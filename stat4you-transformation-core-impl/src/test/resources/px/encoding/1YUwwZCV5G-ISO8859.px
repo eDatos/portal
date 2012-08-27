@@ -1,0 +1,33 @@
+AXIS-VERSION="2000";
+CREATION-DATE="20101129";
+CHARSET="ANSI";
+SUBJECT-AREA="HOSPITALIZACIONES";
+SUBJECT-CODE="05";
+MATRIX="05037";
+TITLE="Número medio de admisiones en el hospital de día en los últimos 12 meses según sexo y país de nacimiento. Media y desviación típica. Población de 16 y más años que ha utilizado algún hospital de día en los últimos 12 meses";
+CONTENTS="Población de 16 y más años. Número medio de admisiones en el hospital de día en los últimos 12 meses";
+DECIMALS=2;
+SHOWDECIMALS=2;
+STUB="sexo","país de nacimiento";
+HEADING="número medio";
+UNITS="media y desviación típica";
+VALUES("sexo")="Ambos sexos","Hombres","Mujeres";
+VALUES("país de nacimiento")="Total","España","Extranjero";
+VALUES("número medio")="Media","Desviación típica";
+CONTACT="INE e-mail:www.ine.es/infoine Internet:www.ine.es Tel: +34 915839100  ";
+SOURCE="Instituto Nacional de Estadística  ";
+COPYRIGHT=YES;
+NOTEX="El símbolo '.' debe interpretarse como dato que no se recoge#"
+"El símbolo '..' debe interpretarse como dato que no puede darse por muestra insuficiente#"
+"El símbolo '...' debe interpretarse como error de división por 0#"
+"Los datos correspondientes a celdas con menos de 35 mil personas han de ser tomados con precaución, ya que pueden estar afectados de elevados errores de muestreo";
+DATA=
+3.15 12.10;
+3.25 12.58;
+2.41 7.46;
+2.9 9.55;
+2.89 9.44;
+2.94 10.27;
+3.37 13.98;
+3.56 14.79;
+1.87 1.92;;

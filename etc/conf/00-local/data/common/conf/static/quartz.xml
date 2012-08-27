@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+
+    <!--
+        #============================================================================
+        # Configure Main Scheduler Properties
+        #============================================================================
+    -->
+    <entry key="org.quartz.scheduler.instanceName">SchedulerStat4You</entry>
+    <entry key="org.quartz.scheduler.instanceId">AUTO</entry>
+
+    <entry key="org.quartz.scheduler.skipUpdateCheck">true</entry>
+
+
+    <!--
+        #============================================================================
+        # The scheduler is local, which means it can't be accessed using RMI
+        #============================================================================
+    -->
+    <entry key="org.quartz.scheduler.rmi.export">false</entry>
+    <entry key="org.quartz.scheduler.rmi.proxy">false</entry>
+
+    <!--
+        #============================================================================
+        # Configure ThreadPool
+        #============================================================================
+    -->
+    <entry key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</entry>
+    <entry key="org.quartz.threadPool.threadCount">25</entry>
+    <entry key="org.quartz.threadPool.threadPriority">5</entry>
+
+    <!--
+        #============================================================================
+        # Configure JobStore
+        #============================================================================
+    -->
+    <!--
+    <entry key="org.quartz.jobStore.class">org.quartz.simpl.RAMJobStore</entry>
+    -->
+    <entry key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</entry>
+    <entry key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</entry>
+    <entry key="org.quartz.jobStore.dataSource">S4YDS</entry>
+    <entry key="org.quartz.jobStore.tablePrefix">QRTZ_</entry>
+    <entry key="org.quartz.jobStore.useProperties">true</entry>    
+    <entry key="org.quartz.jobStore.misfireThreshold">60000</entry>
+    <entry key="org.quartz.jobStore.isClustered">true</entry>
+    <entry key="org.quartz.jobStore.clusterCheckinInterval">20000</entry> 
+
+    <!--
+        #============================================================================
+        # Configure Datasource
+        #============================================================================
+    -->
+    <entry key="org.quartz.dataSource.S4YDS.jndiURL">java:comp/env/jdbc/Stat4YouStatisticsDS</entry>
+
+</properties>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset> 
+
+	<!-- ************************************************************************************ -->
+	<!--                                         USER 1                                       -->
+	<!-- ************************************************************************************ -->
+  	<TBL_USERS
+		ID="1"
+		UUID="U-1"
+		USERNAME="User1"
+		PASSWORD="1234"
+		NAME="Rita"
+		SURNAME="Díaz Adán"
+		MAIL="rdiaada@arte-consultores.com"
+		SEX="F"
+		EDUCATION_LEVEL="ENGINEERING"
+		BIRTHPLACE="TFE-LGN"
+		PERMANENT_ADDRESS="TFE-SC"
+		BIRTHDAY="1985-01-13 00:00:00"
+		MARITAL_STATUS="SINGLE"
+		OCCUPATION="IT"
+		VERSION="1"
+		REMOVED_DATE="[null]"
+		REMOVED_DATE_TZ="[null]"
+		CREATED_BY="user1"
+		CREATED_DATE="2010-07-22 12:47:22"
+		CREATED_DATE_TZ="Europe/London"
+		LAST_UPDATED_BY="user2"
+		LAST_UPDATED="2011-08-24 01:02:03"
+		LAST_UPDATED_TZ="Europe/London" />	 
+		
+		
+	<!-- ************************************************************************************ -->
+	<!--                                         USER 2                                       -->
+	<!-- ************************************************************************************ -->
+  	<TBL_USERS
+		ID="2"
+		UUID="U-2"
+		USERNAME="User2"
+		PASSWORD="4567"
+		NAME="Antonio"
+		SURNAME="López González"
+		MAIL="antonio@arte-consultores.com"
+		VERSION="1"
+		REMOVED_DATE="[null]"
+		REMOVED_DATE_TZ="[null]"
+		CREATED_BY="user1"
+		CREATED_DATE="2010-07-22 12:47:22"
+		CREATED_DATE_TZ="Europe/London"
+		LAST_UPDATED_BY="user2"
+		LAST_UPDATED="2011-08-24 01:02:03"
+		LAST_UPDATED_TZ="Europe/London" />	 
+		
+	<!-- ************************************************************************************ -->
+	<!--                                         USER 3                                       -->
+	<!-- ************************************************************************************ -->
+  	<TBL_USERS
+		ID="3"
+		UUID="U-3"
+		USERNAME="User3"
+		PASSWORD="7890"
+		NAME="Zebensui"
+		SURNAME="Méndez Corujo"
+		MAIL="zmencor@arte-consultores.com"
+		VERSION="1"
+		REMOVED_DATE="2011-08-22 01:02:03"
+		REMOVED_DATE_TZ="Europe/London"
+		CREATED_BY="user1"
+		CREATED_DATE="2010-07-22 12:47:22"
+		CREATED_DATE_TZ="Europe/London"
+		LAST_UPDATED_BY="user2"
+		LAST_UPDATED="2011-08-24 01:02:03"
+		LAST_UPDATED_TZ="Europe/London" />	 
+	
+</dataset>

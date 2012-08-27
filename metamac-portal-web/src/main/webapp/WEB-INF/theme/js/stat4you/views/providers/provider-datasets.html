@@ -1,0 +1,18 @@
+<div class="dataset-list">
+{{#each datasets}}
+    <div class="dataset-list-el">
+        <div class="dataset-list-el-title">
+            <a href="{{context}}/providers/{{providerAcronym}}/datasets/{{identifier}}" title="{{iString title}}">{{iString title}}</a>
+        </div>
+        <div>
+            <i class="icon-calendar-min-gray"></i>
+            <span class="dataset-list-el-date">{{date providerPublishingDate}}</span>
+
+            {{#if providerAcronym}}
+            <i class="icon-provider-min-gray"></i>
+            <span class="dataset-list-el-provider"><a href="{{context}}/providers/{{providerAcronym}}">{{providerAcronym}}</a></span>
+            {{/if}}
+        </div>
+    </div>
+{{/each}}
+</div>

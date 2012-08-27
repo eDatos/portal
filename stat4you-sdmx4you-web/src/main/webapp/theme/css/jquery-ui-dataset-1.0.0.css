@@ -1,0 +1,167 @@
+/*
+IMPORTANT:
+In order to preserve the uniform grid appearance, all cell styles need to have padding, margin and border sizes.
+No built-in (selected, editable, highlight, flashing, invalid, loading, :focus) or user-specified CSS
+classes should alter those!
+*/
+.dataset {
+    position: relative;
+}
+
+.dataset-separator {
+    float: left;
+}
+
+.dataset-separator-container {
+    
+}
+
+.dataset-columns-top {
+    overflow: hidden;
+}
+
+.dataset-columns-top-container {
+    overflow: hidden;
+    border: 1px solid #B3B3B3;
+    border-bottom: 0px;
+}
+
+.dataset-columns-top-cells {
+    width: 999999px;
+    position: relative;
+    white-space: nowrap;
+    cursor: default;
+    overflow: hidden;
+}
+
+.dataset-columns-top-cell {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis-word;
+    float: left;
+}
+
+.dataset-columns-top-cell-container {
+    border-left: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+    border-right: 1px solid silver;
+    background-color: #E6E6E6;
+}
+
+.dataset-columns-left {
+    overflow: hidden;
+    float: left;
+}
+
+.dataset-columns-left-container {
+    overflow: hidden;
+    border-left: 1px solid #B3B3B3;
+    border-top: 1px solid #B3B3B3;
+    border-bottom: 1px solid #B3B3B3;
+}
+
+.dataset-columns-left-cells {
+    height: 999999px;
+    position: relative;
+    white-space: nowrap;
+    cursor: default;
+    overflow: hidden;
+}
+
+.dataset-columns-left-cell {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dataset-columns-left-cell-container {
+    background-color: #E6E6E6;
+    border-right: 0px;
+    border-left: 0px;
+    border-top: 0px;
+    border-bottom: 1px solid silver;
+}
+
+.dataset-data {
+    overflow: hidden;
+    float: left;
+}
+
+.dataset-data-container {
+    overflow: hidden;
+    border: 1px solid silver;
+}
+
+.dataset-data-cells {
+    width: 999999px;
+    height: 999999px;
+    position: relative;
+    white-space: nowrap;
+    cursor: default;
+    overflow: hidden;
+}
+
+.dataset-data-cell {
+    float: left;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.dataset-data-cell-container {
+    border-right: 1px solid silver;
+    border-left: 0px;
+    border-top: 0px;
+    border-bottom: 1px solid silver;
+}
+
+.dataset-data-cell-first {
+    clear: left;
+}
+
+.dataset-data-cell-last {
+    
+}
+
+.dataset-columns-top-cell-container,
+.dataset-columns-left-cell-container,
+.dataset-data-cell-container  {
+    height: 16px;
+    line-height: 16px;
+    margin: 0;
+    padding: 4px;
+}
+
+.dataset-scroll-right {
+    float: left;
+    background: blue;
+    width: 10px;
+    position: relative;
+}
+
+.dataset-scroll-drag {
+    background: red;
+    border-radius: 4px;
+    width: 10px;
+    top: 0;
+    position: absolute;
+}
+
+/*  ##################################
+http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting
+    Unselectable  
+    ################################## */
+.dataset-unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<comment>Stat4You Job Indecato</comment>
+
+    <entry key="stat4you.jbos.importation.idestac.endpoint.api">http://api.idescat.cat</entry>
+    <entry key="stat4you.jbos.importation.idestac.provider.uri">stat4you:dsd:provider:1cc200a1-a967-4a53-80ce-19a4908cdada</entry>
+	
+
+</properties>

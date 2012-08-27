@@ -1,0 +1,774 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:cross="http://www.idescat.cat/-/cross/1.0/">
+    <id>tag:idescat.cat,2010:poblacio/s/100</id>
+    <title xml:lang="ca">Cerca de població: 101</title>
+    <updated>2012-02-01T11:00:00+00:00</updated>
+    <author>
+        <name>Idescat</name>
+        <uri>http://www.idescat.cat/poblacio/</uri>
+    </author>
+    <opensearch:totalResults>150</opensearch:totalResults>
+    <opensearch:startIndex>101</opensearch:startIndex>
+    <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+    <opensearch:Query role="request" searchTerms="" startPage="1"/>
+    <link rel="search" href="http://www.idescat.cat/xml/poblacio-ca.xml" type="application/opensearchdescription+xml"/>
+    <link rel="self" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=100" type="application/atom+xml"/>
+    <link rel="alternate" href="http://www.idescat.cat/poblacio/?q=" type="text/html"/>
+    <link rel="first" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=" type="application/atom+xml"/>
+    <link rel="last" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=8150" type="application/atom+xml"/>
+    <link rel="previous" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=50" type="application/atom+xml"/>
+    <!-- 
+    <link rel="next" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=150" type="application/atom+xml"/>
+    -->
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570004301</id>
+        <title>Serrat de l'Ocata, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570004301" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="1179" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1109" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="2288" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Ametlla del Vallès, l'): 2.288 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570005600</id>
+        <title>Mas Fabrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570005600" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="240" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="236" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="476" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 476 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570005601</id>
+        <title>Mas Fabrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570005601" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="194" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="209" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="403" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Ametlla del Vallès, l'): 403 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570006900</id>
+        <title>Can Plantada</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570006900" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="18" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="26" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="44" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 44 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570007500</id>
+        <title>Can Reixac</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570007500" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="113" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="105" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="218" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 218 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570007501</id>
+        <title>Can Reixac</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570007501" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="96" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="90" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="186" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Ametlla del Vallès, l'): 186 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570008100</id>
+        <title>Santa Creu</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570008100" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="410" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="413" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="823" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 823 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570008101</id>
+        <title>Santa Creu</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570008101" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="399" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="404" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="803" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Ametlla del Vallès, l'): 803 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/080060</id>
+        <title>Arenys de Mar</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="MUN"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=080060"/>
+        <cross:DataSet>
+            <cross:Section AREA="080060" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="7307" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="7556" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="14863" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Municipi: 14.863 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001700</id>
+        <title>Arenys de Mar</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001700" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="7307" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="7556" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="14863" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Mar): 14.863 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001701</id>
+        <title>Arenys de Mar</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001701" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="6516" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="6785" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="13301" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 13.301 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001702</id>
+        <title>Carolines, les</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001702" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="51" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="39" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="90" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 90 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001703</id>
+        <title>Roses, les</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001703" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="59" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="58" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="117" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 117 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001704</id>
+        <title>Cònsul, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001704" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="41" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="38" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="79" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 79 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001705</id>
+        <title>Estrella, l'</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001705" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="63" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="54" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="117" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 117 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001706</id>
+        <title>Maltemps, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001706" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="45" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="69" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="114" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 114 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001707</id>
+        <title>Montmar</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001707" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="45" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="42" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="87" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 87 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001708</id>
+        <title>Portimar</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001708" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="167" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="162" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="329" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 329 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001709</id>
+        <title>Portinyol, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001709" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="65" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="63" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="128" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 128 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001710</id>
+        <title>Victòria, la</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001710" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="36" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="33" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="69" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 69 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001711</id>
+        <title>Vil.les, les</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001711" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="31" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="25" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="56" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 56 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001712</id>
+        <title>Hort del Bisbe, l'</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001712" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="113" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="128" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="241" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 241 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800600001713</id>
+        <title>Canyadell, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800600001713" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="28" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="19" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="47" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Mar): 47 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/080076</id>
+        <title>Arenys de Munt</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="MUN"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=080076"/>
+        <cross:DataSet>
+            <cross:Section AREA="080076" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="4260" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4240" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="8500" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Municipi: 8.500 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760001700</id>
+        <title>Arenys de Munt</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760001700" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="3513" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="3545" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="7058" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 7.058 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760001701</id>
+        <title>Arenys de Munt</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760001701" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="3513" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="3545" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="7058" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 7.058 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760003800</id>
+        <title>Collsacreu</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760003800" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="76" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="79" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="155" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 155 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760003801</id>
+        <title>Collsacreu</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760003801" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="76" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="79" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="155" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 155 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760004300</id>
+        <title>Creueta, la</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760004300" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="134" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="118" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="252" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 252 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760004301</id>
+        <title>Creueta, la</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760004301" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="134" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="118" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="252" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 252 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760006900</id>
+        <title>Sobirans</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760006900" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="23" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="18" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="41" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 41 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760007500</id>
+        <title>Vallvidrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760007500" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="7" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="2" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="9" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 9 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760007501</id>
+        <title>Vallvidrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760007501" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="7" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="2" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="9" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 9 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760008100</id>
+        <title>Aiguaviva</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760008100" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="24" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="26" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="50" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 50 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760008101</id>
+        <title>Aiguaviva</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760008101" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="24" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="26" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="50" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 50 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760009400</id>
+        <title>Arenys Residencial</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760009400" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="123" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="126" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="249" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 249 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760009401</id>
+        <title>Arenys Residencial</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760009401" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="123" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="126" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="249" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 249 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760010800</id>
+        <title>Barri del Migdia, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760010800" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="34" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="20" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="54" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 54 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760011500</id>
+        <title>Barri Nord</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760011500" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="13" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="11" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="24" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 24 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760012000</id>
+        <title>Barri Orient</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760012000" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="20" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="11" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="31" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 31 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760013600</id>
+        <title>Barri Ponent</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760013600" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="15" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="7" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="22" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 22 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760015400</id>
+        <title>Can Sagrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760015400" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="8" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="10" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="18" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 18 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760015401</id>
+        <title>Can Sagrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760015401" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="8" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="10" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="18" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 18 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760016700</id>
+        <title>Santa Rosa dels Pins</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760016700" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="36" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="39" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="75" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 75 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760016701</id>
+        <title>Santa Rosa dels Pins</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760016701" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="36" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="39" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="75" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 75 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760018900</id>
+        <title>Torrent d'en Puig</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760018900" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="28" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="31" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="59" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 59 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760018901</id>
+        <title>Torrent d'en Puig</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760018901" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="28" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="31" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="59" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 59 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760019200</id>
+        <title>Torrentbò</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760019200" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="22" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="23" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="45" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 45 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760019201</id>
+        <title>Torrentbò</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760019201" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="22" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="23" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="45" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Arenys de Munt): 45 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800760020600</id>
+        <title>Tres Turons, els</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800760020600" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="90" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="79" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="169" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Arenys de Munt): 169 hab.</content>
+    </entry>
+</feed>

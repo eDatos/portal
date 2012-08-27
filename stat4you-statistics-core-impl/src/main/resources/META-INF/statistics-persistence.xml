@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+             version="1.0">
+
+    <persistence-unit name="Stat4YouStatisticsEntityManagerFactory" transaction-type="RESOURCE_LOCAL">
+        <description>JPA configuration for Stat4YouStatistics</description>
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <!-- annotated classes -->
+        <class>com.stat4you.statistics.dsd.domain.DatasetEntity</class>
+        <class>com.stat4you.statistics.dsd.domain.DatasetVersionEntity</class>
+        <class>com.stat4you.statistics.dsd.domain.DimensionEntity</class>
+        <class>com.stat4you.statistics.dsd.domain.InternationalStringEntity</class>
+        <class>com.stat4you.statistics.dsd.domain.LocalisedStringEntity</class>
+        <class>com.stat4you.statistics.dsd.domain.PrimaryMeasureEntity</class>
+        <class>com.stat4you.statistics.dsd.domain.ProviderEntity</class>
+        <class>com.stat4you.statistics.dsd.domain.CodeDimensionEntity</class>
+        <!-- properties -->
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="query.substitutions" value="true 1, false 0"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.region_prefix" value=""/>
+            <property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+            <property name="hibernate.jdbc.batch_size" value="50"/>
+            <!-- add additional configuration properties by using SpecialCases.xpt "AROUND templates::jpa::JPA::persistenceUnitAdditionalProperties FOR Application" -->
+        </properties>
+        <!-- add additional configuration properties by using SpecialCases.xpt "AROUND templates::jpa::JPA::persistenceUnitAdditions FOR Application" -->
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,12 @@
+Year;Country;Indicator;Unit;Value;Flags;Note
+2001;BE;FOA_cit_Country;% of pub serv for citizens;0;;
+2001;BE;FOA_ent_Country;% of pub serv for ent;0;;
+2001;LU;FOA_ent_Country;% of pub serv for ent;0;;
+2001;NL;FOA_cit_Country;% of pub serv for citizens;0;;
+2002;LU;FOA_ent_Country;% of pub serv for ent;0;;
+2004;LV;FOA_ent_Country;% of pub serv for ent;0;;
+2004;PL;FOA_cit_Country;% of pub serv for citizens;0;;
+2005;CY;bb_fcov_RURAL_POP;% pop;0;;
+2005;CY;e_igovpr_ENT_ALL_XFIN;% ent;0;;
+2005;EL;bb_fcov_RURAL_POP;% pop;0;;
+2005;LV;e_igovpr_ENT_ALL_XFIN;% ent;0;;

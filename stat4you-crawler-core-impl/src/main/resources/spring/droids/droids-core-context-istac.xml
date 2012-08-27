@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://cocoon.apache.org/schema/configurator http://cocoon.apache.org/schema/configurator/cocoon-configurator-1.1.0.xsd">
+
+    
+    <!-- Common configuration -->
+    <import resource="classpath:spring/droids/droids-core-context-common.xml" />
+    
+    
+    <!-- ****************************************************************
+                    Infrastructure for ISTAC 
+         **************************************************************** -->
+    
+    <!-- Queue -->
+    <bean name="istacQueue" class="com.stat4you.crawler.droids.impl.Stat4youSimpleTaskQueueWithHistory"/>
+
+    <!-- Simple Task Master, use MultiThreadedTaskMaster if you desire better performance (Multiple connections to providers) -->
+    <bean name="istacTaskMaster" class="org.apache.droids.impl.SequentialTaskMaster">
+        <property name="exceptionHandler" ref="taskExceptionHandler" />
+        <property name="delayTimer" ref="delayTimer" />
+    </bean>
+    
+    <!-- Parsers: The ParserFactory will lookup a parser by its identifier (content type) and return it. -->
+    
+    <!--  HTML parser  -->
+    <bean id="istacHtmlParser" name="text/html" class="com.stat4you.crawler.droids.parse.html.IstacHtmlParser">
+        <property name="elements">
+            <map>
+                <entry key="a" value="href" />
+                <entry key="link" value="href" />
+                <entry key="img" value="src" />
+                <entry key="script" value="src" />
+                <entry key="option" value="value" />
+            </map>
+        </property>
+        <property name="crawlerInfo" ref="istacCrawlerInfo" />
+        <property name="forceModeFilter" ref="istacForceModeFilter" />
+    </bean>
+
+    <!-- Crawler Information -->
+    <bean name="istacCrawlerInfo" class="com.stat4you.crawler.util.CrawlerInfo">
+        <property name="crawlerName" value="ISTAC" />
+        <property name="providerUrl" value="${stat4you.crawler.droids.provider.istac.url}" />
+        <property name="fileRepositoryIndex" ref="istacFileRepositoryIndex" />
+    </bean>
+    
+    <!-- Repository Index -->
+    <bean name="istacFileRepositoryIndex" class="com.stat4you.crawler.util.FileRepositoryIndex">
+        <property name="crawlerInfo" ref="istacCrawlerInfo" />
+    </bean>
+
+    <!-- Filter -->
+    <bean name="istacFilter" class="org.apache.droids.net.RegexURLFilter">
+        <property name="file" value="classpath:/regex-urlfilter-istac.txt" />
+    </bean>
+    
+    <bean name="istacForceModeFilter" class="org.apache.droids.net.RegexURLFilter">
+        <property name="file" value="classpath:/regex-urlfilter-istac-forcemode.txt" />
+    </bean>
+
+    <!-- Handler -->
+    <bean name="istacSavePxHandler" class="com.stat4you.crawler.droids.handle.SavePxHandler">
+        <property name="outputDir" value="${stat4you.crawler.droids.handler.save.dir}" />
+        <property name="includeHost" value="true" />
+        <property name="crawlerInfo" ref="istacCrawlerInfo" />
+    </bean>
+        
+    <bean name="istacPxHandler" class="com.stat4you.crawler.droids.handle.PxHandler">
+        <property name="crawlerInfo" ref="istacCrawlerInfo" />
+    </bean>
+
+    <!-- Factories  -->
+
+    <!-- Parsers -->
+    <bean name="istacParserFactory" class="org.apache.droids.helper.factories.ParserFactory">
+        <property name="map">
+            <map>
+                <entry key="text/html" value-ref="istacHtmlParser"></entry>
+                <entry key="text/plain" value-ref="documentParser"></entry>
+                <entry key="application/unknow" value-ref="documentParser"></entry>
+                <entry key="application/px" value-ref="documentParser"></entry>             
+            </map>
+        </property>
+    </bean>
+
+
+    <!-- Filters -->
+    <bean id="istacFiltersFactory" class="org.apache.droids.helper.factories.URLFiltersFactory">
+        <property name="map">
+            <map>
+                <entry key="org.apache.droids.net.RegexURLFilter" value-ref="istacFilter"></entry>          
+            </map>
+        </property>
+    </bean>
+ 
+    <!-- Handlers -->
+    <bean id="istacHandlerFactory" class="com.stat4you.crawler.droids.helper.factories.HandlerFactoryStat4you">
+        <property name="map">
+            <map>
+                <entry key="savePxHandler" value-ref="istacSavePxHandler"></entry>
+<!--                 <entry key="pxHandler" value-ref="istacPxHandler"></entry> -->
+            </map>
+        </property>
+    </bean>
+ 
+ 
+    <!-- Droid -->
+    <bean name="istacCrawler" class="com.stat4you.crawler.droids.impl.Stat4youPxCrawlingDroid">
+        <constructor-arg ref="istacQueue" />
+        <constructor-arg ref="istacTaskMaster" />
+
+        <property name="handlerFactory" ref="istacHandlerFactory" />
+        <property name="protocolFactory" ref="org.apache.droids.helper.factories.ProtocolFactory" />
+        <property name="parserFactory" ref="istacParserFactory" />
+        <property name="filtersFactory" ref="istacFiltersFactory" />
+        
+        <property name="crawlerInfo" ref="istacCrawlerInfo" />
+    </bean>
+
+
+</beans>

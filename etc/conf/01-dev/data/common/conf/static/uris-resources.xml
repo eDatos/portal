@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <uris>
+    
+        <!-- DSD -->
+        <uri>
+            <resource>dsd.provider</resource>
+            <versionable>false</versionable>
+            <prefix>stat4you:dsd:provider</prefix>
+        </uri>
+        
+        <uri>
+            <resource>dsd.dataset</resource>
+            <versionable>true</versionable>
+            <prefix>stat4you:dsd:dataset</prefix>
+        </uri>
+                 
+        <uri>
+            <resource>dsd.dimension</resource>
+            <versionable>false</versionable>
+            <prefix>stat4you:dsd:dimension</prefix>
+        </uri>    
+                         
+        <uri>
+            <resource>dsd.primaryMeasure</resource>
+            <versionable>false</versionable>
+            <prefix>stat4you:dsd:primaryMeasure</prefix>
+        </uri>     
+        
+        <uri>
+            <resource>dsd.attributeDefinition</resource>
+            <versionable>false</versionable>
+            <prefix>stat4you:dsd:attributeDefinition</prefix>
+        </uri>            
+        
+        <!-- USERS -->
+        <uri>
+            <resource>users.user</resource>
+            <versionable>false</versionable>
+            <prefix>stat4you:users:user</prefix>
+        </uri>
+    </uris>
+</configuration>

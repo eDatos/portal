@@ -1,0 +1,80 @@
+[#ftl strip_whitespace=true]
+
+[#--
+ * fieldInputText
+ --]
+[#macro fieldInputText value label required=false minlength=0 maxlength=255 attributes="" class="" hint="" rendered=true]
+    
+	[@fieldInput "text", value, label, required, minlength, maxlength, attributes, class, hint /]
+	
+[/#macro]
+
+[#--
+ * fieldInputPassword
+ --]
+[#macro fieldInputPassword value label required=false minlength=0 maxlength=255 attributes="" class="" hint="" rendered=true]
+    
+	[@fieldInput "password", value, label, required, minlength, maxlength, attributes, class, hint, rendered /]
+
+[/#macro]
+
+
+[#--
+ * fieldInputHidden
+ --]
+[#macro fieldInputHidden value attributes="" rendered=true]
+	[#if rendered]
+		[@spring.bind value /]
+		<input type="hidden" id="${spring.status.expression}" name="${spring.status.expression}" value="${spring.stringStatusValue}" ${attributes}[@spring.closeTag /]
+    [/#if]
+[/#macro]
+
+[#--
+ * fieldInput
+ --]
+[#macro fieldInput fieldType value label required=false minlength=0 maxlength=255 attributes="" class="" hint="" rendered=true]
+	[#if rendered]
+		[@spring.bind value /]
+		
+		[#local error = "${spring.status.errorCode}"?has_content /]
+		
+		<div class="field[#if error] error[/#if]" >
+			<div class="label">
+				<div><em>[#if required]*[#else]&nbsp;[/#if]</em><label for="${spring.status.expression}">[@spring.messageText label label /]:</label></div>
+			</div>
+			<div class="input">
+				<div>			
+					<input type="${fieldType}" id="${spring.status.expression}" name="${spring.status.expression}" value="[#if fieldType!="password"]${spring.stringStatusValue}[/#if]" minlength="${minlength}" maxlength="${maxlength}" class="[#if required]required[/#if] ${class}" ${attributes}[@spring.closeTag /]
+				</div>
+				[#if hint?trim?length != 0] 
+					<span class="hint">${hint}</span>
+				[/#if]
+				[#list spring.status.errorMessages as error] <b>${error}</b> <br> [/#list]
+			</div>
+			<div class="msg"></div>
+
+			<div class="clearfix"></div>
+		</div>
+	[/#if]
+[/#macro]
+
+[#--
+ * fieldOutput
+ --]
+ [#macro fieldOutput value label attributes="" class="" hint="" rendered=true]
+	[#if rendered]
+		[@spring.bind value /]
+		
+		<div class="field" >
+			<div class="label">
+				<div><em>&nbsp;</em>[@spring.messageText label /]:</div>
+			</div>
+			<div class="input">
+				<div>			
+					${spring.stringStatusValue}
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	[/#if]
+[/#macro]

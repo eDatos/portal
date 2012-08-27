@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<override>
+        <system />
+        <properties fileName="${stat4you.data.url}/idxmanager/conf/static/idxmanager-core.xml" config-optional="false" />
+    </override>
+</configuration>

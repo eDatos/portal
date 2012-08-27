@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.siemac.metamac.stat4you</groupId>
+        <artifactId>stat4you-parent</artifactId>
+        <version>0.1.12-SNAPSHOT</version>
+        <relativePath>../stat4you-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>metamac-portal-web</artifactId>
+    <packaging>war</packaging>
+    <name>STAT 4 YOU :: WEB</name>
+    <description>STAT 4 YOU :: WEB</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+
+        <!-- STAT 4 YOU -->
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-statistics-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-statistics-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-transformation-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-transformation-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-idxmanager-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-idxmanager-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-normalized-values-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-normalized-values-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-users-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-users-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-crawler-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-importation-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-importation-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-scheduler</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-job-importation-idescat</artifactId>
+        </dependency>
+
+        <!-- Web -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- json, xml -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+        <!-- <dependency> -->
+        <!-- <groupId>com.thoughtworks.xstream</groupId> -->
+        <!-- <artifactId>xstream</artifactId> -->
+        <!-- <version>1.4.2</version> -->
+        <!-- </dependency> -->
+
+
+        <!-- Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!-- SECURITY -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <!-- SPRING SOCIAL -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+
+        <!-- test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsSrcDir>${project.basedir}/src/main/webapp/WEB-INF/theme/js</jsSrcDir>
+                    <specIncludes>
+                        <include>libs/*.js</include>
+                        <include>responses/*.js</include>
+                        <include>data/*.js</include>
+                        <include>table/*.js</include>
+                        <include>table/primitives/*.js</include>
+                        <include>table/zones/*.js</include>
+                        <include>widget/*.js</include>
+                        <include>widget/filter/*.js</include>
+                        <include>*.js</include>
+                        <include>specs/dataset/*.js</include>
+                        <include>specs/*.js</include>
+                    </specIncludes>
+
+                    <specExcludes>
+                        <exclude>libs/jasmine.js</exclude>
+                        <exclude>libs/JasmineAdapter.js</exclude>
+                        <exclude>libs/jasmine-fake-ajax.js</exclude>
+                    </specExcludes>
+
+                    <sourceIncludes>
+                        <include>stat4you/stat4you-1.0.0.js</include>
+
+                        <!-- vendor libs -->
+                        <include>libs/jquery-1.7.1.js</include>
+                        <include>libs/underscore.js</include>
+                        <include>libs/backbone-min.js</include>
+                        <include>libs/jquery-ui-1.8.17.custom.js</include>
+                        <include>libs/*.js</include>
+
+                        <!-- libs -->
+                        <include>stat4you/libs/HandlebarsHelpers.js</include>
+                        <include>stat4you/libs/jquery-ui-dataset-table-2.1.0.js</include>
+                        <include>stat4you/i18n/*.js</include>
+                        <include>stat4you/libs/ActiveMenu.js</include>
+                        <include>stat4you/libs/AjaxForm.js</include>
+                        <include>stat4you/libs/smartscroll.js</include>
+                        
+                        <!-- modules -->
+                        <include>stat4you/modules/**/*.js</include>
+
+
+                        <!-- Backbone views -->
+
+                        <!-- datasets and filters -->
+                        <include>stat4you/stat4you-dataset-1.0.0.js</include>
+                        <include>stat4you/stat4you-ve-manager-1.0.0.js</include>
+                        <include>stat4you/stat4you-fullscreen-1.0.0.js</include>
+
+                        <include>stat4you/filters/stat4you-filter-1.0.0.js</include>
+                        <include>stat4you/filters/stat4you-chart-filter-1.0.0.js</include>
+                        <include>stat4you/filters/*.js</include>
+                        <include>stat4you/visual-element/stat4you-ve-base-1.0.0.js</include>
+                        <include>stat4you/visual-element/stat4you-ve-bar-and-line-1.0.0.js</include>
+                        <include>stat4you/visual-element/*.js</include>
+                        
+
+                        <!-- dataset  -->
+                        <include>stat4you/dataset/data/ApiResponse.js</include>
+                        <include>stat4you/dataset/data/ApiRequest.js</include>
+                        <include>stat4you/dataset/data/BigDataCacheBlock.js</include>
+                        <include>stat4you/dataset/data/BigDataCache.js</include>
+                        <include>stat4you/dataset/data/BigData.js</include>
+                        <include>stat4you/dataset/data/Data.js</include>
+                        <include>stat4you/dataset/Metadata.js</include>
+                        <include>stat4you/dataset/Dataset.js</include>
+
+                        <include>stat4you/FilterOptionsDimensionRestriction.js</include>
+                        <include>stat4you/FilterOptions.js</include>
+
+
+
+                        <!-- Canvas table -->
+                        <include>stat4you/visual-element/table/primitives/Cell.js</include>
+                        <include>stat4you/visual-element/table/primitives/Point.js</include>
+                        <include>stat4you/visual-element/table/primitives/Size.js</include>
+                        <include>stat4you/visual-element/table/primitives/Rectangle.js</include>
+
+                        <include>stat4you/visual-element/table/Utils.js</include>
+                        <include>stat4you/visual-element/table/Delegate.js</include>
+
+                        <include>stat4you/visual-element/table/ScrollManager.js</include>
+                        <include>stat4you/visual-element/table/KeyboardManager.js</include>
+                        <include>stat4you/visual-element/table/FullScreenManager.js</include>
+
+
+                        <include>stat4you/visual-element/table/zones/Zone.js</include>
+                        <include>stat4you/visual-element/table/zones/*.js</include>
+                        <include>stat4you/visual-element/table/Tooltip.js</include>
+                        <include>stat4you/visual-element/table/View.js</include>
+
+
+                        <include>stat4you/visual-element/table/DataSource.js</include>
+                        <include>stat4you/visual-element/table/DataSourceDatasetData.js</include>
+                        <include>stat4you/visual-element/table/DataSourceDatasetResponse.js</include>
+                        <include>stat4you/visual-element/table/DataSourceDatasetCache.js</include>
+                        <include>stat4you/visual-element/table/DataSourceDataset.js</include>
+
+
+                    </sourceIncludes>
+                    <sourceExcludes>
+                        <exclude>**/uservoice.js</exclude>
+                        <exclude>**/jquery-dataset*</exclude>
+                        <exclude>libs/libs.js</exclude>
+                        <exclude>libs/libs.min.js</exclude>
+                    </sourceExcludes>
+                    <customRunnerTemplate>${project.basedir}/src/test/javascript/runner/template.html</customRunnerTemplate>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

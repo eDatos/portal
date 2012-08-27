@@ -1,0 +1,12 @@
+identifier=SCOREBOARD_INDICATORS
+url=http://scoreboard.lod2.eu/data/digital_scoreboard_19_april_2012.xls
+provider.uri=stat4you:dsd:provider:3a5e3bfb-3392-4097-8bfa-3f104696cfee
+providerReleaseDate=19/04/2012 12:00
+providerPublishingDate=19/04/2012 12:00
+category=3.3.3
+language=en
+languages=en
+title.en=Digital Agenda Scoreboard Indicators
+title.es=Cuadro de Indicadores de la Agenda Digital
+description.en=European Commission services selected around 60 indicators, divided into thematic groups, which illustrate some key dimensions of the European information society. These indicators allow a comparison of progress across countries as well as over time
+description.es=Los servicios de la Comisi�n Europea han seleccionado alrededor de 60 indicadores, divididos en grupos tem�ticos, que ilustran algunas de las dimensiones clave de la sociedad de la informaci�n. Estos indicadores permiten una comparaci�n del progreso en todos los pa�ses, as� como el paso del tiempo

@@ -1,0 +1,286 @@
+/*
+IMPORTANT:
+In order to preserve the uniform grid appearance, all cell styles need to have paddingg, margin and border sizes.
+No built-in (selected, editable, highlight, flashing, invalid, loading, :focus) or user-specified CSS
+classes should alter those!
+*/
+
+.dataset {
+    position: relative;
+}
+
+.s4y-box .s4y-box-container .dataset h3 {
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+/* SEPARATOR */
+.dataset-separator {
+    float: left;
+}
+
+.dataset-separator-container {
+    
+}
+
+/* COLUMNS */
+.dataset-columns-top {
+    overflow: hidden;
+    float: left;
+    position: relative;
+}
+
+.dataset-columns-left {
+    overflow: hidden;
+    float: left;
+}
+
+.dataset-columns-container {
+    overflow: hidden;
+    border: 1px solid #CCC;/*#B3B3B3;*/
+    position: relative;
+}
+
+.dataset-columns-cells {
+    height: 999999px;
+    position: absolute;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.columnsTopDimContainer {
+    height: auto;
+    width: auto;
+    /*float: left;*/
+    position: relative;
+    /*clear: both;*/
+}
+
+.columnsLeftDimContainer {
+    height: auto;
+    width: auto;
+    float: left;
+    position: relative;
+    /*clear: both;*/
+}
+
+.dataset-columns-left .dataset-columns-container {
+    border-right: 0px;
+}
+
+.dataset-columns-top .dataset-columns-container {
+    border-bottom: 0px;
+}
+
+/* DATA */
+.dataset-data {
+    overflow: hidden;
+    float: left;
+    position: relative;
+}
+
+.dataset-data-container {
+    overflow: hidden;
+    border: 1px solid silver;
+    position: relative;
+}
+
+.dataset-data-cells {
+    width: 999999px;
+    height: 999999px;
+    position: absolute;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.grid {
+    height: auto;
+    width: auto;
+    position: relative;
+}
+
+.gridRow {
+    clear: both;
+}
+
+
+.gridElement {
+    float: left;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    /*background-color: #FFF;*/
+    /*border: 1px solid silver;*/
+}
+
+
+.dataset-data-cell {
+    float: left;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #fff;
+    box-shadow: 0px -1px #ddd inset;
+    text-align: right;
+}
+
+.dataset-data-cell-container {
+    height: 11px;
+    line-height: 11px;
+    margin: 0;
+    padding: 4px;
+    
+    test-align: right;
+    //border-right: 1px solid silver;
+    border-left: 0px;
+    border-top: 0px;
+    //border-bottom: 1px 0px 0px 0px solid silver;
+}
+
+.dataset-data-cell-first {
+    clear: left;
+}
+
+.dataset-data-cell-last {
+    
+}
+
+
+/* CELL */
+
+/* [id*="ContainerDim0"] { */
+/*     //background: rgba(66,66,66,0.80); */
+/*     //color: rgba(255,255,255,0.90); */
+    
+/*     background: rgba(94,94,94,0.80); */
+/*     color: #ddd; */
+/* } */
+
+/* [id*="ContainerDim1"] { */
+/*     //background: rgba(66,66,66,0.60); */
+/*     background: rgba(94,94,94,0.60); */
+/*     color: #eee; */
+/* } */
+
+/* [id*="ContainerDim2"] { */
+/*     //background: rgba(66,66,66,0.40); */
+/*     background: rgba(94,94,94,0.40); */
+/*     color: #fff; */
+/* } */
+
+/* [id*="ContainerDim3"] { */
+/*     //background: rgba(66,66,66,0.20); */
+/*     background: rgba(94,94,94,0.20); */
+/*     color: #888; */
+/* } */
+
+/* [id*="ContainerDim4"] { */
+/*     //background: rgba(66,66,66,0.10); */
+/*     background: rgba(94,94,94,0.10); */
+/*     color: #999; */
+/* } */
+
+
+.dataset-cell {
+    position: relative;
+    display: inline-block;
+/*     overflow: hidden; */
+/*     text-overflow: ellipsis-word; */
+    
+    float: left;
+/*     font-weight: bold; */
+    
+    
+    background-color: /*#DDD;*/#E6E6E6;
+}
+
+.dataset-cell-container {
+    height: 11px; /* Must be setted by the user */
+    line-height: 11px;
+    margin: 0;
+    padding: 4px;
+    
+    /*border-right: 1px solid #2B5D86;*/
+    border-right: 1px solid #c4c4c4;
+    border-left: 0px;
+    border-top: 0px;
+    border-bottom: 1px solid #c4c4c4;
+    
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dataset-cell-name {
+/*     white-space: nowrap;  */
+/*     overflow: hidden; */
+/*     text-overflow: ellipsis; */
+}
+
+/* SCROLL */
+.dataset-scroll-right {
+    float: left;
+    /*background: #036;*/
+    background: #e6e6e6;
+    border-radius: 4px;
+    width: 10px;
+    position: relative;
+}
+
+.dataset-scroll-right-drag {
+    background: #bbbbbb;
+    border-radius: 4px;
+    width: 10px;
+    top: 0;
+    position: absolute;
+}
+
+.dataset:hover .dataset-scroll-right-drag,
+.dataset:hover .dataset-scroll-bottom-drag {
+    background: #EA8733;
+}
+
+.dataset-scroll-bottom {
+    float: right;
+    background: #e6e6e6;
+    border-radius: 4px;
+    height: 10px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.dataset-scroll-bottom-drag {
+    background: #bbbbbb;
+    border-radius: 4px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+}
+
+.dataset-scroll-track {
+    width: inherit;
+    height: inherit;
+}
+
+
+/* SPINNER */
+
+.shadow {
+    height: inherit;
+    width: inherit;
+    border: 1px solid silver;
+    background: #EFEFEF;
+}
+
+.spinner {
+    height: 32px;
+    width: 32px;
+    position: absolute;
+}
+
+
+.spinner img {
+    display: block;
+}

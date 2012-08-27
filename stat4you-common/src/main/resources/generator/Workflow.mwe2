@@ -1,0 +1,26 @@
+module generator.Workflow
+
+Workflow {
+	component = @workflow.Sculptorworkflow {
+		modelFile = "classpath:/common-model.btdesign"
+		
+		outlet.src.once.dir      = 'src/main/java'
+		outlet.src.test.once.dir = 'src/test/java'
+		outlet.src.dir      = 'src-gen/main/java'	 	
+		outlet.src.test.dir = 'src-gen/test/java'
+		
+		outlet.res.once.dir      = 'src/main/resources'
+		outlet.res.test.once.dir = 'src/test/resources'		
+		outlet.res.dir      = 'src-gen/main/resources'
+		outlet.res.test.dir = 'src-gen/test/resources'
+		
+		// For org.eclipse.xtext.mwe.Reader:
+		// modelFile = "."
+
+		// Advice for
+		//    transformation, Xtend 'src/main/resources/generator/SpecialCases.ext'
+		transformationAdvice = "generator::SpecialCases"
+		//    templates, Xpand 'src/main/resources/generator/SpecialCases.xpt'
+		templateAdvice = "generator::SpecialCases"
+	}
+}

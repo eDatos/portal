@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.siemac.metamac.stat4you</groupId>
+        <artifactId>stat4you-parent</artifactId>
+        <version>0.1.12-SNAPSHOT</version>
+        <relativePath>../stat4you-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>stat4you-sdmx4you-web</artifactId>
+    <name>SDMX 4 YOU :: WEB</name>
+    <description>SDMX 4 YOU :: WEB</description>
+    <packaging>war</packaging>
+
+    <properties>
+
+        <!-- TODO Los test web son ignorados hasta poder comprobar que funcionen corréctamente -->
+        <skipTests>true</skipTests>
+
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+
+        <!-- STAT 4 YOU -->
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-statistics-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-statistics-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-transformation-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-transformation-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-idxmanager-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-idxmanager-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-normalized-values-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-normalized-values-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-users-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-users-core-impl</artifactId>
+        </dependency>
+
+        <!-- Web -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+
+        <!-- Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!-- SECURITY -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <!-- SPRING SOCIAL -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

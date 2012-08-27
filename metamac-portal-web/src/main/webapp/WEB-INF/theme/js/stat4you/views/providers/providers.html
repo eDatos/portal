@@ -1,0 +1,36 @@
+<div id="first-row-internal-page" class="row">
+    <div class="internal-page-header span12">
+        <div class="internal-page-title">
+            <h2>{{message "page.providers.title" }}</h2>
+        </div>
+        <div class="internal-page-description">
+            <p>{{message "page.providers.description" }}</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="span12">
+        <div class="providers-container">
+             <div id="provider-list">
+                {{#each providers}}
+                    <div class="provider">
+                        <a href="{{acronym}}">
+                            <div class="provider-logo-{{ toLowerCase acronym }} pull-left"></div>
+                        </a>
+                        <div class="provider-info providers-logo_r-margin">
+                            <a href="{{acronym}}">
+                                <p>{{name}}</p>
+                            </a>
+                            <span class="provider-acronym">{{acronym}}</span>
+                            <div class="provider-description">
+                                <span>{{ iString description }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

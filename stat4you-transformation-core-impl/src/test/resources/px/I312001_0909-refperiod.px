@@ -1,0 +1,136 @@
+CHARSET="ANSI";
+AXIS-VERSION="2000";
+LANGUAGE="es";
+LANGUAGES="es","ca";
+CREATION-DATE="20110111 09:00";
+UPDATE-FREQUENCY="A";
+DECIMALS=1;
+SHOWDECIMALS=0;
+MATRIX="I312001_0909";
+AGGREGALLOWED=NO;
+AUTOPEN=NO;
+SUBJECT-AREA="Economía > I+D, innovación tecnológica y TIC";
+SUBJECT-AREA[ca]="Economia > I+D, innovación tecnológica i TIC";
+SUBJECT-CODE="3.65";
+COPYRIGHT=YES;
+DESCRIPTION="Uso de Internet en los últimos 3 meses por características demogr"
+"áficas y tipos "
+"de dispositivos móviles utilizados.";
+DESCRIPTION[ca]="Ús d'Internet els últims 3 mesos per característiques demogrà"
+"fiques i tipus de d"
+"ispositius mòbils utilitzats";
+TITLE="Uso de Internet en los últimos 3 meses por características demográficas"
+" y tipos "
+"de dispositivos móviles utilizados.";
+TITLE[ca]="Ús d'Internet els últims 3 mesos per característiques demogràfiques"
+" i tipus de d"
+"ispositius mòbils utilitzats";
+DESCRIPTIONDEFAULT=YES;
+CONTENTS="Uso de Internet en los últimos 3 meses";
+CONTENTS[ca]="Ús d'Internet els últims 3 mesos";
+UNITS="Según datos";
+UNITS[ca]="Segons dades";
+STUB="Características demográficas";
+STUB[ca]="Característiques demogràfiques";
+HEADING="Datos";
+HEADING[ca]="Dades";
+CONTVARIABLE="Datos";
+CONTVARIABLE[ca]="Dades";
+VALUES("Características demográficas")="Total","Edad: De 16 a 34 años","Edad: De 35 a 54 años","Edad: De 55 a 74 años","Hábitat: Más de 50.000 habitantes","Hábitat: De 20.000 a 50.000 habitantes","Hábitat: Menos de 10.000 a 20.000 habitantes","Tamaño del hogar: Hogares de 1 miembro","Tamaño del hogar: Hogares de 2 miembros","Tamaño del hogar: Hogares de 3 miembros","Tamaño del hogar: Hogares de 4 o más miembros","Hombres","Mujeres";
+VALUES[ca]("Característiques demogràfiques")="Total","Edat: De 16 a 34 anys","Edat: De 35 a 54 anys","Edat: De 55 a 74 anys","Hàbitat: Més de 50.000 habitants","Hàbitat: De 20.000 a 50.000 habitants","Hàbitat: Menys de 10.000 a 20.000 habitants","Grandària de la llar: Llars d'1 membre","Grandària de la llar: Llars de 2 membres","Grandària de la llar: Llars de 3 membres","Grandària de la llar: Llars de 4 membres o més","Homes","Dones";
+VALUES("Datos")="Total de personas que han utilizado Internet","Teléfono móvil banda ancha vía UMTS, 3G, 3,5G","Otro teléfono móvil (GPRS, WAP)","Ordenador de mano (agenda electrónica ó similar, PDA, pocket PC, palmtop)","Ordenador portátil a traves de una conexión sin cables (wireless) fuera de la vivienda habitual o centro de trabajo";
+VALUES[ca]("Dades")="Total de persones que han utilitzat Internet","Telèfon mòbil banda ampla via UMTS, 3G, 3,5G","Un altre telèfon mòbil (GPRS, WAP)","Ordinador de butxaca (agenda electrònica o similar, PDA, pocket, palmtop)","Ordinador portàtil a través d'una connexió sense fil fora de l'habitatge habitual o centre de treball";
+CODES("Características demográficas")="","11","12","13","21","22","23","31","32","33","34","41","46";
+CODES[ca]("Característiques demogràfiques")="","11","12","13","21","22","23","31","32","33","34","41","46";
+CODES("Datos")="aux","porc_DISPINT1","porc_DISPINT2","porc_DISPINT3","porc_DISPINT4";
+CODES[ca]("Dades")="aux","porc_DISPINT1","porc_DISPINT2","porc_DISPINT3","porc_DISPINT4";
+ELIMINATION("Características demográficas")="Total";
+ELIMINATION[ca]("Característiques demogràfiques")="Total";
+PRECISION("Datos","Total de personas que han utilizado Internet")=0;
+PRECISION[ca]("Dades","Total de persones que han utilitzat Internet")=0;
+PRECISION("Datos","Teléfono móvil banda ancha vía UMTS, 3G, 3,5G")=1;
+PRECISION[ca]("Dades","Telèfon mòbil banda ampla via UMTS, 3G, 3,5G")=1;
+PRECISION("Datos","Otro teléfono móvil (GPRS, WAP)")=1;
+PRECISION[ca]("Dades","Un altre telèfon mòbil (GPRS, WAP)")=1;
+PRECISION("Datos","Ordenador de mano (agenda electrónica ó similar, PDA, pocket PC, palmtop)")=1;
+PRECISION[ca]("Dades","Ordinador de butxaca (agenda electrònica o similar, PDA, pocket, palmtop)")=1;
+PRECISION("Datos","Ordenador portátil a traves de una conexión sin cables (wireless) fuera de la vivienda habitual o centro de trabajo")=1;
+PRECISION[ca]("Dades","Ordinador portàtil a través d'una connexió sense fil fora de l'habitatge habitual o centre de treball")=1;
+LAST-UPDATED("Total de personas que han utilizado Internet")="20110114 09:00";
+LAST-UPDATED[ca]("Total de persones que han utilitzat Internet")="20110114 09:00";
+LAST-UPDATED("Teléfono móvil banda ancha vía UMTS, 3G, 3,5G")="20110114 09:00";
+LAST-UPDATED[ca]("Telèfon mòbil banda ampla via UMTS, 3G, 3,5G")="20110114 09:00";
+LAST-UPDATED("Otro teléfono móvil (GPRS, WAP)")="20110114 09:00";
+LAST-UPDATED[ca]("Un altre telèfon mòbil (GPRS, WAP)")="20110114 09:00";
+LAST-UPDATED("Ordenador de mano (agenda electrónica ó similar, PDA, pocket PC, palmtop)")="20110114 09:00";
+LAST-UPDATED[ca]("Ordinador de butxaca (agenda electrònica o similar, PDA, pocket, palmtop)")="20110114 09:00";
+LAST-UPDATED("Ordenador portátil a traves de una conexión sin cables (wireless) fuera de la vivienda habitual o centro de trabajo")="20110114 09:00";
+LAST-UPDATED[ca]("Ordinador portàtil a través d'una connexió sense fil fora de l'habitatge habitual o centre de treball")="20110114 09:00";
+UNITS("Total de personas que han utilizado Internet")="Número de personas";
+UNITS[ca]("Total de persones que han utilitzat Internet")="Nombre de persones";
+UNITS("Teléfono móvil banda ancha vía UMTS, 3G, 3,5G")="Porcentaje";
+UNITS[ca]("Telèfon mòbil banda ampla via UMTS, 3G, 3,5G")="Percentatge";
+UNITS("Otro teléfono móvil (GPRS, WAP)")="Porcentaje";
+UNITS[ca]("Un altre telèfon mòbil (GPRS, WAP)")="Percentatge";
+UNITS("Ordenador de mano (agenda electrónica ó similar, PDA, pocket PC, palmtop)")="Porcentaje";
+UNITS[ca]("Ordinador de butxaca (agenda electrònica o similar, PDA, pocket, palmtop)")="Percentatge";
+UNITS("Ordenador portátil a traves de una conexión sin cables (wireless) fuera de la vivienda habitual o centro de trabajo")="Porcentaje";
+UNITS[ca]("Ordinador portàtil a través d'una connexió sense fil fora de l'habitatge habitual o centre de treball")="Percentatge";
+CONTACT("Total de personas que han utilizado Internet")="Institut d'Estadístic"
+"a de les Illes Balears (IBESTAT)#Teléfono: +34 971 784 575#"
+"Correo electrónico: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT[ca]("Total de persones que han utilitzat Internet")="Institut d'Estadí"
+"stica de les Illes Balears (IBESTAT)#Telèfon: +34 971 784 575#C"
+"orreu electrònic: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT("Teléfono móvil banda ancha vía UMTS, 3G, 3,5G")="Institut d'Estadísti"
+"ca de les Illes Balears (IBESTAT)#Teléfono: +34 971 784 575#"
+"Correo electrónico: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT[ca]("Telèfon mòbil banda ampla via UMTS, 3G, 3,5G")="Institut d'Estadí"
+"stica de les Illes Balears (IBESTAT)#Telèfon: +34 971 784 575#C"
+"orreu electrònic: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT("Otro teléfono móvil (GPRS, WAP)")="Institut d'Estadística de les Ille"
+"s Balears (IBESTAT)#Teléfono: +34 971 784 575#"
+"Correo electrónico: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT[ca]("Un altre telèfon mòbil (GPRS, WAP)")="Institut d'Estadística de l"
+"es Illes Balears (IBESTAT)#Telèfon: +34 971 784 575#C"
+"orreu electrònic: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT("Ordenador de mano (agenda electrónica ó similar, PDA, pocket PC, palmtop)")="Institut d'Estadística de les Illes Balears (IBESTAT)#Teléfono: +34 971 "
+"784 575#"
+"Correo electrónico: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT[ca]("Ordinador de butxaca (agenda electrònica o similar, PDA, pocket, palmtop)")="Institut d'Estadística de les Illes Balears (IBESTAT)#Telèfon: +34 9"
+"71 784 575#C"
+"orreu electrònic: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT("Ordenador portátil a traves de una conexión sin cables (wireless) fuera de la vivienda habitual o centro de trabajo")="Institut d'Estadística de les "
+"Illes Balears (IBESTAT)#Teléfono: +34 971 784 575#"
+"Correo electrónico: info@ibestat.caib.es#www.ibestat.cat";
+CONTACT[ca]("Ordinador portàtil a través d'una connexió sense fil fora de l'habitatge habitual o centre de treball")="Institut d'Estadística de les Illes Bale"
+"ars (IBESTAT)#Telèfon: +34 971 784 575#C"
+"orreu electrònic: info@ibestat.caib.es#www.ibestat.cat";
+REFPERIOD="2010";
+REFPERIOD[ca]="2010";
+REFPERIOD("Total de personas que han utilizado Internet")="2009";
+REFPERIOD[ca]("Total de persones que han utilitzat Internet")="2009";
+REFPERIOD("Teléfono móvil banda ancha vía UMTS, 3G, 3,5G")="2008";
+REFPERIOD[ca]("Telèfon mòbil banda ampla via UMTS, 3G, 3,5G")="2008";
+REFPERIOD("Otro teléfono móvil (GPRS, WAP)")="2009";
+REFPERIOD[ca]("Un altre telèfon mòbil (GPRS, WAP)")="2009";
+REFPERIOD("Ordenador de mano (agenda electrónica ó similar, PDA, pocket PC, palmtop)")="2009";
+REFPERIOD[ca]("Ordinador de butxaca (agenda electrònica o similar, PDA, pocket, palmtop)")="2009";
+REFPERIOD("Ordenador portátil a traves de una conexión sin cables (wireless) fuera de la vivienda habitual o centro de trabajo")="2009";
+REFPERIOD[ca]("Ordinador portàtil a través d'una connexió sense fil fora de l'habitatge habitual o centre de treball")="2009";
+SOURCE="Institut d'Estadística de les Illes Balears (IBESTAT) a partir de dato"
+"s del INE. España (CC BY 3.0)";
+SOURCE[ca]="Institut d'Estadística de les Illes Balears (IBESTAT) a partir de "
+"dades de l'INE. Espanya (CC BY 3.0)";
+SURVEY="Encuesta sobre equipamiento y uso de tecnologías de la información y comunicación en los hogares (TIC-Hogares)";
+SURVEY[ca]="Enquesta sobre equipament i ús de tecnologies de la informació i comunicació en les llars (TIC llars)";
+INFO="Encuesta sobre equipamiento y uso de tecnologías de la información y com"
+"unicació"
+"n en los hogares";
+INFO[ca]="Enquesta sobre equipament i ús de tecnologies de la informació i com"
+"unicació a l"
+"es llars";
+NOTE="1. Número de personas de 16 a 74 años y porcentajes horizontales";
+NOTE[ca]="1. Nombre de persones de 16 a 74 anys i percentatges horitzontals";
+DATA=
+532783 13.2 8.7 6.1 29.3 262037 15.8 12.7 5.4 33 219809 12.7 3.6 6.2 27.9 50937 2.2 9.7 9.7 16.3 185610 18 11.5 9.1 32.1 187446 12.2 5.5 5.2 28.9 159727 8.8 9 3.7 26.5 39942 22.2 4.8 10.1 35.6 101836 12.3 8.1 9.2 21.6 117159 14.9 8 6.3 30.7 273847 11.5 9.7 4.3 30.6 290809 15.3 10.8 7.7 32.6 241974 10.7 6.1 4.2 25.4; 

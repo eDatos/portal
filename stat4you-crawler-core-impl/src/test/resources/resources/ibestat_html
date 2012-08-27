@@ -1,0 +1,26 @@
+<html>
+  <head>Start page</head>
+  <body>
+
+
+		<ul id="navlist">
+					<li id="inicio_migas">
+					<img style="vertical-align: middle;" src="page_files/logo_gris_migas.png" class="printonly">
+<a href="web-sample/page1_html">								Ibestat
+</a>				</li>
+					<li>
+					<span class="printonly"> &gt; </span>
+						<a href="web-sample/page2_html">Estadísticas: Población</a>
+				</li>
+					<li>
+					<span class="printonly"> &gt; </span>
+<a href="web-sample/page3_html">								Padrón (cifras oficiales de población)
+</a>				</li>
+					<li>
+					<span class="printonly"> &gt; </span>
+						<span>2010</span>
+				</li>
+		</ul>
+		
+  </body>
+</html>

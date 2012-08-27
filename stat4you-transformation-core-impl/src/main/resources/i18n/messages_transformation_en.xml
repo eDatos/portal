@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <!-- Px information -->
+    <entry key="px.units">Units</entry>
+
+    <!-- Dataset information -->
+    <entry key="dataset.primaryMeasure">Observation value</entry>
+
+    <!-- Countries -->
+    <entry key="dimensions.geographic.LT">Lithuania</entry>
+    <entry key="dimensions.geographic.PL">Poland</entry>
+    <entry key="dimensions.geographic.UK">United Kingdom</entry>
+    <entry key="dimensions.geographic.HU">Hungary</entry>
+    <entry key="dimensions.geographic.RO">Romania</entry>
+    <entry key="dimensions.geographic.DE">Germany</entry>
+    <entry key="dimensions.geographic.BG">Bulgaria</entry>
+    <entry key="dimensions.geographic.TR">Turkey</entry>
+    <entry key="dimensions.geographic.EU27">European Union - 27 countries </entry>
+    <entry key="dimensions.geographic.FR">France</entry>
+    <entry key="dimensions.geographic.IS">Iceland</entry>
+    <entry key="dimensions.geographic.IT">Italy</entry>
+    <entry key="dimensions.geographic.SI">Slovenia</entry>
+    <entry key="dimensions.geographic.HR">Croatia</entry>
+    <entry key="dimensions.geographic.SE">Sweden</entry>
+    <entry key="dimensions.geographic.CZ">Czech Republic</entry>
+    <entry key="dimensions.geographic.EE">Estonia</entry>
+    <entry key="dimensions.geographic.LV">Latvia</entry>
+    <entry key="dimensions.geographic.LU">Luxembourg</entry>
+    <entry key="dimensions.geographic.NL">Netherlands</entry>
+    <entry key="dimensions.geographic.SK">Slovak Republic</entry>
+    <entry key="dimensions.geographic.EL">Greece</entry>
+    <entry key="dimensions.geographic.FI">Finland</entry>
+    <entry key="dimensions.geographic.CY">Cyprus</entry>
+    <entry key="dimensions.geographic.MT">Malta</entry>
+    <entry key="dimensions.geographic.DK">Denmark</entry>
+    <entry key="dimensions.geographic.BE">Belgium</entry>
+    <entry key="dimensions.geographic.PT">Portugal</entry>
+    <entry key="dimensions.geographic.ES">Spain</entry>
+    <entry key="dimensions.geographic.IE">Ireland</entry>
+    <entry key="dimensions.geographic.AT">Austria</entry>
+    <entry key="dimensions.geographic.NO">Norway</entry>
+
+    <!-- Indicators -->
+    <entry key="bb_lines_TOTAL_FBB">Fixed broadband lines</entry>
+    <entry key="bb_penet_TOTAL_FBB">Fixed broadband penetration</entry>
+    <entry key="bb_ne_TOTAL_FBB">New entrants' share in fixed broadband lines</entry>
+    <entry key="bb_speed2_TOTAL_FBB">Share of fixed broadband lines equal to or above 2 Mbps</entry>
+    <entry key="bb_speed10_TOTAL_FBB">Share of fixed broadband lines equal to or above 10 Mbps</entry>
+    <entry key="bb_dsl_TOTAL_FBB">DSL lines share in fixed broadband</entry>
+    <entry key="bb_fcov_TOTAL_POP">Total fixed broadband coverage</entry>
+    <entry key="bb_fcov_RURAL_POP">Rural fixed broadband coverage</entry>
+    <entry key="mbb_penet_TOTAL_MBB">Mobile broadband penetration </entry>
+    <entry key="h_broad_HH_TOTAL">Households with a broadband connection</entry>
+    <entry key="e_broad_ENT_ALL_XFIN">Enterprises with a fixed broadband connection</entry>
+    <entry key="mbb_3gcov_TOTAL_POP">3G coverage</entry>
+    <entry key="i_iu3g_IND_TOTAL">Use of mobile phones to access the Internet</entry>
+    <entry key="e_iacc3g_ENT_ALL_XFIN">Enterprises providing portable devices to persons employed</entry>
+    <entry key="h_iacc_HH_TOTAL">Households with access to the Internet at home</entry>
+    <entry key="i_iuse_IND_TOTAL">Regular internet users</entry>
+    <entry key="i_iuse_RF_GE1">Disadvantaged people that are regular internet users</entry>
+    <entry key="i_iday_IND_TOTAL">Frequent internet users</entry>
+    <entry key="i_iuport_IND_TOTAL">Use of laptops to access the Internet</entry>
+    <entry key="i_iux_IND_TOTAL">Population who have never used the internet</entry>
+    <entry key="i_iuif_IND_TOTAL">Information about goods and services (% pop)</entry>
+    <entry key="i_iunw_IND_TOTAL">Reading online newspapers/magazines (% pop)</entry>
+    <entry key="i_iugm_IND_TOTAL">Games, images, films or music (% pop)</entry>
+    <entry key="i_iubk_IND_TOTAL">Online banking (% pop)</entry>
+    <entry key="i_iuupl_IND_TOTAL">Uploading self-created content (% pop)</entry>
+    <entry key="i_ihif_IND_TOTAL">Seeking health information (% pop)</entry>
+    <entry key="i_iujob_IND_TOTAL">Looking for a job, sending a job application (% pop)</entry>
+    <entry key="i_iuolc_IND_TOTAL">Doing an online course (% pop)</entry>
+    <entry key="i_iueduif_IND_TOTAL">Information about education and training (% pop)</entry>
+    <entry key="i_iugov_IND_TOTAL">Use of eGovernment services, last 3 months (% pop)</entry>
+    <entry key="i_igovrt_IND_TOTAL">Sending filled forms to eGov services, last 3 months (% pop)</entry>
+    <entry key="i_iusnet_IND_TOTAL">Participating in social networks (% pop)</entry>
+    <entry key="i_iuvote_IND_TOTAL">Taking part in on-line consultations or voting</entry>
+    <entry key="i_iuif_IND_TOTAL">Information about goods and services (% internet users)</entry>
+    <entry key="i_iunw_IND_TOTAL">Reading online newspapers/magazines (% internet users)</entry>
+    <entry key="i_iugm_IND_TOTAL">Games, images, films or music (% internet users)</entry>
+    <entry key="i_iubk_IND_TOTAL">Online banking (% internet users)</entry>
+    <entry key="i_iuupl_IND_TOTAL">Uploading self-created content (% internet users)</entry>
+    <entry key="i_ihif_IND_TOTAL">Seeking health information (% internet users)</entry>
+    <entry key="i_iujob_IND_TOTAL">Looking for a job, sending a job application (% internet users)</entry>
+    <entry key="i_iuolc_IND_TOTAL">Doing an online course (% internet users)</entry>
+    <entry key="i_iueduif_IND_TOTAL">Information about education and training (% internet users)</entry>
+    <entry key="i_iugov_IND_TOTAL">Use of eGovernment services, last 3 months (% internet users)</entry>
+    <entry key="i_igovrt_IND_TOTAL">Sending filled forms to eGov services, last 3 months (% internet users)</entry>
+    <entry key="i_iusnet_IND_TOTAL">Participating in social networks (% internet users)</entry>
+    <entry key="i_iuvote_IND_TOTAL">Taking part in on-line consultations or voting (% internet users)</entry>
+    <entry key="FOA_cit_Country">Availability of eGovernment services - citizens</entry>
+    <entry key="FOA_ent_Country">Availability of eGovernment services - enterprises</entry>
+    <entry key="i_iugov12_IND_TOTAL">Use of eGovernment services, last 12 months (% pop)</entry>
+    <entry key="i_igov12rt_IND_TOTAL">Sending filled forms to eGov services, last 12 months (% pop)</entry>
+    <entry key="e_igov_ENT_ALL_XFIN">Use of eGovernment services (% ent)</entry>
+    <entry key="e_igovrt_ENT_ALL_XFIN">Returning filled forms to eGov services (% enterprises)</entry>
+    <entry key="e_igovpr_ENT_ALL_XFIN">Use of eProcurement services (% enterprises)</entry>
+    <entry key="i_blt12_IND_TOTAL">Ordering goods or services online (% pop)</entry>
+    <entry key="i_blt12_IND_TOTAL">Ordering goods or services online (% internet users)</entry>
+    <entry key="i_bfeu_IND_TOTAL">Cross-border eCommerce (% pop)</entry>
+    <entry key="i_bfeu_IND_TOTAL">Cross-border eCommerce (% internet users)</entry>
+    <entry key="i_iusell_IND_TOTAL">Selling online (e.g. via auctions) (% pop)</entry>
+    <entry key="i_iusell_IND_TOTAL">Selling online (e.g. via auctions) (% internet users)</entry>
+    <entry key="i_bgoodo_IND_TOTAL">Buying online content (% pop)</entry>
+    <entry key="i_bgoodo_IND_TOTAL">Buying online content (% internet users)</entry>
+    <entry key="e_eturn_ENT_ALL_XFIN">Turnover from eCommerce</entry>
+    <entry key="e_ebuy_ENT_ALL_XFIN">Enterprises purchasing online</entry>
+    <entry key="e_ebuy_ENT_SM_XFIN">SMEs purchasing online</entry>
+    <entry key="e_esell_ENT_ALL_XFIN">Enterprises selling online</entry>
+    <entry key="e_esell_ENT_SM_XFIN">SMEs selling online</entry>
+    <entry key="e_sisorp_ENT_L_XFIN">Integration of internal processes (Large ent)</entry>
+    <entry key="e_sisorp_ENT_SM_XFIN">Integration of internal processes (SME)</entry>
+    <entry key="e_crman_ENT_ALL_XFIN">Use of analytical CRM software</entry>
+    <entry key="e_adesucu_ENT_ALL_XFIN">Automatic exchange of business documents</entry>
+    <entry key="e_inv_ENT_ALL_XFIN">Sending or receiving of e-Invoices</entry>
+    <entry key="e_sisc_ENT_ALL_XFIN">Electronic Supply Chain Management</entry>
+    <entry key="e_rfid_ENT_ALL_XFIN">Use of Radio Frequency Identification (RFID) technologies</entry>
+    <entry key="i_cprg_IND_TOTAL">Have written a computer program (% pop)</entry>
+    <entry key="i_cweb_IND_TOTAL">Have created a Web page (% pop)</entry>
+    <entry key="i_csk_ge_me_IND_TOTAL">Individuals with medium or high computer skills</entry>
+    <entry key="i_isk_ge_me_IND_TOTAL">Individuals with medium or high internet skills</entry>
+    <entry key="i_skedu_y25_54">ICT skills obtained through formal educational institution (age 25-54)</entry>
+    <entry key="i_skedu_y16_24">ICT skills obtained through formal educational institution (age 16-24)</entry>
+    <entry key="i_cisk_sfjobx_sal_self_fam">ICT skills perceived as insufficient for the labour market</entry>
+</properties>

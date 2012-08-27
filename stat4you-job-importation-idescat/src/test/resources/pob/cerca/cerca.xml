@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:cross="http://www.idescat.cat/-/cross/1.0/">
+    <id>tag:idescat.cat,2010:poblacio/s</id>
+    <title xml:lang="ca">Cerca de població: </title>
+
+    <updated>2012-02-01T11:00:00+00:00</updated>
+    <author>
+        <name>Idescat</name>
+        <uri>http://www.idescat.cat/poblacio/</uri>
+    </author>
+
+    <opensearch:totalResults>150</opensearch:totalResults>
+    <opensearch:startIndex>1</opensearch:startIndex>
+    <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+
+    <opensearch:Query role="request" searchTerms="" startPage="1"/>
+    <link rel="search" href="http://www.idescat.cat/xml/poblacio-ca.xml" type="application/opensearchdescription+xml"/>
+    <link rel="self" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=" type="application/atom+xml"/>
+    <link rel="alternate" href="http://www.idescat.cat/poblacio/?q=" type="text/html"/>
+    <link rel="first" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=" type="application/atom+xml"/>
+    <link rel="last" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=8150" type="application/atom+xml"/>
+    <link rel="next" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=50" type="application/atom+xml"/>
+
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/09</id>
+        <title>Catalunya</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="CAT"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="09" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="3732196" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="3807422" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="7539618" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca"> 7.539.618 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/08</id>
+        <title>Barcelona</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="PROV"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="08" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="2715628" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="2813471" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="5529099" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Província: 5.529.099 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/17</id>
+        <title>Girona</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="PROV"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="17" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="381448" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="375362" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="756810" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Província: 756.810 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/25</id>
+        <title>Lleida</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="PROV"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="25" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="225388" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="216920" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="442308" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Província: 442.308 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/43</id>
+        <title>Tarragona</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="PROV"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="43" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="409732" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="401669" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="811401" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Província: 811.401 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT01</id>
+        <title>Àmbit Metropolità</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT01" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="2339353" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="2437689" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="4777042" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: 4.777.042 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT02</id>
+        <title>Àmbit de les Comarques Gironines</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT02" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="373793" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="368106" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="741899" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: 741.899 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT03</id>
+        <title>Àmbit del Camp de Tarragona</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT03" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="260792" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="257863" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="518655" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: 518.655 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT04</id>
+        <title>Àmbit de les Terres de l'Ebre</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT04" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="97653" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="93978" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="191631" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: 191.631 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT05</id>
+        <title>Àmbit de Ponent</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT05" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="186190" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="179832" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="366022" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: 366.022 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT06</id>
+        <title>Àmbit de les Comarques Centrals</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT06" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="197336" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="198081" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="395417" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: 395.417 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT07</id>
+        <title>Àmbit de l'Alt Pirineu i Aran</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT07" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="39733" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="37456" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="77189" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: 77.189 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/AT08</id>
+        <title>Àmbit del Penedès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="ATP"/>
+
+
+        <cross:DataSet>
+            <cross:Section AREA="AT08" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="_" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="_" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="_" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Àmbit territorial del pla: Dades no disponibles. </content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/01</id>
+        <title>Alt Camp</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=01"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="01" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="23073" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="22116" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="45189" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 45.189 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/02</id>
+        <title>Alt Empordà</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=02"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="02" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="70921" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="69507" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="140428" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 140.428 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/03</id>
+        <title>Alt Penedès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=03"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="03" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="53197" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="52473" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="105670" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 105.670 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/04</id>
+        <title>Alt Urgell</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=04"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="04" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="11072" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="10936" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="22008" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 22.008 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/05</id>
+        <title>Alta Ribagorça</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=05"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="05" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="2297" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1987" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="4284" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 4.284 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/06</id>
+        <title>Anoia</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=06"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="06" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="59794" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="58715" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="118509" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 118.509 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/07</id>
+        <title>Bages</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=07"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="07" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="92383" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="93482" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="185865" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 185.865 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/08</id>
+        <title>Baix Camp</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=08"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="08" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="95596" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="96351" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="191947" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 191.947 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/09</id>
+        <title>Baix Ebre</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=09"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="09" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="42142" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="40492" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="82634" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 82.634 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/10</id>
+        <title>Baix Empordà</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=10"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="10" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="66768" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="66348" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="133116" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 133.116 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/11</id>
+        <title>Baix Llobregat</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=11"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="11" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="399550" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="404155" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="803705" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 803.705 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/12</id>
+        <title>Baix Penedès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=12"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="12" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="51287" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="49828" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="101115" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 101.115 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/13</id>
+        <title>Barcelonès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=13"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="13" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="1080649" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1165631" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="2246280" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 2.246.280 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/14</id>
+        <title>Berguedà</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=14"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="14" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="20825" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="20715" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="41540" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 41.540 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/15</id>
+        <title>Cerdanya</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=15"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="15" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="9736" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="9047" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="18783" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 18.783 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/16</id>
+        <title>Conca de Barberà</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=16"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="16" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="10857" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="10433" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="21290" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 21.290 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/17</id>
+        <title>Garraf</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=17"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="17" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="73068" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="73401" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="146469" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 146.469 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/18</id>
+        <title>Garrigues</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=18"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="18" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="10617" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="9689" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="20306" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 20.306 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/19</id>
+        <title>Garrotxa</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=19"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="19" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="27792" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="27805" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="55597" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 55.597 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/20</id>
+        <title>Gironès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=20"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="20" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="91123" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="91793" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="182916" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 182.916 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/21</id>
+        <title>Maresme</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=21"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="21" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="216248" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="218649" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="434897" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 434.897 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/22</id>
+        <title>Montsià</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=22"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="22" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="36716" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="35545" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="72261" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 72.261 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/23</id>
+        <title>Noguera</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=23"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="23" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="20795" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="19436" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="40231" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 40.231 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/24</id>
+        <title>Osona</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=24"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="24" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="77076" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="77128" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="154204" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 154.204 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/25</id>
+        <title>Pallars Jussà</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=25"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="25" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="7383" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="6991" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="14374" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 14.374 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/26</id>
+        <title>Pallars Sobirà</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=26"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="26" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="3951" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="3597" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="7548" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 7.548 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/27</id>
+        <title>Pla d'Urgell</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=27"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="27" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="19050" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="18215" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="37265" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 37.265 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/28</id>
+        <title>Pla de l'Estany</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=28"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="28" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="15615" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="15554" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="31169" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 31.169 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/29</id>
+        <title>Priorat</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=29"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="29" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="5259" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4828" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="10087" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 10.087 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/30</id>
+        <title>Ribera d'Ebre</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=30"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="30" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="12143" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="11746" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="23889" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 23.889 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/31</id>
+        <title>Ripollès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=31"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="31" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="13193" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="13200" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="26393" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 26.393 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/32</id>
+        <title>Segarra</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=32"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="32" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="12069" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="11122" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="23191" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 23.191 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/33</id>
+        <title>Segrià</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=33"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="33" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="104590" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="103043" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="207633" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 207.633 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/34</id>
+        <title>Selva</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=34"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="34" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="88381" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="83899" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="172280" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 172.280 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/35</id>
+        <title>Solsonès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=35"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="35" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="7052" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="6756" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="13808" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 13.808 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/36</id>
+        <title>Tarragonès</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=36"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="36" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="126007" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="124135" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="250142" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 250.142 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/37</id>
+        <title>Terra Alta</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=37"/>
+
+        <cross:DataSet>
+            <cross:Section AREA="37" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="6652" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="6195" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="12847" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+
+        <content xml:lang="ca">Comarca: 12.847 hab.</content>
+    </entry>
+</feed>

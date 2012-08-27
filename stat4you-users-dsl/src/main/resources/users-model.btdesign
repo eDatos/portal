@@ -1,0 +1,123 @@
+Application Stat4YouUsers {
+    basePackage=com.stat4you.users
+
+    Module users {
+		basePackage=com.stat4you.users
+
+        // ----------------------------------------------------------------
+    	// 							ENTITIES
+    	// ----------------------------------------------------------------
+		
+		"Registered User"
+        Entity UserEntity {        	
+        	databaseTable = "TBL_USERS"
+        	gap
+        	"Username. It is unique"
+        	String username length="200" not nullable;
+            "Name"
+            String name length="200" not nullable;
+            "Surname"
+            String surname length="500" not nullable;
+            "Password"
+        	String password length="50" nullable;
+            "Email"
+            String mail length="500" nullable;
+            "Sex"
+            String sex length="50" nullable;
+            "Education Level"
+            String educationLevel length="500" nullable;
+            "Birthplace"
+            String birthplace length="500" nullable;
+            "Permanent Address"
+            String permanentAddress length="4000" nullable;
+            "Birthday"
+            Date birthday nullable;
+            "Marital Status"
+            String maritalStatus length="500" nullable;
+            "Occupation"
+            String occupation length="500" nullable;
+            "Removed date"
+            DateTimeTZ removedDate nullable;
+            
+			"Provides access to UserEntity"
+            Repository UserRepository {
+            	 @UserEntity save(@UserEntity entity);
+            	 delete;
+            	 findByCondition(PagingParameter pagingParameter);
+            	 protected List<@UserEntity> findByQuery;
+            	 @UserEntity findUserByUuid(String uuid);
+            }
+        }
+	
+		
+		
+
+        // ----------------------------------------------------------------
+    	// 							SERVICES
+    	// ----------------------------------------------------------------
+    	
+    	"Provides access to Dataset structure definition"
+		Service UserService {
+			
+			> @UserRepository
+			
+			// ------------------------------------------------------------
+			//                       Providers
+			// ------------------------------------------------------------
+			"Create user. @return uri"
+       		String createUser(@UserDto providerDto) throws ApplicationException;
+       		"Retrieve user by uri"
+			@UserDto retrieveUser(String uri) throws ApplicationException;
+			"Update user"
+			updateUser(@UserDto userDto) throws ApplicationException;
+			"Mark user as removed"
+       		removeUser(String uri) throws ApplicationException;
+       	}
+
+    	
+    	// ----------------------------------------------------------------
+    	// 							DTO
+    	// ----------------------------------------------------------------        	
+    	"Dto for User"
+       	DataTransferObject UserDto extends @AuditableDto {
+			String uri;	
+			String username;
+			String password;
+       		String name;
+       		String surname;
+       		String mail;
+       		String sex;
+       		String educationLevel;
+       		String birthplace;
+       		String permanentAddress;
+       		Date birthday;
+       		String maritalStatus;
+       		String occupation;
+            DateTimeTZ removedDate;
+        }
+        
+        "AuditableDto"
+    	DataTransferObject AuditableDto {
+       		DateTime createdDate;
+       		String createdBy;
+       		DateTime lastUpdated;
+       		String lastUpdatedBy;
+    	}
+    	
+       	
+       	// ----------------------------------------------------------------
+    	// 							ENUMS
+    	// ----------------------------------------------------------------   
+    	"Codes to exceptions"
+    	enum UsersExceptionCodeEnum {
+    		REQUIRED_ATTRIBUTE,
+    		ILLEGAL_ARGUMENT,
+    		UNKNOWN,
+    		OPERATION_NOT_SUPPORTED,
+    		USER_NOT_EXISTS,
+    		USER_ALREADY_EXISTS,
+    		USER_INCORRECT_STATUS
+    	}
+    	
+    }
+}

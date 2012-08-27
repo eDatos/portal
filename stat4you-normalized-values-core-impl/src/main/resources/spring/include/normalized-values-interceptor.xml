@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="   http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context-3.0.xsd   http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   http://www.springframework.org/schema/jee   http://www.springframework.org/schema/jee/spring-jee-3.0.xsd   http://www.springframework.org/schema/tx   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">  
+  
+  <aop:aspectj-autoproxy/>  
+
+  <bean id="jpaInterceptorFlushEagerNormalizedValues" class="org.springframework.orm.jpa.JpaInterceptor"> 
+    <property name="entityManagerFactory" ref="entityManagerFactoryNormalizedValues"/>  
+    <!-- Need to flush to detect OptimisticLockingException and do proper rollback. -->  
+    <property name="flushEager" value="true"/> 
+  </bean>  
+  
+  <bean id="errorHandlingAdvice" class="org.fornax.cartridges.sculptor.framework.errorhandling.ErrorHandlingAdvice"/>  
+  
+  <bean id="hibernateErrorHandlingAdvice" class="org.fornax.cartridges.sculptor.framework.errorhandling.HibernateErrorHandlingAdvice"/>  
+  
+  <bean id="serviceContextStoreAdvice" class="org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContextStoreAdvice"/>  
+  
+  <bean id="loggingHandlingAdvice" class="com.stat4you.common.aop.LoggingInterceptor" />
+  
+  <tx:advice id="txAdviceNormalizedValues" transaction-manager="txManagerNormalizedValues"> 
+    <tx:attributes> 
+      <!-- all methods starting with 'get' or 'find' are read-only -->  
+      <tx:method name="get*" read-only="true"/>  
+      <tx:method name="find*" read-only="true"/>  
+      <!-- all other methods are transactional and ApplicationException will cause rollback -->  
+      <tx:method name="*" read-only="false" rollback-for="org.fornax.cartridges.sculptor.framework.errorhandling.ApplicationException"/> 
+    </tx:attributes> 
+  </tx:advice>  
+  
+  <aop:config> 
+    <aop:pointcut id="businessServiceNormalizedValues" expression="execution(public * com.stat4you.normalizedvalues..service.*.*(..))"/>  
+    <aop:pointcut id="readOnlyBusinessServiceNormalizedValues" expression="execution(public * com.stat4you.normalizedvalues..service.*.get*(..)) or execution(public * com.stat4you.normalizedvalues..service.*.find*(..))"/>  
+    <!-- Repeating the expression, since I can't find a way to refer to the other pointcuts. -->  
+    <aop:pointcut id="updatingBusinessServiceNormalizedValues" expression="execution(public * com.stat4you.normalizedvalues..service.*.*(..)) and not (execution(public * com.stat4you.normalizedvalues..service.*.get*(..)) or execution(public * com.stat4you.normalizedvalues..service.*.find*(..)))"/>  
+    <aop:advisor pointcut-ref="businessServiceNormalizedValues" advice-ref="txAdviceNormalizedValues" order="1"/>  
+    <aop:advisor pointcut-ref="businessServiceNormalizedValues" advice-ref="serviceContextStoreAdvice" order="2"/>  
+    <aop:advisor pointcut-ref="businessServiceNormalizedValues" advice-ref="errorHandlingAdvice" order="3"/>  
+    <aop:advisor pointcut-ref="businessServiceNormalizedValues" advice-ref="hibernateErrorHandlingAdvice" order="4"/>  
+    <aop:advisor pointcut-ref="updatingBusinessServiceNormalizedValues" advice-ref="jpaInterceptorFlushEagerNormalizedValues" order="5"/>
+    
+    <!-- Logging interceptor -->
+    <aop:aspect id="afterThrowing" ref="loggingHandlingAdvice">
+        <aop:after-throwing pointcut-ref="businessServiceNormalizedValues" throwing="ex" method="afterThrowing"/>
+    </aop:aspect>   
+  </aop:config> 
+</beans>

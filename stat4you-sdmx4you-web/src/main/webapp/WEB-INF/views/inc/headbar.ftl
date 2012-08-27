@@ -1,0 +1,4 @@
+<#ftl>
+<div>
+	DIV
+</div> 

@@ -1,0 +1,114 @@
+Application Stat4YouCore {
+    basePackage=com.stat4you.transformation
+
+    Module transformation {
+		basePackage=com.stat4you.transformation
+		
+        // ----------------------------------------------------------------
+    	// 							SERVICES
+    	// ----------------------------------------------------------------
+    	Service TransformationService {
+			
+			"Transform px"
+       		public @StatisticDto transformPxToStatistic(@PxImportDto pxImportDto) throws ApplicationException;
+			"Transform csv of Digial Agenda for Europe"
+       		public @StatisticDto transformDigitalAgendaEuropeCsvToStatistic(@DigitalAgendaEuropeCsvDto digitalAgendaEuropeCsvDto) throws ApplicationException;
+       		"Transforms px in a sdmx-ml file"
+       		public transformPxToSdmxMl(@PxImportDto pxImportDto, @SdmxMlResponseDto sdmxMlResponseDto) throws ApplicationException;
+		}
+		
+		// ----------------------------------------------------------------
+    	// 							DTO
+    	// ----------------------------------------------------------------        	
+    	"Dto for px to import"
+       	DataTransferObject PxImportDto {
+       		// Stream of px file
+			java.io.InputStream content;
+			// Uri of provider in Stat4You
+			String providerUri;
+			// Url of px in provider webpage
+			String pxUrl; 
+			// Category code. One of codes of Normalized Service
+			String category;
+			// Add always context information
+			Boolean forceAddContextInformation;
+			// Title
+			InternationalStringDto title;
+			// Period
+			String period;
+			// Geographical value
+			InternationalStringDto geographicalValue;
+        }	
+        
+    	"Dto for Digital Agenda for Europe csv to import"
+       	DataTransferObject DigitalAgendaEuropeCsvDto {
+       		// Data stream
+			java.io.InputStream data;
+       		// Indiators stream
+			java.io.InputStream indicators;
+       		// Sources stream
+			java.io.InputStream sources;
+
+			// Uri of provider in Stat4You
+			String providerUri;
+			// Url of csv in provider webpage
+			String url; 
+			// Identifier of dataset
+			String identifier;
+			// Category code. One of codes of Normalized Service
+			String category;
+			// Languages
+			List<String> languages;
+			// Language
+			String language;
+			// Title
+			InternationalStringDto title;
+			// Description
+			InternationalStringDto description;
+			// Provider release date
+			DateTimeTZ providerReleaseDate;
+			// Provider publishing date
+			DateTimeTZ providerPublishingDate;
+        }	
+        
+        "Dto for dataset, with metadatas and data"
+       	DataTransferObject StatisticDto {
+       		// Dataset
+	        DatasetDto dataset;
+	        // Observations and observations attributes
+        	List<ObservationExtendedDto> observationsExtended;
+        	// Dataset and dimensions attributes
+        	List<AttributeDto> attributes;
+        }	
+        
+        "Dto for SDMX-ML file"
+       	DataTransferObject SdmxMlResponseDto {
+       		// Stream of dsd file
+       		java.io.OutputStream dsd;
+       		// Stream of generic dataset file
+       		java.io.OutputStream genericDataset;
+       		// Stream of structured dataset file
+       		java.io.OutputStream structuredDataset;
+       		
+        }		
+    	
+       	// ----------------------------------------------------------------
+    	// 							ENUMS
+    	// ----------------------------------------------------------------   
+    	"Codes to exceptions"
+    	enum TransformationExceptionCodeEnum {
+    		REQUIRED_ATTRIBUTE,
+    		ILLEGAL_ARGUMENT,
+    		UNKNOWN
+    	}
+    	
+    	"SDMX Messages Types"
+		enum SdmxMessageTypeEnum  {
+			STRUCTURE_2_1,
+			DATA_SPECIFIC_2_1,
+			DATA_GENERIC_2_1,
+			DATA_SPECIFIC_TIME_SERIES_2_1,
+			DATA_GENERIC_TIME_SERIES_2_1
+		}
+    }
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.siemac.metamac.stat4you</groupId>
+		<artifactId>stat4you-parent</artifactId>
+		<version>0.1.12-SNAPSHOT</version>
+		<relativePath>stat4you-parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>stat4you</artifactId>
+	<packaging>pom</packaging>
+
+	<name>STAT 4 YOU</name>
+	<description>STAT 4 YOU</description>
+
+	<modules>
+		<module>stat4you-parent</module>
+		<module>stat4you-common</module>
+		<module>stat4you-common-test</module>
+        <module>stat4you-normalized-values-dsl</module>
+        <module>stat4you-normalized-values-core-api</module>
+        <module>stat4you-normalized-values-core-impl</module>
+        <module>stat4you-statistics-dsl</module>
+        <module>stat4you-statistics-core-api</module>
+        <module>stat4you-statistics-core-impl</module>
+        <module>stat4you-idxmanager-core-api</module>
+        <module>stat4you-idxmanager-core-impl</module>
+		<module>stat4you-transformation-dsl</module>
+		<module>stat4you-transformation-core-api</module>
+		<module>stat4you-transformation-core-impl</module>
+		<module>stat4you-users-dsl</module>
+		<module>stat4you-users-core-api</module>
+		<module>stat4you-users-core-impl</module>
+		<module>stat4you-importation-dsl</module>
+		<module>stat4you-importation-core-api</module>
+		<module>stat4you-importation-core-impl</module>
+		<module>stat4you-crawler-core-impl</module>
+		<module>metamac-portal-web</module>
+		<module>stat4you-sdmx4you-web</module>
+		<module>stat4you-job-importation-idescat</module>
+	    <module>stat4you-scheduler</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.1</version><!--$NO-MVN-MAN-VER$ -->
+				<inherited>false</inherited>
+				<configuration>
+					<tarLongFileMode>gnu</tarLongFileMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>src</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/src.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+    
+    <scm>
+        <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/propios/stat4you/trunk</connection>
+        <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/propios/stat4you/trunk</developerConnection>
+        <url>http://svn.arte-consultores.com/viewvc/arte/propios/stat4you/trunk</url>
+    </scm>
+</project>

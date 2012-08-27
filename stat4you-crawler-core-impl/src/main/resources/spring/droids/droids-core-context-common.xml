@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:configurator="http://cocoon.apache.org/schema/configurator"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://cocoon.apache.org/schema/configurator http://cocoon.apache.org/schema/configurator/cocoon-configurator-1.1.0.xsd">
+
+	
+    <!-- Task -->
+    <bean name="taskExceptionHandler" class="org.apache.droids.impl.DefaultTaskExceptionHandler" />
+       
+    <!-- Time Delay -->
+    <bean name="delayTimer" class="org.apache.droids.delay.SimpleDelayTimer">
+        <property name="delayMillis" value="${stat4you.crawler.droids.delay.request}" />
+    </bean>
+
+    <!-- Protocol -->
+    <bean name="pxDroidsHttpClient" class="com.stat4you.crawler.droids.protocol.http.PxDroidsHttpClient"/>
+    
+    <bean name="http" class="org.apache.droids.protocol.http.HttpProtocol" scope="singleton">
+        <constructor-arg ref="pxDroidsHttpClient"/>
+        
+        <property name="userAgent" value="DROIDS-crawler-x-m01y08" />
+        <property name="forceAllow" value="${stat4you.crawler.droids.protocol.http.force}" />
+    </bean>
+    
+    <bean name="file" class="org.apache.droids.protocol.file.FileProtocol" scope="singleton" />
+
+    <!-- Parsers: The ParserFactory will lookup a parser by its identifier (content type) and return it. -->
+    
+    <!--  Document parser -->
+    <bean name="documentParser" class="com.stat4you.crawler.droids.parse.document.TikaDocumentParser"/>
+
+
+
+    <!-- ********************************************************************** 
+                            Factories 
+        *******************************************************************  -->
+
+    <!-- Protocols -->
+    <bean id="org.apache.droids.helper.factories.ProtocolFactory" class="org.apache.droids.helper.factories.ProtocolFactory">
+        <property name="map">
+            <configurator:bean-map type="org.apache.droids.api.Protocol" check-parent="true" strip-prefix="true" />
+        </property>
+    </bean>
+
+</beans>

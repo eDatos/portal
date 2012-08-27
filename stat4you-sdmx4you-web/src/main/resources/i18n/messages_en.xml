@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+  
+    <!--  Search  -->
+    <entry key="page.search.title">Search</entry>
+    <entry key="page.search.noresults">No results</entry>
+    <entry key="page.search.result.type">Type</entry>
+    <entry key="page.search.result.type.ds">Dataset</entry>
+    <entry key="page.search.result.pubdate">Publishing date</entry>
+    <entry key="page.search.result.prov">Provider</entry>
+    <entry key="page.search.result.category">Category</entry>
+    
+    <entry key="page.search.facets.chosen">Applied filters</entry>
+    <entry key="page.search.facet.freqcodes">Frequent codes</entry>
+    <entry key="page.search.facet.spatial">Territories</entry>
+    <entry key="page.search.facet.years">Years</entry>
+    <entry key="page.search.facet.categories">Categories</entry>
+    
+</properties>

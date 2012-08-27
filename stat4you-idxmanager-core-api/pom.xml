@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.siemac.metamac.stat4you</groupId>
+        <artifactId>stat4you-parent</artifactId>
+        <version>0.1.12-SNAPSHOT</version>
+        <relativePath>../stat4you-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>stat4you-idxmanager-core-api</artifactId>
+    <name>STAT 4 YOU :: IDXMANAGER :: API</name>
+    <description>STAT 4 YOU :: IDXMANAGER :: API</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-statistics-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.stat4you</groupId>
+            <artifactId>stat4you-normalized-values-core-api</artifactId>
+        </dependency>
+    </dependencies>
+</project>

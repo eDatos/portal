@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">		
+		<filter class="com.stat4you.crawler.util.LogBackFilter" />
+
+		<encoder>
+			<pattern>[%-5level] %d{dd/MM/yyyy HH:mm:ss,SSS} (%file:%line\) -> %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

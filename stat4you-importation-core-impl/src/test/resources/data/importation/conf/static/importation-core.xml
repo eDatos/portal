@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<comment>Stat4You Importation Configuration</comment>
+
+	<!-- Databases -->
+	<entry key="stat4you.importation.dataset-repository.db.url">jdbc:mysql://mysql-dev.arte:3306/jenkins_stat4you_dataset_repository</entry>
+	<entry key="stat4you.importation.dataset-repository.db.username">jenkins</entry>
+	<entry key="stat4you.importation.dataset-repository.db.password">jenkins</entry>
+
+	<entry key="stat4you.importation.statistics.db.url">jdbc:mysql://mysql-dev:3306/jenkins_stat4you_statistics</entry>
+	<entry key="stat4you.importation.statistics.db.username">jenkins</entry>
+	<entry key="stat4you.importation.statistics.db.password">jenkins</entry>
+	
+	<!-- Other -->
+	<entry key="stat4you.importation.results-directory">${stat4you.data.url}/importation/tests/results</entry>
+	
+</properties>

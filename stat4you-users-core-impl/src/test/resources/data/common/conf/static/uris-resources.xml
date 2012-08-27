@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <uris>
+    
+        <!-- USERS -->
+        <uri>
+            <resource>users.user</resource>
+            <versionable>false</versionable>
+            <prefix>stat4you:users:user</prefix>
+        </uri>
+        
+        <!-- RESOUCE NOT VALID -->
+        <uri>
+            <resource>resource.notValidToTest</resource>
+            <versionable>false</versionable>
+            <prefix>stat4you:users:notValidToTest</prefix>
+        </uri>
+    </uris>
+</configuration>

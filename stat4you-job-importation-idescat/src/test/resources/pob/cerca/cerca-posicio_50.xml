@@ -1,0 +1,779 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:cross="http://www.idescat.cat/-/cross/1.0/">
+    <id>tag:idescat.cat,2010:poblacio/s/50</id>
+    <title xml:lang="ca">Cerca de població: 51</title>
+    <updated>2012-02-01T11:00:00+00:00</updated>
+    <author>
+        <name>Idescat</name>
+        <uri>http://www.idescat.cat/poblacio/</uri>
+    </author>
+    <opensearch:totalResults>150</opensearch:totalResults>
+    <opensearch:startIndex>51</opensearch:startIndex>
+    <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+    <opensearch:Query role="request" searchTerms="" startPage="1"/>
+    <link rel="search" href="http://www.idescat.cat/xml/poblacio-ca.xml" type="application/opensearchdescription+xml"/>
+    <link rel="self" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=50" type="application/atom+xml"/>
+    <link rel="alternate" href="http://www.idescat.cat/poblacio/?q=" type="text/html"/>
+    <link rel="first" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=" type="application/atom+xml"/>
+    <link rel="last" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=8150" type="application/atom+xml"/>
+    <link rel="previous" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=0" type="application/atom+xml"/>
+    <link rel="next" href="http://[HOST]:[PORT]/pob/v1/cerca.xml?q=&amp;posicio=100" type="application/atom+xml"/>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/38</id>
+        <title>Urgell</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=38"/>
+        <cross:DataSet>
+            <cross:Section AREA="38" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="19069" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="18327" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="37396" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Comarca: 37.396 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/39</id>
+        <title>Val d'Aran</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=39"/>
+        <cross:DataSet>
+            <cross:Section AREA="39" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="5294" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4898" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="10192" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Comarca: 10.192 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/40</id>
+        <title>Vallès Occidental</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=40"/>
+        <cross:DataSet>
+            <cross:Section AREA="40" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="441874" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="450386" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="892260" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Comarca: 892.260 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/41</id>
+        <title>Vallès Oriental</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="COM"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=41"/>
+        <cross:DataSet>
+            <cross:Section AREA="41" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="201032" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="198868" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="399900" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Comarca: 399.900 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/080018</id>
+        <title>Abrera</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="MUN"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=080018"/>
+        <cross:DataSet>
+            <cross:Section AREA="080018" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="5926" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="5685" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="11611" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Municipi: 11.611 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180013600</id>
+        <title>Entitat Est d'Abrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180013600" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="1247" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1144" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="2391" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Abrera): 2.391 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180013601</id>
+        <title>Can Socarrats i Can Moragues</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180013601" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="7" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="5" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="12" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 12 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180013602</id>
+        <title>Can Vilalba</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180013602" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="741" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="701" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="1442" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 1.442 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180013603</id>
+        <title>Carpes de Vilalba, les</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180013603" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="371" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="323" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="694" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 694 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180013604</id>
+        <title>Sant Miquel</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180013604" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="23" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="19" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="42" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 42 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180013605</id>
+        <title>Santa Maria de Vilalba i Can Torres</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180013605" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="94" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="84" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="178" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 178 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180014100</id>
+        <title>Entitat Oest d'Abrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180014100" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="4679" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4541" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="9220" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Abrera): 9.220 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180014101</id>
+        <title>Abrera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180014101" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="4325" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4222" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="8547" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 8.547 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180014102</id>
+        <title>Ca n'Amat</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180014102" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="334" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="305" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="639" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 639 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180014103</id>
+        <title>Polígon Barcelonès, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180014103" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="0" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="0" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="0" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 0 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800180014104</id>
+        <title>Polígon Sant Ermengol</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800180014104" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="0" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="0" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="0" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Abrera): 0 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/080023</id>
+        <title>Aguilar de Segarra</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="MUN"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=080023"/>
+        <cross:DataSet>
+            <cross:Section AREA="080023" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="131" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="114" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="245" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Municipi: 245 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800230001700</id>
+        <title>Aguilar de Segarra</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800230001700" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="73" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="64" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="137" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Aguilar de Segarra): 137 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800230001701</id>
+        <title>Aguilar de Segarra</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800230001701" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="18" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="17" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="35" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Aguilar de Segarra): 35 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800230002200</id>
+        <title>Castellar</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800230002200" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="43" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="37" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="80" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Aguilar de Segarra): 80 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800230002201</id>
+        <title>Castellar</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800230002201" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="14" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="9" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="23" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Aguilar de Segarra): 23 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800230003800</id>
+        <title>Coromines, les</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800230003800" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="15" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="13" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="28" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Aguilar de Segarra): 28 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800230003801</id>
+        <title>Coromines, les</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800230003801" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="8" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="5" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="13" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Aguilar de Segarra): 13 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/080039</id>
+        <title>Alella</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="MUN"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=080039"/>
+        <cross:DataSet>
+            <cross:Section AREA="080039" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="4705" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4865" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="9570" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Municipi: 9.570 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001700</id>
+        <title>Alella</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001700" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="4705" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4865" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="9570" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Alella): 9.570 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001701</id>
+        <title>Alella</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001701" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="1035" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1154" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="2189" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 2.189 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001702</id>
+        <title>Alella Park</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001702" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="301" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="287" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="588" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 588 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001703</id>
+        <title>Garrofers</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001703" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="126" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="122" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="248" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 248 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001704</id>
+        <title>Can Magarola</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001704" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="60" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="57" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="117" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 117 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001705</id>
+        <title>Can Sors</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001705" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="345" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="319" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="664" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 664 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001706</id>
+        <title>Alella de Mar</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001706" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="734" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="792" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="1526" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 1.526 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001707</id>
+        <title>Canonge</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001707" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="120" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="107" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="227" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 227 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001708</id>
+        <title>Can Comulada</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001708" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="284" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="298" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="582" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 582 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001709</id>
+        <title>Eixample</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001709" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="878" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="923" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="1801" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 1.801 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001710</id>
+        <title>Font de Cera</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001710" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="17" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="12" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="29" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 29 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001713</id>
+        <title>Ibars-Meia</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001713" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="96" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="94" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="190" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 190 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001715</id>
+        <title>Mas Coll</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001715" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="376" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="358" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="734" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 734 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001716</id>
+        <title>Nova Alella</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001716" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="254" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="249" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="503" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 503 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800390001721</id>
+        <title>Vallbona</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800390001721" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="79" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="93" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="172" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alella): 172 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/080044</id>
+        <title>Alpens</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="MUN"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=080044"/>
+        <cross:DataSet>
+            <cross:Section AREA="080044" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="165" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="137" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="302" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Municipi: 302 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800440001700</id>
+        <title>Alpens</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800440001700" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="165" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="137" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="302" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Alpens): 302 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800440001701</id>
+        <title>Alpens</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800440001701" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="155" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="134" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="289" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Alpens): 289 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/080057</id>
+        <title>Ametlla del Vallès, l'</title>
+        <updated>2011-12-19T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="MUN"/>
+        <link type="text/html" href="http://www.idescat.cat/emex/?id=080057"/>
+        <cross:DataSet>
+            <cross:Section AREA="080057" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="4081" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="4030" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="8111" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Municipi: 8.111 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570001700</id>
+        <title>Ametlla del Vallès, l'</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570001700" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="1865" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1897" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="3762" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 3.762 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570001701</id>
+        <title>Ametlla del Vallès, l'</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570001701" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="1860" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1891" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="3751" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Ametlla del Vallès, l'): 3.751 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570002200</id>
+        <title>Mas Dorca</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570002200" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="133" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="110" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="243" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 243 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570002201</id>
+        <title>Mas Dorca</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570002201" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="98" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="85" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="183" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Ametlla del Vallès, l'): 183 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570003800</id>
+        <title>Pinar i Portús</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570003800" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="110" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="120" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="230" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 230 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570003801</id>
+        <title>Pinar i Portús</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="NP"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570003801" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="63" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="56" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="119" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Nucli de població (Ametlla del Vallès, l'): 119 hab.</content>
+    </entry>
+    <entry>
+        <id>tag:idescat.cat,2010:poblacio/0800570004300</id>
+        <title>Serrat de l'Ocata, el</title>
+        <updated>2012-02-01T11:00:00+00:00</updated>
+        <category term="sim2"/>
+        <category term="ES"/>
+        <cross:DataSet>
+            <cross:Section AREA="0800570004300" TIME_PERIOD="2011-01-01" FREQ="A" UNIT_MULT="0" DECIMALS="0">
+                <cross:Obs SEX="M" OBS_VALUE="1192" OBS_STATUS="A"/>
+                <cross:Obs SEX="F" OBS_VALUE="1123" OBS_STATUS="A"/>
+                <cross:Obs SEX="T" OBS_VALUE="2315" OBS_STATUS="A"/>
+            </cross:Section>
+        </cross:DataSet>
+        <content xml:lang="ca">Entitat singular (Ametlla del Vallès, l'): 2.315 hab.</content>
+    </entry>
+</feed>
