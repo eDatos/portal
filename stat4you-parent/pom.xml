@@ -1045,7 +1045,7 @@
             <id>arte-repository</id>
             <name>Arte Repository SNAPSHOT</name>
             <url>http://repository.arte-consultores.com/content/repositories/snapshots</url>
-            <uniqueVersion>false</uniqueVersion>
+            <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
 </project>
