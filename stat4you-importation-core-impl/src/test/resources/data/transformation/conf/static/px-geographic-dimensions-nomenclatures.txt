@@ -1,3 +1,0 @@
-es=países#país#municipios#islas#isla
-en=countries#country#municipalities#islands#island
-ca=illa

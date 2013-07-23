@@ -1,5 +1,0 @@
-describe("BigData", function () {
-
-
-
-});

@@ -1,3 +1,0 @@
-es=períodos#periodos#período#periodo#años#año
-en=periods#period#years#year
-ca=períodes#període#anys#any

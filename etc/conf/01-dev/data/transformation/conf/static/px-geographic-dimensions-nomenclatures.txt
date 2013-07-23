@@ -1,3 +1,0 @@
-es=países#país#municipios#municipio#islas#isla#CC.AA#CC.AA y provincias#CCAA#Comunidad Autónoma#comunidades#comunidades autónomas#comunidades/provincias#continente#continentes#provincias#provincia
-en=countries#country#municipalities#islands#island
-ca=illa

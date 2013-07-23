@@ -1,6 +1,0 @@
-es=es
-ca=ca
-en=en
-ES=es
-CA=ca
-EN=en

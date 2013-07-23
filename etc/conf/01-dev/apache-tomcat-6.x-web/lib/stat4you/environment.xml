@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-    <comment>Stat4You Environment</comment>
-    <entry key="stat4you.data.url">/servers/data/stat4you</entry>
-</properties>
