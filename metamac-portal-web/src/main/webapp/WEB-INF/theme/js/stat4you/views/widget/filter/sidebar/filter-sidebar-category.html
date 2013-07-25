@@ -1,0 +1,22 @@
+<div class="filter-sidebar-category-left-actions">
+    {{#if hasSubcategories}}
+        {{#if expanded}}
+            <i class="category-expand icon-angle-down"></i>
+        {{else}}
+            <i class="category-expand icon-angle-right"></i>
+        {{/if}}
+    {{/if}}
+
+    {{#if category.state}}
+        <i class="category-state icon-check-sign"></i>
+    {{else}}
+        <i class="category-state icon-check-empty"></i>
+    {{/if}}
+</div>
+
+<a class="filter-sidebar-category-label" title="{{ category.label }}">
+    {{ category.label }}
+</a>
+
+{{#if hasSubcategories}}
+{{/if}}

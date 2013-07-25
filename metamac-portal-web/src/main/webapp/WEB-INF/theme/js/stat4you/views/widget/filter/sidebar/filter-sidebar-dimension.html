@@ -1,0 +1,27 @@
+<div class="filter-sidebar-dimension {{#if dimension.hierarchy}} filter-sidebar-dimension-hierarchy {{/if}}">
+    <div class="filter-sidebar-dimension-title">
+        <div class="filter-sidebar-dimension-label">
+            {{ dimension.label }}
+        </div>
+
+        <!--
+        <div class="filter-sidebar-dimension-zone">
+            <a title="{{zoneLabel}}">{{ zoneFirstLetter }}</a>
+        </div>
+        -->
+    </div>
+
+    <div class="collapse {{#unless state.collapsed }} in {{/unless}}" >
+        <div class="filter-sidebar-dimension-searchbar"></div>
+
+        {{#unless isFixedDimension}}
+            <div class="filter-sidebar-dimension-actions">
+                <a href="#" class="btn btn-mini filter-sidebar-selectAll">Marcar todo</a>
+                <a href="#" class="btn btn-mini filter-sidebar-unselectAll">Desmarcar todo</a>
+            </div>
+        {{/unless}}
+
+        <div class="filter-sidebar-categories"></div>
+    </div>
+
+</div>

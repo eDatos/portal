@@ -1,0 +1,27 @@
+<h3>Borrar datasets</h3>
+
+<form class="datasetSearchForm">
+    <div class="control-group">
+        <label class="control-label" for="criteria">Criteria</label>
+        <div class="controls">
+            <textarea rows="3" name="criteria" id="criteria" class="admin-delete-criteria"></textarea>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLimit">Limit</label>
+            <div class="controls">
+                <select name="limit" id="inputLimit">
+                    <option>10</option>
+                    <option>50</option>
+                    <option>100</option>
+                    <option>500</option>
+                    <option>1000</option>
+                </select>
+            </div>
+        </div>
+        <div class="controls">
+            <button type="submit" class="btn">Buscar</button>
+        </div>
+    </div>
+</form>
+
+<div class="datasets-list"></div>

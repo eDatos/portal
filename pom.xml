@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.siemac.metamac.metamac-portal</groupId>
+        <artifactId>metamac-portal-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>metamac-portal-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>metamac-portal</artifactId>
+    <packaging>pom</packaging>
+    <name>SIEMAC :: METAMAC :: PORTAL</name>
+
+    <modules>
+        <module>metamac-portal-parent</module>
+        <module>metamac-portal-web</module>
+    </modules>
+
+<!--
+    <scm>
+        <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-srm/trunk/</connection>
+        <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-srm/trunk/</developerConnection>
+        <url>http://svn.arte-consultores.com/viewvc/arte/istac/metamac/metamac-srm/trunk/</url>
+    </scm>
+-->
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

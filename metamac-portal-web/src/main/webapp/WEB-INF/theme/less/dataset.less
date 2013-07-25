@@ -1,0 +1,200 @@
+.dataset-header {
+    .clearfix();
+    margin-bottom: 20px;
+
+    .dataset-header-title, p {
+        margin-bottom: 5px;
+    }
+}
+
+.dataset-header-logo {
+    display: block;
+}
+
+.dataset-header-info {
+    margin-right: 250px;
+
+    .dataset-header-title {
+        font-size: 20px;
+        line-height: 25px;
+        color: @s4yDarkBlue;
+        max-height: 50px;
+        margin-top: 0;
+    }
+    .dataset-header-categories {
+        font-style: italic;
+        color: @s4yLightOrange;
+    }
+}
+
+.dataset-header-actions {
+    width: 250px;
+    float: right;
+
+    .dataset-headers-actions-buttons {
+        text-align: right;
+    }
+
+    a {
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+}
+
+.datasets-visualization {
+    position: relative;
+    #visual-element {
+        .touch-callout();
+        padding: 5px 5px 0 5px;
+
+
+        #visual-element-and-filter {
+            position: relative;
+        }
+        #visual-element-container {
+            position: relative;
+            height: 500px;
+
+            h3 {
+                font-size: 14px;
+                line-height: 20px;
+                margin: 5px 0;
+                margin: 0 0 10px 0;
+            }
+        }
+        #visual-element-options {
+            float: right;
+            #filter-loader {
+                height: 41px;
+            }
+        }
+        #change-visual-element {
+            max-width: 240px;
+        }
+    }
+}
+
+.datasets-visualization.full-screen {
+    #visual-element #visual-element-container {
+        height: auto;
+    }
+    #visual-element #visual-element-and-filter {
+        height: auto;
+    }
+}
+
+.citation {
+    font-size: 10px;
+    font-style: italic;
+    text-align: right;
+}
+
+.metadata-group {
+    h3 {
+        background: #ddd;
+        .border-radius(4px 4px 4px 4px);
+        padding-left: 5px;
+    }
+
+    .field {
+        border-bottom: 1px solid #ebebeb;
+        box-shadow: 0 1px 0 #FDFDFD;
+        .metadata-title {
+            display: block;
+            color: @s4yDarkBlue;
+            font-weight: bold;
+            margin-top: 8px;
+            margin-bottom: 2px;
+        }
+
+        .metadata-value {
+            display: block;
+            margin-bottom: 8px;
+            color: #2F719E;
+        }
+    }
+
+    .field:last-child {
+        border-bottom: none;
+        box-shadow: none;
+    }
+
+    li {
+        color: #2F719E;
+    }
+}
+
+.dataset-export {
+    margin-bottom: 17px;
+
+    .dropdown-menu li > a:hover {
+        #gradient > .vertical(@s4yLightOrange, @s4yDarkOrange);
+    }
+}
+
+.btn-group.open .btn-primary.dropdown-toggle {
+    background-color: @s4yDarkOrange;
+}
+
+@datasetVisualizationOptionsBarHeight: 50px;
+.dataset-visualization {
+    position: relative;
+    height: 100%;
+    .clearfix;
+
+    .dataset-visualization-visual-element {
+        height: 100%;
+        padding-bottom: @datasetVisualizationOptionsBarHeight;
+        .box-sizing(border-box);
+        border-top: 1px solid #E5E5E5;
+        border-right: 1px solid #E5E5E5;
+        .border-radius(0 @sidebarRadius @sidebarRadius 0);
+
+        h3 {
+            margin-top: 0;
+        }
+    }
+
+    .dataset-visualization-options-bar {
+        .clearfix;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: @datasetVisualizationOptionsBarHeight;
+        background: #ddd;
+        padding: 5px;
+        box-shadow: inset 0px -1px 2px 0px rgba(0, 0, 0, 0.2);
+        .border-radius(0 0 @sidebarRadius 0);
+        .box-sizing(border-box);
+        border-left: 0;
+    }
+}
+
+// Options bar
+.visual-element-options {
+    .pull-right;
+
+    .visual-element-options-edit {
+        height: 41px;
+    }
+}
+
+.change-visual-element {
+    .pull-left;
+    max-width: 400px;
+}
+
+
+.dataset-sidebar-visualization-container {
+    margin-bottom: 20px;
+}
+
+.dataset-sidebar-visualization-container.full-screen {
+    height: 100%;
+    width: 100%;
+
+    .sidebar-container {
+        height: 100%;
+    }
+}

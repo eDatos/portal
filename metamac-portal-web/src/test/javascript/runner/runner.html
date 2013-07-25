@@ -1,0 +1,268 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/mocha.css"/>
+    <link rel="stylesheet" href="../../../main/webapp/WEB-INF/theme/assets/css/main.css"/>
+</head>
+<body>
+
+<div id="mocha"></div>
+<script src="js/mocha.js"></script>
+<script src="js/chai.js"></script>
+<script src="js/sinon.js"></script>
+<script>
+    mocha.setup({
+        ignoreLeaks : true
+    });
+    mocha.ui('bdd');
+    mocha.reporter('html');
+    expect = chai.expect;
+</script>
+
+<script>
+    var jsPath = "../../../main/webapp/WEB-INF/theme/js/";
+    var testPath = "../specs/";
+
+    var src = [
+        // vendor libs
+        jsPath + "libs/jquery-1.9.0.js",
+        jsPath + "libs/underscore.js",
+        jsPath + "libs/underscore.string.js",
+        jsPath + "libs/backbone.js",
+        jsPath + "libs/handlebars.runtime.js",
+        jsPath + "libs/lru.js",
+        jsPath + "libs/i18n.js",
+        jsPath + "libs/d3.v2.js",
+        jsPath + "libs/jquery.ajaxmanager.js",
+        jsPath + "libs/modernizr-2.5.3.js",
+        jsPath + "libs/Backbone.ModelBinder.js",
+        jsPath + "libs/backbone.marionette.js",
+        jsPath + "libs/cookies.js",
+        jsPath + "libs/tracekit.js",
+
+
+        jsPath + "stat4you/Stat4you.js",
+
+        // libs
+        jsPath + "stat4you/libs/HandlebarsHelpers.js",
+        jsPath + "stat4you/libs/AjaxForm.js",
+        jsPath + "stat4you/libs/smartscroll.js",
+
+        // templates
+        jsPath + "stat4you/views/HandlebarsTemplates.js",
+        jsPath + "stat4you/modules/TemplateManager.js",
+
+        // mixins
+        jsPath + "stat4you/mixins/FetchEventsForCollection.js",
+        jsPath + "stat4you/mixins/InfiniteScrollView.js",
+        jsPath + "stat4you/mixins/PaginableCollection.js",
+        jsPath + "stat4you/mixins/SelectableCollection.js",
+
+        //svg
+        jsPath + "stat4you/modules/svg/Exporter.js",
+        jsPath + "stat4you/modules/svg/SVGNode.js",
+
+        // components
+        jsPath + "stat4you/components/tooltip/Tooltip.js",
+
+        //datasets and filter
+        jsPath + "stat4you/modules/dataset/utils/VisualElementManager.js",
+        jsPath + "stat4you/modules/dataset/utils/FullScreen.js",
+        jsPath + "stat4you/modules/dataset/filter/FilterOptionsDimensionRestriction.js",
+        jsPath + "stat4you/modules/dataset/filter/FilterOptionsTable.js",
+        jsPath + "stat4you/modules/dataset/filter/FilterOptions.js",
+        jsPath + "stat4you/modules/dataset/visual-element/Base.js",
+        jsPath + "stat4you/modules/dataset/visual-element/CanvasTable.js",
+        jsPath + "stat4you/modules/dataset/visual-element/Column.js",
+        jsPath + "stat4you/modules/dataset/visual-element/Line.js",
+        jsPath + "stat4you/modules/dataset/visual-element/Map.js",
+        jsPath + "stat4you/modules/dataset/visual-element/Pie.js",
+
+        // dataset
+        jsPath + "stat4you/modules/dataset/model/data/ApiResponse.js",
+        jsPath + "stat4you/modules/dataset/model/data/ApiRequest.js",
+        jsPath + "stat4you/modules/dataset/model/data/BigDataCacheBlock.js",
+        jsPath + "stat4you/modules/dataset/model/data/BigDataCache.js",
+        jsPath + "stat4you/modules/dataset/model/data/BigData.js",
+        jsPath + "stat4you/modules/dataset/model/data/NumberFormatter.js",
+        jsPath + "stat4you/modules/dataset/model/data/Data.js",
+        jsPath + "stat4you/modules/dataset/model/Metadata.js",
+        jsPath + "stat4you/modules/dataset/model/Dataset.js",
+        jsPath + "stat4you/modules/dataset/dataset-options-model.js",
+
+
+        //canvas table
+        jsPath + "stat4you/modules/dataset/visual-element/table/primitives/Cell.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/primitives/Point.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/primitives/Size.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/primitives/Rectangle.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/Utils.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/Delegate.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/ScrollManager.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/KeyboardManager.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/FullScreenManager.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/zones/Zone.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/zones/BodyZone.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/zones/BottomScrollZone.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/zones/LeftHeaderZone.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/zones/RightScrollZone.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/zones/SpinnerZone.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/zones/TopHeaderZone.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/View.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/DataSource.js",
+        jsPath + "stat4you/modules/dataset/visual-element/table/DataSourceDataset.js",
+
+        //map
+        jsPath + "stat4you/modules/dataset/visual-element/map/MapModel.js",
+        jsPath + "stat4you/modules/dataset/visual-element/map/ZoomView.js",
+        jsPath + "stat4you/modules/dataset/visual-element/map/RangesView.js",
+        jsPath + "stat4you/modules/dataset/visual-element/map/LegendView.js",
+        jsPath + "stat4you/modules/dataset/visual-element/map/MapView.js",
+
+        jsPath + "stat4you/modules/dataset/PermalinkBuilder.js",
+
+        jsPath + "stat4you/modules/datasets/Dataset.js",
+        jsPath + "stat4you/modules/datasets/Datasets.js",
+        jsPath + "stat4you/modules/datasets/DatasetView.js",
+        jsPath + "stat4you/modules/datasets/DatasetsView.js",
+
+        jsPath + "stat4you/modules/comments/Comment.js",
+        jsPath + "stat4you/modules/comments/Comments.js",
+        jsPath + "stat4you/modules/comments/CommentsMain.js",
+        jsPath + "stat4you/modules/comments/CommentView.js",
+        jsPath + "stat4you/modules/comments/CommentsView.js",
+
+        jsPath + "stat4you/modules/navbar/NavbarView.js",
+        jsPath + "stat4you/modules/navbar/UserModel.js",
+
+        jsPath + "stat4you/modules/user/Favourite.js",
+        jsPath + "stat4you/modules/user/Favourites.js",
+        jsPath + "stat4you/modules/user/User.js",
+
+        jsPath + "stat4you/modules/profile/ProfileFavouritesView.js",
+        jsPath + "stat4you/modules/profile/ProfileReadView.js",
+        jsPath + "stat4you/modules/profile/ProfileUpdateView.js",
+        jsPath + "stat4you/modules/profile/ProfileRouter.js",
+
+        jsPath + "stat4you/modules/providers/Provider.js",
+        jsPath + "stat4you/modules/providers/Providers.js",
+        jsPath + "stat4you/modules/providers/ProviderDetailView.js",
+        jsPath + "stat4you/modules/providers/ProvidersView.js",
+        jsPath + "stat4you/modules/providers/ProvidersRouter.js",
+
+        jsPath + "stat4you/modules/search/SearchActiveProvider.js",
+        jsPath + "stat4you/modules/search/SearchFacetsCollection.js",
+        jsPath + "stat4you/modules/search/SearchMain.js",
+        jsPath + "stat4you/modules/search/SearchQueryModel.js",
+        jsPath + "stat4you/modules/search/SearchResultsCollection.js",
+        jsPath + "stat4you/modules/search/SearchIndexRouter.js",
+        jsPath + "stat4you/modules/search/SearchView.js",
+        jsPath + "stat4you/modules/search/SearchHeaderView.js",
+
+        jsPath + "stat4you/modules/signin/SigninView.js",
+
+        jsPath + "stat4you/components/searchbar/SearchbarView.js",
+
+        jsPath + "stat4you/modules/dataset/filter/sidebar/OrderSidebarView.js",
+        jsPath + "stat4you/modules/dataset/filter/sidebar/FilterSidebarDimensionStateModel.js",
+        jsPath + "stat4you/modules/dataset/filter/sidebar/FilterSidebarCategoryView.js",
+        jsPath + "stat4you/modules/dataset/filter/sidebar/FilterSidebarDimensionView.js",
+        jsPath + "stat4you/modules/dataset/filter/sidebar/FilterSidebarView.js"
+    ];
+
+
+    var tests = [
+        testPath + "utils/SpecUtils.js",
+        testPath + "test/factories/FilterOptionsFactory.js",
+        testPath + "stat4you-spec.js",
+        testPath + "stat4you-fullScreen-spec.js",
+        testPath + "FilterOptions-spec.js",
+        testPath + "FilterOptionsDimensionRestriction-spec.js",
+        testPath + "components/tooltip/Tooltip.spec.js",
+        testPath + "dataset/BigDataCache.spec.js",
+        testPath + "dataset/BigDataCacheBlock.spec.js",
+        testPath + "dataset/Metadata.spec.js",
+        testPath + "dataset/NumberFormatter.spec.js",
+        testPath + "libs/AjaxForm.spec.js",
+        testPath + "libs/HandlebarsHelpers.spec.js",
+        testPath + "mixins/PaginableCollection.spec.js",
+        testPath + "mixins/SelectableCollection.spec.js",
+        testPath + "svg/Exporter.spec.js",
+        testPath + "svg/SVGNode.spec.js",
+        testPath + "modules/admin/DeleteView.spec.js",
+        testPath + "modules/comments/Comments.spec.js",
+        testPath + "modules/comments/CommentsView.spec.js",
+        testPath + "modules/comments/CommentView.spec.js",
+        testPath + "modules/datasets/DatasetView.spec.js",
+        testPath + "modules/datasets/PermalinkBuilder.spec.js",
+        testPath + "modules/navbar/NavbarView.spec.js",
+        testPath + "modules/profile/ProfileUpdateView.spec.js",
+        testPath + "modules/providers/Providers.spec.js",
+        testPath + "modules/search/Search.spec.js",
+        testPath + "modules/search/SearchIndexRouter.spec.js",
+        testPath + "modules/search/SearchHeaderView.spec.js",
+        testPath + "modules/signin/SigninView.spec.js",
+        testPath + "modules/dataset/filter/sidebar/OrderSidebarView.spec.js",
+        testPath + "modules/dataset/filter/sidebar/FilterSidebarDimensionView.spec.js",
+        testPath + "modules/dataset/filter/sidebar/FilterSidebarView.spec.js",
+        testPath + "modules/dataset/filter/sidebar/FilterSidebarCategoryView.spec.js",
+
+        testPath + "visual-element/table/Stubs.js",
+        testPath + "visual-element/table/primitives/Rectangle-spec.js",
+        testPath + "visual-element/table/zones/BodyZone-spec.js",
+        testPath + "visual-element/table/zones/BottomScrollZone-spec.js",
+        testPath + "visual-element/table/zones/LeftHeaderZone-spec.js",
+        testPath + "visual-element/table/zones/RightScrollZone-spec.js",
+        testPath + "visual-element/table/zones/TopHeaderZone-spec.js",
+        testPath + "visual-element/table/zones/Zone-spec.js",
+        testPath + "visual-element/table/DataSource-spec.js",
+        testPath + "visual-element/table/DataSourceDataset-spec.js",
+        testPath + "visual-element/table/Delegate-spec.js",
+        testPath + "visual-element/table/ScrollManager-spec.js",
+        testPath + "visual-element/table/Util-spec.js",
+        testPath + "visual-element/table/View-spec.js"
+
+    ];
+
+</script>
+
+<script>
+    var getScript = function (src, callback) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = src;
+        head.appendChild(script);
+        script.onload = callback;
+        script.onerror = function () {
+            console.log("Error loading" + src);
+            callback();
+        }
+    };
+    var all = src.concat(tests);
+
+    for(var i = 0; i < all.length; i++) {
+        all[i] = all[i] + "?_nocache=" + Math.random();
+    }
+
+    function getNextScript () {
+        if (all.length == 0) {
+            if (window.mochaPhantomJS) {
+                mochaPhantomJS.run();
+            }
+            else {
+                mocha.run();
+            }
+        } else {
+            var script = all.shift();
+            getScript(script, function () {
+                getNextScript()
+            });
+        }
+    }
+    getNextScript();
+
+</script>
+
+</body>
+</html>

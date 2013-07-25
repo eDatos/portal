@@ -1,0 +1,87 @@
+<div class="metadata-group">
+<div class="field">
+    <span class="metadata-title">Proveedor</span>
+
+    <div class="metadata-value">
+        {{#if providerHasImg}}
+        <a href="{{context}}/providers/{{ metadata.provider }}"
+           class="dataset-header-logo provider-logo provider-logo-{{toLowerCase metadata.provider }}"></a>
+        {{else}}
+        <a href="{{context}}/providers/{{ metadata.provider }}">{{ metadata.provider }}</a>
+        {{/if}}
+    </div>
+</div>
+
+{{#if metadata.languages }}
+<div class="field">
+    <span class="metadata-title">{{ message "entity.dataset.language" }}</span>
+
+    <div class="metadata-value">
+        {{#join metadata.languages }}
+        {{ label }}
+        {{/join}}
+    </div>
+</div>
+{{/if}}
+
+<div class="field">
+    <span class="metadata-title">{{ message "entity.dataset.license" }}</span>
+
+    <div class="metadata-value">
+        {{#if metadata.licenseUrl }}
+        <a href="{{ metadata.licenseUrl }}" target="_blank">
+            {{message "entity.dataset.licenseLink"}}
+        </a>
+        {{else}}
+        {{ message "entity.dataset.nolicense" }}
+        {{/if}}
+    </div>
+</div>
+
+{{ fieldOutput "entity.dataset.releaseDate" metadata.dates.release "date" }}
+{{ fieldOutput "entity.dataset.publishingDate" metadata.dates.modification "date" }}
+{{ fieldOutput "entity.dataset.providerReleaseDate" metadata.dates.providerRelease "date" }}
+{{ fieldOutput "entity.dataset.providerPublishingDate" metadata.dates.providerModification "date" }}
+{{ fieldOutput "entity.dataset.frecuency" model.dates.frecuency "text" }}
+
+{{#if metadata.measureDimension.representation }}
+<div class="field">
+    <div class="metadata-title">
+        <div>{{ message "entity.dataset.measureDimension" }}</div>
+    </div>
+    <div class="metadata-value">
+        {{#join metadata.measureDimension.representation }}
+        {{ label }}
+        {{/join}}
+    </div>
+</div>
+{{/if}}
+
+{{#if metadata.dimensions }}
+<div class="field">
+    <div class="metadata-title">
+        <div>{{ message "entity.dataset.dimensions.title" }}</div>
+    </div>
+    <div class="metadata-value">
+        {{#join metadata.dimensions }}
+        {{ label }}
+        {{/join}}
+    </div>
+</div>
+{{/if}}
+
+{{#if attributes.dataset }}
+<div class="field">
+    <div class="metadata-title">
+        <div>{{message "entity.dataset.additionalData"}}</div>
+    </div>
+    <div class="metadata-value">
+        {{#ulList attributes.dataset }}
+        {{ iString value }}
+        {{/ulList}}
+    </div>
+</div>
+{{/if}}
+
+</div>
+</div>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <override>
+        <system/>
+        <properties fileName="${stat4you.data.url}/conf/stat4you.properties" config-optional="false"/>
+        <properties fileName="../application.xml" config-optional="false"/>
+    </override>
+
+</configuration>

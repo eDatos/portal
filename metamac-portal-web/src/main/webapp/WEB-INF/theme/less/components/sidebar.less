@@ -1,0 +1,145 @@
+// Component sidebar
+
+@sidebarMenuWidth: 50px;
+@sidebarSidebarWidth: 350px;
+@sidebarRadius : 6px;
+
+.sidebar-container {
+    display: inline-block;
+    width: 100%;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-menu {
+    #gradient > .horizontal(darken(@s4yMediumBlue, 3), @s4yMediumBlue);
+    color: #fff;
+    width: @sidebarMenuWidth;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    .border-radius(@sidebarRadius 0 0 @sidebarRadius);
+    ul {
+        list-style: none;
+        margin: 0;
+        color: #fff;
+
+        li {
+            text-align: center;
+            padding: 10px 3px 5px 3px;
+            border-bottom: 1px solid @s4yDarkBlue;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-size: 11px;
+            cursor: pointer;
+
+            &.active {
+                box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.20);
+            }
+
+            i {
+                font-size: 30px;
+                display: block;
+                color: #fff;
+                margin-left: 10px;
+                margin-bottom: 5px;
+            }
+
+            a {
+                color: #fff;
+                opacity: 0.8;
+                &:hover {
+                    text-decoration: none;
+                    opacity: 1;
+                }
+            }
+        }
+
+    }
+}
+
+@sidebarTransition : 0.2s ease-in-out;
+@splitterWidth: 6px;
+
+.sidebar-sidebar {
+    background-color: @s4yBoxLightBackgroundColor;
+    border: 1px solid #E5E5E5;
+    position: absolute;
+    width: @sidebarSidebarWidth;
+    height: 100%;
+    left: @sidebarMenuWidth - @sidebarSidebarWidth;
+
+    padding: 5px;
+    .box-sizing(border-box);
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+
+    .sidebar-sidebar-content {
+        height: 100%;
+        margin-right: @splitterWidth;
+    }
+
+    &.animation {
+        .transition(left @sidebarTransition);
+    }
+
+}
+
+.sidebar-splitter {
+    width: @splitterWidth;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #c4c4c4;
+
+    border-left: 1px solid #9f9f9f;
+    border-right: 1px solid #9f9f9f;
+    cursor: col-resize;
+
+
+    i {
+        opacity: 0.5;
+        position: absolute;
+        top: 50%;
+        left: 1px;
+    }
+
+}
+
+.sidebar-content {
+    height: 100%;
+    padding-left: @sidebarMenuWidth;
+    .box-sizing(border-box);
+}
+
+.sidebar-slideRight {
+    .sidebar-sidebar {
+        left: @sidebarMenuWidth;
+    }
+
+    .sidebar-content {
+        padding-left: @sidebarMenuWidth + @sidebarSidebarWidth;
+    }
+}
+
+.sidebar-slideRightOver {
+    .sidebar-sidebar {
+        left: @sidebarMenuWidth;
+    }
+}
+
+.sidebar-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background-color: red; //IE fix
+    cursor: col-resize;
+}
+

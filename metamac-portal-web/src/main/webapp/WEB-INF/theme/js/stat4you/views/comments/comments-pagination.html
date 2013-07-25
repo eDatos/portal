@@ -1,0 +1,11 @@
+<div class="pagination pagination-centered">
+    <ul>
+        <li class="{{previousCssClass}}"><a class="pagination-previous" href="#">«</a></li>
+        {{#each pages}}
+        <li class="{{cssClass}}">
+            <a class="pagination-page" href="#" data-page="{{number}}">{{number}}</a>
+        </li>
+        {{/each}}
+        <li class="{{nextCssClass}}"><a class="pagination-next" href="#">»</a></li>
+    </ul>
+</div>

@@ -1,0 +1,15 @@
+{{#if loading}}
+    <p>{{ message "page.search.result.infinite.loading" }}</p>
+{{/if}}
+
+{{#if loadMore}}
+    <p>{{ message "page.search.result.infinite.loadMore" }}</p>
+{{/if}}
+
+{{#if noMore}}
+    <p>{{ message "page.search.result.infinite.noMore" }}</p>
+    <p><a href="{{context}}/datasetrequest">{{ message "page.search.result.infinite.datasetRequest" }}</a></p>
+{{/if}}
+
+
+
