@@ -1,7 +1,7 @@
-describe("stat4you-ve-map", function () {
+describe("App-ve-map", function () {
 
     var veMap = {};
-    _.defaults(veMap, STAT4YOU.VisualElement.Map.prototype);
+    _.defaults(veMap, App.VisualElement.Map.prototype);
 
     veMap._dataJson = {
         1 : {name : "Mallorca", value : 10},
@@ -10,7 +10,7 @@ describe("stat4you-ve-map", function () {
         4 : {name : "Formentera", value : 39}
     };
 
-    veMap._mapModel = new STAT4YOU.Map.MapModel();
+    veMap._mapModel = new App.Map.MapModel();
     veMap._mapModel.attributes = {
         minScale : 1,
         maxScale : 32,

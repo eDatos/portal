@@ -1,10 +1,10 @@
 describe("[TableCanvas] TopHeaderZone", function () {
 
-    var TopHeaderZone = STAT4YOU.Table.TopHeaderZone,
-        Delegate = STAT4YOU.Table.Delegate,
-        Point = STAT4YOU.Table.Point,
-        DataSource = STAT4YOU.Table.DataSource,
-        Rectangle = STAT4YOU.Table.Rectangle;
+    var TopHeaderZone = App.Table.TopHeaderZone,
+        Delegate = App.Table.Delegate,
+        Point = App.Table.Point,
+        DataSource = App.Table.DataSource,
+        Rectangle = App.Table.Rectangle;
 
     var bodyZone = {
         incrementalCellSize : {

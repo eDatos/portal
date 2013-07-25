@@ -1,6 +1,6 @@
 describe("Number Formatter", function () {
 
-    var NumberFormatter = STAT4YOU.dataset.data.NumberFormatter;
+    var NumberFormatter = App.dataset.data.NumberFormatter;
 
     it("should return null when no param", function () {
 

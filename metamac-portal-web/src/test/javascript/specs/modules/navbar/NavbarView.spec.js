@@ -3,10 +3,10 @@ describe("Navbar", function(){
 
 
     beforeEach(function () {
-        STAT4YOU.context = '';
+        App.context = '';
     });
 
-    var NavbarView = STAT4YOU.modules.navbar.NavbarView;
+    var NavbarView = App.modules.navbar.NavbarView;
 
     it("should set active class to links with href to location", function(){
         var navbarView = new NavbarView({location : '/providers/'});

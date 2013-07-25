@@ -1,9 +1,9 @@
 describe("[TableCanvas] Bottom scroll Zone", function () {
 
-    var Size = STAT4YOU.Table.Size,
-        Point = STAT4YOU.Table.Point,
-        Rectangle = STAT4YOU.Table.Rectangle,
-        BottomScrollZone = STAT4YOU.Table.BottomScrollZone;
+    var Size = App.Table.Size,
+        Point = App.Table.Point,
+        Rectangle = App.Table.Rectangle,
+        BottomScrollZone = App.Table.BottomScrollZone;
 
     it("should calculate the scroll position", function () {
         var bodyZone = {

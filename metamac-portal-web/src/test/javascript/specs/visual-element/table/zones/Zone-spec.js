@@ -1,12 +1,12 @@
 describe("[TableCanvas] Zone", function () {
-    var Point = STAT4YOU.Table.Point,
-        Size = STAT4YOU.Table.Size,
-        Rectangle = STAT4YOU.Table.Rectangle;
+    var Point = App.Table.Point,
+        Size = App.Table.Size,
+        Rectangle = App.Table.Rectangle;
 
     var Zones = ['Zone', 'RightScrollZone', 'BottomScrollZone'];
 
     _.each(Zones, function (Zone) {
-        var ZoneClass = STAT4YOU.Table[Zone];
+        var ZoneClass = App.Table[Zone];
         describe(Zone, function () {
             it(Zone + "should initialize with empty size, viewPort", function () {
                 var zone = new ZoneClass();

@@ -7,7 +7,7 @@ describe("PaginableCollection", function () {
             obj = {
                 fetch : sinon.spy()
             };
-            _.extend(obj, STAT4YOU.mixins.PaginableCollection);
+            _.extend(obj, App.mixins.PaginableCollection);
         });
 
         it("fetchCurrentPage", function () {

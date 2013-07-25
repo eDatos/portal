@@ -2,11 +2,11 @@ describe("Shape Store", function () {
     var TIMEOUT = 3000;
 
     var asserts = function () {
-        var ShapesStore = STAT4YOU.Map.ShapesStore;
+        var ShapesStore = App.Map.ShapesStore;
         var store = new ShapesStore();
 
-        STAT4YOU.configuration = {};
-        STAT4YOU.configuration["map.version"] = 1;
+        App.configuration = {};
+        App.configuration["map.version"] = 1;
 
         beforeEach(function () {
             var req = store.clear();
@@ -81,7 +81,7 @@ describe("Shape Store", function () {
 
     describe("MapStore", function () {
 
-        spyOn(STAT4YOU.Map.ShapesStore, "hasIndexedDbSupport").andReturn(false);
+        spyOn(App.Map.ShapesStore, "hasIndexedDbSupport").andReturn(false);
 
         asserts();
     })

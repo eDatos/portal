@@ -1,6 +1,6 @@
 describe("RangesView", function () {
 
-    var model = new STAT4YOU.Map.MapModel();
+    var model = new App.Map.MapModel();
     model.attributes = {
         minScale : 1,
         maxScale : 32,
@@ -16,7 +16,7 @@ describe("RangesView", function () {
         maxRangesNum : 10,
         currentRangesNum : 5
     };
-    var rangesView = new STAT4YOU.Map.RangesView({model : model});
+    var rangesView = new App.Map.RangesView({model : model});
 
     it("calculateIncrement - should calculate the increments of the ranges selector when changed", function () {
         var inc = rangesView._calculateIncrementPixels(100, 11);

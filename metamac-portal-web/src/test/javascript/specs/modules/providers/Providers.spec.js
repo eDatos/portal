@@ -1,7 +1,7 @@
 describe("Providers", function () {
 
-    var Provider = STAT4YOU.modules.providers.Provider;
-    var Providers = STAT4YOU.modules.providers.Providers;
+    var Provider = App.modules.providers.Provider;
+    var Providers = App.modules.providers.Providers;
 
     it("should find a provider by acronym", function () {
         var ine = new Provider({acronym : 'INE'});

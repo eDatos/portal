@@ -4,7 +4,7 @@ describe("SelectableCollection", function () {
 
     beforeEach(function () {
         var TestCollection = Backbone.Collection.extend({});
-        _.extend(TestCollection.prototype, STAT4YOU.mixins.SelectableCollection);
+        _.extend(TestCollection.prototype, App.mixins.SelectableCollection);
         selectableCollection = new TestCollection([{name : "luke"}, {name : "yoda"}]);
     });
 

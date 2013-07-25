@@ -1,10 +1,10 @@
 describe("[TableCanvas] LeftHeaderZone", function () {
 
-    var LeftHeaderZone = STAT4YOU.Table.LeftHeaderZone,
-        Delegate = STAT4YOU.Table.Delegate,
-        DataSource = STAT4YOU.Table.DataSource,
-        Rectangle = STAT4YOU.Table.Rectangle,
-        Point = STAT4YOU.Table.Point;
+    var LeftHeaderZone = App.Table.LeftHeaderZone,
+        Delegate = App.Table.Delegate,
+        DataSource = App.Table.DataSource,
+        Rectangle = App.Table.Rectangle,
+        Point = App.Table.Point;
 
     var bodyZone = {
         incrementalCellSize : {

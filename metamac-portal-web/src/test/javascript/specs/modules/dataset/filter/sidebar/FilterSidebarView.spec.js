@@ -7,7 +7,7 @@ describe("FilterSidebarView", function () {
 
     beforeEach(function () {
         filterOptions = App.test.factories.filterOptionsFactory();
-        optionsModel = new STAT4YOU.modules.dataset.OptionsModel();
+        optionsModel = new App.modules.dataset.OptionsModel();
 
         $container = $('<div></div>').height(200).appendTo('body');
         filterSidebarDimensionView = new App.widget.filter.sidebar.FilterSidebarView({

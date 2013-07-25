@@ -1,6 +1,6 @@
 describe("Dataset Metadata", function () {
 
-    var Metadata = STAT4YOU.dataset.Metadata;
+    var Metadata = App.dataset.Metadata;
 
     var response;
 
@@ -19,7 +19,7 @@ describe("Dataset Metadata", function () {
                 creatorAcronym : "IBESTAT",
                 modificationDate : "2012-06-30T14:38:08.000+02:00",
                 providerModificationDate : "2012-06-29T14:43:00.000+02:00",
-                publisher : "Stat4You",
+                publisher : "App",
                 releaseDate : "2012-06-09T08:37:40.000+02:00",
                 providerReleaseDate : "2009-08-07T09:00:00.000+02:00",
                 frequency : "M",

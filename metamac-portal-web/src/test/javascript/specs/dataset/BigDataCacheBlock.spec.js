@@ -1,8 +1,8 @@
 describe("BigDataCacheBlock", function () {
 
-    var BigDataCacheBlock =  STAT4YOU.dataset.data.BigDataCacheBlock,
-        Cell = STAT4YOU.Table.Cell,
-        Size = STAT4YOU.Table.Size;
+    var BigDataCacheBlock =  App.dataset.data.BigDataCacheBlock,
+        Cell = App.Table.Cell,
+        Size = App.Table.Size;
 
     it("should get region", function () {
         var options = {

@@ -1,8 +1,8 @@
 describe("Rectangle", function () {
 
-    var Rectangle = STAT4YOU.Table.Rectangle,
-        Point = STAT4YOU.Table.Point,
-        Size = STAT4YOU.Table.Size;
+    var Rectangle = App.Table.Rectangle,
+        Point = App.Table.Point,
+        Size = App.Table.Size;
 
     it("should initialize width point and size", function () {
         var rectangle = new Rectangle(new Point(1, 2), new Size(3, 4));

@@ -8,7 +8,7 @@ describe("Shapes", function () {
     ];
 
     beforeEach(function () {
-        shapes = new STAT4YOU.Map.Shapes();
+        shapes = new App.Map.Shapes();
     });
 
     var callbackWithResolvedDeffered = function () {

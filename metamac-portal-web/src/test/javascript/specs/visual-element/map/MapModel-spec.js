@@ -4,7 +4,7 @@ describe("mapModel", function () {
 
     beforeEach(function () {
 
-        model = new STAT4YOU.Map.MapModel();
+        model = new App.Map.MapModel();
         model.attributes = {
             minScale : 1,
             maxScale : 32,

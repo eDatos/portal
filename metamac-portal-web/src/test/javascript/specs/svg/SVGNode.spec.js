@@ -1,7 +1,7 @@
 
 describe("SVGNode", function () {
 
-    var SVGNode = STAT4YOU.svg.SVGNode;
+    var SVGNode = App.svg.SVGNode;
 
     it("should set single attribute", function () {
         var node = new SVGNode("rect");

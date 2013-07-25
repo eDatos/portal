@@ -3,7 +3,7 @@ describe("SearchIndexRouter", function () {
     var router;
 
     beforeEach(function () {
-        router = new STAT4YOU.modules.search.SearchIndexRouter();
+        router = new App.modules.search.SearchIndexRouter();
     });
 
     describe("parseQueryParams", function () {

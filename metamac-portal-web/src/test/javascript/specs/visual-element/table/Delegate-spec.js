@@ -26,7 +26,7 @@ describe("[TableCanvas] Delegate", function () {
                 }
             };
 
-            delegate = new STAT4YOU.Table.Delegate();
+            delegate = new App.Table.Delegate();
         });
 
         it("should return undefined if the value if undefined", function () {
@@ -68,7 +68,7 @@ describe("[TableCanvas] Delegate", function () {
         var view = {};
 
         it("left zone width = 200 if viewport width is lower or equal than 800", function () {
-            var delegate = new STAT4YOU.Table.Delegate();
+            var delegate = new App.Table.Delegate();
             view.getSize = function () { return {width : 722}; };
 
             var width = delegate.leftHeaderColumnWidth(1, view);

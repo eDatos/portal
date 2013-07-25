@@ -22,10 +22,10 @@
     [/#if]
 
     <script type="text/javascript">
-        STAT4YOU.context = "${contextPath}";
-        STAT4YOU.apiContext = STAT4YOU.context + "/api/v1.0";
-        STAT4YOU.resourceContext = "[@s4yh.resource "" /]";
-        STAT4YOU.configuration = {};
+        App.context = "${contextPath}";
+        App.apiContext = App.context + "/api/v1.0";
+        App.resourceContext = "[@s4yh.resource "" /]";
+        App.configuration = {};
         I18n.defaultLocale = 'es';
         I18n.locale = '[@s4yh.locale /]';
         I18n.fallbacks = true;

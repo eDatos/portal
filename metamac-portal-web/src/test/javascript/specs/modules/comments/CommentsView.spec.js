@@ -1,7 +1,7 @@
 describe("CommentsView", function () {
 
-    var CommentsView = STAT4YOU.modules.comments.CommentsView;
-    var Comments = STAT4YOU.modules.comments.Comments;
+    var CommentsView = App.modules.comments.CommentsView;
+    var Comments = App.modules.comments.Comments;
     var view, collection;
 
     beforeEach(function () {
@@ -106,13 +106,13 @@ describe("CommentsView", function () {
     describe("render", function () {
 
         it("should show login message if not logged user", function () {
-            STAT4YOU.user = undefined;
+            App.user = undefined;
             view.render();
             expect(view.$el.find('.new-comment-text').length).to.equal(0);
         });
 
         it("should show the textarea if the users is logged", function () {
-            STAT4YOU.user = {};
+            App.user = {};
             view.render();
             expect(view.$el.find('.new-comment-text').length).to.equal(1);
         });
@@ -129,7 +129,7 @@ describe("CommentsView", function () {
                 }
             });
 
-            STAT4YOU.user = {
+            App.user = {
                 get : function () {
                     return "axelhzf";
                 }

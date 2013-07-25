@@ -6,7 +6,7 @@ describe("OrderSidebarView", function () {
 
     beforeEach(function () {
         filterOptions = App.test.factories.filterOptionsFactory();
-        optionsModel = new STAT4YOU.modules.dataset.OptionsModel();
+        optionsModel = new App.modules.dataset.OptionsModel();
         orderSidebarView = new App.widget.filter.sidebar.OrderSidebarView({filterOptions : filterOptions, optionsModel : optionsModel});
     });
 

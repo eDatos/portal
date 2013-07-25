@@ -1,7 +1,7 @@
 describe("Map", function () {
 
-    var Map = STAT4YOU.VisualElement.Map;
-    var FilterOptions = STAT4YOU.widget.FilterOptions;
+    var Map = App.VisualElement.Map;
+    var FilterOptions = App.widget.FilterOptions;
     var filterOptions;
     var metadata = {
         getDimensionsAndRepresentations : function () {

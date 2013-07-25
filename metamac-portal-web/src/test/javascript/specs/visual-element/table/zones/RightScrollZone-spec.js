@@ -1,9 +1,9 @@
 describe("[TableCanvas] Right scroll Zone", function () {
 
-    var Size = STAT4YOU.Table.Size,
-        Point = STAT4YOU.Table.Point,
-        Rectangle = STAT4YOU.Table.Rectangle,
-        RightScrollZone = STAT4YOU.Table.RightScrollZone;
+    var Size = App.Table.Size,
+        Point = App.Table.Point,
+        Rectangle = App.Table.Rectangle,
+        RightScrollZone = App.Table.RightScrollZone;
 
     it("should calculate the scroll position" , function () {
         var bodyZone = {

@@ -1,5 +1,5 @@
 describe("Tooltip", function () {
-    var Tooltip = STAT4YOU.components.tooltip.Tooltip;
+    var Tooltip = App.components.tooltip.Tooltip;
     var tooltip;
     var $container;
 

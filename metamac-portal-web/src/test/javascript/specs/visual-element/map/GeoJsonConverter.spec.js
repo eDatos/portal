@@ -1,6 +1,6 @@
 describe("GeoJsonConverter", function () {
 
-    var GeoJsonConverter = STAT4YOU.Map.GeoJsonConverter;
+    var GeoJsonConverter = App.Map.GeoJsonConverter;
     var geoJson, shapeList;
 
     beforeEach(function () {

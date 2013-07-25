@@ -9,7 +9,7 @@ describe("Search view", function () {
     describe("Query Model", function () {
         it("should toggle the user selectedFacets", function () {
 
-            var queryModel = new STAT4YOU.modules.search.SearchQueryModel();
+            var queryModel = new App.modules.search.SearchQueryModel();
             queryModel.toggleFacet({fieldName : "facet1", code : "code1"});
             queryModel.toggleFacet({fieldName : "facet1", code : "code2"});
 
@@ -29,7 +29,7 @@ describe("Search view", function () {
         });
 
         it("should prepare the url parameters", function () {
-            var queryModel = new STAT4YOU.modules.search.SearchQueryModel({
+            var queryModel = new App.modules.search.SearchQueryModel({
                 query : 'busqueda',
                 facets : {
                     facet1 : ["code1", "code2", "code3"],
@@ -46,7 +46,7 @@ describe("Search view", function () {
         });
 
         it("should trigger change on toggle facets", function () {
-            var queryModel = new STAT4YOU.modules.search.SearchQueryModel();
+            var queryModel = new App.modules.search.SearchQueryModel();
 
             var callback = sinon.spy();
             queryModel.on("change", callback);
@@ -62,7 +62,7 @@ describe("Search view", function () {
 
     describe("Facets Collection", function () {
         beforeEach(function () {
-            this.facetsCollection = new STAT4YOU.modules.search.SearchFacetsCollection();
+            this.facetsCollection = new App.modules.search.SearchFacetsCollection();
             this.callback = sinon.spy();
         });
 
@@ -247,9 +247,9 @@ describe("Search view", function () {
 
     describe("Result Collection", function () {
         it("should parse the response and call the facetsCollection reset if not filtered", function () {
-            var facetsCollection = new STAT4YOU.modules.search.SearchFacetsCollection();
+            var facetsCollection = new App.modules.search.SearchFacetsCollection();
 
-            var resultsCollection = new STAT4YOU.modules.search.SearchResultsCollection([], {facetsCollection : facetsCollection});
+            var resultsCollection = new App.modules.search.SearchResultsCollection([], {facetsCollection : facetsCollection});
 
             var callback = sinon.spy();
             resultsCollection.on("change:facets", callback);

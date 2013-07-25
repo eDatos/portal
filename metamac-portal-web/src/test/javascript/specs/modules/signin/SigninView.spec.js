@@ -1,5 +1,5 @@
 describe("SigninView", function () {
-    var signinView = new STAT4YOU.modules.signin.SigninView();
+    var signinView = new App.modules.signin.SigninView();
 
     describe("redirect url ", function () {
         it("should return a promise with the current redirect url", function () {

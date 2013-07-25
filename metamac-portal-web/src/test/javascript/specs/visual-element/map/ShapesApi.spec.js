@@ -1,7 +1,7 @@
 describe("ShapesApi", function () {
     var TIMEOUT = 1000;
-    var ShapesApi = STAT4YOU.Map.ShapesApi;
-    var GeoJsonConverter = STAT4YOU.Map.GeoJsonConverter;
+    var ShapesApi = App.Map.ShapesApi;
+    var GeoJsonConverter = App.Map.GeoJsonConverter;
     var shapesApi = new ShapesApi();
 
     var geoJson = {

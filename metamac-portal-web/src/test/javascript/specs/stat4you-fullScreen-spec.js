@@ -23,7 +23,7 @@ describe("FullScreen", function () {
             containerEl.mozRequestFullScreen = undefined;
             containerEl.msRequestFullScreen = undefined;
 
-            fullScreen = new STAT4YOU.FullScreen({container : containerEl});
+            fullScreen = new App.FullScreen({container : containerEl});
             fullScreen.FS_RESIZE_DELAY = 0; // remove delay
         });
 

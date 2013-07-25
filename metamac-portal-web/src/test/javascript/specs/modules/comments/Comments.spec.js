@@ -1,7 +1,7 @@
 describe("Comments", function () {
     "use strict";
 
-    var Comments = STAT4YOU.modules.comments.Comments;
+    var Comments = App.modules.comments.Comments;
     var comments;
     var resourceUri = "uri:123";
 

@@ -1,10 +1,10 @@
 describe("[TableCanvas] BodyZone", function () {
-    var Zone = STAT4YOU.Table.BodyZone,
-        Point = STAT4YOU.Table.Point,
-        Size = STAT4YOU.Table.Size,
-        Cell = STAT4YOU.Table.Cell,
-        Rectangle = STAT4YOU.Table.Rectangle,
-        Delegate = STAT4YOU.Table.Delegate;
+    var Zone = App.Table.BodyZone,
+        Point = App.Table.Point,
+        Size = App.Table.Size,
+        Cell = App.Table.Cell,
+        Rectangle = App.Table.Rectangle,
+        Delegate = App.Table.Delegate;
 
     var staticDelegate = new Delegate();
 
@@ -27,7 +27,7 @@ describe("[TableCanvas] BodyZone", function () {
     };
 
     it("should calculate the incrementalCellSize", function () {
-        var dataSource = STAT4YOU.Table.DataSource.factory(5, 10);
+        var dataSource = App.Table.DataSource.factory(5, 10);
         var delegate = {
             rowHeight : function () {
                 return 30;
@@ -63,7 +63,7 @@ describe("[TableCanvas] BodyZone", function () {
     });
 
     it("should calculate first cell", function () {
-        var dataSource = STAT4YOU.Table.DataSource.factory(5, 10);
+        var dataSource = App.Table.DataSource.factory(5, 10);
 
         var zone = new Zone({
             delegate : staticDelegate,
@@ -83,7 +83,7 @@ describe("[TableCanvas] BodyZone", function () {
     });
 
     it("should calculate first cell with dynamic size", function () {
-        var dataSource = STAT4YOU.Table.DataSource.factory(5, 10);
+        var dataSource = App.Table.DataSource.factory(5, 10);
 
         var zone = new Zone({
             delegate : dynamicDelegate,
@@ -123,7 +123,7 @@ describe("[TableCanvas] BodyZone", function () {
     it("repaint from origin", function () {
         var context = new ContextStub();
 
-        var dataSource = STAT4YOU.Table.DataSource.factory(10, 10);
+        var dataSource = App.Table.DataSource.factory(10, 10);
         var cellAtIndexSpy = sinon.spy(dataSource, 'cellAtIndex');
 
         var zone = new Zone({
@@ -163,7 +163,7 @@ describe("[TableCanvas] BodyZone", function () {
     it("should not need repaint after repaint", function () {
         var context = new ContextStub();
 
-        var dataSource = STAT4YOU.Table.DataSource.factory(10, 10);
+        var dataSource = App.Table.DataSource.factory(10, 10);
 
         var zone = new Zone({
             delegate : staticDelegate,
@@ -183,7 +183,7 @@ describe("[TableCanvas] BodyZone", function () {
     });
 
     it("should convert a relative point to a cell", function () {
-        var dataSource = STAT4YOU.Table.DataSource.factory(5, 10);
+        var dataSource = App.Table.DataSource.factory(5, 10);
 
         var zone = new Zone({
             delegate : staticDelegate,

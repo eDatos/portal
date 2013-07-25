@@ -1,14 +1,14 @@
 describe("PermalinkBuilder", function () {
     "use strict";
 
-    var PermalinkBuilder = STAT4YOU.modules.dataset.PermalinkBuilder;
-    var OptionsModel = STAT4YOU.modules.dataset.OptionsModel;
+    var PermalinkBuilder = App.modules.dataset.PermalinkBuilder;
+    var OptionsModel = App.modules.dataset.OptionsModel;
 
     var provider = "INE";
     var identifier = "PARO";
     var type = "table";
     var selection = "abc";
-    var uri = "stat4you:abc";
+    var uri = "App:abc";
 
     beforeEach(function () {
 
@@ -28,7 +28,7 @@ describe("PermalinkBuilder", function () {
 
         var optionsModel = new OptionsModel({type : 'table'});
 
-        STAT4YOU.context = "/stat4you-web/";
+        App.context = "/App-web/";
 
         var mockPermalink = new Backbone.Model({identifier : selection});
         mockPermalink.save = function () {
@@ -48,7 +48,7 @@ describe("PermalinkBuilder", function () {
         var expectedUrl = window.location.protocol +
             "//" +
             window.location.host +
-            STAT4YOU.context +
+            App.context +
             "/providers/" + provider +
             "/datasets/" + identifier +
             "/#" +

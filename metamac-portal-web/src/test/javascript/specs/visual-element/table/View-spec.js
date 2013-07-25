@@ -1,11 +1,11 @@
 describe("[TableCanvas] View", function () {
     "use strict";
 
-    var View = STAT4YOU.Table.View,
-        Rectangle = STAT4YOU.Table.Rectangle,
-        DataSource = STAT4YOU.Table.DataSource,
-        Delegate = STAT4YOU.Table.Delegate,
-        Point = STAT4YOU.Table.Point;
+    var View = App.Table.View,
+        Rectangle = App.Table.Rectangle,
+        DataSource = App.Table.DataSource,
+        Delegate = App.Table.Delegate,
+        Point = App.Table.Point;
 
     var canvas, view, dataSource, delegate;
     beforeEach(function () {

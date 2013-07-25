@@ -1,7 +1,7 @@
 describe("[TableCanvas] ScrollManager", function () {
 
-    var ScrollManager = STAT4YOU.Table.ScrollManager,
-        View = STAT4YOU.Table.View;
+    var ScrollManager = App.Table.ScrollManager,
+        View = App.Table.View;
 
     var view, scrollManager;
     var $document, $body;

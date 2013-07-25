@@ -1,8 +1,8 @@
 describe("BigDataCache", function () {
 
-    var Cache = STAT4YOU.dataset.data.BigDataCache,
-        Cell = STAT4YOU.Table.Cell,
-        CacheBlock = STAT4YOU.dataset.data.BigDataCacheBlock;
+    var Cache = App.dataset.data.BigDataCache,
+        Cell = App.Table.Cell,
+        CacheBlock = App.dataset.data.BigDataCacheBlock;
 
     it("should initialize the cache matrix", function () {
         var cache = new Cache({rows : 350, columns : 250, size : 100, capacity : 2});

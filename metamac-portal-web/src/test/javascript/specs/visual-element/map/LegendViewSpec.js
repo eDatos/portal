@@ -3,7 +3,7 @@ describe("LegendView", function () {
     var model, legendView;
 
     beforeEach(function () {
-        model = new STAT4YOU.Map.MapModel();
+        model = new App.Map.MapModel();
         model.set({
             minScale : 1,
             maxScale : 32,
@@ -20,7 +20,7 @@ describe("LegendView", function () {
             maxRangesNum : 10,
             currentRangesNum : 5
         });
-        legendView = new STAT4YOU.Map.LegendView({model : model});
+        legendView = new App.Map.LegendView({model : model});
     });
 
     describe("CreateRanges", function () {

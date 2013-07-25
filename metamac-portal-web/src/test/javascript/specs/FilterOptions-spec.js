@@ -1,6 +1,6 @@
 describe("Filter Options", function () {
 
-    var FilterOptions = STAT4YOU.widget.FilterOptions;
+    var FilterOptions = App.widget.FilterOptions;
     var filterOptions;
     var metadata = {
         getDimensionsAndRepresentations : function () {

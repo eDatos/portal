@@ -1,7 +1,7 @@
 describe("Exporter", function () {
 
     it("should add style to svg", function () {
-        var exporter = new STAT4YOU.svg.Exporter();
+        var exporter = new App.svg.Exporter();
         var svg = "<svg><rect/></svg>";
         var css = ".color {fill : #fff}";
         var result = exporter._insertStyleInSvg(svg, css);

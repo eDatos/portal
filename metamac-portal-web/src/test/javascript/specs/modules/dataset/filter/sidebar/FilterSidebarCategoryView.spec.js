@@ -9,7 +9,7 @@ describe("FilterSidebarCategoryView", function () {
 
     beforeEach(function () {
         filterOptions = App.test.factories.filterOptionsFactory();
-        optionsModel = new STAT4YOU.modules.dataset.OptionsModel();
+        optionsModel = new App.modules.dataset.OptionsModel();
         dimension = filterOptions.getDimensions()[0];
         category = filterOptions.getCategories(dimension.id)[0];
         stateModel = new App.widget.filter.sidebar.FilterSidebarDimensionStateModel();

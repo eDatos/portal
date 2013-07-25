@@ -38,7 +38,7 @@
                 ];
             }
         };
-        return new STAT4YOU.widget.FilterOptions({metadata : metadata});
+        return new App.widget.FilterOptions({metadata : metadata});
     };
 
 }());

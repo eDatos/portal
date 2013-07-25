@@ -1,6 +1,6 @@
 describe("CommentView", function () {
 
-    var CommentView = STAT4YOU.modules.comments.CommentView;
+    var CommentView = App.modules.comments.CommentView;
 
     /*
     it("Replace comment link", function () {

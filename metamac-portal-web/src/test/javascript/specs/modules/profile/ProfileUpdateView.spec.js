@@ -1,8 +1,8 @@
 describe("ProfileUpdateView", function () {
 
     it("when submit it should call user save", function () {
-        var user = new STAT4YOU.modules.user.User({});
-        var view = new STAT4YOU.modules.profile.ProfileUpdateView({user : user});
+        var user = new App.modules.user.User({});
+        var view = new App.modules.profile.ProfileUpdateView({user : user});
         var saveSpy = sinon.stub(user, "save").returns(new $.Deferred().promise());
         sinon.stub(view, "_reloadProfilePage");
         view.render();
@@ -15,8 +15,8 @@ describe("ProfileUpdateView", function () {
         var user, view, navigateToReadSpy, welcomeSpy, welcomePromise;
 
         beforeEach(function () {
-            user = new STAT4YOU.modules.user.User({});
-            view = new STAT4YOU.modules.profile.ProfileUpdateView({user : user});
+            user = new App.modules.user.User({});
+            view = new App.modules.profile.ProfileUpdateView({user : user});
             view.navBarView = {render : function () {} };
             navigateToReadSpy = sinon.stub(view, "_navigateToRead");
             welcomePromise = new $.Deferred();

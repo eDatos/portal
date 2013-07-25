@@ -1,6 +1,6 @@
 describe("[TableCanvas] Utils", function () {
 
-    var Utils = STAT4YOU.Table.Utils;
+    var Utils = App.Table.Utils;
 
     it("should calculate the rightProductAcumulate", function () {
         var result = Utils.rightProductAcumulate([5, 10, 2]);

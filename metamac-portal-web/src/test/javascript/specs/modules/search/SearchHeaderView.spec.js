@@ -49,8 +49,8 @@ describe("SearchHeaderView", function () {
 
     describe("active provider img", function () {
 
-        it("should show stat4you logo by default", function () {
-            expect(headerView.$('img[alt="stat4you"]').length).to.equal(1);
+        it("should show App logo by default", function () {
+            expect(headerView.$('img[alt="App"]').length).to.equal(1);
         });
 
         it("should show provider logo in activeProvider is selected", function () {

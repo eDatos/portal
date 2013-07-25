@@ -1,6 +1,6 @@
 describe("MapView", function () {
 
-    var model = new STAT4YOU.Map.MapModel();
+    var model = new App.Map.MapModel();
     model.attributes = {
         minScale : 1,
         maxScale : 32,
@@ -23,8 +23,8 @@ describe("MapView", function () {
         [1.650424, 39.118286]
     ];
 
-    var shapeList = STAT4YOU.Map.GeoJsonConverter.geoJsonToShapeList(balearsJson);
-    var mapView = new STAT4YOU.Map.MapView({model : model, width : 1, height : 1, shapeList : shapeList, dataJson : {}});
+    var shapeList = App.Map.GeoJsonConverter.geoJsonToShapeList(balearsJson);
+    var mapView = new App.Map.MapView({model : model, width : 1, height : 1, shapeList : shapeList, dataJson : {}});
 
     mapView._width = 722;
     mapView._height = 500;
@@ -65,12 +65,12 @@ describe("MapView", function () {
 
     describe("canRender", function () {
         it("should return false if has has shapes to render", function () {
-            var mapView = new STAT4YOU.Map.MapView({model : model, width : 1, height : 1, shapeList : [undefined, undefined] });
+            var mapView = new App.Map.MapView({model : model, width : 1, height : 1, shapeList : [undefined, undefined] });
             expect(mapView.canRender()).toBeFalsy();
         });
 
         it("should return true if has shapes to render", function () {
-            var mapView = new STAT4YOU.Map.MapView({model : model, width : 1, height : 1, shapeList : shapeList });
+            var mapView = new App.Map.MapView({model : model, width : 1, height : 1, shapeList : shapeList });
             expect(mapView.canRender()).toBeTruthy();
         });
     });

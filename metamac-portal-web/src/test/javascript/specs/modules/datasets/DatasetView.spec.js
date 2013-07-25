@@ -1,6 +1,6 @@
 describe("DatasetView", function () {
 
-    var DatasetView = STAT4YOU.modules.datasets.DatasetView;
+    var DatasetView = App.modules.datasets.DatasetView;
 
     var favouritesMock, datasetMock;
 
@@ -15,13 +15,13 @@ describe("DatasetView", function () {
             uri : "uri"
         });
 
-        STAT4YOU.user = {
+        App.user = {
             favourites : favouritesMock
         };
     });
 
     it("should call favourites.togle clicking the star if user defined", function () {
-        sinon.spy(STAT4YOU.user.favourites, "toggle");
+        sinon.spy(App.user.favourites, "toggle");
 
         var datasetView = new DatasetView({dataset : datasetMock});
         datasetView.render();
@@ -29,18 +29,18 @@ describe("DatasetView", function () {
         var favLink = datasetView.$el.find('.fav');
         expect(favLink).to.exists;
         favLink.click();
-        expect(STAT4YOU.user.favourites.toggle.calledWith(datasetMock.get('uri'))).to.be.true;
+        expect(App.user.favourites.toggle.calledWith(datasetMock.get('uri'))).to.be.true;
     });
 
     it("should do show mondal if user is not defined on click the star", function () {
-        STAT4YOU.user = undefined;
+        App.user = undefined;
         sinon.spy(favouritesMock, "toggle");
 
         var signinView = {
             show : function () {}
         };
 
-        STAT4YOU.getSigninView = function () {
+        App.getSigninView = function () {
             return signinView;
         };
 
@@ -56,7 +56,7 @@ describe("DatasetView", function () {
     });
 
     it("should render filled star if dataset is favourite", function () {
-        sinon.stub(STAT4YOU.user.favourites, "isFav").returns(true);
+        sinon.stub(App.user.favourites, "isFav").returns(true);
         var datasetView = new DatasetView({dataset : datasetMock});
         datasetView.render();
 
@@ -65,7 +65,7 @@ describe("DatasetView", function () {
     });
 
     it("shoudl render empty star if dataset isn't favourite", function () {
-        sinon.stub(STAT4YOU.user.favourites, "isFav").returns(false);
+        sinon.stub(App.user.favourites, "isFav").returns(false);
         var datasetView = new DatasetView({dataset : datasetMock});
         datasetView.render();
         expect(datasetView.$el.find('.icon-star-min').length).to.equal(0);

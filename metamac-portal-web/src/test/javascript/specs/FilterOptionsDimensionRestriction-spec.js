@@ -6,7 +6,7 @@ describe("FilterOptionsDimensionRestriction", function () {
         options = {
             categories : ['a', 'b', 'c', 'd']
         };
-        restriction = new STAT4YOU.widget.FilterOptionsDimensionRestriction(options);
+        restriction = new App.widget.FilterOptionsDimensionRestriction(options);
     });
 
     it("should toggle a category", function () {

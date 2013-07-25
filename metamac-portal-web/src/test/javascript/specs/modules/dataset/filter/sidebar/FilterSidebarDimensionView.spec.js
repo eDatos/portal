@@ -7,7 +7,7 @@ describe("FilterSidebarDimensionView", function () {
 
     beforeEach(function () {
         filterOptions = App.test.factories.filterOptionsFactory();
-        optionsModel = new STAT4YOU.modules.dataset.OptionsModel();
+        optionsModel = new App.modules.dataset.OptionsModel();
         dimension = filterOptions.getDimensions()[0];
 
         filterSidebarDimensionView = new App.widget.filter.sidebar.FilterSidebarDimensionView({
