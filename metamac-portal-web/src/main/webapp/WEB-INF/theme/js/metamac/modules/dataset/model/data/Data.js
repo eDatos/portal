@@ -51,7 +51,10 @@
         getDataById : function (ids) {
             var apiResponse = this._getApiResponse();
             if (apiResponse) {
-                return apiResponse.getDataById(ids).value;
+                var decimals = this.metadata.decimalsForSelection(ids);
+                var value = apiResponse.getDataById(ids).value;
+                console.log(value, App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals}));
+                return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals});
             }
         },
 
@@ -67,7 +70,6 @@
                 return this.getDataById(ids);
             }
         }
-
 
     };
 

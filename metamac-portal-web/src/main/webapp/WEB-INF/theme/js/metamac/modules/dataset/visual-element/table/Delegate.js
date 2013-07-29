@@ -110,14 +110,7 @@
         },
 
         format : function (value) {
-            if (value) {
-                value = value.replace(",", ".");
-
-                if (!this._isNumber(value)) {
-                    return value;
-                }
-                return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value);
-            }
+            return value;
         },
 
         resizableColumns : function () {

@@ -3,6 +3,8 @@
 
     App.namespace("App.dataset.Metadata");
 
+    var DECIMALS = 2;
+
     App.dataset.Metadata = function (options) {
         this.initialize(options);
     };
@@ -125,13 +127,20 @@
         getRepresentations : function (dimensionId) {
             var self = this;
             var dimensions = this.metadata.dimensions.dimension;
-            var dimension = _.findWhere(dimensions,{id : dimensionId});
+            var dimension = _.findWhere(dimensions, {id : dimensionId});
             var representations = [];
+            var defaultDecimals = _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : DECIMALS;
+            var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
+
             if (dimension) {
                 //TODO normCode and parent
-                if(dimension.dimensionValues) {
+                if (dimension.dimensionValues) {
                     representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
-                        return {id : dimensionValue.id, label : self.localizeLabel(dimensionValue.name.text)}
+                        var representation = {id : dimensionValue.id, label : self.localizeLabel(dimensionValue.name.text)};
+                        if (isMeasureDimension) {
+                            representation.decimals = _.has(dimensionValue, 'showDecimalsPrecision') ? dimensionValue.showDecimalsPrecision : defaultDecimals;
+                        }
+                        return representation;
                     });
                 }
             }
@@ -204,6 +213,18 @@
         getTimeDimensions : function () {
             var dimensions = this.getDimensions();
             return  _.where(dimensions, {type : 'TIME_DIMENSION'});
+        },
+
+        decimalsForSelection : function (selection) {
+            var measureDim = this.getMeasureDimension();
+            var selectedDimValueId = selection[measureDim.id];
+            if (selectedDimValueId) {
+                var selectedDimValue = _.findWhere(measureDim.representations, {id : selectedDimValueId});
+                if (selectedDimValue) {
+                    return selectedDimValue.decimals;
+                }
+            }
+            return DECIMALS;
         }
 
     };

@@ -17,8 +17,8 @@
         return result;
     };
 
-    App.dataset.data.NumberFormatter.strNumberToLocalizedString = function (value) {
-        var options = _.defaults({}, I18n.lookup("number.format"), {separator : ".", delimiter : ",", strip_insignificant_zeros : false});
+    App.dataset.data.NumberFormatter.strNumberToLocalizedString = function (value, options) {
+        var options = _.defaults(options || {}, I18n.lookup("number.format"), {separator : ".", delimiter : ",", strip_insignificant_zeros : false});
         var number = parseFloat(value);
         var negative = number < 0;
         var string = value.replace('-', '');
@@ -40,6 +40,9 @@
         formattedNumber = buffer.join(options.delimiter);
 
         if (decimals) {
+            if (options.decimals) {
+                decimals = decimals.substring(0, options.decimals);
+            }
             formattedNumber += options.separator + decimals;
         }
 
@@ -59,6 +62,5 @@
 
         return formattedNumber;
     }
-
 
 }());

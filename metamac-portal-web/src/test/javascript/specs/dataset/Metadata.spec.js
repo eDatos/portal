@@ -8,7 +8,7 @@ describe("Dataset Metadata", function () {
     });
 
     it('should getIdentifier', function () {
-        expect(metadata.getIdentifier()).to.eql('dataset-identifier-01');
+        expect(metadata.getIdentifier()).to.eql('C00025A_000001');
     });
 
     it('should getLanguages', function () {
@@ -46,44 +46,38 @@ describe("Dataset Metadata", function () {
     });
 
     it('should getUri', function () {
-        expect(metadata.getUri()).to.eql('urn:siemac:org.siemac.metamac.infomodel.statisticalresources.Dataset=ISTAC:dataset01(001.000)')
+        expect(metadata.getUri()).to.eql('urn:siemac:org.siemac.metamac.infomodel.statisticalresources.Dataset=ISTAC:C00025A_000001(001.000)');
     });
 
     it('should getDimensions', function () {
-        //TODO hierarchy
         expect(metadata.getDimensions()).to.eql([
-            { id : 'dimension1', label : 'dimension 1', type : "DIMENSION", hierarchy : false},
-            { id : 'dimension2', label : 'dimension 2', type : "MEASURE_DIMENSION", hierarchy : false},
-            { id : 'dimension3', label : 'dimension 3', type : "TIME_DIMENSION", hierarchy : false},
-            { id : 'dimension4', label : 'dimension 4', type : "GEOGRAPHIC_DIMENSION", hierarchy : false}
+            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : false},
+            {"id" : "INDICADORES", "label" : "Indicadores", "type" : "MEASURE_DIMENSION", "hierarchy" : false},
+            {"id" : "CATEGORIA_ALOJAMIENTO", "label" : "Categoría del alojamiento", "type" : "DIMENSION", "hierarchy" : false},
+            {"id" : "DESTINO_ALOJAMIENTO", "label" : "Destino del alojamiento", "type" : "GEOGRAPHIC_DIMENSION", "hierarchy" : false}
         ]);
     });
 
     it('should getRepresentation', function () {
         //todo test normcode and parent
-        expect(metadata.getRepresentations('dimension3')).to.eql(
+        expect(metadata.getRepresentations('INDICADORES')).to.eql(
             [
-                {id : '2012', label : 'Año 2012'},
-                {id : '2011', label : 'Año 2011'},
-                {id : '2010', label : 'Año 2010'}
-                //{id : 'id1b', label : 'enid1b', normCode : 'NORMCODE_2', parent : 'id1a'}
+                {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4},
+                {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6}
             ]
         );
     });
 
     it('should getDimensionsAndRepresentations', function () {
-        expect(metadata.getDimensionsAndRepresentations()).to.eql([
-            { id : 'dimension1', label : 'dimension 1', type : "DIMENSION", hierarchy : false, representations : []},
-            { id : 'dimension2', label : 'dimension 2', type : "MEASURE_DIMENSION", hierarchy : false, representations : []},
-            { id : 'dimension3', label : 'dimension 3', type : "TIME_DIMENSION", hierarchy : false,
-                representations : [
-                    {id : '2012', label : 'Año 2012'},
-                    {id : '2011', label : 'Año 2011'},
-                    {id : '2010', label : 'Año 2010'}
-                ]
-            },
-            { id : 'dimension4', label : 'dimension 4', type : "GEOGRAPHIC_DIMENSION", hierarchy : false, representations : []}
-        ]);
+        var dimensionsAndRepresentations = metadata.getDimensionsAndRepresentations();
+        expect(_.pluck(dimensionsAndRepresentations, 'id')).to.eql(['TIME_PERIOD', 'INDICADORES', 'CATEGORIA_ALOJAMIENTO', 'DESTINO_ALOJAMIENTO']);
+        expect(dimensionsAndRepresentations[1].representations).to.eql(
+            [
+                {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4},
+                {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6}
+            ]
+        );
+
     });
 
     it.skip('should getCategories', function () {
@@ -95,7 +89,35 @@ describe("Dataset Metadata", function () {
     });
 
     it('should getMeasureDimension', function () {
-        expect(metadata.getMeasureDimension()).to.eql({ id : 'dimension2', label : 'dimension 2', type : "MEASURE_DIMENSION", hierarchy : false, representations : []});
+        expect(metadata.getMeasureDimension()).to.eql({
+            "id" : "INDICADORES",
+            "label" : "Indicadores",
+            "type" : "MEASURE_DIMENSION",
+            "hierarchy" : false,
+            representations : [
+                {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4},
+                {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6}
+            ]
+        });
+    });
+
+    describe('decimalsForSelection', function () {
+
+        it('should use dimensionValue decimal if defined', function () {
+            var selection = {INDICADORES : 'INDICE_OCUPACION_PLAZAS'};
+            expect(metadata.decimalsForSelection(selection)).to.equal(4);
+        });
+
+        it('should use relatedDsd decimal value if dimensionValue is not defined', function () {
+            var selection = {INDICADORES : 'INDICE_OCUPACION_HABITACIONES'};
+            expect(metadata.decimalsForSelection(selection)).to.equal(6);
+        });
+
+        it('should return default number of decimals if not measure dimension value defined', function () {
+            var selection = {};
+            expect(metadata.decimalsForSelection(selection)).to.equal(2);
+        });
+
     });
 
     it.skip('should getTotalObservations', function () {
@@ -107,7 +129,9 @@ describe("Dataset Metadata", function () {
     });
 
     it('should getTimeDimensions', function () {
-        expect(metadata.getTimeDimensions()).to.eql([{ id : 'dimension3', label : 'dimension 3', type : "TIME_DIMENSION", hierarchy : false}]);
+        expect(metadata.getTimeDimensions()).to.eql([
+            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : false}
+        ]);
     });
 
 //    it("get dimensions and representations", function () {

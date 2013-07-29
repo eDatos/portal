@@ -13,7 +13,6 @@
         this.updateFilterOptions();
     };
 
-
     App.dataset.data.BigData.prototype = {
 
         isAllSelectedDataLoaded : function () {
@@ -91,12 +90,12 @@
         },
 
         getDataByCell : function (cell) {
-            var value;
-
             var cacheBlock = this.cache.cacheBlockForCell(cell);
             if (this.cache.isBlockReady(cacheBlock)) {
                 var ids = this.filterOptions.getCategoryIdsForCell(cell);
-                value = cacheBlock.apiResponse.getDataById(ids).value;
+                var decimals = this.metadata.decimalsForSelection(ids);
+                var value = cacheBlock.apiResponse.getDataById(ids).value;
+                return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals});
             } else {
                 this._loadCacheBlock(cacheBlock, true);
             }
@@ -106,8 +105,6 @@
             _.each(neighbourCacheBlocks, function (cacheBlock) {
                 this._loadCacheBlock(cacheBlock, true);
             }, this);
-
-            return value;
         }
 
     };
