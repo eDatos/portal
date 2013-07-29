@@ -1,187 +1,175 @@
 describe("Dataset Metadata", function () {
 
     var Metadata = App.dataset.Metadata;
-
-    var response;
+    var metadata;
 
     beforeEach(function () {
-        response = {
-            selectedLanguages : [
-                "en", "es"
-            ],
-            metadata : {
-                identifier : "LICENCIAS_OBRA_SUPERFICIE_CONSTRUIR_DESTINO_DESDE_",
-                title : [
-                    "EN Title",
-                    "ES Title"
-                ],
-                creator : "Institut d'Estadística de les Illes Balears",
-                creatorAcronym : "IBESTAT",
-                modificationDate : "2012-06-30T14:38:08.000+02:00",
-                providerModificationDate : "2012-06-29T14:43:00.000+02:00",
-                publisher : "App",
-                releaseDate : "2012-06-09T08:37:40.000+02:00",
-                providerReleaseDate : "2009-08-07T09:00:00.000+02:00",
-                frequency : "M",
-                temporalCoverage : [],
-                licenseURL : "http://www.ibestat.es/ibestat/page?f=default&p=aviso_legal",
-                theme : [2],
-                category : {
-                    id : [
-                        "3.3.3"
-                    ],
-                    label : {
-                        "3.3.3" : ["Information society", "Sociedad de la información"]
-                    }
-                },
-                language : {
-                    id : ["en"],
-                    label : {
-                        en : "English"
-                    }
-                },
-                dimension : {
-                    id : ["id1", "id2"],
-                    label : {
-                        id1 : ["enid1", null],
-                        id2 : ["enid2", null]
-                    },
-                    representation : {
-                        id : {
-                            id1 : ["id1a", "id1b"],
-                            id2 : ["id2a", "id2b"]
-                        },
-                        label : {
-                            id1 : {
-                                id1a : ["enid1a", null],
-                                id1b : ["enid1b"]
-                            },
-                            id2 : {
-                                id2a : ["enid2a", null],
-                                id2b : ["enid2b", null]
-                            }
-                        },
-                        normCode : {
-                            id1 : {
-                                id1a : "NORMCODE_1",
-                                id1b : "NORMCODE_2"
-                            },
-                            id2 : {
-                                id2a : null,
-                                id2b : null
-                            }
-                        },
-                        hierarchy : {
-                            id1 : {
-                                id1b : "id1a"
-                            }
-                        }
-                    },
-                    type : [
-                        "GEOGRAPHIC_DIMENSION",
-                        "DIMENSION"
-                    ]
-                },
-                attribute : { }
-            }
-        };
+        metadata = new Metadata(App.test.response.metadata);
     });
 
-    it("toJSON", function () {
-        I18n.locale = 'es';
-        I18n.defaultLocale = 'en';
-        var metadata = new Metadata(response);
-        var json = metadata.toJSON();
-        expect(json).to.deep.equal({
-                citation : undefined,
-                provider : 'IBESTAT',
-                title : 'ES Title',
-                description : undefined,
-                categories : [
-                    { id : '3.3.3', label : 'Sociedad de la información' }
-                ],
-                languages : [
-                    { id : 'en', label : 'n' }
-                ],
-                license : undefined,
-                licenseUrl : undefined,
-                dates : {
-                    release : '2012-06-09T08:37:40.000+02:00',
-                    modification : '2012-06-30T14:38:08.000+02:00',
-                    providerRelease : '2009-08-07T09:00:00.000+02:00',
-                    providerModification : '2012-06-29T14:43:00.000+02:00',
-                    frecuency : undefined
-                },
-                measureDimension : undefined,
-                dimensions : [
-                    { id : 'id1', label : 'enid1', type : "GEOGRAPHIC_DIMENSION", hierarchy : true},
-                    { id : 'id2', label : 'enid2', type : "DIMENSION", hierarchy : false}
-                ]
+    it('should getIdentifier', function () {
+        expect(metadata.getIdentifier()).to.eql('dataset-identifier-01');
+    });
+
+    it('should getLanguages', function () {
+        expect(metadata.getLanguages()).to.eql({
+            id : ['es', 'en'],
+            label : {
+                es : 'Español',
+                en : 'Ingles'
             }
+        });
+    });
+
+    it('should getProvider', function () {
+        expect(metadata.getProvider()).to.eql('ISTAC');
+    });
+
+    it('should getTitle', function () {
+        expect(metadata.getTitle()).to.eql('Título en español')
+    });
+
+    it('should getDescription', function () {
+        expect(metadata.getDescription()).to.eql('Descripción en español');
+    });
+
+    it.skip('should getLicense', function () {
+        expect(metadata.getLicense()).to.eql('Licencia en Español')
+    });
+
+    it.skip('should getLicenseUrl', function () {
+
+    });
+
+    it.skip('should getPublisher', function () {
+
+    });
+
+    it('should getUri', function () {
+        expect(metadata.getUri()).to.eql('urn:siemac:org.siemac.metamac.infomodel.statisticalresources.Dataset=ISTAC:dataset01(001.000)')
+    });
+
+    it('should getDimensions', function () {
+        //TODO hierarchy
+        expect(metadata.getDimensions()).to.eql([
+            { id : 'dimension1', label : 'dimension 1', type : "DIMENSION", hierarchy : false},
+            { id : 'dimension2', label : 'dimension 2', type : "MEASURE_DIMENSION", hierarchy : false},
+            { id : 'dimension3', label : 'dimension 3', type : "TIME_DIMENSION", hierarchy : false},
+            { id : 'dimension4', label : 'dimension 4', type : "GEOGRAPHIC_DIMENSION", hierarchy : false}
+        ]);
+    });
+
+    it('should getRepresentation', function () {
+        //todo test normcode and parent
+        expect(metadata.getRepresentations('dimension3')).to.eql(
+            [
+                {id : '2012', label : 'Año 2012'},
+                {id : '2011', label : 'Año 2011'},
+                {id : '2010', label : 'Año 2010'}
+                //{id : 'id1b', label : 'enid1b', normCode : 'NORMCODE_2', parent : 'id1a'}
+            ]
         );
     });
 
-    it("get dimensions and representations", function () {
-        I18n.locale = 'es';
-        var metadata = new Metadata(response);
-
-        var dims = metadata.getDimensionsAndRepresentations();
-
-        expect(dims).to.eql([
-            {
-                id : 'id1',
-                label : 'enid1',
-                type : "GEOGRAPHIC_DIMENSION",
-                hierarchy : true,
+    it('should getDimensionsAndRepresentations', function () {
+        expect(metadata.getDimensionsAndRepresentations()).to.eql([
+            { id : 'dimension1', label : 'dimension 1', type : "DIMENSION", hierarchy : false, representations : []},
+            { id : 'dimension2', label : 'dimension 2', type : "MEASURE_DIMENSION", hierarchy : false, representations : []},
+            { id : 'dimension3', label : 'dimension 3', type : "TIME_DIMENSION", hierarchy : false,
                 representations : [
-                    {id : 'id1a', label : 'enid1a', normCode : 'NORMCODE_1'},
-                    {id : 'id1b', label : 'enid1b', normCode : 'NORMCODE_2', parent : 'id1a'}
+                    {id : '2012', label : 'Año 2012'},
+                    {id : '2011', label : 'Año 2011'},
+                    {id : '2010', label : 'Año 2010'}
                 ]
             },
-            {
-                id : 'id2',
-                label : 'enid2',
-                type : "DIMENSION",
-                hierarchy : false,
-                representations : [
-                    {id : 'id2a', label : 'enid2a', normCode : null},
-                    {id : 'id2b', label : 'enid2b', normCode : null}
-                ]
-            }
+            { id : 'dimension4', label : 'dimension 4', type : "GEOGRAPHIC_DIMENSION", hierarchy : false, representations : []}
         ]);
+    });
+
+    it.skip('should getCategories', function () {
 
     });
 
-    it("get total observations", function () {
-        I18n.locale = 'es';
-        var metadata = new Metadata(response);
+    it.skip('should getDates', function () {
 
-        var total = metadata.getTotalObservations();
-        expect(total).to.deep.equal(4);
     });
 
-    it("getCategoryByNormCode", function () {
-        I18n.locale = 'en';
-        var metadata = new Metadata(response);
-        var category = metadata.getCategoryByNormCode("id1", "NORMCODE_1");
-        expect(category).to.deep.equal({id : "id1a", label : "enid1a", normCode : "NORMCODE_1"});
+    it('should getMeasureDimension', function () {
+        expect(metadata.getMeasureDimension()).to.eql({ id : 'dimension2', label : 'dimension 2', type : "MEASURE_DIMENSION", hierarchy : false, representations : []});
     });
 
-
-    describe("getTimeDimensions", function () {
-
-        it("should return the times dimensions", function () {
-            I18n.locale = 'es';
-            response.metadata.dimension.type[1] = 'TIME_DIMENSION';
-            var metadata = new Metadata(response);
-            expect(metadata.getTimeDimensions().length).to.deep.equal(1);
-        });
-
-        it("should return an empty array if it hasn't time dimensions", function () {
-            I18n.locale = 'es';
-            var metadata = new Metadata(response);
-            expect(metadata.getTimeDimensions().length).to.deep.equal(0);
-        });
+    it.skip('should getTotalObservations', function () {
+        expect(metadata.getTotalObservations()).to.equal(3);
     });
+
+    it.skip('should getProviderCitation', function () {
+
+    });
+
+    it('should getTimeDimensions', function () {
+        expect(metadata.getTimeDimensions()).to.eql([{ id : 'dimension3', label : 'dimension 3', type : "TIME_DIMENSION", hierarchy : false}]);
+    });
+
+//    it("get dimensions and representations", function () {
+//        I18n.locale = 'es';
+//        var metadata = new Metadata(response);
+//
+//        var dims = metadata.getDimensionsAndRepresentations();
+//
+//        expect(dims).to.eql([
+//            {
+//                id : 'id1',
+//                label : 'enid1',
+//                type : "GEOGRAPHIC_DIMENSION",
+//                hierarchy : true,
+//                representations : [
+//                    {id : 'id1a', label : 'enid1a', normCode : 'NORMCODE_1'},
+//                    {id : 'id1b', label : 'enid1b', normCode : 'NORMCODE_2', parent : 'id1a'}
+//                ]
+//            },
+//            {
+//                id : 'id2',
+//                label : 'enid2',
+//                type : "DIMENSION",
+//                hierarchy : false,
+//                representations : [
+//                    {id : 'id2a', label : 'enid2a', normCode : null},
+//                    {id : 'id2b', label : 'enid2b', normCode : null}
+//                ]
+//            }
+//        ]);
+//
+//    });
+//
+//    it("get total observations", function () {
+//        I18n.locale = 'es';
+//        var metadata = new Metadata(response);
+//
+//        var total = metadata.getTotalObservations();
+//        expect(total).to.deep.equal(4);
+//    });
+//
+//    it("getCategoryByNormCode", function () {
+//        I18n.locale = 'en';
+//        var metadata = new Metadata(response);
+//        var category = metadata.getCategoryByNormCode("id1", "NORMCODE_1");
+//        expect(category).to.deep.equal({id : "id1a", label : "enid1a", normCode : "NORMCODE_1"});
+//    });
+//
+//    describe("getTimeDimensions", function () {
+//
+//        it("should return the times dimensions", function () {
+//            I18n.locale = 'es';
+//            response.metadata.dimension.type[1] = 'TIME_DIMENSION';
+//            var metadata = new Metadata(response);
+//            expect(metadata.getTimeDimensions().length).to.deep.equal(1);
+//        });
+//
+//        it("should return an empty array if it hasn't time dimensions", function () {
+//            I18n.locale = 'es';
+//            var metadata = new Metadata(response);
+//            expect(metadata.getTimeDimensions().length).to.deep.equal(0);
+//        });
+//    });
 
 });

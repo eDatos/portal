@@ -9,9 +9,7 @@
     <meta charset='utf-8'>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matamac</title>
-
-    <link rel="icon" type="image/vnd.microsoft.icon" href="[@s4yh.resource "images/s4yFavicon.ico" /]"/>
+    <title>Metamac</title>
 
     [@s4yh.css "assets/css/main.css" /]
     [#include "../includes/libs.html"]
@@ -23,11 +21,11 @@
 
     <script type="text/javascript">
         App.context = "${contextPath}";
-        App.apiContext = App.context + "/api/v1.0";
+        App.apiContext = "http://aherfer:8080/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
         App.resourceContext = "[@s4yh.resource "" /]";
         App.configuration = {};
         I18n.defaultLocale = 'es';
-        I18n.locale = '[@s4yh.locale /]';
+        I18n.locale = 'es'; //TODO change locales
         I18n.fallbacks = true;
     </script>
 </head>

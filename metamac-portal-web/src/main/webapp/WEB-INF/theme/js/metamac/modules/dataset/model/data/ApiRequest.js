@@ -20,7 +20,8 @@
     App.dataset.data.ApiRequest.prototype = {
 
         url : function () {
-            return App.apiContext + "/datasets/" + this.metadata.getProvider() + "-" + this.metadata.getIdentifier();
+            //return App.apiContext + "/datasets/" + this.metadata.getProvider() + "/" + this.metadata.getIdentifier() + "/001.000";
+            return App.apiContext + "/datasets/ISTAC/" + this.metadata.getIdentifier() + "/001.000";
         },
 
         queryParams : function () {
@@ -33,6 +34,7 @@
                     }).join(":");
             }
             result.fields = "-metadata";
+            result._type = "json";
             return result;
         },
 

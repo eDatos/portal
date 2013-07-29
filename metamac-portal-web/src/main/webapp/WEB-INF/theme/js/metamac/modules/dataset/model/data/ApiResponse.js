@@ -18,12 +18,11 @@
         // Receives as parameters the pos to transform (["1", "1"])
         // Returns the array position (5)
         this._transformPosToPosArrays = null;
+        this.observations = this.response.data.observations.split(" | ");
 
         this._createMult();
         this._setUpTransformIdToPos();
         this._setUpTransformPosToPosArray();
-
-        return this;
     };
 
     App.dataset.data.ApiResponse.prototype = {
@@ -33,7 +32,7 @@
             var idArray;
             // Id Object
             if (_.isObject(ids)) {
-                idArray = _.map(ds.data.format[0], function(dimension){
+                idArray = _.map(this.dimensionIds, function(dimension){
                     return ids[dimension];
                 });
             } else {
@@ -50,17 +49,17 @@
                 posArray = 0;
 
             posArray = self._transformPosToPosArrays.apply(self, [pos]); // Use "apply" method to pass actual context
-            return { "value" : ds.data.observation[posArray] };
+            return { "value" : this.observations[posArray] };
         },
 
         /*** OTHER METHODS ***/
         _createMult : function () {
-            var self = this,
-                ds = this.response,
-                m = [],
-                mult = 1,
-                n = ds.data.format[1],
-                dims = n.length;
+            var m = [];
+            var mult = 1;
+            var n = _.map(this.response.data.dimensions.dimension, function (dimension) {
+                return dimension.representations.total;
+            });
+            var dims = n.length;
 
             for (var i = 0; i < dims; i++) {
                 if (i > 0) {
@@ -70,31 +69,42 @@
                 }
                 m.push(mult);
             }
-            self._mult = m;
+            this._mult = m;
         },
 
         _setUpTransformIdToPos : function () {
-            var self = this,
-                body = "",
-                ds = this.response,
-                dims = ds.data.format[0].length;
+            var body = "";
+            var ds = this.response;
+            this.dimensionIds = _.map(this.response.data.dimensions.dimension, function (dimension) {
+                return dimension.dimensionId;
+            });
+            this.representationIndex = _.reduce(this.response.data.dimensions.dimension, function (memo, dimension) {
+                var representationIndex = _.reduce(dimension.representations.representation, function (memo, representation) {
+                    memo[representation.code] = representation.index;
+                    return memo;
+                }, {});
+                memo[dimension.dimensionId] = {
+                    representationIndex : representationIndex
+                };
+                return memo;
+            }, {});
 
             body += "var ds = this.response, pos = [];\n";
-            for (var i = 0; i < dims; i++) {
-                body += "pos.push(ds.data.dimension[ds.data.format[0][" + i + "]].representationIndex[id[" + i + "]]);\n";
+            for (var i = 0; i < this.dimensionIds.length; i++) {
+                body += "pos.push(this.representationIndex[this.dimensionIds[" + i + "]].representationIndex[id[" + i + "]]);\n";
             }
             body += "return pos";
 
             // Creating the function
-            self._transformIdToPos = new Function("id", body);
+            this._transformIdToPos = new Function("id", body);
         },
 
         _setUpTransformPosToPosArray : function () {
-            var self = this,
-                body = "",
-                ds = this.response,
-                mult = self._mult,
-                dims = ds.data.format[0].length;
+            var self = this;
+            var body = "";
+            var ds = this.response;
+            var mult = this._mult;
+            var dims = this.dimensionIds.length;
 
             body += "var ds = this.response, res = 0;\n";
             body += "res = ";

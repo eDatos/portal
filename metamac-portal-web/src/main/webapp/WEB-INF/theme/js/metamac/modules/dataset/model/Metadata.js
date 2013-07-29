@@ -7,11 +7,22 @@
         this.initialize(options);
     };
 
+    App.dataset.Metadata.fetch = function () {
+        //TODO pass parameters, externalize url, no data parameter
+        var result = $.Deferred();
+        $.getJSON(App.apiContext + '/datasets/ISTAC/C00025A_000001/001.000?_type=json&fields=-data', function (response) {
+            var metadata = new App.dataset.Metadata(response);
+            result.resolveWith(null, [metadata]);
+        });
+        return result.promise();
+    };
+
     App.dataset.Metadata.prototype = {
 
         initialize : function (options) {
-            this.selectedLanguages = options.selectedLanguages;
-            this.metadata = options.metadata;
+            this.options = options;
+            this.selectedLanguages = this.options.selectedLanguages.language;
+            this.metadata = this.options.metadata;
             this.initializeLocalesIndex();
         },
 
@@ -35,54 +46,59 @@
             if (labels) {
                 var label;
                 if (this.localesIndex.primary) {
-                    label = labels[this.localesIndex.primary];
+                    label = labels[this.localesIndex.primary].value;
                 }
-
                 if (!label && this.localesIndex.secondary) {
-                    label = labels[this.localesIndex.secondary];
+                    label = labels[this.localesIndex.secondary].value;
                 }
-
                 if (!label) {
-                    label = _.first(_.compact(labels));
+                    label = _.first(labels).value
                 }
                 return label;
             }
         },
 
         getIdentifier : function () {
-            return this.metadata.identifier;
+            return this.options.id;
         },
 
         getLanguages : function () {
-            return this.getIdsAndLocalizedLabels(this.metadata.language);
+            var self = this;
+            var languages = this.metadata.languages.resource;
+            var id = _.pluck(languages, 'id');
+            var label = _.reduce(languages, function (memo, language) {
+                memo[language.id] = self.localizeLabel(language.name.text);
+                return memo;
+            }, {});
+            return {id : id, label : label};
         },
 
         getProvider : function () {
-            return this.metadata.creatorAcronym;
+            return this.localizeLabel(this.metadata.maintainer.name.text);
         },
 
         getTitle : function () {
-            return this.localizeLabel(this.metadata.title);
+            return this.localizeLabel(this.options.name.text);
         },
 
         getDescription : function () {
-            return this.localizeLabel(this.metadata.description);
+            return this.localizeLabel(this.options.description.text);
         },
 
         getLicense : function () {
-            return this.localizeLabel(this.metadata.license);
+            //return this.localizeLabel(this.metadata.license.text);
         },
 
         getLicenseUrl : function () {
-            return this.metadata.licenseUrl;
         },
 
         getPublisher : function () {
-            return this.metadata.publisher;
+            //TODO multiple publishers??
+            return this.localizeLabel(this.metadata.publisher.resource[0].name.text);
         },
 
         getUri : function () {
-            return this.metadata.uri;
+            return this.options.urn;
         },
 
         getIdsAndLocalizedLabels : function (from) {
@@ -93,38 +109,33 @@
         },
 
         getDimensions : function () {
-            var dimension = this.metadata.dimension;
-            var result = _.map(dimension.id, function (id, index) {
-                var hierarchy = !_.isUndefined(dimension.representation.hierarchy) && !_.isUndefined(dimension.representation.hierarchy[id]);
+            var dimensions = this.metadata.dimensions.dimension;
+            var result = _.map(dimensions, function (dimension) {
+                //var hierarchy = !_.isUndefined(dimension.representation.hierarchy) && !_.isUndefined(dimension.representation.hierarchy[id]);
                 return {
-                    id : id,
-                    label : this.localizeLabel(dimension.label[id]),
-                    type : dimension.type[index],
-                    hierarchy : hierarchy
+                    id : dimension.id,
+                    label : this.localizeLabel(dimension.name.text),
+                    type : dimension.type,
+                    hierarchy : false
                 };
             }, this);
             return result;
         },
 
         getRepresentations : function (dimensionId) {
-            var representations = this.metadata.dimension.representation;
             var self = this;
-            var result = [];
-            _.each(representations.id[dimensionId], function (id) {
-                var category = {
-                    id : id,
-                    label : self.localizeLabel(representations.label[dimensionId][id]),
-                    normCode : representations.normCode[dimensionId][id],
-                };
-
-                if (representations.hierarchy && representations.hierarchy[dimensionId] && representations.hierarchy[dimensionId][id]) {
-                    category.parent = representations.hierarchy[dimensionId][id];
+            var dimensions = this.metadata.dimensions.dimension;
+            var dimension = _.findWhere(dimensions,{id : dimensionId});
+            var representations = [];
+            if (dimension) {
+                //TODO normCode and parent
+                if(dimension.dimensionValues) {
+                    representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
+                        return {id : dimensionValue.id, label : self.localizeLabel(dimensionValue.name.text)}
+                    });
                 }
-
-                result.push(category);
-            });
-
-            return result;
+            }
+            return representations;
         },
 
         getDimensionsAndRepresentations : function () {
@@ -137,29 +148,16 @@
         },
 
         getCategories : function () {
-            return this.getIdsAndLocalizedLabels(this.metadata.category);
+            //TODO
         },
 
         getDates : function () {
-            return {
-                release : this.metadata.releaseDate,
-                modification : this.metadata.modificationDate,
-                providerRelease : this.metadata.providerReleaseDate,
-                providerModification : this.metadata.providerModificationDate,
-                frecuency : this.metadata.frecuency
-            };
+            //TODO
         },
 
         getMeasureDimension : function () {
-            if (this.metadata.measureDimension) {
-                var result = {};
-                result.id = this.metadata.measureDimension;
-                if (result.id) {
-                    result.label = this.localizeLabel(this.metadata.dimension.label[result.id]);
-                    result.representation = this.getRepresentations(result.id);
-                }
-                return result;
-            }
+            var dimensions = this.getDimensionsAndRepresentations();
+            return _.findWhere(dimensions, {type : 'MEASURE_DIMENSION'});
         },
 
         getTotalObservations : function () {
@@ -176,7 +174,7 @@
         },
 
         getProviderCitation : function () {
-            return this.metadata.providerCitation;
+            //TODO
         },
 
         toJSON : function () {

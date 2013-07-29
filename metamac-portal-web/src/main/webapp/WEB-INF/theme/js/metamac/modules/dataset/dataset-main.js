@@ -21,17 +21,7 @@
 
             self.attributes = options.attributes;
 
-
-            //TODO mock hierarhcy!!
-//            options.dataset.metadata.dimension.representation.hierarchy = {
-//                "CATEGORIA" : {
-//                    "008" : "007",
-//                    "009" : "007",
-//                    "00A" : "008"
-//                }
-//            };
-
-            self.metadata = new App.dataset.Metadata(options.dataset);
+            self.metadata = options.metadata;
             self.filterOptions = new App.widget.FilterOptions({metadata : self.metadata});
 
             //var veElementTable = Modernizr.canvas ? "canvasTable" : "table";
