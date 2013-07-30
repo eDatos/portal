@@ -51,13 +51,34 @@
             });
         },
 
-        getDataById : function (ids) {
-            var cell = this.filterOptions.getCellForCategoryIds(ids);
-            return this.getDataByCell(cell);
+        getData : function (selection) {
+            var cell = selection.cell || this.filterOptions.getCellForCategoryIds(selection.ids);
+
+            var cacheBlock = this.cache.cacheBlockForCell(cell);
+            if (this.cache.isBlockReady(cacheBlock)) {
+                var ids = this.filterOptions.getCategoryIdsForCell(cell);
+                return cacheBlock.apiResponse.getDataById(ids).value;
+            } else {
+                this._loadCacheBlock(cacheBlock, true);
+            }
+
+            // load neighbours
+            var neighbourCacheBlocks = this.cache.neighbourCacheBlocks(cacheBlock);
+            _.each(neighbourCacheBlocks, function (cacheBlock) {
+                this._loadCacheBlock(cacheBlock, true);
+            }, this);
         },
 
-        getNumberDataById : function (ids) {
-            return App.dataset.data.NumberFormatter.strToNumber(this.getDataById(ids));
+        getNumberData : function (selection) {
+            var value = this.getData(selection);
+            return App.dataset.data.NumberFormatter.strToNumber(value);
+        },
+
+        getStringData : function (selection) {
+            var value = this.getData(selection);
+            var ids = selection.ids || this.filterOptions.getCategoryIdsForCell(selection.cell);
+            var decimals = this.metadata.decimalsForSelection(ids);
+            return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals});
         },
 
         _getCategoryIdsForCacheBlock : function (cacheBlock) {
@@ -87,24 +108,6 @@
             }
 
             return result.promise();
-        },
-
-        getDataByCell : function (cell) {
-            var cacheBlock = this.cache.cacheBlockForCell(cell);
-            if (this.cache.isBlockReady(cacheBlock)) {
-                var ids = this.filterOptions.getCategoryIdsForCell(cell);
-                var decimals = this.metadata.decimalsForSelection(ids);
-                var value = cacheBlock.apiResponse.getDataById(ids).value;
-                return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals});
-            } else {
-                this._loadCacheBlock(cacheBlock, true);
-            }
-
-            // load neighbours
-            var neighbourCacheBlocks = this.cache.neighbourCacheBlocks(cacheBlock);
-            _.each(neighbourCacheBlocks, function (cacheBlock) {
-                this._loadCacheBlock(cacheBlock, true);
-            }, this);
         }
 
     };

@@ -27,7 +27,7 @@
         },
 
         cellAtIndex : function (cell) {
-            return this.dataset.data.getDataByCell(cell);
+            return this.dataset.data.getStringData({cell : cell});
         },
 
         cellExists : function (cell) {

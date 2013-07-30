@@ -60,6 +60,11 @@ describe("Number Formatter", function () {
 
         });
 
+        it('should return same value if not a number', function () {
+            expect(strNumberToLocalizedString()).to.be.undefined;
+            expect(strNumberToLocalizedString('..')).to.eql('..');
+        });
+
     });
 
 });

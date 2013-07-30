@@ -21,7 +21,7 @@
 
     <script type="text/javascript">
         App.context = "${contextPath}";
-        App.apiContext = "http://aherfer:8080/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
+        App.apiContext = "http://localhost:8080/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
         App.resourceContext = "[@s4yh.resource "" /]";
         App.configuration = {};
         I18n.defaultLocale = 'es';

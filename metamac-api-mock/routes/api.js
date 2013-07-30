@@ -465,6 +465,7 @@ var metadata = {
             "total" : 1
         },
         "relatedDsd" : {
+            "showDecimals" : 3,
             "heading" : {
                 "dimensionId" : [
                     "INDICADORES",
@@ -693,6 +694,7 @@ var metadata = {
                     "dimensionValues" : {
                         "value" : [
                             {
+                                "showDecimalsPrecision" : 4,
                                 "id" : "INDICE_OCUPACION_PLAZAS",
                                 "urn" : "urn:sdmx:org.sdmx.infomodel.conceptscheme.Concept=ISTAC:INDICES_CENSALES_OCUPACION_HOTELERA(01.000).INDICE_OCUPACION_PLAZAS",
                                 "name" : {

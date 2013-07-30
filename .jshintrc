@@ -1,0 +1,18 @@
+{
+    "undef" : true,
+    "unused" : true,
+    "node" : true,
+    "globals" : {
+        //test
+        "describe" : false,
+        "it" : false,
+        "beforeEach" : false,
+        "expect" : false,
+
+        //client
+        "App" : false,
+        "Backbone" : false,
+        "_" : false,
+        "$" : false
+    }
+}

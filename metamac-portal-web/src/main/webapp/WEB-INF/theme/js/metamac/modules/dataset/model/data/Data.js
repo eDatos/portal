@@ -48,27 +48,31 @@
             }
         },
 
-        getDataById : function (ids) {
+        _idsFromSelection : function (selection) {
+            return selection.ids || this.filterOptions.getCategoryIdsForCell(selection.cell);
+        },
+
+        /**
+         * @param selection.ids
+         * @param selection.cell
+         */
+        getData : function (selection) {
             var apiResponse = this._getApiResponse();
             if (apiResponse) {
-                var decimals = this.metadata.decimalsForSelection(ids);
-                var value = apiResponse.getDataById(ids).value;
-                console.log(value, App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals}));
-                return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals});
+                var ids = this._idsFromSelection(selection);
+                return apiResponse.getDataById(ids).value;
             }
         },
 
-        getNumberDataById : function (ids) {
-            return App.dataset.data.NumberFormatter.strToNumber(this.getDataById(ids));
+        getNumberData : function (selection) {
+            var value = this.getData(selection);
+            return App.dataset.data.NumberFormatter.strToNumber(value);
         },
 
-        getDataByCell : function (cell) {
-            var apiResponse = this._getApiResponse();
-
-            if (apiResponse) {
-                var ids = this.filterOptions.getCategoryIdsForCell(cell);
-                return this.getDataById(ids);
-            }
+        getStringData : function (selection) {
+            var value = this.getData(selection);
+            var decimals = this.metadata.decimalsForSelection(this._idsFromSelection(selection));
+            return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals});
         }
 
     };

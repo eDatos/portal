@@ -107,17 +107,10 @@
                 });
         },
 
-        resizeFullScreen : function () {
-
-        },
+        resizeFullScreen : function () {},
 
         tooltipFormatter : function () {
-            return '<strong>'
-                + this.series.name
-                + ', '
-                + this.x
-                + '</strong>:<br/>'
-                + App.dataset.data.NumberFormatter.strNumberToLocalizedString(this.y.toString());
+            return '<strong>' + this.series.name + ', ' + this.x + '</strong>:<br/>' + this.point.name;
         },
 
         getData : function () {
@@ -143,8 +136,9 @@
                     currentPermutation[columnsDimension.id] = columnCategory.id;
                     _.extend(currentPermutation, fixedPermutation);
 
-                    var numberValue = self.dataset.data.getNumberDataById(currentPermutation);
-                    serie.data.push(numberValue);
+                    var y = self.dataset.data.getNumberData({ids : currentPermutation});
+                    var name = self.dataset.data.getStringData({ids : currentPermutation});
+                    serie.data.push({y : y, name : name});
                 });
 
                 serie.name = columnCategory.label;

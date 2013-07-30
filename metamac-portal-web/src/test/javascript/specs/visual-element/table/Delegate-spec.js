@@ -38,29 +38,6 @@ describe("[TableCanvas] Delegate", function () {
             expect(delegate.format(value)).to.eql(value);
         });
 
-
-        // TODO ver qué se hace con el formateo
-        it("should format with thousand separator using the current locale if is a Number", function () {
-            expect(delegate.format("12")).to.eql("12");
-            expect(delegate.format("12.5")).to.eql("12,5");
-            expect(delegate.format("1234")).to.eql("1.234");
-            expect(delegate.format("1234.5")).to.eql("1.234,5");
-            expect(delegate.format("1234,5")).to.eql("1.234,5");
-            expect(delegate.format("123456789,987654321")).to.eql("123.456.789,987654321");
-            expect(delegate.format("-123456789,987654321")).to.eql("-123.456.789,987654321");
-
-            I18n.locale = "en";
-
-            expect(delegate.format("12")).to.eql("12");
-            expect(delegate.format("12.5")).to.eql("12.5");
-            expect(delegate.format("1234")).to.eql("1,234");
-            expect(delegate.format("1234.5")).to.eql("1,234.5");
-            expect(delegate.format("1234,5")).to.eql("1,234.5");
-            expect(delegate.format("123456789,987654321")).to.eql("123,456,789.987654321");
-            expect(delegate.format("-123456789,987654321")).to.eql("-123,456,789.987654321");
-        });
-
-
     });
 
     describe("Headers", function () {

@@ -18,6 +18,8 @@
     };
 
     App.dataset.data.NumberFormatter.strNumberToLocalizedString = function (value, options) {
+        if (isNaN(parseFloat(value))) return value;
+
         var options = _.defaults(options || {}, I18n.lookup("number.format"), {separator : ".", delimiter : ",", strip_insignificant_zeros : false});
         var number = parseFloat(value);
         var negative = number < 0;
