@@ -24,10 +24,9 @@
             self.metadata = options.metadata;
             self.filterOptions = new App.widget.FilterOptions({metadata : self.metadata});
 
-            //var veElementTable = Modernizr.canvas ? "canvasTable" : "table";
             var veElementTable = "canvasTable";
             var veElements = [veElementTable, "column", "line"];
-            if (self.metadata.metadata.geographicalCoverage) {
+            if (_.findWhere(this.metadata.getDimensions(), {type : 'GEOGRAPHIC_DIMENSION'})) {
                 veElements.push("map");
             }
 
