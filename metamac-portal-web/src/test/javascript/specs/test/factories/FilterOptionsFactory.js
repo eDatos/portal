@@ -36,6 +36,9 @@
                         ]
                     }
                 ];
+            },
+            getDimensionsPosition : function () {
+                return {top : ['id3'], left : ['id1', 'id2']};
             }
         };
         return new App.widget.FilterOptions({metadata : metadata});

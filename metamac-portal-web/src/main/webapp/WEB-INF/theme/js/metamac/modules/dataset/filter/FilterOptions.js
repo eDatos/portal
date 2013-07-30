@@ -93,23 +93,33 @@
             };
         },
 
+        _findDimensionsByIds : function (ids) {
+            return _.map(ids, function (dimensionId) {
+                return _.findWhere(this.dimensions, {id : dimensionId});
+            }, this);
+        },
+
+        _assignPositions : function (dimensions, firstPosition) {
+            _.each(dimensions, function (dimension, i) {
+                dimension.position = firstPosition + i;
+            });
+        },
+
         /**
-         *  Inicializa las posiciones de las dimensions para una tabla. La mitad a la izquierda y la mitad en la
-         *  parte superior
+         *  Inicializa las posición según la información del metadata
          */
         _initializePositions : function () {
-            var middle = Math.ceil(this.dimensions.length / 2);
+            var positions = this.metadata.getDimensionsPosition();
+            var leftDimensions = this._findDimensionsByIds(positions.left);
+            var topDimensions = this._findDimensionsByIds(positions.top);
 
-            var left = this.dimensions.slice(0, middle);
-            var top = this.dimensions.slice(middle);
+            this._assignPositions(leftDimensions, this.positionLimit.left.begin);
+            this._assignPositions(topDimensions, this.positionLimit.top.begin);
 
-            for (var i = 0; i < left.length; i++) {
-                left[i].position = this.positionLimit.left.begin + i;
-            }
-
-            for (var i = 0; i < top.length; i++) {
-                top[i].position = this.positionLimit.top.begin + i;
-            }
+            var dimensionsOutOfPosition = _.findWhere(this.dimensions, function (dimension) {
+                return _.isUndefined(dimension.position);
+            });
+            this._assignPositions(dimensionsOutOfPosition, this.positionLimit.fixed.begin);
         },
 
         /**

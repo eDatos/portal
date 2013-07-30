@@ -225,6 +225,12 @@
                 }
             }
             return DECIMALS;
+        },
+
+        getDimensionsPosition : function () {
+            var top = this.metadata.relatedDsd.heading.dimensionId;
+            var left = this.metadata.relatedDsd.stub.dimensionId;
+            return {top : top, left : left};
         }
 
     };

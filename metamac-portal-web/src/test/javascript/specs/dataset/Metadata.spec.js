@@ -34,7 +34,7 @@ describe("Dataset Metadata", function () {
     });
 
     it.skip('should getLicense', function () {
-        expect(metadata.getLicense()).to.eql('Licencia en Español')
+        expect(metadata.getLicense()).to.eql('Licencia en Español');
     });
 
     it.skip('should getLicenseUrl', function () {
@@ -133,6 +133,15 @@ describe("Dataset Metadata", function () {
             {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : false}
         ]);
     });
+
+    it('should getPositions', function () {
+        var positions = metadata.getDimensionsPosition();
+        expect(positions).to.eql({
+            top : ["INDICADORES", "TIME_PERIOD"],
+            left : ["CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO"]
+        });
+    });
+
 
 //    it("get dimensions and representations", function () {
 //        I18n.locale = 'es';
