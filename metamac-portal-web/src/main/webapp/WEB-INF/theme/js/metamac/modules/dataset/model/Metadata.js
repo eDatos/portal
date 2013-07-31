@@ -9,10 +9,10 @@
         this.initialize(options);
     };
 
-    App.dataset.Metadata.fetch = function () {
+    App.dataset.Metadata.fetch = function (options) {
         //TODO pass parameters, externalize url, no data parameter
         var result = $.Deferred();
-        $.getJSON(App.apiContext + '/datasets/ISTAC/C00025A_000001/001.000?_type=json&fields=-data', function (response) {
+        $.getJSON(App.apiContext + '/datasets/' + options.agency + '/' + options.identifier + '/' + options.version + '?_type=json&fields=-data', function (response) {
             var metadata = new App.dataset.Metadata(response);
             result.resolveWith(null, [metadata]);
         });

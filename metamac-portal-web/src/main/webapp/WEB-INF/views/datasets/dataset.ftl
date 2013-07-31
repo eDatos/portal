@@ -4,13 +4,17 @@
 
 [#include "../includes/dataset.html"]
 
-<h1>Dataset</h1>
-
 <div id="dataset-container"></div>
-
 <script>
     var main;
-    App.dataset.Metadata.fetch().then(function (metadata) {
+
+    var fetchOptions = {
+        agency : "${agency}",
+        identifier : "${identifier}",
+        version : "${version}"
+    };
+
+    App.dataset.Metadata.fetch(fetchOptions).then(function (metadata) {
         var attributes = {};
         main = new App.modules.dataset.Main({el : '#dataset-container', metadata : metadata, attributes : attributes});
     });

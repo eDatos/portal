@@ -606,13 +606,13 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n    <div class=\"row\">\r\n        <div class=\"span12\">\r\n            <div class=\"internal-page-description\">\r\n                <p>"
+  buffer += "\r\n        <div>\r\n            <p>"
     + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.description)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    ";
+    + "</p>\r\n        </div>\r\n    ";
   return buffer;
   }
 
-  buffer += "<div class=\"dataset-header\">\r\n    <div>\r\n        <div class=\"dataset-header-actions\"></div>\r\n\r\n        <div class=\"dataset-header-info\">\r\n            <h2 class=\"dataset-header-title\" title=\""
+  buffer += "<div class=\"dataset-header\">\r\n    <div>\r\n\r\n        <div class=\"dataset-header-actions\"></div>\r\n\r\n\r\n        <div class=\"dataset-header-info\">\r\n            <h2 class=\"dataset-header-title\" title=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))

@@ -4,6 +4,10 @@
 [#macro page]
     [@layoutBase.base]
 
+    <div class="container header">
+        <a href="/" class="logo"></a>
+    </div>
+
     <div id="page-container" class="container">
         <div id="content">
             [#nested]
@@ -16,7 +20,7 @@
         window.attachEvent("onload", function() {
             CFInstall.check({
                 mode: "overlay",
-                destination: STAT4YOU.context
+                destination: App.context
             });
         });
     </script>

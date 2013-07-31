@@ -41,7 +41,6 @@
 
             self.dataset = new App.dataset.Dataset({metadata : self.metadata, filterOptions : this.filterOptions});
 
-
             if (options.showPage) {
                 self.pageView = new App.modules.dataset.PageView({
                     el : options.el,
@@ -71,13 +70,13 @@
                 optionsModel : self.optionsModel
             });
 
-            var actions$el = self.pageView.$el.find(".dataset-header-actions");
-            self.datasetActionsView = new App.modules.dataset.DatasetActionsView({
-                el : actions$el,
-                filterOptions : self.filterOptions,
-                permalinkBuilder : self.permalinkBuilder
-            });
-            self.datasetActionsView.render();
+//            var actions$el = self.pageView.$el.find(".dataset-header-actions");
+//            self.datasetActionsView = new App.modules.dataset.DatasetActionsView({
+//                el : actions$el,
+//                filterOptions : self.filterOptions,
+//                permalinkBuilder : self.permalinkBuilder
+//            });
+//            self.datasetActionsView.render();
 
             self.router = new App.modules.dataset.Router({ defaultType : veElementTable });
 
@@ -113,7 +112,6 @@
             var $sidebarContainer = self.pageView.$el.find(".dataset-sidebar-visualization-container");
             this.sidebarView = new App.components.sidebar.SidebarView({el : $sidebarContainer, sideViews : sideViews, contentView : self.visualizationView});
             this.sidebarView.render();
-            this.sidebarView.state.toggleSideView("filterSidebar");
 
             // FullScreen
             self.fullScreen = new App.FullScreen({container : $sidebarContainer});
@@ -142,12 +140,12 @@
             /*-------------------------------------------------
              * Events
              * --------------------------------------------- */
-            self.filterOptions.on('change reset', function () {
-                self.datasetActionsView.render();
-            });
+//            self.filterOptions.on('change reset', function () {
+//                self.datasetActionsView.render();
+//            });
 
             self.optionsModel.on('change:type', function (model, type) {
-                self.datasetActionsView.render();
+                //self.datasetActionsView.render();
                 App.track({event : 'dataset.view', veType : type, datasetUri : self.metadata.getUri() });
             });
 
