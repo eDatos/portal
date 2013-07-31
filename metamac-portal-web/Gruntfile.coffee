@@ -9,10 +9,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-watch'
     grunt.loadNpmTasks 'grunt-contrib-connect'
     grunt.loadNpmTasks 'grunt-open'
-
-    grunt.registerTask('dev', ['less:dev', 'less:map', 'handlebars', 'include:dev'])
-    grunt.registerTask('pro', ['less:pro', 'less:map', 'handlebars', 'uglify', 'include:pro'])
-    grunt.registerTask('default', 'pro')
+    grunt.loadNpmTasks 'grunt-mocha'
 
     paths = {}
     paths.theme = 'src/main/webapp/WEB-INF/theme'
@@ -295,9 +292,14 @@ module.exports = (grunt) ->
         options:
             banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 
+    globalConfig =
+        mocha:
+            grep: ''
+
+
     config =
         pkg: grunt.file.readJSON('package.json')
-
+        globalConfig: globalConfig
         less:
             dev:
                 src: paths.less + '/bootstrap.less'
@@ -308,7 +310,7 @@ module.exports = (grunt) ->
                 options:
                     yuicompress: true
             map:
-                src : paths.less + "/dataset/maps-export.less"
+                src: paths.less + "/dataset/maps-export.less"
                 dest: paths.assets + '/css/map.css'
                 options:
                     yuicompress: true
@@ -351,12 +353,31 @@ module.exports = (grunt) ->
         open:
             test:
                 path: 'http://localhost:<%= connect.options.port %>/src/test/javascript/runner/runner.html'
+        mocha:
+            all:
+                src: [ 'src/test/javascript/runner/runner.html' ]
+                options:
+                    log: true
+                    mocha:
+                        ignoreLeaks: false
+                    reporter: 'Dot'
+            spec:
+                src: [ 'src/test/javascript/runner/runner.html' ]
+                options:
+                    log: true
+                    mocha:
+                        ignoreLeaks: false
+                        grep: '<%= globalConfig.mocha.grep %>'
+                    reporter: 'mocha-unfunk-reporter'
 
+    grunt.registerTask 'spec', 'Runs a task on a specified file', (fileName) ->
+        globalConfig.mocha.grep = fileName
+        grunt.task.run('mocha:spec')
 
-    grunt.registerTask('bdd', [
-        'connect:test'
-        'open:test'
-        'watch'
-    ])
+    grunt.registerTask 'dev', ['less:dev', 'less:map', 'handlebars', 'include:dev']
+    grunt.registerTask 'pro', ['less:pro', 'less:map', 'handlebars', 'uglify', 'include:pro']
+    grunt.registerTask 'bdd', ['connect:test', 'open:test', 'watch' ]
+    grunt.registerTask 'test', ['mocha:all']
+    grunt.registerTask 'default', 'pro'
 
     grunt.initConfig(config)

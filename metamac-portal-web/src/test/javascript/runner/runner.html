@@ -11,11 +11,9 @@
 <script src="js/chai.js"></script>
 <script src="js/sinon.js"></script>
 <script>
-    mocha.setup({
-        ignoreLeaks : true
-    });
-    mocha.ui('bdd');
-    mocha.reporter('html');
+    mocha.setup('bdd');
+    //mocha.ui('bdd');
+    //mocha.reporter('html');
     expect = chai.expect;
 </script>
 
@@ -170,7 +168,6 @@
         jsPath + "metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionView.js",
         jsPath + "metamac/modules/dataset/filter/sidebar/FilterSidebarView.js"
     ];
-
 
     var tests = [
         testPath + "utils/SpecUtils.js",
