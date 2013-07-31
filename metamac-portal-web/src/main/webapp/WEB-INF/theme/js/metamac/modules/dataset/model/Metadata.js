@@ -110,18 +110,52 @@
             return result;
         },
 
+        _dimensionHasHierarchy : function (dimension) {
+            var hierarchyDimensionValue = _.find(dimension.dimensionValues.value, function (dimensionValue) {
+                return _.has(dimensionValue, 'parent');
+            });
+            return !_.isUndefined(hierarchyDimensionValue);
+        },
+
         getDimensions : function () {
             var dimensions = this.metadata.dimensions.dimension;
             var result = _.map(dimensions, function (dimension) {
-                //var hierarchy = !_.isUndefined(dimension.representation.hierarchy) && !_.isUndefined(dimension.representation.hierarchy[id]);
                 return {
                     id : dimension.id,
                     label : this.localizeLabel(dimension.name.text),
                     type : dimension.type,
-                    hierarchy : false
+                    hierarchy : this._dimensionHasHierarchy(dimension)
                 };
             }, this);
             return result;
+        },
+
+        _sortFlatRepresentations : function (representations) {
+            return _.sortBy(representations, function (representation) {
+                return representation.order;
+            });
+        },
+
+        _sortHierarchyRepresentations : function (representations) {
+            //group by parents
+            var representationsByParent = _.groupBy(representations, function (representation) {
+                return representation.parent;
+            });
+
+            //sort by levels
+            for (var parent in representationsByParent) {
+                representationsByParent[parent] = this._sortFlatRepresentations(representationsByParent[parent]);
+            }
+
+            // recursive depth tree traversal
+            var rootRepresentations = representationsByParent["undefined"]; //TODO this is risky
+            var sortedRepresentations = [];
+            var depthTreeTraversal = function (node) {
+                sortedRepresentations.push(node);
+                _.each(representationsByParent[node.id], depthTreeTraversal);
+            };
+            _.each(rootRepresentations, depthTreeTraversal);
+            return sortedRepresentations;
         },
 
         getRepresentations : function (dimensionId) {
@@ -130,19 +164,22 @@
             var dimension = _.findWhere(dimensions, {id : dimensionId});
             var representations = [];
             var defaultDecimals = _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : DECIMALS;
-            var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
 
-            if (dimension) {
-                //TODO normCode and parent
-                if (dimension.dimensionValues) {
-                    representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
-                        var representation = {id : dimensionValue.id, label : self.localizeLabel(dimensionValue.name.text)};
-                        if (isMeasureDimension) {
-                            representation.decimals = _.has(dimensionValue, 'showDecimalsPrecision') ? dimensionValue.showDecimalsPrecision : defaultDecimals;
-                        }
-                        return representation;
-                    });
-                }
+            if (dimension && dimension.dimensionValues) {
+                //TODO normCode
+                var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
+                representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
+                    var representation = _.pick(dimensionValue, 'id', 'parent', 'order');
+                    representation.label = self.localizeLabel(dimensionValue.name.text);
+                    if (isMeasureDimension) {
+                        representation.decimals = _.has(dimensionValue, 'showDecimalsPrecision') ? dimensionValue.showDecimalsPrecision : defaultDecimals;
+                    }
+                    return representation;
+                });
+
+                //sort
+                var hasHierarchy = this._dimensionHasHierarchy(dimension);
+                representations = hasHierarchy? this._sortHierarchyRepresentations(representations) : this._sortFlatRepresentations(representations);
             }
             return representations;
         },

@@ -378,6 +378,6 @@ module.exports = (grunt) ->
     grunt.registerTask 'pro', ['less:pro', 'less:map', 'handlebars', 'uglify', 'include:pro']
     grunt.registerTask 'bdd', ['connect:test', 'open:test', 'watch' ]
     grunt.registerTask 'test', ['mocha:all']
-    grunt.registerTask 'default', 'pro'
+    grunt.registerTask 'default', ['pro', 'test']
 
     grunt.initConfig(config)

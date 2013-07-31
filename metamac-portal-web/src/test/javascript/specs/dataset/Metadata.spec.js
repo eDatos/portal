@@ -1,10 +1,18 @@
 describe("Dataset Metadata", function () {
 
-    var Metadata = App.dataset.Metadata;
     var metadata;
+    var MEASURE_DIMENSION;
+    var MEASURE_DIMENSION_REPRESENTATIONS;
+
 
     beforeEach(function () {
-        metadata = new Metadata(App.test.response.metadata);
+        metadata = new App.dataset.Metadata(App.test.response.metadata);
+
+        MEASURE_DIMENSION = {"id" : "INDICADORES", "label" : "Indicadores", "type" : "MEASURE_DIMENSION", "hierarchy" : false};
+        MEASURE_DIMENSION_REPRESENTATIONS = [
+            {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4, order : 1},
+            {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6, order : 2}
+        ];
     });
 
     it('should getIdentifier', function () {
@@ -51,33 +59,36 @@ describe("Dataset Metadata", function () {
 
     it('should getDimensions', function () {
         expect(metadata.getDimensions()).to.eql([
-            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : false},
-            {"id" : "INDICADORES", "label" : "Indicadores", "type" : "MEASURE_DIMENSION", "hierarchy" : false},
+            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : true},
+            MEASURE_DIMENSION,
             {"id" : "CATEGORIA_ALOJAMIENTO", "label" : "Categoría del alojamiento", "type" : "DIMENSION", "hierarchy" : false},
             {"id" : "DESTINO_ALOJAMIENTO", "label" : "Destino del alojamiento", "type" : "GEOGRAPHIC_DIMENSION", "hierarchy" : false}
         ]);
     });
 
-    it('should getRepresentation', function () {
-        //todo test normcode and parent
-        expect(metadata.getRepresentations('INDICADORES')).to.eql(
-            [
-                {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4},
-                {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6}
-            ]
-        );
+    describe('getRepresentation', function () {
+
+        it('hierarchy dimension', function () {
+            expect(metadata.getRepresentations('TIME_PERIOD')).to.eql([
+                {id : 'time_1', label : 'Time 1', order : 1},
+                {id : 'time_2', label : 'Time 2', order : 2},
+                {id : 'time_2_1', label : 'Time 2 1', parent : 'time_2', order : 1},
+                {id : 'time_2_2', label : 'Time 2 2', parent : 'time_2', order : 2},
+                {id : 'time_2_2_1', label : 'Time 2 2 1', parent : 'time_2_2', order : 1},
+                {id : 'time_3', label : 'Time 3', order : 3}
+            ]);
+        });
+
+        it('should order dimensionValues by order field', function () {
+            expect(metadata.getRepresentations('INDICADORES')).to.eql(MEASURE_DIMENSION_REPRESENTATIONS);
+        });
+
     });
 
     it('should getDimensionsAndRepresentations', function () {
         var dimensionsAndRepresentations = metadata.getDimensionsAndRepresentations();
         expect(_.pluck(dimensionsAndRepresentations, 'id')).to.eql(['TIME_PERIOD', 'INDICADORES', 'CATEGORIA_ALOJAMIENTO', 'DESTINO_ALOJAMIENTO']);
-        expect(dimensionsAndRepresentations[1].representations).to.eql(
-            [
-                {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4},
-                {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6}
-            ]
-        );
-
+        expect(dimensionsAndRepresentations[1].representations).to.eql(MEASURE_DIMENSION_REPRESENTATIONS);
     });
 
     it.skip('should getCategories', function () {
@@ -89,16 +100,8 @@ describe("Dataset Metadata", function () {
     });
 
     it('should getMeasureDimension', function () {
-        expect(metadata.getMeasureDimension()).to.eql({
-            "id" : "INDICADORES",
-            "label" : "Indicadores",
-            "type" : "MEASURE_DIMENSION",
-            "hierarchy" : false,
-            representations : [
-                {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4},
-                {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6}
-            ]
-        });
+        MEASURE_DIMENSION.representations = MEASURE_DIMENSION_REPRESENTATIONS;
+        expect(metadata.getMeasureDimension()).to.eql(MEASURE_DIMENSION);
     });
 
     describe('decimalsForSelection', function () {
@@ -130,7 +133,7 @@ describe("Dataset Metadata", function () {
 
     it('should getTimeDimensions', function () {
         expect(metadata.getTimeDimensions()).to.eql([
-            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : false}
+            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : true}
         ]);
     });
 
