@@ -14,18 +14,19 @@
         title : "Filtrar",
 
         initialize : function (options) {
-            this.filterOptions = options.filterOptions;
+            this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
 
             //Initialize subviews here to keep state
-            var dimensions = this.filterOptions.getDimensions();
-            this.subviews = _.map(dimensions, function (dimension) {
+
+            this.subviews = this.filterDimensions.map(function (dimension) {
                 return new FilterSidebarDimensionView({
-                    filterOptions : this.filterOptions,
-                    dimension : dimension
+                    filterDimensions : this.filterDimensions,
+                    filterDimension : dimension
                 });
             }, this);
-            _.last(this.subviews).stateModel.set('collapsed', false); // open last subview
+
+            //_.last(this.subviews).stateModel.set('collapsed', false); // open last subview
         },
 
         destroy : function () {
@@ -37,26 +38,23 @@
         },
 
         _bindEvents : function () {
-            this.listenTo(this.filterOptions, "zoneLengthRestriction", this.render);
-            _.each(this.subviews, function (subview) {
-                this.listenTo(subview.stateModel, 'change:collapsed', _.bind(this._onSubviewChangeCollapsed, this, subview));
-            }, this);
+//            this.listenTo(this.filterOptions, "zoneLengthRestriction", this.render);
         },
 
         _unbindEvents : function () {
-            this.stopListening();
+            //this.stopListening();
         },
 
         render : function () {
             this._unbindEvents();
             this._bindEvents();
 
-            var dimensions = this.filterOptions.getDimensions();
             this.$el.html(this.template());
             var $dimensions = this.$('.filter-sidebar-dimensions');
             _.each(this.subviews, function (subview) {
                 $dimensions.append(subview.render());
             }, this);
+
             this._onResize();
         },
 
@@ -77,7 +75,7 @@
             }, 0);
             var maxHeight = this.$el.height() - totalCollapsedHeight;
             _.each(this.subviews, function (subview) {
-                subview.stateModel.set('maxHeight', maxHeight);
+                subview.setMaxHeight(maxHeight);
             });
         }
 

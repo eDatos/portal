@@ -7,7 +7,7 @@
 
     App.dataset.data.Data = function (options) {
         this.metadata = options.metadata;
-        this.filterOptions = options.filterOptions;
+        this.filterDimensions = options.filterDimensions;
     };
 
     App.dataset.data.Data.prototype = {
@@ -31,11 +31,6 @@
         },
 
         //TODO deprecate method, will be removed soon
-        updateFilterOptions : function () {
-
-        },
-
-        //TODO deprecate method, will be removed soon
         isAllSelectedDataLoaded : function () {
             return !_.isUndefined(this.apiResponse);
         },
@@ -49,7 +44,7 @@
         },
 
         _idsFromSelection : function (selection) {
-            return selection.ids || this.filterOptions.getCategoryIdsForCell(selection.cell);
+            return selection.ids || this.filterDimensions.getTableInfo().getCategoryIdsForCell(selection.cell);
         },
 
         /**

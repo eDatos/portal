@@ -1,27 +1,31 @@
 describe("OrderSidebarView", function () {
 
     var orderSidebarView;
-    var filterOptions;
+    var filterDimensions;
     var optionsModel;
 
     beforeEach(function () {
-        filterOptions = App.test.factories.filterOptionsFactory();
+        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         optionsModel = new App.modules.dataset.OptionsModel();
-        orderSidebarView = new App.widget.filter.sidebar.OrderSidebarView({filterOptions : filterOptions, optionsModel : optionsModel});
+        orderSidebarView = new App.widget.filter.sidebar.OrderSidebarView({filterDimensions : filterDimensions, optionsModel : optionsModel});
     });
 
     describe("renderContext", function () {
         it("fixed dimension should include selected category", function () {
-            filterOptions._changeDimensionZone("id1", "fixed");
+            var dim = filterDimensions.get('INDICADORES');
+            var selectedRepresentation = dim.get('representations').findWhere({selected : true});
+
+            filterDimensions.zones.setDimensionZone('fixed', dim);
 
             var context = orderSidebarView._renderContext();
             var fixedZone = _.find(context.zones, function (zone) {
                 return zone.id === "fixed";
             });
 
-            var selectedCategory = fixedZone.dimensions[0].selectedCategory;
-            expect(selectedCategory.id).to.equal('id1a');
-            expect(selectedCategory.label).to.equal('enid1a');
+            var contextRepresentation = fixedZone.dimensions[0].selectedCategory;
+            expect(contextRepresentation.id).to.equal(selectedRepresentation.id);
+            expect(contextRepresentation.label).to.equal(selectedRepresentation.get('label'));
         });
     });
 

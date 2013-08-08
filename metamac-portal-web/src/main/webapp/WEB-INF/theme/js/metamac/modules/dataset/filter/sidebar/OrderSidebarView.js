@@ -14,7 +14,7 @@
         template : App.templateManager.get("widget/filter/sidebar/filter-order-view"),
 
         initialize : function (options) {
-            this.filterOptions = options.filterOptions;
+            this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
         },
 
@@ -37,8 +37,9 @@
         },
 
         _bindEvents : function () {
-            this.listenTo(this.filterOptions, "change", this.render);
-            this.listenTo(this.filterOptions, "reset", this.render);
+            // TODO
+            this.listenTo(this.filterDimensions, "change:zone", _.throttle(this.render, 15));
+            // this.listenTo(this.filterOptions, "reset", this.render);
         },
 
         _unbindEvents : function () {
@@ -94,17 +95,17 @@
         },
 
         _dimensionsForZone : function (zoneId) {
-            var dimensions = this.filterOptions.getDimensionsInZone(zoneId);
+            var dimensionCollection = this.filterDimensions.dimensionsAtZone(zoneId);
             var isMap = this._getCurrentChartType() === "map";
-            _.each(dimensions, function (dimension) {
-                dimension.draggable = isMap ? dimension.type === "GEOGRAPHIC_DIMENSION" : true;
-
+            var dimensionsForZone = dimensionCollection.map(function (dimensionModel) {
+                var dimension = dimensionModel.toJSON();
+                dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;
                 if (zoneId === "fixed") {
-                    dimension.selectedCategory = this.filterOptions.getSelectedCategories(dimension.id)[0];
+                    dimension.selectedCategory = dimensionModel.get('representations').findWhere({selected : true}).toJSON();
                 }
-            }, this);
-
-            return dimensions;
+                return dimension;
+            });
+            return dimensionsForZone;
         },
 
         _onDragstart : function (e) {
@@ -133,15 +134,17 @@
         _onDrop : function (e) {
             var currentTarget = $(e.currentTarget);
             var transferDimensionId = e.originalEvent.dataTransfer.getData("Text");
+            var transferDimension = this.filterDimensions.get(transferDimensionId);
 
             if (currentTarget.data("dimension-id")) {
                 // swap two dimensions
                 var toDimensionId = currentTarget.data("dimension-id");
-                this.filterOptions.swapDimensions(transferDimensionId, toDimensionId);
+                var toDimension = this.filterDimensions.get(toDimensionId);
+                this.filterDimensions.zones.swapDimensions(transferDimension, toDimension);
             } else {
                 //move to a zone
                 var zone = currentTarget.data("zone");
-                this.filterOptions.changeDimensionZone(transferDimensionId, zone);
+                this.filterDimensions.zones.setDimensionZone(zone, transferDimension);
             }
             return false;
         },

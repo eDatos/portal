@@ -26,7 +26,6 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0/datasets/ISTAC/C00025A_000001/001.000', api.dataset);
-
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });

@@ -217,11 +217,6 @@ describe("Filter Options", function () {
 
     });
 
-    it("get table size", function () {
-        var tableSize = filterOptions.getTableSize();
-        expect(tableSize).to.deep.equal({rows : 4, columns : 3});
-    });
-
     it("get zone from position", function () {
         expect(filterOptions._getZoneFromPosition(-1)).to.be.undefined;
         expect(filterOptions._getZoneFromPosition(0)).to.deep.equal("left");
@@ -312,6 +307,7 @@ describe("Filter Options", function () {
     });
 
     describe("zone length restriction", function () {
+
         it("should change dimensions zones", function () {
             expect(filterOptions.getLeftDimensions().length).to.deep.equal(2);
             expect(filterOptions.getTopDimensions().length).to.deep.equal(1);
@@ -410,54 +406,6 @@ describe("Filter Options", function () {
             expect(selectedCategory.normCode).to.deep.equal('TIME2');
         });
 
-    });
-
-    describe("getCategoryIdsForCell", function () {
-        it("should return categories in normal order if there isn't a time dimension", function () {
-            filterOptions.changeDimensionZone("id1", "left");
-            filterOptions.changeDimensionZone("id2", "top");
-            filterOptions.changeDimensionZone("id3", "fixed");
-
-            expect(filterOptions.getCategoryIdsForCell({x : 0, y : 0})).to.deep.equal({id1 : 'id1a', id2 : 'id2a', id3 : 'id3b'});
-            expect(filterOptions.getCategoryIdsForCell({x : 1, y : 0})).to.deep.equal({id1 : 'id1a', id2 : 'id2b', id3 : 'id3b'});
-            expect(filterOptions.getCategoryIdsForCell({x : 0, y : 1})).to.deep.equal({id1 : 'id1b', id2 : 'id2a', id3 : 'id3b'});
-            expect(filterOptions.getCategoryIdsForCell({x : 1, y : 1})).to.deep.equal({id1 : 'id1b', id2 : 'id2b', id3 : 'id3b'});
-        });
-
-        it("should return newer categories first for a time dimension", function () {
-            filterOptions.changeDimensionZone("id1", "fixed");
-            filterOptions.changeDimensionZone("id2", "left");
-            filterOptions.changeDimensionZone("id3", "top");
-
-            expect(filterOptions.getCategoryIdsForCell({x : 0, y : 0})).to.deep.equal({id1 : 'id1a', id2 : 'id2a', id3 : 'id3c'});
-            expect(filterOptions.getCategoryIdsForCell({x : 1, y : 0})).to.deep.equal({id1 : 'id1a', id2 : 'id2a', id3 : 'id3b'});
-            expect(filterOptions.getCategoryIdsForCell({x : 2, y : 0})).to.deep.equal({id1 : 'id1a', id2 : 'id2a', id3 : 'id3a'});
-            expect(filterOptions.getCategoryIdsForCell({x : 0, y : 1})).to.deep.equal({id1 : 'id1a', id2 : 'id2b', id3 : 'id3c'});
-            expect(filterOptions.getCategoryIdsForCell({x : 1, y : 1})).to.deep.equal({id1 : 'id1a', id2 : 'id2b', id3 : 'id3b'});
-            expect(filterOptions.getCategoryIdsForCell({x : 2, y : 1})).to.deep.equal({id1 : 'id1a', id2 : 'id2b', id3 : 'id3a'});
-        });
-
-    });
-
-    it("getCellForCategoryIds", function () {
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2a', id3 : 'id3c'}))
-            .to.deep.equal({x : 0, y : 0});
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2a', id3 : 'id3b'}))
-            .to.deep.equal({x : 1, y : 0});
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2b', id3 : 'id3c'}))
-            .to.deep.equal({x : 0, y : 1});
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2b', id3 : 'id3b'}))
-            .to.deep.equal({x : 1, y : 1});
-
-        filterOptions.changeDimensionZone(0, "top");
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2a', id3 : 'id3c'}))
-            .to.deep.equal({x : 0, y : 0});
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2a', id3 : 'id3b'}))
-            .to.deep.equal({x : 2, y : 0});
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2b', id3 : 'id3c'}))
-            .to.deep.equal({x : 0, y : 1});
-        expect(filterOptions.getCellForCategoryIds({id1 : 'id1a', id2 : 'id2b', id3 : 'id3b'}))
-            .to.deep.equal({x : 2, y : 1});
     });
 
     it("should clone", function () {

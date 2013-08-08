@@ -26,6 +26,14 @@
             this.selectedLanguages = this.options.selectedLanguages.language;
             this.metadata = this.options.metadata;
             this.initializeLocalesIndex();
+            this.initializeCache();
+        },
+
+        initializeCache : function () {
+            var measureDimension = this.getMeasureDimension().id;
+            this.decimalsForSelection = _.memoize(this.decimalsForSelection, function (selection) {
+                return selection[measureDimension];
+            });
         },
 
         initializeLocalesIndex : function () {
@@ -111,10 +119,7 @@
         },
 
         _dimensionHasHierarchy : function (dimension) {
-            var hierarchyDimensionValue = _.find(dimension.dimensionValues.value, function (dimensionValue) {
-                return _.has(dimensionValue, 'parent');
-            });
-            return !_.isUndefined(hierarchyDimensionValue);
+            return _.any(dimension.dimensionValues.value, function (dimensionValue) { return _.has(dimensionValue, 'visualisationParent')});
         },
 
         getDimensions : function () {
@@ -130,22 +135,12 @@
             return result;
         },
 
-        _sortFlatRepresentations : function (representations) {
-            return _.sortBy(representations, function (representation) {
-                return representation.order;
-            });
-        },
-
         _sortHierarchyRepresentations : function (representations) {
             //group by parents
             var representationsByParent = _.groupBy(representations, function (representation) {
                 return representation.parent;
             });
 
-            //sort by levels
-            for (var parent in representationsByParent) {
-                representationsByParent[parent] = this._sortFlatRepresentations(representationsByParent[parent]);
-            }
 
             // recursive depth tree traversal
             var rootRepresentations = representationsByParent["undefined"]; //TODO this is risky
@@ -169,7 +164,11 @@
                 //TODO normCode
                 var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
                 representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
-                    var representation = _.pick(dimensionValue, 'id', 'parent', 'order');
+                    var representation = _.pick(dimensionValue, 'id', 'open');
+                    if (dimensionValue.visualisationParent) {
+                        var parent = _.findWhere(dimension.dimensionValues.value, {urn : dimensionValue.visualisationParent})
+                        if (parent) representation.parent = parent.id;
+                    }
                     representation.label = self.localizeLabel(dimensionValue.name.text);
                     if (isMeasureDimension) {
                         representation.decimals = _.has(dimensionValue, 'showDecimalsPrecision') ? dimensionValue.showDecimalsPrecision : defaultDecimals;
@@ -179,7 +178,7 @@
 
                 //sort
                 var hasHierarchy = this._dimensionHasHierarchy(dimension);
-                representations = hasHierarchy? this._sortHierarchyRepresentations(representations) : this._sortFlatRepresentations(representations);
+                representations = hasHierarchy? this._sortHierarchyRepresentations(representations) : representations;
             }
             return representations;
         },

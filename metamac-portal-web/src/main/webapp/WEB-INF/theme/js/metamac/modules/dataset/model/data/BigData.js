@@ -7,21 +7,32 @@
     App.namespace("App.dataset.data.Data");
 
     App.dataset.data.BigData = function (options) {
-        this.metadata = options.metadata;
-        this.filterOptions = options.filterOptions;
-        this._initializeAjaxManager();
-        this.updateFilterOptions();
+        this.initialize(options);
     };
 
     App.dataset.data.BigData.prototype = {
 
+        initialize : function (options) {
+            this.metadata = options.metadata;
+            this.filterDimensions = options.filterDimensions;
+
+            this._initializeAjaxManager();
+            this.onUpdateFilter();
+
+            this._bindEvents();
+        },
+
+        _bindEvents : function () {
+            this.filterDimensions.on('change:selected change:zone', this.onUpdateFilter, this);
+        },
+
         isAllSelectedDataLoaded : function () {
-            var blocks = this.cache.getAllCacheBlocks();
+            var blocks = this.getCache().getAllCacheBlocks();
 
             var result = true;
             for (var i = 0; i < blocks.length; i++) {
                 var block = blocks[i];
-                if (!this.cache.isBlockReady(block)) {
+                if (!this.getCache().isBlockReady(block)) {
                     result = false;
                 }
             }
@@ -30,17 +41,24 @@
 
         loadAllSelectedData : function () {
             var self = this;
-            var blocks = this.cache.getAllCacheBlocks();
+            var blocks = this.getCache().getAllCacheBlocks();
             var promises = _.map(blocks, this._loadCacheBlock, this);
             return $.when.apply($, promises);
         },
 
-        updateFilterOptions : function () {
-            this._initializeCache();
+        onUpdateFilter : function () {
+            this._invalidateCache();
         },
 
-        _initializeCache : function () {
-            this.cache = new Cache(this.filterOptions.getTableSize());
+        _invalidateCache : function () {
+            this.cache = undefined;
+        },
+
+        getCache : function () {
+            if (!this.cache) {
+                this.cache = new Cache(this.filterDimensions.getTableInfo().getTableSize());
+            }
+            return this.cache;
         },
 
         _initializeAjaxManager : function () {
@@ -52,18 +70,18 @@
         },
 
         getData : function (selection) {
-            var cell = selection.cell || this.filterOptions.getCellForCategoryIds(selection.ids);
+            var cell = selection.cell || this.filterDimensions.getTableInfo().getCellForCategoryIds(selection.ids);
 
-            var cacheBlock = this.cache.cacheBlockForCell(cell);
-            if (this.cache.isBlockReady(cacheBlock)) {
-                var ids = this.filterOptions.getCategoryIdsForCell(cell);
+            var cacheBlock = this.getCache().cacheBlockForCell(cell);
+            if (this.getCache().isBlockReady(cacheBlock)) {
+                var ids = this.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
                 return cacheBlock.apiResponse.getDataById(ids).value;
             } else {
                 this._loadCacheBlock(cacheBlock, true);
             }
 
             // load neighbours
-            var neighbourCacheBlocks = this.cache.neighbourCacheBlocks(cacheBlock);
+            var neighbourCacheBlocks = this.getCache().neighbourCacheBlocks(cacheBlock);
             _.each(neighbourCacheBlocks, function (cacheBlock) {
                 this._loadCacheBlock(cacheBlock, true);
             }, this);
@@ -76,20 +94,20 @@
 
         getStringData : function (selection) {
             var value = this.getData(selection);
-            var ids = selection.ids || this.filterOptions.getCategoryIdsForCell(selection.cell);
+            var ids = selection.ids || this.filterDimensions.getTableInfo().getCategoryIdsForCell(selection.cell);
             var decimals = this.metadata.decimalsForSelection(ids);
             return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, {decimals : decimals});
         },
 
         _getCategoryIdsForCacheBlock : function (cacheBlock) {
             var region = cacheBlock.getRegion();
-            return this.filterOptions.getCategoryIdsForRegion(region);
+            return this.filterDimensions.getTableInfo().getCategoryIdsForRegion(region);
         },
 
         _loadCacheBlock : function (cacheBlock, limitSimultaneousRequests) {
             var self = this;
             var result = new $.Deferred();
-            if (!this.cache.isBlockReady(cacheBlock)) {
+            if (!this.getCache().isBlockReady(cacheBlock)) {
                 if (!cacheBlock.isFetching()) {
                     var dimensions = this._getCategoryIdsForCacheBlock(cacheBlock);
                     var apiRequestParams = {metadata : this.metadata, dimensions : dimensions};

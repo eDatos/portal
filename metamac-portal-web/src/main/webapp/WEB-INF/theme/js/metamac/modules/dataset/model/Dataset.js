@@ -18,28 +18,19 @@
          */
         initialize : function (options) {
             this.metadata = options.metadata;
-            this.filterOptions = options.filterOptions;
+            this.filterDimensions = options.filterDimensions;
 
             if (this.isBigData()) {
                 this.data = new BigData(options);
             } else {
                 this.data = new Data(options);
             }
-
-            this.initializeEvents();
-        },
-
-        initializeEvents : function () {
-            var self = this;
-            this.filterOptions.on('change reset', function () {
-                self.data.updateFilterOptions();
-            });
         },
 
         isBigData : function () {
+            return true;
             return this.metadata.getTotalObservations() > 1000;
         }
-
 
     };
 

@@ -106,7 +106,9 @@
         getCellForCategoryIds : function (ids) {
             var self = this;
             var result = {x : 0, y : 0};
-            _.each(ids, function (category, dimension) {
+            _.each(ids, function (category, dimensionId) {
+
+
                 var dimension = self._getDimension(dimension);
                 if (dimension) {
                     var zone = self._getZoneFromPosition(dimension.position);
@@ -177,6 +179,7 @@
                 rows : this._dimensionsTotalSize(this.tableInfo.left.representationsLengths)
             };
         }
+
     };
 
 }());

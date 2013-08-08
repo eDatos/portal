@@ -510,12 +510,12 @@ App.test.response.metadata = {
                     "dimensionValues" : {
                         "value" : [
                             {
-                                "id" : "time_3",
-                                "order" : 3,
+                                "id" : "time_1",
+                                "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_1",
                                 "name" : {
                                     "text" : [
                                         {
-                                            "value" : "Time 3",
+                                            "value" : "Time 1",
                                             "lang" : "es"
                                         }
                                     ]
@@ -523,7 +523,7 @@ App.test.response.metadata = {
                             },
                             {
                                 "id" : "time_2",
-                                "order" : 2,
+                                "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2",
                                 "name" : {
                                     "text" : [
                                         {
@@ -534,22 +534,9 @@ App.test.response.metadata = {
                                 }
                             },
                             {
-                                "id" : "time_2_2",
-                                "parent" : "time_2",
-                                "order" : 2,
-                                "name" : {
-                                    "text" : [
-                                        {
-                                            "value" : "Time 2 2",
-                                            "lang" : "es"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
                                 "id" : "time_2_1",
-                                "parent" : "time_2",
-                                "order" : 1,
+                                "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2_1",
+                                "visualisationParent" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2",
                                 "name" : {
                                     "text" : [
                                         {
@@ -560,9 +547,22 @@ App.test.response.metadata = {
                                 }
                             },
                             {
+                                "id" : "time_2_2",
+                                "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2_2",
+                                "visualisationParent" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2",
+                                "name" : {
+                                    "text" : [
+                                        {
+                                            "value" : "Time 2 2",
+                                            "lang" : "es"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
                                 "id" : "time_2_2_1",
-                                "parent" : "time_2_2",
-                                "order" : 1,
+                                "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2_2_1",
+                                "visualisationParent" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2_2",
                                 "name" : {
                                     "text" : [
                                         {
@@ -573,12 +573,12 @@ App.test.response.metadata = {
                                 }
                             },
                             {
-                                "id" : "time_1",
-                                "order" : 1,
+                                "id" : "time_3",
+                                "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_3",
                                 "name" : {
                                     "text" : [
                                         {
-                                            "value" : "Time 1",
+                                            "value" : "Time 3",
                                             "lang" : "es"
                                         }
                                     ]
@@ -603,9 +603,9 @@ App.test.response.metadata = {
                         "value" : [
                             {
                                 "showDecimalsPrecision" : 6,
-                                "order" : 2,
                                 "id" : "INDICE_OCUPACION_HABITACIONES",
                                 "urn" : "urn:sdmx:org.sdmx.infomodel.conceptscheme.Concept=ISTAC:INDICES_CENSALES_OCUPACION_HOTELERA(01.000).INDICE_OCUPACION_HABITACIONES",
+                                "open" : true,
                                 "name" : {
                                     "text" : [
                                         {
@@ -617,7 +617,7 @@ App.test.response.metadata = {
                             },
                             {
                                 "id" : "INDICE_OCUPACION_PLAZAS",
-                                "order" : 1,
+                                "open" : false,
                                 "urn" : "urn:sdmx:org.sdmx.infomodel.conceptscheme.Concept=ISTAC:INDICES_CENSALES_OCUPACION_HOTELERA(01.000).INDICE_OCUPACION_PLAZAS",
                                 "name" : {
                                     "text" : [

@@ -147,6 +147,8 @@ module.exports = (grunt) ->
                 paths.js + "/libs/jquery.jscrollpane.js"
                 paths.js + "/libs/jquery.ba-resize.js"
 
+                paths.js + "/metamac/mixins/ToggleModel.js"
+
                 # svg
                 paths.js + "/metamac/modules/svg/Exporter.js"
                 paths.js + "/metamac/modules/svg/SVGNode.js"
@@ -188,6 +190,15 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js"
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsTable.js"
                 paths.js + "/metamac/modules/dataset/filter/FilterOptions.js"
+
+
+                paths.js + "/metamac/modules/dataset/filter/models/FilterTableInfo.js",
+                paths.js + "/metamac/modules/dataset/filter/models/FilterZone.js",
+                paths.js + "/metamac/modules/dataset/filter/models/FilterZones.js",
+                paths.js + "/metamac/modules/dataset/filter/models/FilterRepresentation.js",
+                paths.js + "/metamac/modules/dataset/filter/models/FilterRepresentations.js",
+                paths.js + "/metamac/modules/dataset/filter/models/FilterDimension.js",
+                paths.js + "/metamac/modules/dataset/filter/models/FilterDimensions.js"
 
                 paths.js + "/metamac/modules/dataset/filter/popup/Filter-dimension-view.js"
                 paths.js + "/metamac/modules/dataset/filter/popup/Filter-view.js"
@@ -361,6 +372,8 @@ module.exports = (grunt) ->
                     mocha:
                         ignoreLeaks: false
                     reporter: 'Dot'
+
+
             spec:
                 src: [ 'src/test/javascript/runner/runner.html' ]
                 options:
@@ -369,6 +382,10 @@ module.exports = (grunt) ->
                         ignoreLeaks: false
                         grep: '<%= globalConfig.mocha.grep %>'
                     reporter: 'mocha-unfunk-reporter'
+
+
+
+
 
     grunt.registerTask 'spec', 'Runs a task on a specified file', (fileName) ->
         globalConfig.mocha.grep = fileName

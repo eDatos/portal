@@ -1,21 +1,19 @@
 describe("FilterSidebarDimensionView", function () {
 
-    var filterOptions;
-    var optionsModel;
-    var dimension;
+    var filterDimension;
     var filterSidebarDimensionView;
 
     beforeEach(function () {
-        filterOptions = App.test.factories.filterOptionsFactory();
-        optionsModel = new App.modules.dataset.OptionsModel();
-        dimension = filterOptions.getDimensions()[0];
+        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
+        var optionsModel = new App.modules.dataset.OptionsModel();
 
+        filterDimension = filterDimensions.at(0);
         filterSidebarDimensionView = new App.widget.filter.sidebar.FilterSidebarDimensionView({
-            dimension : dimension,
-            filterOptions : filterOptions,
+            filterDimension : filterDimension,
             optionsModel : optionsModel
         });
-
+        filterSidebarDimensionView.setMaxHeight(200);
         filterSidebarDimensionView.render();
     });
 
@@ -23,23 +21,22 @@ describe("FilterSidebarDimensionView", function () {
         filterSidebarDimensionView.destroy();
     });
 
-
     describe("collapse", function () {
 
-        it("should change stateModel:collapsed when click title", function () {
-            expect(filterSidebarDimensionView.stateModel.get('collapsed')).to.be.true;
+        it("should change filterDimension:open when click title", function () {
+            expect(filterDimension.get('open')).to.be.true;
             filterSidebarDimensionView.$el.find('.filter-sidebar-dimension-title').click();
-            expect(filterSidebarDimensionView.stateModel.get('collapsed')).to.be.false;
+            expect(filterDimension.get('open')).to.be.false;
         });
 
-        it("should toggle class when stateModel:collapsed change", function () {
+        it("should toggle class when filterDimension:open change", function () {
             var collapseContainer = filterSidebarDimensionView.$el.find(".collapse");
-            expect(collapseContainer.hasClass('in')).to.be.false;
-
-            filterSidebarDimensionView.stateModel.set('collapsed', false);
             expect(collapseContainer.hasClass('in')).to.be.true;
-            filterSidebarDimensionView.stateModel.set('collapsed', true);
+
+            filterDimension.set('open', false);
             expect(collapseContainer.hasClass('in')).to.be.false;
+            filterDimension.set('open', true);
+            expect(collapseContainer.hasClass('in')).to.be.true;
         });
 
     });
@@ -53,12 +50,12 @@ describe("FilterSidebarDimensionView", function () {
         });
 
         it("on change stateModel:maxHeight should update the css", function () {
-            filterSidebarDimensionView.stateModel.set('maxHeight', 300);
+            filterSidebarDimensionView.setMaxHeight(300);
             expect(filterSidebarDimensionView.$(".collapse").css('maxHeight')).to.equal("300px");
         });
 
         it("on render it should set the maxHeight based on stateModel", function () {
-            var currentMaxHeight = filterSidebarDimensionView.stateModel.get('maxHeight');
+            var currentMaxHeight = filterSidebarDimensionView.maxHeight;
             expect(filterSidebarDimensionView.$(".collapse").css('maxHeight')).to.equal(currentMaxHeight + "px");
         });
 

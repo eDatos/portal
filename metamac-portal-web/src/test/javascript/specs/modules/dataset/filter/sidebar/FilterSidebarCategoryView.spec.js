@@ -1,32 +1,22 @@
 describe("FilterSidebarCategoryView", function () {
 
-    var filterOptions;
-    var optionsModel;
-    var dimension;
-    var category;
-    var stateModel;
+    var filterRepresentation;
     var filterSidebarCategoryView;
 
     beforeEach(function () {
-        filterOptions = App.test.factories.filterOptionsFactory();
-        optionsModel = new App.modules.dataset.OptionsModel();
-        dimension = filterOptions.getDimensions()[0];
-        category = filterOptions.getCategories(dimension.id)[0];
-        stateModel = new App.widget.filter.sidebar.FilterSidebarDimensionStateModel();
+        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
+        filterRepresentation = filterDimensions.at(0).get('representations').at(0);
 
         filterSidebarCategoryView = new App.widget.filter.sidebar.FilterSidebarCategoryView({
-            dimension : dimension,
-            filterOptions : filterOptions,
-            optionsModel : optionsModel,
-            category : category,
-            stateModel : stateModel
+            filterRepresentation : filterRepresentation
         });
 
     });
 
     it("should show big titles in one line", function () {
-        category.label = "This is a very big label to check if it show in multiple lines This is a very big label to check if it show in multiple lines This is a very big label to check if it show in multiple lines";
-        sinon.stub(filterOptions, "getCategory").returns(category);
+        var veryBigLabel = "This is a very big label to check if it show in multiple lines This is a very big label to check if it show in multiple lines This is a very big label to check if it show in multiple lines";
+        filterRepresentation.set('label', veryBigLabel);
 
         var $container = $('<div></div>').addClass('filter-sidebar-category').width(100).appendTo('body');
         filterSidebarCategoryView.setElement($container);
@@ -38,10 +28,10 @@ describe("FilterSidebarCategoryView", function () {
         $container.remove();
     });
 
-    it("title shold have tooltip", function () {
+    it("title should have tooltip", function () {
         filterSidebarCategoryView.render();
         var $label = filterSidebarCategoryView.$(".filter-sidebar-category-label");
-        expect($label.attr('title')).to.equal(category.label);
+        expect($label.attr('title')).to.equal(filterRepresentation.get('label'));
     });
 
 });

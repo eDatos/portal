@@ -135,7 +135,7 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _bindEvents : function () {
-            this.listenTo(this.filterOptions, "change", this.update);
+            this.listenTo(this.filterDimensions, "change:selected change:zone", _.debounce(this.update, 20));
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {
@@ -150,8 +150,13 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         updatingDimensionPositions : function () {
-            this.filterOptions.setZoneLengthRestriction({left : 1, top : 1});
-            this.filterOptions.setSelectedCategoriesRestriction({horizontal : -1, columns : -1});
+            console.log("apply updating dimension positions line");
+            this.filterDimensions.zones.get('left').set('fixedSize', 1);
+            this.filterDimensions.zones.get('top').set('fixedSize', 1);
+
+            //TODO
+            //this.filterOptions.setZoneLengthRestriction({left : 1, top : 1});
+            //this.filterOptions.setSelectedCategoriesRestriction({horizontal : -1, columns : -1});
         },
 
         tooltipFormatter : function () {
@@ -270,10 +275,10 @@ App.namespace("App.VisualElement.LineChart");
             var result = {};
             var fixedPermutation = this.getFixedPermutation();
 
-            var horizontalDimension = this.filterOptions.getHorizontalDimension();
-            var columnsDimension = this.filterOptions.getColumnsDimension();
-            var horizontalDimensionSelectedCategories = this.filterOptions.getSelectedCategories(horizontalDimension.number);
-            var columnsDimensionSelectedCategories = this.filterOptions.getSelectedCategories(columnsDimension.number);
+            var horizontalDimension = this.filterDimensions.dimensionsAtZone('left').at(0);
+            var columnsDimension = this.filterDimensions.dimensionsAtZone('top').at(0);
+            var horizontalDimensionSelectedCategories = horizontalDimension.get('representations').where({selected : true});
+            var columnsDimensionSelectedCategories = columnsDimension.get('representations').where({selected : true});
 
             var listSeries = [];
             _.each(columnsDimensionSelectedCategories, function (columnCategory) {
@@ -292,11 +297,11 @@ App.namespace("App.VisualElement.LineChart");
                     serie.data.push({y : y, name : name});
                 });
 
-                serie.name = columnCategory.label;
+                serie.name = columnCategory.get('label');
                 listSeries.push(serie);
             });
 
-            var xaxis = _.pluck(horizontalDimensionSelectedCategories, "label");
+            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'label');
 
             // Changing the options of the chart
             result.series = listSeries;
@@ -316,7 +321,7 @@ App.namespace("App.VisualElement.LineChart");
             var marginIndexStop = Math.min(total, indexStop + 1);
 
             var tickInterval = 1;
-            if (this.filterOptions.getHorizontalDimension().type === "TIME_DIMENSION") {
+            if (this.filterDimensions.dimensionsAtZone('left').at(0).get('type') === "TIME_DIMENSION") {
                 var filteredTotal = marginIndexStop - marginIndexStart;
                 tickInterval = Math.ceil(filteredTotal / this.config.xAxisTicks);
             }

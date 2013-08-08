@@ -10,8 +10,8 @@ describe("Dataset Metadata", function () {
 
         MEASURE_DIMENSION = {"id" : "INDICADORES", "label" : "Indicadores", "type" : "MEASURE_DIMENSION", "hierarchy" : false};
         MEASURE_DIMENSION_REPRESENTATIONS = [
-            {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4, order : 1},
-            {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6, order : 2}
+            {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6, open : true},
+            {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4, open : false}
         ];
     });
 
@@ -70,12 +70,12 @@ describe("Dataset Metadata", function () {
 
         it('hierarchy dimension', function () {
             expect(metadata.getRepresentations('TIME_PERIOD')).to.eql([
-                {id : 'time_1', label : 'Time 1', order : 1},
-                {id : 'time_2', label : 'Time 2', order : 2},
-                {id : 'time_2_1', label : 'Time 2 1', parent : 'time_2', order : 1},
-                {id : 'time_2_2', label : 'Time 2 2', parent : 'time_2', order : 2},
-                {id : 'time_2_2_1', label : 'Time 2 2 1', parent : 'time_2_2', order : 1},
-                {id : 'time_3', label : 'Time 3', order : 3}
+                {id : 'time_1', label : 'Time 1'},
+                {id : 'time_2', label : 'Time 2'},
+                {id : 'time_2_1', label : 'Time 2 1', parent : 'time_2'},
+                {id : 'time_2_2', label : 'Time 2 2', parent : 'time_2'},
+                {id : 'time_2_2_1', label : 'Time 2 2 1', parent : 'time_2_2'},
+                {id : 'time_3', label : 'Time 3'}
             ]);
         });
 

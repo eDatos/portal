@@ -11,31 +11,31 @@
         initialize : function (options) {
             options = options || {};
             this.dataset = options.dataset;
-            this.filterOptions = options.filterOptions;
+
+            this.filterOptions = options.filterOptions; //deprecated
+            this.filterDimensions = options.filterDimensions;
+
             this.el = options.el;
             this.$el = $(this.el);
             this._initializeChartOptions();
         },
 
         getFixedPermutation : function () {
-            var self = this;
             var fixedPermutation = {};
-            var fixedDimensions = this.filterOptions.getFixedDimensions();
-            _.each(fixedDimensions, function (dimension) {
-                var selectedCategory = self.filterOptions.getSelectedCategories(dimension.number)[0];
-                fixedPermutation[dimension.id] = selectedCategory.id;
+            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
+            fixedDimensions.each(function (dimension) {
+                var selectedRepresentations = dimension.get('representations').where({selected : true});
+                fixedPermutation[dimension.id] = selectedRepresentations[0].id;
             });
             return fixedPermutation;
         },
 
         getTitle : function () {
-            var self = this;
-            var fixedDimensions = this.filterOptions.getFixedDimensions();
-            var fixedLabels = _.map(fixedDimensions, function (dimension) {
-                var selectedCategory = self.filterOptions.getSelectedCategories(dimension.number)[0];
-                return selectedCategory.label;
+            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
+            var fixedLabels = fixedDimensions.map(function (dimension) {
+                var selectedRepresentations = dimension.get('representations').where({selected : true});
+                return selectedRepresentations[0].get('label');
             });
-
             return fixedLabels.length ? I18n.t("filter.text.for") + ": " + fixedLabels.join(", ") : "";
         },
 

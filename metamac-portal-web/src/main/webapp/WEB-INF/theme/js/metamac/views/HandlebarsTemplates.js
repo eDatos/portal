@@ -550,7 +550,7 @@ function program1(depth0,data) {
     + " visual-element-options-fs\" title='";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.fullscreen", options) : helperMissing.call(depth0, "message", "filter.button.fullscreen", options)))
-    + "'><i class=\"icon-fullscreen\"></i></button>\r\n    ";
+    + "'><i class=\"icon-fullscreen icon-2x\"></i></button>\r\n    ";
   return buffer;
   }
 
@@ -2146,61 +2146,28 @@ function program13(depth0,data) {
 this["Handlebars"]["templates"]["widget/filter/sidebar/filter-sidebar-category"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, stack2, self=this, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression;
 
-function program1(depth0,data) {
-  
-  var buffer = "", stack1;
-  buffer += "\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.expanded, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    ";
-  return buffer;
-  }
-function program2(depth0,data) {
-  
-  
-  return "\n            <i class=\"category-expand icon-angle-down\"></i>\n        ";
-  }
 
-function program4(depth0,data) {
-  
-  
-  return "\n            <i class=\"category-expand icon-angle-right\"></i>\n        ";
-  }
-
-function program6(depth0,data) {
-  
-  
-  return "\n        <i class=\"category-state icon-check-sign\"></i>\n    ";
-  }
-
-function program8(depth0,data) {
-  
-  
-  return "\n        <i class=\"category-state icon-check-empty\"></i>\n    ";
-  }
-
-function program10(depth0,data) {
-  
-  
-  return "\n";
-  }
-
-  buffer += "<div class=\"filter-sidebar-category-left-actions\">\n    ";
-  stack1 = helpers['if'].call(depth0, depth0.hasSubcategories, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n\n    ";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.category),stack1 == null || stack1 === false ? stack1 : stack1.state), {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n</div>\n\n<a class=\"filter-sidebar-category-label\" title=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.category),stack1 == null || stack1 === false ? stack1 : stack1.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">\n    "
-    + escapeExpression(((stack1 = ((stack1 = depth0.category),stack1 == null || stack1 === false ? stack1 : stack1.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n</a>\n\n";
-  stack2 = helpers['if'].call(depth0, depth0.hasSubcategories, {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n";
+  buffer += "<div class=\"filter-sidebar-category-left-actions\">\n    <i class=\"category-expand ";
+  if (stack1 = helpers.collapseClass) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.collapseClass; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "   level"
+    + escapeExpression(((stack1 = ((stack1 = depth0.filterRepresentation),stack1 == null || stack1 === false ? stack1 : stack1.level)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\"></i>\n    <i class=\"category-state ";
+  if (stack2 = helpers.stateClass) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.stateClass; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + " level"
+    + escapeExpression(((stack1 = ((stack1 = depth0.filterRepresentation),stack1 == null || stack1 === false ? stack1 : stack1.level)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\"></i>\n</div>\n\n<a class=\"filter-sidebar-category-label\" title=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.filterRepresentation),stack1 == null || stack1 === false ? stack1 : stack1.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\n    ";
+  if (stack2 = helpers.label) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.label; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\n</a>";
   return buffer;
   });
 

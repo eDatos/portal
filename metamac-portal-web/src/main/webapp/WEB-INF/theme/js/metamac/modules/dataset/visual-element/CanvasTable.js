@@ -6,7 +6,10 @@
     App.VisualElement.CanvasTable = function (options) {
         this.el = options.el;
         this.dataset = options.dataset;
-        this.filterOptions = options.filterOptions;
+
+        //this.filterOptions = options.filterOptions; //deprecated
+
+        this.filterDimensions = options.filterDimensions;
 
         this._chartOptions = {
             title : {
@@ -49,7 +52,8 @@
 
         _bindEvents : function () {
             this.listenTo(this.dataset.data, "hasNewData", this.hasNewData);
-            this.listenTo(this.filterOptions, "change", this.update);
+            var debouncedUpdate = _.debounce(_.bind(this.update, this), 20);
+            this.listenTo(this.filterDimensions, "change:selected change:zone", debouncedUpdate);
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {
@@ -64,24 +68,35 @@
         },
 
         updatingDimensionPositions : function () {
-            this.filterOptions.setZoneLengthRestriction({left : -1, top : -1});
-            this.filterOptions.setSelectedCategoriesRestriction({left : -1, top : -1});
+            this.filterDimensions.zones.get('left').unset('fixedSize');
+            this.filterDimensions.zones.get('top').unset('fixedSize');
+
+
+            // TODO
+            //this.filterOptions.setZoneLengthRestriction({left : -1, top : -1});
+            //this.filterOptions.setSelectedCategoriesRestriction({left : -1, top : -1});
+        },
+
+        updateTitle : function () {
+            if(this.$title) {
+                this.$title.remove();
+            }
+            var title = this.getTitle();
+
+            this.$title = $("<h3>" + title + "</h3>");
+            this.$el.prepend(this.$title);
         },
 
         render : function () {
-            this.dataSource = new App.DataSourceDataset({dataset : this.dataset, filterOptions : this.filterOptions});
+            this.dataSource = new App.DataSourceDataset({dataset : this.dataset, filterDimensions : this.filterDimensions});
             this.delegate = new App.Table.Delegate();
 
             this.$el.empty();
-
-            var title = this.getTitle();
-            this.$title = $("<h3>" + title + "</h3>");
-            this.$el.append(this.$title);
+            this.updateTitle();
 
             var containerDimensions = this.containerDimensions();
 
             this.$canvas = $('<canvas width="' + containerDimensions.width + '" height="' + containerDimensions.height + '"></canvas>');
-
 
             this.$el.append(this.$canvas);
 
@@ -104,8 +119,9 @@
         },
 
         update : function () {
-            this.filterOptions._initializeTableInfo();
+            this.updateTitle();
             this.view.update();
+            this._updateSize();
         },
 
         containerDimensions : function () {

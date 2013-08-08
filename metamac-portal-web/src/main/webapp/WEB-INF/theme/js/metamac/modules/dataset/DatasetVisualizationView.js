@@ -10,7 +10,9 @@
         initialize : function (options) {
             this.container = options.container;
             this.dataset = options.dataset;
-            this.filterOptions = options.filterOptions;
+
+            this.filterDimensions = options.filterDimensions;
+
             this.optionsModel = options.optionsModel;
             this.veElements = options.veElements;
         },
@@ -19,7 +21,7 @@
             var options = {
                 el : this.$(".dataset-visualization-visual-element"),
                 dataset : this.dataset,
-                filterOptions : this.filterOptions,
+                filterDimensions : this.filterDimensions,
                 animation : this.options.animation
             };
             this.ve = {
@@ -60,17 +62,14 @@
             }
         },
 
-        loadVisualElement : function (element) {
-            var oldElement = this.currentElement;
+        activeVisualElement : function (element) {
             this._removeCurrentElement();
             this.currentElement = element;
-
-            this.ve[this.currentElement].updatingDimensionPositions(oldElement);
-            this.ve[this.currentElement].load();
+            this.ve[this.currentElement].updatingDimensionPositions();
         },
 
         load : function () {
-            this.loadVisualElement(this.currentElement);
+            this.ve[this.currentElement].load();
         },
 
         _removeCurrentElement : function () {

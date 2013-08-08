@@ -10,79 +10,97 @@
         className : "filter-sidebar-category",
 
         initialize : function (options) {
-            this.filterOptions = options.filterOptions;
-            this.stateModel = options.stateModel;
-            this.dimension = options.dimension;
-            this.category = options.category;
-            this.depth = options.depth;
-
-            var eventSufix = "dimension:" + this.dimension.id + ":category:" + this.category.id;
-
-            this.listenTo(this.filterOptions, "select:" + eventSufix, this.render);
-            this.listenTo(this.filterOptions, "unselect:" + eventSufix, this.render);
-            this.listenTo(this.stateModel, "change:categoryFilter", this.onChangeCategoryFilter);
-
-            this.subcategoryViews = [];
-
-            this.visible = true;
-            this.expanded = true;
+            this.filterRepresentation = options.filterRepresentation;
         },
 
         events : {
-            "click .filter-sidebar-category-label" : "toggleModelState",
-            "click .category-state" : "toggleModelState",
-            "click .category-expand" : "toggleExpanded"
+            "click .filter-sidebar-category-label" : "toggleSelected",
+            "click .category-state" : "toggleSelected",
+            "click .category-expand" : "toggleOpen"
         },
 
-        setVisible : function (visible) {
-            if (visible !== this.visible) {
-                this.visible = visible;
-                this.$el.toggle(visible);
+        _bindEvents : function () {
+            var renderEvents = 'change:selected change:childrenSelected change:visible change:open change:matchIndexBegin change:matchIndexEnd';
+
+            //debounce for multiple changes when searching
+            this.listenTo(this.filterRepresentation, renderEvents , _.debounce(this.render, 15));
+        },
+
+        _unbindEvents : function () {
+            this.stopListening();
+        },
+
+        toggleOpen : function (e) {
+            e.preventDefault();
+            this.filterRepresentation.toggle('open');
+        },
+
+        toggleSelected : function (e) {
+            e.preventDefault();
+            this.filterRepresentation.toggle('selected');
+        },
+
+        _stateClass : function () {
+            var stateClass;
+            if (this.filterRepresentation.children.length > 0 && this.filterRepresentation.get('childrenSelected')) {
+                stateClass = this.filterRepresentation.get('selected') ?
+                    'icon-check-sign' :
+                    'icon-sign-blank';
+            } else {
+                stateClass = this.filterRepresentation.get('selected') ?
+                    'icon-check' :
+                    'icon-check-empty';
+            }
+            return stateClass;
+        },
+
+        _collapseClass : function () {
+            if (this.filterRepresentation.children.length > 0) {
+                var collapseClass = this.filterRepresentation.get('open') ?
+                    'icon-collapse' :
+                    'icon-expand';
+                return collapseClass;
             }
         },
 
-        onChangeCategoryFilter : function () {
-            var visible = this.stateModel.isVisibleWithCategoryFilter(this.category.label);
-            this.setVisible(visible);
-        },
-
-        toggleExpanded : function (e) {
-            e.preventDefault();
-            this.expanded = !this.expanded;
-            _.each(this.subcategoryViews, function (view) {
-                view.setVisible(this.expanded);
-            }, this);
-            this.render();
-        },
-
-        toggleModelState : function () {
-            this.filterOptions.toggleCategoryState(this.dimension.id, this.category.id);
-            return false;
-        },
-
-        _hasSubcategories : function () {
-            return this.subcategoryViews.length > 0;
+        _strongZone : function (str, begin, end) {
+            if (begin >= 0 && end > begin) {
+                var p1 = str.substring(0, begin);
+                var p2 = str.substring(begin, end);
+                var p3 = str.substring(end);
+                return p1 + "<strong>" + p2 + "</strong>" + p3;
+            } else {
+                return str;
+            }
         },
 
         render : function () {
-            var category = this.filterOptions.getCategory(this.dimension.id, this.category.id);
-            var context = {
-                category : category,
-                hasSubcategories : this._hasSubcategories(),
-                expanded : this.expanded,
-                depth : this.depth
-            };
-            this.$el.html(this.template(context));
-            this.$el.css("padding-left", this.depth * 35);
+            this._unbindEvents();
+            this._bindEvents();
+
+            var visible = this.filterRepresentation.get('visible');
+
+            if (visible) {
+                this.$el.removeClass('hide');
+                var stateClass = this._stateClass();
+                var collapseClass = this._collapseClass();
+                var filterRepresentation = this.filterRepresentation.toJSON();
+                var label = this._strongZone(filterRepresentation.label, filterRepresentation.matchIndexBegin, filterRepresentation.matchIndexEnd);
+
+                var context = {
+                    filterRepresentation : filterRepresentation,
+                    label : new Handlebars.SafeString(label),
+                    stateClass : stateClass,
+                    collapseClass : collapseClass
+                };
+                this.$el.html(this.template(context));
+                this.$el.css("padding-left", this.filterRepresentation.get('level') * 20);
+            } else {
+                this.$el.addClass('hide');
+                this.$el.html('');
+            }
 
             return this.el;
-        },
-
-        addSubcategoryViews : function (views) {
-            if (!_.isArray(views)) {
-                views = [views];
-            }
-            this.subcategoryViews = this.subcategoryViews.concat(views);
         }
 
     });
