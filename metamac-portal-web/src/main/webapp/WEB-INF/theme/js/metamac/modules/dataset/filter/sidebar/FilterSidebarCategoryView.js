@@ -21,13 +21,17 @@
 
         _bindEvents : function () {
             var renderEvents = 'change:selected change:childrenSelected change:visible change:open change:matchIndexBegin change:matchIndexEnd';
-
             //debounce for multiple changes when searching
             this.listenTo(this.filterRepresentation, renderEvents , _.debounce(this.render, 15));
         },
 
         _unbindEvents : function () {
             this.stopListening();
+        },
+
+        destroy : function () {
+            this._unbindEvents();
+            this.remove();
         },
 
         toggleOpen : function (e) {

@@ -19,6 +19,8 @@
         },
 
         destroy : function () {
+            _.invoke(this.subviews, 'destroy');
+
             this._unbindEvents();
             this.remove();
         },
@@ -31,25 +33,17 @@
 
         _bindEvents : function () {
             this.listenTo(this.filterDimension, "change:open", this._onChangeOpen);
-            //this.listenTo(this.stateModel, "change:maxHeight", this._onChangeMaxHeight);
         },
 
         _unbindEvents : function () {
             this.stopListening();
         },
 
-        _filteredCategoriesIds : function () {
-            var self = this;
-            return _.chain(this.filterOptions.getCategories(this.dimension.id))
-                .filter(function (category) {
-                    return self.stateModel.isVisibleWithCategoryFilter(category.label);
-                })
-                .pluck("id")
-                .value();
-        },
-
         _isFixedDimension : function () {
-            return this.filterDimension.get('zone') === 'fixed';
+            var zone = this.filterDimension.get('zone');
+            if (zone) {
+                return zone.id === 'fixd';
+            }
         },
 
         render : function () {
@@ -64,18 +58,16 @@
             };
             this.$el.html(this.template(context));
 
-            var self = this;
             var filterRepresentations = this.filterDimension.get('representations');
-            var views = filterRepresentations.map(function (filterRepresentation) {
+            this.subviews = filterRepresentations.map(function (filterRepresentation) {
                 var view = new FilterSidebarCategoryView({
-                    filterDimension : self.filterDimension,
                     filterRepresentation : filterRepresentation
                 });
                 return view;
             });
 
             var $categories = this.$(".filter-sidebar-categories");
-            _.each(views, function (view) {
+            _.each(this.subviews, function (view) {
                 view.render();
                 $categories.append(view.el);
             });

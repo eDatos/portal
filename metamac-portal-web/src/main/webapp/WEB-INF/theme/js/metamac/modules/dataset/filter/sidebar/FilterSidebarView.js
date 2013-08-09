@@ -30,6 +30,7 @@
         },
 
         destroy : function () {
+            _.invoke(this.subviews, 'destroy');
             this._unbindEvents();
         },
 
@@ -38,11 +39,11 @@
         },
 
         _bindEvents : function () {
-//            this.listenTo(this.filterOptions, "zoneLengthRestriction", this.render);
+            _.invoke(this.subviews, '_bindEvents');
         },
 
         _unbindEvents : function () {
-            //this.stopListening();
+            _.invoke(this.subviews, '_unbindEvents');
         },
 
         render : function () {
