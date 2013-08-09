@@ -10,7 +10,8 @@
         if (arr2.length === 0) return arr1;
         return _.reduce(arr1, function (memo, elem1) {
             memo.push(elem1);
-            return memo.concat(arr2);
+            var clonedArr2 = _.map(arr2, _.clone);
+            return memo.concat(clonedArr2);
         }, []);
     };
 
@@ -24,10 +25,10 @@
 
     var incrementArray = function (arr, prop, value) {
         _.each(arr, function (e) {
-            e[prop] = e[prop] + value;
+            e[prop] += value;
         });
         return arr;
-    }
+    };
 
     App.modules.dataset.filter.models.FilterTableInfo = Backbone.Model.extend({
 
@@ -102,17 +103,18 @@
                 return dimension.get('representations').invoke('pick', 'label', 'level');
             });
 
-            // plain updating nested level
-            var headerValues = _.reduce(headerValuesGroupByDimension, function (memo, headerValuesInDimension) {
+            // plain update of nested dimensions and levels
+            var headerValues = _.reduceRight(headerValuesGroupByDimension, function (memo, headerValuesInDimension) {
                 if (memo.length === 0) return headerValuesInDimension;
-                var maxLevel = maxInArray(_.pluck(memo, 'level')) + 1;
-                incrementArray(headerValuesInDimension, 'level', maxLevel);
-                return combineExpanding(memo, headerValuesInDimension);
+                var levels = _.pluck(headerValuesInDimension, 'level');
+                var maxLevel = maxInArray(levels) + 1;
+                incrementArray(memo, 'level', maxLevel);
+                return combineExpanding(headerValuesInDimension, memo);
             }, []);
 
             // indent using level
-            var labels = _.map(headerValues, function (headerValues) {
-                return repeatStr(DIMVAL_INDENT, headerValues.level) + headerValues.label;
+            var labels = _.map(headerValues, function (headerValue) {
+                return repeatStr(DIMVAL_INDENT, headerValue.level) + headerValue.label;
             });
 
             this.leftHeaderValues = [labels];

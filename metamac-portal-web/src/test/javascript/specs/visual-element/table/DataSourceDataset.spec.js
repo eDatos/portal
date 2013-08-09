@@ -12,8 +12,7 @@ describe('DataSourceDataset', function () {
         var metadata = new App.dataset.Metadata(App.test.response.metadata);
         var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         filterDimensions.zones.setDimensionZone('left', filterDimensions.get('TIME_PERIOD'));
-        filterDimensions.zones.setDimensionZone('left', filterDimensions.get('CATEGORIA_ALOJAMIENTO'));
-        filterDimensions.zones.setDimensionZone('top', filterDimensions.get('DESTINO_ALOJAMIENTO'));
+        filterDimensions.zones.swapDimensions(filterDimensions.get('TIME_PERIOD'), filterDimensions.get('CATEGORIA_ALOJAMIENTO'));
         dataSource = new App.DataSourceDataset({filterDimensions : filterDimensions});
     };
 
@@ -43,15 +42,36 @@ describe('DataSourceDataset', function () {
         it('should return dimension labels in plain mode preserving space for hierarchy', function () {
             initializeDataSourceWithHierarchyAtLeft();
 
-            var expectedLeftHeaderValues = [[
-                'Time 1', '      1, 2 y 3 estrellas', '      4 y 5 Estrellas', '      Total',
-                'Time 2', '      1, 2 y 3 estrellas', '      4 y 5 Estrellas', '      Total',
-                '  Time 2 1', '      1, 2 y 3 estrellas', '      4 y 5 Estrellas', '      Total',
-                '  Time 2 2', '      1, 2 y 3 estrellas', '      4 y 5 Estrellas', '      Total',
-                '    Time 2 2 1', '      1, 2 y 3 estrellas', '      4 y 5 Estrellas', '      Total',
-                'Time 3', '      1, 2 y 3 estrellas', '      4 y 5 Estrellas', '      Total'
-            ]];
-            expect(dataSource.leftHeaderValues()).to.eql(expectedLeftHeaderValues);
+            //TIME, Destino alojamiento, Categoria alojamiento
+
+            var level2 = [
+                '        1, 2 y 3 estrellas',
+                '        4 y 5 Estrellas',
+                '        Total'
+            ];
+            var level1 = [
+                '      El Hierro', level2,
+                '      La Palma', level2,
+                '      La Gomera', level2,
+                '      Tenerife', level2,
+                '      Gran Canaria', level2,
+                '      Fuerteventura', level2,
+                '      Lanzarote', level2
+            ];
+
+            var level0 = [
+                'Time 1', level1,
+                'Time 2', level1,
+                '  Time 2 1', level1,
+                '  Time 2 2', level1,
+                '    Time 2 2 1', level1,
+                'Time 3', level1
+            ];
+
+            var expectedLeftHeaderValues = [_.flatten(level0)];
+            var leftHeaderValues = dataSource.leftHeaderValues();
+
+            expect(leftHeaderValues).to.eql(expectedLeftHeaderValues);
         });
 
     });
