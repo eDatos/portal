@@ -20,8 +20,7 @@
     App.dataset.data.ApiRequest.prototype = {
 
         url : function () {
-            //return App.apiContext + "/datasets/" + this.metadata.getProvider() + "/" + this.metadata.getIdentifier() + "/001.000";
-            return App.apiContext + "/datasets/ISTAC/" + this.metadata.getIdentifier() + "/001.000";
+            return this.metadata.baseUrl;
         },
 
         queryParams : function () {

@@ -9,6 +9,7 @@
     var main;
 
     var fetchOptions = {
+        type : "${type}",
         agency : "${agency}",
         identifier : "${identifier}",
         version : "${version}"
@@ -19,7 +20,5 @@
         main = new App.modules.dataset.Main({el : '#dataset-container', metadata : metadata, attributes : attributes});
     });
 </script>
-
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-501fc6f600bacbe9"></script>
 
 [/@layoutPage.page]

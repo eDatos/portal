@@ -170,6 +170,4 @@ describe('FilterRepresentations', function () {
 
     });
 
-
-
 });

@@ -10,10 +10,18 @@
     };
 
     App.dataset.Metadata.fetch = function (options) {
-        //TODO pass parameters, externalize url, no data parameter
         var result = $.Deferred();
-        $.getJSON(App.apiContext + '/datasets/' + options.agency + '/' + options.identifier + '/' + options.version + '?_type=json&fields=-data', function (response) {
+        var baseUrl;
+        if (options.type === "dataset") {
+            baseUrl = App.apiContext + '/datasets/' + options.agency + '/' + options.identifier + '/' + options.version;
+        } else if (options.type === "query") {
+            baseUrl = App.apiContext + '/queries/' + options.agency + '/' + options.identifier;
+        }
+        var url = baseUrl + '?_type=json&fields=-data';
+
+        $.getJSON(url, function (response) {
             var metadata = new App.dataset.Metadata(response);
+            metadata.baseUrl = baseUrl;
             result.resolveWith(null, [metadata]);
         });
         return result.promise();
@@ -73,14 +81,16 @@
         },
 
         getLanguages : function () {
-            var self = this;
-            var languages = this.metadata.languages.resource;
-            var id = _.pluck(languages, 'id');
-            var label = _.reduce(languages, function (memo, language) {
-                memo[language.id] = self.localizeLabel(language.name.text);
-                return memo;
-            }, {});
-            return {id : id, label : label};
+            if (this.metadata.languages) {
+                var self = this;
+                var languages = this.metadata.languages.resource;
+                var id = _.pluck(languages, 'id');
+                var label = _.reduce(languages, function (memo, language) {
+                    memo[language.id] = self.localizeLabel(language.name.text);
+                    return memo;
+                }, {});
+                return {id : id, label : label};
+            }
         },
 
         getProvider : function () {
@@ -92,7 +102,9 @@
         },
 
         getDescription : function () {
-            return this.localizeLabel(this.options.description.text);
+            if (this.options.description) {
+                return this.localizeLabel(this.options.description.text);
+            }
         },
 
         getLicense : function () {
@@ -119,7 +131,9 @@
         },
 
         _dimensionHasHierarchy : function (dimension) {
-            return _.any(dimension.dimensionValues.value, function (dimensionValue) { return _.has(dimensionValue, 'visualisationParent')});
+            return _.any(dimension.dimensionValues.value, function (dimensionValue) {
+                return _.has(dimensionValue, 'visualisationParent')
+            });
         },
 
         getDimensions : function () {
@@ -178,7 +192,7 @@
 
                 //sort
                 var hasHierarchy = this._dimensionHasHierarchy(dimension);
-                representations = hasHierarchy? this._sortHierarchyRepresentations(representations) : representations;
+                representations = hasHierarchy ? this._sortHierarchyRepresentations(representations) : representations;
             }
             return representations;
         },
