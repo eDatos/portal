@@ -100,7 +100,8 @@
 
         _initializeLeftHeaderValues : function () {
             var headerValuesGroupByDimension = this.filterDimensions.zones.get('left').get('dimensions').map(function (dimension) {
-                return dimension.get('representations').invoke('pick', 'label', 'level');
+                var selectedRepresentations = dimension.get('representations').where({selected : true});
+                return _.invoke(selectedRepresentations, 'pick', 'label', 'level');
             });
 
             // plain update of nested dimensions and levels

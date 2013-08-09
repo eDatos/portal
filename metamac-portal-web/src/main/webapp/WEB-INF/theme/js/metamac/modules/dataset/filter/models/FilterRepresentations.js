@@ -59,48 +59,6 @@
             _.invoke(selectedModels.slice(selectedLimit), 'set', {selected : false});
         },
 
-        setVisibleQuery : function (visibleQuery) {
-            this.visibleQuery = visibleQuery ? _.string.slugify(visibleQuery) : '';
-            var visibleQuerySize = this.visibleQuery.length;
-
-            this.each(function (model) {
-                model.set({open : false}, {trigger : false});
-            });
-
-            var setObject = {};
-            var visibleModels = [];
-            this.each(function (model) {
-                var matchIndex = _.string.slugify(model.get('label')).indexOf(this.visibleQuery);
-                var match = matchIndex !== -1;
-
-                if (match) {
-                    setObject[model.id] = {id : model.id, visible : true, matchIndexBegin : matchIndex, matchIndexEnd : matchIndex + visibleQuerySize};
-                    visibleModels.push(model);
-                } else {
-                    setObject[model.id] = {id : model.id, visible : false, matchIndexBegin : undefined, matchIndexEnd : undefined};
-                }
-            }, this);
-
-            _.each(visibleModels, function (model) {
-                var parentId = model.get('parent');
-                while (parentId) {
-                    var parent = this.get(parentId);
-                    setObject[parent.id].open = true;
-                    setObject[parent.id].visible = true;
-                    parentId = parent.get('parent');
-                }
-            }, this);
-
-            this.each(function (model) {
-                model.set(setObject[model.id]);
-            });
-
-        },
-
-        setVisibleLevel : function (visibleLevel) {
-            this.visibleLevel = visibleLevel;
-        },
-
         _onChangeSelected : function (model) {
             var selectedModels = this._selectedModels();
             if (!model.get('selected') && selectedModels.length === 0) {

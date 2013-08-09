@@ -272,10 +272,63 @@ function program1(depth0,data) {
 this["Handlebars"]["templates"]["components/searchbar/searchbar"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"searchbar\">\n    <input type=\"text\" placeholder=\"Buscar\" value=\"";
+  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n    <div class=\"icon-search-min\"></div>\n    <a href=\"#\" class=\"searchbar-clear\">\n        <i class=\"icon-remove-min\"></i>\n    </a>\n</div>";
+  return buffer;
+  });
+
+this["Handlebars"]["templates"]["components/select/select"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
   
+  
+  return "multiple";
+  }
 
+function program3(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n        <option value=\"";
+  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" ";
+  stack1 = helpers['if'].call(depth0, depth0.selected, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">";
+  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</option>\n    ";
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  
+  return "selected";
+  }
 
-  return "<div class=\"searchbar\">\n    <input type=\"text\" placeholder=\"Buscar\">\n    <div class=\"icon-search-min\"></div>\n    <a href=\"#\" class=\"searchbar-clear\">\n        <i class=\"icon-remove-min\"></i>\n    </a>\n</div>";
+  buffer += "<select name=\"";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" ";
+  stack1 = helpers['if'].call(depth0, depth0.multiple, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">\n    ";
+  stack1 = helpers.each.call(depth0, depth0.options, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</select>";
+  return buffer;
   });
 
 this["Handlebars"]["templates"]["components/sidebar/sidebar-container"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -2171,6 +2224,31 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return buffer;
   });
 
+this["Handlebars"]["templates"]["widget/filter/sidebar/filter-sidebar-dimension-actions"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, self=this;
+
+function program1(depth0,data) {
+  
+  
+  return "\n\n";
+  }
+
+function program3(depth0,data) {
+  
+  
+  return "\n<div class=\"filter-sidebar-dimension-actions\">\n    <a href=\"#\" class=\"btn btn-mini filter-sidebar-selectAll\">Marcar todo</a>\n    <a href=\"#\" class=\"btn btn-mini filter-sidebar-unselectAll\">Desmarcar todo</a>\n</div>\n";
+  }
+
+  stack1 = helpers['if'].call(depth0, depth0.hasHierarchy, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n";
+  stack1 = helpers.unless.call(depth0, depth0.isFixedDimension, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  return buffer;
+  });
+
 this["Handlebars"]["templates"]["widget/filter/sidebar/filter-sidebar-dimension"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -2188,32 +2266,15 @@ function program3(depth0,data) {
   return " in ";
   }
 
-function program5(depth0,data) {
-  
-  
-  return "\n            <div class=\"filter-sidebar-dimension-actions\">\n                <a href=\"#\" class=\"btn btn-mini filter-sidebar-selectAll\">Marcar todo</a>\n                <a href=\"#\" class=\"btn btn-mini filter-sidebar-unselectAll\">Desmarcar todo</a>\n            </div>\n        ";
-  }
-
   buffer += "<div class=\"filter-sidebar-dimension ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.hierarchy), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\">\n    <div class=\"filter-sidebar-dimension-title\">\n        <div class=\"filter-sidebar-dimension-label\">\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n        </div>\n\n        <!--\n        <div class=\"filter-sidebar-dimension-zone\">\n            <a title=\"";
-  if (stack2 = helpers.zoneLabel) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.zoneLabel; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-  buffer += escapeExpression(stack2)
-    + "\">";
-  if (stack2 = helpers.zoneFirstLetter) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.zoneFirstLetter; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-  buffer += escapeExpression(stack2)
-    + "</a>\n        </div>\n        -->\n    </div>\n\n    <div class=\"collapse ";
-  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.state),stack1 == null || stack1 === false ? stack1 : stack1.collapsed), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+    + "\n        </div>\n    </div>\n\n    <div class=\"collapse ";
+  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\" >\n        <div class=\"filter-sidebar-dimension-searchbar\"></div>\n\n        ";
-  stack2 = helpers.unless.call(depth0, depth0.isFixedDimension, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n\n        <div class=\"filter-sidebar-categories\"></div>\n    </div>\n\n</div>";
+  buffer += "\" >\n        <div class=\"filter-sidebar-dimension-searchbar\"></div>\n        <div class=\"filter-sidebar-dimension-levels\"></div>\n        <div class=\"filter-sidebar-dimension-actions\"></div>\n        <div class=\"filter-sidebar-categories\"></div>\n    </div>\n\n</div>";
   return buffer;
   });
 

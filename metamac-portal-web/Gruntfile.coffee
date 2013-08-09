@@ -185,6 +185,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/components/searchbar/SearchbarView.js"
                 paths.js + "/metamac/components/accordion/AccordionView.js"
                 paths.js + "/metamac/components/accordion/AccordionItemView.js"
+                paths.js + "/metamac/components/select/views/SelectView.js"
 
                 # filters
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js"
@@ -203,8 +204,8 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/filter/popup/Filter-dimension-view.js"
                 paths.js + "/metamac/modules/dataset/filter/popup/Filter-view.js"
 
-                paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionStateModel.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarCategoryView.js"
+                paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionActionsView.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionView.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarView.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/OrderSidebarView.js"

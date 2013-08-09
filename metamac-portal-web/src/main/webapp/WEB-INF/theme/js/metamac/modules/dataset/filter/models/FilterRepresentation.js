@@ -9,21 +9,21 @@
             visible : true,
             open : true,
             selected : true,
-            childrenSelected : true,
-            level : 0
+            childrenSelected : false,
+            level : 0,
+            matchIndexBegin : undefined,
+            matchIndexEnd : undefined
         },
 
         initialize : function () {
             this.children = new Backbone.Collection();
-
-            this.listenTo(this.children, 'change:selected', this._updateChildrenSelected);
-            this.listenTo(this.children, 'change:childrenSelected', this._updateChildrenSelected);
+            this.listenTo(this.children, 'change:selected change:childrenSelected reset', this._updateChildrenSelected);
             this.listenTo(this, 'change:open', this._onChangeOpen);
         },
 
         _updateChildrenSelected : function () {
-            var childrenSelected = this.children.every(function (child) {
-                return child.get('selected') && child.get('childrenSelected');
+            var childrenSelected = this.children.any(function (child) {
+                return child.get('selected') || child.get('childrenSelected');
             });
             this.set('childrenSelected', childrenSelected);
         },

@@ -13,21 +13,17 @@
             this.filterDimensions = options.filterDimensions;
             this.filterDimension = options.filterDimension;
             this.optionsModel = options.optionsModel;
-
-            this.stateModel = new App.widget.filter.sidebar.FilterSidebarDimensionStateModel();
-            this.searchbar = new App.components.searchbar.SearchbarView({model : this.filterDimension, modelAttribute : "filterQuery"});
         },
 
         destroy : function () {
-            _.invoke(this.subviews, 'destroy');
-
+            if (this.subviews) {
+                _.invoke(this.subviews, 'destroy');
+            }
             this._unbindEvents();
             this.remove();
         },
 
         events : {
-            "click .filter-sidebar-selectAll" : "_onSelectAll",
-            "click .filter-sidebar-unselectAll" : "_onDeselectAll",
             "click .filter-sidebar-dimension-title" : "_onClickTitle"
         },
 
@@ -39,41 +35,62 @@
             this.stopListening();
         },
 
-        _isFixedDimension : function () {
-            var zone = this.filterDimension.get('zone');
-            if (zone) {
-                return zone.id === 'fixd';
-            }
-        },
-
         render : function () {
             this.delegateEvents();
             this._unbindEvents();
             this._bindEvents();
 
             var context = {
-                dimension : this.filterDimension.toJSON(),
-                isFixedDimension : this._isFixedDimension(),
-                state : this.stateModel.toJSON()
+                dimension : this.filterDimension.toJSON()
             };
+
             this.$el.html(this.template(context));
 
+            this.subviews = [];
+
             var filterRepresentations = this.filterDimension.get('representations');
-            this.subviews = filterRepresentations.map(function (filterRepresentation) {
+            var $categories = this.$(".filter-sidebar-categories");
+            this.representationsSubviews = filterRepresentations.map(function (filterRepresentation) {
                 var view = new FilterSidebarCategoryView({
                     filterRepresentation : filterRepresentation
                 });
-                return view;
-            });
-
-            var $categories = this.$(".filter-sidebar-categories");
-            _.each(this.subviews, function (view) {
                 view.render();
                 $categories.append(view.el);
+                return view;
             });
+            this.subviews = this.subviews.concat(this.representationsSubviews);
 
-            this.searchbar.setElement(this.$(".filter-sidebar-dimension-searchbar"));
-            this.searchbar.render();
+            this.searchbarView = new App.components.searchbar.SearchbarView({
+                model : this.filterDimension,
+                modelAttribute : "filterQuery",
+                el : this.$(".filter-sidebar-dimension-searchbar")
+            });
+            this.searchbarView.render();
+            this.subviews.push(this.searchbarView);
+
+            this.actionsView = new App.widget.filter.sidebar.FilterSidebarDimensionActionsView({
+                filterDimension : this.filterDimension,
+                el : this.$('.filter-sidebar-dimension-actions')
+            });
+            this.actionsView.render();
+            this.subviews.push(this.actionsView);
+
+            if (this.filterDimension.get('hierarchy')) {
+                var hierarchyLevel = this.filterDimension.getMaxHierarchyLevel() + 1;
+                var levelsModels = _(hierarchyLevel).times(function (n) {
+                    return {id : n, title : 'Nivel ' + (n + 1)};
+                });
+                this.levelsCollection = new Backbone.Collection(levelsModels);
+
+                this.levelView = new App.components.select.views.SelectView({
+                    collection : this.levelsCollection,
+                    selectionModel : this.filterDimension,
+                    name : 'filterLevel',
+                    el : this.$('.filter-sidebar-dimension-levels')
+                });
+                this.levelView.render();
+                this.subviews.push(this.levelView);
+            }
 
             this.setMaxHeight(this.maxHeight);
             this._onChangeOpen();
@@ -83,16 +100,6 @@
 
         getCollapsedHeight : function () {
             return this.$(".filter-sidebar-dimension-title").outerHeight(true);
-        },
-
-        _onSelectAll : function (e) {
-            e.preventDefault();
-            this.filterDimension.get('representations').selectVisible();
-        },
-
-        _onDeselectAll : function (e) {
-            e.preventDefault();
-            this.filterDimension.get('representations').deselectVisible();
         },
 
         _onClickTitle : function (e) {

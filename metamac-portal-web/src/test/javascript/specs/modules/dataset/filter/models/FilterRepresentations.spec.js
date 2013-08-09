@@ -87,60 +87,6 @@ describe('FilterRepresentations', function () {
         });
     });
 
-    describe('setVisibleQuery', function () {
-
-        it('should set visible only models that match with the query and its parents', function () {
-            filterRepresentations.invoke('set', {visible : true});
-            filterRepresentations.setVisibleQuery('1');
-
-            var visibleModels = filterRepresentations.where({visible : true});
-            expect(visibleModels.length).to.equal(4);
-            expect(visibleModels[0].id).to.equal('r1');
-        });
-
-        it('should show all models if query is empty', function () {
-            filterRepresentations.invoke('set', {visible : false});
-            filterRepresentations.setVisibleQuery('');
-
-            var visibleModels = filterRepresentations.where({visible : true});
-            expect(visibleModels.length).to.equal(filterRepresentations.models.length);
-        });
-
-        it('should compare labels case insensitive', function () {
-            filterRepresentations.invoke('set', {visible : false});
-            filterRepresentations.setVisibleQuery('representation 1');
-
-            var visibleModels = filterRepresentations.where({visible : true});
-            expect(visibleModels.length).to.equal(1);
-            expect(visibleModels[0].id).to.equal('r1');
-        });
-
-        it('should set match index in model', function () {
-            filterRepresentations.setVisibleQuery('1');
-
-            expect(r1.get('matchIndexBegin')).to.equal(15);
-            expect(r1.get('matchIndexEnd')).to.equal(16);
-
-            expect(r2.get('matchIndexBegin')).to.be.undefined;
-            expect(r2.get('matchIndexEnd')).to.be.undefined;
-
-            var r212 = filterRepresentations.get('r2.1.2');
-            expect(r212.get('matchIndexBegin')).to.equal(16);
-            expect(r212.get('matchIndexEnd')).to.equal(17);
-
-        });
-
-        it('should set visible all parents when a model match', function () {
-            filterRepresentations.setVisibleQuery('Representation 2.1.2');
-            var visibleModels = filterRepresentations.where({visible : true});
-            expect(visibleModels.length).to.equal(3);
-            expect(filterRepresentations.get('r2.1.2').get('visible')).to.be.true;
-            expect(filterRepresentations.get('r2.1').get('visible')).to.be.true;
-            expect(filterRepresentations.get('r2').get('visible')).to.be.true;
-        });
-
-    });
-
     describe('on models change selected', function () {
 
         it('should not deselect if is the last model', function () {
