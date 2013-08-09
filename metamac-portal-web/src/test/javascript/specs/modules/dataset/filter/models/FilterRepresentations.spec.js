@@ -87,6 +87,37 @@ describe('FilterRepresentations', function () {
         });
     });
 
+    describe('toggleRepresentationsVisibleRange', function () {
+
+        it('should toggle selected range', function () {
+            r2.set('open', false);
+            filterRepresentations.deselectVisible();
+
+            filterRepresentations.toggleRepresentationsVisibleRange(0, 2, true);
+            var allSelected = _.chain([r1, r2, r3]).invoke('get', 'selected').every().value();
+            expect(allSelected).to.be.true;
+        });
+
+        it('should toggle deselected range', function () {
+            r2.set('open', false);
+            filterRepresentations.toggleRepresentationsVisibleRange(0, 2, false);
+            var allSelected = _.chain([r1, r2, r3]).invoke('get', 'selected').any().value();
+            expect(allSelected).to.be.false;
+        });
+
+        it('should toggle selected range until reach the selection limit', function () {
+            filterRepresentations.deselectVisible();
+            r2.set('open', false);
+            filterRepresentations.setSelectedLimit(2);
+
+            filterRepresentations.toggleRepresentationsVisibleRange(0, 2, true);
+
+            var selected = _.invoke([r1, r2, r3], 'get', 'selected');
+            expect(selected).to.eql([false, true, true]);
+        });
+
+    });
+
     describe('on models change selected', function () {
 
         it('should not deselect if is the last model', function () {
@@ -138,5 +169,7 @@ describe('FilterRepresentations', function () {
         });
 
     });
+
+
 
 });

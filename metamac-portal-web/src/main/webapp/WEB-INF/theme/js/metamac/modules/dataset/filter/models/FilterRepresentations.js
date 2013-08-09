@@ -59,6 +59,12 @@
             _.invoke(selectedModels.slice(selectedLimit), 'set', {selected : false});
         },
 
+        toggleRepresentationsVisibleRange : function (start, end, state) {
+            var visibleModels = this.where({visible : true});
+            var modelsToChange = visibleModels.slice(start, end + 1);
+            _.invoke(modelsToChange, 'set', {selected : state});
+        },
+
         _onChangeSelected : function (model) {
             var selectedModels = this._selectedModels();
             if (!model.get('selected') && selectedModels.length === 0) {

@@ -36,8 +36,16 @@
             cursor: pointer;
 
             &.active {
-                box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.20);
+                box-shadow: inset 0px 1px 3px 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2);
+                background-color: #1d4d6e;
             }
+
+            &.active:first-child {
+                .border-radius(@sidebarRadius 0 0 0);
+                box-shadow: inset 0px 1px 3px 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2);
+                background-color: #1d4d6e;
+            }
+
 
             i {
                 font-size: 30px;

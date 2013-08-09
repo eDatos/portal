@@ -11,6 +11,8 @@
 
         initialize : function (options) {
             this.filterRepresentation = options.filterRepresentation;
+            this.filterDimension = options.filterDimension;
+            this.filterSidebarDimensionView = options.filterSidebarDimensionView;
         },
 
         events : {
@@ -22,7 +24,7 @@
         _bindEvents : function () {
             var renderEvents = 'change:selected change:childrenSelected change:visible change:open change:matchIndexBegin change:matchIndexEnd';
             //debounce for multiple changes when searching
-            this.listenTo(this.filterRepresentation, renderEvents , _.debounce(this.render, 15));
+            this.listenTo(this.filterRepresentation, renderEvents, _.debounce(this.render, 15));
         },
 
         _unbindEvents : function () {
@@ -41,7 +43,16 @@
 
         toggleSelected : function (e) {
             e.preventDefault();
-            this.filterRepresentation.toggle('selected');
+            var representations = this.filterDimension.get('representations');
+            var currentIndex = representations.indexOf(this.filterRepresentation);
+            if (e.shiftKey && this.filterSidebarDimensionView.lastIndex !== -1) {
+                var newState = !this.filterRepresentation.get('selected');
+                var sortedIndex = [currentIndex, this.filterSidebarDimensionView.lastIndex].sort();
+                representations.toggleRepresentationsVisibleRange(sortedIndex[0], sortedIndex[1], newState);
+            } else {
+                this.filterRepresentation.toggle('selected');
+            }
+            this.filterSidebarDimensionView.lastIndex = currentIndex;
         },
 
         _stateClass : function () {

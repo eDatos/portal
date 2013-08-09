@@ -13,6 +13,7 @@
             this.filterDimensions = options.filterDimensions;
             this.filterDimension = options.filterDimension;
             this.optionsModel = options.optionsModel;
+            this.resetLastIndex();
         },
 
         destroy : function () {
@@ -28,6 +29,7 @@
         },
 
         _bindEvents : function () {
+            this.listenTo(this.filterDimension, "change:visible", this.resetLastIndex);
             this.listenTo(this.filterDimension, "change:open", this._onChangeOpen);
         },
 
@@ -52,12 +54,14 @@
             var $categories = this.$(".filter-sidebar-categories");
             this.representationsSubviews = filterRepresentations.map(function (filterRepresentation) {
                 var view = new FilterSidebarCategoryView({
+                    filterSidebarDimensionView : this,
+                    filterDimension : this.filterDimension,
                     filterRepresentation : filterRepresentation
                 });
                 view.render();
                 $categories.append(view.el);
                 return view;
-            });
+            }, this);
             this.subviews = this.subviews.concat(this.representationsSubviews);
 
             this.searchbarView = new App.components.searchbar.SearchbarView({
@@ -93,7 +97,7 @@
             }
 
             this.setMaxHeight(this.maxHeight);
-            this._onChangeOpen();
+            this._onChangeOpen(this.filterDimension);
 
             return this.el;
         },
@@ -107,13 +111,19 @@
             this.filterDimension.toggle('open');
         },
 
-        _onChangeOpen : function () {
-            this.$el.find('.collapse').toggleClass('in', this.filterDimension.get('open'));
+        _onChangeOpen : function (model) {
+            if (model.id === this.filterDimension.id) {
+                this.$el.find('.collapse').toggleClass('in', this.filterDimension.get('open'));
+            }
         },
 
         setMaxHeight : function (maxHeight) {
             this.maxHeight = maxHeight;
             this.$('.collapse').css('max-height', maxHeight);
+        },
+
+        resetLastIndex : function () {
+            this.lastIndex = -1;
         }
 
     });
