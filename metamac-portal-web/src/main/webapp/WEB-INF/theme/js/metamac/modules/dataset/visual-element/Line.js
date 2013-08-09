@@ -150,7 +150,6 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         updatingDimensionPositions : function () {
-            console.log("apply updating dimension positions line");
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 1);
 
@@ -247,6 +246,7 @@ App.namespace("App.VisualElement.LineChart");
             var data = this.getData();
             this.replaceSeries(this.masterChart, data.series);
             this.masterChart.xAxis[0].setCategories(data.xAxis, false);
+            this.masterChart.counters.color = 0;
             this.masterChart.redraw();
         },
 
@@ -264,6 +264,8 @@ App.namespace("App.VisualElement.LineChart");
                     },
                     false
                 );
+
+                this.detailChart.counters.color = 0;
 
                 this.detailChart.redraw(false);
             }

@@ -169,6 +169,7 @@
 
                 self.replaceSeries(self.chart, data.series);
                 self.chart.xAxis[0].setCategories(data.xAxis, false);
+                self.chart.counters.color = 0;
                 self.chart.redraw(false);
             });
         },
