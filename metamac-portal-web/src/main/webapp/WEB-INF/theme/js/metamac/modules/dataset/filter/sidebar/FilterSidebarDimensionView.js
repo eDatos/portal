@@ -10,10 +10,9 @@
         template : App.templateManager.get('widget/filter/sidebar/filter-sidebar-dimension'),
 
         initialize : function (options) {
-            this.filterDimensions = options.filterDimensions;
             this.filterDimension = options.filterDimension;
-            this.optionsModel = options.optionsModel;
             this.resetLastIndex();
+            this.collapsable = _(options).has('collapsable') ? options.collapsable : true;
         },
 
         destroy : function () {
@@ -108,7 +107,9 @@
 
         _onClickTitle : function (e) {
             e.preventDefault();
-            this.filterDimension.toggle('open');
+            if (this.collapsable) {
+                this.filterDimension.toggle('open');
+            }
         },
 
         _onChangeOpen : function (model) {

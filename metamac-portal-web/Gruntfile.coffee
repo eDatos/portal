@@ -263,6 +263,9 @@ module.exports = (grunt) ->
                 # Utils
                 paths.js + "/metamac/modules/dataset/utils/VisualElementManager.js"
                 paths.js + "/metamac/modules/dataset/utils/FullScreen.js"
+
+                # Selection
+                paths.js + "/metamac/modules/selection/SelectionView.js"
             ]
             dest: paths.assets + "/js/dataset.js"
         admin:

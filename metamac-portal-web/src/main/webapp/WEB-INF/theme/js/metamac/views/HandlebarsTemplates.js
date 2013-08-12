@@ -1913,6 +1913,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return buffer;
   });
 
+this["Handlebars"]["templates"]["selection/selection"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"selection-actions\">\n    <a href=\"#\" class=\"btn\">Consultar todo</a>\n    <a href=\"#\" class=\"btn\">Consultar seleccion</a>\n</div>\n\n<div class=\"selection-dimensions\">\n\n</div>";
+  });
+
 this["Handlebars"]["templates"]["signin/signin"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -2354,7 +2363,7 @@ function program3(depth0,data) {
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\">\n    <div class=\"filter-sidebar-dimension-title\">\n        <div class=\"filter-sidebar-dimension-label\">\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n        </div>\n    </div>\n\n    <div class=\"collapse ";
+    + "\n        </div>\n    </div>\n\n    <div class=\"filter-sidebar-dimension-content collapse ";
   stack2 = helpers.unless.call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\" >\n        <div class=\"filter-sidebar-dimension-searchbar\"></div>\n\n        <div class=\"filter-sidebar-dimension-actionsbar\">\n            <div class=\"filter-sidebar-dimension-levels\"></div>\n            <div class=\"filter-sidebar-dimension-actions\"></div>\n        </div>\n\n        <div class=\"filter-sidebar-categories\"></div>\n    </div>\n\n</div>";

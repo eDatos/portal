@@ -16,6 +16,8 @@
 
             this.at(0).set('open', true); //open the first dimension
             this._bindEvents();
+
+            this.accordion = true; //accordion behaviour
         },
 
         _bindEvents : function () {
@@ -43,7 +45,7 @@
         },
 
         _onChangeOpen : function (model, value) {
-            if (value) { //Accordion behaviour in dimensions
+            if (this.accordion && value) { //Accordion behaviour in dimensions
                 var openDimensions = this.where({open : true});
                 if (openDimensions.length > 1) {
                     var otherOpenDimension = _.find(openDimensions, function (openDimension) {
