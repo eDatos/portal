@@ -285,7 +285,14 @@ module.exports = (grunt) ->
                 paths.modules + "/admin/status/StatusView.js"
             ]
             dest: paths.assets + "/js/admin.js"
-
+        collection:
+            src: [
+                paths.js + "/metamac/libs/i18n.js"
+                paths.modules + "/collection/CollectionNode.js"
+                paths.modules + "/collection/Collection.js"
+                paths.modules + "/collection/CollectionNodeView.js"
+                paths.modules + "/collection/CollectionView.js"
+            ]
 
     includeConfig =
         modules: modules
