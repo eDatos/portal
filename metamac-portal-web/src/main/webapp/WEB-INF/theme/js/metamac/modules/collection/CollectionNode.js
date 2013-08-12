@@ -10,13 +10,15 @@
             attributes.name = App.i18n.localizeText(response.name);
             attributes.description = App.i18n.localizeText(response.description);
 
+
+            //TODO parámetro autoopen para identificar las selection
             if (response.query) {
                 attributes.type = 'query';
                 var url = response.query.selfLink.href;
                 var urlParts = _.last(url.split('/'), 2);
                 attributes.agency = urlParts[0];
                 attributes.identifier = urlParts[1];
-                attributes.url = App.context + "/queries/" + attributes.agency + "/" + attributes.identifier;
+                attributes.url = App.context + "/queries/" + attributes.agency + "/" + attributes.identifier + "/selection";
             }
 
             if (response.dataset) {
@@ -26,7 +28,7 @@
                 attributes.agency = urlParts[0];
                 attributes.identifier = urlParts[1];
                 attributes.version = urlParts[2];
-                attributes.url = App.context + "/datasets/" + attributes.agency + "/" + attributes.identifier + "/" + attributes.version;
+                attributes.url = App.context + "/datasets/" + attributes.agency + "/" + attributes.identifier + "/" + attributes.version + "/selection";
             }
 
             if (response.nodes) {

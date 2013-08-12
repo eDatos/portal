@@ -20,7 +20,7 @@
     App.dataset.data.ApiRequest.prototype = {
 
         url : function () {
-            return this.metadata.baseUrl;
+            return App.apiContext + this.metadata.urlIdentifierPart();
         },
 
         queryParams : function () {

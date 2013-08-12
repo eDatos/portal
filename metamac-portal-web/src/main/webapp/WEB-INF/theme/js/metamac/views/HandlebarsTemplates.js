@@ -1916,10 +1916,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["Handlebars"]["templates"]["selection/selection"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  return "<div class=\"selection-actions\">\n    <a href=\"#\" class=\"btn\">Consultar todo</a>\n    <a href=\"#\" class=\"btn\">Consultar seleccion</a>\n</div>\n\n<div class=\"selection-dimensions\">\n\n</div>";
+  buffer += "<div class=\"selection-actions\">\n    <a href=\"";
+  if (stack1 = helpers.selectAllUrl) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.selectAllUrl; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" class=\"btn selection-all\">Consultar todo</a>\n    <a href=\"#\" class=\"btn selection-permalink\">Consultar seleccion</a>\n</div>\n\n<div class=\"selection-dimensions\">\n\n</div>";
+  return buffer;
   });
 
 this["Handlebars"]["templates"]["signin/signin"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

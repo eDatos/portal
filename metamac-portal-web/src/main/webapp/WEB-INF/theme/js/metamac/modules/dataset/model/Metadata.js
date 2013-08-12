@@ -9,28 +9,36 @@
         this.initialize(options);
     };
 
-    App.dataset.Metadata.fetch = function (options) {
-        var result = $.Deferred();
-        var baseUrl;
-        if (options.type === "dataset") {
-            baseUrl = App.apiContext + '/datasets/' + options.agency + '/' + options.identifier + '/' + options.version;
-        } else if (options.type === "query") {
-            baseUrl = App.apiContext + '/queries/' + options.agency + '/' + options.identifier;
-        }
-        var url = baseUrl + '?_type=json&fields=-data';
-
-        $.getJSON(url, function (response) {
-            var metadata = new App.dataset.Metadata(response);
-            metadata.baseUrl = baseUrl;
-            result.resolveWith(null, [metadata]);
-        });
-        return result.promise();
-    };
-
     App.dataset.Metadata.prototype = {
 
         initialize : function (options) {
             this.options = options;
+        },
+
+        urlIdentifierPart : function () {
+            if (this.options.type === "dataset") {
+                return '/datasets/' + this.options.agency + '/' + this.options.identifier + '/' + this.options.version;
+            } else if (this.options.type === "query") {
+                return '/queries/' + this.options.agency + '/' + this.options.identifier;
+            }
+        },
+
+        url : function () {
+            return App.apiContext + this.urlIdentifierPart() + '?_type=json&fields=-data';
+        },
+
+        fetch : function () {
+            var self = this;
+            var result = $.Deferred();
+            $.getJSON(this.url(), function (response) {
+                self.parse(response);
+                result.resolveWith(null, [this]);
+            });
+            return result.promise();
+        },
+
+        parse : function (response) {
+            _.extend(this.options, response);
             this.selectedLanguages = this.options.selectedLanguages.language;
             this.metadata = this.options.metadata;
             this.initializeLocalesIndex();
