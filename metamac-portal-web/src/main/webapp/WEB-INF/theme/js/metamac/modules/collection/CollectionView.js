@@ -25,7 +25,6 @@
 
         initialize : function () {
             this.collection = this.model.nodes;
-            console.log(this.collection);
         },
 
         appendHtml : function (collectionView, itemView) {

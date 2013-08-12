@@ -14,7 +14,18 @@
             attributes.name = App.i18n.localizeText(response.name);
             attributes.description = App.i18n.localizeText(response.description);
             this.nodes = App.modules.collection.CollectionNode.parseNodes(response.data.nodes);
+            this._enumerateNodes(this.nodes, '');
             return attributes;
+        },
+
+        _enumerateNodes : function (nodes, prefix) {
+            if (nodes) {
+                nodes.each(function (node, i) {
+                    var numeration = prefix + _.string.pad(i + 1, 2, '0');
+                    node.set('numeration', numeration);
+                    this._enumerateNodes(node.nodes, numeration + ".");
+                }, this);
+            }
         }
 
     });
