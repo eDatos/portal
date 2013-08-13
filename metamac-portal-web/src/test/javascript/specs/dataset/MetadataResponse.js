@@ -478,6 +478,7 @@ App.test.response.metadata = {
                 ],
                 "total" : 2
             },
+            "autoOpen" : true,
             "id" : "DSD_INDICE_OCUPACION",
             "urn" : "urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=ISTAC:DSD_INDICE_OCUPACION(01.000)",
             "selfLink" : {

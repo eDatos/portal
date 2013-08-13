@@ -4,7 +4,6 @@
     App.namespace("App.VisualElement.CanvasTable");
 
     App.VisualElement.CanvasTable = function (options) {
-        this.el = options.el;
         this.dataset = options.dataset;
 
         //this.filterOptions = options.filterOptions; //deprecated
@@ -30,7 +29,6 @@
     App.VisualElement.CanvasTable.prototype = {
 
         load : function () {
-            this.$el = $(this.el);
             this.render();
             this._bindEvents();
         },

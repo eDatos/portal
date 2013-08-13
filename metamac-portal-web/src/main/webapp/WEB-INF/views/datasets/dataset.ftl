@@ -15,11 +15,8 @@
         version : "${version}"
     };
 
-    var metadata = new App.dataset.Metadata(datasetIdentifier);
-    metadata.fetch().then(function () {
-        var attributes = {};
-        main = new App.modules.dataset.Main({el : '#dataset-container', metadata : metadata, attributes : attributes});
-    });
+
+    App.modules.dataset.DatasetApplication.start({datasetIdentifier : datasetIdentifier});
 
 </script>
 

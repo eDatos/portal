@@ -23,6 +23,10 @@
             this.remove();
         },
 
+        close : function () {
+            this.remove();
+        },
+
         events : {
             "click .filter-sidebar-dimension-title" : "_onClickTitle"
         },

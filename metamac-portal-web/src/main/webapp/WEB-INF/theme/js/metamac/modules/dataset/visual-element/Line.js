@@ -179,14 +179,14 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _renderContainers : function () {
-            var detailHeight = $(this.el).height() - this.config.masterHeight - this.$title.height();
+            var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height();
             this.$detailContainer = $('<div id="detail-container">')
                 .css({height : detailHeight})
-                .appendTo(this.el);
+                .appendTo(this.$el);
 
             this.$masterContainer = $('<div id="master-container">')
                 .css({ position : 'absolute', top : detailHeight + this.$title.height(), height : this.config.masterHeight, width : '100%' })
-                .appendTo(this.el);
+                .appendTo(this.$el);
         },
 
         _renderMaster : function () {
@@ -218,7 +218,7 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _updateSize : function () {
-            var detailHeight = $(this.el).height() - this.config.masterHeight - this.$title.height();
+            var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height();
             this.$detailContainer.css({height : detailHeight});
             this.$masterContainer.css({ top : detailHeight + this.$title.height()});
 

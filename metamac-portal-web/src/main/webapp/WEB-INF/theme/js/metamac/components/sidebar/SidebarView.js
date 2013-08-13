@@ -7,6 +7,8 @@
 
         template : App.templateManager.get("components/sidebar/sidebar-container"),
 
+        className : "sidebar-container",
+
         initialize : function (options) {
             this.sideViews = options.sideViews;
             this.contentView = options.contentView;
@@ -16,16 +18,23 @@
             };
             this.state = new App.components.sidebar.SidebarStateModel(stateOptions);
 
-            this.listenTo(this.state, "change:currentSideView", this._onChangeCurrentSideView);
-            this.listenTo(this.state, "change:width", this._updateSidebar);
-            this.listenTo(this.state, "change:visible", this._updateSidebar);
-
             _.bindAll(this, "_onClickSplitter", "_onMousemoveSplitter", "_onMouseupSplitter");
         },
 
         events : {
             "click .sidebar-menu-item" : "_onClickMenuItem",
             "mousedown .sidebar-splitter" : "_onClickSplitter"
+        },
+
+        _bindEvents : function () {
+            this.listenTo(this.state, "change:currentSideView", this._onChangeCurrentSideView);
+            this.listenTo(this.state, "change:width", this._updateSidebar);
+            this.listenTo(this.state, "change:visible", this._updateSidebar);
+            this.delegateEvents();
+        },
+
+        _unbindEvents : function () {
+            this.stopListening();
         },
 
         _onClickMenuItem : function (e) {
@@ -89,8 +98,10 @@
             });
         },
 
-        _onChangeCurrentSideView : function (stateModel, currentSideViewId) {
+        _onChangeCurrentSideView : function () {
             var sidebarContainer = this.$(".sidebar-container");
+            var currentSideViewId = this.state.get('currentSideView');
+
             if (currentSideViewId) {
                 var currentView = this._getSideView(currentSideViewId);
                 currentView.render();
@@ -101,7 +112,7 @@
                 this.state.set('visible', false);
             }
 
-            var previousViewId = stateModel.previous("currentSideView");
+            var previousViewId = this.state.previous("currentSideView");
             if (previousViewId) {
                 var previousView = this._getSideView(previousViewId);
                 if (previousView.destroy) {
@@ -113,6 +124,9 @@
         },
 
         render : function () {
+            this._unbindEvents();
+            this._bindEvents();
+
             var context = {};
             context.menuItems = _.map(this.sideViews, function (view) {
                 return {id : view.id, icon : view.icon, title : view.title};
@@ -132,6 +146,10 @@
 
             this.contentView.setElement(this.$content);
             this.contentView.render();
+        },
+
+        close : function () {
+            this.state.restoreDefaults();
         }
 
     });

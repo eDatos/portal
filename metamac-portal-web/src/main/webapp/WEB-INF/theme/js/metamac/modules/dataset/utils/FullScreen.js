@@ -19,22 +19,36 @@
         },
 
         initialize : function (options) {
-            if (options.container instanceof $) {
-                this.$container = options.container;
-            } else {
-                this.$container = $(options.container);
+            options || (options = {});
+            if (_.has(options, 'container')) {
+                this.setContainer(options.container);
             }
-            this.container = this.$container[0];
             this.$document = $(document);
-
             _.bindAll(this, "exitFullScreen", "_keydown", "_didExitFullScreen");
         },
 
+        setContainer : function (container) {
+            if (container instanceof $) {
+                this.$container = container;
+            } else {
+                this.$container = $(container);
+            }
+            this.container = this.$container[0];
+        },
+
+        getContainer : function () {
+            return this.container;
+        },
+
+        get$Container : function () {
+            return this.$container;
+        },
+
         _getRequestFullScreen : function () {
-            return this.container.requestFullscreen
-                || this.container.webkitRequestFullScreen
-                || this.container.mozRequestFullScreen
-                || this.container.msRequestFullScreen;
+            return this.getContainer().requestFullscreen
+                || this.getContainer().webkitRequestFullScreen
+                || this.getContainer().mozRequestFullScreen
+                || this.getContainer().msRequestFullScreen;
         },
 
         _getRequestExitFullScreen : function () {
@@ -49,7 +63,7 @@
         },
 
         _enterFullScreenSupport : function () {
-            this._getRequestFullScreen().call(this.container, keyboardAllowed && Element.ALLOW_KEYBOARD_INPUT);
+            this._getRequestFullScreen().call(this.getContainer(), keyboardAllowed && Element.ALLOW_KEYBOARD_INPUT);
             this._setFullScreenCss();
         },
 
@@ -127,19 +141,19 @@
 
         _setFullScreenCss : function () {
             if (!this.browserHasFullScreenSupport()) {
-                this.$container.addClass('full-screen-no-support');
+                this.get$Container().addClass('full-screen-no-support');
                 $('.navbar-fixed-top').css('position', 'static');
             } else {
-                this.$container.addClass('full-screen');
+                this.get$Container().addClass('full-screen');
             }
         },
 
         _removeFullScreenCss : function () {
             if (!this.browserHasFullScreenSupport()) {
-                this.$container.removeClass('full-screen-no-support');
+                this.get$Container().removeClass('full-screen-no-support');
                 $('.navbar-fixed-top').css('position', 'fixed');
             } else {
-                this.$container.removeClass('full-screen');
+                this.get$Container().removeClass('full-screen');
             }
         }
 

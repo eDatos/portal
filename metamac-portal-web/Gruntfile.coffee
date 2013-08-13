@@ -296,7 +296,6 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/libs/i18n.js"
                 paths.modules + "/collection/CollectionNode.js"
                 paths.modules + "/collection/Collection.js"
-                paths.modules + "/collection/CollectionNodeView.js"
                 paths.modules + "/collection/CollectionView.js"
             ]
             dest: paths.assets + "/js/collection.js"

@@ -14,8 +14,6 @@
 
         initialize : function (options) {
             this.metadata = options.metadata;
-            this.collection.accordion = false;
-            this.collection.invoke('set', {open : true});
         },
 
         serializeData : function () {
@@ -37,6 +35,18 @@
         _onClickPermalink : function () {
             var selection = this.collection.exportJSON();
             console.log("Create permalink with", selection);
+        },
+
+        onBeforeRender : function () {
+            this.collection.invoke('set', {open : true});
+            this.collection.accordion = false;
+        },
+
+        onBeforeClose : function () {
+            var models = this.collection.models;
+            _(models).first().set({open : true});
+            _.chain(models).tail().invoke('set', {open : false});
+            this.collection.accordion = true;
         }
 
     });

@@ -16,7 +16,7 @@
             this.filterDimensions = options.filterDimensions;
 
             this.el = options.el;
-            this.$el = $(this.el);
+
             this._initializeChartOptions();
         },
 
@@ -105,6 +105,10 @@
             _.each(series, function (serie) {
                 chart.addSeries(serie, false, false);
             });
+        },
+
+        setEl : function (el) {
+            this.$el = $(el);
         }
 
     };

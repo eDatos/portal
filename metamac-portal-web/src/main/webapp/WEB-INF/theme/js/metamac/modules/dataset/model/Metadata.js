@@ -289,6 +289,10 @@
             var top = this.metadata.relatedDsd.heading.dimensionId;
             var left = this.metadata.relatedDsd.stub.dimensionId;
             return {top : top, left : left};
+        },
+
+        getAutoOpen : function () {
+            return this.metadata.relatedDsd.autoOpen || false;
         }
 
     };

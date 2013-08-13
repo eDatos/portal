@@ -18,7 +18,7 @@
                 var urlParts = _.last(url.split('/'), 2);
                 attributes.agency = urlParts[0];
                 attributes.identifier = urlParts[1];
-                attributes.url = App.context + "/queries/" + attributes.agency + "/" + attributes.identifier + "/selection";
+                attributes.url = App.context + "/queries/" + attributes.agency + "/" + attributes.identifier;
             }
 
             if (response.dataset) {
@@ -28,7 +28,7 @@
                 attributes.agency = urlParts[0];
                 attributes.identifier = urlParts[1];
                 attributes.version = urlParts[2];
-                attributes.url = App.context + "/datasets/" + attributes.agency + "/" + attributes.identifier + "/" + attributes.version + "/selection";
+                attributes.url = App.context + "/datasets/" + attributes.agency + "/" + attributes.identifier + "/" + attributes.version;
             }
 
             if (response.nodes) {

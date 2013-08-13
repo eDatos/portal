@@ -15,11 +15,12 @@
 
             this.optionsModel = options.optionsModel;
             this.veElements = options.veElements;
+
+            this._initializeVisualElements();
         },
 
         _initializeVisualElements : function () {
             var options = {
-                el : this.$(".dataset-visualization-visual-element"),
                 dataset : this.dataset,
                 filterDimensions : this.filterDimensions,
                 animation : this.options.animation
@@ -27,7 +28,6 @@
             this.ve = {
                 //table : new App.VisualElement.Table(options),
                 column : new App.VisualElement.ColumnChart(options),
-                pie : new App.VisualElement.PieChart(options),
                 line : new App.VisualElement.LineChart(options),
                 canvasTable : new App.VisualElement.CanvasTable(options),
                 map : new App.VisualElement.Map(options)
@@ -69,6 +69,7 @@
         },
 
         load : function () {
+
             this.ve[this.currentElement].load();
         },
 
@@ -125,8 +126,10 @@
             var context = {};
             this.$el.html(this.template(context));
 
-            this._initializeVisualElements();
-            this._initializeFullScreen();
+            var veEl = this.$(".dataset-visualization-visual-element");
+            _.each(this.ve, function (ve) {
+                ve.setEl(veEl);
+            });
 
             this.optionsView = new App.modules.dataset.OptionsView({
                 optionsModel : this.optionsModel,

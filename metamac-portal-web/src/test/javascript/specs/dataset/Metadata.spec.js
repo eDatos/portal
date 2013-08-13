@@ -147,6 +147,9 @@ describe("Dataset Metadata", function () {
         });
     });
 
+    it('should getAutoOpen', function () {
+        expect(metadata.getAutoOpen()).to.be.true;
+    });
 
 //    it("get dimensions and representations", function () {
 //        I18n.locale = 'es';

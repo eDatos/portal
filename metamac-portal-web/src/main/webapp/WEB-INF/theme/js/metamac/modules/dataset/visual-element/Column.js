@@ -88,6 +88,7 @@
 
         render : function () {
             var self = this;
+
             this.dataset.data.loadAllSelectedData()
                 .then(function () {
                     self.$el.html("");

@@ -8,7 +8,8 @@
         defaults : {
             width : 350,
             minWidth : 100,
-            visible : true
+            visible : false,
+            currentSideView : undefined
         },
 
         initialize : function (options) {
@@ -29,6 +30,10 @@
             if (attrs.width < attrs.minWidth) {
                 return "width min size is "  + attrs.minWidth;
             }
+        },
+
+        restoreDefaults : function () {
+            this.set(this.defaults);
         }
 
     });

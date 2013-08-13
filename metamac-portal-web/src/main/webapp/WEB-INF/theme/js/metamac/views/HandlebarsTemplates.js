@@ -422,7 +422,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n            <li class=\"sidebar-menu-item\" data-view-id=\"";
+  buffer += "\n        <li class=\"sidebar-menu-item\" data-view-id=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -434,14 +434,14 @@ function program1(depth0,data) {
   if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a></li>\n            ";
+    + "</a></li>\n        ";
   return buffer;
   }
 
-  buffer += "<div class=\"sidebar-container\">\n    <div class=\"sidebar-menu\">\n        <ul>\n            ";
+  buffer += "<div class=\"sidebar-menu\">\n    <ul>\n        ";
   stack1 = helpers.each.call(depth0, depth0.menuItems, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </ul>\n    </div>\n\n    <div class=\"sidebar-sidebar\">\n        <div class=\"sidebar-sidebar-content\"></div>\n        <div class=\"sidebar-splitter\">\n            <i class=\"icon-separator\"></i>\n        </div>\n    </div>\n\n    <div class=\"sidebar-content\">\n\n    </div>\n</div>";
+  buffer += "\n    </ul>\n</div>\n\n<div class=\"sidebar-sidebar\">\n    <div class=\"sidebar-sidebar-content\"></div>\n    <div class=\"sidebar-splitter\">\n        <i class=\"icon-separator\"></i>\n    </div>\n</div>\n\n<div class=\"sidebar-content\">\n\n</div>";
   return buffer;
   });
 
@@ -748,7 +748,7 @@ function program3(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"dataset-header\">\r\n    <div>\r\n\r\n        <div class=\"dataset-header-actions\"></div>\r\n\r\n\r\n        <div class=\"dataset-header-info\">\r\n            <h2 class=\"dataset-header-title\" title=\""
+  buffer += "<div class=\"dataset-header\">\r\n    <div>\r\n\r\n        <div class=\"dataset-header-actions\"></div>\r\n\r\n        <div class=\"dataset-header-info\">\r\n            <h2 class=\"dataset-header-title\" title=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1916,15 +1916,10 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["Handlebars"]["templates"]["selection/selection"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  
 
 
-  buffer += "<div class=\"selection-actions\">\n    <a href=\"";
-  if (stack1 = helpers.selectAllUrl) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.selectAllUrl; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\" class=\"btn selection-all\">Consultar todo</a>\n    <a href=\"#\" class=\"btn selection-permalink\">Consultar seleccion</a>\n</div>\n\n<div class=\"selection-dimensions\">\n\n</div>";
-  return buffer;
+  return "<div class=\"selection-actions\">\n    <a href=\"#visualization/canvasTable\" class=\"btn selection-all\">Consultar todo</a>\n    <a href=\"#\" class=\"btn selection-permalink\">Consultar seleccion</a>\n</div>\n\n<div class=\"selection-dimensions\">\n\n</div>";
   });
 
 this["Handlebars"]["templates"]["signin/signin"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
