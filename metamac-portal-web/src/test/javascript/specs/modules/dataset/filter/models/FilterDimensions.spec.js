@@ -3,7 +3,8 @@ describe('FilterDimensions', function () {
     var filterDimensions;
 
     beforeEach(function () {
-        metadata = new App.dataset.Metadata(App.test.response.metadata);
+        metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
         filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
     });
 

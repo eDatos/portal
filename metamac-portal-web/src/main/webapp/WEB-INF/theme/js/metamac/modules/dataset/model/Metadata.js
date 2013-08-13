@@ -12,7 +12,7 @@
     App.dataset.Metadata.prototype = {
 
         initialize : function (options) {
-            this.options = options;
+            this.options = options || {};
         },
 
         urlIdentifierPart : function () {

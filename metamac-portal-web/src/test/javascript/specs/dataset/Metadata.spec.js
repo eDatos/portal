@@ -6,7 +6,9 @@ describe("Dataset Metadata", function () {
 
 
     beforeEach(function () {
-        metadata = new App.dataset.Metadata(App.test.response.metadata);
+        metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
+
 
         MEASURE_DIMENSION = {"id" : "INDICADORES", "label" : "Indicadores", "type" : "MEASURE_DIMENSION", "hierarchy" : false};
         MEASURE_DIMENSION_REPRESENTATIONS = [

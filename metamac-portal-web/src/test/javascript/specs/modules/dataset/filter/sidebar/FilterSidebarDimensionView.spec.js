@@ -4,7 +4,8 @@ describe("FilterSidebarDimensionView", function () {
     var filterSidebarDimensionView;
 
     beforeEach(function () {
-        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        var metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
         var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         var optionsModel = new App.modules.dataset.OptionsModel();
 

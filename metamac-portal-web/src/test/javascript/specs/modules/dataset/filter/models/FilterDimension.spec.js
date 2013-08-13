@@ -3,7 +3,8 @@ describe('FilterDimension', function () {
     var filterDimension, representations;
 
     beforeEach(function () {
-        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        var metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
         var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         filterDimension = filterDimensions.get('TIME_PERIOD');
         representations = filterDimension.get('representations');

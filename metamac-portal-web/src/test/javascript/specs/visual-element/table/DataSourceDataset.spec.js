@@ -3,13 +3,15 @@ describe('DataSourceDataset', function () {
     var dataSource;
 
     var initializeDataSource = function () {
-        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        var metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
         var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         dataSource = new App.DataSourceDataset({filterDimensions : filterDimensions});
     };
 
     var initializeDataSourceWithHierarchyAtLeft = function () {
-        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        var metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
         var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         filterDimensions.zones.setDimensionZone('left', filterDimensions.get('TIME_PERIOD'));
         filterDimensions.zones.swapDimensions(filterDimensions.get('TIME_PERIOD'), filterDimensions.get('CATEGORIA_ALOJAMIENTO'));

@@ -7,7 +7,8 @@ describe('Dataset Data', function () {
     beforeEach(function () {
         SpecUtils.configureI18n('es');
 
-        metadata = new App.dataset.Metadata(App.test.response.metadata);
+        metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
         data = new App.dataset.data.Data({metadata : metadata});
         data.apiResponse = new App.dataset.data.ApiResponse(App.test.response.data);
 

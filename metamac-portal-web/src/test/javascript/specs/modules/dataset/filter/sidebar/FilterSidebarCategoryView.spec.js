@@ -4,7 +4,8 @@ describe("FilterSidebarCategoryView", function () {
     var filterSidebarCategoryView;
 
     beforeEach(function () {
-        var metadata = new App.dataset.Metadata(App.test.response.metadata);
+        var metadata = new App.dataset.Metadata();
+        metadata.parse(App.test.response.metadata);
         var filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         filterRepresentation = filterDimensions.at(0).get('representations').at(0);
 
