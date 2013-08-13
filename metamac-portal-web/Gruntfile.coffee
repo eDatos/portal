@@ -158,14 +158,14 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/PermalinkBuilder.js"
                 paths.modules + "/dataset/DatasetActionsView.js"
                 paths.modules + "/dataset/DatasetExportView.js"
-                paths.modules + "/dataset/dataset-main.js"
+                paths.modules + "/dataset/DatasetView.js"
                 paths.modules + "/dataset/dataset-options-model.js"
                 paths.modules + "/dataset/dataset-options-view.js"
                 paths.modules + "/dataset/dataset-page-view.js"
                 paths.modules + "/dataset/DatasetWidgetPageView.js"
                 paths.modules + "/dataset/DatasetInfoView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
-                paths.modules + "/dataset/dataset-router.js"
+                paths.modules + "/dataset/DatasetRouter.js"
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"
@@ -266,6 +266,9 @@ module.exports = (grunt) ->
 
                 # Selection
                 paths.js + "/metamac/modules/selection/SelectionView.js"
+
+
+                paths.js + "/metamac/modules/dataset/DatasetApplication.js"
             ]
             dest: paths.assets + "/js/dataset.js"
         admin:
@@ -296,6 +299,7 @@ module.exports = (grunt) ->
                 paths.modules + "/collection/CollectionNodeView.js"
                 paths.modules + "/collection/CollectionView.js"
             ]
+            dest: paths.assets + "/js/collection.js"
 
     includeConfig =
         modules: modules
