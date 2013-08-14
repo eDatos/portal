@@ -7,6 +7,7 @@
 
         template : "selection/selection",
         itemView : App.widget.filter.sidebar.FilterSidebarDimensionView,
+        itemViewContainer: ".selection-dimensions",
 
         events : {
             "click .selection-permalink" : "_onClickPermalink"
@@ -21,10 +22,6 @@
                 selectAllUrl : App.context + this.metadata.urlIdentifierPart()
             };
             return context;
-        },
-
-        appendHtml : function (collectionView, itemView) {
-            collectionView.$(".selection-dimensions").append(itemView.el);
         },
 
         buildItemView : function (item, ItemViewType, itemViewOptions) {
