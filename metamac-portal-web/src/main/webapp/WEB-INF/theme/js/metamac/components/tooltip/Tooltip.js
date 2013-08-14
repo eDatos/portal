@@ -134,11 +134,13 @@
 
         _mouseMove : function (e) {
             var offset = this._getOffset();
-            var point = {
-                x : e.pageX - offset.left,
-                y : e.pageY - offset.top
-            };
-            this._update(point);
+            if (offset) {
+                var point = {
+                    x : e.pageX - offset.left,
+                    y : e.pageY - offset.top
+                };
+                this._update(point);
+            }
         }
 
     };

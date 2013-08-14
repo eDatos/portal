@@ -4,3 +4,4 @@ node_modules
 target
 atlassian-ide-plugin.xml
 rebel.xml
+metamac-portal-web/src/main/webapp/WEB-INF/views/includes
