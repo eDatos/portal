@@ -2,7 +2,6 @@ module.exports = (grunt) ->
     _ = require('underscore')
     path = require('path')
 
-    grunt.loadTasks 'tasks'
     grunt.loadNpmTasks 'grunt-contrib-less'
     grunt.loadNpmTasks 'grunt-contrib-handlebars'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -10,21 +9,24 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-connect'
     grunt.loadNpmTasks 'grunt-open'
     grunt.loadNpmTasks 'grunt-mocha'
+    grunt.loadNpmTasks 'grunt-contrib-concat'
+    grunt.loadNpmTasks 'grunt-contrib-copy'
+    grunt.loadNpmTasks 'grunt-contrib-clean'
 
     paths = {}
-    paths.theme = 'src/main/webapp/WEB-INF/theme'
+    paths.theme = 'src/main'
     paths.less = paths.theme + '/less'
     paths.lib = paths.theme + '/js/libs'
     paths.templates = paths.theme + "/js/metamac/views"
-    paths.js = "src/main/webapp/WEB-INF/theme/js"
+    paths.js = "src/main/js"
     paths.modules = paths.js + "/metamac/modules"
-    paths.assets = "src/main/webapp/WEB-INF/theme/assets"
+    paths.assets = "target"
 
     modules =
-        libs:
+        metamac:
             src: [
+                # External libs
                 paths.lib + "/jquery-1.9.0.js"
-                paths.lib + "/tracekit.js"
                 paths.lib + "/i18n.js"
                 paths.lib + "/underscore.js"
                 paths.lib + "/underscore.string.js"
@@ -32,119 +34,16 @@ module.exports = (grunt) ->
                 paths.lib + "/backbone.marionette.js"
                 paths.lib + "/backbone.wreqr.js"
                 paths.lib + "/handlebars.runtime.js"
-                paths.lib + "/bootstrap.js"
-                paths.lib + "/modernizr-2.5.3.js"
-                paths.lib + "/moment.js"
-                paths.lib + "/cookies.js"
                 paths.lib + "/jquery.dotdotdot-1.5.0-packed.js"
                 paths.js + "/metamac/App.js"
-                paths.js + "/metamac/track.js"
                 paths.js + "/metamac/libs/HandlebarsHelpers.js"
                 paths.js + "/metamac/views/HandlebarsTemplates.js"
                 paths.js + "/metamac/modules/TemplateManager.js"
 
-                # modules always included
-
-                paths.js + "/metamac/modules/signin/SigninView.js"
-            ],
-            dest: paths.assets + "/js/libs.js"
-        navbar:
-            src: [
-                paths.js + "/metamac/modules/navbar/NavbarView.js"
-                paths.js + "/metamac/modules/user/Favourite.js"
-                paths.js + "/metamac/modules/user/Favourites.js"
-                paths.js + "/metamac/modules/user/User.js"
-                paths.js + "/metamac/libs/NavigationSearch.js"
-                paths.js + "/metamac/libs/AjaxForm.js"
-            ]
-            dest: paths.assets + "/js/navbar.js"
-        comments:
-            src: [
-                paths.js + "/libs/ba-linkify.js"
-                paths.modules + "/comments/Comment.js"
-                paths.modules + "/comments/Comments.js"
-                paths.modules + "/comments/CommentView.js"
-                paths.modules + "/comments/CommentsView.js"
-                paths.modules + "/comments/CommentsMain.js"
-            ]
-            dest: paths.assets + "/js/comments.js"
-        index:
-            src: [
-                paths.js + "/metamac/libs/smartscroll.js"
-                paths.js + "/metamac/mixins/FetchEventsForCollection.js"
-                paths.js + "/metamac/mixins/InfiniteScrollView.js"
-                paths.modules + "/search/SearchActiveProvider.js"
-                paths.modules + "/search/SearchFacetsCollection.js"
-                paths.modules + "/search/SearchQueryModel.js"
-                paths.modules + "/search/SearchResultsCollection.js"
-                paths.modules + "/search/SearchIndexRouter.js"
-                paths.modules + "/search/SearchHeaderView.js"
-                paths.modules + "/search/SearchView.js"
-                paths.modules + "/search/SearchMain.js"
-
-                paths.js + "/metamac/mixins/PaginableCollection.js"
-                paths.modules + "/datasets/Dataset.js"
-                paths.modules + "/datasets/Datasets.js"
-                paths.modules + "/datasets/DatasetView.js"
-                paths.modules + "/datasets/DatasetsView.js"
-                paths.modules + "/index/IndexView.js"
-            ]
-            dest: paths.assets + "/js/index.js"
-        providers:
-            src: [
-                paths.js + "/metamac/mixins/PaginableCollection.js"
-                paths.modules + "/datasets/Dataset.js"
-                paths.modules + "/datasets/Datasets.js"
-                paths.modules + "/datasets/DatasetView.js"
-                paths.modules + "/datasets/DatasetsView.js"
-                paths.modules + "/providers/Provider.js"
-                paths.modules + "/providers/Providers.js"
-                paths.modules + "/providers/ProvidersView.js"
-                paths.modules + "/providers/ProviderDetailView.js"
-                paths.modules + "/providers/ProvidersRouter.js"
-            ]
-            dest: paths.assets + "/js/providers.js"
-        search:
-            src: [
-                paths.js + "/metamac/libs/smartscroll.js"
-                paths.js + "/metamac/mixins/FetchEventsForCollection.js"
-                paths.js + "/metamac/mixins/InfiniteScrollView.js"
-                paths.modules + "/search/SearchActiveProvider.js"
-                paths.modules + "/search/SearchFacetsCollection.js"
-                paths.modules + "/search/SearchQueryModel.js"
-                paths.modules + "/search/SearchResultsCollection.js"
-                paths.modules + "/search/SearchRouter.js"
-                paths.modules + "/search/SearchHeaderView.js"
-                paths.modules + "/search/SearchView.js"
-                paths.modules + "/search/SearchMain.js"
-            ]
-            dest: paths.assets + "/js/search.js"
-        profile:
-            src: [
-                paths.js + "/libs/Backbone.ModelBinder.js"
-                paths.js + "/metamac/mixins/PaginableCollection.js"
-                paths.modules + "/datasets/Dataset.js"
-                paths.modules + "/datasets/Datasets.js"
-                paths.modules + "/datasets/DatasetView.js"
-                paths.modules + "/datasets/DatasetsView.js"
-                paths.modules + "/profile/ProfileFavouritesView.js"
-                paths.modules + "/profile/ProfileReadView.js"
-                paths.modules + "/profile/ProfileUpdateView.js"
-                paths.modules + "/profile/ProfileRouter.js"
-            ]
-            dest: paths.assets + "/js/profile.js"
-        dataset:
-            src: [
-                #libs
-                paths.js + "/libs/isOverflowed.js"
-                paths.js + "/libs/jquery.json-2.3.min.js"
-                paths.js + "/libs/jquery-disable-text-selection-1.0.0.js"
-                paths.js + "/libs/css_browser_selector.js"
-                paths.js + "/libs/spin-min-1.2.5.js"
+                # Metamac libs
                 paths.js + "/libs/highcharts.js"
                 paths.js + "/libs/d3.v2.js"
                 paths.js + "/libs/jquery.mousewheel.js"
-                paths.js + "/libs/jquery.jscrollpane.js"
                 paths.js + "/libs/jquery.ba-resize.js"
 
                 paths.js + "/metamac/mixins/ToggleModel.js"
@@ -212,9 +111,7 @@ module.exports = (grunt) ->
 
 
                 # visual elements
-                #paths.js + "/metamac/libs/jquery-ui-dataset-table-2.1.0.js"
                 paths.js + "/metamac/modules/dataset/visual-element/Base.js"
-                #paths.js + "/metamac/modules/dataset/visual-element/Table.js"
                 paths.js + "/metamac/modules/dataset/visual-element/Column.js"
                 paths.js + "/metamac/modules/dataset/visual-element/Line.js"
                 paths.js + "/metamac/modules/dataset/visual-element/Pie.js"
@@ -266,45 +163,16 @@ module.exports = (grunt) ->
 
                 # Selection
                 paths.js + "/metamac/modules/selection/SelectionView.js"
-
-
                 paths.js + "/metamac/modules/dataset/DatasetApplication.js"
-            ]
-            dest: paths.assets + "/js/dataset.js"
-        admin:
-            src: [
-                paths.js + "/libs/Backbone.ModelBinder.js"
-                paths.js + "/metamac/mixins/PaginableCollection.js"
-                paths.js + "/metamac/mixins/SelectableCollection.js"
-                paths.modules + "/datasets/Dataset.js"
-                paths.modules + "/datasets/Datasets.js"
 
-                paths.modules + "/admin/remove/DatasetSelectionCollection.js"
-                paths.modules + "/admin/remove/RemoveDatasetsTableRowView.js"
-                paths.modules + "/admin/remove/RemoveDatasetsTableView.js"
-                paths.modules + "/admin/remove/RemoveStateModel.js"
-                paths.modules + "/admin/remove/RemoveView.js"
-                paths.modules + "/admin/remove/RemoveRouter.js"
-
-                paths.modules + "/admin/status/StatusModel.js"
-                paths.modules + "/admin/status/StatusCollection.js"
-                paths.modules + "/admin/status/StatusView.js"
-            ]
-            dest: paths.assets + "/js/admin.js"
-        collection:
-            src: [
+                # Collection
                 paths.js + "/metamac/libs/i18n.js"
                 paths.modules + "/collection/CollectionNode.js"
                 paths.modules + "/collection/Collection.js"
                 paths.modules + "/collection/CollectionView.js"
             ]
-            dest: paths.assets + "/js/collection.js"
+            dest: paths.assets + "/metamac.js"
 
-    includeConfig =
-        modules: modules
-        dest: 'src/main/webapp/WEB-INF/views/includes'
-        pathToRemove: 'src/main/webapp/WEB-INF/theme'
-        pathToAdd: '${contextPath}/theme/${applicationVersion}/'
 
     handlebarsTemplateNameProcesor = (srcFile) ->
         rootRelative = srcFile.substring(paths.templates.length + 1)
@@ -317,6 +185,10 @@ module.exports = (grunt) ->
         options:
             banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 
+    concatOptions =
+        options:
+            separator: ';'
+
     globalConfig =
         mocha:
             grep: ''
@@ -325,18 +197,14 @@ module.exports = (grunt) ->
     config =
         pkg: grunt.file.readJSON('package.json')
         globalConfig: globalConfig
+
         less:
             dev:
                 src: paths.less + '/bootstrap.less'
-                dest: paths.assets + '/css/main.css'
+                dest: paths.assets + '/metamac.css'
             pro:
                 src: paths.less + '/bootstrap.less'
-                dest: paths.assets + '/css/main.css'
-                options:
-                    yuicompress: true
-            map:
-                src: paths.less + "/dataset/maps-export.less"
-                dest: paths.assets + '/css/map.css'
+                dest: paths.assets + '/metamac.css'
                 options:
                     yuicompress: true
 
@@ -363,17 +231,27 @@ module.exports = (grunt) ->
                 files: 'Gruntfile.js'
                 tasks: 'include:dev'
 
-        uglify: _.extend(modules, uglifyOptions)
+        copy:
+            main: {
+                src: 'src/main/font/*',
+                dest: 'target/font/',
+                flatten: true,
+                expand: true
+            }
 
-        include:
-            dev: _.extend({dev: true}, includeConfig),
-            pro: _.extend({dev: false}, includeConfig)
+        clean:
+            build: "target",
+
+
+        uglify: _.extend(modules, uglifyOptions)
+        concat: _.extend(modules, concatOptions)
+
 
         connect:
-            options:
-                port: 9000
-                hostname: 'localhost'
-            test: {}
+            server:
+                options:
+                    port: 3000
+                    hostname: 'localhost'
 
         open:
             test:
@@ -398,17 +276,14 @@ module.exports = (grunt) ->
                     reporter: 'mocha-unfunk-reporter'
 
 
-
-
-
     grunt.registerTask 'spec', 'Runs a task on a specified file', (fileName) ->
         globalConfig.mocha.grep = fileName
         grunt.task.run('mocha:spec')
 
-    grunt.registerTask 'dev', ['less:dev', 'less:map', 'handlebars', 'include:dev']
-    grunt.registerTask 'pro', ['less:pro', 'less:map', 'handlebars', 'uglify', 'include:pro']
+    grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'handlebars', 'concat']
+    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify']
     grunt.registerTask 'bdd', ['connect:test', 'open:test', 'watch' ]
     grunt.registerTask 'test', ['mocha:all']
-    grunt.registerTask 'default', ['pro', 'test']
+    grunt.registerTask 'default', ['build', 'test']
 
     grunt.initConfig(config)

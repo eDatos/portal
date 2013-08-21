@@ -1,0 +1,7 @@
+Vagrant::Config.run do |config|
+  config.vm.box = 'precise32'
+  config.vm.box_url = 'http://files.vagrantup.com/precise32.box'
+  config.vm.forward_port 8080, 8082
+
+  config.vm.provision :shell, :path => "provisioner.sh"
+end

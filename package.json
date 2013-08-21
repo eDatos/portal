@@ -1,0 +1,14 @@
+{
+    "name" : "metamac-portal",
+    "description" : "Metamac Portal",
+    "author" : "Arte Consultores",
+    "version" : "0.0.1",
+    "dependencies" : {
+        "underscore" : "*"
+    },
+    "devDependencies" : {
+        "grunt" : "~0.4.1",
+        "grunt-contrib-clean" : "~0.5.0",
+        "grunt-hub" : "~0.5.0"
+    }
+}

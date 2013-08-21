@@ -1,0 +1,30 @@
+<div class="dataset-header">
+    <div>
+
+        <div class="dataset-header-actions"></div>
+
+        <div class="dataset-header-info">
+            <h2 class="dataset-header-title" title="{{ metadata.title }}">{{ metadata.title }}</h2>
+
+            <p class="dataset-header-categories">
+                {{#join metadata.categories }}
+                {{ label }}
+                {{/join}}
+            </p>
+        </div>
+    </div>
+
+    {{#if metadata.description }}
+        <div>
+            <p>{{ metadata.description }}</p>
+        </div>
+    {{/if}}
+</div>
+
+<div class="dataset-sidebar-visualization-container">
+
+</div>
+
+<div class="clearfix dataset-export">
+
+</div>

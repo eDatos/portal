@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="stylesheet" href="preview/basico.css"/>
+    <link rel="stylesheet" href="preview/cuerpo.css"/>
+    <link rel="stylesheet" href="preview/estilos.css"/>
+    <link rel="stylesheet" href="preview/imprime.css"/>
+    <link rel="stylesheet" href="preview/voz.css"/>
+
+    <link rel="stylesheet" href="../../target/metamac.css"/>
+
+    <script type="text/javascript" src="../../target/metamac.js"></script>
+</head>
+<body>
+
+<div id="contenido">
+    <div id="bloq_interior">
+        <div class="contenido">
+
+            <div class="dataset-container"></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    App.apiContext = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
+    var datasetIdentifier = {
+        type : "dataset",
+        agency : "ISTAC",
+        identifier : "C00031A_000002",
+        version : "001.000"
+    };
+    App.modules.dataset.DatasetApplication.start({datasetIdentifier : datasetIdentifier});
+</script>
+
+</body>
+</html>
