@@ -36,6 +36,11 @@ describe('FilterDimensions', function () {
             expect(filterDimensions.at(0).get('open')).to.be.true;
         });
 
+        it('should set no visible representations if a node is not open', function () {
+            var visible = filterDimensions.get('TIME_PERIOD').get('representations').get('time_2_2_1').get('visible');
+            expect(visible).to.be.false;
+        });
+
     });
 
     describe('when a dimension is open', function () {

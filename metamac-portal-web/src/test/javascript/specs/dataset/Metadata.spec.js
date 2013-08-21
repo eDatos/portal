@@ -75,7 +75,7 @@ describe("Dataset Metadata", function () {
                 {id : 'time_1', label : 'Time 1'},
                 {id : 'time_2', label : 'Time 2'},
                 {id : 'time_2_1', label : 'Time 2 1', parent : 'time_2'},
-                {id : 'time_2_2', label : 'Time 2 2', parent : 'time_2'},
+                {id : 'time_2_2', label : 'Time 2 2', parent : 'time_2', open : false},
                 {id : 'time_2_2_1', label : 'Time 2 2 1', parent : 'time_2_2'},
                 {id : 'time_3', label : 'Time 3'}
             ]);

@@ -27,6 +27,7 @@
                 if (children.length) {
                     hasHierarchy = true;
                     representation.children.set(children);
+                    representation._onChangeOpen();
                 }
             }, this);
             this.hasHierarchy = hasHierarchy;
@@ -99,6 +100,7 @@
                 _.each(representationsByParent[node.id], _.partial(depthTreeTraversal, level + 1));
             };
             _.each(rootRepresentations, _.partial(depthTreeTraversal, 0));
+
             return sortedRepresentations;
         }
 
@@ -106,6 +108,7 @@
         initializeWithRepresentations : function (representations) {
             var filterRepresentations = new App.modules.dataset.filter.models.FilterRepresentations(representations, {parse : true});
             filterRepresentations.initializeHierarchy();
+
             return filterRepresentations;
         }
     });

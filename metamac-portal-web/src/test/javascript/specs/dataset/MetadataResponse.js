@@ -551,6 +551,7 @@ App.test.response.metadata = {
                                 "id" : "time_2_2",
                                 "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2_2",
                                 "visualisationParent" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:time_2",
+                                "open" : false,
                                 "name" : {
                                     "text" : [
                                         {
