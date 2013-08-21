@@ -1,4 +1,6 @@
 module.exports = (grunt) ->
+
+    grunt.loadTasks 'tasks'
     grunt.loadNpmTasks 'grunt-hub'
 
     projects = ["metamac-portal-web", "metamac-portal-opencms"]
@@ -14,7 +16,10 @@ module.exports = (grunt) ->
             tasks: task
 
     grunt.initConfig({
-        hub: hubConfig
+        hub: hubConfig,
+        "npm-install" :
+            build:
+                folders : projects
     });
 
     hubTasks.forEach (task) ->
