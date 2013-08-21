@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/mocha.css"/>
-    <link rel="stylesheet" href="../../../main/webapp/WEB-INF/theme/assets/css/main.css"/>
+    <link rel="stylesheet" href="../../../../target/metamac.css"/>
 </head>
 <body>
 
@@ -22,168 +22,7 @@
 var jsPath = "../../../main/webapp/WEB-INF/theme/js/";
 var testPath = "../specs/";
 
-var src = [
-    // vendor libs
-    jsPath + "libs/jquery-1.9.0.js",
-    jsPath + "libs/underscore.js",
-    jsPath + "libs/underscore.string.js",
-    jsPath + "libs/backbone.js",
-    jsPath + "libs/handlebars.runtime.js",
-    jsPath + "libs/lru.js",
-    jsPath + "libs/i18n.js",
-    jsPath + "libs/d3.v2.js",
-    jsPath + "libs/jquery.ajaxmanager.js",
-    jsPath + "libs/modernizr-2.5.3.js",
-    jsPath + "libs/Backbone.ModelBinder.js",
-    jsPath + "libs/backbone.marionette.js",
-    jsPath + "libs/cookies.js",
-    jsPath + "libs/tracekit.js",
-    jsPath + "libs/underscore.string.js",
-
-
-    jsPath + "metamac/App.js",
-
-    // libs
-    jsPath + "metamac/libs/HandlebarsHelpers.js",
-    jsPath + "metamac/libs/AjaxForm.js",
-    jsPath + "metamac/libs/smartscroll.js",
-
-    // templates
-    jsPath + "metamac/views/HandlebarsTemplates.js",
-    jsPath + "metamac/modules/TemplateManager.js",
-
-    // mixins
-    jsPath + "metamac/mixins/FetchEventsForCollection.js",
-    jsPath + "metamac/mixins/InfiniteScrollView.js",
-    jsPath + "metamac/mixins/PaginableCollection.js",
-    jsPath + "metamac/mixins/SelectableCollection.js",
-    jsPath + "metamac/mixins/ToggleModel.js",
-
-    //svg
-    jsPath + "metamac/modules/svg/Exporter.js",
-    jsPath + "metamac/modules/svg/SVGNode.js",
-
-    // components
-    jsPath + "metamac/components/tooltip/Tooltip.js",
-
-    //datasets and filter
-    jsPath + "metamac/modules/dataset/utils/VisualElementManager.js",
-    jsPath + "metamac/modules/dataset/utils/FullScreen.js",
-    jsPath + "metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js",
-    jsPath + "metamac/modules/dataset/filter/FilterOptionsTable.js",
-    jsPath + "metamac/modules/dataset/filter/FilterOptions.js",
-    jsPath + "metamac/modules/dataset/visual-element/Base.js",
-    jsPath + "metamac/modules/dataset/visual-element/CanvasTable.js",
-    jsPath + "metamac/modules/dataset/visual-element/Column.js",
-    jsPath + "metamac/modules/dataset/visual-element/Line.js",
-    jsPath + "metamac/modules/dataset/visual-element/Map.js",
-    jsPath + "metamac/modules/dataset/visual-element/Pie.js",
-
-    // dataset
-    jsPath + "metamac/modules/dataset/model/data/ApiResponse.js",
-    jsPath + "metamac/modules/dataset/model/data/ApiRequest.js",
-    jsPath + "metamac/modules/dataset/model/data/BigDataCacheBlock.js",
-    jsPath + "metamac/modules/dataset/model/data/BigDataCache.js",
-    jsPath + "metamac/modules/dataset/model/data/BigData.js",
-    jsPath + "metamac/modules/dataset/model/data/NumberFormatter.js",
-    jsPath + "metamac/modules/dataset/model/data/Data.js",
-    jsPath + "metamac/modules/dataset/model/Metadata.js",
-    jsPath + "metamac/modules/dataset/model/Dataset.js",
-    jsPath + "metamac/modules/dataset/dataset-options-model.js",
-
-
-    //canvas table
-    jsPath + "metamac/modules/dataset/visual-element/table/primitives/Cell.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/primitives/Point.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/primitives/Size.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/primitives/Rectangle.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/Utils.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/Delegate.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/ScrollManager.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/KeyboardManager.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/FullScreenManager.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/zones/Zone.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/zones/BodyZone.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/zones/BottomScrollZone.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/zones/LeftHeaderZone.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/zones/RightScrollZone.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/zones/SpinnerZone.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/zones/TopHeaderZone.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/View.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/DataSource.js",
-    jsPath + "metamac/modules/dataset/visual-element/table/DataSourceDataset.js",
-
-    //map
-    jsPath + "metamac/modules/dataset/visual-element/map/MapModel.js",
-    jsPath + "metamac/modules/dataset/visual-element/map/ZoomView.js",
-    jsPath + "metamac/modules/dataset/visual-element/map/RangesView.js",
-    jsPath + "metamac/modules/dataset/visual-element/map/LegendView.js",
-    jsPath + "metamac/modules/dataset/visual-element/map/MapView.js",
-
-    jsPath + "metamac/modules/dataset/PermalinkBuilder.js",
-
-    jsPath + "metamac/modules/datasets/Dataset.js",
-    jsPath + "metamac/modules/datasets/Datasets.js",
-    jsPath + "metamac/modules/datasets/DatasetView.js",
-    jsPath + "metamac/modules/datasets/DatasetsView.js",
-
-    jsPath + "metamac/modules/comments/Comment.js",
-    jsPath + "metamac/modules/comments/Comments.js",
-    jsPath + "metamac/modules/comments/CommentsMain.js",
-    jsPath + "metamac/modules/comments/CommentView.js",
-    jsPath + "metamac/modules/comments/CommentsView.js",
-
-    jsPath + "metamac/modules/navbar/NavbarView.js",
-    jsPath + "metamac/modules/navbar/UserModel.js",
-
-    jsPath + "metamac/modules/user/Favourite.js",
-    jsPath + "metamac/modules/user/Favourites.js",
-    jsPath + "metamac/modules/user/User.js",
-
-    jsPath + "metamac/modules/profile/ProfileFavouritesView.js",
-    jsPath + "metamac/modules/profile/ProfileReadView.js",
-    jsPath + "metamac/modules/profile/ProfileUpdateView.js",
-    jsPath + "metamac/modules/profile/ProfileRouter.js",
-
-    jsPath + "metamac/modules/providers/Provider.js",
-    jsPath + "metamac/modules/providers/Providers.js",
-    jsPath + "metamac/modules/providers/ProviderDetailView.js",
-    jsPath + "metamac/modules/providers/ProvidersView.js",
-    jsPath + "metamac/modules/providers/ProvidersRouter.js",
-
-    jsPath + "metamac/modules/search/SearchActiveProvider.js",
-    jsPath + "metamac/modules/search/SearchFacetsCollection.js",
-    jsPath + "metamac/modules/search/SearchMain.js",
-    jsPath + "metamac/modules/search/SearchQueryModel.js",
-    jsPath + "metamac/modules/search/SearchResultsCollection.js",
-    jsPath + "metamac/modules/search/SearchIndexRouter.js",
-    jsPath + "metamac/modules/search/SearchView.js",
-    jsPath + "metamac/modules/search/SearchHeaderView.js",
-
-    jsPath + "metamac/modules/signin/SigninView.js",
-
-    jsPath + "metamac/components/searchbar/SearchbarView.js",
-    jsPath + "metamac/components/select/views/SelectView.js",
-
-    jsPath + "metamac/modules/dataset/filter/sidebar/OrderSidebarView.js",
-    jsPath + "metamac/modules/dataset/filter/sidebar/FilterSidebarCategoryView.js",
-    jsPath + "metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionActionsView.js",
-    jsPath + "metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionView.js",
-    jsPath + "metamac/modules/dataset/filter/sidebar/FilterSidebarView.js",
-
-    jsPath + "metamac/modules/dataset/filter/models/FilterTableInfo.js",
-    jsPath + "metamac/modules/dataset/filter/models/FilterZone.js",
-    jsPath + "metamac/modules/dataset/filter/models/FilterZones.js",
-    jsPath + "metamac/modules/dataset/filter/models/FilterRepresentation.js",
-    jsPath + "metamac/modules/dataset/filter/models/FilterRepresentations.js",
-    jsPath + "metamac/modules/dataset/filter/models/FilterDimension.js",
-    jsPath + "metamac/modules/dataset/filter/models/FilterDimensions.js",
-
-    jsPath + "metamac/libs/i18n.js",
-    jsPath + "metamac/modules/collection/CollectionNode.js",
-    jsPath + "metamac/modules/collection/Collection.js",
-    jsPath + "metamac/modules/collection/CollectionView.js"
-];
+var src = ["../../../../target/metamac.js"];
 
 var tests = [
     testPath + "utils/SpecUtils.js",
@@ -199,25 +38,11 @@ var tests = [
     testPath + "dataset/Metadata.spec.js",
     testPath + "dataset/Data.spec.js",
     testPath + "dataset/NumberFormatter.spec.js",
-    testPath + "libs/AjaxForm.spec.js",
     testPath + "libs/HandlebarsHelpers.spec.js",
-    testPath + "mixins/PaginableCollection.spec.js",
-    testPath + "mixins/SelectableCollection.spec.js",
     testPath + "svg/Exporter.spec.js",
     testPath + "svg/SVGNode.spec.js",
-    testPath + "modules/admin/DeleteView.spec.js",
-    testPath + "modules/comments/Comments.spec.js",
-    testPath + "modules/comments/CommentsView.spec.js",
-    testPath + "modules/comments/CommentView.spec.js",
-    testPath + "modules/datasets/DatasetView.spec.js",
-    testPath + "modules/datasets/PermalinkBuilder.spec.js",
-    testPath + "modules/navbar/NavbarView.spec.js",
-    testPath + "modules/profile/ProfileUpdateView.spec.js",
-    testPath + "modules/providers/Providers.spec.js",
-    testPath + "modules/search/Search.spec.js",
-    testPath + "modules/search/SearchIndexRouter.spec.js",
-    testPath + "modules/search/SearchHeaderView.spec.js",
-    testPath + "modules/signin/SigninView.spec.js",
+
+
     testPath + "modules/dataset/filter/sidebar/OrderSidebarView.spec.js",
     testPath + "modules/dataset/filter/sidebar/FilterSidebarDimensionView.spec.js",
     testPath + "modules/dataset/filter/sidebar/FilterSidebarView.spec.js",
@@ -226,6 +51,7 @@ var tests = [
     testPath + "dataset/ApiResponse.spec.js",
     testPath + "dataset/DataResponse.js",
 
+    testPath + "visual-element/table/DataSourceMock.js",
     testPath + "visual-element/table/Stubs.js",
     testPath + "visual-element/table/primitives/Rectangle-spec.js",
     testPath + "visual-element/table/zones/BodyZone-spec.js",

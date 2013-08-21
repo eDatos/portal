@@ -262,7 +262,7 @@ module.exports = (grunt) ->
                 options:
                     log: true
                     mocha:
-                        ignoreLeaks: false
+                        ignoreLeaks: true
                     reporter: 'Dot'
 
 
@@ -271,7 +271,7 @@ module.exports = (grunt) ->
                 options:
                     log: true
                     mocha:
-                        ignoreLeaks: false
+                        ignoreLeaks: true
                         grep: '<%= globalConfig.mocha.grep %>'
                     reporter: 'mocha-unfunk-reporter'
 
@@ -280,10 +280,11 @@ module.exports = (grunt) ->
         globalConfig.mocha.grep = fileName
         grunt.task.run('mocha:spec')
 
-    grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'handlebars', 'concat']
-    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify']
-    grunt.registerTask 'bdd', ['connect:test', 'open:test', 'watch' ]
     grunt.registerTask 'test', ['mocha:all']
+    grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'handlebars', 'concat']
+    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify', 'test']
+
+    grunt.registerTask 'bdd', ['connect:test', 'open:test', 'watch' ]
     grunt.registerTask 'default', ['build', 'test']
 
     grunt.initConfig(config)
