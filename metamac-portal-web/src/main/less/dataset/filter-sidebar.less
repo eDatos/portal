@@ -7,6 +7,32 @@
     height: 100%;
 }
 
+
+.filter-sidebar-icon {
+    .glyphicons;
+    height: 25px;
+    margin-left: 9px;
+
+    &:before {
+        color: #fff;
+    }
+}
+
+.filter-sidebar-icon-info {
+    .filter-sidebar-icon;
+    .glyphicons.circle_info;
+}
+
+.filter-sidebar-icon-filter {
+    .filter-sidebar-icon;
+    .glyphicons.filter;
+}
+
+.filter-sidebar-icon-order {
+    .filter-sidebar-icon;
+    .glyphicons.sorting;
+}
+
 .filter-sidebar-search {
     width: 100%;
 }
@@ -16,9 +42,7 @@
     margin-bottom: @filterSidebarCategoryMargin;
     font-size: 14px;
     line-height: 1.25em;
-    //#gradient > .vertical(@s4yMediumBlue, @s4yDarkBlue);
-    background-color: @s4yMediumBlue;
-    .border-radius(6px 6px 0 0);
+    background-color: @istacBlueMedium;
     color: #fff;
     .user-select(none);
 }
@@ -50,20 +74,17 @@
                 font-size: 11px;
                 width: 100px;
                 height: 22px;
+                margin-top: 6px;
             }
         }
 
         .filter-sidebar-dimension-actions {
             text-align: right;
-            margin-right: 3px;
             margin-bottom: 5px;
+            margin-top: 8px;
         }
 
     }
-
-
-
-
 
     .collapse {
         overflow-y: auto;
@@ -110,6 +131,7 @@
 
         .category-expand {
             width: 14px;
+            display: inline-block;
         }
 
         @levelBaseColor : #286996;
@@ -127,13 +149,7 @@
     }
 
     &.active {
-
         font-weight: bold;
-
-        .filter-sidebar-category-checkbox {
-            background: @imgCheckboxChecked no-repeat;
-        }
-
     }
 }
 
@@ -203,3 +219,49 @@
     border: 1px dashed #286996;
 }
 
+//icons
+.filter-sidebar-category-icon {
+    .glyphicons;
+    position: static;
+    padding-left: 0;
+
+    &:before {
+        font-size: 16px;
+        position: static;
+        vertical-align: baseline;
+    }
+}
+
+.filter-sidebar-category-icon-min {
+    .filter-sidebar-category-icon;
+    &:before {
+        margin: 3px 5px 0 0;
+        font-size: 10px;
+    }
+}
+
+.filter-sidebar-category-icon-check {
+    .filter-sidebar-category-icon;
+    .glyphicons.check;
+}
+
+.filter-sidebar-category-icon-unchecked {
+    .filter-sidebar-category-icon;
+    .glyphicons.unchecked;
+}
+
+.filter-sidebar-category-icon-expand {
+    .filter-sidebar-category-icon-min;
+    .glyphicons.chevron-right;
+    &:before {
+        font-size: 10px
+    }
+}
+
+.filter-sidebar-category-icon-collapse {
+    .filter-sidebar-category-icon-min;
+    .glyphicons.chevron-right;
+    &:before {
+        .rotate(90deg);
+    }
+}

@@ -8,7 +8,7 @@
     App.widget.filter.sidebar.OrderSidebarView = Backbone.View.extend({
 
         id : "orderSidebar",
-        icon : "icon-reorder",
+        icon : "filter-sidebar-icon-order",
         title : "Ordenar",
 
         template : App.templateManager.get("dataset/filter/sidebar/filter-order-view"),

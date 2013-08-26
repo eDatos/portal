@@ -59,12 +59,12 @@
             var stateClass;
             if (this.filterRepresentation.children.length > 0 && this.filterRepresentation.get('childrenSelected')) {
                 stateClass = this.filterRepresentation.get('selected') ?
-                    'icon-check-sign' :
-                    'icon-sign-blank';
+                    'filter-sidebar-category-icon-check' :
+                    'filter-sidebar-category-icon-unchecked';
             } else {
                 stateClass = this.filterRepresentation.get('selected') ?
-                    'icon-check' :
-                    'icon-check-empty';
+                    'filter-sidebar-category-icon-check' :
+                    'filter-sidebar-category-icon-unchecked';
             }
             return stateClass;
         },
@@ -72,8 +72,8 @@
         _collapseClass : function () {
             if (this.filterRepresentation.children.length > 0) {
                 var collapseClass = this.filterRepresentation.get('open') ?
-                    'icon-collapse' :
-                    'icon-expand';
+                    'filter-sidebar-category-icon-collapse' :
+                    'filter-sidebar-category-icon-expand';
                 return collapseClass;
             }
         },

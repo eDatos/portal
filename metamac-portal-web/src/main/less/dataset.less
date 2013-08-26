@@ -45,9 +45,7 @@
 .datasets-visualization {
     position: relative;
     #visual-element {
-        .touch-callout();
         padding: 5px 5px 0 5px;
-
 
         #visual-element-and-filter {
             position: relative;
@@ -138,6 +136,8 @@
 }
 
 @datasetVisualizationOptionsBarHeight: 50px;
+@optionsBarColor: #eeeeee;
+
 .dataset-visualization {
     position: relative;
     height: 100%;
@@ -149,7 +149,6 @@
         .box-sizing(border-box);
         border-top: 1px solid #E5E5E5;
         border-right: 1px solid #E5E5E5;
-        .border-radius(0 @sidebarRadius @sidebarRadius 0);
 
         h3 {
             margin-top: 0;
@@ -162,13 +161,12 @@
         bottom: 0;
         width: 100%;
         height: @datasetVisualizationOptionsBarHeight;
-        background: #ddd;
+        background: @optionsBarColor;
         padding: 5px;
-        box-shadow: inset 0px -1px 2px 0px rgba(0, 0, 0, 0.2);
-        .border-radius(0 0 @sidebarRadius 0);
         .box-sizing(border-box);
         border-left: 0;
     }
+
 }
 
 // Options bar
@@ -178,6 +176,14 @@
     .visual-element-options-edit {
         height: 41px;
     }
+}
+
+.dataset-visualization-options-bar .btn{
+    display: inline-block;
+    background-image:none;
+    background-color: @optionsBarColor;
+    box-shadow: none;
+    border:none;
 }
 
 .change-visual-element {
@@ -197,4 +203,42 @@
     .sidebar-container {
         height: 100%;
     }
+}
+
+.dataset-options-type-icon {
+    .glyphicons;
+    height: 28px;
+    width: 37px;
+    padding-left: 0;
+
+    &:before {
+        color: #1e1e1e;
+        padding: 2px 6px;
+    }
+
+}
+
+.dataset-options-type-canvasTable {
+    .dataset-options-type-icon;
+    .glyphicons.table;
+}
+
+.dataset-options-type-column {
+    .dataset-options-type-icon;
+    .glyphicons.charts;
+}
+
+.dataset-options-type-line {
+    .dataset-options-type-icon;
+    .glyphicons.stats;
+}
+
+.dataset-options-type-map {
+    .dataset-options-type-icon;
+    .glyphicons.globe;
+}
+
+.dataset-options-full-screen {
+    .dataset-options-type-icon;
+    .glyphicons.fullscreen;
 }

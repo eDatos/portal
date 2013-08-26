@@ -11,7 +11,7 @@
 
         id : "info",
         title : "Info",
-        icon : "icon-info",
+        icon : "filter-sidebar-icon-info",
 
         initialize : function (options) {
             this.dataset = options.dataset;

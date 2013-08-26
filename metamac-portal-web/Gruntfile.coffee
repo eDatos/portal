@@ -221,11 +221,11 @@ module.exports = (grunt) ->
         watch:
             less:
                 files: paths.less + '/**/*.less'
-                tasks: ['less:dev', 'less:map']
+                tasks: ['less:dev']
 
             handlebars:
                 files: paths.templates + "/**/*.html"
-                tasks: 'handlebars'
+                tasks: ['handlebars', 'concat']
 
             include:
                 files: 'Gruntfile.js'
@@ -233,8 +233,8 @@ module.exports = (grunt) ->
 
         copy:
             main: {
-                src: 'src/main/font/*',
-                dest: 'target/font/',
+                src: 'src/main/fonts/*',
+                dest: 'target/fonts/',
                 flatten: true,
                 expand: true
             }

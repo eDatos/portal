@@ -4,6 +4,9 @@
 @sidebarSidebarWidth: 350px;
 @sidebarRadius : 6px;
 
+@sidebarMenuColor: @istacBlueMedium;
+@sidebarMenuDark: @istacBlueDark;
+
 .sidebar-container {
     display: inline-block;
     width: 100%;
@@ -13,7 +16,7 @@
 }
 
 .sidebar-menu {
-    #gradient > .horizontal(darken(@s4yMediumBlue, 3), @s4yMediumBlue);
+    background-color: @sidebarMenuColor;
     color: #fff;
     width: @sidebarMenuWidth;
     height: 100%;
@@ -21,7 +24,7 @@
     top: 0;
     left: 0;
     z-index: 100;
-    .border-radius(@sidebarRadius 0 0 @sidebarRadius);
+
     ul {
         list-style: none;
         margin: 0;
@@ -30,22 +33,15 @@
         li {
             text-align: center;
             padding: 10px 3px 5px 3px;
-            border-bottom: 1px solid @s4yDarkBlue;
+            border-bottom: 1px solid @sidebarMenuDark;
             box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
             font-size: 11px;
             cursor: pointer;
+            margin: 0;
 
             &.active {
-                box-shadow: inset 0px 1px 3px 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2);
-                background-color: #1d4d6e;
+                background-color: @sidebarMenuDark;
             }
-
-            &.active:first-child {
-                .border-radius(@sidebarRadius 0 0 0);
-                box-shadow: inset 0px 1px 3px 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2);
-                background-color: #1d4d6e;
-            }
-
 
             i {
                 font-size: 30px;
@@ -80,7 +76,6 @@
 
     padding: 5px;
     .box-sizing(border-box);
-    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1;
 
     .sidebar-sidebar-content {

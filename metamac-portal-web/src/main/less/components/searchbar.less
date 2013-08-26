@@ -6,19 +6,33 @@
         width: 100%;
         .box-sizing(border-box);
         padding: 0 20px;
-        height: 30px;
+        height: 24px;
     }
 
-    .icon-search-min {
-        position: absolute;
-        top: 7px;
-        left: 7px;
+
+    .searchbar-icon {
+        .glyphicons;
+        position:absolute;
+        padding-left: 0;
+        width: 13px;
+
+        &:before {
+            font-size: 12px;
+        }
     }
 
-    .searchbar-clear {
-        position: absolute;
-        top: 7px;
-        right: 15px;
+    .searchbar-icon-search {
+        .searchbar-icon;
+        .glyphicons.search;
+        top: 6px;
+        left: 6px;
+    }
+
+    .searchbar-icon-clear {
+        .searchbar-icon;
+        .glyphicons.remove_2;
+        top: 6px;
+        right: 6px;
     }
 
 }

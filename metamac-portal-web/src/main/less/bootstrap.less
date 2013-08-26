@@ -1,105 +1,27 @@
 // CSS Reset
-@import "bootstrap/reset";
+@import "variables";
+@import "mixins";
 
-// Core variables and mixins
-
-@import "bootstrap/variables";
-@import "variables"; //custom variables
-
-@import "bootstrap/mixins";
-
-// Grid system and page structure
-@import "bootstrap/scaffolding";
-@import "bootstrap/grid";
-@import "bootstrap/layouts";
-
-// Base CSS
-@import "bootstrap/type";
-@import "bootstrap/code";
-@import "bootstrap/forms";
-@import "bootstrap/tables";
-
-// Components: common
-@import "bootstrap/sprites";
-@import "bootstrap/dropdowns";
-@import "bootstrap/wells";
-@import "bootstrap/component-animations";
-@import "bootstrap/close";
-
-// Components: Buttons & Alerts
-@import "bootstrap/buttons";
-@import "bootstrap/button-groups";
-@import "bootstrap/alerts"; // Note: alerts share common CSS with buttons and thus have styles in buttons.less
-
-// Components: Nav
-@import "bootstrap/navs";
-@import "bootstrap/navbar";
-@import "bootstrap/breadcrumbs";
-@import "bootstrap/pagination";
-@import "bootstrap/pager";
-
-// Components: Popovers
-@import "bootstrap/modals";
-@import "bootstrap/tooltip";
-@import "bootstrap/popovers";
-
-// Components: Misc
-@import "bootstrap/thumbnails";
-@import "bootstrap/labels-badges";
-@import "bootstrap/progress-bars";
-@import "bootstrap/accordion";
-@import "bootstrap/carousel";
-@import "bootstrap/hero-unit";
-
-// Utility classes
-@import "bootstrap/utilities"; // Has to be last to override when necessary
-
-// fontawesome
-@import "fontawesome/font-awesome";
-@import "fontawesome/bootstrap";
-
-// App specific
-@import "app";
-
-//layouts
-@import "simpleLayout";
-
-//pages
-@import "index";
-@import "providers";
-@import "profile";
-@import "signin";
-@import "navbar";
-@import "comments";
-@import "dataset";
-@import "admin";
-@import "search";
-
-//dataset-page
-@import "dataset/jquery-ui-dataset-table-2.1.0";
-@import "dataset/charts";
-@import "dataset/tables";
-@import "dataset/maps";
-@import "dataset/filter-sidebar";
-
-@import "selection";
-
-//sprites
-@import "icons";
-@import "sprite-providers";
-@import "sprite-providers-min";
+@import "fullscreen";
+@import "cursors";
+@import "glyphicons";
+@import "buttons";
 
 // components
 @import "components/sidebar";
 @import "components/searchbar";
 
 
+// pages
+@import "dataset";
+@import "dataset/charts";
+@import "dataset/tables";
+@import "dataset/maps";
+@import "dataset/filter-sidebar";
+@import "dataset/line-zoom";
+@import "selection";
+
+//sprites
+@import "icons";
 
 
-// Responsive
-//@import "bootstrap/responsive-utilities.less";
-//@import "bootstrap/responsive-1200px-min.less";
-//@import "bootstrap/responsive-768px-979px.less";
-//@import "bootstrap/responsive-767px-max.less";
-//@import "bootstrap/responsive-navbar.less";
-//@import "responsive.less";

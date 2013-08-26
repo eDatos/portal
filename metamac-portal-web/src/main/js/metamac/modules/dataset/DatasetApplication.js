@@ -4,7 +4,7 @@
     App.modules.dataset.DatasetApplication = new Backbone.Marionette.Application();
 
     App.modules.dataset.DatasetApplication.addRegions({
-        mainRegion : ".dataset-container"
+        mainRegion : ".metamac-container"
     });
 
     App.modules.dataset.DatasetApplication.addInitializer(function (options) {

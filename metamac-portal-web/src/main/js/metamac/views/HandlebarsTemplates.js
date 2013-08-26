@@ -94,7 +94,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n    <div class=\"icon-search-min\"></div>\n    <a href=\"#\" class=\"searchbar-clear\">\n        <i class=\"icon-remove-min\"></i>\n    </a>\n</div>";
+    + "\">\n    <div class=\"searchbar-icon-search\"></div>\n    <a href=\"#\" class=\"searchbar-clear\">\n        <i class=\"searchbar-icon-clear\"></i>\n    </a>\n</div>";
   return buffer;
   });
 
@@ -418,7 +418,7 @@ function program1(depth0,data) {
     + " visual-element-options-fs\" title='";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.fullscreen", options) : helperMissing.call(depth0, "message", "filter.button.fullscreen", options)))
-    + "'><i class=\"icon-fullscreen icon-2x\"></i></button>\r\n    ";
+    + "'><i class=\"dataset-options-full-screen\"></i></button>\r\n    ";
   return buffer;
   }
 
@@ -437,7 +437,7 @@ function program3(depth0,data) {
   if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"><i class=\"icon-";
+    + "\"><i class=\"dataset-options-type-";
   if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)

@@ -1,13 +1,13 @@
 <div class="visual-element-options">
     {{#if fullScreen.visible}}
-        <button class="btn fs {{fullScreen.btnClass}} visual-element-options-fs" title='{{message "filter.button.fullscreen"}}'><i class="icon-fullscreen icon-2x"></i></button>
+        <button class="btn fs {{fullScreen.btnClass}} visual-element-options-fs" title='{{message "filter.button.fullscreen"}}'><i class="dataset-options-full-screen"></i></button>
     {{/if}}
 </div>
 
 <div class="change-visual-element">
     <div class="btn-group" data-toggle="buttons-radio">
         {{#each veTypeButton}}
-        <button class="btn {{btnClass}}" data-type="{{type}}" title="{{title}}"><i class="icon-{{type}}"></i></button>
+        <button class="btn {{btnClass}}" data-type="{{type}}" title="{{title}}"><i class="dataset-options-type-{{type}}"></i></button>
         {{/each}}
     </div>
 </div>

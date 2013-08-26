@@ -10,7 +10,7 @@
         template : App.templateManager.get('dataset/filter/sidebar/filter-sidebar-view'),
 
         id : "filterSidebar",
-        icon : "icon-filter",
+        icon : "filter-sidebar-icon-filter",
         title : "Filtrar",
 
         initialize : function (options) {
