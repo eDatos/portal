@@ -17,7 +17,7 @@ module.exports = (grunt) ->
     paths.theme = 'src/main'
     paths.less = paths.theme + '/less'
     paths.lib = paths.theme + '/js/libs'
-    paths.templates = paths.theme + "/js/metamac/views"
+    paths.templates = paths.theme + "/js/metamac/templates"
     paths.js = "src/main/js"
     paths.modules = paths.js + "/metamac/modules"
     paths.assets = "target"
@@ -37,7 +37,7 @@ module.exports = (grunt) ->
                 paths.lib + "/jquery.dotdotdot-1.5.0-packed.js"
                 paths.js + "/metamac/App.js"
                 paths.js + "/metamac/libs/HandlebarsHelpers.js"
-                paths.js + "/metamac/views/HandlebarsTemplates.js"
+                paths.js + "/metamac/templates/HandlebarsTemplates.js"
                 paths.js + "/metamac/modules/TemplateManager.js"
 
                 # Metamac libs
@@ -64,13 +64,10 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DatasetActionsView.js"
                 paths.modules + "/dataset/DatasetExportView.js"
                 paths.modules + "/dataset/DatasetView.js"
-                paths.modules + "/dataset/dataset-options-model.js"
-                paths.modules + "/dataset/dataset-options-view.js"
-                paths.modules + "/dataset/dataset-page-view.js"
-                paths.modules + "/dataset/DatasetWidgetPageView.js"
+                paths.modules + "/dataset/OptionsModel.js"
+                paths.modules + "/dataset/OptionsView.js"
                 paths.modules + "/dataset/DatasetInfoView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
-                paths.modules + "/dataset/DatasetRouter.js"
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"
@@ -90,7 +87,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/components/searchbar/SearchbarView.js"
                 paths.js + "/metamac/components/accordion/AccordionView.js"
                 paths.js + "/metamac/components/accordion/AccordionItemView.js"
-                paths.js + "/metamac/components/select/views/SelectView.js"
+                paths.js + "/metamac/components/select/SelectView.js"
 
                 # filters
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js"
@@ -176,6 +173,12 @@ module.exports = (grunt) ->
                 paths.modules + "/collection/Collection.js"
                 paths.modules + "/collection/CollectionView.js"
                 paths.modules + "/collection/CollectionController.js"
+
+
+                # Error module
+                paths.modules + "/error/ErrorController.js"
+                paths.modules + "/error/ErrorView.js"
+
             ]
             dest: paths.assets + "/metamac.js"
 
@@ -240,7 +243,7 @@ module.exports = (grunt) ->
         copy:
             main: {
                 src: 'src/main/fonts/*',
-                dest: 'target/fonts/',
+                dest: 'target/',
                 flatten: true,
                 expand: true
             }

@@ -9,9 +9,9 @@
         <export_version>7</export_version>
     </info>
     <module>
-        <name>es.gobcan.istac.metamac</name>
+        <name>org.siemac.metamac.metamac-portal</name>
         <nicename><![CDATA[metamac]]></nicename>
-        <group>es.gobcan.istac.metamac</group>
+        <group>org.siemac.metamac</group>
         <class/>
         <description><![CDATA[Metamac]]></description>
         <version>0.10</version>
@@ -22,15 +22,15 @@
         <dateinstalled/>
         <dependencies/>
         <exportpoints>
-            <exportpoint uri="/system/modules/es.gobcan.istac.metamac/classes/" destination="WEB-INF/classes/"/>
+            <exportpoint uri="/system/modules/org.siemac.metamac.metamac-portal/classes/" destination="WEB-INF/classes/"/>
         </exportpoints>
         <resources>
-            <resource uri="/system/modules/es.gobcan.istac.metamac/"/>
+            <resource uri="/system/modules/org.siemac.metamac.metamac-portal/"/>
         </resources>
         <parameters/>
         <resourcetypes>
             <type class="org.opencms.file.types.CmsResourceTypeXmlContent" name="metamac" id="500">
-                <param name="schema">/system/modules/es.gobcan.istac.metamac/schemas/metamac.xsd</param>
+                <param name="schema">/system/modules/org.siemac.metamac.metamac-portal/schemas/metamac.xsd</param>
             </type>
         </resourcetypes>
         <explorertypes>
@@ -89,7 +89,7 @@
             </accesscontrol>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal</destination>
             <type>folder</type>
             <uuidstructure>9b6f2d6c-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -102,7 +102,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/classes</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/classes</destination>
             <type>folder</type>
             <uuidstructure>9b74abb8-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -115,7 +115,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/classes/es</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/classes/es</destination>
             <type>folder</type>
             <uuidstructure>9b756f0a-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -128,46 +128,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/classes/es/gobcan</destination>
-            <type>folder</type>
-            <uuidstructure>9b76596c-08a4-11e3-8061-b5c8236e06de</uuidstructure>
-            <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
-            <userlastmodified>Admin</userlastmodified>
-            <datecreated>Mon, 19 Aug 2013 07:54:42 GMT</datecreated>
-            <usercreated>Admin</usercreated>
-            <flags>0</flags>
-            <properties/>
-            <relations/>
-            <accesscontrol/>
-        </file>
-        <file>
-            <destination>system/modules/es.gobcan.istac.metamac/classes/es/gobcan/istac</destination>
-            <type>folder</type>
-            <uuidstructure>9b7743ce-08a4-11e3-8061-b5c8236e06de</uuidstructure>
-            <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
-            <userlastmodified>Admin</userlastmodified>
-            <datecreated>Mon, 19 Aug 2013 07:54:42 GMT</datecreated>
-            <usercreated>Admin</usercreated>
-            <flags>0</flags>
-            <properties/>
-            <relations/>
-            <accesscontrol/>
-        </file>
-        <file>
-            <destination>system/modules/es.gobcan.istac.metamac/classes/es/gobcan/istac/metamac</destination>
-            <type>folder</type>
-            <uuidstructure>9b782e30-08a4-11e3-8061-b5c8236e06de</uuidstructure>
-            <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
-            <userlastmodified>Admin</userlastmodified>
-            <datecreated>Mon, 19 Aug 2013 07:54:42 GMT</datecreated>
-            <usercreated>Admin</usercreated>
-            <flags>0</flags>
-            <properties/>
-            <relations/>
-            <accesscontrol/>
-        </file>
-        <file>
-            <destination>system/modules/es.gobcan.istac.metamac/elements</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/elements</destination>
             <type>folder</type>
             <uuidstructure>9b712940-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -180,7 +141,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/formatters</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/formatters</destination>
             <type>folder</type>
             <uuidstructure>9b7213a2-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -193,8 +154,8 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/formatters/all.jsp</source>
-            <destination>system/modules/es.gobcan.istac.metamac/formatters/all.jsp</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/formatters/all.jsp</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/formatters/all.jsp</destination>
             <type>jsp</type>
             <uuidstructure>e46f1312-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <uuidresource>e46f1313-08a4-11e3-8061-b5c8236e06de</uuidresource>
@@ -213,7 +174,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/resources</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources</destination>
             <type>folder</type>
             <uuidstructure>9b73c156-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -226,8 +187,8 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/metamac.css</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/metamac.css</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/metamac.css</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/metamac.css</destination>
             <type>plain</type>
             <uuidstructure>6e4da2d2-08d3-11e3-b009-bfe7e2ffa974</uuidstructure>
             <uuidresource>6e4da2d3-08d3-11e3-b009-bfe7e2ffa974</uuidresource>
@@ -241,8 +202,8 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/metamac.js</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/metamac.js</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/metamac.js</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/metamac.js</destination>
             <type>plain</type>
             <uuidstructure>664f95c0-08d3-11e3-b009-bfe7e2ffa974</uuidstructure>
             <uuidresource>664f95c1-08d3-11e3-b009-bfe7e2ffa974</uuidresource>
@@ -256,27 +217,14 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts</destination>
-            <type>folder</type>
-            <uuidstructure>c0cc4499-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
-            <datelastmodified>Tue, 20 Aug 2013 13:23:51 GMT</datelastmodified>
-            <userlastmodified>Admin</userlastmodified>
-            <datecreated>Tue, 20 Aug 2013 13:23:51 GMT</datecreated>
-            <usercreated>Admin</usercreated>
-            <flags>0</flags>
-            <properties/>
-            <relations/>
-            <accesscontrol/>
-        </file>
-        <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.eot</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.eot</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.eot</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.eot</destination>
             <type>plain</type>
-            <uuidstructure>d188a17f-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
-            <uuidresource>d188a180-099b-11e3-b607-bfe7e2ffa974</uuidresource>
-            <datelastmodified>Tue, 20 Aug 2013 13:24:19 GMT</datelastmodified>
+            <uuidstructure>1caccd9f-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
+            <uuidresource>1caccda0-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
+            <datelastmodified>Fri, 23 Aug 2013 11:14:00 GMT</datelastmodified>
             <userlastmodified>Admin</userlastmodified>
-            <datecreated>Tue, 20 Aug 2013 13:24:19 GMT</datecreated>
+            <datecreated>Fri, 23 Aug 2013 11:14:00 GMT</datecreated>
             <usercreated>Admin</usercreated>
             <flags>0</flags>
             <properties>
@@ -289,14 +237,14 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.svg</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.svg</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.svg</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.svg</destination>
             <type>plain</type>
-            <uuidstructure>d18a4f32-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
-            <uuidresource>d18a4f33-099b-11e3-b607-bfe7e2ffa974</uuidresource>
-            <datelastmodified>Tue, 20 Aug 2013 13:24:19 GMT</datelastmodified>
+            <uuidstructure>1caf8cc2-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
+            <uuidresource>1caf8cc3-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
+            <datelastmodified>Fri, 23 Aug 2013 11:14:00 GMT</datelastmodified>
             <userlastmodified>Admin</userlastmodified>
-            <datecreated>Tue, 20 Aug 2013 13:24:19 GMT</datecreated>
+            <datecreated>Fri, 23 Aug 2013 11:14:00 GMT</datecreated>
             <usercreated>Admin</usercreated>
             <flags>0</flags>
             <properties>
@@ -309,14 +257,14 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.ttf</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.ttf</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.ttf</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.ttf</destination>
             <type>plain</type>
-            <uuidstructure>d18c9925-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
-            <uuidresource>d18c9926-099b-11e3-b607-bfe7e2ffa974</uuidresource>
-            <datelastmodified>Tue, 20 Aug 2013 13:24:19 GMT</datelastmodified>
+            <uuidstructure>1cb29a05-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
+            <uuidresource>1cb29a06-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
+            <datelastmodified>Fri, 23 Aug 2013 11:14:00 GMT</datelastmodified>
             <userlastmodified>Admin</userlastmodified>
-            <datecreated>Tue, 20 Aug 2013 13:24:19 GMT</datecreated>
+            <datecreated>Fri, 23 Aug 2013 11:14:00 GMT</datecreated>
             <usercreated>Admin</usercreated>
             <flags>0</flags>
             <properties>
@@ -329,14 +277,14 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.woff</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.woff</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.woff</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.woff</destination>
             <type>plain</type>
-            <uuidstructure>d18ebc08-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
-            <uuidresource>d18ebc09-099b-11e3-b607-bfe7e2ffa974</uuidresource>
-            <datelastmodified>Tue, 20 Aug 2013 13:24:19 GMT</datelastmodified>
+            <uuidstructure>1cb4e3f8-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
+            <uuidresource>1cb4e3f9-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
+            <datelastmodified>Fri, 23 Aug 2013 11:14:00 GMT</datelastmodified>
             <userlastmodified>Admin</userlastmodified>
-            <datecreated>Tue, 20 Aug 2013 13:24:19 GMT</datecreated>
+            <datecreated>Fri, 23 Aug 2013 11:14:00 GMT</datecreated>
             <usercreated>Admin</usercreated>
             <flags>0</flags>
             <properties>
@@ -349,7 +297,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/schemas</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/schemas</destination>
             <type>folder</type>
             <uuidstructure>9b72fe04-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -362,8 +310,8 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/schemas/metamac.xsd</source>
-            <destination>system/modules/es.gobcan.istac.metamac/schemas/metamac.xsd</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/schemas/metamac.xsd</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/schemas/metamac.xsd</destination>
             <type>plain</type>
             <uuidstructure>c4121dcc-08ae-11e3-b7bc-bfe7e2ffa974</uuidstructure>
             <uuidresource>c4121dcd-08ae-11e3-b7bc-bfe7e2ffa974</uuidresource>
@@ -377,7 +325,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/templates</destination>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/templates</destination>
             <type>folder</type>
             <uuidstructure>9b703ede-08a4-11e3-8061-b5c8236e06de</uuidstructure>
             <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
@@ -389,7 +337,5 @@
             <relations/>
             <accesscontrol/>
         </file>
-
-
     </files>
 </export>

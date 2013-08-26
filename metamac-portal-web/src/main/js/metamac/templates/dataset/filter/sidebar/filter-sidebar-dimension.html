@@ -1,0 +1,19 @@
+<div class="filter-sidebar-dimension {{#if dimension.hierarchy}} filter-sidebar-dimension-hierarchy {{/if}}">
+    <div class="filter-sidebar-dimension-title">
+        <div class="filter-sidebar-dimension-label">
+            {{ dimension.label }}
+        </div>
+    </div>
+
+    <div class="filter-sidebar-dimension-content collapse {{#unless dimension.open }} in {{/unless}}" >
+        <div class="filter-sidebar-dimension-searchbar"></div>
+
+        <div class="filter-sidebar-dimension-actionsbar">
+            <div class="filter-sidebar-dimension-levels"></div>
+            <div class="filter-sidebar-dimension-actions"></div>
+        </div>
+
+        <div class="filter-sidebar-categories"></div>
+    </div>
+
+</div>
