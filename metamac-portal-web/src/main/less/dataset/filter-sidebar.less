@@ -1,12 +1,21 @@
 @filterSidebarCheckboxSize: 17px;
 @filterSidebarCategoryMargin: 5px;
 
+
+.sidebar-container {
+    .collapse {
+        display: none;
+        &.in {
+            display: block;
+        }
+    }
+}
+
 .filter-sidebar {
     font-size: 12px;
     line-height: 18px;
     height: 100%;
 }
-
 
 .filter-sidebar-icon {
     .glyphicons;
@@ -171,11 +180,10 @@
 
 .order-sidebar-zone {
 
-    background-color: #1E4F70;
+    background-color: @istacGreyDark;
 
     &.fixed {
         padding-top: 3px;
-        background-color: #909090;
     }
 
     h2 {
