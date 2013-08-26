@@ -2,6 +2,7 @@
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
 apt-get -q -y install mysql-server
+apt-get -q -y install vim
 apt-get install unzip
 apt-get -q -y install openjdk-6-jre
 
