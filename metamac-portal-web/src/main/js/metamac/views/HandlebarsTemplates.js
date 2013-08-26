@@ -1003,5 +1003,5 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"selection-actions\">\n    <a href=\"#visualization/canvasTable\" class=\"btn selection-all\">Consultar todo</a>\n    <a href=\"#\" class=\"btn selection-permalink\">Consultar seleccion</a>\n</div>\n\n<div class=\"selection-dimensions\">\n\n</div>";
+  return "<div class=\"selection-actions\">\n    <a href=\"#\" class=\"btn selection-visualize-all\">Consultar todo</a>\n    <a href=\"#\" class=\"btn selection-visualize-selection\">Consultar seleccion</a>\n</div>\n\n<div class=\"selection-dimensions\">\n\n</div>";
   });

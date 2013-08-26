@@ -256,7 +256,7 @@
             <accesscontrol/>
         </file>
         <file>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/font</destination>
+            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts</destination>
             <type>folder</type>
             <uuidstructure>c0cc4499-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
             <datelastmodified>Tue, 20 Aug 2013 13:23:51 GMT</datelastmodified>
@@ -269,8 +269,8 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.eot</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.eot</destination>
+            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.eot</source>
+            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.eot</destination>
             <type>plain</type>
             <uuidstructure>d188a17f-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
             <uuidresource>d188a180-099b-11e3-b607-bfe7e2ffa974</uuidresource>
@@ -282,15 +282,15 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[fontawesome-webfont]]></value>
+                    <value><![CDATA[glyphicons-regular]]></value>
                 </property>
             </properties>
             <relations/>
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.svg</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.svg</destination>
+            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.svg</source>
+            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.svg</destination>
             <type>plain</type>
             <uuidstructure>d18a4f32-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
             <uuidresource>d18a4f33-099b-11e3-b607-bfe7e2ffa974</uuidresource>
@@ -302,15 +302,15 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[fontawesome-webfont]]></value>
+                    <value><![CDATA[glyphicons-regular]]></value>
                 </property>
             </properties>
             <relations/>
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.ttf</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.ttf</destination>
+            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.ttf</source>
+            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.ttf</destination>
             <type>plain</type>
             <uuidstructure>d18c9925-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
             <uuidresource>d18c9926-099b-11e3-b607-bfe7e2ffa974</uuidresource>
@@ -322,15 +322,15 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[fontawesome-webfont]]></value>
+                    <value><![CDATA[glyphicons-regular]]></value>
                 </property>
             </properties>
             <relations/>
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.woff</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/font/fontawesome-webfont.woff</destination>
+            <source>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.woff</source>
+            <destination>system/modules/es.gobcan.istac.metamac/resources/fonts/glyphicons-regular.woff</destination>
             <type>plain</type>
             <uuidstructure>d18ebc08-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
             <uuidresource>d18ebc09-099b-11e3-b607-bfe7e2ffa974</uuidresource>
@@ -342,27 +342,7 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[fontawesome-webfont]]></value>
-                </property>
-            </properties>
-            <relations/>
-            <accesscontrol/>
-        </file>
-        <file>
-            <source>system/modules/es.gobcan.istac.metamac/resources/font/FontAwesome.otf</source>
-            <destination>system/modules/es.gobcan.istac.metamac/resources/font/FontAwesome.otf</destination>
-            <type>plain</type>
-            <uuidstructure>d185943c-099b-11e3-b607-bfe7e2ffa974</uuidstructure>
-            <uuidresource>d185943d-099b-11e3-b607-bfe7e2ffa974</uuidresource>
-            <datelastmodified>Tue, 20 Aug 2013 13:24:19 GMT</datelastmodified>
-            <userlastmodified>Admin</userlastmodified>
-            <datecreated>Tue, 20 Aug 2013 13:24:19 GMT</datecreated>
-            <usercreated>Admin</usercreated>
-            <flags>0</flags>
-            <properties>
-                <property>
-                    <name>Title</name>
-                    <value><![CDATA[FontAwesome]]></value>
+                    <value><![CDATA[glyphicons-regular]]></value>
                 </property>
             </properties>
             <relations/>

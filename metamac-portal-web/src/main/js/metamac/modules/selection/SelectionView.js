@@ -10,11 +10,13 @@
         itemViewContainer: ".selection-dimensions",
 
         events : {
-            "click .selection-permalink" : "_onClickPermalink"
+            "click .selection-visualize-selection" : "onVisualizeSelection",
+            "click .selection-visualize-all" : "onVisualizeAll"
         },
 
         initialize : function (options) {
             this.metadata = options.metadata;
+            this.controller = options.controller;
         },
 
         serializeData : function () {
@@ -29,12 +31,8 @@
             return new ItemViewType(options);
         },
 
-        _onClickPermalink : function () {
-            var selection = this.collection.exportJSON();
-            console.log("Create permalink with", selection);
-        },
-
         onBeforeRender : function () {
+            this.delegateEvents();
             this.collection.invoke('set', {open : true});
             this.collection.accordion = false;
         },
@@ -44,6 +42,26 @@
             _(models).first().set({open : true});
             _.chain(models).tail().invoke('set', {open : false});
             this.collection.accordion = true;
+        },
+
+        onVisualizeAll : function (e) {
+            e.preventDefault();
+
+            this.collection.each(function (filterDimension) {
+                filterDimension.get('representations').selectAll();
+            });
+            this.gotoVisualization();
+        },
+
+        onVisualizeSelection : function (e) {
+            e.preventDefault();
+            // generate a permalink?
+            this.gotoVisualization();
+        },
+
+        gotoVisualization : function () {
+            var controllerParams = this.metadata.identifier();
+            this.controller.showDatasetVisualization(controllerParams);
         }
 
     });

@@ -14,7 +14,8 @@
     <script>
         LazyLoad.css('<cms:link>/system/modules/es.gobcan.istac.metamac/resources/metamac.css</cms:link>', function () {
             LazyLoad.js('<cms:link>/system/modules/es.gobcan.istac.metamac/resources/metamac.js</cms:link>', function () {
-
+                I18n.defaultLocale = "es";
+                I18n.locale = "es";
                 App.apiContext = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
                 var datasetIdentifier = {
                     type : "dataset",

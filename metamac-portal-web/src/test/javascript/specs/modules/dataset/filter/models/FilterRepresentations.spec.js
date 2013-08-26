@@ -42,6 +42,16 @@ describe('FilterRepresentations', function () {
 
     });
 
+    describe('selectAll', function () {
+
+        it('should select all visible elements', function () {
+            filterRepresentations.invoke('set', {selected : false});
+            filterRepresentations.selectAll();
+            expect(filterRepresentations.where({selected : true}).length).to.equal(filterRepresentations.length);
+        });
+
+    });
+
     describe('selectVisible', function () {
 
         it('should select all visible elements', function () {

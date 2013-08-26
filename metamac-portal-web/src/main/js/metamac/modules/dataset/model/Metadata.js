@@ -16,11 +16,27 @@
         },
 
         urlIdentifierPart : function () {
-            if (this.options.type === "dataset") {
-                return '/datasets/' + this.options.agency + '/' + this.options.identifier + '/' + this.options.version;
-            } else if (this.options.type === "query") {
-                return '/queries/' + this.options.agency + '/' + this.options.identifier;
+            var identifier = this.identifier();
+            if (identifier.type === "dataset") {
+                return '/datasets/' + identifier.agency + '/' + identifier.identifier + '/' + identifier.version;
+            } else if (identifier.type === "query") {
+                return '/queries/' + identifier.agency + '/' + identifier.identifier;
             }
+        },
+
+        idAttributes : ["type", "agency", "identifier", "version"],
+
+        equals : function (metadata) {
+            if (_.isUndefined(metadata)) return false;
+
+            var self = this;
+            return _.every(this.idAttributes, function (idAttribute) {
+                return self.options[idAttribute] === metadata.options[idAttribute];
+            });
+        },
+
+        identifier : function () {
+            return _.pick(this.options, this.idAttributes);
         },
 
         url : function () {

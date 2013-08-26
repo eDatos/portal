@@ -69,7 +69,6 @@
         },
 
         load : function () {
-
             this.ve[this.currentElement].load();
         },
 

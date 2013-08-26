@@ -38,6 +38,7 @@
             font-size: 11px;
             cursor: pointer;
             margin: 0;
+            background:none;
 
             &.active {
                 background-color: @sidebarMenuDark;
@@ -53,6 +54,11 @@
             a {
                 color: #fff;
                 opacity: 0.8;
+
+                &:link, &:active, &:visited, &:hover {
+                    color: #fff;
+                }
+
                 &:hover {
                     text-decoration: none;
                     opacity: 1;

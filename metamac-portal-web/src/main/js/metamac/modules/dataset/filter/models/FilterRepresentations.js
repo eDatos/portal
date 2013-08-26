@@ -37,6 +37,12 @@
             return this.where({selected : true});
         },
 
+        selectAll : function () {
+            var nModelsToSelected = this.selectedLimit - this.length;
+            var modelsToSelect = this.models.slice(0, nModelsToSelected);
+            _.invoke(modelsToSelect, 'set', {selected : true});
+        },
+
         selectVisible : function () {
             var visibleModels = this.where({visible : true, selected : false});
             var selectedModels = this._selectedModels();

@@ -26,6 +26,17 @@
                     this._enumerateNodes(node.nodes, numeration + ".");
                 }, this);
             }
+        },
+
+        equals : function (collection) {
+            if (_.isUndefined(collection)) return false;
+
+            var self = this;
+            var idProperties = ["agency", "identifier", "version"];
+            var equals = _.reduce(idProperties, function (equals, property) {
+                return equals && self.get(property) === collection.get(property);
+            }, true);
+            return equals;
         }
 
     });

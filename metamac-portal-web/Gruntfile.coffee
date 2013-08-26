@@ -45,8 +45,11 @@ module.exports = (grunt) ->
                 paths.js + "/libs/d3.v2.js"
                 paths.js + "/libs/jquery.mousewheel.js"
                 paths.js + "/libs/jquery.ba-resize.js"
-
                 paths.js + "/metamac/mixins/ToggleModel.js"
+                paths.js + "/metamac/libs/i18n.js"
+
+                paths.js + "/metamac/Controller.js"
+                paths.js + "/metamac/AppRouter.js"
 
                 # svg
                 paths.js + "/metamac/modules/svg/Exporter.js"
@@ -166,13 +169,13 @@ module.exports = (grunt) ->
 
                 # Selection
                 paths.js + "/metamac/modules/selection/SelectionView.js"
-                paths.js + "/metamac/modules/dataset/DatasetApplication.js"
+                paths.js + "/metamac/modules/dataset/DatasetController.js"
 
                 # Collection
-                paths.js + "/metamac/libs/i18n.js"
                 paths.modules + "/collection/CollectionNode.js"
                 paths.modules + "/collection/Collection.js"
                 paths.modules + "/collection/CollectionView.js"
+                paths.modules + "/collection/CollectionController.js"
             ]
             dest: paths.assets + "/metamac.js"
 
@@ -230,9 +233,9 @@ module.exports = (grunt) ->
                 files: paths.templates + "/**/*.html"
                 tasks: ['handlebars', 'concat']
 
-            include:
-                files: 'Gruntfile.js'
-                tasks: 'include:dev'
+            concat:
+                files: paths.js + "/**/*.js"
+                tasks: 'concat'
 
         copy:
             main: {
@@ -283,7 +286,7 @@ module.exports = (grunt) ->
         globalConfig.mocha.grep = fileName
         grunt.task.run('mocha:spec')
 
-    grunt.registerTask 'test', ['mocha:all']
+    grunt.registerTask 'test', ['concat','mocha:all']
     grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'handlebars', 'concat']
     grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify', 'test']
 
