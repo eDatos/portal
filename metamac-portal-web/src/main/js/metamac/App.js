@@ -10,7 +10,9 @@
     App.addInitializer(function () {
         App.collectionController = new App.modules.collection.CollectionController({region : this.mainRegion});
         App.datasetController = new App.modules.dataset.DatasetController({region : this.mainRegion});
-        App.router = new App.AppRouter({collectionController : App.collectionController, datasetController : App.datasetController});
+        App.errorController = new App.modules.error.ErrorController({region : this.mainRegion});
+
+        App.router = new App.AppRouter({collectionController : App.collectionController, datasetController : App.datasetController, errorController : App.errorController});
 
         Backbone.history.start();
     });

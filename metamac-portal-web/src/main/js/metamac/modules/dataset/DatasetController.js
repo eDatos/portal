@@ -45,14 +45,6 @@
                 });
         },
 
-        _linkToDatasetVisualization : function (options) {
-            var routeName = options.type + "Visualization";
-            if (options.visualizationType) {
-                routeName = routeName + "Type";
-            }
-            return this.router.linkTo(routeName, options);
-        },
-
         showDatasetVisualization : function (options) {
             var link = this._linkToDatasetVisualization(options);
             this.router.navigate(link);
@@ -75,6 +67,14 @@
             var link = this._linkToDatasetVisualization(options);
             this.router.navigate(link, {replace : true});
             this.visualizationView.showChart(options);
+        },
+
+        _linkToDatasetVisualization : function (options) {
+            var routeName = options.type + "Visualization";
+            if (options.visualizationType) {
+                routeName = routeName + "Type";
+            }
+            return this.router.linkTo(routeName, options);
         },
 
         _loadMetadata : function (datasetIdentifier) {

@@ -18,7 +18,6 @@
             this.dataset = new App.dataset.Dataset({metadata : this.metadata, filterDimensions : this.filterDimensions});
 
             this._initializeVisualElements();
-            this._initializeFilterDimensionsByType();
             this._initializeSidebarView();
             this._initializeFullScreen();
         },
@@ -29,14 +28,6 @@
                 visualElements.push("map");
             }
             this.visualElements = visualElements;
-        },
-
-        _initializeFilterDimensionsByType : function () {
-            var metadata = this.metadata;
-            this.filterDimensionsByType = _.reduce(this.visualElements, function (memo, visualElement) {
-                memo[visualElement] = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
-                return memo;
-            }, {});
         },
 
         _initializeSidebarView : function () {
@@ -118,22 +109,14 @@
             if (currentVe) {
                 currentVe._unbindEvents();
             }
+
             var type = this.optionsModel.get('type');
-
-            var oldType = this.optionsModel.previousAttributes().type;
-
-            if (oldType) {
-                this.copyFilterDimensions(this.filterDimensions, this.filterDimensionsByType[oldType]);
-            }
-
             if (type) {
                 this.visualizationView.activeVisualElement(type);
-                this.copyFilterDimensions(this.filterDimensionsByType[type], this.filterDimensions);
                 this.visualizationView.load();
 
                 var controllerParams = this.metadata.identifier();
                 controllerParams.visualizationType = type;
-
                 this.controller.changeDatasetVisualization(controllerParams);
             }
         },

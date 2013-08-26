@@ -34,7 +34,7 @@
 
             var destZone = this.get(zoneId);
 
-            var srcInFixedSize = srcZone ? srcZone.get('fixedSize') === srcZone.get('dimensions').length : false
+            var srcInFixedSize = srcZone ? srcZone.get('fixedSize') === srcZone.get('dimensions').length : false;
             var destInFixedSize = destZone.get('fixedSize') === destZone.get('dimensions').length;
 
             if (options.force == false && (srcInFixedSize || destInFixedSize)) {

@@ -33,8 +33,20 @@
 
         onBeforeRender : function () {
             this.delegateEvents();
+
             this.collection.invoke('set', {open : true});
             this.collection.accordion = false;
+
+            var zones = this.collection.zones;
+
+            // Remove restrictions
+            zones.get("left").set({fixedSize : undefined, selectedLimit : Infinity});
+            zones.get("top").set({fixedSize : undefined, selectedLimit : Infinity});
+
+            var fixedDimensions = _.clone(zones.get("fixed").get("dimensions").models);
+            _.each(fixedDimensions, function (dimension) {
+                zones.setDimensionZone("left", dimension);
+            }, this);
         },
 
         onBeforeClose : function () {

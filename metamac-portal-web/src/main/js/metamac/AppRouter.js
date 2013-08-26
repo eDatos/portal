@@ -16,16 +16,19 @@
             "queries/:agency/:identifier" : "query",
             "queries/:agency/:identifier/selection" : "querySelection",
             "queries/:agency/:identifier/visualization" : "queryVisualization",
-            "queries/:agency/:identifier/visualization/:visualizationType" : "queryVisualizationType"
+            "queries/:agency/:identifier/visualization/:visualizationType" : "queryVisualizationType",
+            "*path" : "error"
         },
 
         initialize : function (options) {
             options || (options = {});
             this.collectionController = options.collectionController;
             this.datasetController = options.datasetController;
+            this.errorController = options.errorController;
 
             this.collectionController.router = this;
             this.datasetController.router = this;
+            this.errorController.router = this;
 
             this.routesByName = _.invert(this.routes);
         },
@@ -92,6 +95,11 @@
         queryVisualization : function () {
             var args = this._nameQueryArguments(arguments);
             this.datasetController.showDatasetVisualization(args);
+        },
+
+        error : function () {
+            console.log("error");
+            this.errorController.showError({errorCode : 404});
         },
 
         linkTo : function (routeName, params) {
