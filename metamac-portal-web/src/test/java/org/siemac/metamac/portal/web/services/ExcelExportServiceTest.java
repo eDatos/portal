@@ -1,6 +1,7 @@
 package org.siemac.metamac.portal.web.services;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.siemac.metamac.core.common.conf.ConfigurationService;
@@ -32,6 +33,7 @@ public class ExcelExportServiceTest {
         ReflectionTestUtils.setField(excelExportService, "metamacApisLocator", metamacApisLocator);
     }
 
+    @Ignore
     @Test
     public void testExportDatasetToExcel() throws Exception {
         DatasetSelection datasetSelection = new DatasetSelection();
