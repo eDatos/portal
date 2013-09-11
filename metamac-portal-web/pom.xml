@@ -39,11 +39,6 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
 
-        <!-- json, xml -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-jaxrs</artifactId>
-        </dependency>
 
         <!-- Commons -->
         <dependency>
@@ -94,6 +89,31 @@
         <dependency>
             <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-core-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
+            <artifactId>metamac-statistical-resources-rest-external-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
 
     </dependencies>

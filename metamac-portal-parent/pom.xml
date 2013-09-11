@@ -81,7 +81,7 @@
 
         <!-- CRAWLER -->
         <droids-version>0.1.0-incubating</droids-version>
-        <google-guava-version>11.0.2</google-guava-version>
+        <google-guava-version>15.0</google-guava-version>
         <cocoon-spring-configurator-version>2.0.0</cocoon-spring-configurator-version>
         <tika-parsers-version>1.0</tika-parsers-version>
         <jsoup-version>1.6.1</jsoup-version>
@@ -97,7 +97,6 @@
 
         <!-- WEB/REST SERVICES -->
         <jsr311-api-version>1.1.1</jsr311-api-version>
-        <cxf-version>2.6.1</cxf-version>
 
         <!-- TEST -->
         <junit-version>4.10</junit-version>
@@ -114,6 +113,10 @@
 
         <fluent-logger-version>0.2.5</fluent-logger-version>
         <java-akismet-version>0.0.9-20120831</java-akismet-version>
+
+        <metamac-statistical-resources-version>1.0.0-SNAPSHOT</metamac-statistical-resources-version>
+
+        <apache-poi-version>3.9</apache-poi-version>
     </properties>
 
     <dependencyManagement>
@@ -353,11 +356,6 @@
                 <artifactId>spring-data-jpa</artifactId>
                 <version>${spring-data-version}</version>
             </dependency>
-            <!-- <dependency> -->
-            <!-- <groupId>org.springframework</groupId> -->
-            <!-- <artifactId>spring-jms</artifactId> -->
-            <!-- <version>${spring-version}</version> -->
-            <!-- </dependency> -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
@@ -373,63 +371,13 @@
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring-version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.batch</groupId>
-                <artifactId>spring-batch-core</artifactId>
-                <version>${spring-batch-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.batch</groupId>
-                <artifactId>spring-batch-test</artifactId>
-                <version>${spring-batch-version}</version>
-                <scope>test</scope>
-            </dependency>
 
             <!-- SPRING SECURTY -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-config</artifactId>
-                <version>${spring-security-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-core</artifactId>
-                <version>${spring-security-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-web</artifactId>
-                <version>${spring-security-version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker-version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-jaxrs</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
@@ -441,41 +389,25 @@
                 <version>${aspectj-version}</version>
             </dependency>
 
-            <!-- SPRING SOCIAL -->
             <dependency>
-                <groupId>org.springframework.social</groupId>
-                <artifactId>spring-social-core</artifactId>
-                <version>${spring-social-version}</version>
+                <groupId>org.siemac.metamac</groupId>
+                <artifactId>metamac-core-common</artifactId>
+                <version>${metamac-core-common-version}</version>
             </dependency>
+
             <dependency>
-                <groupId>org.springframework.social</groupId>
-                <artifactId>spring-social-web</artifactId>
-                <version>${spring-social-version}</version>
+                <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
+                <artifactId>metamac-statistical-resources-rest-external-api</artifactId>
+                <version>${metamac-statistical-resources-version}</version>
             </dependency>
+
             <dependency>
-                <groupId>org.springframework.social</groupId>
-                <artifactId>spring-social-facebook</artifactId>
-                <version>${spring-social-facebook-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.social</groupId>
-                <artifactId>spring-social-twitter</artifactId>
-                <version>${spring-social-twitter-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-crypto</artifactId>
-                <version>${org.springframework.security.crypto-version}</version>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+                <version>${cxf.version}</version>
             </dependency>
 
             <!-- Tests -->
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-common-test</artifactId>
-                <version>${project.version}</version>
-                <scope>test</scope>
-            </dependency>
-
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -538,158 +470,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.fornax.cartridges</groupId>
-                <artifactId>fornax-cartridges-sculptor-generator</artifactId>
-                <version>${sculptor-version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.fornax.cartridges</groupId>
-                <artifactId>fornax-cartridges-sculptor-framework</artifactId>
-                <version>${sculptor-version}</version>
-                <classifier>without-ejb-arte</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.fornax.cartridges</groupId>
-                <artifactId>fornax-cartridges-sculptor-framework-test</artifactId>
-                <version>${sculptor-version}</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.fornax.cartridges</groupId>
-                        <artifactId>fornax-cartridges-sculptor-framework</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- SOLR -->
-            <dependency>
-                <groupId>org.apache.solr</groupId>
-                <artifactId>solr-solrj</artifactId>
-                <version>${solr-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.zookeeper</groupId>
-                        <artifactId>zookeeper</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.lucene</groupId>
-                        <artifactId>lucene-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- Apache Http components needed for solr -->
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpcore</artifactId>
-                <version>${httpcomponents-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpcomponents-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpmime</artifactId>
-                <version>${httpcomponents-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpcomponents-version}</version>
-                <classifier>tests</classifier>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.abdera</groupId>
-                <artifactId>abdera-client</artifactId>
-                <version>${abdera-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.abdera</groupId>
-                <artifactId>abdera-extensions-opensearch</artifactId>
-                <version>${abdera-version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.quartz-scheduler</groupId>
-                <artifactId>quartz</artifactId>
-                <version>${quartz-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>com.ibm.icu</groupId>
-                <artifactId>icu4j</artifactId>
-                <version>${icu4j-version}</version>
-            </dependency>
-
-            <!-- DROIDS -->
-            <dependency>
-                <groupId>org.apache.droids</groupId>
-                <artifactId>droids-core</artifactId>
-                <version>${droids-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.guava</groupId>
-                        <artifactId>guava</artifactId>
-                    </exclusion>
-
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.droids</groupId>
-                <artifactId>droids-spring</artifactId>
-                <version>${droids-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${apache-poi-version}</version>
             </dependency>
 
             <dependency>
@@ -699,285 +482,11 @@
             </dependency>
 
             <dependency>
-                <groupId>org.apache.cocoon</groupId>
-                <artifactId>cocoon-spring-configurator</artifactId>
-                <version>${cocoon-spring-configurator-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${jackson-version}</version>
             </dependency>
 
-            <!-- Lucene -->
-            <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-core</artifactId>
-                <version>${solr-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-spellchecker</artifactId>
-                <version>${solr-version}</version>
-            </dependency>
-
-            <!-- PARSERS -->
-
-            <!-- Tika -->
-            <dependency>
-                <groupId>org.apache.tika</groupId>
-                <artifactId>tika-parsers</artifactId>
-                <version>${tika-parsers-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
-            <dependency>
-                <groupId>org.jsoup</groupId>
-                <artifactId>jsoup</artifactId>
-                <version>${jsoup-version}</version>
-            </dependency>
-
-            <!-- STAT 4 YOU -->
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-transformation-core-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-transformation-core-impl</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-statistics-core-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-statistics-core-impl</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-idxmanager-core-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-idxmanager-core-impl</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-common-rest</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-normalized-values-core-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-normalized-values-core-impl</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-users-core</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-users-frontend-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-users-frontend-impl</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-users-rest-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-users-rest-impl</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-importation-core-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-importation-core-impl</artifactId>
-                <version>${project.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-crawler-core-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-scheduler</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-job-importation-idescat</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-dimensions-normalizer</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-statistics-dsl</artifactId>
-                <scope>provided</scope>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-transformation-dsl</artifactId>
-                <scope>provided</scope>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.stat4you</groupId>
-                <artifactId>stat4you-importation-dsl</artifactId>
-                <scope>provided</scope>
-                <version>${project.version}</version>
-            </dependency>
-
-            <!-- STATISTIC -->
-            <dependency>
-                <groupId>com.arte.statistic</groupId>
-                <artifactId>statistic-dataset-repository</artifactId>
-                <version>${statistic-dataset-repository-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.fornax.cartridges</groupId>
-                        <artifactId>fornax-cartridges-sculptor-framework</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.arte.statistic</groupId>
-                <artifactId>statistic-parser</artifactId>
-                <version>${statistic-parser-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- METAMAC -->
-
-            <dependency>
-                <groupId>org.siemac.metamac</groupId>
-                <artifactId>metamac-rest-common</artifactId>
-                <version>${metamac-rest-common-version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.siemac.metamac</groupId>
-                <artifactId>metamac-core-common</artifactId>
-                <version>${metamac-core-common-version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.ws.rs</groupId>
-                <artifactId>jsr311-api</artifactId>
-                <version>${jsr311-api-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-                <version>${cxf-version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.ws.xmlschema</groupId>
-                        <artifactId>xmlschema-core</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.geronimo.specs</groupId>
-                        <artifactId>geronimo-javamail_1.4_spec</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-testutils</artifactId>
-                <version>${cxf-version}</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.sun.xml.bind</groupId>
-                        <artifactId>jaxb-impl</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.ws.xmlschema</groupId>
-                        <artifactId>xmlschema-core</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.geronimo.specs</groupId>
-                        <artifactId>geronimo-javamail_1.4_spec</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>eu.michael-simons</groupId>
-                <artifactId>java-akismet</artifactId>
-                <version>${java-akismet-version}</version>
-            </dependency>
-
-            <!-- EVENTS -->
-            <dependency>
-                <groupId>org.fluentd</groupId>
-                <artifactId>fluent-logger</artifactId>
-                <version>${fluent-logger-version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -7,7 +7,7 @@
     <!--  **************************** APIS ************************************************************ -->
     <!--  ********************************************************************************************** -->
     
-    <entry key="metamac.endpoints.statistical_resources.rest.external">http://localhost:8080/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0</entry>
+    <entry key="metamac.endpoints.statistical_resources.rest.external">http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources</entry>
 
     <!--  ********************************************************************************************** -->
     <!--  **************************** MISC ************************************************************ -->
