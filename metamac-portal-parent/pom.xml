@@ -2,11 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
+
+<!--    <parent>
         <groupId>org.siemac.metamac</groupId>
         <artifactId>metamac-parent</artifactId>
         <version>1.7.0</version>
-    </parent>
+    </parent>-->
 
     <groupId>org.siemac.metamac.metamac-portal</groupId>
     <artifactId>metamac-portal-parent</artifactId>
@@ -113,7 +114,6 @@
         <fluent-logger-version>0.2.5</fluent-logger-version>
         <java-akismet-version>0.0.9-20120831</java-akismet-version>
     </properties>
-
 
     <dependencyManagement>
         <dependencies>
@@ -979,4 +979,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 </project>

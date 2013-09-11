@@ -1,4 +1,0 @@
-call sf src/main/webapp/WEB-INF/theme/images/icons --library chunkypng --output-style src/main/webapp/WEB-INF/theme/less/icons.less --csspath ../../images/ --selector ".icon-"
-call sf src/main/webapp/WEB-INF/theme/images/providers --library chunkypng --output-style src/main/webapp/WEB-INF/theme/less/sprite-providers.less --csspath ../../images/ --selector ".provider-logo-"
-call sf src/main/webapp/WEB-INF/theme/images/providers-min --library chunkypng --output-style src/main/webapp/WEB-INF/theme/less/sprite-providers-min.less --csspath ../../images/ --selector ".provider-logo-min-"
-call grunt.cmd less
