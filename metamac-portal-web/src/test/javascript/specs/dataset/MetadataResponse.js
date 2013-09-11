@@ -697,6 +697,21 @@ App.test.response.metadata = {
                             }
                         ]
                     },
+                    variable: {
+                        managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO",
+                        id: "TERRITORIO",
+                        urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.Variable=TERRITORIO",
+                        selfLink: {},
+                        name: {
+                            text: [
+                                {
+                                    value: "Territorio",
+                                    lang: "es"
+                                }
+                            ]
+                        },
+                        kind: "structuralResources#variable"
+                    },
                     "type" : "GEOGRAPHIC_DIMENSION",
                     "dimensionValues" : {
                         "value" : [
@@ -710,6 +725,24 @@ App.test.response.metadata = {
                                             "lang" : "es"
                                         }
                                     ]
+                                },
+                                variableElement: {
+                                    managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO/variableElement;id=ELHIERRO",
+                                    id: "ELHIERRO",
+                                    urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.ELHIERRO",
+                                    selfLink: {
+                                        kind: "structuralResources#variableElement",
+                                        href: "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/variables/TERRITORIO/variableelements/ELHIERRO"
+                                    },
+                                    name: {
+                                        text: [
+                                            {
+                                                value: "ELHIERRO",
+                                                lang: "es"
+                                            }
+                                        ]
+                                    },
+                                    kind: "structuralResources#variableElement"
                                 }
                             },
                             {
@@ -722,6 +755,24 @@ App.test.response.metadata = {
                                             "lang" : "es"
                                         }
                                     ]
+                                },
+                                variableElement: {
+                                    managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO/variableElement;id=LAPALMA",
+                                    id: "LAPALMA",
+                                    urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.LAPALMA",
+                                    selfLink: {
+                                        kind: "structuralResources#variableElement",
+                                        href: "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/variables/TERRITORIO/variableelements/LAPALMA"
+                                    },
+                                    name: {
+                                        text: [
+                                            {
+                                                value: "ELHIERRO",
+                                                lang: "es"
+                                            }
+                                        ]
+                                    },
+                                    kind: "structuralResources#variableElement"
                                 }
                             },
                             {
@@ -734,6 +785,24 @@ App.test.response.metadata = {
                                             "lang" : "es"
                                         }
                                     ]
+                                },
+                                variableElement: {
+                                    managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO/variableElement;id=LAGOMERA",
+                                    id: "LAGOMERA",
+                                    urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.LAGOMERA",
+                                    selfLink: {
+                                        kind: "structuralResources#variableElement",
+                                        href: "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/variables/TERRITORIO/variableelements/LAGOMERA"
+                                    },
+                                    name: {
+                                        text: [
+                                            {
+                                                value: "LAGOMERA",
+                                                lang: "es"
+                                            }
+                                        ]
+                                    },
+                                    kind: "structuralResources#variableElement"
                                 }
                             },
                             {
@@ -746,6 +815,24 @@ App.test.response.metadata = {
                                             "lang" : "es"
                                         }
                                     ]
+                                },
+                                variableElement: {
+                                    managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO/variableElement;id=LAGOMERA",
+                                    id: "TENERIFE",
+                                    urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.TENERIFE",
+                                    selfLink: {
+                                        kind: "structuralResources#variableElement",
+                                        href: "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/variables/TERRITORIO/variableelements/LAGOMERA"
+                                    },
+                                    name: {
+                                        text: [
+                                            {
+                                                value: "TENERIFE",
+                                                lang: "es"
+                                            }
+                                        ]
+                                    },
+                                    kind: "structuralResources#variableElement"
                                 }
                             },
                             {
@@ -758,6 +845,24 @@ App.test.response.metadata = {
                                             "lang" : "es"
                                         }
                                     ]
+                                },
+                                variableElement: {
+                                    managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO/variableElement;id=GRANCANARIA",
+                                    id: "GRANCANARIA",
+                                    urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.GRANCANARIA",
+                                    selfLink: {
+                                        kind: "structuralResources#variableElement",
+                                        href: "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/variables/TERRITORIO/variableelements/GRANCANARIA"
+                                    },
+                                    name: {
+                                        text: [
+                                            {
+                                                value: "GRANCANARIA",
+                                                lang: "es"
+                                            }
+                                        ]
+                                    },
+                                    kind: "structuralResources#variableElement"
                                 }
                             },
                             {
@@ -770,6 +875,24 @@ App.test.response.metadata = {
                                             "lang" : "es"
                                         }
                                     ]
+                                },
+                                variableElement: {
+                                    managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO/variableElement;id=FUERTEVENTURA",
+                                    id: "FUERTEVENTURA",
+                                    urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.FUERTEVENTURA",
+                                    selfLink: {
+                                        kind: "structuralResources#variableElement",
+                                        href: "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/variables/TERRITORIO/variableelements/FUERTEVENTURA"
+                                    },
+                                    name: {
+                                        text: [
+                                            {
+                                                value: "FUERTEVENTURA",
+                                                lang: "es"
+                                            }
+                                        ]
+                                    },
+                                    kind: "structuralResources#variableElement"
                                 }
                             },
                             {
@@ -782,6 +905,24 @@ App.test.response.metadata = {
                                             "lang" : "es"
                                         }
                                     ]
+                                },
+                                variableElement: {
+                                    managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO/variableElement;id=LANZAROTE",
+                                    id: "LANZAROTE",
+                                    urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.LANZAROTE",
+                                    selfLink: {
+                                        kind: "structuralResources#variableElement",
+                                        href: "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/variables/TERRITORIO/variableelements/LANZAROTE"
+                                    },
+                                    name: {
+                                        text: [
+                                            {
+                                                value: "LANZAROTE",
+                                                lang: "es"
+                                            }
+                                        ]
+                                    },
+                                    kind: "structuralResources#variableElement"
                                 }
                             }
                         ],

@@ -81,6 +81,22 @@ describe("Dataset Metadata", function () {
             ]);
         });
 
+        describe('when dimension is geographical', function () {
+
+            it('should return normcodes', function () {
+                expect(metadata.getRepresentations('DESTINO_ALOJAMIENTO')).to.eql([
+                    {id : 'EL_HIERRO', label : 'El Hierro', normCode : "TERRITORIO.ELHIERRO"},
+                    {id : 'LA_PALMA', label : 'La Palma', normCode : "TERRITORIO.LAPALMA"},
+                    {id : 'LA_GOMERA', label : 'La Gomera', normCode : "TERRITORIO.LAGOMERA"},
+                    {id : 'TENERIFE', label : 'Tenerife', normCode : "TERRITORIO.TENERIFE"},
+                    {id : 'GRAN_CANARIA', label : 'Gran Canaria', normCode : "TERRITORIO.GRANCANARIA"},
+                    {id : 'FUERTEVENTURA', label : 'Fuerteventura', normCode : "TERRITORIO.FUERTEVENTURA"},
+                    {id : 'LANZAROTE', label : 'Lanzarote', normCode : "TERRITORIO.LANZAROTE"}
+                ]);
+            });
+
+        });
+
         it('should order dimensionValues by order field', function () {
             expect(metadata.getRepresentations('INDICADORES')).to.eql(MEASURE_DIMENSION_REPRESENTATIONS);
         });
@@ -93,13 +109,9 @@ describe("Dataset Metadata", function () {
         expect(dimensionsAndRepresentations[1].representations).to.eql(MEASURE_DIMENSION_REPRESENTATIONS);
     });
 
-    it.skip('should getCategories', function () {
+    it.skip('should getCategories', function () {});
 
-    });
-
-    it.skip('should getDates', function () {
-
-    });
+    it.skip('should getDates', function () {});
 
     it('should getMeasureDimension', function () {
         MEASURE_DIMENSION.representations = MEASURE_DIMENSION_REPRESENTATIONS;
@@ -151,66 +163,5 @@ describe("Dataset Metadata", function () {
         expect(metadata.getAutoOpen()).to.be.true;
     });
 
-//    it("get dimensions and representations", function () {
-//        I18n.locale = 'es';
-//        var metadata = new Metadata(response);
-//
-//        var dims = metadata.getDimensionsAndRepresentations();
-//
-//        expect(dims).to.eql([
-//            {
-//                id : 'id1',
-//                label : 'enid1',
-//                type : "GEOGRAPHIC_DIMENSION",
-//                hierarchy : true,
-//                representations : [
-//                    {id : 'id1a', label : 'enid1a', normCode : 'NORMCODE_1'},
-//                    {id : 'id1b', label : 'enid1b', normCode : 'NORMCODE_2', parent : 'id1a'}
-//                ]
-//            },
-//            {
-//                id : 'id2',
-//                label : 'enid2',
-//                type : "DIMENSION",
-//                hierarchy : false,
-//                representations : [
-//                    {id : 'id2a', label : 'enid2a', normCode : null},
-//                    {id : 'id2b', label : 'enid2b', normCode : null}
-//                ]
-//            }
-//        ]);
-//
-//    });
-//
-//    it("get total observations", function () {
-//        I18n.locale = 'es';
-//        var metadata = new Metadata(response);
-//
-//        var total = metadata.getTotalObservations();
-//        expect(total).to.deep.equal(4);
-//    });
-//
-//    it("getCategoryByNormCode", function () {
-//        I18n.locale = 'en';
-//        var metadata = new Metadata(response);
-//        var category = metadata.getCategoryByNormCode("id1", "NORMCODE_1");
-//        expect(category).to.deep.equal({id : "id1a", label : "enid1a", normCode : "NORMCODE_1"});
-//    });
-//
-//    describe("getTimeDimensions", function () {
-//
-//        it("should return the times dimensions", function () {
-//            I18n.locale = 'es';
-//            response.metadata.dimension.type[1] = 'TIME_DIMENSION';
-//            var metadata = new Metadata(response);
-//            expect(metadata.getTimeDimensions().length).to.deep.equal(1);
-//        });
-//
-//        it("should return an empty array if it hasn't time dimensions", function () {
-//            I18n.locale = 'es';
-//            var metadata = new Metadata(response);
-//            expect(metadata.getTimeDimensions().length).to.deep.equal(0);
-//        });
-//    });
 
 });

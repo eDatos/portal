@@ -201,13 +201,26 @@
             if (dimension && dimension.dimensionValues) {
                 //TODO normCode
                 var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
+                var isGeographic = dimension.type === "GEOGRAPHIC_DIMENSION";
+
+                var variableId;
+                if(isGeographic && dimension.variable) {
+                    variableId = dimension.variable.id;
+                }
+
                 representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
                     var representation = _.pick(dimensionValue, 'id', 'open');
+                    representation.label = self.localizeLabel(dimensionValue.name.text);
+
                     if (dimensionValue.visualisationParent) {
-                        var parent = _.findWhere(dimension.dimensionValues.value, {urn : dimensionValue.visualisationParent})
+                        var parent = _.findWhere(dimension.dimensionValues.value, {urn : dimensionValue.visualisationParent});
                         if (parent) representation.parent = parent.id;
                     }
-                    representation.label = self.localizeLabel(dimensionValue.name.text);
+
+                    if (variableId && dimensionValue.variableElement) {
+                        representation.normCode = variableId + "." + dimensionValue.variableElement.id;
+                    }
+
                     if (isMeasureDimension) {
                         representation.decimals = _.has(dimensionValue, 'showDecimalsPrecision') ? dimensionValue.showDecimalsPrecision : defaultDecimals;
                     }
