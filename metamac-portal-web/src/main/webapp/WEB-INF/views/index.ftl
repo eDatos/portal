@@ -1,7 +1,11 @@
-[#ftl]
-[#include "helpers/helpers-import.ftl"]
-[@layoutPage.page]
-
-<h1>Metamac</h1>
-
-[/@layoutPage.page]
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Metamac Portal Web</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Metamac Portal Web</h1>
+</body>
+</html>
