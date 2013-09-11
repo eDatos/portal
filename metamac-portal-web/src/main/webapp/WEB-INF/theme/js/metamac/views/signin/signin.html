@@ -1,0 +1,31 @@
+<div class="signin-social-container simpleLayout-content-inner">
+    <h3 class="signin-title">{{msg}}</h3>
+
+    <div class="signin-social-forms">
+        <form action="{{context}}/signin/twitter" method="POST" class="signin-social-form">
+            <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"/>
+            <a class="icon-social-container" href="#" data-provider="twitter">
+                <i class="icon-twitter"></i>
+            </a>
+        </form>
+
+        <form action="{{context}}/signin/facebook" method="POST" class="signin-social-form">
+            <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"/>
+            <input type="hidden" name="scope" value="email"/>
+            <a class="icon-social-container" href="#" data-provider="facebook">
+                <i class="icon-facebook"></i>
+            </a>
+        </form>
+
+        <form action="{{context}}/signin/google" method="POST" class="signin-social-form">
+            <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"/>
+            <input type="hidden" name="scope"
+                   value="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo#email https://www.googleapis.com/auth/plus.me"/>
+            <a class="icon-social-container" href="#" data-provider="google">
+                <i class="icon-google"></i>
+            </a>
+        </form>
+    </div>
+
+    <div class="signin-tip">Accede siempre con la misma red social</div>
+</div>

@@ -1,0 +1,6 @@
+[#ftl]
+[#import "../spring.ftl" as spring]
+[#import "../layout/layout-base.ftl" as layoutBase]
+[#import "../layout/layout-page.ftl" as layoutPage]
+[#assign xhtmlCompliant = true in spring/]
+[#import "helpers-render.ftl" as s4yh]

@@ -1,0 +1,67 @@
+<div class="row">
+
+    <div class="span12 profile-header">
+        <div class="row">
+            <div class="span9">
+            {{#if user.imageUrl}}
+                <img src="{{user.imageUrl}}">
+            {{else}}
+                <img src="{{resourceContext}}/images/defaultUser.png">
+            {{/if}}
+
+            <h1>{{user.name}}  {{user.surname}}
+                <small>({{user.username}})</small>
+            </h1>
+            </div>
+            <div class="span3 profile-actions-container">
+                <a href="#update" class="btn profile-update-btn">{{ message "profile.read.update-profile" }}</a>
+                <a href="{{context}}/signout" class="btn profile-logout-btn">{{ message "profile.read.logout" }} <i class="icon-logout-min"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="span6">
+        <div class="s4y-box">
+            <div class="s4y-box-header">
+                <h2>{{message "profile.read.information.title"}}</h2>
+            </div>
+            <div class="s4y-box-container">
+                <div>
+                    <dl>
+                        <dt>{{message "profile.read.information.email" }} :</dt>
+                        <dd>{{user.mail}}</dd>
+                        <dt>{{message "profile.read.information.memberSince" }} : </dt>
+                        <dd>{{date user.createdDate}}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="s4y-box">
+            <div class="s4y-box-header">
+                <h2>{{message "profile.read.preferences.title" }}</h2>
+            </div>
+            <div class="s4y-box-container">
+                <div>
+                    <dl>
+                        <dt>{{message "profile.read.preferences.language" }} :</dt>
+                        <dd>{{user.localeLabel}}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="span6">
+        <div class="s4y-box">
+            <div class="s4y-box-header">
+                <h2>{{message "profile.read.favourites.title"}}</h2>
+            </div>
+            <div class="s4y-box-container">
+                <div class="favs"></div>
+            </div>
+        </div>
+    </div>
+
+</div>

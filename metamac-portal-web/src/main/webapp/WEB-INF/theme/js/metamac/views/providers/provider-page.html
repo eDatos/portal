@@ -1,0 +1,45 @@
+<div id="first-row-internal-page" class="row">
+    <div class="search-active-provider search-s4y-img span3">
+        <!-- <img src="/stat4you-web/theme/images/stat4you.png" alt="stat4you">-->
+    </div>
+    <div class="span9" id="search-bar">
+        <form class="search-form search" method="GET" action="{{context}}/search">
+            <div class="search-box">
+                <input type="text" name="query" class="search-form-query" placeholder='{{ message "page.provider.search.placeholder"}}'/>
+            </div>
+            <div class="search-button">
+                <input class="btn btn-primary" type="submit" value="{{message "page.search.button"}}" />
+            </div>
+            <input type="hidden" name="ff_ds_prov_acronym" value="{{ provider.acronym }}">
+        </form>
+    </div>
+</div>
+
+<div id="first-row-providers" class="row">
+    <div class="span12 provider-full-description">
+        {{#if provider.description}}
+            <p>{{ iString provider.description }}</p>
+        {{/if}}
+    </div>
+</div>
+
+<div class="row">
+    <div class="providers-item span4">
+        <div class="provider">
+        
+        </div>
+    </div>
+
+    <div class="span8">
+        <div class="s4y-box">
+            <div class="s4y-box-header">
+                <h2>{{ message "entity.provider.lastUpdatedDatasets" }}</h2>
+            </div>
+            <div class="s4y-box-container">
+                <div class="datasets-list">
+        
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

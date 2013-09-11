@@ -1,0 +1,9 @@
+{{#if visible}}
+    {{#if activeProvider.logo}}
+        <img alt="{{activeProvider.acronym}}" src="{{resourceContext}}images/logos/{{activeProvider.logo}}" />
+    {{else}}
+        <img alt="stat4you" src="{{resourceContext}}images/stat4you.png" />
+    {{/if}}
+{{else}}
+    <img alt="stat4you" src="{{resourceContext}}images/stat4you.png" />
+{{/if}}

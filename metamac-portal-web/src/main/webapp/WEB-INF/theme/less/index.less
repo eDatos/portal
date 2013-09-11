@@ -1,0 +1,154 @@
+//
+// Index
+//
+
+.about {
+    margin-bottom: 40px;
+    display: block;
+}
+
+.index-datasets {
+
+    .index-dataset {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+
+        border-bottom: 1px solid #ebebeb;
+        box-shadow: 0 1px 0 #fdfdfd;
+
+
+        .index-dataset-date {
+            color: #333;
+            font-size: 11px;
+        }
+
+        .index-dataset-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1D4D6E;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .index-dataset-provider {
+            font-size: 11px;
+        }
+
+        &:last-child {
+            border-bottom: none;
+            box-shadow: none;
+        }
+
+        .clearfix();
+    }
+}
+
+.index-provider {
+    display: table;
+    width: 100%;
+    padding: 10px 0;
+
+    .index-provider-logo {
+        display: table-cell;
+        vertical-align : middle;
+        width: 50px;
+        height: 50px;
+    }
+
+    .index-provider-title {
+        display: table-cell;
+        vertical-align : middle;
+        padding-left: 10px;
+    }
+
+    .clearfix();
+}
+
+.list-separator {
+    border-bottom: 1px solid #ebebeb;
+    box-shadow: 0 1px 0 #fdfdfd;
+    &:last-child {
+        border-bottom: 0;
+        box-shadow: none;
+    }
+}
+
+.index-hero {
+    background-image: url("../../images/landing-chart.png");
+    height: 320px;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-bottom: 5px;
+
+    h1 {
+        background-color: #DF7926; //user var
+        color: #fff;
+        font-weight: normal;
+        margin: 0;
+        padding: 5px;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        background: rgba(255, 255, 255, .8);
+        color: #1D5379; //user var
+        font-weight: normal;
+        margin-top: 15px;
+        padding: 5px;
+    }
+
+    .video {
+        display: block;
+        background-color: rgba(0, 0, 0, 0.15);
+        height: 103px;
+        position: relative;
+        padding-top: 52px;
+
+        .video-icon {
+            .icon-play-video;
+            margin: 0 auto;
+            display:block;
+        }
+
+        &:hover {
+            .video-icon {
+                .icon-play-video-hover
+            }
+        }
+    }
+
+
+    .index-hero-content {
+        margin-top: 90px;
+    }
+
+    .index-hero-search {
+        margin-top: 15px;
+    }
+}
+
+#logo {
+    position: relative;
+    img {
+        max-height: 80px;
+    }
+    .version {
+        position: absolute;
+        left: 215px;
+        bottom: 0px;
+        font-style: italic;
+    }
+}
+
+.index-searchbar {
+    margin-top: 20px;
+}
+
+
+#videoModal {
+    width: 853px;
+    margin-left: -853/2px;
+    outline: none;
+    border:none !important;
+    box-shadow:none !important;
+}

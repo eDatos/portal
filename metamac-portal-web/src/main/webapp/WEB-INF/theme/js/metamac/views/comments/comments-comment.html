@@ -1,0 +1,32 @@
+<div class="comment">
+
+    <div class="comment-avatar-container">
+        {{#if comment.user.imageUrl}}
+            <img class="comment-avatar" src="{{comment.user.imageUrl}}">
+        {{else}}
+            <img class="comment-avatar" src="{{resourceContext}}/images/defaultUser.png">
+        {{/if}}
+    </div>
+
+    <div class="comment-content">
+        <div class="comment-header">
+            <span class="comment-username">{{comment.user.username}}</span> |
+            <span class="comment-createdDate">{{fromNow comment.createdDate}}</span>
+            {{#if comment.lastUpdate}}
+            | <span class="comment-lastUpdate">{{fromNow comment.lastUpdated}}</span>
+            {{/if}}
+
+            {{#if isSelfComment}}
+                <span class="pull-right">
+                    <a href="#" title="Borrar comentario" rel="popover" class="comment-delete"
+                       data-placement="bottom">x</a>
+                </span>
+            {{/if}}
+        </div>
+
+        <div class="comment-text">
+            {{{ comment.contentHtml }}}
+        </div>
+    </div>
+
+</div>

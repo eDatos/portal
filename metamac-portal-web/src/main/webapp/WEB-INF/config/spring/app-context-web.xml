@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+
+    <context:property-placeholder />
+
+    <!-- Scans within the base package of the application for @Components to configure as beans -->
+    <bean id="messageSource" class="org.siemac.metamac.portal.web.i18n.CustomResourceBundleMessageSource">
+        <property name="basename"     value="classpath:i18n/messages" />
+        <property name="fallbackToSystemLocale" value="false"/>
+        <property name="useCodeAsDefaultMessage" value="true" />
+        <property name="cacheSeconds" value="0" />
+    </bean>
+
+    <!-- Configurer that sets up a shared FreeMarker Configuration for FreeMarker views -->
+    <bean id="freemarkerConfigurer"  class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+          <property name="defaultEncoding" value="UTF-8" />
+          <property name="templateLoaderPath" value="/WEB-INF/views" />         
+      </bean>
+
+    <!-- Simple ViewResolver for FreeMarker, appending ".ftl" to logical view names. -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver" >
+          <property name="cache" value="true" />
+          <property name="prefix" value="" />
+          <property name="suffix" value=".ftl" />
+          <property name="contentType" value="text/html; charset=UTF-8" />
+          <property name="viewClass" value="org.siemac.metamac.portal.web.view.FreeMarkerHelperView" />
+          <property name="exposeSpringMacroHelpers" value="true" />
+          <property name="exposeRequestAttributes" value="true" />
+          <property name="exposeSessionAttributes" value="true" />
+          <property name="allowSessionOverride" value="true" />
+          <property name="allowRequestOverride" value="true" />      
+          <property name="requestContextAttribute" value="rc"/>                        
+    </bean>
+
+
+    <!-- METAMAC environment configuration -->
+    <bean id="configurationService" class="org.siemac.metamac.core.common.conf.ConfigurationServiceImpl">
+        <property name="systemConfigurationFile">
+            <value>classpath:metamac/environment.xml</value>
+        </property>
+    </bean>
+
+    <bean id="propertyPlaceholderConfigurer" class="org.siemac.metamac.core.common.conf.ConfigurationServicePropertyPlaceholderConfigurer">
+        <property name="configurationService">
+            <ref bean="configurationService" />
+        </property>
+    </bean>
+
+    <!-- Imports user-defined @Controller beans that process client requests -->
+    <import resource="app-context-web-controllers.xml" />
+    <import resource="app-context-web-resources.xml" />
+
+</beans>
