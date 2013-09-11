@@ -1,0 +1,41 @@
+Application PORTAL {
+    basePackage=org.siemac.metamac.portal
+
+	Module core {
+		basePackage=org.siemac.metamac.portal.core
+		
+		// ----------------------------------------------------------------
+		// 							SERVICES
+		// ----------------------------------------------------------------  
+		
+		Service PermalinkService {
+			> @PermalinkRepository
+			
+			@Permalink createPermalink(@Permalink permalink) throws MetamacException;
+			@Permalink retrievePermalinkByCode(String code) throws MetamacException;
+		}
+		
+		
+		
+		// ----------------------------------------------------------------
+		// 							ENTITIES
+		// ---------------------------------------------------------------- 
+		
+		Entity Permalink {
+			databaseTable="TB_PERMALINKS"
+			hint="idSequence=PERMALINK"
+			
+			
+			String code not nullable;
+       		Clob content not nullable;
+			
+			Repository PermalinkRepository {
+				findByCode;
+		   		findByCondition;
+		   		save;
+			}
+		}
+		
+    }
+
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd"
+    default-autowire="byName">
+
+    <!-- Creates a EntityManagerFactory for use with the Hibernate JPA provider -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="StatisticalOperationsEntityManagerFactory" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true" />
+                <property name="generateDdl" value="true" />
+                <property name="databasePlatform" value="${metamac.portal.db.dialect}" />
+            </bean>
+        </property>
+        <property name="persistenceXmlLocation" value="META-INF/persistence-test.xml" />
+    </bean>
+
+   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName"    value="${metamac.portal.db.driver_name}"/>
+        <property name="url"                value="${metamac.portal.db.url}"/>
+        <property name="username"           value="${metamac.portal.db.username}"/>
+        <property name="password"           value="${metamac.portal.db.password}"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- BeanPostProcessor that processes PersistenceUnit and PersistenceContext annotations, for injection of the corresponding JPA resources EntityManagerFactory and EntityManager. -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+</beans>
+
