@@ -16,6 +16,7 @@
     <modules>
         <module>metamac-portal-parent</module>
         <module>metamac-portal-core</module>
+        <module>metamac-portal-rest-external-api</module>
         <module>metamac-portal-web</module>
         <module>metamac-portal-web-client</module>
     </modules>
