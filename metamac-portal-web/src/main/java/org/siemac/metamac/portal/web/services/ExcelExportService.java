@@ -45,8 +45,10 @@ public class ExcelExportService {
         int rownum = 0;
         for (String observation : observationIterable) {
             Row row = sh.createRow(rownum);
-            Cell cell = row.createCell(0);
-            cell.setCellValue(Double.valueOf(observation));
+            if(!observation.trim().isEmpty()) {
+                Cell cell = row.createCell(0);
+                cell.setCellValue(Double.valueOf(observation));
+            }
             rownum++;
         }
 
@@ -70,7 +72,7 @@ public class ExcelExportService {
 
         for(DatasetSelectionDimension dimension : datasetSelection.getDimensions()) {
             sb.append(dimension.getId());
-            sb.append("+");
+            sb.append(":");
             sb.append(joiner.join(dimension.getSelectedCategories()));
             sb.append(":");
         }

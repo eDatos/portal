@@ -18,7 +18,7 @@ public class DatasetSelectionMapper {
 
     public static DatasetSelection fromJSON(String json) throws Exception {
 
-        DatasetSelection selection = new DatasetSelection();
+        List<DatasetSelectionDimension> dimensions = new ArrayList<DatasetSelectionDimension>();
         try {
             JsonNode jsonNode = mapper.readTree(json);
             Iterator<Map.Entry<String, JsonNode>> dimensionNodes = jsonNode.getFields();
@@ -32,13 +32,13 @@ public class DatasetSelectionMapper {
 
                 DatasetSelectionDimension dimension = new DatasetSelectionDimension(id, position);
                 dimension.setSelectedCategories(selectedCategories);
-                selection.addDimension(dimension);
+                dimensions.add(dimension);
             }
         } catch (IOException e) {
             throw new Exception("Error parsing dataset selection", e);
         }
 
-        return selection;
+        return new DatasetSelection(dimensions);
     }
 
     private static List<String> nodeArrayToListString(ArrayNode selectedCategoriesNode) {
