@@ -2,7 +2,7 @@ package org.siemac.metamac.portal.web.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.siemac.metamac.portal.web.mocks.DatasetSelectionMockBuilder;
+import org.siemac.metamac.portal.web.test.mocks.DatasetSelectionMockBuilder;
 
 import java.util.List;
 import java.util.Map;

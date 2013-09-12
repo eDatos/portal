@@ -21,7 +21,7 @@ public class ExcelExportService {
 
     public static final int ROW_ACCESS_WINDOW_SIZE = 100;
 
-    public void exportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) {
+    public void exportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) throws Exception {
 
         DatasetDataAccess datasetDataAccess = new DatasetDataAccess(dataset);
 
@@ -81,7 +81,7 @@ public class ExcelExportService {
         try {
             wb.write(resultOutputStream);
         } catch (IOException e) {
-            throw new Error("Error writing excel to OutputStream");
+            throw new Exception("Error writing excel to OutputStream");
         }
 
         // dispose of temporary files backing this workbook on disk

@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.web.mocks;
+package org.siemac.metamac.portal.web.test.mocks;
 
 import org.siemac.metamac.portal.web.model.DatasetSelection;
 import org.siemac.metamac.portal.web.model.DatasetSelectionDimension;

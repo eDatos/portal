@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.web.mocks;
+package org.siemac.metamac.portal.web.test.mocks;
 
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.*;
 import sun.plugin.dom.exception.InvalidStateException;
@@ -32,15 +32,17 @@ public class DatasetDataMockBuilder {
         return this;
     }
 
-    public DatasetDataMockBuilder representation(String representationCode) {
+    public DatasetDataMockBuilder representation(String ... representationCodes) {
         if (codeRepresentationList == null){
             throw new InvalidStateException("Define a dimension before it representation");
         }
 
-        CodeRepresentation representation = new CodeRepresentation();
-        representation.setCode(representationCode);
-        representation.setIndex(codeRepresentationList.size());
-        codeRepresentationList.add(representation);
+        for(String representationCode : representationCodes) {
+            CodeRepresentation representation = new CodeRepresentation();
+            representation.setCode(representationCode);
+            representation.setIndex(codeRepresentationList.size());
+            codeRepresentationList.add(representation);
+        }
 
         return this;
     }
