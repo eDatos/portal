@@ -16,7 +16,7 @@
 
     <aop:config>
         <aop:pointcut id="restServicePortalExternal" expression="execution(public * org.siemac.metamac.portal.rest.external..service.*.*(..))" />  
-        <aop:advisor pointcut-ref="restServicePortalExternal" advice-ref="txAdvice" order="1" />
+        <aop:advisor pointcut-ref="restServicePortalExternal" advice-ref="txAdviceCore" order="1" />
     </aop:config> 
 
 </beans>

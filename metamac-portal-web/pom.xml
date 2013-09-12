@@ -15,6 +15,22 @@
     <description>SIEMAC :: METAMAC :: PORTAL :: WEB</description>
 
     <dependencies>
+        <!-- Metamac -->
+        <dependency>
+            <groupId>org.siemac.metamac</groupId>
+            <artifactId>metamac-core-common</artifactId>
+            <classifier>client</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.metamac-portal</groupId>
+            <artifactId>metamac-portal-rest-external-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
+            <artifactId>metamac-statistical-resources-rest-external-api</artifactId>
+        </dependency>
+
         <!-- Web -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -86,15 +102,6 @@
             <artifactId>spring-test</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.siemac.metamac</groupId>
-            <artifactId>metamac-core-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
-            <artifactId>metamac-statistical-resources-rest-external-api</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.cxf</groupId>

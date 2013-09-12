@@ -3,15 +3,30 @@
 <properties>
     <comment>Configuration</comment>
 
-    <!--  ********************************************************************************************** -->
-    <!--  **************************** APIS ************************************************************ -->
-    <!--  ********************************************************************************************** -->
-    
-    <entry key="metamac.endpoints.statistical_resources.rest.external">http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources</entry>
+    <!-- ********************************************************************************************** -->
+    <!-- **************************** DATASOURCES ***************************************************** -->
+    <!-- ********************************************************************************************** -->
+<!--     <entry key="metamac.portal.db.url">jdbc:oracle:thin:@FILL_ME_WITH_HOST:FILL_ME_WITH_PORT:XE</entry> -->
+<!--     <entry key="metamac.portal.db.username">FILL_ME_WITH_USERNAME</entry> -->
+<!--     <entry key="metamac.portal.db.password">FILL_ME_WITH_PASSWORD</entry> -->
+<!--     <entry key="metamac.portal.db.driver_name">oracle.jdbc.OracleDriver</entry> -->
+<!--     <entry key="metamac.portal.db.dialect">org.siemac.metamac.hibernate.dialect.Oracle10gDialectMetamac</entry> -->
 
-    <!--  ********************************************************************************************** -->
-    <!--  **************************** MISC ************************************************************ -->
-    <!--  ********************************************************************************************** -->
+    <entry key="metamac.portal.db.url">jdbc:oracle:thin:@localhost:1521:XE</entry>
+    <entry key="metamac.portal.db.username">metamac_portal_test</entry>
+    <entry key="metamac.portal.db.password">metamac_portal_test</entry>
+    <entry key="metamac.portal.db.driver_name">oracle.jdbc.OracleDriver</entry>
+    <entry key="metamac.portal.db.dialect">org.siemac.metamac.hibernate.dialect.Oracle10gDialectMetamac</entry>
+
+    <!-- ********************************************************************************************** -->
+    <!-- **************************** APIS ************************************************************ -->
+    <!-- ********************************************************************************************** -->
+
+    <entry key="metamac.statistical_resources.rest.external">http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources</entry>
+
+    <!-- ********************************************************************************************** -->
+    <!-- **************************** MISC ************************************************************ -->
+    <!-- ********************************************************************************************** -->
     <entry key="metamac.edition.languages">es</entry>
-    
+
 </properties>
