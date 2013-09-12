@@ -1,4 +1,4 @@
-Application PORTAL {
+Application Portal {
     basePackage=org.siemac.metamac.portal
 
 	Module core {
@@ -24,7 +24,6 @@ Application PORTAL {
 		Entity Permalink {
 			databaseTable="TB_PERMALINKS"
 			hint="idSequence=PERMALINK"
-			
 			
 			String code not nullable;
        		Clob content not nullable;

@@ -16,17 +16,14 @@ public class PermalinkServiceImpl extends PermalinkServiceImplBase {
 
     @Override
     public Permalink createPermalink(ServiceContext ctx, Permalink permalink) throws MetamacException {
-
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("createPermalink not implemented");
-
+        return null;
     }
 
     @Override
     public Permalink retrievePermalinkByCode(ServiceContext ctx, String code) throws MetamacException {
-
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("retrievePermalinkByCode not implemented");
-
+        return null;
     }
+
 }

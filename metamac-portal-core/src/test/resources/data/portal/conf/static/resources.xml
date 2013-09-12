@@ -4,7 +4,6 @@
     <comment>Configurations</comment>
    
     <!-- Database -->
-    <!-- ORACLE -->
     <entry key="metamac.portal.db.url">jdbc:oracle:thin:@oracle-dev:1521:XE</entry>
     <entry key="metamac.portal.db.username">jenkins_metamac_portal</entry>
     <entry key="metamac.portal.db.password">jenkins_metamac_portal</entry>
