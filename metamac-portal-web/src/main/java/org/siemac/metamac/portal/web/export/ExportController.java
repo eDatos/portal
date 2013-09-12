@@ -1,5 +1,7 @@
 package org.siemac.metamac.portal.web.export;
 
+import java.io.ByteArrayOutputStream;
+
 import org.apache.batik.transcoder.TranscoderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,20 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.ByteArrayOutputStream;
-
+// TODO servir como API? Si no, habilitar component scan Controller
 @Controller
 @RequestMapping("/chart/export")
 public class ExportController {
 
     private static final String FORBIDDEN_WORD = "<!ENTITY";
-    private static Logger log = LoggerFactory.getLogger(ExportController.class);
+    private static Logger       log            = LoggerFactory.getLogger(ExportController.class);
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
-    public HttpEntity<byte[]> export(@RequestParam(value = "filename", required = false) String filename,
-                       @RequestParam(value = "width", required = false) Float width,
-                       @RequestParam(value = "type", required = false) String type,
-                       @RequestParam(value = "svg") String svg) throws Exception {
+    public HttpEntity<byte[]> export(@RequestParam(value = "filename", required = false) String filename, @RequestParam(value = "width", required = false) Float width,
+            @RequestParam(value = "type", required = false) String type, @RequestParam(value = "svg") String svg) throws Exception {
 
         filename = getFilename(filename);
         width = getWidth(width);
@@ -36,7 +35,7 @@ public class ExportController {
     public static HttpEntity<byte[]> createResponse(String svg, String filename, Float width, MimeType mime) throws Exception {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-        //mime = MimeType.SVG;
+        // mime = MimeType.SVG;
 
         if (!MimeType.SVG.equals(mime)) {
             try {
@@ -58,7 +57,7 @@ public class ExportController {
         headers.set("Content-Disposition", "attachment; filename=" + filename + "." + mime.name().toLowerCase());
         headers.setContentLength(documentBody.length);
 
-        return new HttpEntity<byte[]>(documentBody,headers);
+        return new HttpEntity<byte[]>(documentBody, headers);
     }
 
     private void validateSvg(String svg) throws Exception {
