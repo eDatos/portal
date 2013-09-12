@@ -4,6 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import org.siemac.metamac.rest.permalink.v1_0.domain.Permalink;
 
@@ -20,5 +21,17 @@ public interface PermalinksV1_0 {
     @GET
     @Produces("application/xml")
     @Path("/permalinks/{id}")
-    Permalink retrievePermalinkById(@PathParam("id") String id);
+    Permalink retrievePermalinkByIdXml(@PathParam("id") String id);
+
+    /**
+     * Retrieve content of permalink by id
+     * 
+     * @param id Id
+     * @return Content in JSON format
+     */
+    @GET
+    @Produces("application/json")
+    @Path("/permalinks/{id}")
+    Response retrievePermalinkByIdJson(@PathParam("id") String id);
+
 }

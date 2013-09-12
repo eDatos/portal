@@ -1,19 +1,38 @@
 package org.siemac.metamac.portal.rest.external.permalink.v1_0.service;
 
+import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
+
+import javax.ws.rs.core.Response;
+
+import org.siemac.metamac.portal.rest.external.permalink.v1_0.mapper.PermalinksDo2RestMapperV10;
+import org.siemac.metamac.portal.rest.external.service.PortalRestExternalCommonService;
 import org.siemac.metamac.rest.permalink.v1_0.domain.Permalink;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("permalinksRestExternalFacadeV10")
 public class PermalinksRestExternalFacadeV10Impl implements PermalinksV1_0 {
 
-    @Override
-    public Permalink retrievePermalinkById(String id) {
-        // TODO API retrievePermalinkById
+    @Autowired
+    private PortalRestExternalCommonService commonService;
 
-        Permalink p = new Permalink();
-        p.setId("aaaaaaa");
-        p.setContent("afdjaslfjal");
-        return p;
+    @Autowired
+    private PermalinksDo2RestMapperV10      permalinksDo2RestMapper;
+
+    @Override
+    public Permalink retrievePermalinkByIdXml(String id) {
+        try {
+            org.siemac.metamac.portal.core.domain.Permalink permalinkEntity = commonService.retrievePermalink(id);
+            Permalink permalink = permalinksDo2RestMapper.toPermalink(permalinkEntity);
+            return permalink;
+        } catch (Exception e) {
+            throw manageException(e);
+        }
     }
 
+    @Override
+    public Response retrievePermalinkByIdJson(String id) {
+        // TODO retrievePermalinkByIdJson
+        return null;
+    }
 }
