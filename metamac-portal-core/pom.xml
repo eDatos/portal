@@ -31,6 +31,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
+            <artifactId>metamac-statistical-resources-rest-external-api</artifactId>
+        </dependency>
+        
+        <!-- Test -->
+        <dependency>
             <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-common-test</artifactId>
             <version>${metamac-common-test.version}</version>
@@ -261,7 +267,19 @@
             <artifactId>commons-dbcp</artifactId>
             <version>${commons-dbcp.version}</version>
         </dependency>
-
+        
+        <!-- MISC -->
+       <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
+        <!-- SVG Export -->
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-codec</artifactId>
+            <version>${batik-core.version}</version>
+        </dependency>
+        
         <!-- TESTS -->
         <dependency>
             <groupId>org.dbunit</groupId>

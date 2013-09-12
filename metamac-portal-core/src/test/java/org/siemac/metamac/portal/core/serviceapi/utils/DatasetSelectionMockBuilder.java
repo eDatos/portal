@@ -1,7 +1,7 @@
-package org.siemac.metamac.portal.web.test.mocks;
+package org.siemac.metamac.portal.core.serviceapi.utils;
 
-import org.siemac.metamac.portal.web.model.DatasetSelection;
-import org.siemac.metamac.portal.web.model.DatasetSelectionDimension;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 
 import java.util.ArrayList;
 import java.util.Arrays;

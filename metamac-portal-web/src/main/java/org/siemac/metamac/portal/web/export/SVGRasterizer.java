@@ -1,5 +1,8 @@
 package org.siemac.metamac.portal.web.export;
 
+import java.io.ByteArrayOutputStream;
+import java.io.StringReader;
+
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
@@ -8,9 +11,7 @@ import org.apache.batik.transcoder.image.JPEGTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.fop.svg.PDFTranscoder;
 
-import java.io.ByteArrayOutputStream;
-import java.io.StringReader;
-
+// TODO mover a core?
 public class SVGRasterizer {
 
     private static final SVGRasterizer INSTANCE = new SVGRasterizer();
@@ -19,11 +20,10 @@ public class SVGRasterizer {
         return INSTANCE;
     }
 
-    public SVGRasterizer() {}
+    public SVGRasterizer() {
+    }
 
-    public synchronized ByteArrayOutputStream transcode(
-            ByteArrayOutputStream stream, String svg, MimeType mime, Float width)
-            throws SVGRasterizerException, TranscoderException {
+    public synchronized ByteArrayOutputStream transcode(ByteArrayOutputStream stream, String svg, MimeType mime, Float width) throws SVGRasterizerException, TranscoderException {
         TranscoderInput input = new TranscoderInput(new StringReader(svg));
         TranscoderOutput transOutput = new TranscoderOutput(stream);
         SVGAbstractTranscoder transcoder = SVGRasterizer.getTranscoder(mime);
@@ -34,8 +34,7 @@ public class SVGRasterizer {
         return stream;
     }
 
-    public static SVGAbstractTranscoder getTranscoder(MimeType mime)
-            throws SVGRasterizerException {
+    public static SVGAbstractTranscoder getTranscoder(MimeType mime) throws SVGRasterizerException {
 
         SVGAbstractTranscoder transcoder = null;
 
@@ -45,8 +44,7 @@ public class SVGRasterizer {
                 break;
             case JPEG:
                 transcoder = new JPEGTranscoder();
-                transcoder.addTranscodingHint(JPEGTranscoder.KEY_QUALITY,
-                        new Float(0.9));
+                transcoder.addTranscodingHint(JPEGTranscoder.KEY_QUALITY, new Float(0.9));
                 break;
             case PDF:
                 transcoder = new PDFTranscoder();

@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.web.model;
+package org.siemac.metamac.portal.core.domain;
 
 import java.util.List;
 

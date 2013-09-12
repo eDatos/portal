@@ -1,19 +1,22 @@
-package org.siemac.metamac.portal.web.test.mocks;
-
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.*;
-import sun.plugin.dom.exception.InvalidStateException;
+package org.siemac.metamac.portal.core.serviceapi.utils;
 
 import java.util.List;
 
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentations;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Data;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentations;
+
 public class DatasetDataMockBuilder {
 
-    private Data data;
+    private final Data               data;
     private List<CodeRepresentation> codeRepresentationList;
 
     public static DatasetDataMockBuilder create() {
         return new DatasetDataMockBuilder();
     }
-    
+
     private DatasetDataMockBuilder() {
         data = new Data();
         data.setDimensions(new DimensionRepresentations());
@@ -32,12 +35,12 @@ public class DatasetDataMockBuilder {
         return this;
     }
 
-    public DatasetDataMockBuilder representation(String ... representationCodes) {
-        if (codeRepresentationList == null){
-            throw new InvalidStateException("Define a dimension before it representation");
+    public DatasetDataMockBuilder representation(String... representationCodes) {
+        if (codeRepresentationList == null) {
+            throw new IllegalArgumentException("Define a dimension before it representation");
         }
 
-        for(String representationCode : representationCodes) {
+        for (String representationCode : representationCodes) {
             CodeRepresentation representation = new CodeRepresentation();
             representation.setCode(representationCode);
             representation.setIndex(codeRepresentationList.size());

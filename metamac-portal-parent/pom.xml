@@ -25,6 +25,7 @@
         <google-guava.version>15.0</google-guava.version>
         <apache-poi.version>3.9</apache-poi.version>
         <commons-lang3.version>3.0.1</commons-lang3.version>
+        <batik-core.version>1.7</batik-core.version>
         
         <!-- WEB -->
         <freemarker.version>2.3.18</freemarker.version>

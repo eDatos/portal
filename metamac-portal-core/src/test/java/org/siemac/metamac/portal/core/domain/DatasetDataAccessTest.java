@@ -1,7 +1,8 @@
-package org.siemac.metamac.portal.web.model;
+package org.siemac.metamac.portal.core.domain;
 
 import org.junit.Test;
-import org.siemac.metamac.portal.web.test.mocks.DatasetDataMockBuilder;
+import org.siemac.metamac.portal.core.domain.DatasetDataAccess;
+import org.siemac.metamac.portal.core.serviceapi.utils.DatasetDataMockBuilder;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Data;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 

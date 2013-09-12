@@ -19,6 +19,10 @@ Application Portal {
     		PagedResult<@Permalink> findPermalinksByCondition(List<ConditionalCriteria> conditions, PagingParameter pagingParameter)  throws MetamacException;
 		}
 		
+		Service ExportService {
+			exportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) throws MetamacException;
+		}
+		
 		// ----------------------------------------------------------------
 		// 							ENTITIES
 		// ---------------------------------------------------------------- 

@@ -1,8 +1,10 @@
-package org.siemac.metamac.portal.web.model;
+package org.siemac.metamac.portal.core.domain;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.siemac.metamac.portal.web.test.mocks.DatasetSelectionMockBuilder;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
+import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuilder;
 
 import java.util.List;
 import java.util.Map;

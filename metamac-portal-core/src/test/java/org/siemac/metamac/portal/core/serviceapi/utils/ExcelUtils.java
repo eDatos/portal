@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.web.test.utils;
+package org.siemac.metamac.portal.core.serviceapi.utils;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

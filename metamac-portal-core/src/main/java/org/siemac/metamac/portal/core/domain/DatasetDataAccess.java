@@ -1,27 +1,28 @@
-package org.siemac.metamac.portal.web.model;
-
-import com.google.common.base.Splitter;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
+package org.siemac.metamac.portal.core.domain;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
+import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
+
 public class DatasetDataAccess {
 
-    private Dataset dataset;
-    private Map<String, Integer> multipliers = new HashMap<String, Integer>();
-    private Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>();
-    private List<String> observations;
+    private final Dataset                        dataset;
+    private final Map<String, Integer>           multipliers         = new HashMap<String, Integer>();
+    private final Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>();
+    private final String[]                       observations;
 
     public DatasetDataAccess(Dataset dataset) {
         this.dataset = dataset;
         initializeMultipliers();
         initializerIndex();
-        observations = Splitter.on(" | ").splitToList(dataset.getData().getObservations());
+        observations = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
     }
 
     private void initializeMultipliers() {
@@ -58,7 +59,7 @@ public class DatasetDataAccess {
             offset += index * multiplier;
         }
 
-        String observation = observations.get(offset);
+        String observation = observations[offset];
         if (!observation.trim().isEmpty()) {
             return Double.valueOf(observation);
         } else {

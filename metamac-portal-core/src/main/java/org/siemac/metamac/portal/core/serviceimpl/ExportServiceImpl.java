@@ -1,27 +1,37 @@
-package org.siemac.metamac.portal.web.services;
-
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.siemac.metamac.portal.web.model.DatasetDataAccess;
-import org.siemac.metamac.portal.web.model.DatasetSelection;
-import org.siemac.metamac.portal.web.model.DatasetSelectionDimension;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
-import org.springframework.stereotype.Service;
+package org.siemac.metamac.portal.core.serviceimpl;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class ExcelExportService {
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
+import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.portal.core.domain.DatasetDataAccess;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
+import org.siemac.metamac.portal.core.error.ServiceExceptionType;
+import org.siemac.metamac.portal.core.serviceapi.validators.ExportServiceInvocationValidator;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    public static final int ROW_ACCESS_WINDOW_SIZE = 100;
+@Service("exportService")
+public class ExportServiceImpl extends ExportServiceImplBase {
 
-    public void exportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) throws Exception {
+    public static final int                  ROW_ACCESS_WINDOW_SIZE = 100;
+
+    @Autowired
+    private ExportServiceInvocationValidator exportServiceInvocationValidator;
+
+    @Override
+    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) throws MetamacException {
+
+        exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, resultOutputStream);
 
         DatasetDataAccess datasetDataAccess = new DatasetDataAccess(dataset);
 
@@ -58,7 +68,7 @@ public class ExcelExportService {
         for (int i = 0; i < rows; i++) {
             Row row = sh.createRow(observationsStartRow + i);
             for (int j = 0; j < columns; j++) {
-                Map<String,String> permutationAtCell = datasetSelection.permutationAtCell(i, j);
+                Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(i, j);
                 Double observation = datasetDataAccess.observationAtPermutation(permutationAtCell);
                 if (observation != null) {
                     Cell cell = row.createCell(leftHeaderSize + j);
@@ -66,7 +76,7 @@ public class ExcelExportService {
                 }
             }
 
-            //LeftHeader
+            // LeftHeader
             for (int leftDimensionIndex = 0; leftDimensionIndex < leftDimensions.size(); leftDimensionIndex++) {
                 DatasetSelectionDimension dimension = leftDimensions.get(leftDimensionIndex);
                 int multiplier = datasetSelection.getMultiplierForDimension(dimension);
@@ -81,13 +91,11 @@ public class ExcelExportService {
         try {
             wb.write(resultOutputStream);
         } catch (IOException e) {
-            throw new Exception("Error writing excel to OutputStream");
+            throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error writing excel to OutputStream");
         }
 
         // dispose of temporary files backing this workbook on disk
         wb.dispose();
     }
-
-
 
 }
