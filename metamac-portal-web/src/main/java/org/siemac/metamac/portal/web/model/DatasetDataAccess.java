@@ -57,7 +57,7 @@ public class DatasetDataAccess {
             int multiplier = multipliers.get(dimensionId);
             offset += index * multiplier;
         }
-        System.out.println(offset);
+
         String observation = observations.get(offset);
         if (!observation.trim().isEmpty()) {
             return Double.valueOf(observation);

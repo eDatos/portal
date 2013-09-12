@@ -5,21 +5,21 @@ import sun.plugin.dom.exception.InvalidStateException;
 
 import java.util.List;
 
-public class DatasetDataMockFactory {
+public class DatasetDataMockBuilder {
 
     private Data data;
     private List<CodeRepresentation> codeRepresentationList;
 
-    public static DatasetDataMockFactory create() {
-        return new DatasetDataMockFactory();
+    public static DatasetDataMockBuilder create() {
+        return new DatasetDataMockBuilder();
     }
     
-    private DatasetDataMockFactory() {
+    private DatasetDataMockBuilder() {
         data = new Data();
         data.setDimensions(new DimensionRepresentations());
     }
 
-    public DatasetDataMockFactory dimension(String dimensionId) {
+    public DatasetDataMockBuilder dimension(String dimensionId) {
         CodeRepresentations codeRepresentations = new CodeRepresentations();
         codeRepresentationList = codeRepresentations.getRepresentations();
 
@@ -32,7 +32,7 @@ public class DatasetDataMockFactory {
         return this;
     }
 
-    public DatasetDataMockFactory representation(String representationCode) {
+    public DatasetDataMockBuilder representation(String representationCode) {
         if (codeRepresentationList == null){
             throw new InvalidStateException("Define a dimension before it representation");
         }
@@ -45,7 +45,7 @@ public class DatasetDataMockFactory {
         return this;
     }
 
-    public DatasetDataMockFactory observations(String observations) {
+    public DatasetDataMockBuilder observations(String observations) {
         data.setObservations(observations);
         return this;
     }

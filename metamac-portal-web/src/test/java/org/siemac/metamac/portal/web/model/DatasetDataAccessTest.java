@@ -1,7 +1,7 @@
 package org.siemac.metamac.portal.web.model;
 
 import org.junit.Test;
-import org.siemac.metamac.portal.web.mocks.DatasetDataMockFactory;
+import org.siemac.metamac.portal.web.mocks.DatasetDataMockBuilder;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Data;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
@@ -14,7 +14,7 @@ public class DatasetDataAccessTest {
 
     @Test
     public void testObservationAtPermutation() throws Exception {
-        Data data = DatasetDataMockFactory.create()
+        Data data = DatasetDataMockBuilder.create()
                 .observations("1.35 | 2.24 |  | 4.5")
                 .dimension("DIM_A").representation("DIM_A_0").representation("DIM_A_1")
                 .dimension("DIM_B").representation("DIM_B_0").representation("DIM_B_1")

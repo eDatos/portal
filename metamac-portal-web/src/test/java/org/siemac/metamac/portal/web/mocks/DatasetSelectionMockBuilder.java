@@ -7,27 +7,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DatasetSelectionMockFactory {
+public class DatasetSelectionMockBuilder {
 
-    public static DatasetSelectionMockFactory create() {
-        return new DatasetSelectionMockFactory();
+    public static DatasetSelectionMockBuilder create() {
+        return new DatasetSelectionMockBuilder();
     }
 
     private List<DatasetSelectionDimension> dimensions = new ArrayList<DatasetSelectionDimension>();
     private DatasetSelectionDimension lastDimension;
 
-    private DatasetSelectionMockFactory() {
+    private DatasetSelectionMockBuilder() {
 
     }
 
-    public DatasetSelectionMockFactory dimension(String dimensionId, int position) {
+    public DatasetSelectionMockBuilder dimension(String dimensionId, int position) {
         DatasetSelectionDimension dimension = new DatasetSelectionDimension(dimensionId, position);
         lastDimension = dimension;
         dimensions.add(dimension);
         return this;
     }
 
-    public DatasetSelectionMockFactory categories(String... categoriesId) {
+    public DatasetSelectionMockBuilder categories(String... categoriesId) {
         lastDimension.setSelectedCategories(Arrays.asList(categoriesId));
         return this;
     }

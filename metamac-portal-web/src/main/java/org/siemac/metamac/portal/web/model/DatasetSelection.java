@@ -120,4 +120,8 @@ public class DatasetSelection {
 
         return permutation;
     }
+
+    public int getMultiplierForDimension(DatasetSelectionDimension dimension) {
+        return multipliers.get(dimension.getId());
+    }
 }

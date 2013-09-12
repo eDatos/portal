@@ -2,7 +2,7 @@ package org.siemac.metamac.portal.web.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.siemac.metamac.portal.web.mocks.DatasetSelectionMockFactory;
+import org.siemac.metamac.portal.web.mocks.DatasetSelectionMockBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class DatasetSelectionTest {
 
     @Before
     public void before() {
-        datasetSelection = DatasetSelectionMockFactory.create()
+        datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("TIME_PERIOD", 21).categories("2013", "2012")
                 .dimension("INDICADORES", 0).categories("INDICE_OCUPACION_PLAZAS")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20).categories("1_2_3_ESTRELLAS")
