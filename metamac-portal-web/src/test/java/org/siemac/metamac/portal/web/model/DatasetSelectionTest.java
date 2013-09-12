@@ -15,7 +15,12 @@ public class DatasetSelectionTest {
 
     @Before
     public void before() {
-        datasetSelection = DatasetSelectionMockFactory.create();
+        datasetSelection = DatasetSelectionMockFactory.create()
+                .dimension("TIME_PERIOD", 21).categories("2013", "2012")
+                .dimension("INDICADORES", 0).categories("INDICE_OCUPACION_PLAZAS")
+                .dimension("CATEGORIA_ALOJAMIENTO", 20).categories("1_2_3_ESTRELLAS")
+                .dimension("DESTINO_ALOJAMIENTO", 40).categories("EL_HIERRO")
+                .build();
     }
 
     @Test

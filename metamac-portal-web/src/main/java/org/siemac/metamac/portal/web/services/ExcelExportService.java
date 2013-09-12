@@ -2,11 +2,11 @@ package org.siemac.metamac.portal.web.services;
 
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.siemac.metamac.portal.web.model.DatasetDataAccess;
 import org.siemac.metamac.portal.web.model.DatasetSelection;
 import org.siemac.metamac.portal.web.model.DatasetSelectionDimension;
 import org.siemac.metamac.portal.web.ws.MetamacApisLocator;
@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExcelExportService {
@@ -37,19 +38,24 @@ public class ExcelExportService {
         String dims = getDimsParameter(datasetSelection);
 
         Dataset dataset = statisticalResourcesV1_0.retrieveDataset("ISTAC", "C00031A_000002", "001.000", languages, fields, dims);
-        String observations = dataset.getData().getObservations();
-        Iterable<String> observationIterable = Splitter.on(" | ").split(observations);
+        DatasetDataAccess datasetDataAccess = new DatasetDataAccess(dataset);
+
+        int rows = datasetSelection.getRows();
+        int columns = datasetSelection.getColumns();
+
 
         SXSSFWorkbook wb = new SXSSFWorkbook(ROW_ACCESS_WINDOW_SIZE);
         Sheet sh = wb.createSheet();
-        int rownum = 0;
-        for (String observation : observationIterable) {
-            Row row = sh.createRow(rownum);
-            if(!observation.trim().isEmpty()) {
-                Cell cell = row.createCell(0);
-                cell.setCellValue(Double.valueOf(observation));
+        for (int i = 0; i < rows; i++) {
+            Row row = sh.createRow(i);
+            for (int j = 0; j < columns; j++) {
+                Map<String,String> permutationAtCell = datasetSelection.permutationAtCell(i, j);
+                Double observation = datasetDataAccess.observationAtPermutation(permutationAtCell);
+                if (observation != null) {
+                    Cell cell = row.createCell(j);
+                    cell.setCellValue(observation);
+                }
             }
-            rownum++;
         }
 
         try {
