@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+
+    <TB_SEQUENCES SEQUENCE_NAME="PERMALINKS" SEQUENCE_NEXT_VALUE="100000000" />
+
+    <TB_PERMALINKS
+        ID="1"
+        CODE="permalink01"
+        CONTENT="http://datasets/ISTAC/OCUPACION_HOTELERA"
+        
+        UUID="1"
+        VERSION="1"
+        CREATED_BY="user1"
+        CREATED_DATE="2011-01-01 01:02:03"
+        CREATED_DATE_TZ="Europe/London"
+        LAST_UPDATED_BY="user2"
+        LAST_UPDATED="2012-01-22 01:02:03"
+        LAST_UPDATED_TZ="Europe/London"  
+    />
+    
+    <TB_PERMALINKS
+        ID="2"
+        CODE="permalink02"
+        CONTENT="http://datasets/ISTAC/TURISMO"
+        
+        UUID="2"
+        VERSION="1"
+        CREATED_BY="user1"
+        CREATED_DATE="2011-01-01 01:02:03"
+        CREATED_DATE_TZ="Europe/London"
+        LAST_UPDATED_BY="user2"
+        LAST_UPDATED="2011-01-22 01:02:03"
+        LAST_UPDATED_TZ="Europe/London"  
+    />    
+    
+    <TB_PERMALINKS
+        ID="3"
+        CODE="permalink03"
+        CONTENT="http://datasets/INE/POBLACION"
+        
+        UUID="3"
+        VERSION="1"
+        CREATED_BY="user1"
+        CREATED_DATE="2011-01-01 01:02:03"
+        CREATED_DATE_TZ="Europe/London"
+        LAST_UPDATED_BY="user2"
+        LAST_UPDATED="2011-01-22 01:02:03"
+        LAST_UPDATED_TZ="Europe/London"  
+    />        
+</dataset>

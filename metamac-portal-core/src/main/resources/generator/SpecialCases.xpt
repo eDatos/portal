@@ -86,3 +86,9 @@ Attribute»
 
 «AROUND templates::db::OracleDDL::createSequence FOR Application»
 «ENDAROUND»
+
+«REM»Generate invocation validator for services «ENDREM»
+«AROUND templates::service::Service::service FOR Service»
+	«targetDef.proceed() -»
+	«EXPAND generatorcommon::InvocationValidator::invocationValidator»
+«ENDAROUND»

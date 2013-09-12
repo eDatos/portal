@@ -8,14 +8,16 @@ Application Portal {
 		// 							SERVICES
 		// ----------------------------------------------------------------  
 		
-		Service PermalinkService {
+		Service PermalinksService {
 			> @PermalinkRepository
 			
+			"Creates new permalink, generating the permalink code"
 			@Permalink createPermalink(@Permalink permalink) throws MetamacException;
+			"Retrieves permalink by code. Throws exception if permalink does not exist"
 			@Permalink retrievePermalinkByCode(String code) throws MetamacException;
+    		"Finds permalinks by criteria"
+    		PagedResult<@Permalink> findPermalinksByCondition(List<ConditionalCriteria> conditions, PagingParameter pagingParameter)  throws MetamacException;
 		}
-		
-		
 		
 		// ----------------------------------------------------------------
 		// 							ENTITIES
@@ -29,12 +31,11 @@ Application Portal {
        		Clob content not nullable;
 			
 			Repository PermalinkRepository {
-				findByCode;
-		   		findByCondition;
+				@Permalink findByCode(String code);
+				findByQuery(String query, Map<String, Object> parameters, int maxResult);
+		   		findByCondition(PagingParameter pagingParameter);
 		   		save;
 			}
 		}
-		
     }
-
 }

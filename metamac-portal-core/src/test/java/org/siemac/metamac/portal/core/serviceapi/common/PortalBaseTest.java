@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.common.test.dbunit.MetamacDBUnitBaseTests;
 import org.siemac.metamac.core.common.exception.CommonServiceExceptionType;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -41,6 +42,10 @@ public abstract class PortalBaseTest extends MetamacDBUnitBaseTests {
     @Override
     protected DataBaseProvider getDatabaseProvider() {
         return DataBaseProvider.valueOf(databaseProvider);
+    }
+
+    protected ServiceContext getServiceContext() {
+        return new ServiceContext("junit", "junit", "app");
     }
 
     protected MetamacExceptionItem assertListContainsExceptionItemOneParameter(MetamacException e, CommonServiceExceptionType serviceExceptionType, String parameter) {
