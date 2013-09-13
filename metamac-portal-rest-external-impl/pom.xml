@@ -92,6 +92,18 @@
         <!-- Test -->
         <dependency>
             <groupId>org.siemac.metamac</groupId>
+            <artifactId>metamac-common-test</artifactId>
+            <version>${metamac-common-test.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>metamac-core-common</artifactId>
+                    <groupId>org.siemac.metamac</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-rest-common-test</artifactId>
             <version>${metamac-rest-common-test.version}</version>
             <scope>test</scope>
