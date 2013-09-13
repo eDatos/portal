@@ -30,16 +30,24 @@
         <url-pattern>/apis/*</url-pattern>
     </servlet-mapping>
     
+    <!-- URL rewriting -->
+    <filter>
+            <filter-name>UrlRewriteFilter</filter-name>
+            <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+            <filter-name>UrlRewriteFilter</filter-name>
+            <url-pattern>/apis/*</url-pattern>
+    </filter-mapping>
+    
     <error-page>
         <exception-type>404</exception-type>
         <location>/error.html</location>
     </error-page>
-    
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/error.html</location>
     </error-page>
-  
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
