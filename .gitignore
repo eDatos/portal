@@ -6,3 +6,6 @@ target
 atlassian-ide-plugin.xml
 rebel.xml
 metamac-portal-web/src/main/webapp/WEB-INF/views/includes
+metamac-portal-core/src/generated
+metamac-portal-core/src/test/generated
+metamac-portal-rest-external-api/src/generated
