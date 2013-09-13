@@ -1,6 +1,6 @@
 package org.siemac.metamac.portal.rest.external.permalink.v1_0.mapper;
 
-import org.siemac.metamac.rest.permalink.v1_0.domain.Permalink;
+import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
 
 public interface PermalinksDo2RestMapperV10 {
 

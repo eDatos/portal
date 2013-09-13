@@ -22,6 +22,7 @@
     <!-- **************************** APIS ************************************************************ -->
     <!-- ********************************************************************************************** -->
 
+    <entry key="metamac.portal.rest.external">http://estadisticas.arte-consultores.com/metamac-portal-web/apis</entry>
     <entry key="metamac.statistical_resources.rest.external">http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources</entry>
 
     <!-- ********************************************************************************************** -->

@@ -1,10 +1,31 @@
 package org.siemac.metamac.portal.rest.external.permalink.v1_0.mapper;
 
-import org.siemac.metamac.rest.permalink.v1_0.domain.Permalink;
+import javax.annotation.PostConstruct;
+
+import org.siemac.metamac.core.common.conf.ConfigurationService;
+import org.siemac.metamac.portal.rest.external.RestExternalConstants;
+import org.siemac.metamac.rest.common.v1_0.domain.ResourceLink;
+import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
+import org.siemac.metamac.rest.utils.RestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PermalinksDo2RestMapperV10Impl implements PermalinksDo2RestMapperV10 {
+
+    @Autowired
+    private ConfigurationService configurationService;
+
+    private String               portalApiExternalEndpointV10;
+
+    @PostConstruct
+    public void init() throws Exception {
+        // ENDPOINTS
+        // Permalinks external Api V1.0
+        String portalApiExternalEndpoint = configurationService.retrievePortalExternalApiUrlBase();
+        portalApiExternalEndpointV10 = RestUtils.createLink(portalApiExternalEndpoint, RestExternalConstants.API_VERSION_1_0);
+
+    }
 
     @Override
     public Permalink toPermalink(org.siemac.metamac.portal.core.domain.Permalink source) throws Exception {
@@ -12,27 +33,24 @@ public class PermalinksDo2RestMapperV10Impl implements PermalinksDo2RestMapperV1
             return null;
         }
         Permalink target = new Permalink();
-        // target.setKind(StatisticalResourcesRestExternalConstants.KIND_DATASET);
-        // target.setId(source.getSiemacMetadataStatisticalResource().getCode());
-        // target.setUrn(source.getSiemacMetadataStatisticalResource().getUrn());
-        // target.setSelfLink(toDatasetSelfLink(source));
-        // target.setName(commonDo2RestMapper.toInternationalString(source.getSiemacMetadataStatisticalResource().getTitle(), selectedLanguages));
-        // target.setDescription(commonDo2RestMapper.toInternationalString(source.getSiemacMetadataStatisticalResource().getDescription(), selectedLanguages));
-        // target.setParentLink(toDatasetParentLink(source));
-        // target.setChildLinks(toDatasetChildLinks(source));
-        // target.setSelectedLanguages(commonDo2RestMapper.toLanguages(selectedLanguages));
-        //
-        // DsdProcessorResult dsdProcessorResult = null;
-        // if (includeMetadata || includeData) {
-        // dsdProcessorResult = commonDo2RestMapper.processDataStructure(source.getRelatedDsd().getUrn());
-        // }
-        // if (includeMetadata) {
-        // target.setMetadata(toDatasetMetadata(source, dsdProcessorResult, selectedLanguages));
-        // }
-        // if (includeData) {
-        // target.setData(commonDo2RestMapper.toData(source, dsdProcessorResult, selectedDimensions, selectedLanguages));
-        // }
+        target.setKind(RestExternalConstants.KIND_PERMALINK);
+        target.setId(source.getCode());
+        target.setContent(source.getContent());
+        target.setSelfLink(toPermalinkSelfLink(source));
         return target;
+    }
+
+    private ResourceLink toPermalinkSelfLink(org.siemac.metamac.portal.core.domain.Permalink source) {
+        ResourceLink target = new ResourceLink();
+        target.setKind(RestExternalConstants.KIND_PERMALINK);
+        target.setHref(toPermalinkLink(source));
+        return target;
+    }
+
+    private String toPermalinkLink(org.siemac.metamac.portal.core.domain.Permalink source) {
+        String link = RestUtils.createLink(portalApiExternalEndpointV10, RestExternalConstants.LINK_SUBPATH_PERMALINK);
+        link = RestUtils.createLink(link, source.getCode());
+        return link;
     }
 
 }

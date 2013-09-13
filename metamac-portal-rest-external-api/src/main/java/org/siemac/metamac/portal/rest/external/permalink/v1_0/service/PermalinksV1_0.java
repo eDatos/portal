@@ -6,9 +6,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import org.siemac.metamac.rest.permalink.v1_0.domain.Permalink;
+import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
 
-@Path("/permalinks/v1.0")
+@Path("/v1.0")
 // IMPORTANT: If a new version of API is added, remember change latest url y urlrewrite.xml in war
 public interface PermalinksV1_0 {
 
