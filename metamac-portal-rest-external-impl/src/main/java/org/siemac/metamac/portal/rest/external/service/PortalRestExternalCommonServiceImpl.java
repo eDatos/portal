@@ -44,4 +44,13 @@ public class PortalRestExternalCommonServiceImpl implements PortalRestExternalCo
             throw manageException(e);
         }
     }
+
+    @Override
+    public Permalink createPermalink(Permalink permalink) {
+        try {
+            return permalinksService.createPermalink(SERVICE_CONTEXT, permalink);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
 }

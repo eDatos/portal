@@ -16,15 +16,14 @@ public class PermalinksDo2RestMapperV10Impl implements PermalinksDo2RestMapperV1
     @Autowired
     private ConfigurationService configurationService;
 
-    private String               portalApiExternalEndpointV10;
+    private String               permalinksApiExternalEndpointV10;
 
     @PostConstruct
     public void init() throws Exception {
         // ENDPOINTS
         // Permalinks external Api V1.0
         String portalApiExternalEndpoint = configurationService.retrievePortalExternalApiUrlBase();
-        portalApiExternalEndpointV10 = RestUtils.createLink(portalApiExternalEndpoint, RestExternalConstants.API_VERSION_1_0);
-
+        permalinksApiExternalEndpointV10 = RestUtils.createLink(portalApiExternalEndpoint, RestExternalConstants.API_PERMALINKS_NAME + "/" + RestExternalConstants.API_VERSION_1_0);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class PermalinksDo2RestMapperV10Impl implements PermalinksDo2RestMapperV1
     }
 
     private String toPermalinkLink(org.siemac.metamac.portal.core.domain.Permalink source) {
-        String link = RestUtils.createLink(portalApiExternalEndpointV10, RestExternalConstants.LINK_SUBPATH_PERMALINK);
+        String link = RestUtils.createLink(permalinksApiExternalEndpointV10, RestExternalConstants.LINK_SUBPATH_PERMALINK);
         link = RestUtils.createLink(link, source.getCode());
         return link;
     }

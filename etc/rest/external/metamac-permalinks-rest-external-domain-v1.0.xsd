@@ -9,7 +9,7 @@
     <xs:complexType name="Permalink">
         <xs:sequence>
             <xs:element name="id" type="xs:string" />
-            <xs:element name="content" type="xs:string" />
+            <xs:element name="content" type="xs:string" minOccurs="1" />
             <xs:element name="selfLink" type="common:ResourceLink" />
         </xs:sequence>
         <xs:attribute name="kind" type="xs:string" use="required" />
