@@ -126,7 +126,6 @@ public class PermalinksServiceTest extends PortalBaseTest implements PermalinksS
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
             assertListContainsExceptionItemOneParameter(e, ServiceExceptionType.PERMALINK_NOT_FOUND, code);
-            assertEquals("El enlace con código not-exists no existe", e.getExceptionItems().get(0).getMessage());
         }
     }
 
