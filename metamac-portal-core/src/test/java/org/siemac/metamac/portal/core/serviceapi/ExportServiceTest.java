@@ -1,5 +1,12 @@
 package org.siemac.metamac.portal.core.serviceapi;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.junit.Before;
 import org.junit.Rule;
@@ -15,17 +22,14 @@ import org.siemac.metamac.portal.core.serviceimpl.validators.ExportServiceInvoca
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
 public class ExportServiceTest implements ExportServiceTestBase {
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder       tempFolder = new TemporaryFolder();
 
-    private ExportService exportService;
+    private ExportService        exportService;
 
-    private final ServiceContext ctx = getServiceContext();
+    private final ServiceContext ctx        = getServiceContext();
 
     @Before
     public void before() throws Exception {
@@ -73,8 +77,41 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Asserts.assertArrayEquals(expected, content);
     }
 
+    @Override
+    @Test
+    public void testExportDatasetToTsv() throws Exception {
+        //@formatter:off
+        Dataset dataset = DatasetMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO").representation("ANDALUCIA").representation("ARAGON")
+                .dimension("TIME_PERIOD").representation("2013").representation("2012")
+                .dimension("CATEGORIA_ALOJAMIENTO").representation("1_2_3_ESTRELLAS").representation("4_5_ESTRELLAS")
+                .dimension("INDICADORES").representation("INDICE_OCUPACION_PLAZAS")
+                .observations("1 | 2 | 3 | 4 | 5 | 6 | 7 | 8")
+                .build();
+        //@formatter:on
+
+        File tmpFile = tempFolder.newFile();
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        exportService.exportDatasetToTsv(ctx, dataset, out);
+
+        out.close(); // TODO close stream?
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4", bufferedReader.readLine());
+        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5", bufferedReader.readLine());
+        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6", bufferedReader.readLine());
+        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t7", bufferedReader.readLine());
+        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8", bufferedReader.readLine());
+        assertEquals(null, bufferedReader.readLine());
+        bufferedReader.close();
+    }
+
     private ServiceContext getServiceContext() {
         return new ServiceContext("junit", "junit", "app");
     }
-
 }

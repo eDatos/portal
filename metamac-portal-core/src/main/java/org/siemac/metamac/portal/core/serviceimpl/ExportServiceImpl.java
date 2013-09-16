@@ -1,5 +1,15 @@
 package org.siemac.metamac.portal.core.serviceimpl;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,19 +21,17 @@ import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.serviceapi.validators.ExportServiceInvocationValidator;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
+import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
 
 @Service("exportService")
 public class ExportServiceImpl extends ExportServiceImplBase {
 
-    public static final int ROW_ACCESS_WINDOW_SIZE = 100;
+    public static final int                  ROW_ACCESS_WINDOW_SIZE = 100;
 
     @Autowired
     private ExportServiceInvocationValidator exportServiceInvocationValidator;
@@ -31,19 +39,29 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     @Override
     public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) throws MetamacException {
         exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, resultOutputStream);
+
         ExcelExporter excelExport = new ExcelExporter(dataset, datasetSelection);
         excelExport.write(resultOutputStream);
     }
 
+    @Override
+    public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, resultOutputStream);
+
+        TsvExporter tsvExport = new TsvExporter(dataset);
+        tsvExport.write(resultOutputStream);
+    }
+
     private class ExcelExporter {
-        private DatasetAccess datasetAccess;
-        private DatasetSelection datasetSelection;
-        private Sheet sheet;
-        private int rows;
-        private int columns;
-        private int leftHeaderSize;
-        private int topHeaderSize;
-        private SXSSFWorkbook workbook;
+
+        private final DatasetAccess    datasetAccess;
+        private final DatasetSelection datasetSelection;
+        private Sheet                  sheet;
+        private int                    rows;
+        private int                    columns;
+        private int                    leftHeaderSize;
+        private int                    topHeaderSize;
+        private SXSSFWorkbook          workbook;
 
         private ExcelExporter(Dataset dataset, DatasetSelection datasetSelection) {
             this.datasetAccess = new DatasetAccess(dataset);
@@ -125,8 +143,110 @@ public class ExportServiceImpl extends ExportServiceImplBase {
             }
             workbook.dispose();
         }
-
     }
 
+    private class TsvExporter {
 
+        private final List<String>              dimensions;
+        private final Map<String, List<String>> codesByDimensionId;
+        private final String[]                  observations;
+        private final String                    SEPARATOR          = "\t";
+        private final String                    HEADER_OBSERVATION = "OBS_VALUE";
+
+        private TsvExporter(Dataset dataset) {
+            List<DimensionRepresentation> dimensionRepresentations = dataset.getData().getDimensions().getDimensions();
+            this.dimensions = new ArrayList<String>(dimensionRepresentations.size());
+            this.codesByDimensionId = new HashMap<String, List<String>>(dimensionRepresentations.size());
+            for (DimensionRepresentation dimensionRepresentation : dimensionRepresentations) {
+                String dimensionId = dimensionRepresentation.getDimensionId();
+                this.dimensions.add(dimensionId);
+
+                List<CodeRepresentation> codesRepresentations = dimensionRepresentation.getRepresentations().getRepresentations();
+                this.codesByDimensionId.put(dimensionId, new ArrayList<String>(codesRepresentations.size()));
+                for (CodeRepresentation codeRepresentation : codesRepresentations) {
+                    this.codesByDimensionId.get(dimensionId).add(codeRepresentation.getCode());
+                }
+            }
+            this.observations = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
+        }
+
+        public void write(OutputStream os) throws MetamacException {
+            PrintWriter printWriter = null;
+            try {
+                printWriter = new PrintWriter(os);
+
+                // Header
+                StringBuilder header = new StringBuilder();
+                for (String dimension : dimensions) {
+                    header.append(dimension + SEPARATOR);
+                }
+                header.append(HEADER_OBSERVATION);
+                printWriter.println(header);
+
+                // Observations
+                Stack<OrderingStackElement> stack = new Stack<OrderingStackElement>();
+                stack.push(new OrderingStackElement(StringUtils.EMPTY, -1));
+                ArrayList<String> entryId = new ArrayList<String>(dimensions.size());
+                for (int i = 0; i < dimensions.size(); i++) {
+                    entryId.add(i, StringUtils.EMPTY);
+                }
+
+                int lastDimension = dimensions.size() - 1;
+                int observationIndex = 0;
+                while (stack.size() > 0) {
+                    OrderingStackElement elem = stack.pop();
+                    int elemDimension = elem.getDimNum();
+                    String elemCode = elem.getCodeId();
+                    if (elemDimension != -1) {
+                        entryId.set(elemDimension, elemCode);
+                    }
+
+                    if (elemDimension == lastDimension) {
+                        // The observation is complete
+                        String observation = observations[observationIndex];
+                        StringBuilder line = new StringBuilder();
+                        for (String codeDimension : entryId) {
+                            line.append(codeDimension + SEPARATOR);
+                        }
+                        line.append(observation);
+                        printWriter.println(line);
+                        observationIndex++;
+                        entryId.set(elemDimension, StringUtils.EMPTY);
+                    } else {
+                        String dimensionId = dimensions.get(elemDimension + 1);
+                        List<String> codes = codesByDimensionId.get(dimensionId);
+                        for (int i = codes.size() - 1; i >= 0; i--) {
+                            OrderingStackElement temp = new OrderingStackElement(codes.get(i), elemDimension + 1);
+                            stack.push(temp);
+                        }
+                    }
+                }
+            } finally {
+                if (printWriter != null) {
+                    printWriter.flush();
+                    // printWriter.close(); TODO close stream?
+                }
+            }
+        }
+    }
+
+    private class OrderingStackElement {
+
+        private String codeId = null;
+        private int    dimNum = -1;
+
+        public OrderingStackElement(String codeId, int dimNum) {
+            super();
+            this.codeId = codeId;
+            this.dimNum = dimNum;
+        }
+
+        public String getCodeId() {
+            return codeId;
+        }
+
+        public int getDimNum() {
+            return dimNum;
+        }
+    }
 }

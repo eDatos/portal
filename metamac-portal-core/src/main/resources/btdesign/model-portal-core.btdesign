@@ -21,6 +21,7 @@ Application Portal {
 		
 		Service ExportService {
 			exportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) throws MetamacException;
+			exportDatasetToTsv(Dataset dataset, OutputStream resultOutputStream) throws MetamacException;
 		}
 		
 		// ----------------------------------------------------------------
