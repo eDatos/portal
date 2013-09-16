@@ -10,4 +10,7 @@ public class RestExternalConstants extends RestApiConstants {
     public static String API_PERMALINKS_NAME    = "permalinks";
     public static String LINK_SUBPATH_PERMALINK = "permalinks";
     public static String KIND_PERMALINK         = API_PERMALINKS_NAME + KIND_SEPARATOR + "permalink";
+
+    // Data export
+    public static String PARAMETER_SELECTION    = "selection";
 }

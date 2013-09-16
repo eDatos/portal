@@ -10,10 +10,10 @@
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-    <jaxrs:server id="restExternal" address="/permalinks">
-        <jaxrs:features>
-            <cxf:logging />
-        </jaxrs:features>
+    <jaxrs:server id="restExternalPermalinks" address="/permalinks">
+<!--         <jaxrs:features> -->
+<!--             <cxf:logging /> -->
+<!--         </jaxrs:features> -->
 
         <jaxrs:serviceBeans>
             <ref bean="permalinksRestExternalFacadeV10" />
@@ -30,6 +30,20 @@
             <ref bean="wadlGenerator" />
         </jaxrs:providers>
     </jaxrs:server>
+    
+    <jaxrs:server id="restExternalDataExport" address="/export">
+<!--         <jaxrs:features> -->
+<!--             <cxf:logging /> -->
+<!--         </jaxrs:features> -->
+
+        <jaxrs:serviceBeans>
+            <ref bean="dataExportRestExternalFacadeV10" />
+        </jaxrs:serviceBeans>
+
+        <jaxrs:providers>
+            <ref bean="wadlGenerator" />
+        </jaxrs:providers>
+    </jaxrs:server>    
 
     <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
         <property name="marshallerProperties" ref="marshallerProperties" />

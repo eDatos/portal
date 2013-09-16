@@ -224,7 +224,6 @@ public class ExportServiceImpl extends ExportServiceImplBase {
             } finally {
                 if (printWriter != null) {
                     printWriter.flush();
-                    // printWriter.close(); TODO close stream?
                 }
             }
         }

@@ -6,4 +6,8 @@
         <from>/apis/permalinks/latest</from>
         <to type="redirect">%{context-path}/apis/permalinks/v1.0</to>
     </rule>
+    <rule>
+        <from>/apis/export/latest</from>
+        <to type="redirect">%{context-path}/apis/export/v1.0</to>
+    </rule>    
 </urlrewrite>

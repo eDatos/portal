@@ -1,14 +1,14 @@
 <enunciate xsi:noNamespaceSchemaLocation="http://enunciate.codehaus.org/schemas/enunciate-1.26.xsd">
 
     <namespaces>
-        <namespace uri="http://www.siemac.org/metamac/rest/structural-resources-internal/v1.0/domain" id="srm"/>
         <namespace uri="http://www.siemac.org/metamac/rest/common/v1.0/domain" id="cdomain"/>
     </namespaces>
     
     <api-import class="org.siemac.metamac.portal.rest.external.permalink.v1_0.service.PermalinksV1_0" />
+    <api-import class="org.siemac.metamac.portal.rest.external.export.v1_0.service.DataExportV1_0" />
 
     <services>
-        <rest defaultRestSubcontext="apis/structural-resources-internal/" />
+        <rest defaultRestSubcontext="apis/" />
     </services>
 
     <modules>

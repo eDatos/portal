@@ -95,7 +95,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         exportService.exportDatasetToTsv(ctx, dataset, out);
 
-        out.close(); // TODO close stream?
+        out.close();
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
         assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE", bufferedReader.readLine());
