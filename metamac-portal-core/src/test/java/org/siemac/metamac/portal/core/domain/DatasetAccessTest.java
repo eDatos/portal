@@ -25,7 +25,7 @@ public class DatasetAccessTest {
                 .representation("DIM_B_0", "Representation B0")
                 .representation("DIM_B_1", "Representation B1")
                 .build();
-        datasetAccess = new DatasetAccess(dataset);
+        datasetAccess = new DatasetAccess(dataset, "es");
     }
 
     @Test

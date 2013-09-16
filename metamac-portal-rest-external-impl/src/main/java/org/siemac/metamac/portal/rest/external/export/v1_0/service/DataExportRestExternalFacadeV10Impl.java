@@ -5,12 +5,13 @@ import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestEx
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
@@ -33,6 +34,9 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     @Autowired
     private StatisticalResourcesRestExternalFacade statisticalResourcesRestExternal;
 
+    @Autowired
+    private ConfigurationService                   configurationService;
+
     @Override
     public Response exportDatasetToTsv(String agencyID, String resourceID, String version, String dimensionSelection) {
         try {
@@ -53,7 +57,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcel(String agencyID, String resourceID, String version, List<String> lang, String datasetSelectionJson) {
+    public Response exportDatasetToExcel(String agencyID, String resourceID, String version, String lang, String datasetSelectionJson) {
         try {
             // Check and transform selection
             if (StringUtils.isEmpty(datasetSelectionJson)) {
@@ -74,12 +78,15 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             }
 
             // Retrieve dataset
-            final Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, null, dimensionSelection);
+            if (lang == null) {
+                lang = configurationService.retrieveLanguageDefault();
+            }
+            final Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, Arrays.asList(lang), null, dimensionSelection);
 
             // Export
             final File tmpFile = File.createTempFile("dataset", "xlsx");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelection, outputStream);
+            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelection, lang, outputStream);
             outputStream.close();
 
             final String filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".xlsx";

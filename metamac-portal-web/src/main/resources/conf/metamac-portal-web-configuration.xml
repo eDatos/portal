@@ -3,6 +3,7 @@
 <properties>
     <comment>Configuration</comment>
 
+
     <!-- ********************************************************************************************** -->
     <!-- **************************** DATASOURCES ***************************************************** -->
     <!-- ********************************************************************************************** -->
@@ -18,5 +19,10 @@
 
     <entry key="metamac.portal.rest.external">http://FILL_ME_WITH_HOST_AND_PORT/FILL_ME_WITH_PORTAL_EXTERNAL_APP/apis</entry>
     <entry key="metamac.statistical_resources.rest.external">http://FILL_ME_WITH_HOST_AND_PORT/FILL_ME_WITH_STATISTICAL_RESOURCES_EXTERNAL_APP/apis/statistical-resources</entry>
+
+    <!-- ********************************************************************************************** -->
+    <!-- **************************** MISC ************************************************************ -->
+    <!-- ********************************************************************************************** -->
+    <entry key="metamac.edition.languages">es</entry>
 
 </properties>

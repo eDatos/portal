@@ -12,10 +12,11 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
 public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidator {
 
-    public static void checkExportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
+    public static void checkExportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
         checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
         checkMetadataRequired(datasetSelection, ServiceExceptionParameters.DATASET_SELECTION, exceptions);
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkMetadataRequired(lang, ServiceExceptionParameters.LANG, exceptions);
     }
 
     public static void checkExportDatasetToTsv(Dataset dataset, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {

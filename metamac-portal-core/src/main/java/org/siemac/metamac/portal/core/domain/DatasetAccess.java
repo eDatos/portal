@@ -1,27 +1,37 @@
 package org.siemac.metamac.portal.core.domain;
 
-import org.apache.commons.lang.StringUtils;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.*;
-import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
+import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionValues;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValues;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValue;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValues;
+import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
+
 public class DatasetAccess {
 
-    private final Dataset dataset;
-    private final Map<String, Integer> multipliers = new HashMap<String, Integer>();
-    private final Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>();
-    private final String[] observations;
+    private final Dataset                          dataset;
+    private final Map<String, Integer>             multipliers          = new HashMap<String, Integer>();
+    private final Map<String, Map<String, Long>>   representationIndex  = new HashMap<String, Map<String, Long>>();
+    private final String[]                         observations;
     private final Map<String, Map<String, String>> representationLabels = new HashMap<String, Map<String, String>>();
 
-    public DatasetAccess(Dataset dataset) {
+    public DatasetAccess(Dataset dataset, String lang) {
         this.dataset = dataset;
         initializeMultipliers();
         initializerIndex();
-        initializeRepresentationLabels();
+        initializeRepresentationLabels(lang);
 
         observations = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
     }
@@ -49,7 +59,7 @@ public class DatasetAccess {
         }
     }
 
-    private void initializeRepresentationLabels() {
+    private void initializeRepresentationLabels(String lang) {
         List<Dimension> dimensions = dataset.getMetadata().getDimensions().getDimensions();
         for (Dimension dimension : dimensions) {
             Map<String, String> labels = new HashMap<String, String>();
@@ -59,21 +69,20 @@ public class DatasetAccess {
                 NonEnumeratedDimensionValues nonEnumeratedDimensionValues = (NonEnumeratedDimensionValues) dimensionValues;
                 for (NonEnumeratedDimensionValue dimensionValue : nonEnumeratedDimensionValues.getValues()) {
                     String representationId = dimensionValue.getId();
-                    String representationLabel = dimensionValue.getName().getTexts().get(0).getValue();
+                    String representationLabel = getLabel(dimensionValue.getName(), lang);
                     labels.put(representationId, representationLabel);
                 }
-            } else if  (dimensionValues instanceof EnumeratedDimensionValues) {
+            } else if (dimensionValues instanceof EnumeratedDimensionValues) {
                 EnumeratedDimensionValues enumeratedDimensionValues = (EnumeratedDimensionValues) dimensionValues;
                 for (EnumeratedDimensionValue dimensionValue : enumeratedDimensionValues.getValues()) {
                     String representationId = dimensionValue.getId();
-                    String representationLabel = dimensionValue.getName().getTexts().get(0).getValue();
+                    String representationLabel = getLabel(dimensionValue.getName(), lang);
                     labels.put(representationId, representationLabel);
                 }
             }
 
             representationLabels.put(dimension.getId(), labels);
         }
-
     }
 
     public Double observationAtPermutation(Map<String, String> permutation) {
@@ -96,10 +105,21 @@ public class DatasetAccess {
     }
 
     public String representationLabel(String dimensionId, String representationId) {
-        if (representationLabels.get(dimensionId) != null){
+        if (representationLabels.get(dimensionId) != null) {
             return representationLabels.get(dimensionId).get(representationId);
         }
         return null;
     }
 
+    private String getLabel(InternationalString internationalString, String lang) {
+        if (internationalString == null) {
+            return null;
+        }
+        for (LocalisedString localisedString : internationalString.getTexts()) {
+            if (localisedString.getLang().equals(lang)) {
+                return localisedString.getValue();
+            }
+        }
+        return null; // TODO devolver cualquier locale?
+    }
 }

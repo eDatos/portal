@@ -1,7 +1,5 @@
 package org.siemac.metamac.portal.rest.external.export.v1_0.service;
 
-import java.util.List;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,7 +15,7 @@ public interface DataExportV1_0 {
      */
     @GET
     @Path("excel/{agencyID}/{resourceID}/{version}")
-    Response exportDatasetToExcel(@PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") List<String> lang,
+    Response exportDatasetToExcel(@PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang,
             @QueryParam("selection") String datasetSelectionJson);
 
     /**

@@ -42,6 +42,9 @@ public class ApplicationStartup implements ServletContextListener {
         configurationService.checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
         configurationService.checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_PORTAL_EXTERNAL_API);
 
+        // Misc
+        configurationService.checkRequiredProperty(PortalConfigurationConstants.METAMAC_EDITION_LANGUAGES);
+
         LOG.info("**************************************************************************");
         LOG.info("[metamac-portal-web] Application configuration checked");
         LOG.info("**************************************************************************");

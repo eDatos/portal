@@ -37,10 +37,10 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     private ExportServiceInvocationValidator exportServiceInvocationValidator;
 
     @Override
-    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelection datasetSelection, OutputStream resultOutputStream) throws MetamacException {
-        exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, resultOutputStream);
+    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, lang, resultOutputStream);
 
-        ExcelExporter excelExport = new ExcelExporter(dataset, datasetSelection);
+        ExcelExporter excelExport = new ExcelExporter(dataset, datasetSelection, lang);
         excelExport.write(resultOutputStream);
     }
 
@@ -63,8 +63,8 @@ public class ExportServiceImpl extends ExportServiceImplBase {
         private int                    topHeaderSize;
         private SXSSFWorkbook          workbook;
 
-        private ExcelExporter(Dataset dataset, DatasetSelection datasetSelection) {
-            this.datasetAccess = new DatasetAccess(dataset);
+        private ExcelExporter(Dataset dataset, DatasetSelection datasetSelection, String lang) {
+            this.datasetAccess = new DatasetAccess(dataset, lang);
             this.datasetSelection = datasetSelection;
         }
 

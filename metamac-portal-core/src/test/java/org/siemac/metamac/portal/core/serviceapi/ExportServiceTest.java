@@ -60,7 +60,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         File tmpFile = tempFolder.newFile();
         FileOutputStream out = new FileOutputStream(tmpFile);
 
-        exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, out);
+        exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, "es", out);
 
         out.close();
 
