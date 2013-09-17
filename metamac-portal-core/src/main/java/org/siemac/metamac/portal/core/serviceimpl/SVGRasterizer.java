@@ -1,17 +1,16 @@
-package org.siemac.metamac.portal.web.export;
+package org.siemac.metamac.portal.core.serviceimpl;
 
-import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.StringReader;
 
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
-import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.JPEGTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.fop.svg.PDFTranscoder;
+import org.siemac.metamac.portal.core.domain.SvgExportSupportedMimeType;
 
-// TODO mover a core?
 public class SVGRasterizer {
 
     private static final SVGRasterizer INSTANCE = new SVGRasterizer();
@@ -23,7 +22,7 @@ public class SVGRasterizer {
     public SVGRasterizer() {
     }
 
-    public synchronized ByteArrayOutputStream transcode(ByteArrayOutputStream stream, String svg, MimeType mime, Float width) throws SVGRasterizerException, TranscoderException {
+    public synchronized void transcode(OutputStream stream, String svg, SvgExportSupportedMimeType mime, Float width) throws Exception {
         TranscoderInput input = new TranscoderInput(new StringReader(svg));
         TranscoderOutput transOutput = new TranscoderOutput(stream);
         SVGAbstractTranscoder transcoder = SVGRasterizer.getTranscoder(mime);
@@ -31,10 +30,9 @@ public class SVGRasterizer {
             transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH, width);
         }
         transcoder.transcode(input, transOutput);
-        return stream;
     }
 
-    public static SVGAbstractTranscoder getTranscoder(MimeType mime) throws SVGRasterizerException {
+    public static SVGAbstractTranscoder getTranscoder(SvgExportSupportedMimeType mime) throws Exception {
 
         SVGAbstractTranscoder transcoder = null;
 
@@ -55,7 +53,7 @@ public class SVGRasterizer {
         }
 
         if (transcoder == null) {
-            throw new SVGRasterizerException("MimeType not supported");
+            throw new Exception("MimeType not supported: " + mime);
         }
 
         return transcoder;

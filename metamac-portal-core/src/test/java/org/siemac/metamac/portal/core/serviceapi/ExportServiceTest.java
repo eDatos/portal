@@ -1,6 +1,7 @@
 package org.siemac.metamac.portal.core.serviceapi;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -109,6 +110,32 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
+    }
+
+    @Override
+    @Test
+    public void testExportSvgToImage() throws Exception {
+        //@formatter:off
+        // No test
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" +
+                        "<g fill=\"none\">" +
+                            "<path stroke=\"blue\" d=\"M5 60 l215 0\" />" +
+                        "</g>" +
+                     "</svg>";
+		
+        //@formatter:on
+
+        File tmpFile = tempFolder.newFile();
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        exportService.exportSvgToImage(ctx, svg, null, null, out);
+
+        out.close();
+
+        // Validation: nothing special... Only test service does not throw error and generate a PNG
+        assertTrue(tmpFile.length() > 0);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        assertTrue(bufferedReader.readLine().contains("PNG"));
     }
 
     private ServiceContext getServiceContext() {

@@ -4,6 +4,7 @@ import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPriva
 import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Arrays;
 
@@ -38,26 +39,29 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private ConfigurationService                   configurationService;
 
     @Override
-    public Response exportDatasetToTsv(String agencyID, String resourceID, String version, String dimensionSelection) {
+    public Response exportDatasetToTsv(String agencyID, String resourceID, String version, String dimensionsSelection, String filename) {
         try {
             // Retrieve dataset
-            final Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, StatisticalResourcesRestConstants.FIELD_EXCLUDE_METADATA, dimensionSelection);
+            final Dataset dataset = statisticalResourcesRestExternal
+                    .retrieveDataset(agencyID, resourceID, version, null, StatisticalResourcesRestConstants.FIELD_EXCLUDE_METADATA, dimensionsSelection);
 
             // Export
-            final File tmpFile = File.createTempFile("dataset", "tsv");
+            final File tmpFile = File.createTempFile("metamac", "tsv");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
             exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, outputStream);
             outputStream.close();
 
-            final String filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".tsv";
-            return Response.ok(new DeleteOnCloseFileInputStream(tmpFile)).header("Content-Disposition", "attachment; filename=" + filename).build();
+            if (filename == null) {
+                filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".tsv";
+            }
+            return buildResponseOkWithFile(tmpFile, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportDatasetToExcel(String agencyID, String resourceID, String version, String lang, String datasetSelectionJson) {
+    public Response exportDatasetToExcel(String agencyID, String resourceID, String version, String lang, String datasetSelectionJson, String filename) {
         try {
             // Check and transform selection
             if (StringUtils.isEmpty(datasetSelectionJson)) {
@@ -84,16 +88,40 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             final Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, Arrays.asList(lang), null, dimensionSelection);
 
             // Export
-            final File tmpFile = File.createTempFile("dataset", "xlsx");
+            final File tmpFile = File.createTempFile("metamac", "xlsx");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
             exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelection, lang, outputStream);
             outputStream.close();
 
-            final String filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".xlsx";
-            return Response.ok(new DeleteOnCloseFileInputStream(tmpFile)).header("Content-Disposition", "attachment; filename=" + filename).build();
+            if (filename == null) {
+                filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".xlsx";
+            }
+            return buildResponseOkWithFile(tmpFile, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
+    }
+
+    @Override
+    public Response exportSvgToImage(String svg, String filename, Float width, String mimeType) {
+        try {
+            // Export
+            final File tmpFile = File.createTempFile("metamac", "image");
+            FileOutputStream outputStream = new FileOutputStream(tmpFile);
+            exportService.exportSvgToImage(SERVICE_CONTEXT, svg, width, mimeType, outputStream);
+            outputStream.close();
+
+            if (filename == null) {
+                filename = "chart";
+            }
+            return buildResponseOkWithFile(tmpFile, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    private Response buildResponseOkWithFile(File file, String filename) throws FileNotFoundException {
+        return Response.ok(new DeleteOnCloseFileInputStream(file)).header("Content-Disposition", "attachment; filename=" + filename).build();
     }
 
 }

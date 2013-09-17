@@ -23,4 +23,10 @@ public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidato
         checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
+
+    public static void checkExportSvgToImage(String svg, Float width, String mimeType, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkMetadataRequired(svg, ServiceExceptionParameters.SVG, exceptions);
+        // width, mimeType optional
+    }
 }
