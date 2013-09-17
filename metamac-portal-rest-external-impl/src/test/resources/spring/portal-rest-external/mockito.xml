@@ -7,5 +7,9 @@
     <bean id="permalinksService" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="org.siemac.metamac.portal.core.serviceapi.PermalinksService" />
     </bean>
+
+    <bean id="exportService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.siemac.metamac.portal.core.serviceapi.ExportService" />
+    </bean>
         
 </beans>
