@@ -24,7 +24,10 @@ import org.siemac.metamac.portal.core.error.ServiceExceptionParameters;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
 import org.siemac.metamac.portal.core.serviceapi.validators.ExportServiceInvocationValidator;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
 import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
@@ -165,11 +168,15 @@ public class ExportServiceImpl extends ExportServiceImplBase {
 
         private final List<String>              dimensions;
         private final Map<String, List<String>> codesByDimensionId;
-        private final String[]                  observations;
+        private final List<String>              attributesIdObservationLevelAttachment;
+
+        private final String[]                  observationsData;
+        private final Map<String, String[]>     attributesDataByAttributeId;
         private final String                    SEPARATOR          = "\t";
         private final String                    HEADER_OBSERVATION = "OBS_VALUE";
 
         private TsvExporter(Dataset dataset) {
+            // Dimensions and code dimensions
             List<DimensionRepresentation> dimensionRepresentations = dataset.getData().getDimensions().getDimensions();
             this.dimensions = new ArrayList<String>(dimensionRepresentations.size());
             this.codesByDimensionId = new HashMap<String, List<String>>(dimensionRepresentations.size());
@@ -183,9 +190,32 @@ public class ExportServiceImpl extends ExportServiceImplBase {
                     this.codesByDimensionId.get(dimensionId).add(codeRepresentation.getCode());
                 }
             }
-            this.observations = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
-        }
+            // Observations
+            this.observationsData = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
 
+            // Attributes (observation attachment level)
+            this.attributesIdObservationLevelAttachment = new ArrayList<String>();
+            this.attributesDataByAttributeId = new HashMap<String, String[]>(attributesIdObservationLevelAttachment.size());
+            if (dataset.getMetadata().getAttributes() != null) {
+                // Definition
+                for (Attribute attribute : dataset.getMetadata().getAttributes().getAttributes()) {
+                    if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
+                        this.attributesIdObservationLevelAttachment.add(attribute.getId());
+                    }
+                }
+                // Data
+                for (String attributeId : attributesIdObservationLevelAttachment) {
+                    if (dataset.getData().getAttributes() != null) {
+                        for (DataAttribute dataAttribute : dataset.getData().getAttributes().getAttributes()) {
+                            if (dataAttribute.getId().equals(attributeId)) {
+                                attributesDataByAttributeId.put(attributeId,
+                                        StringUtils.splitByWholeSeparatorPreserveAllTokens(dataAttribute.getValue(), StatisticalResourcesRestConstants.DATA_SEPARATOR));
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public void write(OutputStream os) throws MetamacException {
             PrintWriter printWriter = null;
             try {
@@ -197,6 +227,9 @@ public class ExportServiceImpl extends ExportServiceImplBase {
                     header.append(dimension + SEPARATOR);
                 }
                 header.append(HEADER_OBSERVATION);
+                for (String attributeId : attributesIdObservationLevelAttachment) {
+                    header.append(SEPARATOR + attributeId);
+                }
                 printWriter.println(header);
 
                 // Observations
@@ -219,12 +252,28 @@ public class ExportServiceImpl extends ExportServiceImplBase {
 
                     if (elemDimension == lastDimension) {
                         // The observation is complete
-                        String observation = observations[observationIndex];
                         StringBuilder line = new StringBuilder();
+                        // Codes
                         for (String codeDimension : entryId) {
                             line.append(codeDimension + SEPARATOR);
                         }
+                        // Observation
+                        String observation = observationsData[observationIndex];
+                        if (observation == null) {
+                            observation = StringUtils.EMPTY;
+                        }
                         line.append(observation);
+                        // Attributes
+                        for (String attributeId : attributesIdObservationLevelAttachment) {
+                            String attributeValue = null;
+                            if (attributesDataByAttributeId.containsKey(attributeId)) {
+                                attributeValue = attributesDataByAttributeId.get(attributeId)[observationIndex];
+                            }
+                            if (attributeValue == null) {
+                                attributeValue = StringUtils.EMPTY;
+                            }
+                            line.append(SEPARATOR + attributeValue);
+                        }
                         printWriter.println(line);
                         observationIndex++;
                         entryId.set(elemDimension, StringUtils.EMPTY);
@@ -267,11 +316,11 @@ public class ExportServiceImpl extends ExportServiceImplBase {
 
     private class ImageExporter {
 
-        private static final String     FORBIDDEN_WORD = "<!ENTITY";
+        private static final String              FORBIDDEN_WORD = "<!ENTITY";
 
-        private final String            svg;
+        private final String                     svg;
         private final SvgExportSupportedMimeType mimeType;
-        private final Float             width;
+        private final Float                      width;
 
         private ImageExporter(String svg, Float width, String mimeType) throws MetamacException {
             validateSvg(svg);

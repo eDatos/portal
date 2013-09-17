@@ -20,6 +20,7 @@ import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuild
 import org.siemac.metamac.portal.core.serviceapi.utils.ExcelUtils;
 import org.siemac.metamac.portal.core.serviceimpl.ExportServiceImpl;
 import org.siemac.metamac.portal.core.serviceimpl.validators.ExportServiceInvocationValidatorBaseImpl;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -87,7 +88,13 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .dimension("TIME_PERIOD").representation("2013").representation("2012")
                 .dimension("CATEGORIA_ALOJAMIENTO").representation("1_2_3_ESTRELLAS").representation("4_5_ESTRELLAS")
                 .dimension("INDICADORES").representation("INDICE_OCUPACION_PLAZAS")
-                .observations("1 | 2 | 3 | 4 | 5 | 6 | 7 | 8")
+                .attribute("ATTRIBUTE_A", AttributeAttachmentLevelType.DATASET)
+                .attribute("ATTRIBUTE_B", AttributeAttachmentLevelType.PRIMARY_MEASURE)
+                .attribute("ATTRIBUTE_C", AttributeAttachmentLevelType.PRIMARY_MEASURE)
+                .attribute("ATTRIBUTE_D", AttributeAttachmentLevelType.PRIMARY_MEASURE)
+                .observations("1 | 2 | 3 | 4 | 5 | 6 |  | 8")
+                .attributeValues("ATTRIBUTE_B", "a1 | a2 | a3 |  | a5 | a6 | a7 | a8")
+                .attributeValues("ATTRIBUTE_D", "d1 | d2 | d3 | d4 | d5 | d6 | d7 | d8")
                 .build();
         //@formatter:on
 
@@ -99,19 +106,18 @@ public class ExportServiceTest implements ExportServiceTestBase {
         out.close();
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
-        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4", bufferedReader.readLine());
-        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5", bufferedReader.readLine());
-        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6", bufferedReader.readLine());
-        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t7", bufferedReader.readLine());
-        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8", bufferedReader.readLine());
+        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1\ta1\t\td1", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2\ta2\t\td2", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3\ta3\t\td3", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4\t\t\td4", bufferedReader.readLine());
+        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5\ta5\t\td5", bufferedReader.readLine());
+        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6\ta6\t\td6", bufferedReader.readLine());
+        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t\ta7\t\td7", bufferedReader.readLine());
+        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8\ta8\t\td8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
-
     @Override
     @Test
     public void testExportSvgToImage() throws Exception {

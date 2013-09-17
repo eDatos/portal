@@ -22,7 +22,6 @@ import org.siemac.metamac.portal.rest.external.invocation.StatisticalResourcesRe
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
-import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +41,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     public Response exportDatasetToTsv(String agencyID, String resourceID, String version, String dimensionsSelection, String filename) {
         try {
             // Retrieve dataset
-            final Dataset dataset = statisticalResourcesRestExternal
-                    .retrieveDataset(agencyID, resourceID, version, null, StatisticalResourcesRestConstants.FIELD_EXCLUDE_METADATA, dimensionsSelection);
+            final Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, null, dimensionsSelection);
 
             // Export
             final File tmpFile = File.createTempFile("metamac", "tsv");
