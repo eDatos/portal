@@ -12,6 +12,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-concat'
     grunt.loadNpmTasks 'grunt-contrib-copy'
     grunt.loadNpmTasks 'grunt-contrib-clean'
+    grunt.loadNpmTasks 'grunt-webfont'
 
     paths = {}
     paths.theme = 'src/main'
@@ -287,6 +288,19 @@ module.exports = (grunt) ->
                         grep: '<%= globalConfig.mocha.grep %>'
                     reporter: 'mocha-unfunk-reporter'
 
+        webfont:
+            icons:
+                src: 'icons/*.svg'
+                dest: 'src/main/fonts'
+                destCss: 'src/main/less'
+                options: {
+                    relativeFontPath : "./"
+                    destHtml : 'src/main/fonts'
+                    stylesheet : "less"
+                    hashes : false
+                    syntax: "bootstrap"
+                }
+
 
     grunt.registerTask 'spec', 'Runs a task on a specified file', (fileName) ->
         globalConfig.mocha.grep = fileName
@@ -298,5 +312,7 @@ module.exports = (grunt) ->
 
     grunt.registerTask 'bdd', ['connect', 'open:test', 'watch' ]
     grunt.registerTask 'default', ['build', 'test']
+
+    grunt.registerTask 'font', ['webfont', "dev"]
 
     grunt.initConfig(config)

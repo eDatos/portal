@@ -186,7 +186,7 @@
 
         _shapeListOrderByHierarchy : function () {
             return _.chain(this._shapeList).compact().sortBy(function (shape) {
-                return shape.hierarchy;
+                return -shape.hierarchy; //reverse order
             }).value();
         },
 

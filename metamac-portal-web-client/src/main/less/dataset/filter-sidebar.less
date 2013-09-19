@@ -18,9 +18,7 @@
 }
 
 .filter-sidebar-icon {
-    .glyphicons;
-    height: 25px;
-    margin-left: 9px;
+    height: 30px;
 
     &:before {
         color: #fff;
@@ -29,17 +27,17 @@
 
 .filter-sidebar-icon-info {
     .filter-sidebar-icon;
-    .glyphicons.circle_info;
+    .icon-info;
 }
 
 .filter-sidebar-icon-filter {
     .filter-sidebar-icon;
-    .glyphicons.filter;
+    .icon-filter;
 }
 
 .filter-sidebar-icon-order {
     .filter-sidebar-icon;
-    .glyphicons.sorting;
+    .icon-sort;
 }
 
 .filter-sidebar-search {
@@ -229,7 +227,6 @@
 
 //icons
 .filter-sidebar-category-icon {
-    .glyphicons;
     position: static;
     padding-left: 0;
 
@@ -250,26 +247,36 @@
 
 .filter-sidebar-category-icon-check {
     .filter-sidebar-category-icon;
-    .glyphicons.check;
+    .icon-check;
 }
 
 .filter-sidebar-category-icon-unchecked {
     .filter-sidebar-category-icon;
-    .glyphicons.unchecked;
+    .icon-uncheck;
+}
+
+.filter-sidebar-category-any-children-icon-check {
+    .filter-sidebar-category-icon;
+    .icon-check-fill;
+}
+
+.filter-sidebar-category-any-children-icon-unchecked {
+    .filter-sidebar-category-icon;
+    .icon-uncheck-fill;
 }
 
 .filter-sidebar-category-icon-expand {
     .filter-sidebar-category-icon-min;
-    .glyphicons.chevron-right;
+    .icon-collapse;
     &:before {
-        font-size: 10px
+        font-size: 16px
     }
 }
 
 .filter-sidebar-category-icon-collapse {
     .filter-sidebar-category-icon-min;
-    .glyphicons.chevron-right;
+    .icon-expand;
     &:before {
-        .rotate(90deg);
+        font-size: 16px
     }
 }

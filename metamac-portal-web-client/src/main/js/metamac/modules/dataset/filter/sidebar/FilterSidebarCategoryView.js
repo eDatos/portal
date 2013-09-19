@@ -59,8 +59,8 @@
             var stateClass;
             if (this.filterRepresentation.children.length > 0 && this.filterRepresentation.get('childrenSelected')) {
                 stateClass = this.filterRepresentation.get('selected') ?
-                    'filter-sidebar-category-icon-check' :
-                    'filter-sidebar-category-icon-unchecked';
+                    'filter-sidebar-category-any-children-icon-check' :
+                    'filter-sidebar-category-any-children-icon-unchecked';
             } else {
                 stateClass = this.filterRepresentation.get('selected') ?
                     'filter-sidebar-category-icon-check' :
@@ -109,7 +109,7 @@
                     collapseClass : collapseClass
                 };
                 this.$el.html(this.template(context));
-                this.$el.css("padding-left", this.filterRepresentation.get('level') * 20);
+                this.$el.css("padding-left", this.filterRepresentation.get('level') * 18);
             } else {
                 this.$el.addClass('hide');
                 this.$el.html('');

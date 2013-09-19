@@ -2,7 +2,7 @@ module.exports = (grunt) ->
     grunt.loadTasks 'tasks'
     grunt.loadNpmTasks 'grunt-hub'
 
-    projects = ["metamac-portal-web", "metamac-portal-opencms"]
+    projects = ["metamac-portal-web-client", "metamac-portal-opencms"]
     hubTasks = ['clean', 'build']
 
     hubConfigTaskSrc = projects.map (project) ->

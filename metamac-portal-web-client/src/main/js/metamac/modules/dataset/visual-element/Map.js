@@ -36,8 +36,6 @@
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 0);
 
-            debugger;
-
             this._forceGeographicDimensionInLeftZone();
         },
 

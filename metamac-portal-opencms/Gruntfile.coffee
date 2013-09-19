@@ -27,7 +27,7 @@ module.exports = (grunt) ->
                         expand: true,
                         src: '**',
                         dest: 'target/tmp/system/modules/org.siemac.metamac.metamac-portal/resources/',
-                        cwd: '../metamac-portal-web/target/'
+                        cwd: '../metamac-portal-web-client/target/'
                     }
                 ]
         uglify:

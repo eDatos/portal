@@ -11,28 +11,37 @@
 
 
     .searchbar-icon {
-        .glyphicons;
         position:absolute;
         padding-left: 0;
         width: 13px;
+        top: 3px;
 
         &:before {
-            font-size: 12px;
+            color: #444;
+            font-size: 14px;
         }
     }
 
     .searchbar-icon-search {
         .searchbar-icon;
-        .glyphicons.search;
-        top: 6px;
+        .icon-search;
         left: 6px;
     }
 
     .searchbar-icon-clear {
         .searchbar-icon;
-        .glyphicons.remove_2;
-        top: 6px;
+        .icon-remove;
         right: 6px;
+    }
+
+    .searchbar-clear {
+        &:link, &:active, &:visited {
+            color: #444;
+        }
+
+        &:hover {
+            color: #111;
+        }
     }
 
 }
