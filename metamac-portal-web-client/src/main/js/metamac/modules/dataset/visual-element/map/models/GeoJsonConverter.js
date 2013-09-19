@@ -17,7 +17,9 @@
                     var feature = {
                         type : 'Feature',
                         id : item.normCode,
-                        properties : {},
+                        properties : {
+                            geographicalGranularity : item.granularity
+                        },
                         geometry : {
                             type : item.geometryType,
                             coordinates : item.shape
@@ -43,7 +45,7 @@
                 normCode : feature.id,
                 geometryType : feature.geometry.type,
                 shape : feature.geometry.coordinates,
-                hierarchy : 1 //TODO hierarchy level????
+                granularity : feature.properties.geographicalGranularity
             };
         },
 

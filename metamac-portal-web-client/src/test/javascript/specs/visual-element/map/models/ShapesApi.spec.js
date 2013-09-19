@@ -22,7 +22,7 @@ describe("ShapesApi", function () {
     };
 
     it('should make the correct api request for getShapes', function (done) {
-        ajaxStubReturns(geoJson);
+        ajaxStubReturns(geoJSONResponse);
         shapesApi.getShapes(codes, function () {
             var ajaxParams = ajaxStub.getCall(0).args[0];
             expect(ajaxParams.url).to.eql(App.endpoints.srm + "/variables/TERRITORIO/variableelements/~all/geoinfo");
@@ -32,27 +32,37 @@ describe("ShapesApi", function () {
     });
 
     it("should transform the returned geoJson into shapeList", function (done) {
-        ajaxStubReturns(geoJson);
+        var expected = [
+            {"normCode" : "TERRITORIO.CODE1", "geometryType" : "Polygon", "shape" : [
+                [1, 2],
+                [3, 4]
+            ], "granularity" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL3"},
+            {"normCode" : "TERRITORIO.CODE2", "geometryType" : "MultiPolygon", "shape" : [
+                [
+                    [5, 6],
+                    [7, 8]
+                ]
+            ], "granularity" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL3"}
+        ];
+
+        ajaxStubReturns(geoJSONResponse);
 
         shapesApi.getShapes(codes, function (err, response) {
-            expect(response).to.eql([
-                {"normCode":"TERRITORIO.CODE1","geometryType":"Polygon","shape":[[1,2],[3,4]],"hierarchy":1},
-                {"normCode":"TERRITORIO.CODE2","geometryType":"MultiPolygon","shape":[[[5,6],[7,8]]],"hierarchy":1}
-            ]);
+            expect(response).to.eql(expected);
             done();
         });
     });
 
     it('should get lastUpdateDate', function (done) {
         var lastUpdateResponse = {
-            type: "FeatureCollection",
-            features: [
+            type : "FeatureCollection",
+            features : [
                 {
-                    type: "Feature",
-                    id: "LA_GOMERA",
-                    properties: {
-                        urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.LA_GOMERA",
-                        lastUpdatedDate: "2013-09-05T00:00:00.000+01:00"
+                    type : "Feature",
+                    id : "LA_GOMERA",
+                    properties : {
+                        urn : "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO.LA_GOMERA",
+                        lastUpdatedDate : "2013-09-05T00:00:00.000+01:00"
                     }
                 }
             ]
@@ -65,21 +75,57 @@ describe("ShapesApi", function () {
         });
     });
 
+    it('should get granularity order', function (done) {
+        ajaxStubReturns(geoGranularityResponse);
+        shapesApi.getGranularityOrder(function (err, granularityOrder) {
+
+            expect(granularityOrder).to.eql([
+                {
+                    id : "COUNTRIES",
+                    order : 1,
+                    urn : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).COUNTRIES"
+                },
+                {
+                    id : "ISLANDS",
+                    order : 2,
+                    urn : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ISLANDS"
+                },
+                {
+                    id : "MUNICIPALITIES",
+                    order : 3,
+                    urn : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).MUNICIPALITIES"
+                },
+                {
+                    id : "PROVINCES",
+                    order : 4,
+                    urn : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).PROVINCES"
+                },
+                {
+                    id : "REGIONS",
+                    order : 5,
+                    urn : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).REGIONS"
+                }
+            ]);
+            done();
+        })
+    });
+
+
     it('should extract variable id from normcodes', function () {
-        expect(shapesApi.extractVariableId(["TERRITORIO.CODE1", "TERRITORIO.CODE2"])).to.equal("TERRITORIO");
+        expect(shapesApi._extractVariableId(["TERRITORIO.CODE1", "TERRITORIO.CODE2"])).to.equal("TERRITORIO");
     });
 
     it('should extract codes from normcodes', function () {
-        expect(shapesApi.extractCodes(["TERRITORIO.CODE1", "TERRITORIO.CODE2"])).to.eql(["CODE1", "CODE2"]);
+        expect(shapesApi._extractCodes(["TERRITORIO.CODE1", "TERRITORIO.CODE2"])).to.eql(["CODE1", "CODE2"]);
     });
 
     it('should extract normCode from urn', function () {
         var urn = "urn:siemac:org.siemac.metamac.infomodel.structuralresources.VariableElement=TERRITORIO_MUNDO.MUNDO";
         var normCode = "TERRITORIO_MUNDO.MUNDO";
-        expect(shapesApi.extractNormCodeFromUrn(urn)).to.eql(normCode);
+        expect(shapesApi._extractNormCodeFromUrn(urn)).to.eql(normCode);
     });
-    
-    var geoJson = {
+
+    var geoJSONResponse = {
         type : "FeatureCollection",
         features : [
             {
@@ -91,6 +137,9 @@ describe("ShapesApi", function () {
                         [1, 2],
                         [3, 4]
                     ]
+                },
+                properties : {
+                    geographicalGranularity : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL3"
                 }
             },
             {
@@ -104,9 +153,29 @@ describe("ShapesApi", function () {
                             [7, 8]
                         ]
                     ]
+                },
+                properties : {
+                    geographicalGranularity : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL3"
                 }
             }
         ]
     };
 
+    var geoGranularityResponse = {"code" : [
+        {"order" : 1, "open" : true, "id" : "COUNTRIES", "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).COUNTRIES", "selfLink" : {"kind" : "structuralResources#code", "href" : "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes/COUNTRIES"}, "name" : {"text" : [
+            {"value" : "PaÃ­ses", "lang" : "es"}
+        ]}, "kind" : "structuralResources#code", "managementAppLink" : "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/codelists/codelist;id=ISTAC:CL_GEO_GRANULARITIES(01.001)/code;id=COUNTRIES"},
+        {"order" : 2, "open" : true, "id" : "ISLANDS", "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ISLANDS", "selfLink" : {"kind" : "structuralResources#code", "href" : "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes/ISLANDS"}, "name" : {"text" : [
+            {"value" : "Islas", "lang" : "es"}
+        ]}, "kind" : "structuralResources#code", "managementAppLink" : "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/codelists/codelist;id=ISTAC:CL_GEO_GRANULARITIES(01.001)/code;id=ISLANDS"},
+        {"order" : 3, "open" : true, "id" : "MUNICIPALITIES", "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).MUNICIPALITIES", "selfLink" : {"kind" : "structuralResources#code", "href" : "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes/MUNICIPALITIES"}, "name" : {"text" : [
+            {"value" : "Municipios", "lang" : "es"}
+        ]}, "kind" : "structuralResources#code", "managementAppLink" : "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/codelists/codelist;id=ISTAC:CL_GEO_GRANULARITIES(01.001)/code;id=MUNICIPALITIES"},
+        {"order" : 4, "open" : true, "id" : "PROVINCES", "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).PROVINCES", "selfLink" : {"kind" : "structuralResources#code", "href" : "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes/PROVINCES"}, "name" : {"text" : [
+            {"value" : "Provincias", "lang" : "es"}
+        ]}, "kind" : "structuralResources#code", "managementAppLink" : "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/codelists/codelist;id=ISTAC:CL_GEO_GRANULARITIES(01.001)/code;id=PROVINCES"},
+        {"order" : 5, "open" : true, "id" : "REGIONS", "urn" : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).REGIONS", "selfLink" : {"kind" : "structuralResources#code", "href" : "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes/REGIONS"}, "name" : {"text" : [
+            {"value" : "Comunidades AutÃ³nomas", "lang" : "es"}
+        ]}, "kind" : "structuralResources#code", "managementAppLink" : "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/codelists/codelist;id=ISTAC:CL_GEO_GRANULARITIES(01.001)/code;id=REGIONS"}
+    ], "kind" : "structuralResources#codes", "total" : 5, "selfLink" : "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes"}
 });

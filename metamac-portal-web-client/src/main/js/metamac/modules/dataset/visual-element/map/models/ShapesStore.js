@@ -64,7 +64,6 @@
             this._connect(function () {
                 var db = self.db;
                 db.config.get(LAST_UPDATED_DATE, function (err, dbProperty) {
-                    console.log("GET LAST_UPDATED_DATE FROM DATABASE", dbProperty);
                     if (!dbProperty || lastUpdatedDate > dbProperty.value) {
                         var record = {key : LAST_UPDATED_DATE, value : lastUpdatedDate};
                         db.config.put(record, function (err) {

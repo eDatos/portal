@@ -1,7 +1,11 @@
 {
     "undef" : true,
     "unused" : true,
-    "node" : true,
+    "node" : false,
+    "browser" : true,
+    "curly" : true,
+    "indent" : 4,
+
     "globals" : {
         //test
         "describe" : false,

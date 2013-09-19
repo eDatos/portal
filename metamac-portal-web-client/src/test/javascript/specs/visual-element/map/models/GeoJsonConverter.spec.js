@@ -17,6 +17,9 @@ describe("GeoJsonConverter", function () {
                             [1, 2],
                             [3, 4]
                         ]
+                    },
+                    properties: {
+                        geographicalGranularity: "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL3"
                     }
                 },
                 {
@@ -30,6 +33,9 @@ describe("GeoJsonConverter", function () {
                                 [7, 8]
                             ]
                         ]
+                    },
+                    properties: {
+                        geographicalGranularity: "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL2"
                     }
                 },
                 {
@@ -43,6 +49,9 @@ describe("GeoJsonConverter", function () {
                                 [7, 8]
                             ]
                         ]
+                    },
+                    properties: {
+                        geographicalGranularity: "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL1"
                     }
                 },
                 {
@@ -56,6 +65,9 @@ describe("GeoJsonConverter", function () {
                                 [7, 8]
                             ]
                         ]
+                    },
+                    properties: {
+                        geographicalGranularity: "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).COUNTRY"
                     }
                 },
                 {
@@ -69,6 +81,9 @@ describe("GeoJsonConverter", function () {
                                 [7, 8]
                             ]
                         ]
+                    },
+                    properties: {
+                        geographicalGranularity: "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).CONTINENT"
                     }
                 }
             ]
@@ -79,7 +94,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODE3_ADM-LEVEL-3",
                 geometryType : "Polygon",
-                hierarchy : 1,
+                granularity : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL3",
                 shape : [
                     [1, 2],
                     [3, 4]
@@ -88,7 +103,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODE2_ADM-LEVEL-2",
                 geometryType : "MultiPolygon",
-                hierarchy : 1,
+                granularity : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL2",
                 shape : [
                     [
                         [5, 6],
@@ -99,7 +114,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODE1_ADM-LEVEL-1",
                 geometryType : "MultiPolygon",
-                hierarchy : 1,
+                granularity : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).ADM-LEVEL1",
                 shape : [
                     [
                         [5, 6],
@@ -110,7 +125,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODECOUNTRY_COUNTRY",
                 geometryType : "MultiPolygon",
-                hierarchy : 1,
+                granularity : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).COUNTRY",
                 shape : [
                     [
                         [5, 6],
@@ -121,7 +136,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODECONTINENT_CONTINENT",
                 geometryType : "MultiPolygon",
-                hierarchy : 1,
+                granularity : "urn:sdmx:org.sdmx.infomodel.codelist.Code=ISTAC:CL_GEO_GRANULARITIES(01.001).CONTINENT",
                 shape : [
                     [
                         [5, 6],
@@ -133,23 +148,23 @@ describe("GeoJsonConverter", function () {
     });
 
     it("should convert from shapeList to geoJson", function () {
-        expect(GeoJsonConverter.shapeListToGeoJson(shapeList)).toEqual(geoJson);
+        expect(GeoJsonConverter.shapeListToGeoJson(shapeList)).to.eql(geoJson);
     });
 
     it("should filter null entries", function () {
         shapeList.push(null);
-        expect(GeoJsonConverter.shapeListToGeoJson(shapeList)).toEqual(geoJson);
+        expect(GeoJsonConverter.shapeListToGeoJson(shapeList)).to.eql(geoJson);
     });
 
     it("should convert from shapeList to geoJson adding extra properties", function () {
         _.each(geoJson.features, function (feature) {
             feature.properties.contour = true;
         });
-        expect(GeoJsonConverter.shapeListToGeoJson(shapeList, {contour : true})).toEqual(geoJson);
+        expect(GeoJsonConverter.shapeListToGeoJson(shapeList, {contour : true})).to.eql(geoJson);
     });
 
     it("should convert form geoJson to shapeList", function () {
-        expect(GeoJsonConverter.geoJsonToShapeList(geoJson)).toEqual(shapeList);
+        expect(GeoJsonConverter.geoJsonToShapeList(geoJson)).to.eql(shapeList);
     });
 
 });

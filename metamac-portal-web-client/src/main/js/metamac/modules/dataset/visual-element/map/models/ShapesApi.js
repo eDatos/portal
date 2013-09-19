@@ -7,39 +7,9 @@
 
     App.Map.ShapesApi.prototype = {
 
-        _prepareRequestParams : function (normCodes, url) {
-            var data = {normCodes : _.compact(normCodes)};
-
-            var params = {
-                url : url,
-                dataType : 'json'
-            };
-
-            if (data.normCodes.length > 100) {
-                // Post
-                params.type = "POST";
-                params.contentType = 'application/json';
-                params.data = JSON.stringify(data);
-            } else {
-                // Get
-                params.type = "GET";
-                params.data = data;
-                params.traditional = true;
-            }
-
-            return params;
-        },
-
-        _createNormCodesQuery : function (codes) {
-            var inContent = _.map(codes, function (code) {
-                return "'" + code + "'";
-            }).join(", ");
-            return "ID IN (" + inContent + ")";
-        },
-
         getShapes : function (normCodes, cb) {
-            var variableId = this.extractVariableId(normCodes);
-            var codes = this.extractCodes(normCodes);
+            var variableId = this._extractVariableId(normCodes);
+            var codes = this._extractCodes(normCodes);
             var ajaxParams = {
                 type : "GET",
                 url : App.endpoints.srm + "/variables/" + variableId + "/variableelements/~all/geoinfo",
@@ -61,19 +31,13 @@
                 });
         },
 
-        extractNormCodeFromUrn : function (urn) {
-            if (urn) {
-                return _.last(urn.split("="));
-            }
-        },
-
         getContainer : function (normCodes, cb) {
             var self = this;
             var url = App.endpoints.srm + "/variables/~all/variableelements?query=VARIABLE_TYPE%20EQ%20'GEOGRAPHICAL'%20AND%20GEOGRAPHICAL_GRANULARITY_URN%20IS_NULL&limit=1&_type=json";
             $.getJSON(url)
                 .done(function (response) {
                     var urn = response.variableElement[0].urn;
-                    cb(null, self.extractNormCodeFromUrn(urn));
+                    cb(null, self._extractNormCodeFromUrn(urn));
                 })
                 .fail(function () {
                     cb("Error fetching container");
@@ -81,8 +45,8 @@
         },
 
         getLastUpdatedDate : function (normCodes, cb) {
-            var variableId = this.extractVariableId(normCodes);
-            var codes = this.extractCodes(normCodes);
+            var variableId = this._extractVariableId(normCodes);
+            var codes = this._extractCodes(normCodes);
             if (codes.length) {
                 var requestParams = {
                     url : App.endpoints.srm + "/variables/" + variableId + "/variableelements/" + codes[0] + "/geoinfo.json?fields=-geographicalGranularity,-geometry,-point",
@@ -98,7 +62,43 @@
             }
         },
 
-        extractVariableId : function (normCodes) {
+        getGranularityOrder : function (cb) {
+            //TODO query to retrieve granularityOrder codelist ID
+            var codelist = {
+                id : "CL_GEO_GRANULARITIES",
+                version : "01.001"
+            };
+
+            var requestParams = {
+                url : App.endpoints.srm + "/codelists/ISTAC/" + codelist.id + "/" + codelist.version + "/codes?_type=json",
+                method : "GET"
+            };
+            $.ajax(requestParams).
+                done(function (response) {
+                    var result = _.map(response.code, function (code) {
+                        return _.pick(code, "id", "order", "urn");
+                    });
+                    cb(null, result);
+                })
+                .fail(function () {
+                    cb("Error fetching granularity order");
+                });
+        },
+
+        _createNormCodesQuery : function (codes) {
+            var inContent = _.map(codes, function (code) {
+                return "'" + code + "'";
+            }).join(", ");
+            return "ID IN (" + inContent + ")";
+        },
+
+        _extractNormCodeFromUrn : function (urn) {
+            if (urn) {
+                return _.last(urn.split("="));
+            }
+        },
+
+        _extractVariableId : function (normCodes) {
             if (normCodes.length) {
                 var normCode = _.first(normCodes);
                 var dotIndex = normCode.indexOf(".");
@@ -106,8 +106,8 @@
             }
         },
 
-        extractCodes : function (normCodes) {
-            var variableId = this.extractVariableId(normCodes);
+        _extractCodes : function (normCodes) {
+            var variableId = this._extractVariableId(normCodes);
             return _.map(normCodes, function (normCode) {
                 return normCode.substring(variableId.length + 1);
             });
