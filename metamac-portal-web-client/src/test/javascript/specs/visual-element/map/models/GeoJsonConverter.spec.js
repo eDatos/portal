@@ -11,9 +11,6 @@ describe("GeoJsonConverter", function () {
                 {
                     type : "Feature",
                     id : "CODE3_ADM-LEVEL-3",
-                    properties : {
-                        normCode : "CODE3_ADM-LEVEL-3"
-                    },
                     geometry : {
                         type : "Polygon",
                         coordinates : [
@@ -25,9 +22,6 @@ describe("GeoJsonConverter", function () {
                 {
                     type : "Feature",
                     id : "CODE2_ADM-LEVEL-2",
-                    properties : {
-                        normCode : "CODE2_ADM-LEVEL-2"
-                    },
                     geometry : {
                         type : "MultiPolygon",
                         coordinates : [
@@ -41,9 +35,6 @@ describe("GeoJsonConverter", function () {
                 {
                     type : "Feature",
                     id : "CODE1_ADM-LEVEL-1",
-                    properties : {
-                        normCode : "CODE1_ADM-LEVEL-1"
-                    },
                     geometry : {
                         type : "MultiPolygon",
                         coordinates : [
@@ -57,9 +48,6 @@ describe("GeoJsonConverter", function () {
                 {
                     type : "Feature",
                     id : "CODECOUNTRY_COUNTRY",
-                    properties : {
-                        normCode : "CODECOUNTRY_COUNTRY"
-                    },
                     geometry : {
                         type : "MultiPolygon",
                         coordinates : [
@@ -73,9 +61,6 @@ describe("GeoJsonConverter", function () {
                 {
                     type : "Feature",
                     id : "CODECONTINENT_CONTINENT",
-                    properties : {
-                        normCode : "CODECONTINENT_CONTINENT"
-                    },
                     geometry : {
                         type : "MultiPolygon",
                         coordinates : [
@@ -89,11 +74,12 @@ describe("GeoJsonConverter", function () {
             ]
         };
 
+        //TODO hierarchy!
         shapeList = [
             {
                 normCode : "CODE3_ADM-LEVEL-3",
                 geometryType : "Polygon",
-                hierarchy : 6,
+                hierarchy : 1,
                 shape : [
                     [1, 2],
                     [3, 4]
@@ -102,7 +88,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODE2_ADM-LEVEL-2",
                 geometryType : "MultiPolygon",
-                hierarchy : 4,
+                hierarchy : 1,
                 shape : [
                     [
                         [5, 6],
@@ -113,7 +99,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODE1_ADM-LEVEL-1",
                 geometryType : "MultiPolygon",
-                hierarchy : 3,
+                hierarchy : 1,
                 shape : [
                     [
                         [5, 6],
@@ -124,7 +110,7 @@ describe("GeoJsonConverter", function () {
             {
                 normCode : "CODECOUNTRY_COUNTRY",
                 geometryType : "MultiPolygon",
-                hierarchy : 2,
+                hierarchy : 1,
                 shape : [
                     [
                         [5, 6],

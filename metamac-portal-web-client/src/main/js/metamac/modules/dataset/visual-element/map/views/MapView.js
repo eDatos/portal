@@ -204,6 +204,7 @@
 
             this._createQuantizer();
 
+
             var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
             var containerGeoJson = GeoJsonConverter.shapeListToGeoJson([this._container], {contour : true});
             var features = _.union(containerGeoJson.features, geoJson.features);
@@ -238,13 +239,15 @@
         },
 
         _calculateColor : function (d) {
-            if (d.properties.normCode && !d.properties.contour) {
-                var normCodeData = this._dataJson[d.properties.normCode];
+            if (d.id && !d.properties.contour) {
+                var normCodeData = this._dataJson[d.id];
                 if (normCodeData) {
                     var value = normCodeData.value;
                     if (!isNaN(value)) {
                         var currentRangesNum = this.model.get("currentRangesNum");
-                        return "color" + currentRangesNum + '-' + this._quantizer(value);
+                        var color = "color" + currentRangesNum + '-' + this._quantizer(value);
+                        console.log(color);
+                        return color;
                     }
                 } else {
                     return "noAvailable";

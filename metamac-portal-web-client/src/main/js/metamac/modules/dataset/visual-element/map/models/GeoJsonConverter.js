@@ -17,9 +17,7 @@
                     var feature = {
                         type : 'Feature',
                         id : item.normCode,
-                        properties : {
-                            normCode : item.normCode
-                        },
+                        properties : {},
                         geometry : {
                             type : item.geometryType,
                             coordinates : item.shape
@@ -36,15 +34,24 @@
             return result;
         },
 
+        featureHasGeometry : function (feature) {
+            return !_.isUndefined(feature.geometry)
+        },
+
+        featureToShapeList : function (feature) {
+            return {
+                normCode : feature.id,
+                geometryType : feature.geometry.type,
+                shape : feature.geometry.coordinates,
+                hierarchy : 1 //TODO hierarchy level????
+            };
+        },
+
         geoJsonToShapeList : function (geoJson) {
-            return _.map(geoJson.features, function (feature) {
-                return {
-                    normCode : feature.properties.normCode,
-                    geometryType : feature.geometry.type,
-                    shape : feature.geometry.coordinates,
-                    hierarchy : this._hierarchyByNormCode(feature.properties.normCode)
-                };
-            }, this);
+            return _.chain(geoJson.features)
+                .filter(this.featureHasGeometry)
+                .map(this.featureToShapeList, this)
+                .value();
         },
 
         _hierarchyByNormCode : function (normCode) {
@@ -52,7 +59,7 @@
             if (normCode) {
                 var hierarchies = ["WORLD", "CONTINENT", "COUNTRY", "ADM-LEVEL-1", "ADM-LEVEL-2", "ISLAND", "ADM-LEVEL-3"];
                 var hierarchyCode = normCode.substring(normCode.lastIndexOf("_") + 1);
-                hierarchy =  _.indexOf(hierarchies, hierarchyCode);
+                hierarchy = _.indexOf(hierarchies, hierarchyCode);
             }
             return hierarchy;
         }

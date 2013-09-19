@@ -25,7 +25,7 @@
             if (this.mapView.canRender()) {
                 this.zoomView.render();
                 //this.leyendView.render();
-                this.rangesView.render();
+                //this.rangesView.render();
                 this.mapView.render();
             } else {
                 this.$el.html(this._errorTemplate());
@@ -60,6 +60,7 @@
         },
 
         _initMapView : function () {
+            console.log("init map view", this.$el);
             //TODO: Need to create a container DIV and set the width and height of the elements
             var $mapContainer = $('<div class="svgContainer"></div>').appendTo(this.$el);
             this.mapView = new App.Map.MapView({

@@ -35,6 +35,7 @@ module.exports = (grunt) ->
                 paths.lib + "/backbone.wreqr.js"
                 paths.lib + "/handlebars.runtime.js"
                 paths.lib + "/jquery.dotdotdot-1.5.0-packed.js"
+                paths.lib + "/async.js"
                 paths.js + "/metamac/App.js"
                 paths.js + "/metamac/libs/HandlebarsHelpers.js"
                 paths.js + "/metamac/templates/HandlebarsTemplates.js"
@@ -47,6 +48,7 @@ module.exports = (grunt) ->
                 paths.js + "/libs/jquery.ba-resize.js"
                 paths.js + "/metamac/mixins/ToggleModel.js"
                 paths.js + "/metamac/libs/i18n.js"
+                paths.js + "/metamac/libs/DB.js"
 
                 paths.js + "/metamac/Controller.js"
                 paths.js + "/metamac/AppRouter.js"
@@ -147,11 +149,12 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/visual-element/table/KeyboardManager.js"
 
                 # map
-                paths.js + "/metamac/modules/dataset/visual-element/map/models/MapModel.js"
+                paths.js + "/libs/db.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/models/ShapesApi.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/models/ShapesStore.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/models/Shapes.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/models/GeoJsonConverter.js"
+                paths.js + "/metamac/modules/dataset/visual-element/map/models/MapModel.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/MapTooltipDelegate.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/MapContainerView.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/MapView.js"
@@ -264,7 +267,7 @@ module.exports = (grunt) ->
 
         open:
             test:
-                path: 'http://localhost:<%= connect.options.port %>/src/test/javascript/runner/runner.html'
+                path: 'http://localhost:<%= connect.server.options.port %>/src/test/javascript/runner/runner.html'
         mocha:
             all:
                 src: [ 'src/test/javascript/runner/runner.html' ]
@@ -293,7 +296,7 @@ module.exports = (grunt) ->
     grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'handlebars', 'concat']
     grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify', 'test']
 
-    grunt.registerTask 'bdd', ['connect:test', 'open:test', 'watch' ]
+    grunt.registerTask 'bdd', ['connect', 'open:test', 'watch' ]
     grunt.registerTask 'default', ['build', 'test']
 
     grunt.initConfig(config)

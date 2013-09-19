@@ -10,17 +10,17 @@
     App.VisualElement.Map.prototype = {
 
         initialize : function (options) {
-            this.el = options.el;
-            this.$el = $(this.el);
-            this.filterOptions = options.filterOptions;
+            this.filterDimensions = options.filterDimensions;
             this.dataset = options.dataset;
             this.shapes = new App.Map.Shapes();
-            this.visible = false;
+
+
+            this.visible = false; //unnecesary?
         },
 
         _bindEvents : function () {
             var self = this;
-            this.listenTo(this.filterOptions, "change", function () {
+            this.listenTo(this.filterDimensions, "change", function () {
                 self.destroy();
                 self.load();
             });
@@ -30,32 +30,76 @@
             this.stopListening();
         },
 
+        updatingDimensionPositions : function () {
+            this.filterDimensions.zones.get('left').set('fixedSize', 1);
+            this.filterDimensions.zones.get('top').set('fixedSize', 1);
+            this._forceGeographicDimensionInLeftZone();
+        },
+
+        _forceGeographicDimensionInLeftZone : function () {
+            var geographicDimensions = this.filterDimensions.where({type : "GEOGRAPHIC_DIMENSION"});
+            if (geographicDimensions.length == 0) {
+                throw new Error("No geographic dimension");
+            }
+            var geographicDimension = geographicDimensions[0];
+            this.filterDimensions.zones.setDimensionZone('left', geographicDimension);
+        },
+
         load : function () {
+            var self = this;
             this._bindEvents();
             this.visible = true;
-            var self = this;
 
-            var dataReq = this.dataset.data.loadAllSelectedData();
-            var normCodes = this._getNormCodes();
+            var normCodes = this._getGeographicDimensionNormCodes();
 
-            var shapesReq = this.shapes.fetchShapes(normCodes)
-                .done(function (shapes) {
-                    self._geoJson = shapes;
-                });
+            var actions = {
+                data : _.bind(this._loadData, this),
+                shapes : _.bind(this.shapes.fetchShapes, this.shapes, normCodes),
+                container : _.bind(this.shapes.fetchContainer, this.shapes, normCodes)
+            };
 
-            var containerReq = this.shapes.fetchContainer(normCodes)
-                .done(function (shape) {
-                    self._container = shape;
-                });
-
-            $.when(dataReq, shapesReq, containerReq).then(function () {
-                self._loadCallback();
+            async.parallel(actions, function (err, result) {
+                if (!err) {
+                    self._geoJson = result.shapes;
+                    self._container = result.container;
+                    self._dataJson = result.data;
+                    self._loadCallback();
+                }
             });
+        },
 
+        _loadData : function (cb) {
+            var self = this;
+            this.dataset.data.loadAllSelectedData()
+                .done(function () {
+                    var fixedPermutation = self.getFixedPermutation();
+                    var geographicDimension = self._getGeographicDimension();
+                    var geographicDimensionSelectedRepresentations = self._getGeographicSelectedRepresentations();
+
+                    var result = {};
+                    _.each(geographicDimensionSelectedRepresentations, function (geographicRepresentation) {
+                        var normCode = geographicRepresentation.get("normCode");
+                        if (normCode) {
+                            var currentPermutation = {};
+                            currentPermutation[geographicDimension.id] = geographicRepresentation.id;
+                            _.extend(currentPermutation, fixedPermutation);
+
+                            var value = self.dataset.data.getNumberData({ids :currentPermutation});
+                            if (_.isNumber(value)) {
+                                result[normCode] = {value : value};
+                            }
+                        }
+                    });
+                    cb(null, result);
+                })
+                .fail(function () {
+                    cb("Error fetching data");
+                });
         },
 
         render : function () {
             if (this.visible) {
+                console.log("render!");
                 this._mapContainerView.render();
             }
         },
@@ -77,59 +121,26 @@
             this._unbindEvents();
         },
 
-        updatingDimensionPositions : function () {
-            this.filterOptions.setZoneLengthRestriction({left : {value : 1, type : "GEOGRAPHIC_DIMENSION"}, top : 0});
-            this.filterOptions.setSelectedCategoriesRestriction({map : -1});
+        _getGeographicDimension : function () {
+            return this.filterDimensions.dimensionsAtZone('left').at(0);
         },
 
-        _getNormCodes : function () {
-            var dimension = this.filterOptions.getMapDimension();
-            var selectedCategories = this.filterOptions.getSelectedCategories(dimension.id);
-            return _.pluck(selectedCategories, 'normCode');
+        _getGeographicSelectedRepresentations : function () {
+            return this._getGeographicDimension().get('representations').where({selected : true});
         },
 
-        _checkDataAndShapes : function () {
-            if (this._areDataAndShapesLoaded()) {
-                this._loadCallback();
-            }
-        },
-
-        _areDataAndShapesLoaded : function () {
-            return (this.dataset.data.isAllSelectedDataLoaded() && this._geoJson && this._container);
+        _getGeographicDimensionNormCodes : function () {
+            var selectedRepresentations = this._getGeographicSelectedRepresentations();
+            return _.invoke(selectedRepresentations, "get", "normCode");
         },
 
         _loadCallback : function () {
-            this._dataJson = this._getData();
-
             this._initModel();
             this._calculateRanges();
             this._initContainerView();
+
             this._setUpListeners();
             this.render();
-            this.trigger('didLoadVe');
-        },
-
-        _getData : function () {
-            var self = this;
-
-            var fixedPermutation = this.getFixedPermutation();
-            var mapDimension = this.filterOptions.getMapDimension();
-            var mapDimensionsSelectedCagegories = this.filterOptions.getSelectedCategories(mapDimension.number);
-
-            var result = {};
-            _.each(mapDimensionsSelectedCagegories, function (mapCategory) {
-                if (mapCategory.normCode) {
-                    var currentPermutation = {};
-                    currentPermutation[mapDimension.id] = mapCategory.id;
-                    _.extend(currentPermutation, fixedPermutation);
-
-                    var value = self.dataset.data.getNumberDataById(currentPermutation);
-                    if (_.isNumber(value)) {
-                        result[mapCategory.normCode] = {value : value};
-                    }
-                }
-            });
-            return result;
         },
 
         _initModel : function () {

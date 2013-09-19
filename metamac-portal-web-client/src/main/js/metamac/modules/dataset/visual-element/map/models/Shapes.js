@@ -22,49 +22,77 @@
             return allShapes;
         },
 
-        fetchShapes : function (normCodes) {
+        fetchShapes : function (normCodes, cb) {
             var self = this;
+            var validNormCodes = this._filterValidNormCodes(normCodes);
+            self._validateCache(validNormCodes, function (err) {
+                if (err) return cb(err);
 
-            var result = this.store.get(normCodes)
-                .then(function (dbShapes) {
-                    var result;
-                    var dbNormCodes = _.chain(dbShapes).compact().pluck("normCode").value();
-                    var notDbNormCodes =_.difference(_.compact(normCodes), dbNormCodes);
-                    if (notDbNormCodes.length !== 0) {
-                        result = new $.Deferred();
-                        self.api.getShapes(notDbNormCodes)
-                            .done(function (apiShapes) {
-                                self.store.save(apiShapes);
-                                result.resolveWith(null, [self._mixDbAndApiShapes(dbShapes, apiShapes)]);
-                            }).fail(result.reject);
-                    } else {
-                        result = dbShapes;
+                self.store.get(normCodes, function (err, dbShapes) {
+                    if (err) return cb(err);
+
+                    var dbNormCodes = self._normCodesFromShapes(dbShapes);
+                    var notDbNormCodes = _.difference(validNormCodes, dbNormCodes);
+                    if (notDbNormCodes.length === 0) {
+                        return cb(null, dbShapes);
                     }
-                    return result;
+
+                    self.api.getShapes(notDbNormCodes, function (err, apiShapes) {
+                        if (err) return cb(err);
+                        console.log("calling put!", apiShapes);
+                        self.store.put(apiShapes, function () {
+                            //ignore error saving shapes
+                            var shapes = self._mixDbAndApiShapes(dbShapes, apiShapes);
+                            cb(null, shapes);
+                        });
+                    });
                 });
-            return result;
+            });
         },
 
-        fetchContainer : function (normCodes) {
+        _normCodesFromShapes : function (shapes) {
+            return _.chain(shapes).compact().pluck("normCode").value();
+        },
+
+        fetchContainer : function (normCodes, cb) {
             var self = this;
 
-            var validNormCodes = _.compact(normCodes);
-            if(validNormCodes.length == 0) {
-                return new $.Deferred().resolveWith(null, [[]]).promise();
+            var validNormCodes = this._filterValidNormCodes(normCodes);
+            if (validNormCodes.length == 0) {
+                return cb();
             }
 
-            var result = this.api.getContainer(normCodes)
-                .then(function (response) {
-                    var containerNormCode = response.normCode;
-                    return self.fetchShapes([containerNormCode]);
-                }).then(function (shapes) {
-                    if(shapes) {
-                        return shapes[0];
-                    }
-                });
-            return result;
-        }
+            self.api.getContainer(normCodes, function (err, containerNormCode) {
+                if (err) return cb(err);
 
+                self.fetchShapes([containerNormCode], function (err, shapes) {
+                    if (err) return cb(err);
+
+                    var shape = shapes? shapes[0] : undefined;
+                    cb(null, shape);
+                });
+            });
+        },
+
+        _filterValidNormCodes : function (normCodes) {
+            var notNullNormCodes = _.compact(normCodes);
+            return notNullNormCodes;
+        },
+
+        _validateCache : function (normCodes, cb) {
+            var self = this;
+            if (self.lastUpdatedDate) {
+                cb();
+            } else {
+                self.api.getLastUpdatedDate(normCodes, function (err, lastUpdatedDate) {
+                    console.log(lastUpdatedDate);
+                    self.store.setLastUpdatedDate(lastUpdatedDate, function (err) {
+                        self.lastUpdatedDate = lastUpdatedDate;
+                        cb();
+                    });
+                });
+            }
+        }
     };
 
     _.extend(App.Map.Shapes.prototype, Backbone.Events);

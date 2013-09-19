@@ -199,7 +199,6 @@
             var defaultDecimals = _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : DECIMALS;
 
             if (dimension && dimension.dimensionValues) {
-                //TODO normCode
                 var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
                 var isGeographic = dimension.type === "GEOGRAPHIC_DIMENSION";
 

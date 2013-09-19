@@ -20,6 +20,14 @@
     App.context = "";
     App.apiContext = "";
     App.resourceContext = "";
+
+    //TODO Migrate to use endpoint properties
+    App.endpoints = {
+        srm : "",
+        "statistical-resources" : ""
+    };
+
+
     App.namespace = function (namespaceString) {
 
         if (!namespaceString) {

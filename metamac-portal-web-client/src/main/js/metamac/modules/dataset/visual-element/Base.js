@@ -109,6 +109,7 @@
 
         setEl : function (el) {
             this.$el = $(el);
+            this.el = this.$el[0];
         }
 
     };
