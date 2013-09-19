@@ -37,15 +37,6 @@ describe("ShapesStore", function () {
             });
         });
 
-        it("shouldn't clear cache if new date is previous", function (done) {
-            var previousDate = new Date(2000, 1, 1);
-            var invalidateCacheSpy = sinon.spy(shapesStore, "invalidateCache");
-            shapesStore.setLastUpdatedDate(previousDate, function (err) {
-                expect(invalidateCacheSpy.called).to.be.false;
-                done();
-            });
-        });
-
         it("should clear cache if new date is previous", function (done) {
             var previousDate = new Date();
             var invalidateCacheSpy = sinon.spy(shapesStore, "invalidateCache");

@@ -39,7 +39,6 @@
 
                     self.api.getShapes(notDbNormCodes, function (err, apiShapes) {
                         if (err) return cb(err);
-                        console.log("calling put!", apiShapes);
                         self.store.put(apiShapes, function () {
                             //ignore error saving shapes
                             var shapes = self._mixDbAndApiShapes(dbShapes, apiShapes);
@@ -85,7 +84,6 @@
                 cb();
             } else {
                 self.api.getLastUpdatedDate(normCodes, function (err, lastUpdatedDate) {
-                    console.log(lastUpdatedDate);
                     self.store.setLastUpdatedDate(lastUpdatedDate, function (err) {
                         self.lastUpdatedDate = lastUpdatedDate;
                         cb();
