@@ -217,8 +217,8 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.eot</source>
-            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.eot</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/icons.eot</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/icons.eot</destination>
             <type>plain</type>
             <uuidstructure>1caccd9f-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
             <uuidresource>1caccda0-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
@@ -230,15 +230,15 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[glyphicons-regular]]></value>
+                    <value><![CDATA[icons]]></value>
                 </property>
             </properties>
             <relations/>
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.svg</source>
-            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.svg</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/icons.svg</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/icons.svg</destination>
             <type>plain</type>
             <uuidstructure>1caf8cc2-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
             <uuidresource>1caf8cc3-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
@@ -250,15 +250,15 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[glyphicons-regular]]></value>
+                    <value><![CDATA[icons]]></value>
                 </property>
             </properties>
             <relations/>
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.ttf</source>
-            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.ttf</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/icons.ttf</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/icons.ttf</destination>
             <type>plain</type>
             <uuidstructure>1cb29a05-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
             <uuidresource>1cb29a06-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
@@ -270,15 +270,15 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[glyphicons-regular]]></value>
+                    <value><![CDATA[icons]]></value>
                 </property>
             </properties>
             <relations/>
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.woff</source>
-            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/glyphicons-regular.woff</destination>
+            <source>system/modules/org.siemac.metamac.metamac-portal/resources/icons.woff</source>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/resources/icons.woff</destination>
             <type>plain</type>
             <uuidstructure>1cb4e3f8-0be5-11e3-b520-bfe7e2ffa974</uuidstructure>
             <uuidresource>1cb4e3f9-0be5-11e3-b520-bfe7e2ffa974</uuidresource>
@@ -290,7 +290,7 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[glyphicons-regular]]></value>
+                    <value><![CDATA[icons]]></value>
                 </property>
             </properties>
             <relations/>
