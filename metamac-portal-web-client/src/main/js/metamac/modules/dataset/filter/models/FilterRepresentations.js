@@ -26,7 +26,7 @@
                 var children = this.where({parent : representation.id});
                 if (children.length) {
                     hasHierarchy = true;
-                    representation.children.set(children);
+                    representation.children.reset(children);
                     representation._onChangeOpen();
                 }
             }, this);

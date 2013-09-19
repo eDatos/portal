@@ -14,9 +14,8 @@ describe('FilterRepresentation', function () {
         });
 
         it('should set childrenSelected to true if a children is selected', function () {
-            child1.set('selected', {selected : false, childrenSelected : false});
-            child1.set('selected', {selected : true, childrenSelected : false});
-            filterRepresentation._updateChildrenSelected();
+            child1.set({selected : false, childrenSelected : false});
+            child1.set({selected : true, childrenSelected : false});
             expect(filterRepresentation.get('childrenSelected')).to.be.true;
         });
 
