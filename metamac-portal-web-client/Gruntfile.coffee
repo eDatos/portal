@@ -311,7 +311,7 @@ module.exports = (grunt) ->
     grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify', 'test']
 
     grunt.registerTask 'bdd', ['connect', 'open:test', 'watch' ]
-    grunt.registerTask 'default', ['build', 'test']
+    grunt.registerTask 'default', 'build'
 
     grunt.registerTask 'font', ['webfont', "dev"]
 

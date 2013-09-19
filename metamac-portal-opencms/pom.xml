@@ -10,12 +10,17 @@
         <relativePath>../metamac-portal-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>metamac-portal-web-client</artifactId>
+    <artifactId>metamac-portal-opencms</artifactId>
     <packaging>pom</packaging>
-    <name>SIEMAC :: METAMAC :: PORTAL :: WEB :: CLIENT</name>
-    <description>SIEMAC :: METAMAC :: PORTAL :: WEB :: CLIENT</description>
+    <name>SIEMAC :: METAMAC :: PORTAL :: WEB :: OPENCMS</name>
+    <description>SIEMAC :: METAMAC :: PORTAL :: WEB :: OPENCMS</description>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>metamac-portal-web-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -49,6 +54,28 @@
                             <arguments>
                                 <argument>node_modules/grunt-cli/bin/grunt</argument>
                             </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/${project.artifactId}-${project.version}.zip</file>
+                                    <type>zip</type>
+                                </artifact>
+                            </artifacts>
                         </configuration>
                     </execution>
                 </executions>

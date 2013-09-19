@@ -1,3 +1,6 @@
+fs = require "fs"
+parseXML = require('xml2js').parseString;
+
 module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-preprocess');
@@ -7,10 +10,11 @@ module.exports = (grunt) ->
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        pom : {}
         compress:
             build:
                 options:
-                    archive: "target/metamac-portal-<%= pkg.version %>.zip"
+                    archive: "target/metamac-portal-opencms-<%= pom.version %>.zip"
                 expand: true,
                 cwd: 'target/tmp/',
                 src: ['**/*'],
@@ -40,5 +44,19 @@ module.exports = (grunt) ->
             build: ["target"]
     });
 
-    grunt.registerTask("build", ["clean", "copy", "uglify", "preprocess", "compress"]);
+    grunt.registerTask "pom",  () ->
+        done = @async();
+        pomfile = "./pom.xml"
+        fs.readFile pomfile, (err, pomContent) ->
+            return cb(err) if err
+
+            parseXML pomContent, (err, pomTree) ->
+                return cb(err) if err
+                version = pomTree.project.parent[0].version[0]
+                grunt.config(['pom', 'version'], version);
+                done();
+
+
+    grunt.registerTask("build", ["pom", "clean", "copy", "uglify", "preprocess", "compress"]);
+    grunt.registerTask("default", "build")
 
