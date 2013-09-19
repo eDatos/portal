@@ -209,7 +209,7 @@
                 this.ctx.closePath();
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
-                this.ctx.fillText(cell.content, cell.x + +margin, Math.ceil(cell.y + cell.height / 2));
+                this.ctx.fillText(cell.content || "", cell.x + +margin, Math.ceil(cell.y + cell.height / 2));
 
                 this.ctx.restore();
             }

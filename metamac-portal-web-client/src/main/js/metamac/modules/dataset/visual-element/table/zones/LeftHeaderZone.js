@@ -215,7 +215,7 @@
                 this.ctx.closePath();
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
-                this.ctx.fillText(cell.content, cell.x + margin, cell.y + margin);
+                this.ctx.fillText(cell.content || "", cell.x + margin, cell.y + margin);
 
                 this.ctx.restore();
             }
