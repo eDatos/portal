@@ -24,8 +24,7 @@
         render : function () {
             if (this.mapView.canRender()) {
                 this.zoomView.render();
-                //this.leyendView.render();
-                //this.rangesView.render();
+                this.rangesView.render();
                 this.mapView.render();
             } else {
                 this.$el.html(this._errorTemplate());

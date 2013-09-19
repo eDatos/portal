@@ -59,11 +59,11 @@
                     text : null
                 },
                 credits : {
-                    text : 'App.com',
-                    href : 'http://www.App.com',
+                    text : 'http://www.gobiernodecanarias.com/istac',
+                    href : 'http://www.gobiernodecanarias.com/istac',
                     position : {
-                        y : -5,
-                        x : -5
+                        y : -20,
+                        x : -20
                     }
                 },
                 legend : {

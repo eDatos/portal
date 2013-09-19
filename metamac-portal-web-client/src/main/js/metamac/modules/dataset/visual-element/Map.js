@@ -19,20 +19,25 @@
         },
 
         _bindEvents : function () {
-            var self = this;
-            this.listenTo(this.filterDimensions, "change", function () {
-                self.destroy();
-                self.load();
-            });
+            var debounceReload = _.debounce(_.bind(this.reload, this), 20);
+            this.listenTo(this.filterDimensions, "change:selected change:zone", debounceReload);
         },
 
         _unbindEvents : function () {
             this.stopListening();
         },
 
+        reload : function () {
+            this.destroy();
+            this.load();
+        },
+
         updatingDimensionPositions : function () {
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
-            this.filterDimensions.zones.get('top').set('fixedSize', 1);
+            this.filterDimensions.zones.get('top').set('fixedSize', 0);
+
+            debugger;
+
             this._forceGeographicDimensionInLeftZone();
         },
 
