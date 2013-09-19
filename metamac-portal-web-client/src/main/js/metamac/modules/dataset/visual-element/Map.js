@@ -99,7 +99,6 @@
 
         render : function () {
             if (this.visible) {
-                console.log("render!");
                 this._mapContainerView.render();
             }
         },
@@ -151,7 +150,7 @@
             this._mapContainerView = new App.Map.MapContainerView({
                 el : this.el,
                 dataset : this.dataset,
-                filterOptions : this.filterOptions,
+                filterDimensions : this.filterDimensions,
                 mapModel : this._mapModel,
                 geoJson : this._geoJson,
                 container : this._container,

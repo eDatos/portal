@@ -1,3 +1,4 @@
+
 (function () {
     "use strict";
 
@@ -97,32 +98,17 @@
             var pointInsideEl = point.x > 0 && point.y > 0 && point.x < this.$el.width() && point.y < this.$el.height();
             if (pointInsideEl) {
                 var title = this.delegate.getTitleAtMousePosition(point);
-
                 if (title) {
-                    if (_.isUndefined(this.lastTitle) && !this.timer) {
-                        var self = this;
-                        this.timer = setTimeout(function () {
-                            self.timer = undefined;
-                            self.visible = true;
-                            self._update(self.lastPoint);
-                        }, this.delay);
-                    }
-
-                    if (this.visible) {
-                        this.$innerTooltip.text(title);
-                        var position = this._getPosition(point);
-                        this.$tooltip.css({
-                            display : 'block',
-                            top : position.y,
-                            left : position.x
-                        });
-                    }
+                    this.$innerTooltip.html(title);
+                    var position = this._getPosition(point);
+                    this.$tooltip.css({
+                        display : 'block',
+                        top : position.y,
+                        left : position.x
+                    });
                 } else {
                     this._hide();
-                    this.visible = false;
                 }
-                this.lastTitle = title;
-                this.lastPoint = point;
             } else {
                 this._hide();
             }
@@ -134,13 +120,11 @@
 
         _mouseMove : function (e) {
             var offset = this._getOffset();
-            if (offset) {
-                var point = {
-                    x : e.pageX - offset.left,
-                    y : e.pageY - offset.top
-                };
-                this._update(point);
-            }
+            var point = {
+                x : e.pageX - offset.left,
+                y : e.pageY - offset.top
+            };
+            this._update(point);
         }
 
     };

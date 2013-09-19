@@ -8,7 +8,7 @@
 
         render : function () {
             var creditsNode = new SVGNode('text');
-            creditsNode.node.textContent = "App.com";
+            creditsNode.node.textContent = "http://www.gobiernodecanarias.org/istac";
             creditsNode.set({"class" : "credits"});
 
             var elNode = new SVGNode(this.el);
@@ -18,7 +18,7 @@
                 width : $(this.options.container).width(),
                 height : $(this.options.container).height()
             };
-            creditsNode.alignBottomRight(frame, 0, 0);
+            creditsNode.alignBottomRight(frame, 0, 10);
         }
 
     });

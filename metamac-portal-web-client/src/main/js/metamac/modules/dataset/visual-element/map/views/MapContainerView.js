@@ -9,7 +9,7 @@
 
         initialize : function (options) {
             this._dataset = options.dataset;
-            this._filterOptions = options.filterOptions;
+            this._filterDimensions = options.filterDimensions;
             this._mapModel = options.mapModel;
             this._width = options.width;
             this._height = options.height;
@@ -60,13 +60,12 @@
         },
 
         _initMapView : function () {
-            console.log("init map view", this.$el);
             //TODO: Need to create a container DIV and set the width and height of the elements
             var $mapContainer = $('<div class="svgContainer"></div>').appendTo(this.$el);
             this.mapView = new App.Map.MapView({
                 el : $mapContainer,
                 dataset : this._dataset,
-                filterOptions : this._filterOptions,
+                filterDimensions : this._filterDimensions,
                 model : this._mapModel,
                 shapeList : this.geoJson,
                 container : this.container,

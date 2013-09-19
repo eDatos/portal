@@ -9,7 +9,7 @@
 
         initialize : function (options) {
             this._dataset = options.dataset;
-            this._filterOptions = options.filterOptions;
+            this._filterDimensions = options.filterDimensions;
             this._width = options.width;
             this._height = options.height;
             this._shapeList = options.shapeList;
@@ -246,7 +246,6 @@
                     if (!isNaN(value)) {
                         var currentRangesNum = this.model.get("currentRangesNum");
                         var color = "color" + currentRangesNum + '-' + this._quantizer(value);
-                        console.log(color);
                         return color;
                     }
                 } else {

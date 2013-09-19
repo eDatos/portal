@@ -50,19 +50,7 @@
          * @returns {Array}
          */
         topHeaderTooltipValues : function () {
-            var values = this.topHeaderValues();
-            var dimensions = this.filterDimensions.dimensionsAtZone('top');
-
-            var tooltips = [];
-            for (var i = 0; i < values.length; i++) {
-                tooltips[i] = [];
-                for (var j = 0; j < values[i].length; j++) {
-                    if (dimensions[i]) {
-                        tooltips[i][j] = dimensions.at(i).get('label') + " : " + values[i][j];
-                    }
-                }
-            }
-            return tooltips;
+            return this.topHeaderValues();
         },
 
         /**
@@ -71,19 +59,7 @@
          * @returns {Array}
          */
         leftHeaderTooltipValues : function () {
-            var values = this.leftHeaderValues();
-            var dimensions = this.filterDimensions.dimensionsAtZone('left');
-
-            var tooltips = [];
-            for (var i = 0; i < values.length; i++) {
-                tooltips[i] = [];
-                for (var j = 0; j < values[i].length; j++) {
-                    if (dimensions[i]) {
-                        tooltips[i][j] = dimensions.at(i).get('label') + " : " + values[i][j];
-                    }
-                }
-            }
-            return tooltips;
+            return this.leftHeaderValues();
         }
 
     };

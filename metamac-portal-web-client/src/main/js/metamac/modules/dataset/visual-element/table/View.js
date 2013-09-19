@@ -357,11 +357,13 @@
     };
 
     App.Table.View.prototype.getTitleAtMousePosition = function (point) {
+        var title;
         if (this.mouseZone === "leftHeaderZone") {
-            return this.leftHeaderZone.titleAtPoint(point);
+            title = this.leftHeaderZone.titleAtPoint(point);
         } else if (this.mouseZone === "topHeaderZone") {
-            return this.topHeaderZone.titleAtPoint(point);
+            title = this.topHeaderZone.titleAtPoint(point);
         }
+        return title;
     };
 
     App.Table.View.prototype.setLastClickZone = function (zone) {

@@ -43,6 +43,7 @@
             this.dataSource = null;
             this.delegate = null;
 
+            this.view.destroy();
             this.view = null;
 
             this._unbindEvents();

@@ -11,7 +11,7 @@
         initialize : function (options) {
             this.text = null;
             this._dataset = options.dataset;
-            this._filterOptions = options.filterOptions;
+            this._filterDimensions = options.filterDimensions;
             this._dataJson = options.dataJson;
 
             _.bindAll(this, "mouseOut", "mouseOver");
@@ -23,7 +23,7 @@
 
         mouseOver : function (d) {
             if (!d.properties.contour) {
-                var normCode = d.properties.normCode;
+                var normCode = d.id;
                 var label = this._getLabelFromNormCode(normCode);
                 var value = this._getValueFromNormCode(normCode);
                 this.text = label + " : " + value;
@@ -33,7 +33,9 @@
         },
 
         _getLabelFromNormCode : function (normCode) {
-            return this._dataset.metadata.getCategoryByNormCode(this._filterOptions.getMapDimension().id, normCode).label;
+            var geographicDimension = this._filterDimensions.dimensionsAtZone('left').at(0);
+            var label = this._dataset.metadata.getCategoryByNormCode(geographicDimension.id, normCode).label;
+            return label;
         },
 
         _getValueFromNormCode : function (normCode) {
