@@ -18,7 +18,6 @@
     });
 
     App.context = "";
-    App.apiContext = "";
     App.resourceContext = "";
 
     //TODO Migrate to use endpoint properties

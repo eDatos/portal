@@ -17,7 +17,9 @@
             var self = this;
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
-                    var routeParts = [datasetIdentifier.type + "s", datasetIdentifier.agency, datasetIdentifier.identifier];
+                    var routeName = App.Inflector.pluralize(datasetIdentifier.type);
+
+                    var routeParts = [routeName, datasetIdentifier.agency, datasetIdentifier.identifier];
 
                     if (datasetIdentifier.version) {
                         routeParts.push(datasetIdentifier.version);

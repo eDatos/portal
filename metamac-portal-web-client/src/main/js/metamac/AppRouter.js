@@ -53,7 +53,7 @@
 
         _nameQueryArguments : function (args) {
             var args = this._nameArguments(["agency", "identifier", "visualizationType"], args);
-            args.type = "dataset";
+            args.type = "query";
             return args;
         },
 
@@ -93,6 +93,11 @@
         },
 
         queryVisualization : function () {
+            var args = this._nameQueryArguments(arguments);
+            this.datasetController.showDatasetVisualization(args);
+        },
+
+        queryVisualizationType : function () {
             var args = this._nameQueryArguments(arguments);
             this.datasetController.showDatasetVisualization(args);
         },
