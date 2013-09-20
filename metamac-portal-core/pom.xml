@@ -38,16 +38,11 @@
         <!-- Test -->
         <dependency>
             <groupId>org.siemac.metamac</groupId>
-            <artifactId>metamac-common-test</artifactId>
-            <version>${metamac-common-test.version}</version>
+            <artifactId>metamac-core-common</artifactId>
+            <version>${metamac-core-common.version}</version>
+            <type>test-jar</type>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>metamac-core-common</artifactId>
-                    <groupId>org.siemac.metamac</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        </dependency>   
 
         <!-- JAVAX -->
         <dependency>
