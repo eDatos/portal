@@ -994,7 +994,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"exit-zoom\" class=\"zoom-controls\"></div>\r\n<div id=\"more-zoom\" class=\"zoom-controls\"></div>\r\n<div id=\"less-zoom\" class=\"zoom-controls\"></div>\r\n<div id=\"zoom-line\"></div>\r\n<div id=\"current-zoom\"></div>";
+  return "<div id=\"exit-zoom\" class=\"zoom-controls\"><i class=\"icon-map-center\" title=\"Centrar\"/></div>\r\n<div id=\"more-zoom\" class=\"zoom-controls\"><i class=\"icon-plus\" title=\"Ampliar\"/></div>\r\n<div id=\"less-zoom\" class=\"zoom-controls\"><i class=\"icon-minus\" title=\"Disminuir\"/></div>\r\n<div id=\"zoom-line\"></div>\r\n<div id=\"current-zoom\"></div>";
   });
 
 this["Handlebars"]["templates"]["error/404"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

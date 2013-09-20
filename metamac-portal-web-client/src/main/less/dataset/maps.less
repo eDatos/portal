@@ -56,73 +56,42 @@ svg { overflow: hidden; } // IE FIX
     height: 130px;
 
     .zoom-controls {
+        font-size: 11px;
         background-color: #fff;
-        box-shadow: 0 0 3px #888;
         left: 6px;
         width: 18px;
         height: 18px;
         cursor: pointer;
         position: absolute;
+        line-height: 18px;
+        text-align: center;
+        color: #333;
+        .user-select(none);
     }
 
     #exit-zoom {
         top: 15px;
     }
 
-    #exit-zoom::after {
-        margin-top: -5px;
-        content: '↩';
-        margin-left: 2px;
-    }
-
     #more-zoom {
-    /*background: url('../images/showMore.png');*/
-    /*         background-color: #fff; */
-    /*         box-shadow: 0 0 2px #888; */
-    /*         position: absolute; */
         top: 40px;
-    /*         left: 6px; */
-    /*         width: 18px; */
-    /*         height: 18px; */
-    /*         cursor: pointer; */
-    /*         content: '+'; */
-    }
-
-    #more-zoom::after {
-        content: '+';
-        margin-left: 5px;
     }
 
     #less-zoom {
-    /*background: url('../images/showLess.png');*/
-    /*         background-color: #fff; */
-    /*         box-shadow: 0 0 2px #888; */
-    /*         position: absolute; */
         top: 100px;
-    /*         left: 6px; */
-    /*         width: 18px; */
-    /*         height: 18px; */
-    /*         cursor: pointer; */
-    }
-
-    #less-zoom::after {
-        content: '-';
-        margin-left: 7px;
     }
 
     #zoom-line {
-        background-color: #fff;
-        box-shadow: 0 0 2px #888;
+        background-color: #808080;
         position: absolute;
-        top: 59px;
+        top: 58px;
         left: 13px;
         width: 4px;
-        height: 40px;
+        height: 42px;
     }
 
     #current-zoom {
         background-color: #fff;
-        box-shadow: 0 0 2px #888;
         position: absolute;
         top: 95px;
         left: 5px;
