@@ -14,7 +14,6 @@
                 I18n.defaultLocale = "es";
                 I18n.locale = "es";
 
-                App.apiContext = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
                 App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
                 App.endpoints["srm"] = "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0";
 

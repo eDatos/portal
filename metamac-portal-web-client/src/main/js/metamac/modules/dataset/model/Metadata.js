@@ -40,7 +40,7 @@
         },
 
         url : function () {
-            return App.apiContext + this.urlIdentifierPart() + '?_type=json&fields=-data';
+            return App.endpoints["statistical-resources"] + this.urlIdentifierPart() + '?_type=json&fields=-data';
         },
 
         fetch : function () {
