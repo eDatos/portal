@@ -2,14 +2,25 @@
 
 http://localhost:8082/opencms/setup/
 
-import module : es.gobcan.istac.web_2.0.4.zip
-import database : contenidos_istac_des-opencms_20130816.zip
+# Importar portal del istac
+
+Administración
+http://localhost:8082/opencms/opencms/system/workplace/views/workplace.jsp
+
+user: Admin
+password: admin
+
+Importar módulo : es.gobcan.istac.web_2.0.4.zip
+Importar contenidos : contenidos_istac_des-opencms_20130816.zip
+
 
 # OpenCMS instalación del módulo
 
 http://localhost:8082/opencms/opencms/system/workplace/views/workplace.jsp
 
 Ir a  `Administration View`  >  `Module Management` > `Import Module with HTTP`
+
+**Reiniciar el servidor**
 
 # Configuración del módulo
 
