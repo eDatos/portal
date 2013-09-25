@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang.StringUtils;
-import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
@@ -34,9 +33,6 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     @Autowired
     private StatisticalResourcesRestExternalFacade statisticalResourcesRestExternal;
 
-    @Autowired
-    private ConfigurationService                   configurationService;
-
     @Override
     public Response exportDatasetToTsv(String agencyID, String resourceID, String version, String dimensionsSelection, String filename) {
         try {
@@ -46,7 +42,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             // Export
             final File tmpFile = File.createTempFile("metamac", "tsv");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, outputStream);
+            exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, null, null, outputStream);// TODO lang y conf
             outputStream.close();
 
             if (filename == null) {
@@ -80,15 +76,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             }
 
             // Retrieve dataset
-            if (lang == null) {
-                lang = configurationService.retrieveLanguageDefault();
-            }
-            final Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, Arrays.asList(lang), null, dimensionSelection);
+            Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, Arrays.asList(lang), null, dimensionSelection);
 
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelection, lang, outputStream);
+            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelection, null, lang, outputStream); // TODO conf labels
             outputStream.close();
 
             if (filename == null) {
