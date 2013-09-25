@@ -79,17 +79,11 @@ public class TsvExporter {
         StringBuilder header = new StringBuilder();
         for (String dimensionId : dimensionsOrderedForData) {
             LabelVisualisationModeEnum labelVisualisation = dimensionsLabelVisualisationMode.get(dimensionId);
-            switch (labelVisualisation) {
-                case CODE_AND_LABEL:
-                    header.append(dimensionId + SEPARATOR);
-                    header.append(dimensionId + HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE + SEPARATOR);
-                    break;
-                case CODE:
-                    header.append(dimensionId + SEPARATOR);
-                    break;
-                case LABEL:
-                    header.append(dimensionId + SEPARATOR);
-                    break;
+            if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
+                header.append(dimensionId + SEPARATOR);
+            }
+            if (labelVisualisation.isCode() && labelVisualisation.isLabel()) {
+                header.append(dimensionId + HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE + SEPARATOR);
             }
         }
         header.append(HEADER_OBSERVATION);
@@ -122,26 +116,16 @@ public class TsvExporter {
                 StringBuilder line = new StringBuilder();
 
                 // Dimension values
-                for (int i = 0; i < dimensionsOrderedForData.size(); i++) {
+                for (int i = 0, size = dimensionsOrderedForData.size(); i < size; i++) {
                     String dimensionId = dimensionsOrderedForData.get(i);
                     String dimensionValueCode = entryId.get(i);
                     LabelVisualisationModeEnum labelVisualisation = dimensionsLabelVisualisationMode.get(dimensionId);
-                    switch (labelVisualisation) {
-                        case CODE_AND_LABEL: {
-                            String dimensionValueLabel = dimensionValuesTitles.get(dimensionId).get(dimensionValueCode);
-                            line.append(dimensionValueLabel + SEPARATOR);
-                            line.append(dimensionValueCode + SEPARATOR);
-                            break;
-                        }
-                        case CODE: {
-                            line.append(dimensionValueCode + SEPARATOR);
-                            break;
-                        }
-                        case LABEL: {
-                            String dimensionValueLabel = dimensionValuesTitles.get(dimensionId).get(dimensionValueCode);
-                            line.append(dimensionValueLabel + SEPARATOR);
-                            break;
-                        }
+                    if (labelVisualisation.isLabel()) {
+                        String dimensionValueLabel = dimensionValuesTitles.get(dimensionId).get(dimensionValueCode);
+                        line.append(dimensionValueLabel + SEPARATOR);
+                    }
+                    if (labelVisualisation.isCode()) {
+                        line.append(dimensionValueCode + SEPARATOR);
                     }
                 }
 

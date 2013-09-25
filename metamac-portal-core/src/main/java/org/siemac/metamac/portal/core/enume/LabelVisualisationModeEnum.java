@@ -12,4 +12,12 @@ public enum LabelVisualisationModeEnum {
         return valueOf(v);
     }
 
+    public boolean isLabel() {
+        return CODE_AND_LABEL.equals(this) || LABEL.equals(this);
+    }
+
+    public boolean isCode() {
+        return CODE_AND_LABEL.equals(this) || CODE.equals(this);
+    }
+
 }
