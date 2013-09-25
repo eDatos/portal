@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- NOTE: System properties must be configured in: SetupApplicationListener -->
-<!-- <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="commons-configuration.xsd">  -->
+<!-- <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="commons-configuration.xsd"> -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <override>
-	<system />
+    <override>
+        <system />
 
-  	<properties fileName="${environment.metamac.data}/common/conf/static/resources.xml" basePath="" config-optional="false" />
-    <properties fileName="${environment.metamac.data}/portal/conf/static/resources-local.xml" basePath="" config-optional="true" />
-  	<properties fileName="${environment.metamac.data}/portal/conf/static/resources.xml" basePath="" config-optional="false" />
+        <properties fileName="${environment.metamac.data}/common/conf/static/resources.xml" basePath="" config-optional="false" />
+        <!-- <properties fileName="${environment.metamac.data}/portal/conf/static/resources-local.xml" basePath="" config-optional="true" /> -->
+        <properties fileName="${environment.metamac.data}/portal/conf/static/resources.xml" basePath="" config-optional="false" />
 
-  </override>
+    </override>
 </configuration>
