@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.core.exporter;
+package org.siemac.metamac.portal.core.exporters;
 
 import static org.siemac.metamac.portal.core.utils.PortalUtils.calculateConfigurationDimensionLabelVisualisation;
 

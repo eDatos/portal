@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.core.serviceimpl;
+package org.siemac.metamac.portal.core.exporters;
 
 import java.io.OutputStream;
 import java.io.StringReader;
@@ -9,7 +9,6 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.JPEGTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.fop.svg.PDFTranscoder;
-import org.siemac.metamac.portal.core.domain.SvgExportSupportedMimeType;
 
 public class SVGRasterizer {
 

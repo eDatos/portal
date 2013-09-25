@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.core.domain;
+package org.siemac.metamac.portal.core.exporters;
 
 import java.util.EnumSet;
 import java.util.HashMap;
