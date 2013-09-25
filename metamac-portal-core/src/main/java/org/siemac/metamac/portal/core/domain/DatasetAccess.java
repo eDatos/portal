@@ -6,8 +6,8 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.portal.core.utils.PortalUtils;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
-import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
@@ -112,14 +112,6 @@ public class DatasetAccess {
     }
 
     private String getLabel(InternationalString internationalString, String lang) {
-        if (internationalString == null) {
-            return null;
-        }
-        for (LocalisedString localisedString : internationalString.getTexts()) {
-            if (localisedString.getLang().equals(lang)) {
-                return localisedString.getValue();
-            }
-        }
-        return null; // TODO devolver cualquier locale?
+        return PortalUtils.getLabel(internationalString, lang, null); // TODO langAlternative, pasar el default
     }
 }

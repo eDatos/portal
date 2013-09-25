@@ -2,12 +2,8 @@ package org.siemac.metamac.portal.core.serviceimpl;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,21 +12,18 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.domain.DatasetAccess;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
+import org.siemac.metamac.portal.core.domain.ExportPersonalisation;
 import org.siemac.metamac.portal.core.domain.SvgExportSupportedMimeType;
 import org.siemac.metamac.portal.core.error.ServiceExceptionParameters;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
+import org.siemac.metamac.portal.core.exporter.TsvExporter;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
 import org.siemac.metamac.portal.core.serviceapi.validators.ExportServiceInvocationValidator;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
-import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,19 +37,30 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     @Autowired
     private ExportServiceInvocationValidator exportServiceInvocationValidator;
 
-    @Override
-    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
-        exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, lang, resultOutputStream);
+    @Autowired
+    private PortalConfiguration              portalConfiguration;
 
+    @Override
+    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelection datasetSelection, ExportPersonalisation exportPersonalisation, String lang, OutputStream resultOutputStream)
+            throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, exportPersonalisation, lang, resultOutputStream);
+
+        if (lang == null) {
+            lang = portalConfiguration.retrieveLanguageDefault();
+        }
         ExcelExporter exporter = new ExcelExporter(dataset, datasetSelection, lang);
         exporter.write(resultOutputStream);
     }
 
     @Override
-    public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, OutputStream resultOutputStream) throws MetamacException {
-        exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, resultOutputStream);
+    public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, ExportPersonalisation exportPersonalisation, String lang, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, exportPersonalisation, lang, resultOutputStream);
 
-        TsvExporter exporter = new TsvExporter(dataset);
+        String langDefault = portalConfiguration.retrieveLanguageDefault();
+        if (lang == null) {
+            lang = langDefault;
+        }
+        TsvExporter exporter = new TsvExporter(dataset, exportPersonalisation, lang, langDefault);
         exporter.write(resultOutputStream);
     }
 
@@ -161,156 +165,6 @@ public class ExportServiceImpl extends ExportServiceImplBase {
                 throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error writing excel to OutputStream");
             }
             workbook.dispose();
-        }
-    }
-
-    private class TsvExporter {
-
-        private final List<String>              dimensions;
-        private final Map<String, List<String>> codesByDimensionId;
-        private final List<String>              attributesIdObservationLevelAttachment;
-
-        private final String[]                  observationsData;
-        private final Map<String, String[]>     attributesDataByAttributeId;
-        private final String                    SEPARATOR          = "\t";
-        private final String                    HEADER_OBSERVATION = "OBS_VALUE";
-
-        private TsvExporter(Dataset dataset) {
-            // Dimensions and code dimensions
-            List<DimensionRepresentation> dimensionRepresentations = dataset.getData().getDimensions().getDimensions();
-            this.dimensions = new ArrayList<String>(dimensionRepresentations.size());
-            this.codesByDimensionId = new HashMap<String, List<String>>(dimensionRepresentations.size());
-            for (DimensionRepresentation dimensionRepresentation : dimensionRepresentations) {
-                String dimensionId = dimensionRepresentation.getDimensionId();
-                this.dimensions.add(dimensionId);
-
-                List<CodeRepresentation> codesRepresentations = dimensionRepresentation.getRepresentations().getRepresentations();
-                this.codesByDimensionId.put(dimensionId, new ArrayList<String>(codesRepresentations.size()));
-                for (CodeRepresentation codeRepresentation : codesRepresentations) {
-                    this.codesByDimensionId.get(dimensionId).add(codeRepresentation.getCode());
-                }
-            }
-            // Observations
-            this.observationsData = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
-
-            // Attributes (observation attachment level)
-            this.attributesIdObservationLevelAttachment = new ArrayList<String>();
-            this.attributesDataByAttributeId = new HashMap<String, String[]>(attributesIdObservationLevelAttachment.size());
-            if (dataset.getMetadata().getAttributes() != null) {
-                // Definition
-                for (Attribute attribute : dataset.getMetadata().getAttributes().getAttributes()) {
-                    if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
-                        this.attributesIdObservationLevelAttachment.add(attribute.getId());
-                    }
-                }
-                // Data
-                for (String attributeId : attributesIdObservationLevelAttachment) {
-                    if (dataset.getData().getAttributes() != null) {
-                        for (DataAttribute dataAttribute : dataset.getData().getAttributes().getAttributes()) {
-                            if (dataAttribute.getId().equals(attributeId)) {
-                                attributesDataByAttributeId.put(attributeId,
-                                        StringUtils.splitByWholeSeparatorPreserveAllTokens(dataAttribute.getValue(), StatisticalResourcesRestConstants.DATA_SEPARATOR));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        public void write(OutputStream os) throws MetamacException {
-            PrintWriter printWriter = null;
-            try {
-                printWriter = new PrintWriter(os);
-
-                // Header
-                StringBuilder header = new StringBuilder();
-                for (String dimension : dimensions) {
-                    header.append(dimension + SEPARATOR);
-                }
-                header.append(HEADER_OBSERVATION);
-                for (String attributeId : attributesIdObservationLevelAttachment) {
-                    header.append(SEPARATOR + attributeId);
-                }
-                printWriter.println(header);
-
-                // Observations
-                Stack<OrderingStackElement> stack = new Stack<OrderingStackElement>();
-                stack.push(new OrderingStackElement(StringUtils.EMPTY, -1));
-                ArrayList<String> entryId = new ArrayList<String>(dimensions.size());
-                for (int i = 0; i < dimensions.size(); i++) {
-                    entryId.add(i, StringUtils.EMPTY);
-                }
-
-                int lastDimension = dimensions.size() - 1;
-                int observationIndex = 0;
-                while (stack.size() > 0) {
-                    OrderingStackElement elem = stack.pop();
-                    int elemDimension = elem.getDimNum();
-                    String elemCode = elem.getCodeId();
-                    if (elemDimension != -1) {
-                        entryId.set(elemDimension, elemCode);
-                    }
-
-                    if (elemDimension == lastDimension) {
-                        // The observation is complete
-                        StringBuilder line = new StringBuilder();
-                        // Codes
-                        for (String codeDimension : entryId) {
-                            line.append(codeDimension + SEPARATOR);
-                        }
-                        // Observation
-                        String observation = observationsData[observationIndex];
-                        if (observation == null) {
-                            observation = StringUtils.EMPTY;
-                        }
-                        line.append(observation);
-                        // Attributes
-                        for (String attributeId : attributesIdObservationLevelAttachment) {
-                            String attributeValue = null;
-                            if (attributesDataByAttributeId.containsKey(attributeId)) {
-                                attributeValue = attributesDataByAttributeId.get(attributeId)[observationIndex];
-                            }
-                            if (attributeValue == null) {
-                                attributeValue = StringUtils.EMPTY;
-                            }
-                            line.append(SEPARATOR + attributeValue);
-                        }
-                        printWriter.println(line);
-                        observationIndex++;
-                        entryId.set(elemDimension, StringUtils.EMPTY);
-                    } else {
-                        String dimensionId = dimensions.get(elemDimension + 1);
-                        List<String> codes = codesByDimensionId.get(dimensionId);
-                        for (int i = codes.size() - 1; i >= 0; i--) {
-                            OrderingStackElement temp = new OrderingStackElement(codes.get(i), elemDimension + 1);
-                            stack.push(temp);
-                        }
-                    }
-                }
-            } finally {
-                if (printWriter != null) {
-                    printWriter.flush();
-                }
-            }
-        }
-    }
-
-    private class OrderingStackElement {
-
-        private String codeId = null;
-        private int    dimNum = -1;
-
-        public OrderingStackElement(String codeId, int dimNum) {
-            super();
-            this.codeId = codeId;
-            this.dimNum = dimNum;
-        }
-
-        public String getCodeId() {
-            return codeId;
-        }
-
-        public int getDimNum() {
-            return dimNum;
         }
     }
 
