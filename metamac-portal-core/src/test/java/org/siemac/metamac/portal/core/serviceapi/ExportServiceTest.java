@@ -70,7 +70,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, null, "es", out);
-        
+
         // TODO test with labels
 
         out.close();
@@ -185,6 +185,39 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("Aragón\tARAGON\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\ta6\t\td6", bufferedReader.readLine());
         assertEquals("Aragón\tARAGON\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\ta7\t\td7", bufferedReader.readLine());
         assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\ta8\t\td8", bufferedReader.readLine());
+        assertEquals(null, bufferedReader.readLine());
+        bufferedReader.close();
+    }
+
+    @Test
+    public void testExportDatasetToTsvWithCodesAndSomeLabels() throws Exception {
+
+        Dataset dataset = buildDatasetToExportTsv();
+
+        File tmpFile = tempFolder.newFile();
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        ExportPersonalisation exportPersonalisation = new ExportPersonalisation();
+        exportPersonalisation.getDimensionsLabelVisualisationsMode().put("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL);
+        exportPersonalisation.getDimensionsLabelVisualisationsMode().put("TIME_PERIOD", LabelVisualisationModeEnum.CODE);
+        exportPersonalisation.getDimensionsLabelVisualisationsMode().put("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL);
+        // do not specify for INDICADORES (apply default)
+
+        exportService.exportDatasetToTsv(ctx, dataset, exportPersonalisation, "es", out);
+
+        out.close();
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        assertEquals("DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D",
+                bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t1\ta1\t\td1", bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t2\ta2\t\td2", bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t3\ta3\t\td3", bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t4\t\t\td4", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t5\ta5\t\td5", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\ta6\t\td6", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\ta7\t\td7", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\ta8\t\td8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }

@@ -1,6 +1,8 @@
 package org.siemac.metamac.portal.core.exporters;
 
-import static org.siemac.metamac.portal.core.utils.PortalUtils.calculateConfigurationDimensionLabelVisualisation;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsLabelVisualisationMode;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsValuesTitles;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.dataToDataArray;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -15,8 +17,6 @@ import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.domain.ExportPersonalisation;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
-import org.siemac.metamac.portal.core.utils.PortalUtils;
-import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
@@ -24,11 +24,6 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValues;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValue;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValues;
-import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
 
 public class TsvExporter {
 
@@ -169,34 +164,8 @@ public class TsvExporter {
     private void initDimensions(Dataset dataset, ExportPersonalisation exportPersonalisation) throws MetamacException {
         // Dimensions and dimensions values to export titles
         this.dimensionsMetadata = dataset.getMetadata().getDimensions().getDimensions();
-        this.dimensionValuesTitles = new HashMap<String, Map<String, String>>(this.dimensionsMetadata.size());
-        this.dimensionsLabelVisualisationMode = new HashMap<String, LabelVisualisationModeEnum>(this.dimensionsMetadata.size());
-        for (Dimension dimension : dimensionsMetadata) {
-            String dimensionId = dimension.getId();
-
-            // Visualisation configuration
-            LabelVisualisationModeEnum labelVisualisation = calculateConfigurationDimensionLabelVisualisation(exportPersonalisation, dimensionId);
-            dimensionsLabelVisualisationMode.put(dimensionId, labelVisualisation);
-
-            // Titles of dimensions values
-            Map<String, String> dimensionsValuesTitles = null;
-            if (dimension.getDimensionValues() instanceof EnumeratedDimensionValues) {
-                EnumeratedDimensionValues dimensionValues = (EnumeratedDimensionValues) dimension.getDimensionValues();
-                dimensionsValuesTitles = new HashMap<String, String>(dimensionValues.getValues().size());
-                for (EnumeratedDimensionValue dimensionValue : dimensionValues.getValues()) {
-                    dimensionsValuesTitles.put(dimensionValue.getId(), getLabel(dimensionValue.getName()));
-                }
-            } else if (dimension.getDimensionValues() instanceof NonEnumeratedDimensionValues) {
-                NonEnumeratedDimensionValues dimensionValues = (NonEnumeratedDimensionValues) dimension.getDimensionValues();
-                dimensionsValuesTitles = new HashMap<String, String>(dimensionValues.getValues().size());
-                for (NonEnumeratedDimensionValue dimensionValue : dimensionValues.getValues()) {
-                    dimensionsValuesTitles.put(dimensionValue.getId(), getLabel(dimensionValue.getName()));
-                }
-            } else {
-                throw new MetamacException(ServiceExceptionType.UNKNOWN, "Dimension values unexpected: " + dimension.getDimensionValues().getClass().getCanonicalName());
-            }
-            dimensionValuesTitles.put(dimensionId, dimensionsValuesTitles);
-        }
+        this.dimensionValuesTitles = buildMapDimensionsValuesTitles(this.dimensionsMetadata, lang, langAlternative);
+        this.dimensionsLabelVisualisationMode = buildMapDimensionsLabelVisualisationMode(exportPersonalisation, this.dimensionsMetadata);
 
         // Dimensions and dimensions values to export observations
         List<DimensionRepresentation> dimensionRepresentations = dataset.getData().getDimensions().getDimensions();
@@ -218,7 +187,7 @@ public class TsvExporter {
      * Init observations values
      */
     private void initObservations(Dataset dataset) {
-        this.observationsData = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
+        this.observationsData = dataToDataArray(dataset.getData().getObservations());
     }
 
     /**
@@ -239,17 +208,12 @@ public class TsvExporter {
                 if (dataset.getData().getAttributes() != null) {
                     for (DataAttribute dataAttribute : dataset.getData().getAttributes().getAttributes()) {
                         if (dataAttribute.getId().equals(attributeId)) {
-                            attributesValuesByAttributeId.put(attributeId,
-                                    StringUtils.splitByWholeSeparatorPreserveAllTokens(dataAttribute.getValue(), StatisticalResourcesRestConstants.DATA_SEPARATOR));
+                            attributesValuesByAttributeId.put(attributeId, dataToDataArray(dataAttribute.getValue()));
                         }
                     }
                 }
             }
         }
-    }
-
-    private String getLabel(InternationalString internationalString) {
-        return PortalUtils.getLabel(internationalString, lang, langAlternative);
     }
 
     private class OrderingStackElement {

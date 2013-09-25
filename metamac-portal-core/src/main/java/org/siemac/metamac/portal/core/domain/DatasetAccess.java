@@ -1,11 +1,12 @@
 package org.siemac.metamac.portal.core.domain;
 
+import static org.siemac.metamac.portal.core.utils.PortalUtils.dataToDataArray;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.portal.core.utils.PortalUtils;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
@@ -17,7 +18,6 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimen
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValue;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValues;
-import org.siemac.metamac.statistical_resources.rest.common.StatisticalResourcesRestConstants;
 
 public class DatasetAccess {
 
@@ -33,7 +33,7 @@ public class DatasetAccess {
         initializerIndex();
         initializeRepresentationLabels(lang);
 
-        observations = StringUtils.splitByWholeSeparatorPreserveAllTokens(dataset.getData().getObservations(), StatisticalResourcesRestConstants.DATA_SEPARATOR);
+        observations = dataToDataArray(dataset.getData().getObservations());
     }
 
     private void initializeMultipliers() {
