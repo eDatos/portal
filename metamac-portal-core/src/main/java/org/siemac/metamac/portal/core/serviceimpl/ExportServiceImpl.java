@@ -5,8 +5,8 @@ import java.io.OutputStream;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
-import org.siemac.metamac.portal.core.domain.DatasetSelection;
-import org.siemac.metamac.portal.core.domain.ExportPersonalisation;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
 import org.siemac.metamac.portal.core.exporters.ExcelExporter;
 import org.siemac.metamac.portal.core.exporters.ImageExporter;
 import org.siemac.metamac.portal.core.exporters.TsvExporter;
@@ -25,9 +25,8 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     private PortalConfiguration              portalConfiguration;
 
     @Override
-    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelection datasetSelection, ExportPersonalisation exportPersonalisation, String lang, OutputStream resultOutputStream)
-            throws MetamacException {
-        exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, exportPersonalisation, lang, resultOutputStream);
+    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, lang, resultOutputStream);
 
         String langDefault = portalConfiguration.retrieveLanguageDefault();
         if (lang == null) {
@@ -38,14 +37,14 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     }
 
     @Override
-    public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, ExportPersonalisation exportPersonalisation, String lang, OutputStream resultOutputStream) throws MetamacException {
-        exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, exportPersonalisation, lang, resultOutputStream);
+    public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, datasetSelection, lang, resultOutputStream);
 
         String langDefault = portalConfiguration.retrieveLanguageDefault();
         if (lang == null) {
             lang = langDefault;
         }
-        TsvExporter exporter = new TsvExporter(dataset, exportPersonalisation, lang, langDefault);
+        TsvExporter exporter = new TsvExporter(dataset, datasetSelection, lang, langDefault);
         exporter.write(resultOutputStream);
     }
 

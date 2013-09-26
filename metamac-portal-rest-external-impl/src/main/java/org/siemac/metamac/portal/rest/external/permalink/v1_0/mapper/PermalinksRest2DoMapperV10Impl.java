@@ -4,7 +4,7 @@ import org.siemac.metamac.portal.core.domain.Permalink;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PermalinksRest2DoMapperV10Impl implements PermalinksRest2Do2MapperV10 {
+public class PermalinksRest2DoMapperV10Impl implements PermalinksRest2DoMapperV10 {
 
     @Override
     public Permalink toPermalink(org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink source) throws Exception {

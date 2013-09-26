@@ -11,6 +11,12 @@
             <xs:element name="datasetSelection" type="tns:DatasetSelection" minOccurs="1" />
         </xs:sequence>
     </xs:complexType> 
+    
+    <xs:complexType name="TsvExportation">
+        <xs:sequence>
+            <xs:element name="datasetSelection" type="tns:DatasetSelection" minOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>     
                           
     <xs:complexType name="DatasetSelection">
         <xs:sequence>
@@ -31,8 +37,9 @@
     <xs:complexType name="DatasetSelectionDimension">
         <xs:sequence>
             <xs:element name="dimensionId" type="xs:string" minOccurs="1" />
-            <xs:element name="position" type="xs:int" minOccurs="1" />
             <xs:element name="dimensionValues" type="tns:DimensionValues" minOccurs="0" />
+            <xs:element name="labelVisualisationMode" type="tns:LabelVisualisationMode" minOccurs="0" />
+            <xs:element name="position" type="xs:int" minOccurs="0" />
         </xs:sequence>
     </xs:complexType> 
     
@@ -45,7 +52,16 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>    
+    
+    <xs:simpleType name="LabelVisualisationMode">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="CODE" />
+            <xs:enumeration value="LABEL" />
+            <xs:enumeration value="CODE_AND_LABEL" />
+        </xs:restriction>
+    </xs:simpleType>    
            
     <!-- Elements -->
     <xs:element name="excelExportation" type="tns:ExcelExportation" />
+    <xs:element name="tsvExportation" type="tns:TsvExportation" />
 </xs:schema>

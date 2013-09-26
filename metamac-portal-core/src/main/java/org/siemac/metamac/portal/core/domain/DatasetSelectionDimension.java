@@ -2,23 +2,38 @@ package org.siemac.metamac.portal.core.domain;
 
 import java.util.List;
 
+import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
+
 public class DatasetSelectionDimension {
 
-    private final String id;
-    private final int    position;
-    private List<String> selectedDimensionValues;
+    private final String               id;
+    private List<String>               selectedDimensionValues;
 
-    public DatasetSelectionDimension(String id, int position) {
+    private LabelVisualisationModeEnum labelVisualisationMode;
+    private Integer                    position;
+
+    public DatasetSelectionDimension(String id) {
         this.id = id;
-        this.position = position;
     }
 
     public String getId() {
         return id;
     }
 
-    public int getPosition() {
+    public Integer getPosition() {
         return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    public LabelVisualisationModeEnum getLabelVisualisationMode() {
+        return labelVisualisationMode;
+    }
+
+    public void setLabelVisualisationMode(LabelVisualisationModeEnum labelVisualisationMode) {
+        this.labelVisualisationMode = labelVisualisationMode;
     }
 
     public List<String> getSelectedDimensionValues() {

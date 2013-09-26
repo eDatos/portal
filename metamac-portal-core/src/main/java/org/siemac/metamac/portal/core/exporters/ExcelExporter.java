@@ -11,8 +11,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.domain.DatasetAccessForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.slf4j.Logger;
@@ -20,20 +20,20 @@ import org.slf4j.LoggerFactory;
 
 public class ExcelExporter {
 
-    private static final int            ROW_ACCESS_WINDOW_SIZE = 100;
+    private static final int               ROW_ACCESS_WINDOW_SIZE = 100;
 
-    private final DatasetAccessForExcel datasetAccess;
-    private final DatasetSelection      datasetSelection;
-    private Sheet                       sheet;
-    private int                         rows;
-    private int                         columns;
-    private int                         leftHeaderSize;
-    private int                         topHeaderSize;
-    private SXSSFWorkbook               workbook;
+    private final DatasetAccessForExcel    datasetAccess;
+    private final DatasetSelectionForExcel datasetSelection;
+    private Sheet                          sheet;
+    private int                            rows;
+    private int                            columns;
+    private int                            leftHeaderSize;
+    private int                            topHeaderSize;
+    private SXSSFWorkbook                  workbook;
 
-    private static Logger               log                    = LoggerFactory.getLogger(ExcelExporter.class);
+    private static Logger                  log                    = LoggerFactory.getLogger(ExcelExporter.class);
 
-    public ExcelExporter(Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public ExcelExporter(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
         this.datasetAccess = new DatasetAccessForExcel(dataset, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }

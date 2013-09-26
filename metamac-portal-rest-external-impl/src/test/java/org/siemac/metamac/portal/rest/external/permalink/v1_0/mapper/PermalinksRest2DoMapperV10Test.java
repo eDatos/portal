@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class PermalinksRest2DoMapperV10Test {
 
     @Autowired
-    private PermalinksRest2Do2MapperV10 permalinksRest2Do2MapperV10;
+    private PermalinksRest2DoMapperV10 permalinksRest2Do2MapperV10;
 
     @Test
     public void testToPermalink() throws Exception {

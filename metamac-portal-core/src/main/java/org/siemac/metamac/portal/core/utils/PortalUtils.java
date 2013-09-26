@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.portal.core.domain.ExportPersonalisation;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
@@ -48,28 +48,6 @@ public class PortalUtils {
     }
 
     /**
-     * Calculates effective configuration to label visualisation. If configuration does not exist for dimension, returns default configuration
-     */
-    public static LabelVisualisationModeEnum calculateConfigurationDimensionLabelVisualisation(ExportPersonalisation exportPersonalisation, String dimensionId) {
-        Map<String, LabelVisualisationModeEnum> visualisationsConfig = null;
-        if (exportPersonalisation != null) {
-            visualisationsConfig = exportPersonalisation.getDimensionsLabelVisualisationsMode();
-        }
-        return calculateConfigurationDimensionLabelVisualisation(visualisationsConfig, dimensionId);
-    }
-
-    /**
-     * Calculates effective configuration to label visualisation. If configuration does not exist for attribute, returns default configuration
-     */
-    public static LabelVisualisationModeEnum calculateConfigurationAttributeLabelVisualisation(ExportPersonalisation exportPersonalisation, String dimensionId) {
-        Map<String, LabelVisualisationModeEnum> visualisationsConfig = null;
-        if (exportPersonalisation != null) {
-            visualisationsConfig = exportPersonalisation.getAttributesLabelVisualisationsMode();
-        }
-        return calculateConfigurationDimensionLabelVisualisation(visualisationsConfig, dimensionId);
-    }
-
-    /**
      * Builds a map indexed by dimensionId with a map indexed by dimensionValueId and value as title of the dimension value.
      */
     public static Map<String, Map<String, String>> buildMapDimensionsValuesLabels(List<Dimension> dimensions, String lang, String langAlternative) throws MetamacException {
@@ -102,34 +80,23 @@ public class PortalUtils {
     }
 
     /**
-     * Builds a map indexed by dimensionId with the effective label visualisation mode
+     * Builds a map indexed by dimensionId with the effective label visualisation mode. If configuration does not exist for component, returns default configuration
      */
-    public static Map<String, LabelVisualisationModeEnum> buildMapDimensionsLabelVisualisationMode(ExportPersonalisation exportPersonalisation, List<Dimension> dimensions) {
+    public static Map<String, LabelVisualisationModeEnum> buildMapDimensionsLabelVisualisationMode(DatasetSelection datasetSelection, List<Dimension> dimensions) {
         Map<String, LabelVisualisationModeEnum> dimensionsLabelVisualisationMode = new HashMap<String, LabelVisualisationModeEnum>(dimensions.size());
         for (Dimension dimension : dimensions) {
             String dimensionId = dimension.getId();
-            LabelVisualisationModeEnum labelVisualisation = calculateConfigurationDimensionLabelVisualisation(exportPersonalisation, dimensionId);
-            dimensionsLabelVisualisationMode.put(dimensionId, labelVisualisation);
+            LabelVisualisationModeEnum labelVisualisationMode = datasetSelection != null ? datasetSelection.getLabelVisualisationMode(dimensionId) : null;
+            if (labelVisualisationMode == null) {
+                // default value
+                labelVisualisationMode = LabelVisualisationModeEnum.CODE_AND_LABEL;
+            }
+            dimensionsLabelVisualisationMode.put(dimensionId, labelVisualisationMode);
         }
         return dimensionsLabelVisualisationMode;
     }
 
     public static String[] dataToDataArray(String data) {
         return StringUtils.splitByWholeSeparatorPreserveAllTokens(data, StatisticalResourcesRestConstants.DATA_SEPARATOR);
-    }
-
-    /**
-     * Calculates effective configuration to label visualisation. If configuration does not exist for component, returns default configuration
-     */
-    private static LabelVisualisationModeEnum calculateConfigurationDimensionLabelVisualisation(Map<String, LabelVisualisationModeEnum> visualisationsConfig, String id) {
-        LabelVisualisationModeEnum labelVisualisation = null;
-        if (visualisationsConfig != null) {
-            labelVisualisation = visualisationsConfig.get(id);
-        }
-        if (labelVisualisation == null) {
-            // default value
-            labelVisualisation = LabelVisualisationModeEnum.CODE_AND_LABEL;
-        }
-        return labelVisualisation;
     }
 }

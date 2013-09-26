@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 
 public class DatasetSelectionMockBuilder {
 
@@ -17,11 +19,24 @@ public class DatasetSelectionMockBuilder {
     private DatasetSelectionDimension             lastDimension;
 
     private DatasetSelectionMockBuilder() {
-
     }
 
-    public DatasetSelectionMockBuilder dimension(String dimensionId, int position) {
-        DatasetSelectionDimension dimension = new DatasetSelectionDimension(dimensionId, position);
+    public DatasetSelectionMockBuilder dimension(String dimensionId) {
+        return dimension(dimensionId, null, null);
+    }
+
+    public DatasetSelectionMockBuilder dimension(String dimensionId, Integer position) {
+        return dimension(dimensionId, position, null);
+    }
+
+    public DatasetSelectionMockBuilder dimension(String dimensionId, LabelVisualisationModeEnum labelVisualisationMode) {
+        return dimension(dimensionId, null, labelVisualisationMode);
+    }
+
+    public DatasetSelectionMockBuilder dimension(String dimensionId, Integer position, LabelVisualisationModeEnum labelVisualisationMode) {
+        DatasetSelectionDimension dimension = new DatasetSelectionDimension(dimensionId);
+        dimension.setPosition(position);
+        dimension.setLabelVisualisationMode(labelVisualisationMode);
         lastDimension = dimension;
         dimensions.add(dimension);
         return this;
@@ -32,8 +47,12 @@ public class DatasetSelectionMockBuilder {
         return this;
     }
 
-    public DatasetSelection build() {
-        return new DatasetSelection(dimensions);
+    public DatasetSelectionForExcel buildForExcel() {
+        return new DatasetSelectionForExcel(dimensions);
+    }
+
+    public DatasetSelectionForTsv buildForTsv() {
+        return new DatasetSelectionForTsv(dimensions);
     }
 
 }

@@ -20,8 +20,8 @@ Application Portal {
 		}
 		
 		Service ExportService {
-			exportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, ExportPersonalisation exportPersonalisation, String lang, OutputStream resultOutputStream) throws MetamacException;
-			exportDatasetToTsv(Dataset dataset, ExportPersonalisation exportPersonalisation, String lang, OutputStream resultOutputStream) throws MetamacException;
+			exportDatasetToExcel(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
+			exportDatasetToTsv(Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
 			exportSvgToImage(String svg, Float width, String mimeType, OutputStream resultOutputStream) throws MetamacException;
 		}
 		

@@ -13,8 +13,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
-import org.siemac.metamac.portal.core.domain.DatasetSelection;
-import org.siemac.metamac.portal.core.domain.ExportPersonalisation;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.serviceapi.utils.Asserts;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetMockBuilder;
@@ -22,7 +22,6 @@ import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuild
 import org.siemac.metamac.portal.core.serviceapi.utils.ExcelUtils;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -50,12 +49,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Test
     public void testExportDatasetToExcel() throws Exception {
         //@formatter:off
-        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0).categories("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", 1).categories("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20).categories("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40).categories("INDICE_OCUPACION_PLAZAS")
-                .build();
+                .buildForExcel();
 
         Dataset dataset = DatasetMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO").representation("ANDALUCIA", "Andalucía").representation("ARAGON", "Aragón")
@@ -69,7 +68,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         File tmpFile = tempFolder.newFile();
         FileOutputStream out = new FileOutputStream(tmpFile);
 
-        exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, null, "es", out);
+        exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, "es", out);
 
         // TODO test with labels
 
@@ -102,12 +101,16 @@ public class ExportServiceTest implements ExportServiceTestBase {
         File tmpFile = tempFolder.newFile();
         FileOutputStream out = new FileOutputStream(tmpFile);
 
-        ExportPersonalisation exportPersonalisation = new ExportPersonalisation();
-        for (Dimension dimension : dataset.getMetadata().getDimensions().getDimensions()) {
-            exportPersonalisation.getDimensionsLabelVisualisationsMode().put(dimension.getId(), LabelVisualisationModeEnum.CODE);
-        }
+        //@formatter:off
+        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).categories("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).categories("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).categories("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", LabelVisualisationModeEnum.CODE).categories("INDICE_OCUPACION_PLAZAS")
+                .buildForTsv();
+        //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, exportPersonalisation, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
 
         out.close();
 
@@ -133,12 +136,16 @@ public class ExportServiceTest implements ExportServiceTestBase {
         File tmpFile = tempFolder.newFile();
         FileOutputStream out = new FileOutputStream(tmpFile);
 
-        ExportPersonalisation exportPersonalisation = new ExportPersonalisation();
-        for (Dimension dimension : dataset.getMetadata().getDimensions().getDimensions()) {
-            exportPersonalisation.getDimensionsLabelVisualisationsMode().put(dimension.getId(), LabelVisualisationModeEnum.LABEL);
-        }
+        //@formatter:off
+        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).categories("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", LabelVisualisationModeEnum.LABEL).categories("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).categories("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", LabelVisualisationModeEnum.LABEL).categories("INDICE_OCUPACION_PLAZAS")
+                .buildForTsv();
+        //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, exportPersonalisation, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
 
         out.close();
 
@@ -164,12 +171,16 @@ public class ExportServiceTest implements ExportServiceTestBase {
         File tmpFile = tempFolder.newFile();
         FileOutputStream out = new FileOutputStream(tmpFile);
 
-        ExportPersonalisation exportPersonalisation = new ExportPersonalisation();
-        for (Dimension dimension : dataset.getMetadata().getDimensions().getDimensions()) {
-            exportPersonalisation.getDimensionsLabelVisualisationsMode().put(dimension.getId(), LabelVisualisationModeEnum.CODE_AND_LABEL);
-        }
+        //@formatter:off
+        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).categories("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE_AND_LABEL).categories("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).categories("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", LabelVisualisationModeEnum.CODE_AND_LABEL).categories("INDICE_OCUPACION_PLAZAS")
+                .buildForTsv();
+        //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, exportPersonalisation, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
 
         out.close();
 
@@ -197,13 +208,16 @@ public class ExportServiceTest implements ExportServiceTestBase {
         File tmpFile = tempFolder.newFile();
         FileOutputStream out = new FileOutputStream(tmpFile);
 
-        ExportPersonalisation exportPersonalisation = new ExportPersonalisation();
-        exportPersonalisation.getDimensionsLabelVisualisationsMode().put("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL);
-        exportPersonalisation.getDimensionsLabelVisualisationsMode().put("TIME_PERIOD", LabelVisualisationModeEnum.CODE);
-        exportPersonalisation.getDimensionsLabelVisualisationsMode().put("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL);
-        // do not specify for INDICADORES (apply default)
+        //@formatter:off
+        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).categories("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).categories("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).categories("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES").categories("INDICE_OCUPACION_PLAZAS")         // do not specify for INDICADORES (apply default)
+                .buildForTsv();
+        //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, exportPersonalisation, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
 
         out.close();
 

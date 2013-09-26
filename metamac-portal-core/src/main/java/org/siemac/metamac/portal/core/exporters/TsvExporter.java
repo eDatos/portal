@@ -12,7 +12,7 @@ import java.util.Stack;
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.domain.DatasetAccessForTsv;
-import org.siemac.metamac.portal.core.domain.ExportPersonalisation;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
@@ -21,14 +21,14 @@ public class TsvExporter {
 
     private final DatasetAccessForTsv                     datasetAccess;
 
-    private final Map<String, LabelVisualisationModeEnum> dimensionsLabelVisualisationMode;
+    private final Map<String, LabelVisualisationModeEnum> dimensionsLabelVisualisationMode;                            // TODO pasar a DatasetAccess si se necesita para excel
     private final String                                  SEPARATOR                                      = "\t";
     private final String                                  HEADER_OBSERVATION                             = "OBS_VALUE";
     private final String                                  HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE = "_CODE";
 
-    public TsvExporter(Dataset dataset, ExportPersonalisation exportPersonalisation, String lang, String langAlternative) throws MetamacException {
+    public TsvExporter(Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, String langAlternative) throws MetamacException {
         this.datasetAccess = new DatasetAccessForTsv(dataset, lang, langAlternative);
-        this.dimensionsLabelVisualisationMode = buildMapDimensionsLabelVisualisationMode(exportPersonalisation, datasetAccess.getDimensionsMetadata());
+        this.dimensionsLabelVisualisationMode = buildMapDimensionsLabelVisualisationMode(datasetSelection, datasetAccess.getDimensionsMetadata());
     }
 
     public void write(OutputStream os) throws MetamacException {

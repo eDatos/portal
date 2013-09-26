@@ -13,7 +13,7 @@ import org.siemac.metamac.rest.export.v1_0.domain.DimensionValues;
 public class DatasetSelectionMapperTest {
 
     @Test
-    public void testFormJSON() throws Exception {
+    public void testToDatasetSelectionForExcel() throws Exception {
 
         org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source = new org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection();
         source.setDimensions(new DatasetSelectionDimensions());
@@ -23,7 +23,7 @@ public class DatasetSelectionMapperTest {
         source.getDimensions().getDimensions().add(mockDimension("DESTINO_ALOJAMIENTO", 40, "EL_HIERRO"));
 
         // Transform
-        DatasetSelection selection = DatasetSelectionMapper.toDatasetSelection(source);
+        DatasetSelection selection = DatasetSelectionMapper.toDatasetSelectionForExcel(source);
 
         // Validate
         assertEquals(selection.getDimensions().size(), 4);
@@ -32,6 +32,7 @@ public class DatasetSelectionMapperTest {
         assertDimension(selection, "CATEGORIA_ALOJAMIENTO", 20, "1_2_3_ESTRELLAS");
         assertDimension(selection, "DESTINO_ALOJAMIENTO", 40, "EL_HIERRO");
     }
+
     private DatasetSelectionDimension mockDimension(String dimensionId, int position, String... dimensionValues) {
         DatasetSelectionDimension dimension = new DatasetSelectionDimension();
         dimension.setDimensionId(dimensionId);
@@ -41,7 +42,7 @@ public class DatasetSelectionMapperTest {
         return dimension;
     }
 
-    private void assertDimension(DatasetSelection selection, String dimensionId, int position, String... dimensionValues) {
+    private void assertDimension(DatasetSelection selection, String dimensionId, Integer position, String... dimensionValues) {
         org.siemac.metamac.portal.core.domain.DatasetSelectionDimension dimension = selection.getDimension(dimensionId);
         assertEquals(dimensionId, dimension.getId());
         assertEquals(position, dimension.getPosition());
