@@ -21,6 +21,7 @@
     <xs:complexType name="DatasetSelection">
         <xs:sequence>
             <xs:element name="dimensions" type="tns:DatasetSelectionDimensions" minOccurs="1" />
+            <xs:element name="attributes" type="tns:DatasetSelectionAttributes" minOccurs="0" />
         </xs:sequence>
     </xs:complexType> 
        
@@ -52,6 +53,23 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>    
+    
+    <xs:complexType name="DatasetSelectionAttributes">
+        <xs:complexContent>
+            <xs:extension base="common:ListBase">
+                <xs:sequence>
+                    <xs:element name="attribute" type="tns:DatasetSelectionAttribute" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DatasetSelectionAttribute">
+        <xs:sequence>
+            <xs:element name="attributeId" type="xs:string" minOccurs="1" />
+            <xs:element name="labelVisualisationMode" type="tns:LabelVisualisationMode" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
     
     <xs:simpleType name="LabelVisualisationMode">
         <xs:restriction base="xs:token">
