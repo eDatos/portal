@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
+    targetNamespace="http://www.siemac.org/metamac/rest/export/v1.0/domain" 
+    xmlns:tns="http://www.siemac.org/metamac/rest/export/v1.0/domain"
+    xmlns:common="http://www.siemac.org/metamac/rest/common/v1.0/domain">
+
+    <xs:import namespace="http://www.siemac.org/metamac/rest/common/v1.0/domain" schemaLocation="metamac-rest-api:metamac-rest-common-domain-v1.0.xsd" />
+
+    <xs:complexType name="ExcelExportation">
+        <xs:sequence>
+            <xs:element name="datasetSelection" type="tns:DatasetSelection" minOccurs="1" />
+        </xs:sequence>
+    </xs:complexType> 
+                          
+    <xs:complexType name="DatasetSelection">
+        <xs:sequence>
+            <xs:element name="dimensions" type="tns:DatasetSelectionDimensions" minOccurs="1" />
+        </xs:sequence>
+    </xs:complexType> 
+       
+    <xs:complexType name="DatasetSelectionDimensions">
+        <xs:complexContent>
+            <xs:extension base="common:ListBase">
+                <xs:sequence>
+                    <xs:element name="dimension" type="tns:DatasetSelectionDimension" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DatasetSelectionDimension">
+        <xs:sequence>
+            <xs:element name="dimensionId" type="xs:string" minOccurs="1" />
+            <xs:element name="position" type="xs:int" minOccurs="1" />
+            <xs:element name="dimensionValues" type="tns:DimensionValues" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType> 
+    
+    <xs:complexType name="DimensionValues">
+        <xs:complexContent>
+            <xs:extension base="common:ListBase">
+                <xs:sequence>
+                    <xs:element name="dimensionValue" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>    
+           
+    <!-- Elements -->
+    <xs:element name="excelExportation" type="tns:ExcelExportation" />
+</xs:schema>

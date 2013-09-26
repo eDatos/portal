@@ -11,15 +11,16 @@ import java.util.Arrays;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
-import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
 import org.siemac.metamac.portal.rest.external.RestExternalConstants;
 import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionType;
+import org.siemac.metamac.portal.rest.external.export.v1_0.mapper.DatasetSelectionMapper;
 import org.siemac.metamac.portal.rest.external.invocation.StatisticalResourcesRestExternalFacade;
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
+import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,20 +56,20 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcel(String agencyID, String resourceID, String version, String lang, String datasetSelectionJson, String filename) {
+    public Response exportDatasetToExcel(ExcelExportation excelExportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Check and transform selection
-            if (StringUtils.isEmpty(datasetSelectionJson)) {
+            if (excelExportationBody == null || excelExportationBody.getDatasetSelection() == null || excelExportationBody.getDatasetSelection().getDimensions() == null
+                    || CollectionUtils.isEmpty(excelExportationBody.getDatasetSelection().getDimensions().getDimensions())) {
                 org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils
                         .getException(RestServiceExceptionType.PARAMETER_REQUIRED, RestExternalConstants.PARAMETER_SELECTION);
                 throw new RestException(exception, Status.BAD_REQUEST);
-
             }
-            DatasetSelection datasetSelection = null;
+            org.siemac.metamac.portal.core.domain.DatasetSelection datasetSelectionCore = null;
             String dimensionSelection = null;
             try {
-                datasetSelection = DatasetSelectionMapper.fromJSON(datasetSelectionJson);
-                dimensionSelection = DatasetSelectionMapper.getDimsParameter(datasetSelection);
+                datasetSelectionCore = DatasetSelectionMapper.toDatasetSelection(excelExportationBody.getDatasetSelection());
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionCore);
             } catch (Exception e) {
                 org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
                         RestExternalConstants.PARAMETER_SELECTION);
@@ -81,7 +82,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelection, null, lang, outputStream); // TODO conf labels
+            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelectionCore, null, lang, outputStream); // TODO configuración de visualización de etiquetas
             outputStream.close();
 
             if (filename == null) {

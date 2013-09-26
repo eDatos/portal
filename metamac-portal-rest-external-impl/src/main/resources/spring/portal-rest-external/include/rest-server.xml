@@ -41,6 +41,8 @@
         </jaxrs:serviceBeans>
 
         <jaxrs:providers>
+            <ref bean="jaxbProvider" />
+            <ref bean="jsonProvider" />        
             <ref bean="wadlGenerator" />
         </jaxrs:providers>
     </jaxrs:server>    

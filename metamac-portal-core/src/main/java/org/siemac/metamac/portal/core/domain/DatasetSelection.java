@@ -29,7 +29,7 @@ public class DatasetSelection {
         while(li.hasPrevious()) {
             DatasetSelectionDimension dimension = li.previous();
             multipliers.put(dimension.getId(), ac);
-            ac *= dimension.getSelectedCategories().size();
+            ac *= dimension.getSelectedDimensionValues().size();
         }
     }
 
@@ -52,7 +52,7 @@ public class DatasetSelection {
         List<DatasetSelectionDimension> leftDimensions = getLeftDimensions();
         if(leftDimensions.size() > 0) {
             DatasetSelectionDimension biggerLeftDimension = leftDimensions.get(0);
-            return multipliers.get(biggerLeftDimension.getId()) * biggerLeftDimension.getSelectedCategories().size();
+            return multipliers.get(biggerLeftDimension.getId()) * biggerLeftDimension.getSelectedDimensionValues().size();
         } else {
             return 1;
         }
@@ -62,7 +62,7 @@ public class DatasetSelection {
         List<DatasetSelectionDimension> topDimensions = getTopDimensions();
         if (topDimensions.size() > 0) {
             DatasetSelectionDimension biggerTopDimension = topDimensions.get(0);
-            return multipliers.get(biggerTopDimension.getId()) * biggerTopDimension.getSelectedCategories().size();
+            return multipliers.get(biggerTopDimension.getId()) * biggerTopDimension.getSelectedDimensionValues().size();
         } else {
             return 1;
         }
@@ -104,18 +104,18 @@ public class DatasetSelection {
 
         for(DatasetSelectionDimension dimension : getLeftDimensions()) {
             Integer multiplier = multipliers.get(dimension.getId());
-            int selectedCategoryIndex = (row / multiplier) % dimension.getSelectedCategories().size();
-            permutation.put(dimension.getId(), dimension.getSelectedCategories().get(selectedCategoryIndex));
+            int selectedCategoryIndex = (row / multiplier) % dimension.getSelectedDimensionValues().size();
+            permutation.put(dimension.getId(), dimension.getSelectedDimensionValues().get(selectedCategoryIndex));
         }
 
         for(DatasetSelectionDimension dimension : getTopDimensions()) {
             Integer multiplier = multipliers.get(dimension.getId());
-            int selectedCategoryIndex = (column / multiplier) % dimension.getSelectedCategories().size();
-            permutation.put(dimension.getId(), dimension.getSelectedCategories().get(selectedCategoryIndex));
+            int selectedCategoryIndex = (column / multiplier) % dimension.getSelectedDimensionValues().size();
+            permutation.put(dimension.getId(), dimension.getSelectedDimensionValues().get(selectedCategoryIndex));
         }
 
         for(DatasetSelectionDimension dimension : getFixedDimensions()) {
-            permutation.put(dimension.getId(), dimension.getSelectedCategories().get(0));
+            permutation.put(dimension.getId(), dimension.getSelectedDimensionValues().get(0));
         }
 
         return permutation;

@@ -50,7 +50,7 @@ public class ExcelExporter {
         int headerRow = 0;
         for (DatasetSelectionDimension dimension : datasetSelection.getTopDimensions()) {
             Row row = sheet.createRow(headerRow);
-            List<String> selectedCategories = dimension.getSelectedCategories();
+            List<String> selectedCategories = dimension.getSelectedDimensionValues();
             int headerColumn = leftHeaderSize;
             int multiplier = datasetSelection.getMultiplierForDimension(dimension);
             int repeat = columns / (multiplier * selectedCategories.size());
@@ -82,7 +82,7 @@ public class ExcelExporter {
             DatasetSelectionDimension dimension = leftDimensions.get(leftDimensionIndex);
             int multiplier = datasetSelection.getMultiplierForDimension(dimension);
             if (observationRowIndex % multiplier == 0) {
-                String categoryId = dimension.getSelectedCategories().get((observationRowIndex / multiplier) % dimension.getSelectedCategories().size());
+                String categoryId = dimension.getSelectedDimensionValues().get((observationRowIndex / multiplier) % dimension.getSelectedDimensionValues().size());
                 String categoryLabel = datasetAccess.representationLabel(dimension.getId(), categoryId);
                 Cell cell = row.createCell(leftDimensionIndex);
                 cell.setCellValue(categoryLabel);

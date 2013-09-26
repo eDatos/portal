@@ -4,9 +4,9 @@ import java.util.List;
 
 public class DatasetSelectionDimension {
 
-    private String id;
-    private int position;
-    private List<String> selectedCategories;
+    private final String id;
+    private final int    position;
+    private List<String> selectedDimensionValues;
 
     public DatasetSelectionDimension(String id, int position) {
         this.id = id;
@@ -21,12 +21,12 @@ public class DatasetSelectionDimension {
         return position;
     }
 
-    public List<String> getSelectedCategories() {
-        return selectedCategories;
+    public List<String> getSelectedDimensionValues() {
+        return selectedDimensionValues;
     }
 
-    public void setSelectedCategories(List<String> selectedCategories) {
-        this.selectedCategories = selectedCategories;
+    public void setSelectedDimensionValues(List<String> selectedDimensionValues) {
+        this.selectedDimensionValues = selectedDimensionValues;
     }
 
 }

@@ -1,11 +1,11 @@
 package org.siemac.metamac.portal.core.serviceapi.utils;
 
-import org.siemac.metamac.portal.core.domain.DatasetSelection;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 
 public class DatasetSelectionMockBuilder {
 
@@ -13,8 +13,8 @@ public class DatasetSelectionMockBuilder {
         return new DatasetSelectionMockBuilder();
     }
 
-    private List<DatasetSelectionDimension> dimensions = new ArrayList<DatasetSelectionDimension>();
-    private DatasetSelectionDimension lastDimension;
+    private final List<DatasetSelectionDimension> dimensions = new ArrayList<DatasetSelectionDimension>();
+    private DatasetSelectionDimension             lastDimension;
 
     private DatasetSelectionMockBuilder() {
 
@@ -28,7 +28,7 @@ public class DatasetSelectionMockBuilder {
     }
 
     public DatasetSelectionMockBuilder categories(String... categoriesId) {
-        lastDimension.setSelectedCategories(Arrays.asList(categoriesId));
+        lastDimension.setSelectedDimensionValues(Arrays.asList(categoriesId));
         return this;
     }
 
