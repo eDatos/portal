@@ -3,6 +3,7 @@ package org.siemac.metamac.portal.rest.external.invocation;
 import javax.annotation.PostConstruct;
 
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.portal.core.constants.PortalConfigurationConstants;
 import org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0;
@@ -24,6 +25,10 @@ public class MetamacApisLocator {
     }
 
     public StatisticalResourcesV1_0 getStatisticalResourcesV1_0() {
+        // reset thread context
+        WebClient.client(statisticalResourcesV1_0).reset();
+        WebClient.client(statisticalResourcesV1_0).accept("application/xml");
+
         return statisticalResourcesV1_0;
     }
 }
