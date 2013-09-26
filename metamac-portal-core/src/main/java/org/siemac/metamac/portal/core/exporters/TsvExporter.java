@@ -1,58 +1,34 @@
 package org.siemac.metamac.portal.core.exporters;
 
 import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsLabelVisualisationMode;
-import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsValuesTitles;
-import static org.siemac.metamac.portal.core.utils.PortalUtils.dataToDataArray;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.portal.core.domain.DatasetAccessForTsv;
 import org.siemac.metamac.portal.core.domain.ExportPersonalisation;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
 
 public class TsvExporter {
 
-    // Metadata
-    private List<Dimension>                         dimensionsMetadata;
-    private Map<String, LabelVisualisationModeEnum> dimensionsLabelVisualisationMode;
-    private Map<String, Map<String, String>>        dimensionValuesTitles;                                       // indexed by dimensionId and dimensionValueId
-    private List<String>                            attributesIdObservationLevelAttachment;
+    private final DatasetAccessForTsv                     datasetAccess;
 
-    private final String                            lang;
-    private final String                            langAlternative;
-
-    // Data
-    private List<String>                            dimensionsOrderedForData;
-    private Map<String, List<String>>               dimensionValuesOrderedForDataByDimensionId;
-    private String[]                                observationsData;
-    private Map<String, String[]>                   attributesValuesByAttributeId;
-
-    private final String                            SEPARATOR                                      = "\t";
-    private final String                            HEADER_OBSERVATION                             = "OBS_VALUE";
-    private final String                            HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE = "_CODE";
+    private final Map<String, LabelVisualisationModeEnum> dimensionsLabelVisualisationMode;
+    private final String                                  SEPARATOR                                      = "\t";
+    private final String                                  HEADER_OBSERVATION                             = "OBS_VALUE";
+    private final String                                  HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE = "_CODE";
 
     public TsvExporter(Dataset dataset, ExportPersonalisation exportPersonalisation, String lang, String langAlternative) throws MetamacException {
-        this.lang = lang;
-        this.langAlternative = langAlternative;
-
-        initDimensions(dataset, exportPersonalisation);
-        initObservations(dataset);
-        initAttributesWithObservationAttachmentLevel(dataset);
+        this.datasetAccess = new DatasetAccessForTsv(dataset, lang, langAlternative);
+        this.dimensionsLabelVisualisationMode = buildMapDimensionsLabelVisualisationMode(exportPersonalisation, datasetAccess.getDimensionsMetadata());
     }
 
     public void write(OutputStream os) throws MetamacException {
@@ -72,7 +48,7 @@ public class TsvExporter {
 
     private void writeHeader(PrintWriter printWriter) {
         StringBuilder header = new StringBuilder();
-        for (String dimensionId : dimensionsOrderedForData) {
+        for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
             LabelVisualisationModeEnum labelVisualisation = dimensionsLabelVisualisationMode.get(dimensionId);
             if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
                 header.append(dimensionId + SEPARATOR);
@@ -82,7 +58,7 @@ public class TsvExporter {
             }
         }
         header.append(HEADER_OBSERVATION);
-        for (String attributeId : attributesIdObservationLevelAttachment) {
+        for (String attributeId : datasetAccess.getAttributesIdObservationLevelAttachment()) {
             header.append(SEPARATOR + attributeId); // TODO label
         }
         printWriter.println(header);
@@ -91,12 +67,12 @@ public class TsvExporter {
     private void writeObservations(PrintWriter printWriter) {
         Stack<OrderingStackElement> stack = new Stack<OrderingStackElement>();
         stack.push(new OrderingStackElement(StringUtils.EMPTY, -1));
-        ArrayList<String> entryId = new ArrayList<String>(dimensionsMetadata.size());
-        for (int i = 0; i < dimensionsMetadata.size(); i++) {
+        ArrayList<String> entryId = new ArrayList<String>(datasetAccess.getDimensionsMetadata().size());
+        for (int i = 0; i < datasetAccess.getDimensionsMetadata().size(); i++) {
             entryId.add(i, StringUtils.EMPTY);
         }
 
-        int lastDimension = dimensionsMetadata.size() - 1;
+        int lastDimension = datasetAccess.getDimensionsMetadata().size() - 1;
         int observationIndex = 0;
         while (stack.size() > 0) {
             OrderingStackElement elem = stack.pop();
@@ -111,12 +87,12 @@ public class TsvExporter {
                 StringBuilder line = new StringBuilder();
 
                 // Dimension values
-                for (int i = 0, size = dimensionsOrderedForData.size(); i < size; i++) {
-                    String dimensionId = dimensionsOrderedForData.get(i);
+                for (int i = 0, size = datasetAccess.getDimensionsOrderedForData().size(); i < size; i++) {
+                    String dimensionId = datasetAccess.getDimensionsOrderedForData().get(i);
                     String dimensionValueCode = entryId.get(i);
                     LabelVisualisationModeEnum labelVisualisation = dimensionsLabelVisualisationMode.get(dimensionId);
                     if (labelVisualisation.isLabel()) {
-                        String dimensionValueLabel = dimensionValuesTitles.get(dimensionId).get(dimensionValueCode);
+                        String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueCode);
                         line.append(dimensionValueLabel + SEPARATOR);
                     }
                     if (labelVisualisation.isCode()) {
@@ -125,17 +101,18 @@ public class TsvExporter {
                 }
 
                 // Observation
-                String observation = observationsData[observationIndex];
+                String observation = datasetAccess.getObservations()[observationIndex];
                 if (observation == null) {
                     observation = StringUtils.EMPTY;
                 }
                 line.append(observation);
 
                 // Attributes // TODO label
-                for (String attributeId : attributesIdObservationLevelAttachment) {
+                for (String attributeId : datasetAccess.getAttributesIdObservationLevelAttachment()) {
+                    String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
                     String attributeValue = null;
-                    if (attributesValuesByAttributeId.containsKey(attributeId)) {
-                        attributeValue = attributesValuesByAttributeId.get(attributeId)[observationIndex];
+                    if (attributeValues != null) {
+                        attributeValue = attributeValues[observationIndex];
                     }
                     if (attributeValue == null) {
                         attributeValue = StringUtils.EMPTY;
@@ -146,71 +123,11 @@ public class TsvExporter {
                 observationIndex++;
                 entryId.set(elemDimension, StringUtils.EMPTY);
             } else {
-                String dimensionId = dimensionsOrderedForData.get(elemDimension + 1);
-                List<String> dimensionValues = dimensionValuesOrderedForDataByDimensionId.get(dimensionId);
+                String dimensionId = datasetAccess.getDimensionsOrderedForData().get(elemDimension + 1);
+                List<String> dimensionValues = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
                 for (int i = dimensionValues.size() - 1; i >= 0; i--) {
                     OrderingStackElement temp = new OrderingStackElement(dimensionValues.get(i), elemDimension + 1);
                     stack.push(temp);
-                }
-            }
-        }
-    }
-
-    /**
-     * Inits dimensions and dimensions values.
-     * 1) Builds a map with titles of dimensions values
-     * 2) Builds another map with dimensions values to get order provided in DATA, because observations are retrieved in API with this order
-     */
-    private void initDimensions(Dataset dataset, ExportPersonalisation exportPersonalisation) throws MetamacException {
-        // Dimensions and dimensions values to export titles
-        this.dimensionsMetadata = dataset.getMetadata().getDimensions().getDimensions();
-        this.dimensionValuesTitles = buildMapDimensionsValuesTitles(this.dimensionsMetadata, lang, langAlternative);
-        this.dimensionsLabelVisualisationMode = buildMapDimensionsLabelVisualisationMode(exportPersonalisation, this.dimensionsMetadata);
-
-        // Dimensions and dimensions values to export observations
-        List<DimensionRepresentation> dimensionRepresentations = dataset.getData().getDimensions().getDimensions();
-        this.dimensionsOrderedForData = new ArrayList<String>(dimensionRepresentations.size());
-        this.dimensionValuesOrderedForDataByDimensionId = new HashMap<String, List<String>>(dimensionRepresentations.size());
-        for (DimensionRepresentation dimensionRepresentation : dimensionRepresentations) {
-            String dimensionId = dimensionRepresentation.getDimensionId();
-            this.dimensionsOrderedForData.add(dimensionId);
-
-            List<CodeRepresentation> codesRepresentations = dimensionRepresentation.getRepresentations().getRepresentations();
-            this.dimensionValuesOrderedForDataByDimensionId.put(dimensionId, new ArrayList<String>(codesRepresentations.size()));
-            for (CodeRepresentation codeRepresentation : codesRepresentations) {
-                this.dimensionValuesOrderedForDataByDimensionId.get(dimensionId).add(codeRepresentation.getCode());
-            }
-        }
-    }
-
-    /**
-     * Init observations values
-     */
-    private void initObservations(Dataset dataset) {
-        this.observationsData = dataToDataArray(dataset.getData().getObservations());
-    }
-
-    /**
-     * Init definitions and values of attributes with observation attachment level
-     */
-    private void initAttributesWithObservationAttachmentLevel(Dataset dataset) {
-        this.attributesIdObservationLevelAttachment = new ArrayList<String>();
-        this.attributesValuesByAttributeId = new HashMap<String, String[]>(attributesIdObservationLevelAttachment.size());
-        if (dataset.getMetadata().getAttributes() != null) {
-            // Definition
-            for (Attribute attribute : dataset.getMetadata().getAttributes().getAttributes()) {
-                if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
-                    this.attributesIdObservationLevelAttachment.add(attribute.getId());
-                }
-            }
-            // Data
-            for (String attributeId : attributesIdObservationLevelAttachment) {
-                if (dataset.getData().getAttributes() != null) {
-                    for (DataAttribute dataAttribute : dataset.getData().getAttributes().getAttributes()) {
-                        if (dataAttribute.getId().equals(attributeId)) {
-                            attributesValuesByAttributeId.put(attributeId, dataToDataArray(dataAttribute.getValue()));
-                        }
-                    }
                 }
             }
         }

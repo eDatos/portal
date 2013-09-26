@@ -29,10 +29,11 @@ public class ExportServiceImpl extends ExportServiceImplBase {
             throws MetamacException {
         exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, exportPersonalisation, lang, resultOutputStream);
 
+        String langDefault = portalConfiguration.retrieveLanguageDefault();
         if (lang == null) {
-            lang = portalConfiguration.retrieveLanguageDefault();
+            lang = langDefault;
         }
-        ExcelExporter exporter = new ExcelExporter(dataset, datasetSelection, lang);
+        ExcelExporter exporter = new ExcelExporter(dataset, datasetSelection, lang, langDefault);
         exporter.write(resultOutputStream);
     }
 

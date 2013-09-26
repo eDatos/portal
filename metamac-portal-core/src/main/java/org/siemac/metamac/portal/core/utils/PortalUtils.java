@@ -72,7 +72,7 @@ public class PortalUtils {
     /**
      * Builds a map indexed by dimensionId with a map indexed by dimensionValueId and value as title of the dimension value.
      */
-    public static Map<String, Map<String, String>> buildMapDimensionsValuesTitles(List<Dimension> dimensions, String lang, String langAlternative) throws MetamacException {
+    public static Map<String, Map<String, String>> buildMapDimensionsValuesLabels(List<Dimension> dimensions, String lang, String langAlternative) throws MetamacException {
         Map<String, Map<String, String>> dimensionValuesTitles = new HashMap<String, Map<String, String>>(dimensions.size());
         for (Dimension dimension : dimensions) {
             String dimensionId = dimension.getId();
@@ -81,13 +81,17 @@ public class PortalUtils {
                 EnumeratedDimensionValues dimensionValues = (EnumeratedDimensionValues) dimension.getDimensionValues();
                 dimensionsValuesTitles = new HashMap<String, String>(dimensionValues.getValues().size());
                 for (EnumeratedDimensionValue dimensionValue : dimensionValues.getValues()) {
-                    dimensionsValuesTitles.put(dimensionValue.getId(), getLabel(dimensionValue.getName(), lang, langAlternative));
+                    String dimensionValueId = dimensionValue.getId();
+                    String dimensionValueLabel = getLabel(dimensionValue.getName(), lang, langAlternative);
+                    dimensionsValuesTitles.put(dimensionValueId, dimensionValueLabel);
                 }
             } else if (dimension.getDimensionValues() instanceof NonEnumeratedDimensionValues) {
                 NonEnumeratedDimensionValues dimensionValues = (NonEnumeratedDimensionValues) dimension.getDimensionValues();
                 dimensionsValuesTitles = new HashMap<String, String>(dimensionValues.getValues().size());
                 for (NonEnumeratedDimensionValue dimensionValue : dimensionValues.getValues()) {
-                    dimensionsValuesTitles.put(dimensionValue.getId(), getLabel(dimensionValue.getName(), lang, langAlternative));
+                    String dimensionValueId = dimensionValue.getId();
+                    String dimensionValueLabel = getLabel(dimensionValue.getName(), lang, langAlternative);
+                    dimensionsValuesTitles.put(dimensionValueId, dimensionValueLabel);
                 }
             } else {
                 throw new MetamacException(ServiceExceptionType.UNKNOWN, "Dimension values unexpected: " + dimension.getDimensionValues().getClass().getCanonicalName());
