@@ -20,9 +20,11 @@ public abstract class DatasetSelection {
         for (DatasetSelectionDimension dimension : dimensions) {
             dimensionsMap.put(dimension.getId(), dimension);
         }
-        this.attributes = new ArrayList<DatasetSelectionAttribute>(attributes);
-        for (DatasetSelectionAttribute attribute : attributes) {
-            attributesMap.put(attribute.getId(), attribute);
+        if (attributes != null) {
+            this.attributes = new ArrayList<DatasetSelectionAttribute>(attributes);
+            for (DatasetSelectionAttribute attribute : attributes) {
+                attributesMap.put(attribute.getId(), attribute);
+            }
         }
     }
 

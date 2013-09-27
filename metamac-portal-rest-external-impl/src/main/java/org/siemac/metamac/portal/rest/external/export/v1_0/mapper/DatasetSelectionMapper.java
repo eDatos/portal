@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
@@ -24,7 +25,8 @@ public class DatasetSelectionMapper {
         if (dimensions == null) {
             return null;
         }
-        return new DatasetSelectionForExcel(dimensions, null); // TODO attributes
+        List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
+        return new DatasetSelectionForExcel(dimensions, attributes);
     }
 
     public static DatasetSelectionForTsv toDatasetSelectionForTsv(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
@@ -32,7 +34,8 @@ public class DatasetSelectionMapper {
         if (dimensions == null) {
             return null;
         }
-        return new DatasetSelectionForTsv(dimensions, null); // TODO attributes
+        List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
+        return new DatasetSelectionForTsv(dimensions, attributes);
     }
 
     public static String toStatisticalResourcesApiDimsParameter(DatasetSelection datasetSelection) {
@@ -67,6 +70,25 @@ public class DatasetSelectionMapper {
         DatasetSelectionDimension target = new DatasetSelectionDimension(source.getDimensionId());
         target.setSelectedDimensionValues(source.getDimensionValues().getDimensionValues());
         target.setPosition(source.getPosition());
+        target.setLabelVisualisationMode(toLabelVisualisationMode(source.getLabelVisualisationMode()));
+        return target;
+    }
+
+    private static List<DatasetSelectionAttribute> toDatasetSelectionAttributes(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
+        if (source == null || source.getAttributes() == null) {
+            return null;
+        }
+        List<DatasetSelectionAttribute> attributes = new ArrayList<DatasetSelectionAttribute>(source.getAttributes().getAttributes().size());
+        for (Iterator<org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttribute> iterator = source.getAttributes().getAttributes().iterator(); iterator.hasNext();) {
+            org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttribute attributeSource = iterator.next();
+            DatasetSelectionAttribute target = toDatasetSelectionAttribute(attributeSource);
+            attributes.add(target);
+        }
+        return attributes;
+    }
+
+    private static DatasetSelectionAttribute toDatasetSelectionAttribute(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttribute source) throws Exception {
+        DatasetSelectionAttribute target = new DatasetSelectionAttribute(source.getAttributeId());
         target.setLabelVisualisationMode(toLabelVisualisationMode(source.getLabelVisualisationMode()));
         return target;
     }
