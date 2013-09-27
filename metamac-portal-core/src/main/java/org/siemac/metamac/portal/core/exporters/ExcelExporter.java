@@ -13,6 +13,7 @@ import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.domain.DatasetAccessForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class ExcelExporter {
     private static Logger                  log                    = LoggerFactory.getLogger(ExcelExporter.class);
 
     public ExcelExporter(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
-        this.datasetAccess = new DatasetAccessForExcel(dataset, null, lang, langAlternative);
+        this.datasetAccess = new DatasetAccessForExcel(dataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 
@@ -80,10 +81,19 @@ public class ExcelExporter {
         List<DatasetSelectionDimension> leftDimensions = datasetSelection.getLeftDimensions();
         for (int leftDimensionIndex = 0; leftDimensionIndex < leftDimensions.size(); leftDimensionIndex++) {
             DatasetSelectionDimension dimension = leftDimensions.get(leftDimensionIndex);
+            String dimensionId = dimension.getId();
             int multiplier = datasetSelection.getMultiplierForDimension(dimension);
             if (observationRowIndex % multiplier == 0) {
                 String dimensionValueId = dimension.getSelectedDimensionValues().get((observationRowIndex / multiplier) % dimension.getSelectedDimensionValues().size());
-                String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimension.getId(), dimensionValueId);
+                LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
+                String dimensionValueLabel = null;
+                if (labelVisualisation.isLabel() && labelVisualisation.isCode()) {
+                    dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimension.getId(), dimensionValueId) + " (" + dimensionValueId + ")";
+                } else if (labelVisualisation.isLabel()) {
+                    dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimension.getId(), dimensionValueId);
+                } else if (labelVisualisation.isCode()) {
+                    dimensionValueLabel = dimensionValueId;
+                }
                 Cell cell = row.createCell(leftDimensionIndex);
                 cell.setCellValue(dimensionValueLabel);
             }

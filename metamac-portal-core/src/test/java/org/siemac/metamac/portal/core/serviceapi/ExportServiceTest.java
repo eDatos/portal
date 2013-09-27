@@ -46,31 +46,27 @@ public class ExportServiceTest implements ExportServiceTestBase {
     private final ServiceContext ctx        = getServiceContext();
 
     @Override
-    @Test
     public void testExportDatasetToExcel() throws Exception {
+        // Tested in testExportDatasetToExcel* methods
+    }
+
+    @Test
+    public void testExportDatasetToExcelWithCodes() throws Exception {
         //@formatter:off
         DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
-                .dimension("DESTINO_ALOJAMIENTO", 0).dimensionValues("ANDALUCIA", "ARAGON")
-                .dimension("TIME_PERIOD", 1).dimensionValues("2013", "2012")
-                .dimension("CATEGORIA_ALOJAMIENTO", 20).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
-                .dimension("INDICADORES", 40).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", 40, LabelVisualisationModeEnum.CODE).dimensionValues("INDICE_OCUPACION_PLAZAS")
                 .buildForExcel();
 
-        Dataset dataset = DatasetMockBuilder.create()
-                .dimension("DESTINO_ALOJAMIENTO").dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
-                .dimension("TIME_PERIOD").dimensionValue("2013").dimensionValue("2012")
-                .dimension("CATEGORIA_ALOJAMIENTO").dimensionValue("1_2_3_ESTRELLAS", "1, 2, 3 *").dimensionValue("4_5_ESTRELLAS", "4, 5 *")
-                .dimension("INDICADORES").dimensionValue("INDICE_OCUPACION_PLAZAS")
-                .observations("1.1 | 2.2 | 3.3 | 4.4 | 5.5 | 6.6 | 7.7 | 8.8")
-                .build();
-        //@formatter:on
+         //@formatter:on
 
         File tmpFile = tempFolder.newFile();
         FileOutputStream out = new FileOutputStream(tmpFile);
 
+        Dataset dataset = buildDatasetToExportExcel();
         exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, "es", out);
-
-        // TODO test with labels
 
         out.close();
 
@@ -78,10 +74,76 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         String[][] expected = {
                 {null, null, "1, 2, 3 *", "4, 5 *"},
-                {"Andalucía", "2013", "1.1", "2.2"},
+                {"ANDALUCIA", "2013", "1.1", "2.2"},
                 {null, "2012", "3.3", "4.4"},
-                {"Aragón", "2013", "5.5", "6.6"},
+                {"ARAGON", "2013", "5.5", "6.6"},
                 {null, "2012", "7.7", "8.8"}
+        };
+        //@formatter:on
+        Asserts.assertArrayEquals(expected, content);
+    }
+
+    @Test
+    public void testExportDatasetToExcelWithLabels() throws Exception {
+        //@formatter:off
+        DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.LABEL).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.LABEL).dimensionValues("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", 40, LabelVisualisationModeEnum.LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .buildForExcel();
+
+         //@formatter:on
+
+        File tmpFile = tempFolder.newFile();
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        Dataset dataset = buildDatasetToExportExcel();
+        exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, "es", out);
+
+        out.close();
+
+        String[][] content = ExcelUtils.readExcelContent(tmpFile);
+        //@formatter:off
+        String[][] expected = {
+                {null, null, "1, 2, 3 *", "4, 5 *"},
+                {"Andalucía", "Año 2013", "1.1", "2.2"},
+                {null, "Año 2012", "3.3", "4.4"},
+                {"Aragón", "Año 2013", "5.5", "6.6"},
+                {null, "Año 2012", "7.7", "8.8"}
+        };
+        //@formatter:on
+        Asserts.assertArrayEquals(expected, content);
+    }
+
+    @Test
+    public void testExportDatasetToExcelWithLabelsAndCodes() throws Exception {
+        //@formatter:off
+        DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", 40, null).dimensionValues("INDICE_OCUPACION_PLAZAS")// do not specify visualisation mode (apply default)
+                .buildForExcel();
+
+         //@formatter:on
+
+        File tmpFile = tempFolder.newFile();
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        Dataset dataset = buildDatasetToExportExcel();
+        exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, "es", out);
+
+        out.close();
+
+        String[][] content = ExcelUtils.readExcelContent(tmpFile);
+        //@formatter:off
+        String[][] expected = {
+                {null, null, "1, 2, 3 *", "4, 5 *"},
+                {"Andalucía (ANDALUCIA)", "Año 2013 (2013)", "1.1", "2.2"},
+                {null, "Año 2012 (2012)", "3.3", "4.4"},
+                {"Aragón (ARAGON)", "Año 2013 (2013)", "5.5", "6.6"},
+                {null, "Año 2012 (2012)", "7.7", "8.8"}
         };
         //@formatter:on
         Asserts.assertArrayEquals(expected, content);
@@ -291,6 +353,19 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
     private ServiceContext getServiceContext() {
         return new ServiceContext("junit", "junit", "app");
+    }
+
+    private Dataset buildDatasetToExportExcel() {
+        //@formatter:off
+        Dataset dataset = DatasetMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO").dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
+                .dimension("TIME_PERIOD").dimensionValue("2013", "Año 2013").dimensionValue("2012", "Año 2012")
+                .dimension("CATEGORIA_ALOJAMIENTO").dimensionValue("1_2_3_ESTRELLAS", "1, 2, 3 *").dimensionValue("4_5_ESTRELLAS", "4, 5 *")
+                .dimension("INDICADORES").dimensionValue("INDICE_OCUPACION_PLAZAS")
+                .observations("1.1 | 2.2 | 3.3 | 4.4 | 5.5 | 6.6 | 7.7 | 8.8")
+                .build();
+        return dataset;
+        //@formatter:on
     }
 
     private Dataset buildDatasetToExportTsv() {
