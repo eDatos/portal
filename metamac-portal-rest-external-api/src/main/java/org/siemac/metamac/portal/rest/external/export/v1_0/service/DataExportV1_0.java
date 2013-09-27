@@ -1,5 +1,6 @@
 package org.siemac.metamac.portal.rest.external.export.v1_0.service;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -18,6 +19,7 @@ public interface DataExportV1_0 {
      */
     @POST
     @Path("excel/{agencyID}/{resourceID}/{version}")
+    @Consumes({"application/xml", "application/json"})
     Response exportDatasetToExcel(ExcelExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
@@ -26,6 +28,7 @@ public interface DataExportV1_0 {
      */
     @POST
     @Path("tsv/{agencyID}/{resourceID}/{version}")
+    @Consumes({"application/xml", "application/json"})
     Response exportDatasetToTsv(TsvExportation tsvExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
