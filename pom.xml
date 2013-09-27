@@ -11,7 +11,7 @@
 
     <artifactId>metamac-portal</artifactId>
     <packaging>pom</packaging>
-    <name>SIEMAC :: METAMAC :: PORTAL</name>
+    <name>METAMAC :: PORTAL</name>
 
     <modules>
         <module>metamac-portal-parent</module>

@@ -12,8 +12,8 @@
 
     <artifactId>metamac-portal-web-client</artifactId>
     <packaging>pom</packaging>
-    <name>SIEMAC :: METAMAC :: PORTAL :: WEB :: CLIENT</name>
-    <description>SIEMAC :: METAMAC :: PORTAL :: WEB :: CLIENT</description>
+    <name>METAMAC :: PORTAL :: WEB :: CLIENT</name>
+    <description>METAMAC :: PORTAL :: WEB :: CLIENT</description>
 
     <dependencies>
     </dependencies>

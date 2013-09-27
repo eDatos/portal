@@ -12,8 +12,8 @@
 
     <artifactId>metamac-portal-opencms</artifactId>
     <packaging>pom</packaging>
-    <name>SIEMAC :: METAMAC :: PORTAL :: WEB :: OPENCMS</name>
-    <description>SIEMAC :: METAMAC :: PORTAL :: WEB :: OPENCMS</description>
+    <name>METAMAC :: PORTAL :: WEB :: OPENCMS</name>
+    <description>METAMAC :: PORTAL :: WEB :: OPENCMS</description>
 
     <dependencies>
         <dependency>
