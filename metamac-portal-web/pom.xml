@@ -11,8 +11,8 @@
 
     <artifactId>metamac-portal-web</artifactId>
     <packaging>war</packaging>
-    <name>SIEMAC :: METAMAC :: PORTAL :: WEB</name>
-    <description>SIEMAC :: METAMAC :: PORTAL :: WEB</description>
+    <name>METAMAC :: PORTAL :: WEB</name>
+    <description>METAMAC :: PORTAL :: WEB</description>
 
     <dependencies>
         <!-- Metamac -->
