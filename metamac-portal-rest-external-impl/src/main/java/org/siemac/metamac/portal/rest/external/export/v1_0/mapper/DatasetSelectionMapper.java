@@ -24,7 +24,7 @@ public class DatasetSelectionMapper {
         if (dimensions == null) {
             return null;
         }
-        return new DatasetSelectionForExcel(dimensions);
+        return new DatasetSelectionForExcel(dimensions, null); // TODO attributes
     }
 
     public static DatasetSelectionForTsv toDatasetSelectionForTsv(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
@@ -32,7 +32,7 @@ public class DatasetSelectionMapper {
         if (dimensions == null) {
             return null;
         }
-        return new DatasetSelectionForTsv(dimensions);
+        return new DatasetSelectionForTsv(dimensions, null); // TODO attributes
     }
 
     public static String toStatisticalResourcesApiDimsParameter(DatasetSelection datasetSelection) {

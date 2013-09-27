@@ -15,8 +15,8 @@ public class DatasetAccessForExcel extends DatasetAccess {
     private final Map<String, Integer>           multipliers         = new HashMap<String, Integer>();
     private final Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>();
 
-    public DatasetAccessForExcel(Dataset dataset, String lang, String langAlternative) throws MetamacException {
-        super(dataset, lang, langAlternative);
+    public DatasetAccessForExcel(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
+        super(dataset, datasetSelection, lang, langAlternative);
         initializeMultipliers();
         initializeIndex();
     }

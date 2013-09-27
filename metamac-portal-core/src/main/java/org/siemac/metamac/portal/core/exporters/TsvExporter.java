@@ -1,12 +1,9 @@
 package org.siemac.metamac.portal.core.exporters;
 
-import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsLabelVisualisationMode;
-
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,20 +12,20 @@ import org.siemac.metamac.portal.core.domain.DatasetAccessForTsv;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
 public class TsvExporter {
 
-    private final DatasetAccessForTsv                     datasetAccess;
+    private final DatasetAccessForTsv datasetAccess;
 
-    private final Map<String, LabelVisualisationModeEnum> dimensionsLabelVisualisationMode;                            // TODO pasar a DatasetAccess si se necesita para excel
-    private final String                                  SEPARATOR                                      = "\t";
-    private final String                                  HEADER_OBSERVATION                             = "OBS_VALUE";
-    private final String                                  HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE = "_CODE";
+    private final String              SEPARATOR                                      = "\t";
+    private final String              HEADER_OBSERVATION                             = "OBS_VALUE";
+    private final String              HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE = "_CODE";
 
     public TsvExporter(Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, String langAlternative) throws MetamacException {
-        this.datasetAccess = new DatasetAccessForTsv(dataset, lang, langAlternative);
-        this.dimensionsLabelVisualisationMode = buildMapDimensionsLabelVisualisationMode(datasetSelection, datasetAccess.getDimensionsMetadata());
+        this.datasetAccess = new DatasetAccessForTsv(dataset, datasetSelection, lang, langAlternative);
     }
 
     public void write(OutputStream os) throws MetamacException {
@@ -49,7 +46,7 @@ public class TsvExporter {
     private void writeHeader(PrintWriter printWriter) {
         StringBuilder header = new StringBuilder();
         for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
-            LabelVisualisationModeEnum labelVisualisation = dimensionsLabelVisualisationMode.get(dimensionId);
+            LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
             if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
                 header.append(dimensionId + SEPARATOR);
             }
@@ -58,8 +55,18 @@ public class TsvExporter {
             }
         }
         header.append(HEADER_OBSERVATION);
-        for (String attributeId : datasetAccess.getAttributesIdObservationLevelAttachment()) {
-            header.append(SEPARATOR + attributeId); // TODO label
+        for (Attribute attribute : datasetAccess.getAttributesMetadata()) {
+            if (!AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
+                continue; // only observation attachment level
+            }
+            String attributeId = attribute.getId();
+            LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
+            if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
+                header.append(SEPARATOR + attributeId);
+            }
+            if (labelVisualisation.isCode() && labelVisualisation.isLabel()) {
+                header.append(SEPARATOR + attributeId + HEADER_SUFIX_DIMENSION_VALUE_WITH_EXPORT_TITLE);
+            }
         }
         printWriter.println(header);
     }
@@ -90,7 +97,7 @@ public class TsvExporter {
                 for (int i = 0, size = datasetAccess.getDimensionsOrderedForData().size(); i < size; i++) {
                     String dimensionId = datasetAccess.getDimensionsOrderedForData().get(i);
                     String dimensionValueCode = entryId.get(i);
-                    LabelVisualisationModeEnum labelVisualisation = dimensionsLabelVisualisationMode.get(dimensionId);
+                    LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
                     if (labelVisualisation.isLabel()) {
                         String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueCode);
                         line.append(dimensionValueLabel + SEPARATOR);
@@ -107,8 +114,12 @@ public class TsvExporter {
                 }
                 line.append(observation);
 
-                // Attributes // TODO label
-                for (String attributeId : datasetAccess.getAttributesIdObservationLevelAttachment()) {
+                // Attributes
+                for (Attribute attribute : datasetAccess.getAttributesMetadata()) {
+                    if (!AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
+                        continue; // only observation attachment level
+                    }
+                    String attributeId = attribute.getId();
                     String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
                     String attributeValue = null;
                     if (attributeValues != null) {
@@ -116,8 +127,21 @@ public class TsvExporter {
                     }
                     if (attributeValue == null) {
                         attributeValue = StringUtils.EMPTY;
+                        line.append(SEPARATOR + attributeValue);
+                    } else {
+                        LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
+                        if (labelVisualisation.isLabel()) {
+                            String attributeValueLabel = datasetAccess.getAttributeValueLabel(attributeId, attributeValue);
+                            if (attributeValueLabel != null) {
+                                line.append(SEPARATOR + attributeValueLabel);
+                            } else {
+                                line.append(SEPARATOR + attributeValue);
+                            }
+                        }
+                        if (labelVisualisation.isCode()) {
+                            line.append(SEPARATOR + attributeValue);
+                        }
                     }
-                    line.append(SEPARATOR + attributeValue);
                 }
                 printWriter.println(line);
                 observationIndex++;

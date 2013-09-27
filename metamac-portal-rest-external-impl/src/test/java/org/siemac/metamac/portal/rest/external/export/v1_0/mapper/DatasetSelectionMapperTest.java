@@ -57,6 +57,8 @@ public class DatasetSelectionMapperTest {
         for (DatasetSelectionDimension expected : source.getDimensions().getDimensions()) {
             assertDimension(expected, selection);
         }
+
+        // TODO test attributes label
     }
 
     private DatasetSelectionDimension mockDimension(String dimensionId, Integer position, LabelVisualisationMode labelVisualisationMode, String... dimensionValues) {

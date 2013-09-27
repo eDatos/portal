@@ -1,36 +1,25 @@
 package org.siemac.metamac.portal.core.domain;
 
-import static org.siemac.metamac.portal.core.utils.PortalUtils.dataToDataArray;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
 
 public class DatasetAccessForTsv extends DatasetAccess {
 
-    // Metadata
-    private List<String>              attributesIdObservationLevelAttachment;
-
     // Data
     private List<String>              dimensionsOrderedForData;
     private Map<String, List<String>> dimensionValuesOrderedForDataByDimensionId;
-    private Map<String, String[]>     attributesValuesByAttributeId;
 
-    public DatasetAccessForTsv(Dataset dataset, String lang, String langAlternative) throws MetamacException {
-        super(dataset, lang, langAlternative);
+    public DatasetAccessForTsv(Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, String langAlternative) throws MetamacException {
+        super(dataset, datasetSelection, lang, langAlternative);
 
         initializeDimensionsForData(dataset);
-        initializeAttributesWithObservationAttachmentLevel(dataset);
-
     }
 
     public List<String> getDimensionsOrderedForData() {
@@ -39,14 +28,6 @@ public class DatasetAccessForTsv extends DatasetAccess {
 
     public List<String> getDimensionValuesOrderedForData(String dimensionId) {
         return dimensionValuesOrderedForDataByDimensionId.get(dimensionId);
-    }
-
-    public List<String> getAttributesIdObservationLevelAttachment() {
-        return attributesIdObservationLevelAttachment;
-    }
-
-    public String[] getAttributeValues(String attributeId) {
-        return attributesValuesByAttributeId.get(attributeId);
     }
 
     /**
@@ -64,34 +45,6 @@ public class DatasetAccessForTsv extends DatasetAccess {
             this.dimensionValuesOrderedForDataByDimensionId.put(dimensionId, new ArrayList<String>(codesRepresentations.size()));
             for (CodeRepresentation codeRepresentation : codesRepresentations) {
                 this.dimensionValuesOrderedForDataByDimensionId.get(dimensionId).add(codeRepresentation.getCode());
-            }
-        }
-    }
-
-    /**
-     * Init definitions and values of attributes with observation attachment level
-     */
-    private void initializeAttributesWithObservationAttachmentLevel(Dataset dataset) {
-        this.attributesIdObservationLevelAttachment = new ArrayList<String>();
-        this.attributesValuesByAttributeId = new HashMap<String, String[]>(attributesIdObservationLevelAttachment.size());
-        if (dataset.getMetadata().getAttributes() == null) {
-            return;
-        }
-
-        // Definition
-        for (Attribute attribute : dataset.getMetadata().getAttributes().getAttributes()) {
-            if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
-                this.attributesIdObservationLevelAttachment.add(attribute.getId());
-            }
-        }
-        // Data
-        for (String attributeId : attributesIdObservationLevelAttachment) {
-            if (dataset.getData().getAttributes() != null) {
-                for (DataAttribute dataAttribute : dataset.getData().getAttributes().getAttributes()) {
-                    if (dataAttribute.getId().equals(attributeId)) {
-                        attributesValuesByAttributeId.put(attributeId, dataToDataArray(dataAttribute.getValue()));
-                    }
-                }
             }
         }
     }

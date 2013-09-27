@@ -4,7 +4,7 @@ import java.util.List;
 
 public class DatasetSelectionForTsv extends DatasetSelection {
 
-    public DatasetSelectionForTsv(List<DatasetSelectionDimension> dimensions) {
-        super(dimensions);
+    public DatasetSelectionForTsv(List<DatasetSelectionDimension> dimensions, List<DatasetSelectionAttribute> attributes) {
+        super(dimensions, attributes);
     }
 }

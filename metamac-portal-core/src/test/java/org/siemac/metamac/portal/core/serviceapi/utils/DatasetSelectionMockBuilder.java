@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
@@ -17,6 +18,8 @@ public class DatasetSelectionMockBuilder {
 
     private final List<DatasetSelectionDimension> dimensions = new ArrayList<DatasetSelectionDimension>();
     private DatasetSelectionDimension             lastDimension;
+
+    private final List<DatasetSelectionAttribute> attributes = new ArrayList<DatasetSelectionAttribute>();
 
     private DatasetSelectionMockBuilder() {
     }
@@ -42,17 +45,24 @@ public class DatasetSelectionMockBuilder {
         return this;
     }
 
-    public DatasetSelectionMockBuilder categories(String... categoriesId) {
-        lastDimension.setSelectedDimensionValues(Arrays.asList(categoriesId));
+    public DatasetSelectionMockBuilder dimensionValues(String... dimensionValuesId) {
+        lastDimension.setSelectedDimensionValues(Arrays.asList(dimensionValuesId));
+        return this;
+    }
+
+    public DatasetSelectionMockBuilder attribute(String attributeId, LabelVisualisationModeEnum labelVisualisationMode) {
+        DatasetSelectionAttribute attribute = new DatasetSelectionAttribute(attributeId);
+        attribute.setLabelVisualisationMode(labelVisualisationMode);
+        attributes.add(attribute);
         return this;
     }
 
     public DatasetSelectionForExcel buildForExcel() {
-        return new DatasetSelectionForExcel(dimensions);
+        return new DatasetSelectionForExcel(dimensions, attributes);
     }
 
     public DatasetSelectionForTsv buildForTsv() {
-        return new DatasetSelectionForTsv(dimensions);
+        return new DatasetSelectionForTsv(dimensions, attributes);
     }
 
 }

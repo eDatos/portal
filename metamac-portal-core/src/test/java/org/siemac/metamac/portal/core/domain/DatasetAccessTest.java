@@ -20,14 +20,14 @@ public class DatasetAccessTest {
         Dataset dataset = DatasetMockBuilder.create()
                 .observations("1.35 | 2.24 |  | 4.5")
                 .dimension("DIM_A", "Dimension A")
-                .representation("DIM_A_0", "Representation A0")
-                .representation("DIM_A_1", "Representation A1")
+                .dimensionValue("DIM_A_0", "Representation A0")
+                .dimensionValue("DIM_A_1", "Representation A1")
                 .dimension("DIM_B", "Dimension B")
-                .representation("DIM_B_0", "Representation B0")
-                .representation("DIM_B_1", "Representation B1")
+                .dimensionValue("DIM_B_0", "Representation B0")
+                .dimensionValue("DIM_B_1", "Representation B1")
                 .build();
         //@formatter:on
-        datasetAccessForExcel = new DatasetAccessForExcel(dataset, "es", "es");
+        datasetAccessForExcel = new DatasetAccessForExcel(dataset, null, "es", "es");
     }
 
     @Test

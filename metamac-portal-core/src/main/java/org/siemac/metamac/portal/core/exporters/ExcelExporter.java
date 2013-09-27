@@ -34,7 +34,7 @@ public class ExcelExporter {
     private static Logger                  log                    = LoggerFactory.getLogger(ExcelExporter.class);
 
     public ExcelExporter(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
-        this.datasetAccess = new DatasetAccessForExcel(dataset, lang, langAlternative);
+        this.datasetAccess = new DatasetAccessForExcel(dataset, null, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 

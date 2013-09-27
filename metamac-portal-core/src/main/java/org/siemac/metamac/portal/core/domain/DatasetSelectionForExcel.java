@@ -16,8 +16,8 @@ public class DatasetSelectionForExcel extends DatasetSelection {
 
     private final Map<String, Integer> multipliers                     = new HashMap<String, Integer>();
 
-    public DatasetSelectionForExcel(List<DatasetSelectionDimension> dimensions) {
-        super(dimensions);
+    public DatasetSelectionForExcel(List<DatasetSelectionDimension> dimensions, List<DatasetSelectionAttribute> attributes) {
+        super(dimensions, attributes);
 
         initializeMultipliers(getLeftDimensions());
         initializeMultipliers(getTopDimensions());
