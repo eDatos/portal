@@ -1,7 +1,9 @@
 package org.siemac.metamac.portal.core.exporters;
 
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -31,7 +33,7 @@ public class TsvExporter {
     public void write(OutputStream os) throws MetamacException {
         PrintWriter printWriter = null;
         try {
-            printWriter = new PrintWriter(os);
+            printWriter = new PrintWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
             writeHeader(printWriter);
             writeObservations(printWriter);
         } catch (Exception e) {

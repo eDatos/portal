@@ -6,6 +6,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
@@ -21,7 +22,7 @@ public interface PermalinksV1_0 {
      * @return Permalink
      */
     @GET
-    @Produces("application/xml")
+    @Produces(MediaType.APPLICATION_XML)
     @Path("/permalinks/{id}")
     Permalink retrievePermalinkByIdXml(@PathParam("id") String id);
 
@@ -32,7 +33,7 @@ public interface PermalinksV1_0 {
      * @return Content in JSON format
      */
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/permalinks/{id}")
     Response retrievePermalinkByIdJson(@PathParam("id") String id);
 
@@ -40,8 +41,8 @@ public interface PermalinksV1_0 {
      * Create new permalink
      */
     @POST
-    @Consumes({"application/xml", "application/json"})
-    @Produces({"application/xml", "application/json"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/permalinks")
     public Permalink createPermalink(Permalink permalink);
 
