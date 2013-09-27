@@ -10,6 +10,8 @@ import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
+import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttribute;
+import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttributes;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionDimension;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionDimensions;
 import org.siemac.metamac.rest.export.v1_0.domain.DimensionValues;
@@ -48,6 +50,9 @@ public class DatasetSelectionMapperTest {
         source.getDimensions().getDimensions().add(mockDimension("INDICADORES", null, LabelVisualisationMode.LABEL, "INDICE_OCUPACION_PLAZAS"));
         source.getDimensions().getDimensions().add(mockDimension("CATEGORIA_ALOJAMIENTO", null, LabelVisualisationMode.CODE_AND_LABEL, "1_2_3_ESTRELLAS"));
         source.getDimensions().getDimensions().add(mockDimension("DESTINO_ALOJAMIENTO", null, null, "EL_HIERRO", "TENERIFE"));
+        source.setAttributes(new DatasetSelectionAttributes());
+        source.getAttributes().getAttributes().add(mockAttribute("ATTRIBUTE_01", LabelVisualisationMode.CODE_AND_LABEL));
+        source.getAttributes().getAttributes().add(mockAttribute("ATTRIBUTE_02", LabelVisualisationMode.CODE));
 
         // Transform
         DatasetSelectionForTsv selection = DatasetSelectionMapper.toDatasetSelectionForTsv(source);
@@ -57,8 +62,10 @@ public class DatasetSelectionMapperTest {
         for (DatasetSelectionDimension expected : source.getDimensions().getDimensions()) {
             assertDimension(expected, selection);
         }
-
-        // TODO test attributes label
+        assertEquals(source.getAttributes().getAttributes().size(), selection.getAttributes().size());
+        for (DatasetSelectionAttribute expected : source.getAttributes().getAttributes()) {
+            assertAttribute(expected, selection);
+        }
     }
 
     private DatasetSelectionDimension mockDimension(String dimensionId, Integer position, LabelVisualisationMode labelVisualisationMode, String... dimensionValues) {
@@ -71,6 +78,13 @@ public class DatasetSelectionMapperTest {
         return dimension;
     }
 
+    private DatasetSelectionAttribute mockAttribute(String attributeId, LabelVisualisationMode labelVisualisationMode) {
+        DatasetSelectionAttribute attribute = new DatasetSelectionAttribute();
+        attribute.setAttributeId(attributeId);
+        attribute.setLabelVisualisationMode(labelVisualisationMode);
+        return attribute;
+    }
+
     private void assertDimension(DatasetSelectionDimension expected, DatasetSelection actualDatasetSelection) {
         org.siemac.metamac.portal.core.domain.DatasetSelectionDimension actual = actualDatasetSelection.getDimension(expected.getDimensionId());
         assertEquals(expected.getDimensionId(), actual.getId());
@@ -81,6 +95,12 @@ public class DatasetSelectionMapperTest {
 
     private void assertDimensionValues(DatasetSelectionDimension expected, org.siemac.metamac.portal.core.domain.DatasetSelectionDimension actual) {
         assertEquals(expected.getDimensionValues().getDimensionValues(), actual.getSelectedDimensionValues());
+    }
+
+    private void assertAttribute(DatasetSelectionAttribute expected, DatasetSelection actualDatasetSelection) {
+        org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute actual = actualDatasetSelection.getAttribute(expected.getAttributeId());
+        assertEquals(expected.getAttributeId(), actual.getId());
+        assertLabelVisualisationMode(expected.getLabelVisualisationMode(), actual.getLabelVisualisationMode());
     }
 
     private void assertLabelVisualisationMode(LabelVisualisationMode expected, LabelVisualisationModeEnum actual) {
