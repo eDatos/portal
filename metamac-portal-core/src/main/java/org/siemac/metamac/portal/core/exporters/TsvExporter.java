@@ -35,7 +35,7 @@ public class TsvExporter {
         try {
             printWriter = new PrintWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
             writeHeader(printWriter);
-            writeObservations(printWriter);
+            writeObservationsAndAttributesObservations(printWriter);
         } catch (Exception e) {
             throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error exporting to tsv");
         } finally {
@@ -73,7 +73,7 @@ public class TsvExporter {
         printWriter.println(header);
     }
 
-    private void writeObservations(PrintWriter printWriter) {
+    private void writeObservationsAndAttributesObservations(PrintWriter printWriter) {
         Stack<OrderingStackElement> stack = new Stack<OrderingStackElement>();
         stack.push(new OrderingStackElement(StringUtils.EMPTY, -1));
         ArrayList<String> entryId = new ArrayList<String>(datasetAccess.getDimensionsMetadata().size());
