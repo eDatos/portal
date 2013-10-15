@@ -16,9 +16,11 @@ public abstract class DatasetSelection {
     private final Map<String, DatasetSelectionAttribute> attributesMap = new HashMap<String, DatasetSelectionAttribute>();
 
     public DatasetSelection(List<DatasetSelectionDimension> dimensions, List<DatasetSelectionAttribute> attributes) {
-        this.dimensions = new ArrayList<DatasetSelectionDimension>(dimensions);
-        for (DatasetSelectionDimension dimension : dimensions) {
-            dimensionsMap.put(dimension.getId(), dimension);
+        if (dimensions != null) {
+            this.dimensions = new ArrayList<DatasetSelectionDimension>(dimensions);
+            for (DatasetSelectionDimension dimension : dimensions) {
+                dimensionsMap.put(dimension.getId(), dimension);
+            }
         }
         if (attributes != null) {
             this.attributes = new ArrayList<DatasetSelectionAttribute>(attributes);

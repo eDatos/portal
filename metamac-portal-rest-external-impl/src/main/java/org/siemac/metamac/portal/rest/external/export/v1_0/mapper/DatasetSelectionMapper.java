@@ -6,8 +6,8 @@ import java.util.List;
 
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
@@ -22,28 +22,22 @@ public class DatasetSelectionMapper {
 
     public static DatasetSelectionForExcel toDatasetSelectionForExcel(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
-        if (dimensions == null) {
-            return null;
-        }
         List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
         return new DatasetSelectionForExcel(dimensions, attributes);
     }
 
     public static DatasetSelectionForTsv toDatasetSelectionForTsv(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
-        if (dimensions == null) {
-            return null;
-        }
         List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
         return new DatasetSelectionForTsv(dimensions, attributes);
     }
 
-    public static String toStatisticalResourcesApiDimsParameter(DatasetSelection datasetSelection) {
-        if (datasetSelection == null) {
+    public static String toStatisticalResourcesApiDimsParameter(List<DatasetSelectionDimension> dimensions) {
+        if (CollectionUtils.isEmpty(dimensions)) {
             return null;
         }
         StringBuilder sb = new StringBuilder();
-        for (DatasetSelectionDimension dimension : datasetSelection.getDimensions()) {
+        for (DatasetSelectionDimension dimension : dimensions) {
             sb.append(dimension.getId());
             sb.append(":");
             sb.append(StringUtils.join(dimension.getSelectedDimensionValues(), "|"));
@@ -53,7 +47,7 @@ public class DatasetSelectionMapper {
         return sb.toString();
     }
 
-    private static List<DatasetSelectionDimension> toDatasetSelectionDimensions(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
+    public static List<DatasetSelectionDimension> toDatasetSelectionDimensions(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         if (source == null || source.getDimensions() == null) {
             return null;
         }

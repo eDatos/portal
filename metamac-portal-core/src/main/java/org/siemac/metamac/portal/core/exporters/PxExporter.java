@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -39,7 +40,7 @@ public class PxExporter {
     public void write(OutputStream os) throws MetamacException {
         PrintWriter printWriter = null;
         try {
-            printWriter = new PrintWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
+            printWriter = new PrintWriter(new OutputStreamWriter(os, Charset.forName("ISO-8859-1"))); // charset ANSI
             writePx(printWriter);
         } catch (Exception e) {
             throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error exporting to px");
@@ -53,17 +54,26 @@ public class PxExporter {
     private void writePx(PrintWriter printWriter) {
         writeField(printWriter, "CHARSET", "ANSI");
         writeField(printWriter, "AXIS-VERSION", "2000");
-        writeField(printWriter, "LANGUAGE", datasetAccess.getLangEffective());
+        writeField(printWriter, "LANGUAGE", datasetAccess.getLangEffective()); // TODO o languages?
         writeFieldResourceId(printWriter, "LANGUAGES", datasetAccess.getDataset().getMetadata().getLanguages());
 
         writeField(printWriter, "CREATION-DATE", datasetAccess.getDataset().getMetadata().getCreatedDate());
         writeField(printWriter, "NEXT-UPDATE", datasetAccess.getDataset().getMetadata().getDateNextUpdate());
         writeFieldResourceName(printWriter, "UPDATE-FREQUENCY", datasetAccess.getDataset().getMetadata().getUpdateFrequency());
         writeField(printWriter, "SHOWDECIMALS", datasetAccess.getDataset().getMetadata().getRelatedDsd().getShowDecimals());
+        writeField(printWriter, "MATRIX", datasetAccess.getDataset().getId());
         writeField(printWriter, "AUTOPEN", datasetAccess.getDataset().getMetadata().getRelatedDsd().getAutoOpen());
+        writeSubjectAreas(printWriter);
         writeField(printWriter, "COPYRIGHT", datasetAccess.getDataset().getMetadata().getCopyrightDate() != null);
-        writeField(printWriter, "DESCRIPTION", datasetAccess.getDataset().getDescription());
+        writeField(printWriter, "DESCRIPTION", datasetAccess.getDataset().getDescription() != null ? datasetAccess.getDataset().getDescription() : datasetAccess.getDataset().getName()); // TODO si no,
+                                                                                                                                                                                          // el PX-Edit
+                                                                                                                                                                                          // lo
+                                                                                                                                                                                          // construye
         writeField(printWriter, "TITLE", datasetAccess.getDataset().getName());
+        writeField(printWriter, "DESCRIPTIONDEFAULT", Boolean.TRUE);
+        writeField(printWriter, "CONTENTS", "TODO-CONTENTS"); // TODO Content
+        writeField(printWriter, "UNITS", "TODO-UNITS"); // TODO Units
+        writeField(printWriter, "DECIMALS", Integer.valueOf(2)); // TODO Decimals
 
         writeDimensions(printWriter);
         writeDimensionValuesLabels(printWriter);
@@ -198,6 +208,28 @@ public class PxExporter {
                 writeField(printWriter, name, lang, localisedString.getValue());
             }
         }
+    }
+
+    private void writeSubjectAreas(PrintWriter printWriter) {
+        Resources subjectAreas = datasetAccess.getDataset().getMetadata().getSubjectAreas();
+        if (subjectAreas == null) {
+            writeField(printWriter, "SUBJECT-AREA", datasetAccess.getDataset().getName()); // TODO (en px es obligatorio)
+            writeField(printWriter, "SUBJECT-CODE", datasetAccess.getDataset().getId()); // TODO (en px es obligatorio)
+            return;
+        }
+        StringBuilder valueName = new StringBuilder();
+        StringBuilder valueCode = new StringBuilder();
+        for (Iterator<Resource> iterator = subjectAreas.getResources().iterator(); iterator.hasNext();) {
+            Resource subjectArea = iterator.next();
+            valueName.append(PortalUtils.getLabel(subjectArea.getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative()));
+            valueCode.append(subjectArea.getId());
+            if (iterator.hasNext()) {
+                valueName.append("; ");
+                valueCode.append("; ");
+            }
+        }
+        writeField(printWriter, "SUBJECT-AREA", valueName.toString());
+        writeField(printWriter, "SUBJECT-CODE", valueName.toString());
     }
 
     private void writeDimensions(PrintWriter printWriter) {

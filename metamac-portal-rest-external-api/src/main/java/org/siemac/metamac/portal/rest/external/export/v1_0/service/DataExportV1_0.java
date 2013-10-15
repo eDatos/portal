@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
+import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
 import org.siemac.metamac.rest.export.v1_0.domain.TsvExportation;
 
 @Path("/v1.0")
@@ -31,6 +32,15 @@ public interface DataExportV1_0 {
     @Path("tsv/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     Response exportDatasetToTsv(TsvExportation tsvExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    /**
+     * Exports a dataset to px
+     */
+    @POST
+    @Path("px/{agencyID}/{resourceID}/{version}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportDatasetToPx(PxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**

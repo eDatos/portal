@@ -17,6 +17,12 @@
             <xs:element name="datasetSelection" type="tns:DatasetSelection" minOccurs="1" />
         </xs:sequence>
     </xs:complexType>     
+    
+    <xs:complexType name="PxExportation">
+        <xs:sequence>
+            <xs:element name="datasetSelection" type="tns:DatasetSelection" minOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>      
                           
     <xs:complexType name="DatasetSelection">
         <xs:sequence>
@@ -82,4 +88,5 @@
     <!-- Elements -->
     <xs:element name="excelExportation" type="tns:ExcelExportation" />
     <xs:element name="tsvExportation" type="tns:TsvExportation" />
+    <xs:element name="pxExportation" type="tns:PxExportation" />
 </xs:schema>

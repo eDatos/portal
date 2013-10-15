@@ -57,6 +57,14 @@ public abstract class DatasetAccess {
         return dataset;
     }
 
+    public String getLang() {
+        return lang;
+    }
+
+    public String getLangAlternative() {
+        return langAlternative;
+    }
+
     public String getLangEffective() {
         return lang != null ? lang : langAlternative;
     }

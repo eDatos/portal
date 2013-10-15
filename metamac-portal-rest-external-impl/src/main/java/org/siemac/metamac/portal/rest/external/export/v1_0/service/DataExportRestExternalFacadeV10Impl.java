@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -15,6 +16,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
@@ -26,6 +28,7 @@ import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection;
 import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
+import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
 import org.siemac.metamac.rest.export.v1_0.domain.TsvExportation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +52,15 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             // Transform possible selection (not required)
             DatasetSelectionForTsv datasetSelectionForTsv = null;
             String dimensionSelection = null;
-            try {
-                datasetSelectionForTsv = DatasetSelectionMapper.toDatasetSelectionForTsv(exportationBody.getDatasetSelection());
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForTsv);
-            } catch (Exception e) {
-                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                        RestExternalConstants.PARAMETER_SELECTION);
-                throw new RestException(exception, Status.BAD_REQUEST);
+            if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
+                try {
+                    datasetSelectionForTsv = DatasetSelectionMapper.toDatasetSelectionForTsv(exportationBody.getDatasetSelection());
+                    dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForTsv.getDimensions());
+                } catch (Exception e) {
+                    org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                            RestExternalConstants.PARAMETER_SELECTION);
+                    throw new RestException(exception, Status.BAD_REQUEST);
+                }
             }
 
             // Retrieve dataset
@@ -76,10 +81,6 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private boolean isEmpty(DatasetSelection datasetSelection) {
-        return datasetSelection == null || datasetSelection.getDimensions() == null || CollectionUtils.isEmpty(datasetSelection.getDimensions().getDimensions());
-    }
-
     @Override
     public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
@@ -93,7 +94,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             String dimensionSelection = null;
             try {
                 datasetSelectionForExcel = DatasetSelectionMapper.toDatasetSelectionForExcel(exportationBody.getDatasetSelection());
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel);
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
             } catch (Exception e) {
                 org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
                         RestExternalConstants.PARAMETER_SELECTION);
@@ -111,6 +112,40 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
             if (filename == null) {
                 filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".xlsx";
+            }
+            return buildResponseOkWithFile(tmpFile, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    @Override
+    public Response exportDatasetToPx(PxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        try {
+            // Transform possible selection (not required)
+            String dimensionSelection = null;
+            if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
+                try {
+                    List<DatasetSelectionDimension> datasetSelectionDimensions = DatasetSelectionMapper.toDatasetSelectionDimensions(exportationBody.getDatasetSelection());
+                    dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionDimensions);
+                } catch (Exception e) {
+                    org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                            RestExternalConstants.PARAMETER_SELECTION);
+                    throw new RestException(exception, Status.BAD_REQUEST);
+                }
+            }
+
+            // Retrieve dataset
+            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+
+            // Export
+            final File tmpFile = File.createTempFile("metamac", "px");
+            FileOutputStream outputStream = new FileOutputStream(tmpFile);
+            exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, lang, outputStream);
+            outputStream.close();
+
+            if (filename == null) {
+                filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".px";
             }
             return buildResponseOkWithFile(tmpFile, filename);
         } catch (Exception e) {
@@ -143,5 +178,9 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private Dataset retrieveDataset(String agencyID, String resourceID, String version, String lang, String dimensionSelection) throws MetamacException {
         String langAlternative = portalConfiguration.retrieveLanguageDefault();
         return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, Arrays.asList(lang, langAlternative), null, dimensionSelection);
+    }
+
+    private boolean isEmpty(DatasetSelection datasetSelection) {
+        return datasetSelection == null || datasetSelection.getDimensions() == null || CollectionUtils.isEmpty(datasetSelection.getDimensions().getDimensions());
     }
 }
