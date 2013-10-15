@@ -5,8 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.junit.Rule;
@@ -73,7 +74,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         String[][] content = ExcelUtils.readExcelContent(tmpFile);
         //@formatter:off
         String[][] expected = {
-                {null, null, "1, 2, 3 *", "4, 5 *"},
+                {null, null, "1_2_3_ESTRELLAS", "4_5_ESTRELLAS"},
                 {"ANDALUCIA", "2013", "1.1", "2.2"},
                 {null, "2012", "3.3", "4.4"},
                 {"ARAGON", "2013", "5.5", "6.6"},
@@ -139,7 +140,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         String[][] content = ExcelUtils.readExcelContent(tmpFile);
         //@formatter:off
         String[][] expected = {
-                {null, null, "1, 2, 3 *", "4, 5 *"},
+                {null, null, "1, 2, 3 * (1_2_3_ESTRELLAS)", "4, 5 * (4_5_ESTRELLAS)"},
                 {"Andalucía (ANDALUCIA)", "Año 2013 (2013)", "1.1", "2.2"},
                 {null, "Año 2012 (2012)", "3.3", "4.4"},
                 {"Aragón (ARAGON)", "Año 2013 (2013)", "5.5", "6.6"},
@@ -179,7 +180,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         out.close();
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        BufferedReader bufferedReader = createBufferedReader(tmpFile);
         assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReader.readLine());
         assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1\tb1\t\td1\te1", bufferedReader.readLine());
         assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\td2\te2", bufferedReader.readLine());
@@ -218,7 +219,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         out.close();
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        BufferedReader bufferedReader = createBufferedReader(tmpFile);
         assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReader.readLine());
         assertEquals("Andalucía\tAño 2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t1\tAttribute b1\t\tAttribute d1\te1", bufferedReader.readLine());
         assertEquals("Andalucía\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t2\tAttribute b2\t\tAttribute d2\te2", bufferedReader.readLine());
@@ -257,7 +258,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         out.close();
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        BufferedReader bufferedReader = createBufferedReader(tmpFile);
         assertEquals(
                 "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tTIME_PERIOD_CODE\tCATEGORIA_ALOJAMIENTO\tCATEGORIA_ALOJAMIENTO_CODE\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_B_CODE\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E\tATTRIBUTE_E_CODE",
                 bufferedReader.readLine());
@@ -309,7 +310,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         out.close();
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        BufferedReader bufferedReader = createBufferedReader(tmpFile);
         assertEquals(
                 "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E",
                 bufferedReader.readLine());
@@ -321,6 +322,97 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\tAttribute d6\td6\te6", bufferedReader.readLine());
         assertEquals("Aragón\tARAGON\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\tb7\t\tAttribute d7\td7\te7", bufferedReader.readLine());
         assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\tAttribute d8\td8\te8", bufferedReader.readLine());
+        assertEquals(null, bufferedReader.readLine());
+        bufferedReader.close();
+    }
+
+    @Override
+    @Test
+    public void testExportDatasetToPx() throws Exception {
+
+        Dataset dataset = buildDatasetToExportTsv();
+
+        File tmpFile = tempFolder.newFile();
+        FileOutputStream out = new FileOutputStream(tmpFile);
+        exportService.exportDatasetToPx(ctx, dataset, null, out);
+
+        out.close();
+
+        BufferedReader bufferedReader = createBufferedReader(tmpFile);
+        assertEquals("CHARSET=\"ANSI\";", bufferedReader.readLine());
+        assertEquals("AXIS-VERSION=\"2000\";", bufferedReader.readLine());
+        assertEquals("LANGUAGE=\"es\";", bufferedReader.readLine());
+        assertEquals("LANGUAGES=\"es\",\"en\";", bufferedReader.readLine());
+        assertEquals("CREATION-DATE=\"20130102 13:15\";", bufferedReader.readLine());
+        assertEquals("NEXT-UPDATE=\"20130103 09:00\";", bufferedReader.readLine());
+        assertEquals("UPDATE-FREQUENCY=\"Label updateFrequency\";", bufferedReader.readLine());
+        assertEquals("UPDATE-FREQUENCY[en]=\"Label updateFrequency (en)\";", bufferedReader.readLine());
+        assertEquals("SHOWDECIMALS=2;", bufferedReader.readLine());
+        assertEquals("AUTOPEN=NO;", bufferedReader.readLine());
+        assertEquals("COPYRIGHT=NO;", bufferedReader.readLine());
+        assertEquals("DESCRIPTION=\"description\";", bufferedReader.readLine());
+        assertEquals("DESCRIPTION[en]=\"description (en)\";", bufferedReader.readLine());
+        assertEquals("TITLE=\"title\";", bufferedReader.readLine());
+        assertEquals("TITLE[en]=\"title (en)\";", bufferedReader.readLine());
+        assertEquals("STUB=\"CATEGORIA_ALOJAMIENTO\",\"INDICADORES\";", bufferedReader.readLine());
+        assertEquals("HEADING=\"DESTINO_ALOJAMIENTO\",\"TIME_PERIOD\";", bufferedReader.readLine());
+        assertEquals("VALUES(\"DESTINO_ALOJAMIENTO\")=\"Andalucía\",\"Aragón\";", bufferedReader.readLine());
+        assertEquals("VALUES(\"TIME_PERIOD\")=\"Año 2013\",\"Año 2012\";", bufferedReader.readLine());
+        assertEquals("VALUES(\"CATEGORIA_ALOJAMIENTO\")=\"1, 2 y 3 estrellas\",\"4 y 5 estrellas\";", bufferedReader.readLine());
+        assertEquals("VALUES(\"INDICADORES\")=\"Índice de ocupación de plazas\";", bufferedReader.readLine());
+        assertEquals("CODES(\"DESTINO_ALOJAMIENTO\")=\"ANDALUCIA\",\"ARAGON\";", bufferedReader.readLine());
+        assertEquals("CODES(\"TIME_PERIOD\")=\"2013\",\"2012\";", bufferedReader.readLine());
+        assertEquals("CODES(\"CATEGORIA_ALOJAMIENTO\")=\"1_2_3_ESTRELLAS\",\"4_5_ESTRELLAS\";", bufferedReader.readLine());
+        assertEquals("CODES(\"INDICADORES\")=\"INDICE_OCUPACION_PLAZAS\";", bufferedReader.readLine());
+        assertEquals("LAST-UPDATED=\"20130102 09:00\";", bufferedReader.readLine());
+
+        // CONTACT="Instituto Canario de Estadística (ISTAC)#www.gobiernodecanarias.org/"
+        // "istac#consultas.istac@gobiernodecanarias.org#";
+        // REFPERIOD="Mes";
+        // SOURCE="Instituto Canario de Estadística (ISTAC) e Instituto de Estudios "
+        // "Turísticos (IET).";
+        // SURVEY="Estadística de Movimientos Turísticos en Fronteras de Canarias (FRONTUR-Canarias)";
+        // INFO="FRONTUR-Canarias: Resultados mensuales de entrada de turistas";
+        // NOTEX="Los datos corresponden a turistas entrados por vía aérea.";
+        // NOTE="En las estimaciones para el total de Canarias se incluyen los turistas de "
+        // "La Gomera y El Hierro.#(p) Dato provisional.#(*) Dato estimado con menos de 20 "
+        // "observaciones muestrales.";
+        // NOTEX("Motivos de la estancia")="Notex para motivos de la estancia";
+        // NOTEX[en]("Reason for stay")="Notex para motivos de la estancia English";
+        // NOTE("Motivos de la estancia")="Note para motivos de la estancia";
+        // NOTE[en]("Reason for stay")="Note para motivos de la estancia English";
+        // NOTEX("Islas de destino principal")="Notex para Islas de destino principal";
+        // NOTEX[en]("Principal destination")="Notex para Islas de destino principal English";
+        // NOTE("Islas de destino principal")="Note para Islas de destino principal";
+        // NOTE[en]("Principal destination")="Note para Islas de destino principal English";
+        // VALUENOTEX("Motivos de la estancia","TOTAL MOTIVOS")="Value notex 1";
+        // VALUENOTEX[en]("Reason for stay","TOTAL")="Value notex 1 English";
+        // VALUENOTEX("Motivos de la estancia","Trabajo o negocios")="Value notex 2";
+        // VALUENOTEX("Islas de destino principal","CANARIAS")="Value notex Canarias";
+        // VALUENOTEX[en]("Principal destination","CANARY ISLANDS")="Value notex Canary Islands";
+        // VALUENOTE("Motivos de la estancia","Ocio o vacaciones")="Value note 1";
+        // VALUENOTE("Islas de destino principal","CANARIAS")="Value note Canarias";
+        // VALUENOTE[en]("Reason for stay","Work")="Value note Reason form stay - Work english";
+        // CELLNOTEX("*","*","*")="Nota para todas las observaciones";
+        // CELLNOTEX[en]("*","*","*")="Nota para todas las observaciones English";
+        // CELLNOTEX("Trabajo o negocios","*","2010 Septiembre (p)")="Trabajo o negocios, todas las islas en 2010 Septiembre";
+        // CELLNOTEX[en]("Work","*","2010 Septiembre (p)")="EN Trabajo o negocios, todas las islas en 2010 Septiembre";
+        // CELLNOTEX("Trabajo o negocios","Lanzarote","2010 Septiembre (p)")="Cell notex 1";
+        // CELLNOTEX("Ocio o vacaciones","La Palma","*")="Ocio o vacaciones en La Palma";
+        // CELLNOTE("Trabajo o negocios","*","2010 Septiembre (p)")="Trabajo o negocios en 2010 Septiembre";
+        // CELLNOTE("Trabajo o negocios","Lanzarote","2010 Septiembre (p)")="Trabajo o negocios en Lanzarote en 2010 Septiembre";
+        // CELLNOTE[en]("Work","Lanzarote EN","2010 Septiembre (p)")="Work Lanzarote 2010 September";
+        // CELLNOTEX("Trabajo o negocios","*","*")="Cellnotex Trabajo o negocios";
+        // CELLNOTEX[en]("Work","*","*")="EN Cellnotex Trabajo o negocios";
+        // DATANOTECELL("*","*","*")="Data note cell 4";
+        // DATANOTECELL("Trabajo o negocios","ES708","2010 Noviembre (p)")="ES Data note cell 1";
+        // DATANOTECELL("Trabajo o negocios","ES707","2010 Noviembre (p)")="ES Data note cell 2";
+        // DATANOTECELL[en]("Trabajo o negocios","ES707","2010 Noviembre (p)")="EN Data note cell 2";
+        // DATANOTECELL("Personal","ES708","2010 Septiembre (p)")="ES Data note cell 4";
+
+        assertEquals("DATA=", bufferedReader.readLine());
+        assertEquals("1 2 3 4 5 6 \".\" 8; ", bufferedReader.readLine());
+
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
@@ -347,7 +439,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         // Validation: nothing special... Only test service does not throw error and generate a PNG
         assertTrue(tmpFile.length() > 0);
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(tmpFile));
+        BufferedReader bufferedReader = createBufferedReader(tmpFile);
         assertTrue(bufferedReader.readLine().contains("PNG"));
     }
 
@@ -371,10 +463,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
     private Dataset buildDatasetToExportTsv() {
         //@formatter:off
         return DatasetMockBuilder.create()
-                .dimension("DESTINO_ALOJAMIENTO", "Destino de alojamiento").dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
-                .dimension("TIME_PERIOD").dimensionValue("2013", "Año 2013").dimensionValue("2012", "Año 2012")
-                .dimension("CATEGORIA_ALOJAMIENTO").dimensionValue("1_2_3_ESTRELLAS", "1, 2 y 3 estrellas").dimensionValue("4_5_ESTRELLAS", "4 y 5 estrellas")
-                .dimension("INDICADORES").dimensionValue("INDICE_OCUPACION_PLAZAS", "Índice de ocupación de plazas")
+                .dimension("DESTINO_ALOJAMIENTO", "Destino de alojamiento").heading().dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
+                .dimension("TIME_PERIOD").heading().dimensionValue("2013", "Año 2013").dimensionValue("2012", "Año 2012")
+                .dimension("CATEGORIA_ALOJAMIENTO").stub().dimensionValue("1_2_3_ESTRELLAS", "1, 2 y 3 estrellas").dimensionValue("4_5_ESTRELLAS", "4 y 5 estrellas")
+                .dimension("INDICADORES").stub().dimensionValue("INDICE_OCUPACION_PLAZAS", "Índice de ocupación de plazas")
                 .attribute("ATTRIBUTE_A", "Attribute A", AttributeAttachmentLevelType.DATASET)
                 .attribute("ATTRIBUTE_B", "Attribute B", AttributeAttachmentLevelType.PRIMARY_MEASURE)
                            .attributeValue("b1", "Attribute b1").attributeValue("b2", "Attribute b2").attributeValue("b3", "Attribute b3")
@@ -392,5 +484,9 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attributeData("ATTRIBUTE_E", "e1 | e2 | e3 | e4 | e5 | e6 | e7 | e8")
                 .build();
         //@formatter:on
+    }
+
+    private BufferedReader createBufferedReader(File file) throws Exception {
+        return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
     }
 }

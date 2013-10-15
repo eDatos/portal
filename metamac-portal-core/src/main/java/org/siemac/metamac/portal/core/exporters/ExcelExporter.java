@@ -57,7 +57,7 @@ public class ExcelExporter {
             int repeat = columns / (multiplier * selectedDimensionValues.size());
             for (int i = 0; i < repeat; i++) {
                 for (String selectedDimensionValue : selectedDimensionValues) {
-                    String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimension.getId(), selectedDimensionValue);
+                    String dimensionValueLabel = toDimensionValueLabel(dimension.getId(), selectedDimensionValue);
                     Cell cell = row.createCell(headerColumn);
                     cell.setCellValue(dimensionValueLabel);
                     headerColumn += multiplier;
@@ -85,15 +85,7 @@ public class ExcelExporter {
             int multiplier = datasetSelection.getMultiplierForDimension(dimension);
             if (observationRowIndex % multiplier == 0) {
                 String dimensionValueId = dimension.getSelectedDimensionValues().get((observationRowIndex / multiplier) % dimension.getSelectedDimensionValues().size());
-                LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
-                String dimensionValueLabel = null;
-                if (labelVisualisation.isLabel() && labelVisualisation.isCode()) {
-                    dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimension.getId(), dimensionValueId) + " (" + dimensionValueId + ")";
-                } else if (labelVisualisation.isLabel()) {
-                    dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimension.getId(), dimensionValueId);
-                } else if (labelVisualisation.isCode()) {
-                    dimensionValueLabel = dimensionValueId;
-                }
+                String dimensionValueLabel = toDimensionValueLabel(dimensionId, dimensionValueId);
                 Cell cell = row.createCell(leftDimensionIndex);
                 cell.setCellValue(dimensionValueLabel);
             }
@@ -109,6 +101,19 @@ public class ExcelExporter {
                 cell.setCellValue(observation);
             }
         }
+    }
+
+    private String toDimensionValueLabel(String dimensionId, String dimensionValueId) {
+        LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
+        String dimensionValueLabel = null;
+        if (labelVisualisation.isLabel() && labelVisualisation.isCode()) {
+            dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId) + " (" + dimensionValueId + ")";
+        } else if (labelVisualisation.isLabel()) {
+            dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId);
+        } else if (labelVisualisation.isCode()) {
+            dimensionValueLabel = dimensionValueId;
+        }
+        return dimensionValueLabel;
     }
 
     public void write(OutputStream os) throws MetamacException {

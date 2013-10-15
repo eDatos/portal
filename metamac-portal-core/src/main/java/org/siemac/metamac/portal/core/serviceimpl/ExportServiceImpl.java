@@ -9,6 +9,7 @@ import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
 import org.siemac.metamac.portal.core.exporters.ExcelExporter;
 import org.siemac.metamac.portal.core.exporters.ImageExporter;
+import org.siemac.metamac.portal.core.exporters.PxExporter;
 import org.siemac.metamac.portal.core.exporters.TsvExporter;
 import org.siemac.metamac.portal.core.serviceapi.validators.ExportServiceInvocationValidator;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
@@ -46,6 +47,19 @@ public class ExportServiceImpl extends ExportServiceImplBase {
         }
         TsvExporter exporter = new TsvExporter(dataset, datasetSelection, lang, langDefault);
         exporter.write(resultOutputStream);
+    }
+
+    @Override
+    public void exportDatasetToPx(ServiceContext ctx, Dataset dataset, String lang, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToPx(ctx, dataset, lang, resultOutputStream);
+
+        String langDefault = portalConfiguration.retrieveLanguageDefault();
+        if (lang == null) {
+            lang = langDefault;
+        }
+        PxExporter exporter = new PxExporter(dataset, lang, langDefault);
+        exporter.write(resultOutputStream);
+
     }
 
     @Override

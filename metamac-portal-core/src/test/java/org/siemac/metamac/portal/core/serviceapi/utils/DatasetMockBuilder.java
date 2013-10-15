@@ -1,7 +1,10 @@
 package org.siemac.metamac.portal.core.serviceapi.utils;
 
+import org.joda.time.DateTime;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
+import org.siemac.metamac.rest.common.v1_0.domain.Resource;
+import org.siemac.metamac.rest.common.v1_0.domain.Resources;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attributes;
@@ -10,12 +13,14 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentat
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Data;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttributes;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DatasetMetadata;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentations;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimensions;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionsId;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedAttributeValue;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedAttributeValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
@@ -39,7 +44,17 @@ public class DatasetMockBuilder {
 
     private DatasetMockBuilder() {
         dataset = new Dataset();
+        dataset.setName(internationalString("title"));
+        dataset.setDescription(internationalString("description"));
         dataset.setMetadata(new DatasetMetadata());
+        dataset.getMetadata().setLanguages(new Resources());
+        dataset.getMetadata().getLanguages().getResources().add(mockResource("es"));
+        dataset.getMetadata().getLanguages().getResources().add(mockResource("en"));
+        dataset.getMetadata().setCreatedDate(new DateTime(2013, 1, 2, 13, 15, 12, 0).toDate());
+        dataset.getMetadata().setLastUpdate(new DateTime(2013, 1, 2, 9, 0, 0, 0).toDate());
+        dataset.getMetadata().setDateNextUpdate(new DateTime(2013, 1, 3, 9, 0, 0, 0).toDate());
+        dataset.getMetadata().setUpdateFrequency(mockResource("updateFrequency"));
+        dataset.getMetadata().setRelatedDsd(mockDataStructureDefinition());
         dataset.getMetadata().setDimensions(new Dimensions());
         dataset.setData(new Data());
         dataset.getData().setDimensions(new DimensionRepresentations());
@@ -65,6 +80,22 @@ public class DatasetMockBuilder {
         dataset.getData().getDimensions().getDimensions().add(dimensionRepresentation);
         lastDimensionData = dimensionRepresentation;
 
+        return this;
+    }
+
+    public DatasetMockBuilder stub() {
+        if (lastDimensionMetadata == null || lastDimensionData == null) {
+            throw new IllegalArgumentException("Define a dimension previously");
+        }
+        dataset.getMetadata().getRelatedDsd().getStub().getDimensionIds().add(lastDimensionMetadata.getId());
+        return this;
+    }
+
+    public DatasetMockBuilder heading() {
+        if (lastDimensionMetadata == null || lastDimensionData == null) {
+            throw new IllegalArgumentException("Define a dimension previously");
+        }
+        dataset.getMetadata().getRelatedDsd().getHeading().getDimensionIds().add(lastDimensionMetadata.getId());
         return this;
     }
 
@@ -159,18 +190,40 @@ public class DatasetMockBuilder {
         return this;
     }
 
+    private DataStructureDefinition mockDataStructureDefinition() {
+        DataStructureDefinition dataStructureDefinition = new DataStructureDefinition();
+        dataStructureDefinition.setShowDecimals(Integer.valueOf(2));
+        dataStructureDefinition.setAutoOpen(Boolean.FALSE);
+        dataStructureDefinition.setStub(new DimensionsId());
+        dataStructureDefinition.setHeading(new DimensionsId());
+        return dataStructureDefinition;
+    }
+
     public Dataset build() {
         return dataset;
     }
 
     private InternationalString internationalString(String label) {
-        LocalisedString localisedString = new LocalisedString();
-        localisedString.setLang("es");
-        localisedString.setValue(label);
-
         InternationalString internationalString = new InternationalString();
-        internationalString.getTexts().add(localisedString);
+        {
+            LocalisedString localisedString = new LocalisedString();
+            localisedString.setLang("es");
+            localisedString.setValue(label);
+            internationalString.getTexts().add(localisedString);
+        }
+        {
+            LocalisedString localisedString = new LocalisedString();
+            localisedString.setLang("en");
+            localisedString.setValue(label + " (en)");
+            internationalString.getTexts().add(localisedString);
+        }
         return internationalString;
     }
 
+    private Resource mockResource(String id) {
+        Resource resource = new Resource();
+        resource.setId(id);
+        resource.setName(internationalString("Label " + id));
+        return resource;
+    }
 }
