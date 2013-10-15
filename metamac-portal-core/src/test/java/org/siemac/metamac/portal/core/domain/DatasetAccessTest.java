@@ -35,12 +35,12 @@ public class DatasetAccessTest {
         Map<String, String> p1 = new HashMap<String, String>();
         p1.put("DIM_A", "DIM_A_0");
         p1.put("DIM_B", "DIM_B_0");
-        assertEquals(new Double(1.35), datasetAccessForExcel.observationAtPermutation(p1));
+        assertEquals("1.35", datasetAccessForExcel.observationAtPermutation(p1));
 
         Map<String, String> p2 = new HashMap<String, String>();
         p2.put("DIM_A", "DIM_A_1");
         p2.put("DIM_B", "DIM_B_1");
-        assertEquals(new Double(4.5), datasetAccessForExcel.observationAtPermutation(p2));
+        assertEquals("4.5", datasetAccessForExcel.observationAtPermutation(p2));
 
         Map<String, String> p3 = new HashMap<String, String>();
         p3.put("DIM_A", "DIM_A_1");

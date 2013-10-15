@@ -26,6 +26,8 @@ import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
 import org.siemac.metamac.rest.common.v1_0.domain.Resource;
 import org.siemac.metamac.rest.common.v1_0.domain.Resources;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
@@ -84,6 +86,7 @@ public class PxExporter {
         writeFieldResourceName(printWriter, "SOURCE", datasetAccess.getDataset().getMetadata().getMaintainer());
 
         // TODO atributos
+        writeAttributes(printWriter);
         // NOTEX="Los datos corresponden a turistas entrados por vía aérea.";
         // NOTE="En las estimaciones para el total de Canarias se incluyen los turistas de "
         // "La Gomera y El Hierro.#(p) Dato provisional.#(*) Dato estimado con menos de 20 "
@@ -124,60 +127,54 @@ public class PxExporter {
         writeData(printWriter);
     }
 
-    private void writeField(PrintWriter printWriter, String name, String value) {
+    private String formatValue(String value) {
+        return value.replace("\"", "'");
+    }
+
+    private void writeField(PrintWriter printWriter, String name, Object value) {
+        writeField(printWriter, name, value, null);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void writeField(PrintWriter printWriter, String name, Object value, String lang) {
         if (value == null) {
             return;
         }
-        printWriter.println(name + EQUALS + QUOTE + value + QUOTE + SEMICOLON);
+        String valueString = null;
+        if (value instanceof String) {
+            valueString = QUOTE + formatValue((String) value) + QUOTE;
+        } else if (value instanceof Integer) {
+            valueString = String.valueOf(value);
+        } else if (value instanceof Boolean) {
+            valueString = (Boolean) value ? "YES" : "NO";
+        } else if (value instanceof Date) {
+            valueString = QUOTE + new DateTime(value).toString("yyyyMMdd HH:mm") + QUOTE;
+        } else if (value instanceof List) { // List<String>
+            valueString = listToValue((List) value);
+        } else {
+            throw new IllegalArgumentException("Type unsupported: " + value.getClass().getCanonicalName());
+        }
+
+        if (lang != null) {
+            printWriter.println(name + "[" + lang + "]=" + valueString + SEMICOLON);
+        } else {
+            printWriter.println(name + EQUALS + valueString + SEMICOLON);
+        }
     }
 
-    private void writeField(PrintWriter printWriter, String name, String lang, String value) {
+    private void writeField(PrintWriter printWriter, String name, InternationalString value) {
         if (value == null) {
             return;
         }
-        printWriter.println(name + "[" + lang + "]=\"" + value + QUOTE + SEMICOLON);
-    }
-
-    private void writeFieldWithoutQuote(PrintWriter printWriter, String name, String value) {
-        if (value == null) {
-            return;
+        String defaultLang = datasetAccess.getLangEffective();
+        for (LocalisedString localisedString : value.getTexts()) {
+            String lang = localisedString.getLang();
+            if (defaultLang.equals(lang)) {
+                writeField(printWriter, name, localisedString.getValue());
+            } else {
+                writeField(printWriter, name, localisedString.getValue(), lang);
+            }
         }
-        printWriter.println(name + EQUALS + value + SEMICOLON);
-    }
-
-    private void writeField(PrintWriter printWriter, String name, Integer value) {
-        if (value == null) {
-            return;
-        }
-        String valueString = String.valueOf(value);
-        writeFieldWithoutQuote(printWriter, name, valueString);
-    }
-
-    private void writeField(PrintWriter printWriter, String name, Boolean value) {
-        if (value == null) {
-            return;
-        }
-        String valueString = value ? "YES" : "NO";
-        writeFieldWithoutQuote(printWriter, name, valueString);
-    }
-
-    /**
-     * Write with date transformed to "yyyyMMdd HH:mm";
-     */
-    private void writeField(PrintWriter printWriter, String name, Date value) {
-        if (value == null) {
-            return;
-        }
-        String valueString = QUOTE + (new DateTime(value)).toString("yyyyMMdd HH:mm") + QUOTE;
-        writeFieldWithoutQuote(printWriter, name, valueString);
-    }
-
-    private void writeField(PrintWriter printWriter, String name, List<String> values) {
-        if (CollectionUtils.isEmpty(values)) {
-            return;
-        }
-        String value = listToValue(values);
-        writeFieldWithoutQuote(printWriter, name, value);
     }
 
     private void writeFieldResourceId(PrintWriter printWriter, String name, Resources values) {
@@ -193,21 +190,6 @@ public class PxExporter {
             return;
         }
         writeField(printWriter, name, value.getName());
-    }
-
-    private void writeField(PrintWriter printWriter, String name, InternationalString value) {
-        if (value == null) {
-            return;
-        }
-        String defaultLang = datasetAccess.getLangEffective();
-        for (LocalisedString localisedString : value.getTexts()) {
-            String lang = localisedString.getLang();
-            if (defaultLang.equals(lang)) {
-                writeField(printWriter, name, localisedString.getValue());
-            } else {
-                writeField(printWriter, name, lang, localisedString.getValue());
-            }
-        }
     }
 
     private void writeSubjectAreas(PrintWriter printWriter) {
@@ -257,6 +239,39 @@ public class PxExporter {
         }
     }
 
+    private void writeAttributes(PrintWriter printWriter) {
+        List<Attribute> attributes = datasetAccess.getAttributesMetadata();
+        if (CollectionUtils.isEmpty(attributes)) {
+            return;
+        }
+        writeAttributesDatasetAttachmentLevel(printWriter, attributes);
+        // TODO resto
+    }
+
+    private void writeAttributesDatasetAttachmentLevel(PrintWriter printWriter, List<Attribute> attributes) {
+        StringBuilder valueNote = new StringBuilder();
+        StringBuilder valueNotex = new StringBuilder();
+        for (Attribute attribute : attributes) {
+            if (AttributeAttachmentLevelType.DATASET.equals(attribute.getAttachmentLevel())) {
+                String attributeId = attribute.getId();
+                String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
+                if (attributeValues != null) {
+                    StringBuilder value = "NOTEX".equals(attributeId) ? valueNotex : valueNote;
+                    if (value.length() != 0) {
+                        value.append("#");
+                    }
+                    value.append(attributeValues[0]);
+                }
+            }
+        }
+        if (valueNotex.length() != 0) {
+            writeField(printWriter, "NOTEX", valueNotex.toString());
+        }
+        if (valueNote.length() != 0) {
+            writeField(printWriter, "NOTE", valueNote.toString());
+        }
+    }
+
     private void writeData(PrintWriter printWriter) {
         printWriter.println("DATA" + EQUALS);
         String[] observations = PortalUtils.dataToDataArray(datasetAccess.getDataset().getData().getObservations());
@@ -291,7 +306,16 @@ public class PxExporter {
     }
 
     private String listToValue(List<String> sources) {
-        return QUOTE + StringUtils.join(sources, QUOTE + COMMA + QUOTE) + QUOTE;
+        StringBuilder target = new StringBuilder(256);
+        for (Iterator<String> iterator = sources.iterator(); iterator.hasNext();) {
+            String source = iterator.next();
+            target.append(QUOTE);
+            target.append(formatValue(source));
+            target.append(QUOTE);
+            if (iterator.hasNext()) {
+                target.append(COMMA);
+            }
+        }
+        return target.toString();
     }
-
 }

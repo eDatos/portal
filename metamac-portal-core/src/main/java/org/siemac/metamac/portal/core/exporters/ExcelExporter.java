@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -95,11 +96,12 @@ public class ExcelExporter {
     private void observationsAtRow(int observationRowIndex, Row row) {
         for (int j = 0; j < columns; j++) {
             Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(observationRowIndex, j);
-            Double observation = datasetAccess.observationAtPermutation(permutationAtCell);
-            if (observation != null) {
-                Cell cell = row.createCell(leftHeaderSize + j);
-                cell.setCellValue(observation);
+            String observation = datasetAccess.observationAtPermutation(permutationAtCell); // TODO y si no hay decimales?
+            if (observation == null) {
+                observation = StringUtils.EMPTY;
             }
+            Cell cell = row.createCell(leftHeaderSize + j);
+            cell.setCellValue(observation);
         }
     }
 

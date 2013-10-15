@@ -21,7 +21,7 @@ public class DatasetAccessForExcel extends DatasetAccess {
         initializeIndex();
     }
 
-    public Double observationAtPermutation(Map<String, String> permutation) {
+    public String observationAtPermutation(Map<String, String> permutation) {
         int offset = 0;
         for (Map.Entry<String, String> permutationEntry : permutation.entrySet()) {
             String dimensionId = permutationEntry.getKey();
@@ -34,7 +34,8 @@ public class DatasetAccessForExcel extends DatasetAccess {
 
         String observation = getObservations()[offset];
         if (!observation.trim().isEmpty()) {
-            return Double.valueOf(observation);
+            // return Double.valueOf(observation); // TODO se deja como String, ¿si no hay decimales o es un "."?
+            return observation;
         } else {
             return null;
         }
