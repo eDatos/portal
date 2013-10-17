@@ -248,7 +248,7 @@ public class PxExporter {
         }
         writeAttributesDatasetAttachmentLevel(printWriter, attributes);
         writeAttributesDimensionAttachmentLevelOneDimension(printWriter, attributes);
-        writeAttributesDimensionAttachmentLevelMoreThanOneDimensionOrObservation(printWriter, attributes);
+        // writeAttributesDimensionAttachmentLevelMoreThanOneDimensionOrObservation(printWriter, attributes);
         // TODO value note para los atributos que tengan más de una dimensión
         // TODO atributos de observación
 
