@@ -373,15 +373,13 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("LAST-UPDATED=\"20130102 09:00\";", bufferedReader.readLine());
         assertEquals("NOTEX=\"a3\";", bufferedReader.readLine());
         assertEquals("NOTE=\"a1#a2\";", bufferedReader.readLine());
+        assertEquals("VALUENOTEX(\"DESTINO_ALOJAMIENTO\",\"ANDALUCIA\")=\"vn1\";", bufferedReader.readLine());
+        assertEquals("VALUENOTEX(\"DESTINO_ALOJAMIENTO\",\"ARAGON\")=\"vn2\";", bufferedReader.readLine());
+        assertEquals("VALUENOTE(\"DESTINO_ALOJAMIENTO\",\"ANDALUCIA\")=\"da1\";", bufferedReader.readLine());
+        assertEquals("VALUENOTE(\"CATEGORIA_ALOJAMIENTO\",\"1_2_3_ESTRELLAS\")=\"ca1#ca3\";", bufferedReader.readLine());
+        assertEquals("VALUENOTE(\"CATEGORIA_ALOJAMIENTO\",\"4_5_ESTRELLAS\")=\"ca2#ca4#ca5\";", bufferedReader.readLine());
+        assertEquals("VALUENOTE(\"INDICADORES\",\"INDICE_OCUPACION_PLAZAS\")=\"io1\";", bufferedReader.readLine());
 
-        // VALUENOTEX("Motivos de la estancia","TOTAL MOTIVOS")="Value notex 1";
-        // VALUENOTEX[en]("Reason for stay","TOTAL")="Value notex 1 English";
-        // VALUENOTEX("Motivos de la estancia","Trabajo o negocios")="Value notex 2";
-        // VALUENOTEX("Islas de destino principal","CANARIAS")="Value notex Canarias";
-        // VALUENOTEX[en]("Principal destination","CANARY ISLANDS")="Value notex Canary Islands";
-        // VALUENOTE("Motivos de la estancia","Ocio o vacaciones")="Value note 1";
-        // VALUENOTE("Islas de destino principal","CANARIAS")="Value note Canarias";
-        // VALUENOTE[en]("Reason for stay","Work")="Value note Reason form stay - Work english";
         // CELLNOTEX("*","*","*")="Nota para todas las observaciones";
         // CELLNOTEX[en]("*","*","*")="Nota para todas las observaciones English";
         // CELLNOTEX("Trabajo o negocios","*","2010 Septiembre (p)")="Trabajo o negocios, todas las islas en 2010 Septiembre";
@@ -446,6 +444,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_A", "Attribute A", AttributeAttachmentLevelType.DATASET)
                 .attribute("ATTRIBUTE_A2", "Attribute A2", AttributeAttachmentLevelType.DATASET)
                 .attribute("NOTEX", "Attribute Notex", AttributeAttachmentLevelType.DATASET)
+                .attribute("VALUENOTEX", "ValueNotex01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "AttrDestinoAlojamiento01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "AttrCategoriaAlojamiento01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "AttrCategoriaAlojamiento02", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", "AttrCategoriaAlojamiento03", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                .attribute("INDICADORES_01", "AttrIndiceOcupacion01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("INDICADORES")
                 .attribute("ATTRIBUTE_B", "Attribute B", AttributeAttachmentLevelType.PRIMARY_MEASURE)
                            .attributeValue("b1", "Attribute b1").attributeValue("b2", "Attribute b2").attributeValue("b3", "Attribute b3")
                            .attributeValue("b4", "Attribute b4").attributeValue("b5", "Attribute b5").attributeValue("b6", "Attribute b6")
@@ -460,6 +464,13 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attributeData("ATTRIBUTE_A", "a1")
                 .attributeData("ATTRIBUTE_A2", "a2")
                 .attributeData("NOTEX", "a3")
+                .attributeData("NOTEX", "a3")
+                .attributeData("VALUENOTEX", "vn1 | vn2")
+                .attributeData("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "da1 | ")
+                .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "ca1 | ca2")
+                .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "ca3 | ca4")
+                .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", " | ca5")
+                .attributeData("INDICADORES_01", "io1")
                 .attributeData("ATTRIBUTE_B", "b1 | b2 | b3 |  | b5 | b6 | b7 | b8")
                 .attributeData("ATTRIBUTE_D", "d1 | d2 | d3 | d4 | d5 | d6 | d7 | d8")
                 .attributeData("ATTRIBUTE_E", "e1 | e2 | e3 | e4 | e5 | e6 | e7 | e8")

@@ -12,8 +12,10 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -245,18 +247,25 @@ public class PxExporter {
             return;
         }
         writeAttributesDatasetAttachmentLevel(printWriter, attributes);
-        // TODO resto
+        writeAttributesDimensionAttachmentLevelOneDimension(printWriter, attributes);
+        writeAttributesDimensionAttachmentLevelMoreThanOneDimensionOrObservation(printWriter, attributes);
+        // TODO value note para los atributos que tengan más de una dimensión
+        // TODO atributos de observación
+
+        // TODO resto; añadir si colisionan
     }
 
     private void writeAttributesDatasetAttachmentLevel(PrintWriter printWriter, List<Attribute> attributes) {
-        StringBuilder valueNote = new StringBuilder();
-        StringBuilder valueNotex = new StringBuilder();
+        String notexName = "NOTEX";
+        String noteName = "NOTE";
+        StringBuilder notex = new StringBuilder();
+        StringBuilder note = new StringBuilder();
         for (Attribute attribute : attributes) {
             if (AttributeAttachmentLevelType.DATASET.equals(attribute.getAttachmentLevel())) {
                 String attributeId = attribute.getId();
                 String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
                 if (attributeValues != null) {
-                    StringBuilder value = "NOTEX".equals(attributeId) ? valueNotex : valueNote;
+                    StringBuilder value = notexName.equals(attributeId) ? notex : note;
                     if (value.length() != 0) {
                         value.append("#");
                     }
@@ -264,11 +273,123 @@ public class PxExporter {
                 }
             }
         }
-        if (valueNotex.length() != 0) {
-            writeField(printWriter, "NOTEX", valueNotex.toString());
+        if (notex.length() != 0) {
+            writeField(printWriter, notexName, notex.toString());
         }
-        if (valueNote.length() != 0) {
-            writeField(printWriter, "NOTE", valueNote.toString());
+        if (note.length() != 0) {
+            writeField(printWriter, noteName, note.toString());
+        }
+    }
+
+    private void writeAttributesDimensionAttachmentLevelOneDimension(PrintWriter printWriter, List<Attribute> attributes) {
+        String valueNotexName = "VALUENOTEX";
+        String valueNoteName = "VALUENOTE";
+
+        // Attribute values indexed by dimensionId and dimensionValueId
+        Map<String, Map<String, StringBuilder>> valueNotex = new HashMap<String, Map<String, StringBuilder>>();
+        Map<String, Map<String, StringBuilder>> valueNote = new HashMap<String, Map<String, StringBuilder>>();
+
+        // Builds attribute values. If exist more than one attribute to pair dimensionId-dimensionValueId concat values with <br/> (# in PX)
+        for (Attribute attribute : attributes) {
+            if (AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel()) && attribute.getDimensions().getDimensions().size() == 1) {
+                String attributeId = attribute.getId();
+                String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
+                if (attributeValues == null) {
+                    continue;
+                }
+                String dimensionId = attribute.getDimensions().getDimensions().get(0).getDimensionId();
+                Map<String, Map<String, StringBuilder>> attributeValuesByDimensionId = valueNotexName.equals(attributeId) ? valueNotex : valueNote;
+                if (!attributeValuesByDimensionId.containsKey(dimensionId)) {
+                    attributeValuesByDimensionId.put(dimensionId, new HashMap<String, StringBuilder>());
+                }
+                List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+                Map<String, StringBuilder> attributeValuesByDimensionValueId = attributeValuesByDimensionId.get(dimensionId);
+                for (int i = 0; i < dimensionValuesId.size(); i++) {
+                    String dimensionValueId = dimensionValuesId.get(i);
+                    String attributeValue = attributeValues[i];
+                    if (StringUtils.isEmpty(attributeValue)) {
+                        continue;
+                    }
+                    if (!attributeValuesByDimensionValueId.containsKey(dimensionValueId)) {
+                        attributeValuesByDimensionValueId.put(dimensionValueId, new StringBuilder());
+                    }
+                    StringBuilder value = attributeValuesByDimensionValueId.get(dimensionValueId);
+                    if (value.length() != 0) {
+                        value.append("#");
+                    }
+                    value.append(attributeValue);
+                }
+            }
+        }
+
+        // Print in stream
+        writeAttributeDimensionAttachmentLevelOneDimension(printWriter, valueNotexName, valueNotex);
+        writeAttributeDimensionAttachmentLevelOneDimension(printWriter, valueNoteName, valueNote);
+    }
+
+    // TODO primero stub
+    private void writeAttributesDimensionAttachmentLevelMoreThanOneDimensionOrObservation(PrintWriter printWriter, List<Attribute> attributes) {
+        String cellNotexName = "CELLNOTEX";
+        String cellNoteName = "CELLNOTE";
+
+        // Attribute values indexed by dimensionId and dimensionValueId
+        Map<String, Map<String, StringBuilder>> cellNotex = new HashMap<String, Map<String, StringBuilder>>();
+        Map<String, Map<String, StringBuilder>> cellNote = new HashMap<String, Map<String, StringBuilder>>();
+
+        // First stub and then heading
+        List<String> dimensionsOrderedToAttributes = new ArrayList<String>();
+        dimensionsOrderedToAttributes.addAll(datasetAccess.getDataset().getMetadata().getRelatedDsd().getStub().getDimensionIds());
+        dimensionsOrderedToAttributes.addAll(datasetAccess.getDataset().getMetadata().getRelatedDsd().getHeading().getDimensionIds());
+
+        // Builds attribute values. If exist more than one attribute to pair dimensionId-dimensionValueId concat values with <br/> (# in PX)
+        for (Attribute attribute : attributes) {
+            if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())
+                    || (AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel()) && attribute.getDimensions().getDimensions().size() > 1)) {
+                String attributeId = attribute.getId();
+                String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
+                if (attributeValues != null) {
+                    continue;
+                }
+                String dimensionId = attribute.getDimensions().getDimensions().get(0).getDimensionId();
+
+                Map<String, Map<String, StringBuilder>> attributeValuesByDimensionId = cellNotexName.equals(attributeId) ? cellNotex : cellNote;
+                if (!attributeValuesByDimensionId.containsKey(dimensionId)) {
+                    attributeValuesByDimensionId.put(dimensionId, new HashMap<String, StringBuilder>());
+                }
+                List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+                Map<String, StringBuilder> attributeValuesByDimensionValueId = attributeValuesByDimensionId.get(dimensionId);
+                for (int i = 0; i < dimensionValuesId.size(); i++) {
+                    String dimensionValueId = dimensionValuesId.get(i);
+                    String attributeValue = attributeValues[i];
+                    if (StringUtils.isEmpty(attributeValue)) {
+                        continue;
+                    }
+                    if (!attributeValuesByDimensionValueId.containsKey(dimensionValueId)) {
+                        attributeValuesByDimensionValueId.put(dimensionValueId, new StringBuilder());
+                    }
+                    StringBuilder value = attributeValuesByDimensionValueId.get(dimensionValueId);
+                    if (value.length() != 0) {
+                        value.append("#");
+                    }
+                    value.append(attributeValue);
+                }
+            }
+        }
+
+        // Print in stream TODO
+
+    }
+
+    private void writeAttributeDimensionAttachmentLevelOneDimension(PrintWriter printWriter, String name, Map<String, Map<String, StringBuilder>> valueNote) {
+        for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
+            if (valueNote.containsKey(dimensionId)) {
+                List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+                for (String dimensionValueId : dimensionValuesId) {
+                    if (valueNote.get(dimensionId).containsKey(dimensionValueId)) {
+                        writeField(printWriter, name + "(\"" + dimensionId + "\",\"" + dimensionValueId + "\")", valueNote.get(dimensionId).get(dimensionValueId).toString());
+                    }
+                }
+            }
         }
     }
 

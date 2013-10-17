@@ -7,6 +7,8 @@ import org.siemac.metamac.rest.common.v1_0.domain.Resource;
 import org.siemac.metamac.rest.common.v1_0.domain.Resources;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeDimension;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeDimensions;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attributes;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentations;
@@ -148,6 +150,23 @@ public class DatasetMockBuilder {
         attribute.setAttributeValues(new NonEnumeratedAttributeValues());
         dataset.getMetadata().getAttributes().getAttributes().add(attribute);
         lastAttributeMetadata = attribute;
+        return this;
+    }
+
+    public DatasetMockBuilder dimensionsAttached(String... dimensionsId) {
+        if (lastAttributeMetadata == null) {
+            throw new IllegalArgumentException("Define a attribute previously");
+        }
+        if (!AttributeAttachmentLevelType.DIMENSION.equals(lastAttributeMetadata.getAttachmentLevel())) {
+            throw new IllegalArgumentException("Attribute is not with dimension attachment level");
+        }
+        lastAttributeMetadata.setDimensions(new AttributeDimensions());
+        for (int i = 0; i < dimensionsId.length; i++) {
+            String dimensionId = dimensionsId[i];
+            AttributeDimension attributeDimension = new AttributeDimension();
+            attributeDimension.setDimensionId(dimensionId);
+            lastAttributeMetadata.getDimensions().getDimensions().add(attributeDimension);
+        }
         return this;
     }
 
