@@ -11,11 +11,13 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -30,12 +32,14 @@ import org.siemac.metamac.rest.common.v1_0.domain.Resource;
 import org.siemac.metamac.rest.common.v1_0.domain.Resources;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeDimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
 public class PxExporter {
 
     private final DatasetAccessForPx datasetAccess;
+    private final String             ATTRIBUTE_LINE_SEPARATOR = "#";
 
     public PxExporter(Dataset dataset, String lang, String langAlternative) throws MetamacException {
         this.datasetAccess = new DatasetAccessForPx(dataset, lang, langAlternative);
@@ -87,49 +91,14 @@ public class PxExporter {
         writeFieldResourceName(printWriter, "CONTACT", datasetAccess.getDataset().getMetadata().getRightsHolder());
         writeFieldResourceName(printWriter, "SOURCE", datasetAccess.getDataset().getMetadata().getMaintainer());
 
-        // TODO atributos
         writeAttributes(printWriter);
-        // NOTEX="Los datos corresponden a turistas entrados por vía aérea.";
-        // NOTE="En las estimaciones para el total de Canarias se incluyen los turistas de "
-        // "La Gomera y El Hierro.#(p) Dato provisional.#(*) Dato estimado con menos de 20 "
-        // "observaciones muestrales.";
-        // NOTEX("Motivos de la estancia")="Notex para motivos de la estancia";
-        // NOTEX[en]("Reason for stay")="Notex para motivos de la estancia English";
-        // NOTE("Motivos de la estancia")="Note para motivos de la estancia";
-        // NOTE[en]("Reason for stay")="Note para motivos de la estancia English";
-        // NOTEX("Islas de destino principal")="Notex para Islas de destino principal";
-        // NOTEX[en]("Principal destination")="Notex para Islas de destino principal English";
-        // NOTE("Islas de destino principal")="Note para Islas de destino principal";
-        // NOTE[en]("Principal destination")="Note para Islas de destino principal English";
-        // VALUENOTEX("Motivos de la estancia","TOTAL MOTIVOS")="Value notex 1";
-        // VALUENOTEX[en]("Reason for stay","TOTAL")="Value notex 1 English";
-        // VALUENOTEX("Motivos de la estancia","Trabajo o negocios")="Value notex 2";
-        // VALUENOTEX("Islas de destino principal","CANARIAS")="Value notex Canarias";
-        // VALUENOTEX[en]("Principal destination","CANARY ISLANDS")="Value notex Canary Islands";
-        // VALUENOTE("Motivos de la estancia","Ocio o vacaciones")="Value note 1";
-        // VALUENOTE("Islas de destino principal","CANARIAS")="Value note Canarias";
-        // VALUENOTE[en]("Reason for stay","Work")="Value note Reason form stay - Work english";
-        // CELLNOTEX("*","*","*")="Nota para todas las observaciones";
-        // CELLNOTEX[en]("*","*","*")="Nota para todas las observaciones English";
-        // CELLNOTEX("Trabajo o negocios","*","2010 Septiembre (p)")="Trabajo o negocios, todas las islas en 2010 Septiembre";
-        // CELLNOTEX[en]("Work","*","2010 Septiembre (p)")="EN Trabajo o negocios, todas las islas en 2010 Septiembre";
-        // CELLNOTEX("Trabajo o negocios","Lanzarote","2010 Septiembre (p)")="Cell notex 1";
-        // CELLNOTEX("Ocio o vacaciones","La Palma","*")="Ocio o vacaciones en La Palma";
-        // CELLNOTE("Trabajo o negocios","*","2010 Septiembre (p)")="Trabajo o negocios en 2010 Septiembre";
-        // CELLNOTE("Trabajo o negocios","Lanzarote","2010 Septiembre (p)")="Trabajo o negocios en Lanzarote en 2010 Septiembre";
-        // CELLNOTE[en]("Work","Lanzarote EN","2010 Septiembre (p)")="Work Lanzarote 2010 September";
-        // CELLNOTEX("Trabajo o negocios","*","*")="Cellnotex Trabajo o negocios";
-        // CELLNOTEX[en]("Work","*","*")="EN Cellnotex Trabajo o negocios";
-        // DATANOTECELL("*","*","*")="Data note cell 4";
-        // DATANOTECELL("Trabajo o negocios","ES708","2010 Noviembre (p)")="ES Data note cell 1";
-        // DATANOTECELL("Trabajo o negocios","ES707","2010 Noviembre (p)")="ES Data note cell 2";
-        // DATANOTECELL[en]("Trabajo o negocios","ES707","2010 Noviembre (p)")="EN Data note cell 2";
-        // DATANOTECELL("Personal","ES708","2010 Septiembre (p)")="ES Data note cell 4";
-
         writeData(printWriter);
     }
 
     private String formatValue(String value) {
+        if (value == null) {
+            return null;
+        }
         return value.replace("\"", "'");
     }
 
@@ -241,21 +210,24 @@ public class PxExporter {
         }
     }
 
+    /**
+     * If exist more than one attribute for a same key (example: pair dimensionId-dimensionValueId for VALUENOTE) concat values with <br/>
+     * (# in PX)
+     */
     private void writeAttributes(PrintWriter printWriter) {
         List<Attribute> attributes = datasetAccess.getAttributesMetadata();
         if (CollectionUtils.isEmpty(attributes)) {
             return;
         }
-        writeAttributesDatasetAttachmentLevel(printWriter, attributes);
-        writeAttributesDimensionAttachmentLevelOneDimension(printWriter, attributes);
-        // writeAttributesDimensionAttachmentLevelMoreThanOneDimensionOrObservation(printWriter, attributes);
-        // TODO value note para los atributos que tengan más de una dimensión
-        // TODO atributos de observación
-
-        // TODO resto; añadir si colisionan
+        writeAttributesNote(printWriter, attributes);
+        writeAttributesValueNote(printWriter, attributes);
+        writeAttributesCellNote(printWriter, attributes);
     }
 
-    private void writeAttributesDatasetAttachmentLevel(PrintWriter printWriter, List<Attribute> attributes) {
+    /**
+     * Builds NOTE and NOTEX attributes: attributes with dataset attachment level
+     */
+    private void writeAttributesNote(PrintWriter printWriter, List<Attribute> attributes) {
         String notexName = "NOTEX";
         String noteName = "NOTE";
         StringBuilder notex = new StringBuilder();
@@ -266,10 +238,7 @@ public class PxExporter {
                 String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
                 if (attributeValues != null) {
                     StringBuilder value = notexName.equals(attributeId) ? notex : note;
-                    if (value.length() != 0) {
-                        value.append("#");
-                    }
-                    value.append(attributeValues[0]);
+                    addAttributeValue(value, attributeValues[0]);
                 }
             }
         }
@@ -281,7 +250,10 @@ public class PxExporter {
         }
     }
 
-    private void writeAttributesDimensionAttachmentLevelOneDimension(PrintWriter printWriter, List<Attribute> attributes) {
+    /**
+     * Builds VALUENOTE and VALUENOTEX attributes: attributes with dimension attachment level but only one dimension
+     */
+    private void writeAttributesValueNote(PrintWriter printWriter, List<Attribute> attributes) {
         String valueNotexName = "VALUENOTEX";
         String valueNoteName = "VALUENOTE";
 
@@ -289,7 +261,7 @@ public class PxExporter {
         Map<String, Map<String, StringBuilder>> valueNotex = new HashMap<String, Map<String, StringBuilder>>();
         Map<String, Map<String, StringBuilder>> valueNote = new HashMap<String, Map<String, StringBuilder>>();
 
-        // Builds attribute values. If exist more than one attribute to pair dimensionId-dimensionValueId concat values with <br/> (# in PX)
+        // Builds attribute values
         for (Attribute attribute : attributes) {
             if (AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel()) && attribute.getDimensions().getDimensions().size() == 1) {
                 String attributeId = attribute.getId();
@@ -314,73 +286,17 @@ public class PxExporter {
                         attributeValuesByDimensionValueId.put(dimensionValueId, new StringBuilder());
                     }
                     StringBuilder value = attributeValuesByDimensionValueId.get(dimensionValueId);
-                    if (value.length() != 0) {
-                        value.append("#");
-                    }
-                    value.append(attributeValue);
+                    addAttributeValue(value, attributeValue);
                 }
             }
         }
 
         // Print in stream
-        writeAttributeDimensionAttachmentLevelOneDimension(printWriter, valueNotexName, valueNotex);
-        writeAttributeDimensionAttachmentLevelOneDimension(printWriter, valueNoteName, valueNote);
+        writeAttributeValueNoteField(printWriter, valueNotexName, valueNotex);
+        writeAttributeValueNoteField(printWriter, valueNoteName, valueNote);
     }
 
-    // TODO primero stub
-    private void writeAttributesDimensionAttachmentLevelMoreThanOneDimensionOrObservation(PrintWriter printWriter, List<Attribute> attributes) {
-        String cellNotexName = "CELLNOTEX";
-        String cellNoteName = "CELLNOTE";
-
-        // Attribute values indexed by dimensionId and dimensionValueId
-        Map<String, Map<String, StringBuilder>> cellNotex = new HashMap<String, Map<String, StringBuilder>>();
-        Map<String, Map<String, StringBuilder>> cellNote = new HashMap<String, Map<String, StringBuilder>>();
-
-        // First stub and then heading
-        List<String> dimensionsOrderedToAttributes = new ArrayList<String>();
-        dimensionsOrderedToAttributes.addAll(datasetAccess.getDataset().getMetadata().getRelatedDsd().getStub().getDimensionIds());
-        dimensionsOrderedToAttributes.addAll(datasetAccess.getDataset().getMetadata().getRelatedDsd().getHeading().getDimensionIds());
-
-        // Builds attribute values. If exist more than one attribute to pair dimensionId-dimensionValueId concat values with <br/> (# in PX)
-        for (Attribute attribute : attributes) {
-            if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())
-                    || (AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel()) && attribute.getDimensions().getDimensions().size() > 1)) {
-                String attributeId = attribute.getId();
-                String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
-                if (attributeValues != null) {
-                    continue;
-                }
-                String dimensionId = attribute.getDimensions().getDimensions().get(0).getDimensionId();
-
-                Map<String, Map<String, StringBuilder>> attributeValuesByDimensionId = cellNotexName.equals(attributeId) ? cellNotex : cellNote;
-                if (!attributeValuesByDimensionId.containsKey(dimensionId)) {
-                    attributeValuesByDimensionId.put(dimensionId, new HashMap<String, StringBuilder>());
-                }
-                List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
-                Map<String, StringBuilder> attributeValuesByDimensionValueId = attributeValuesByDimensionId.get(dimensionId);
-                for (int i = 0; i < dimensionValuesId.size(); i++) {
-                    String dimensionValueId = dimensionValuesId.get(i);
-                    String attributeValue = attributeValues[i];
-                    if (StringUtils.isEmpty(attributeValue)) {
-                        continue;
-                    }
-                    if (!attributeValuesByDimensionValueId.containsKey(dimensionValueId)) {
-                        attributeValuesByDimensionValueId.put(dimensionValueId, new StringBuilder());
-                    }
-                    StringBuilder value = attributeValuesByDimensionValueId.get(dimensionValueId);
-                    if (value.length() != 0) {
-                        value.append("#");
-                    }
-                    value.append(attributeValue);
-                }
-            }
-        }
-
-        // Print in stream TODO
-
-    }
-
-    private void writeAttributeDimensionAttachmentLevelOneDimension(PrintWriter printWriter, String name, Map<String, Map<String, StringBuilder>> valueNote) {
+    private void writeAttributeValueNoteField(PrintWriter printWriter, String name, Map<String, Map<String, StringBuilder>> valueNote) {
         for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
             if (valueNote.containsKey(dimensionId)) {
                 List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
@@ -390,6 +306,135 @@ public class PxExporter {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Builds CELLNOTE and CELLNOTEX attributes: attributes with observationa attachment level or dimension attachment level but more than one dimension
+     */
+    private void writeAttributesCellNote(PrintWriter printWriter, List<Attribute> attributes) {
+        String cellNotexName = "CELLNOTEX";
+        String cellNoteName = "CELLNOTE";
+
+        // Attribute values indexed by all dimension values of attribute. Dimensions ordered: First stub and then heading
+        Map<String, StringBuilder> cellNotex = new HashMap<String, StringBuilder>();
+        Map<String, StringBuilder> cellNote = new HashMap<String, StringBuilder>();
+        List<String> allDimensionsDatasetOrderedForPx = getPxDimensionsDatasetOrdered();
+
+        // Builds attribute values
+        for (Attribute attribute : attributes) {
+            if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())
+                    || (AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel()) && attribute.getDimensions().getDimensions().size() > 1)) {
+                String attributeId = attribute.getId();
+                String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
+                if (attributeValues == null) {
+                    continue;
+                }
+
+                Map<String, StringBuilder> cellNoteToAttribute = cellNotexName.equals(attributeId) ? cellNotex : cellNote;
+                List<String> dimensionsAttributeOrderedForExtractData = getPxDimensionsAttributeOrderedForExtractData(attribute);
+                writeAttributeCellNote(printWriter, attributeId, attributeValues, dimensionsAttributeOrderedForExtractData, allDimensionsDatasetOrderedForPx, cellNoteToAttribute);
+            }
+        }
+
+        // Print in stream
+        writeAttributeCellNoteField(printWriter, cellNotexName, cellNotex);
+        writeAttributeCellNoteField(printWriter, cellNoteName, cellNote);
+    }
+
+    private void writeAttributeCellNote(PrintWriter printWriter, String attributeId, String[] attributeValues, List<String> dimensionsAttributeOrderedForExtractData,
+            List<String> dimensionsDatasetOrderedForPx, Map<String, StringBuilder> cellNote) {
+
+        Stack<OrderingStackElement> stack = new Stack<OrderingStackElement>();
+        stack.push(new OrderingStackElement(null, -1, null));
+        Map<String, String> dimensionValuesForAttributeValue = new HashMap<String, String>(dimensionsAttributeOrderedForExtractData.size());
+
+        int lastDimensionPosition = dimensionsAttributeOrderedForExtractData.size() - 1;
+        int attributeValueIndex = 0;
+        while (stack.size() > 0) {
+            // POP
+            OrderingStackElement elem = stack.pop();
+            int dimensionPosition = elem.getDimensionPosition();
+            String dimensionCodeId = elem.getDimensionCodeId();
+
+            if (dimensionPosition != -1) {
+                String dimensionId = elem.getDimensionId();
+                dimensionValuesForAttributeValue.put(dimensionId, dimensionCodeId);
+            }
+
+            if (dimensionPosition == lastDimensionPosition) {
+                // We have all dimensions here
+                String attributeValue = attributeValues[attributeValueIndex++];
+                if (!StringUtils.isEmpty(attributeValue)) {
+                    StringBuilder key = new StringBuilder();
+                    key.append(QUOTE);
+                    for (Iterator<String> iterator = dimensionsDatasetOrderedForPx.iterator(); iterator.hasNext();) {
+                        String dimensionDatasetId = iterator.next();
+                        if (dimensionValuesForAttributeValue.containsKey(dimensionDatasetId)) {
+                            key.append(dimensionValuesForAttributeValue.get(dimensionDatasetId));
+                        } else {
+                            key.append("*");
+                        }
+                        if (iterator.hasNext()) {
+                            key.append(QUOTE + COMMA + QUOTE);
+                        }
+                    }
+                    key.append(QUOTE);
+                    String keyString = key.toString();
+                    StringBuilder value = cellNote.get(keyString);
+                    if (value == null) {
+                        value = new StringBuilder();
+                        cellNote.put(keyString, value);
+                    }
+                    addAttributeValue(value, attributeValue);
+                }
+            } else {
+                String dimensionId = dimensionsAttributeOrderedForExtractData.get(dimensionPosition + 1);
+                List<String> dimensionValues = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+                for (int i = dimensionValues.size() - 1; i >= 0; i--) {
+                    OrderingStackElement temp = new OrderingStackElement(dimensionId, dimensionPosition + 1, dimensionValues.get(i));
+                    stack.push(temp);
+                }
+            }
+        }
+    }
+
+    private void writeAttributeCellNoteField(PrintWriter printWriter, String name, Map<String, StringBuilder> cellNote) {
+        if (cellNote.size() == 0) {
+            return;
+        }
+        // Get keys ordered to obtain same result to same dataset
+        List<String> keys = new ArrayList<String>(cellNote.keySet());
+        Collections.sort(keys);
+
+        for (String key : keys) {
+            writeField(printWriter, name + "(" + key + ")", cellNote.get(key).toString());
+        }
+    }
+
+    private class OrderingStackElement {
+
+        private final String dimensionId;
+        private final int    dimensionPosition;
+        private final String dimensionCodeId;
+
+        public OrderingStackElement(String dimensionId, int dimensionPosition, String dimensionCodeId) {
+            super();
+            this.dimensionId = dimensionId;
+            this.dimensionPosition = dimensionPosition;
+            this.dimensionCodeId = dimensionCodeId;
+        }
+
+        public String getDimensionId() {
+            return dimensionId;
+        }
+
+        public int getDimensionPosition() {
+            return dimensionPosition;
+        }
+
+        public String getDimensionCodeId() {
+            return dimensionCodeId;
         }
     }
 
@@ -438,5 +483,41 @@ public class PxExporter {
             }
         }
         return target.toString();
+    }
+
+    private List<String> getPxDimensionsDatasetOrdered() {
+        List<String> dimensionsOrderedToAttributes = new ArrayList<String>();
+        dimensionsOrderedToAttributes.addAll(datasetAccess.getDataset().getMetadata().getRelatedDsd().getStub().getDimensionIds());
+        dimensionsOrderedToAttributes.addAll(datasetAccess.getDataset().getMetadata().getRelatedDsd().getHeading().getDimensionIds());
+        return dimensionsOrderedToAttributes;
+    }
+
+    private List<String> getPxDimensionsAttributeOrderedForExtractData(Attribute attribute) {
+        List<String> allDimensionsOrderedForData = datasetAccess.getDimensionsOrderedForData();
+        if (AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel())) {
+            List<String> dimensionsAttribute = new ArrayList<String>();
+            for (AttributeDimension attributeDimension : attribute.getDimensions().getDimensions()) {
+                dimensionsAttribute.add(attributeDimension.getDimensionId());
+            }
+            List<String> dimensionsAttributeOrdered = new ArrayList<String>(dimensionsAttribute.size());
+            for (String dimensionDatasetId : datasetAccess.getDimensionsOrderedForData()) {
+                if (dimensionsAttribute.contains(dimensionDatasetId)) {
+                    dimensionsAttributeOrdered.add(dimensionDatasetId);
+                }
+            }
+            return dimensionsAttributeOrdered;
+        } else if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
+            return allDimensionsOrderedForData;
+        } else {
+            throw new IllegalArgumentException("Attribute attachement level unsupported in this operation: " + attribute.getAttachmentLevel());
+        }
+    }
+
+    private void addAttributeValue(StringBuilder attributeGlobalValue, String attributeValue) {
+        if (attributeGlobalValue.length() != 0) {
+            attributeGlobalValue.append(ATTRIBUTE_LINE_SEPARATOR);
+        }
+        attributeValue = formatValue(attributeValue);
+        attributeGlobalValue.append(attributeValue);
     }
 }

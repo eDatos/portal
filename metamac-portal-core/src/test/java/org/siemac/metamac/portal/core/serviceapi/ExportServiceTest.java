@@ -56,7 +56,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
-                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, LabelVisualisationModeEnum.CODE).dimensionValues("INDICE_OCUPACION_PLAZAS")
                 .buildForExcel();
@@ -75,10 +75,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         String[][] expected = {
                 {null, null, "1_2_3_ESTRELLAS", "4_5_ESTRELLAS"},
-                {"ANDALUCIA", "2013", "1.1", "2"},
-                {null, "2012", "3", "4"},
-                {"ARAGON", "2013", "5", "6"},
-                {null, "2012", "", "8"}
+                {"ANDALUCIA", "2012", "1.1", "2"},
+                {null, "2013", "3", "4"},
+                {"ARAGON", "2012", "5", "6"},
+                {null, "2013", "", "8"}
         };
         //@formatter:on
         Asserts.assertArrayEquals(expected, content);
@@ -89,7 +89,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.LABEL).dimensionValues("ANDALUCIA", "ARAGON")
-                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.LABEL).dimensionValues("2013", "2012")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.LABEL).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, LabelVisualisationModeEnum.LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
                 .buildForExcel();
@@ -108,10 +108,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         String[][] expected = {
                 {null, null, "1, 2 y 3 estrellas", "4 y 5 estrellas"},
-                {"Andalucía", "Año 2013", "1.1", "2"},
-                {null, "Año 2012", "3", "4"},
-                {"Aragón", "Año 2013", "5", "6"},
-                {null, "Año 2012", "", "8"}
+                {"Andalucía", "Año 2012", "1.1", "2"},
+                {null, "Año 2013", "3", "4"},
+                {"Aragón", "Año 2012", "5", "6"},
+                {null, "Año 2013", "", "8"}
         };
         //@formatter:on
         Asserts.assertArrayEquals(expected, content);
@@ -122,7 +122,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
-                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, null).dimensionValues("INDICE_OCUPACION_PLAZAS")// do not specify visualisation mode (apply default)
                 .buildForExcel();
@@ -141,10 +141,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         String[][] expected = {
                 {null, null, "1, 2 y 3 estrellas (1_2_3_ESTRELLAS)", "4 y 5 estrellas (4_5_ESTRELLAS)"},
-                {"Andalucía (ANDALUCIA)", "Año 2013 (2013)", "1.1", "2"},
-                {null, "Año 2012 (2012)", "3", "4"},
-                {"Aragón (ARAGON)", "Año 2013 (2013)", "5", "6"},
-                {null, "Año 2012 (2012)", "", "8"}
+                {"Andalucía (ANDALUCIA)", "Año 2012 (2012)", "1.1", "2"},
+                {null, "Año 2013 (2013)", "3", "4"},
+                {"Aragón (ARAGON)", "Año 2012 (2012)", "5", "6"},
+                {null, "Año 2013 (2013)", "", "8"}
         };
         //@formatter:on
         Asserts.assertArrayEquals(expected, content);
@@ -182,14 +182,14 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         BufferedReader bufferedReader = createBufferedReader(tmpFile);
         assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\td1\te1", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\td2\te2", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\td3\te3", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4\t\t\td4\te4", bufferedReader.readLine());
-        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\td5\te5", bufferedReader.readLine());
-        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\td6\te6", bufferedReader.readLine());
-        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t\tb7\t\td7\te7", bufferedReader.readLine());
-        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\td8\te8", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\td1\te1", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\td2\te2", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\td3\te3", bufferedReader.readLine());
+        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4\t\t\td4\te4", bufferedReader.readLine());
+        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\td5\te5", bufferedReader.readLine());
+        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\td6\te6", bufferedReader.readLine());
+        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t\tb7\t\td7\te7", bufferedReader.readLine());
+        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\td8\te8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
@@ -221,14 +221,14 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         BufferedReader bufferedReader = createBufferedReader(tmpFile);
         assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t1.1\tAttribute b1\t\tAttribute d1\te1", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t2\tAttribute b2\t\tAttribute d2\te2", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t3\tAttribute b3\t\tAttribute d3\te3", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\t4\t\t\tAttribute d4\te4", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t5\tAttribute b5\t\tAttribute d5\te5", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t6\tAttribute b6\t\tAttribute d6\te6", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t\tAttribute b7\t\tAttribute d7\te7", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\t8\tAttribute b8\t\tAttribute d8\te8", bufferedReader.readLine());
+        assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t1.1\tAttribute b1\t\tAttribute d1\te1", bufferedReader.readLine());
+        assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\t2\tAttribute b2\t\tAttribute d2\te2", bufferedReader.readLine());
+        assertEquals("Andalucía\tAño 2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t3\tAttribute b3\t\tAttribute d3\te3", bufferedReader.readLine());
+        assertEquals("Andalucía\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t4\t\t\tAttribute d4\te4", bufferedReader.readLine());
+        assertEquals("Aragón\tAño 2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t5\tAttribute b5\t\tAttribute d5\te5", bufferedReader.readLine());
+        assertEquals("Aragón\tAño 2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\t6\tAttribute b6\t\tAttribute d6\te6", bufferedReader.readLine());
+        assertEquals("Aragón\tAño 2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t\tAttribute b7\t\tAttribute d7\te7", bufferedReader.readLine());
+        assertEquals("Aragón\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t8\tAttribute b8\t\tAttribute d8\te8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
@@ -263,22 +263,22 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tTIME_PERIOD_CODE\tCATEGORIA_ALOJAMIENTO\tCATEGORIA_ALOJAMIENTO_CODE\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_B_CODE\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E\tATTRIBUTE_E_CODE",
                 bufferedReader.readLine());
         assertEquals(
-                "Andalucía\tANDALUCIA\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t1.1\tAttribute b1\tb1\t\tAttribute d1\td1\te1\te1",
+                "Andalucía\tANDALUCIA\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t1.1\tAttribute b1\tb1\t\tAttribute d1\td1\te1\te1",
                 bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t2\tAttribute b2\tb2\t\tAttribute d2\td2\te2\te2",
+        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t2\tAttribute b2\tb2\t\tAttribute d2\td2\te2\te2",
                 bufferedReader.readLine());
         assertEquals(
-                "Andalucía\tANDALUCIA\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t3\tAttribute b3\tb3\t\tAttribute d3\td3\te3\te3",
+                "Andalucía\tANDALUCIA\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t3\tAttribute b3\tb3\t\tAttribute d3\td3\te3\te3",
                 bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t4\t\t\t\tAttribute d4\td4\te4\te4",
+        assertEquals("Andalucía\tANDALUCIA\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t4\t\t\t\tAttribute d4\td4\te4\te4",
                 bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t5\tAttribute b5\tb5\t\tAttribute d5\td5\te5\te5",
+        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t5\tAttribute b5\tb5\t\tAttribute d5\td5\te5\te5",
                 bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\tAttribute b6\tb6\t\tAttribute d6\td6\te6\te6",
+        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\tAttribute b6\tb6\t\tAttribute d6\td6\te6\te6",
                 bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\tAttribute b7\tb7\t\tAttribute d7\td7\te7\te7",
+        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\tAttribute b7\tb7\t\tAttribute d7\td7\te7\te7",
                 bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tAttribute b8\tb8\t\tAttribute d8\td8\te8\te8",
+        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tAttribute b8\tb8\t\tAttribute d8\td8\te8\te8",
                 bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
@@ -314,14 +314,14 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals(
                 "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E",
                 bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\tAttribute d1\td1\te1", bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\tAttribute d2\td2\te2", bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\tAttribute d3\td3\te3", bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t4\t\t\tAttribute d4\td4\te4", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\tAttribute d5\td5\te5", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\tAttribute d6\td6\te6", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\tb7\t\tAttribute d7\td7\te7", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\tAttribute d8\td8\te8", bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\tAttribute d1\td1\te1", bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\tAttribute d2\td2\te2", bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\tAttribute d3\td3\te3", bufferedReader.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t4\t\t\tAttribute d4\td4\te4", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\tAttribute d5\td5\te5", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\tAttribute d6\td6\te6", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\tb7\t\tAttribute d7\td7\te7", bufferedReader.readLine());
+        assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\tAttribute d8\td8\te8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
@@ -363,11 +363,11 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("STUB=\"CATEGORIA_ALOJAMIENTO\",\"INDICADORES\";", bufferedReader.readLine());
         assertEquals("HEADING=\"DESTINO_ALOJAMIENTO\",\"TIME_PERIOD\";", bufferedReader.readLine());
         assertEquals("VALUES(\"DESTINO_ALOJAMIENTO\")=\"Andalucía\",\"Aragón\";", bufferedReader.readLine());
-        assertEquals("VALUES(\"TIME_PERIOD\")=\"Año 2013\",\"Año 2012\";", bufferedReader.readLine());
+        assertEquals("VALUES(\"TIME_PERIOD\")=\"Año 2012\",\"Año 2013\";", bufferedReader.readLine());
         assertEquals("VALUES(\"CATEGORIA_ALOJAMIENTO\")=\"1, 2 y 3 estrellas\",\"4 y 5 estrellas\";", bufferedReader.readLine());
         assertEquals("VALUES(\"INDICADORES\")=\"Índice de ocupación de plazas\";", bufferedReader.readLine());
         assertEquals("CODES(\"DESTINO_ALOJAMIENTO\")=\"ANDALUCIA\",\"ARAGON\";", bufferedReader.readLine());
-        assertEquals("CODES(\"TIME_PERIOD\")=\"2013\",\"2012\";", bufferedReader.readLine());
+        assertEquals("CODES(\"TIME_PERIOD\")=\"2012\",\"2013\";", bufferedReader.readLine());
         assertEquals("CODES(\"CATEGORIA_ALOJAMIENTO\")=\"1_2_3_ESTRELLAS\",\"4_5_ESTRELLAS\";", bufferedReader.readLine());
         assertEquals("CODES(\"INDICADORES\")=\"INDICE_OCUPACION_PLAZAS\";", bufferedReader.readLine());
         assertEquals("LAST-UPDATED=\"20130102 09:00\";", bufferedReader.readLine());
@@ -378,24 +378,26 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("VALUENOTE(\"DESTINO_ALOJAMIENTO\",\"ANDALUCIA\")=\"da1\";", bufferedReader.readLine());
         assertEquals("VALUENOTE(\"CATEGORIA_ALOJAMIENTO\",\"1_2_3_ESTRELLAS\")=\"ca1#ca3\";", bufferedReader.readLine());
         assertEquals("VALUENOTE(\"CATEGORIA_ALOJAMIENTO\",\"4_5_ESTRELLAS\")=\"ca2#ca4#ca5\";", bufferedReader.readLine());
-        assertEquals("VALUENOTE(\"INDICADORES\",\"INDICE_OCUPACION_PLAZAS\")=\"io1\";", bufferedReader.readLine());
-
-        // CELLNOTEX("*","*","*")="Nota para todas las observaciones";
-        // CELLNOTEX[en]("*","*","*")="Nota para todas las observaciones English";
-        // CELLNOTEX("Trabajo o negocios","*","2010 Septiembre (p)")="Trabajo o negocios, todas las islas en 2010 Septiembre";
-        // CELLNOTEX[en]("Work","*","2010 Septiembre (p)")="EN Trabajo o negocios, todas las islas en 2010 Septiembre";
-        // CELLNOTEX("Trabajo o negocios","Lanzarote","2010 Septiembre (p)")="Cell notex 1";
-        // CELLNOTEX("Ocio o vacaciones","La Palma","*")="Ocio o vacaciones en La Palma";
-        // CELLNOTE("Trabajo o negocios","*","2010 Septiembre (p)")="Trabajo o negocios en 2010 Septiembre";
-        // CELLNOTE("Trabajo o negocios","Lanzarote","2010 Septiembre (p)")="Trabajo o negocios en Lanzarote en 2010 Septiembre";
-        // CELLNOTE[en]("Work","Lanzarote EN","2010 Septiembre (p)")="Work Lanzarote 2010 September";
-        // CELLNOTEX("Trabajo o negocios","*","*")="Cellnotex Trabajo o negocios";
-        // CELLNOTEX[en]("Work","*","*")="EN Cellnotex Trabajo o negocios";
-        // DATANOTECELL("*","*","*")="Data note cell 4";
-        // DATANOTECELL("Trabajo o negocios","ES708","2010 Noviembre (p)")="ES Data note cell 1";
-        // DATANOTECELL("Trabajo o negocios","ES707","2010 Noviembre (p)")="ES Data note cell 2";
-        // DATANOTECELL[en]("Trabajo o negocios","ES707","2010 Noviembre (p)")="EN Data note cell 2";
-        // DATANOTECELL("Personal","ES708","2010 Septiembre (p)")="ES Data note cell 4";
+        assertEquals("VALUENOTE(\"INDICADORES\",\"INDICE_OCUPACION_PLAZAS\")=\"ioA_1\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"*\",\"*\",\"ANDALUCIA\",\"2012\")=\"cnA_1\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"*\",\"*\",\"ANDALUCIA\",\"2013\")=\"cnA_2\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"*\",\"*\",\"ARAGON\",\"2012\")=\"cnA_3\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"*\",\"*\",\"ARAGON\",\"2013\")=\"cnA_4\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"*\",\"ANDALUCIA\",\"2012\")=\"cnB_1#cnC_1\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"*\",\"ANDALUCIA\",\"2013\")=\"cnB_3\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"*\",\"ARAGON\",\"2012\")=\"cnB_5\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"*\",\"ARAGON\",\"2013\")=\"cnB_7\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ANDALUCIA\",\"2012\")=\"b1#d1#e1\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ANDALUCIA\",\"2013\")=\"b3#d3#e3\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ARAGON\",\"2012\")=\"b5#d5#e5\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"1_2_3_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ARAGON\",\"2013\")=\"b7#d7#e7\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"4_5_ESTRELLAS\",\"*\",\"ANDALUCIA\",\"2012\")=\"cnB_2#cnC_2\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"4_5_ESTRELLAS\",\"*\",\"ARAGON\",\"2012\")=\"cnB_6#cnC_6\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"4_5_ESTRELLAS\",\"*\",\"ARAGON\",\"2013\")=\"cnB_8\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"4_5_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ANDALUCIA\",\"2012\")=\"b2#d2#e2\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"4_5_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ANDALUCIA\",\"2013\")=\"d4#e4\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"4_5_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ARAGON\",\"2012\")=\"b6#d6#e6\";", bufferedReader.readLine());
+        assertEquals("CELLNOTE(\"4_5_ESTRELLAS\",\"INDICE_OCUPACION_PLAZAS\",\"ARAGON\",\"2013\")=\"b8#d8#e8\";", bufferedReader.readLine());
 
         assertEquals("DATA=", bufferedReader.readLine());
         assertEquals("1.1 2 3 4 5 6 \".\" 8; ", bufferedReader.readLine());
@@ -438,7 +440,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         //@formatter:off
         return DatasetMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", "Destino de alojamiento").heading().dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
-                .dimension("TIME_PERIOD").heading().dimensionValue("2013", "Año 2013").dimensionValue("2012", "Año 2012")
+                .dimension("TIME_PERIOD").heading().dimensionValue("2012", "Año 2012").dimensionValue("2013", "Año 2013")
                 .dimension("CATEGORIA_ALOJAMIENTO").stub().dimensionValue("1_2_3_ESTRELLAS", "1, 2 y 3 estrellas").dimensionValue("4_5_ESTRELLAS", "4 y 5 estrellas")
                 .dimension("INDICADORES").stub().dimensionValue("INDICE_OCUPACION_PLAZAS", "Índice de ocupación de plazas")
                 .attribute("ATTRIBUTE_A", "Attribute A", AttributeAttachmentLevelType.DATASET)
@@ -449,7 +451,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "AttrCategoriaAlojamiento01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
                 .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "AttrCategoriaAlojamiento02", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
                 .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", "AttrCategoriaAlojamiento03", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
-                .attribute("INDICADORES_01", "AttrIndiceOcupacion01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("INDICADORES")
+                .attribute("INDICADORES_A", "Attribute Indicadores A", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("INDICADORES")
+                .attribute("CELLNOTE_A", "Attribute CellNote A", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD")
+                .attribute("CELLNOTE_B", "Attribute CellNote B", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD", "CATEGORIA_ALOJAMIENTO")
+                .attribute("CELLNOTE_C", "Attribute CellNote C", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("TIME_PERIOD", "CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO") // unordered in attribute definition
                 .attribute("ATTRIBUTE_B", "Attribute B", AttributeAttachmentLevelType.PRIMARY_MEASURE)
                            .attributeValue("b1", "Attribute b1").attributeValue("b2", "Attribute b2").attributeValue("b3", "Attribute b3")
                            .attributeValue("b4", "Attribute b4").attributeValue("b5", "Attribute b5").attributeValue("b6", "Attribute b6")
@@ -470,7 +475,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "ca1 | ca2")
                 .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "ca3 | ca4")
                 .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", " | ca5")
-                .attributeData("INDICADORES_01", "io1")
+                .attributeData("INDICADORES_A", "ioA_1")
+                .attributeData("CELLNOTE_A", "cnA_1 | cnA_2 | cnA_3 | cnA_4")
+                .attributeData("CELLNOTE_B", "cnB_1 | cnB_2 | cnB_3 |  | cnB_5 | cnB_6 | cnB_7 | cnB_8")
+                .attributeData("CELLNOTE_C", "cnC_1 | cnC_2 |  |  |  | cnC_6 |  | ")
                 .attributeData("ATTRIBUTE_B", "b1 | b2 | b3 |  | b5 | b6 | b7 | b8")
                 .attributeData("ATTRIBUTE_D", "d1 | d2 | d3 | d4 | d5 | d6 | d7 | d8")
                 .attributeData("ATTRIBUTE_E", "e1 | e2 | e3 | e4 | e5 | e6 | e7 | e8")
