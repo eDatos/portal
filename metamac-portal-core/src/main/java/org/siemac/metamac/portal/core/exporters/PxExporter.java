@@ -74,8 +74,6 @@ public class PxExporter {
         writeSubjectAreas(printWriter);
         writeField(printWriter, "COPYRIGHT", datasetAccess.getDataset().getMetadata().getCopyrightDate() != null);
         writeField(printWriter, "DESCRIPTION", datasetAccess.getDataset().getDescription() != null ? datasetAccess.getDataset().getDescription() : datasetAccess.getDataset().getName()); // TODO si no,
-                                                                                                                                                                                          // el PX-Edit
-                                                                                                                                                                                          // lo
                                                                                                                                                                                           // construye
         writeField(printWriter, "TITLE", datasetAccess.getDataset().getName());
         writeField(printWriter, "DESCRIPTIONDEFAULT", Boolean.TRUE);
@@ -302,7 +300,8 @@ public class PxExporter {
                 List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
                 for (String dimensionValueId : dimensionValuesId) {
                     if (valueNote.get(dimensionId).containsKey(dimensionValueId)) {
-                        writeField(printWriter, name + "(\"" + dimensionId + "\",\"" + dimensionValueId + "\")", valueNote.get(dimensionId).get(dimensionValueId).toString());
+                        String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId);
+                        writeField(printWriter, name + "(\"" + dimensionId + "\",\"" + dimensionValueLabel + "\")", valueNote.get(dimensionId).get(dimensionValueId).toString());
                     }
                 }
             }
@@ -369,9 +368,10 @@ public class PxExporter {
                     StringBuilder key = new StringBuilder();
                     key.append(QUOTE);
                     for (Iterator<String> iterator = dimensionsDatasetOrderedForPx.iterator(); iterator.hasNext();) {
-                        String dimensionDatasetId = iterator.next();
-                        if (dimensionValuesForAttributeValue.containsKey(dimensionDatasetId)) {
-                            key.append(dimensionValuesForAttributeValue.get(dimensionDatasetId));
+                        String dimensionId = iterator.next();
+                        if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
+                            String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
+                            key.append(datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId));
                         } else {
                             key.append("*");
                         }
