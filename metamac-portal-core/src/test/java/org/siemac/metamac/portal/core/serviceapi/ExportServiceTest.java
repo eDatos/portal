@@ -160,8 +160,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFile = tempFolder.newFile();
-        FileOutputStream out = new FileOutputStream(tmpFile);
+        File tmpFileObservations = tempFolder.newFile();
+        File tmpFileAttributes = tempFolder.newFile();
+        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
         //@formatter:off
         DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
@@ -169,6 +171,18 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", LabelVisualisationModeEnum.CODE).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE)
+                .attribute("NOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE)
@@ -176,22 +190,56 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+        outObservations.close();
+        outAttributes.close();
 
-        out.close();
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReaderObservations = createBufferedReader(tmpFileObservations);
+        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\td1\te1", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\td2\te2", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\td3\te3", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4\t\t\td4\te4", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\td5\te5", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\td6\te6", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t\tb7\t\td7\te7", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\td8\te8", bufferedReaderObservations.readLine());
+        assertEquals(null, bufferedReaderObservations.readLine());
+        bufferedReaderObservations.close();
 
-        BufferedReader bufferedReader = createBufferedReader(tmpFile);
-        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\td1\te1", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\td2\te2", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\td3\te3", bufferedReader.readLine());
-        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4\t\t\td4\te4", bufferedReader.readLine());
-        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\td5\te5", bufferedReader.readLine());
-        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\td6\te6", bufferedReader.readLine());
-        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t\tb7\t\td7\te7", bufferedReader.readLine());
-        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\td8\te8", bufferedReader.readLine());
-        assertEquals(null, bufferedReader.readLine());
-        bufferedReader.close();
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
+        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tATTRIBUTE\tATTRIBUTE_VALUE", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\tATTRIBUTE_A\ta1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\tATTRIBUTE_A2\ta2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\tNOTEX\ta3", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t\t\t\tVALUENOTEX\tvn1", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t\t\t\tVALUENOTEX\tvn2", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tda1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t1_2_3_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t4_5_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t1_2_3_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t4_5_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t4_5_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\tca5", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\tINDICE_OCUPACION_PLAZAS\tINDICADORES_A\tioA_1", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t2012\t\t\tCELLNOTE_A\tcnA_1", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t2013\t\t\tCELLNOTE_A\tcnA_2", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t2012\t\t\tCELLNOTE_A\tcnA_3", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t2013\t\t\tCELLNOTE_A\tcnA_4", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_1", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_B\tcnB_2", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_3", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_5", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_B\tcnB_6", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_7", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\t\tCELLNOTE_B\tcnB_8", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\t\tCELLNOTE_C\tcnC_1", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_C\tcnC_2", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_C\tcnC_6", bufferedReaderAttributes.readLine());
+        assertEquals(null, bufferedReaderAttributes.readLine());
+
+        bufferedReaderAttributes.close();
     }
 
     @Test
@@ -199,8 +247,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFile = tempFolder.newFile();
-        FileOutputStream out = new FileOutputStream(tmpFile);
+        File tmpFileObservations = tempFolder.newFile();
+        File tmpFileAttributes = tempFolder.newFile();
+        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
         //@formatter:off
         DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
@@ -208,6 +258,18 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.LABEL).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", LabelVisualisationModeEnum.LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.LABEL)
+                .attribute("NOTEX", LabelVisualisationModeEnum.LABEL)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.LABEL)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.LABEL)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.LABEL)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.LABEL)
+                .attribute("CELLNOTE_C", LabelVisualisationModeEnum.LABEL)
                 .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.LABEL)
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.LABEL)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.LABEL)
@@ -215,11 +277,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+        outObservations.close();
+        outAttributes.close();
 
-        out.close();
-
-        BufferedReader bufferedReader = createBufferedReader(tmpFile);
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
         assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReader.readLine());
         assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t1.1\tAttribute b1\t\tAttribute d1\te1", bufferedReader.readLine());
         assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\t2\tAttribute b2\t\tAttribute d2\te2", bufferedReader.readLine());
@@ -231,6 +294,38 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("Aragón\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t8\tAttribute b8\t\tAttribute d8\te8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
+
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
+        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tATTRIBUTE\tATTRIBUTE_VALUE", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\tATTRIBUTE_A\ta1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\tATTRIBUTE_A2\tAttribute a2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\tNOTEX\tNotex a3", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\t\t\t\tVALUENOTEX\tvn1", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\t\t\t\tVALUENOTEX\tvn2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tDestino 1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t1, 2 y 3 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t4 y 5 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t1, 2 y 3 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t4 y 5 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t4 y 5 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\tCategoría 5", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\tÍndice de ocupación de plazas\tINDICADORES_A\tioA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tAño 2012\t\t\tCELLNOTE_A\tcnA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tAño 2013\t\t\tCELLNOTE_A\tcnA_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tAño 2012\t\t\tCELLNOTE_A\tcnA_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tAño 2013\t\t\tCELLNOTE_A\tcnA_4", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_B\tcnB_2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tAño 2013\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tAño 2012\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_5", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_B\tcnB_6", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tAño 2013\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_7", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tAño 2013\t4 y 5 estrellas\t\tCELLNOTE_B\tcnB_8", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\t\tCELLNOTE_C\tCell C1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_C\tCell C2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_C\tCell C6", bufferedReaderAttributes.readLine());
+        assertEquals(null, bufferedReaderAttributes.readLine());
+        bufferedReaderAttributes.close();
     }
 
     @Test
@@ -238,8 +333,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFile = tempFolder.newFile();
-        FileOutputStream out = new FileOutputStream(tmpFile);
+        File tmpFileObservations = tempFolder.newFile();
+        File tmpFileAttributes = tempFolder.newFile();
+        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
         //@formatter:off
         DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
@@ -251,14 +348,27 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("NOTEX", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+        outObservations.close();
+        outAttributes.close();
 
-        out.close();
-
-        BufferedReader bufferedReader = createBufferedReader(tmpFile);
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
         assertEquals(
                 "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tTIME_PERIOD_CODE\tCATEGORIA_ALOJAMIENTO\tCATEGORIA_ALOJAMIENTO_CODE\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_B_CODE\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E\tATTRIBUTE_E_CODE",
                 bufferedReader.readLine());
@@ -282,6 +392,40 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
+
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
+        assertEquals(
+                "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tTIME_PERIOD_CODE\tCATEGORIA_ALOJAMIENTO\tCATEGORIA_ALOJAMIENTO_CODE\tINDICADORES\tINDICADORES_CODE\tATTRIBUTE\tATTRIBUTE_VALUE\tATTRIBUTE_VALUE_CODE",
+                bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t\t\t\t\tATTRIBUTE_A\ta1\ta1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t\t\t\t\tATTRIBUTE_A2\tAttribute a2\ta2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t\t\t\t\tNOTEX\tNotex a3\ta3", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\t\t\tVALUENOTEX\tvn1\tvn1", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t\t\t\t\t\t\tVALUENOTEX\tvn2\tvn2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tDestino 1\tda1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1\tca1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2\tca2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3\tca3", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4\tca4", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\tCategoría 5\tca5", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t\t\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\tINDICADORES_A\tioA_1\tioA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t\t\t\t\tCELLNOTE_A\tcnA_1\tcnA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\tAño 2013\t2013\t\t\t\t\tCELLNOTE_A\tcnA_2\tcnA_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t\t\t\t\tCELLNOTE_A\tcnA_3\tcnA_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t\t\t\t\tCELLNOTE_A\tcnA_4\tcnA_4", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_1\tcnB_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_2\tcnB_2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_3\tcnB_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_5\tcnB_5", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_6\tcnB_6", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_7\tcnB_7", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_8\tcnB_8", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_C\tCell C1\tcnC_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_C\tCell C2\tcnC_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_C\tCell C6\tcnC_6", bufferedReaderAttributes.readLine());
+        assertEquals(null, bufferedReaderAttributes.readLine());
+        bufferedReaderAttributes.close();
     }
 
     @Test
@@ -289,8 +433,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFile = tempFolder.newFile();
-        FileOutputStream out = new FileOutputStream(tmpFile);
+        File tmpFileObservations = tempFolder.newFile();
+        File tmpFileAttributes = tempFolder.newFile();
+        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
         //@formatter:off
         DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
@@ -298,19 +444,32 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES").dimensionValues("INDICE_OCUPACION_PLAZAS")         // do not specify visualisation mode (apply default)
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE)
+                .attribute("NOTEX", LabelVisualisationModeEnum.LABEL)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_C", null)                  // do not specify visualisation mode (apply default)
                 .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
-                .attribute("ATTRIBUTE_D", null) // do not specify visualisation mode (apply default)
+                .attribute("ATTRIBUTE_D", null)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
 
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", out);
+        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+        outObservations.close();
+        outAttributes.close();
 
-        out.close();
-
-        BufferedReader bufferedReader = createBufferedReader(tmpFile);
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
         assertEquals(
                 "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E",
                 bufferedReader.readLine());
@@ -324,6 +483,40 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\tAttribute d8\td8\te8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
+
+        // Validate attributes with dataset and dimension attachment
+        BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
+        assertEquals("DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tINDICADORES_CODE\tATTRIBUTE\tATTRIBUTE_VALUE\tATTRIBUTE_VALUE_CODE",
+                bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t\t\tATTRIBUTE_A\t\ta1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t\t\tATTRIBUTE_A2\t\ta2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\t\t\tNOTEX\tNotex a3\t", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\tVALUENOTEX\tvn1\tvn1", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t\t\t\t\tVALUENOTEX\tvn2\tvn2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tDestino 1\t", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t1, 2 y 3 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1\tca1", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t4 y 5 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2\tca2", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t1, 2 y 3 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3\tca3", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t4 y 5 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4\tca4", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t4 y 5 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\t\tca5", bufferedReaderAttributes.readLine());
+        assertEquals("\t\t\t\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\tINDICADORES_A\tioA_1\tioA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t\t\t\tCELLNOTE_A\tcnA_1\tcnA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2013\t\t\t\tCELLNOTE_A\tcnA_2\tcnA_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t\t\t\tCELLNOTE_A\tcnA_3\tcnA_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t2013\t\t\t\tCELLNOTE_A\tcnA_4\tcnA_4", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_1\tcnB_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_B\tcnB_2\tcnB_2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2013\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_3\tcnB_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_5\tcnB_5", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_B\tcnB_6\tcnB_6", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t2013\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_7\tcnB_7", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\t\t\tCELLNOTE_B\tcnB_8\tcnB_8", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\t\t\tCELLNOTE_C\tCell C1\tcnC_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_C\tCell C2\tcnC_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_C\tCell C6\tcnC_6", bufferedReaderAttributes.readLine());
+
+        assertEquals(null, bufferedReaderAttributes.readLine());
+        bufferedReaderAttributes.close();
     }
 
     @Override
@@ -445,16 +638,21 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .dimension("INDICADORES").stub().dimensionValue("INDICE_OCUPACION_PLAZAS", "Índice de ocupación de plazas")
                 .attribute("ATTRIBUTE_A", "Attribute A", AttributeAttachmentLevelType.DATASET)
                 .attribute("ATTRIBUTE_A2", "Attribute A2", AttributeAttachmentLevelType.DATASET)
+                        .attributeValue("a2", "Attribute a2")
                 .attribute("NOTEX", "Attribute Notex", AttributeAttachmentLevelType.DATASET)
+                        .attributeValue("a3", "Notex a3")
                 .attribute("VALUENOTEX", "ValueNotex01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO")
                 .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "AttrDestinoAlojamiento01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO")
+                        .attributeValue("da1", "Destino 1")
                 .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "AttrCategoriaAlojamiento01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
                 .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "AttrCategoriaAlojamiento02", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
                 .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", "AttrCategoriaAlojamiento03", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                        .attributeValue("ca5", "Categoría 5")
                 .attribute("INDICADORES_A", "Attribute Indicadores A", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("INDICADORES")
                 .attribute("CELLNOTE_A", "Attribute CellNote A", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD")
                 .attribute("CELLNOTE_B", "Attribute CellNote B", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD", "CATEGORIA_ALOJAMIENTO")
                 .attribute("CELLNOTE_C", "Attribute CellNote C", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("TIME_PERIOD", "CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO") // unordered in attribute definition
+                           .attributeValue("cnC_1", "Cell C1").attributeValue("cnC_2", "Cell C2").attributeValue("cnC_6", "Cell C6")
                 .attribute("ATTRIBUTE_B", "Attribute B", AttributeAttachmentLevelType.PRIMARY_MEASURE)
                            .attributeValue("b1", "Attribute b1").attributeValue("b2", "Attribute b2").attributeValue("b3", "Attribute b3")
                            .attributeValue("b4", "Attribute b4").attributeValue("b5", "Attribute b5").attributeValue("b6", "Attribute b6")
@@ -468,7 +666,6 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .observations("1.1 | 2 | 3 | 4 | 5 | 6 |  | 8")
                 .attributeData("ATTRIBUTE_A", "a1")
                 .attributeData("ATTRIBUTE_A2", "a2")
-                .attributeData("NOTEX", "a3")
                 .attributeData("NOTEX", "a3")
                 .attributeData("VALUENOTEX", "vn1 | vn2")
                 .attributeData("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "da1 | ")

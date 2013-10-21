@@ -14,6 +14,8 @@ import java.util.Map;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeDimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
@@ -107,6 +109,27 @@ public abstract class DatasetAccess {
 
     public List<String> getDimensionValuesOrderedForData(String dimensionId) {
         return dimensionValuesOrderedForDataByDimensionId.get(dimensionId);
+    }
+
+    public List<String> getDimensionsAttributeOrderedForData(Attribute attribute) {
+        List<String> allDimensionsOrderedForData = getDimensionsOrderedForData();
+        if (AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel())) {
+            List<String> dimensionsAttribute = new ArrayList<String>();
+            for (AttributeDimension attributeDimension : attribute.getDimensions().getDimensions()) {
+                dimensionsAttribute.add(attributeDimension.getDimensionId());
+            }
+            List<String> dimensionsAttributeOrdered = new ArrayList<String>(dimensionsAttribute.size());
+            for (String dimensionDatasetId : getDimensionsOrderedForData()) {
+                if (dimensionsAttribute.contains(dimensionDatasetId)) {
+                    dimensionsAttributeOrdered.add(dimensionDatasetId);
+                }
+            }
+            return dimensionsAttributeOrdered;
+        } else if (AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
+            return allDimensionsOrderedForData;
+        } else {
+            throw new IllegalArgumentException("Attribute attachement level unsupported in this operation: " + attribute.getAttachmentLevel());
+        }
     }
 
     /**

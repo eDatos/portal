@@ -18,9 +18,11 @@ public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidato
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
 
-    public static void checkExportDatasetToTsv(Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
+    public static void checkExportDatasetToTsv(Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream,
+            List<MetamacExceptionItem> exceptions) {
         checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
-        checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkMetadataRequired(resultObservationsOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkMetadataRequired(resultAttributesOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
 
     public static void checkExportDatasetToPx(Dataset dataset, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {

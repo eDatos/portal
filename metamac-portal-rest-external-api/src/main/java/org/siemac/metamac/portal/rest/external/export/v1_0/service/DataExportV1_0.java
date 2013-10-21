@@ -26,7 +26,8 @@ public interface DataExportV1_0 {
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
-     * Exports a dataset to tsv
+     * Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
+     * and dimension attachment level
      */
     @POST
     @Path("tsv/{agencyID}/{resourceID}/{version}")

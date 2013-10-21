@@ -38,15 +38,17 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     }
 
     @Override
-    public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
-        exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, datasetSelection, lang, resultOutputStream);
+    public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
 
         String langDefault = portalConfiguration.retrieveLanguageDefault();
         if (lang == null) {
             lang = langDefault;
         }
         TsvExporter exporter = new TsvExporter(dataset, datasetSelection, lang, langDefault);
-        exporter.write(resultOutputStream);
+        exporter.writeObservationsAndAttributesWithObservationAttachmentLevel(resultObservationsOutputStream);
+        exporter.writeAttributesWithDatasetAndDimensionAttachmentLevel(resultAttributesOutputStream);
     }
 
     @Override

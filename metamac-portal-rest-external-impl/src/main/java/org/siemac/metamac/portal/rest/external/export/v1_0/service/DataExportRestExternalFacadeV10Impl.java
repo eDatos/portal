@@ -4,15 +4,20 @@ import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPriva
 import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
@@ -67,15 +72,22 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
 
             // Export
-            final File tmpFile = File.createTempFile("metamac", "tsv");
-            FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, datasetSelectionForTsv, lang, outputStream);
-            outputStream.close();
+            final File tmpFileObservations = File.createTempFile("metamac", "tsv");
+            final File tmpFileAttributes = File.createTempFile("metamac", "tsv");
+            FileOutputStream outputStreamObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outputStreamAttributes = new FileOutputStream(tmpFileAttributes);
+            exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, datasetSelectionForTsv, lang, outputStreamObservations, outputStreamAttributes);
+            outputStreamObservations.close();
+            outputStreamAttributes.close();
 
-            if (filename == null) {
-                filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".tsv";
+            String filenamePrefix = null;
+            if (filename != null) {
+                filenamePrefix = FilenameUtils.getBaseName(filename);
+            } else {
+                filenamePrefix = "dataset-" + agencyID + "-" + resourceID + "-" + version;
             }
-            return buildResponseOkWithFile(tmpFile, filename);
+            File tsvZip = generateTsvZip(tmpFileObservations, tmpFileAttributes, filename);
+            return buildResponseOkWithFile(tsvZip, filename + ".zip");
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -182,5 +194,33 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     private boolean isEmpty(DatasetSelection datasetSelection) {
         return datasetSelection == null || datasetSelection.getDimensions() == null || CollectionUtils.isEmpty(datasetSelection.getDimensions().getDimensions());
+    }
+
+    private File generateTsvZip(File fileObservations, File fileAttributes, String filenamePrefix) throws Exception {
+
+        File zipFile = File.createTempFile("metamac", "zip");
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFile));
+
+        addToZip(out, fileObservations, filenamePrefix + "-observations.tsv");
+        addToZip(out, fileAttributes, filenamePrefix + "-attributes.tsv");
+        out.close();
+
+        return zipFile;
+    }
+
+    private void addToZip(ZipOutputStream zip, File fileToZip, String filenameToZip) throws Exception {
+        InputStream in = new FileInputStream(fileToZip);
+        zip.putNextEntry(new ZipEntry(filenameToZip));
+
+        // Transfer bytes from the file to the ZIP file
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            zip.write(buf, 0, len);
+        }
+
+        // Complete the entry
+        zip.closeEntry();
+        in.close();
     }
 }
