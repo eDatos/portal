@@ -86,7 +86,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             } else {
                 filenamePrefix = "dataset-" + agencyID + "-" + resourceID + "-" + version;
             }
-            File tsvZip = generateTsvZip(tmpFileObservations, tmpFileAttributes, filename);
+            File tsvZip = generateTsvZip(tmpFileObservations, tmpFileAttributes, filenamePrefix);
             return buildResponseOkWithFile(tsvZip, filename + ".zip");
         } catch (Exception e) {
             throw manageException(e);
