@@ -20,7 +20,7 @@ describe('CollectionModel', function () {
         expect(query.get('type')).to.equal("query");
         expect(query.get('agency')).to.equal("ISTAC");
         expect(query.get('identifier')).to.equal("QueryFixed");
-        expect(query.get('url')).to.equal("/queries/ISTAC/QueryFixed");
+        expect(query.get('url')).to.equal("#queries/ISTAC/QueryFixed");
         expect(query.get('numeration')).to.equal("01.01");
 
         var capitulo2 = collection.nodes.at(1);
@@ -32,7 +32,7 @@ describe('CollectionModel', function () {
         expect(dataset.get('agency')).to.equal("ISTAC");
         expect(dataset.get('identifier')).to.equal("E30308A_000001");
         expect(dataset.get('version')).to.equal("001.000");
-        expect(dataset.get('url')).to.equal("/datasets/ISTAC/E30308A_000001/001.000");
+        expect(dataset.get('url')).to.equal("#datasets/ISTAC/E30308A_000001/001.000");
         expect(dataset.get('numeration')).to.equal("02.02.01");
 
     });
