@@ -12,7 +12,10 @@ I18n.translations.es = {
             map : "Mapa",
             fullscreen : "Pantalla completa",
             accept : "Aceptar",
-            cancel : "Cancelar"
+            cancel : "Cancelar",
+            selectAll : "Marcar todo",
+            deselectAll : "Desmarcar todo",
+            reverseOrder : "Invertir orden"
         },
         text : {
             fixedDimensions : "Valores fijados",

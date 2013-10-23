@@ -180,4 +180,12 @@ describe('FilterRepresentations', function () {
 
     });
 
+    describe('reverse', function () {
+        it('sort the collection in reverse order', function () {
+            filterRepresentations.reverse();
+            var filterRepresentationsIds = filterRepresentations.pluck("id");
+            expect(filterRepresentationsIds).to.eql(["r3", "r2.2", "r2.1.2", "r2.1", "r2", "r1"]);
+        });
+    });
+
 });

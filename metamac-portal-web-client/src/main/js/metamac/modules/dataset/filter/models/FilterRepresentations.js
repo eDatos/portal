@@ -108,6 +108,11 @@
             _.each(rootRepresentations, _.partial(depthTreeTraversal, 0));
 
             return sortedRepresentations;
+        },
+
+        reverse : function () {
+            this.reset(this.last(this.length).reverse());
+            this.trigger("reverse");
         }
 
     }, {

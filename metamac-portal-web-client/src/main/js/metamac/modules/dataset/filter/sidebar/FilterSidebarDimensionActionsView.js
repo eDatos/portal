@@ -17,7 +17,8 @@
 
         events : {
             "click .filter-sidebar-selectAll" : "_onSelectAll",
-            "click .filter-sidebar-unselectAll" : "_onDeselectAll"
+            "click .filter-sidebar-unselectAll" : "_onDeselectAll",
+            "click .filter-sidebar-reverse" : "_onReverse"
         },
 
         _bindEvents : function () {
@@ -36,11 +37,16 @@
             }
         },
 
+        _isTimeDimension : function () {
+            return this.filterDimension.get("type") === "TIME_DIMENSION";
+        },
+
         render : function (){
             this._unbindEvents();
             this._bindEvents();
             var context = {
-                isFixedDimension : this._isFixedDimension()
+                isFixedDimension : this._isFixedDimension(),
+                isTimeDimension : this._isTimeDimension()
             };
             this.$el.html(this.template(context));
         },
@@ -53,6 +59,11 @@
         _onDeselectAll : function (e) {
             e.preventDefault();
             this.filterDimension.get('representations').deselectVisible();
+        },
+
+        _onReverse : function (e) {
+            e.preventDefault();
+            this.filterDimension.get('representations').reverse();
         }
 
     });

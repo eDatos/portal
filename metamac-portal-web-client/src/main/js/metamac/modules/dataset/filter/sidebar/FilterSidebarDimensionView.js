@@ -34,6 +34,7 @@
         _bindEvents : function () {
             this.listenTo(this.filterDimension, "change:visible", this.resetLastIndex);
             this.listenTo(this.filterDimension, "change:open", this._onChangeOpen);
+            this.listenTo(this.filterDimension.get("representations"), "reverse", this.render);
         },
 
         _unbindEvents : function () {

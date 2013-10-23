@@ -19,6 +19,10 @@
         _bindEvents : function () {
             this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
             this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
+
+            this.listenTo(this.get("representations"), "reverse", function () {
+                this.trigger("reverse");
+            });
         },
 
         _unbindEvents : function () {
