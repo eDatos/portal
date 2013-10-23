@@ -310,7 +310,7 @@ module.exports = (grunt) ->
 
     grunt.registerTask 'test', ['concat','mocha:all']
     grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'handlebars', 'concat']
-    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify', 'test']
+    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify', 'mocha:all']
 
     grunt.registerTask 'bdd', ['connect', 'open:test', 'watch' ]
     grunt.registerTask 'default', 'build'
