@@ -135,7 +135,7 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _bindEvents : function () {
-            this.listenTo(this.filterDimensions, "change:selected change:zone", _.debounce(this.update, 20));
+            this.listenTo(this.filterDimensions, "change:selected change:zone reverse", _.debounce(this.update, 20));
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {

@@ -51,9 +51,9 @@
 
         _bindEvents : function () {
             this.listenTo(this.dataset.data, "hasNewData", this.hasNewData);
+
             var debouncedUpdate = _.debounce(_.bind(this.update, this), 20);
-            this.listenTo(this.filterDimensions, "change:selected change:zone", debouncedUpdate);
-            this.listenTo(this.filterDimensions, "reverse", debouncedUpdate);
+            this.listenTo(this.filterDimensions, "change:selected change:zone reverse", debouncedUpdate);
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {

@@ -62,7 +62,8 @@
         },
 
         _bindEvents : function () {
-            this.listenTo(this.filterDimensions, "change:selected change:zone", _.debounce(this.update, 20));
+            var debounceUpdate = _.debounce(this.update, 20);
+            this.listenTo(this.filterDimensions, "change:selected change:zone reverse", debounceUpdate);
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             var self = this;
