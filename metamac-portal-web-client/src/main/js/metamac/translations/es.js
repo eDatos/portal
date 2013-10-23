@@ -50,5 +50,22 @@ I18n.translations.es = {
 
             }
         }
+    },
+    ve : {
+        map : {
+            nomap : "Mapa no disponible"
+        }
+    },
+
+    entity : {
+        dataset : {
+            license : "Licencia",
+            language : "Idioma",
+            nolicense : "Licencia no disponible",
+            dimensions : {
+                title : "Dimensiones"
+            }
+        }
     }
+
 };
