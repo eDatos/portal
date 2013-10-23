@@ -34,6 +34,18 @@
             <version>${metamac-rest-common.version}</version>
         </dependency>
 
+        <!-- reCaptcha -->
+        <dependency>
+            <groupId>net.tanesha.recaptcha4j</groupId>
+            <artifactId>recaptcha4j</artifactId>
+            <version>0.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -158,5 +170,6 @@
             <version>${geronimo-servlet_2.5_spec.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 </project>

@@ -25,4 +25,12 @@
     <!-- ********************************************************************************************** -->
     <entry key="metamac.edition.languages">es</entry>
 
+
+    <!-- ********************************************************************************************** -->
+    <!-- **************************** CAPTCHA ********************************************************* -->
+    <!-- ********************************************************************************************** -->
+    <entry key="metamac.portal.rest.external.authentication.captcha.enable">true</entry>
+    <entry key="metamac.portal.rest.external.authentication.captcha.private_key">FILL_ME_WITH_PRIVATE_KEY</entry>
+    <entry key="metamac.portal.rest.external.authentication.captcha.public_key">FILL_ME_WITH_PUBLIC_KEY</entry>
+
 </properties>

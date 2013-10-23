@@ -28,6 +28,7 @@
             <ref bean="jaxbProvider" />
             <ref bean="jsonProvider" />
             <ref bean="wadlGenerator" />
+            <ref bean="captchaFilter"/>
         </jaxrs:providers>
     </jaxrs:server>
     
@@ -56,6 +57,8 @@
     <bean id="wadlGenerator" class="org.apache.cxf.jaxrs.model.wadl.WadlGenerator">
         <property name="namespacePrefix" value="ns" />
     </bean>
+
+    <bean id="captchaFilter" class="org.siemac.metamac.portal.rest.external.authentication.CaptchaFilter"/>
 
     <util:map id="marshallerProperties">
         <entry key="jaxb.formatted.output">

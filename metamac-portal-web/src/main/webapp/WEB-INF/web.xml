@@ -29,7 +29,17 @@
         <servlet-name>CXFServlet</servlet-name>
         <url-pattern>/apis/*</url-pattern>
     </servlet-mapping>
-    
+
+
+    <servlet>
+        <servlet-name>authentication</servlet-name>
+        <jsp-file>/js/authentication.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>authentication</servlet-name>
+        <url-pattern>/js/authentication.js</url-pattern>
+    </servlet-mapping>
+
     <!-- URL rewriting -->
     <filter>
             <filter-name>UrlRewriteFilter</filter-name>
