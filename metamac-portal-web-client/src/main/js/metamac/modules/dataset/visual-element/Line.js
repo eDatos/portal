@@ -135,7 +135,7 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _bindEvents : function () {
-            this.listenTo(this.filterDimensions, "change:selected change:zone reverse", _.debounce(this.update, 20));
+            this.listenTo(this.filterDimensions, "change:selected change:zone change:visibleLabelType reverse", _.debounce(this.update, 20));
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {
@@ -299,11 +299,11 @@ App.namespace("App.VisualElement.LineChart");
                     serie.data.push({y : y, name : name});
                 });
 
-                serie.name = columnCategory.get('label');
+                serie.name = columnCategory.get('visibleLabel');
                 listSeries.push(serie);
             });
 
-            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'label');
+            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'visibleLabel');
 
             // Changing the options of the chart
             result.series = listSeries;

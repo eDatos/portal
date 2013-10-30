@@ -22,7 +22,7 @@
         },
 
         _bindEvents : function () {
-            var renderEvents = 'change:selected change:childrenSelected change:visible change:open change:matchIndexBegin change:matchIndexEnd';
+            var renderEvents = 'change:visibleLabel change:selected change:childrenSelected change:visible change:open change:matchIndexBegin change:matchIndexEnd';
             //debounce for multiple changes when searching
             this.listenTo(this.filterRepresentation, renderEvents, _.debounce(this.render, 15));
         },
@@ -100,7 +100,7 @@
                 var stateClass = this._stateClass();
                 var collapseClass = this._collapseClass();
                 var filterRepresentation = this.filterRepresentation.toJSON();
-                var label = this._strongZone(filterRepresentation.label, filterRepresentation.matchIndexBegin, filterRepresentation.matchIndexEnd);
+                var label = this._strongZone(filterRepresentation.visibleLabel, filterRepresentation.matchIndexBegin, filterRepresentation.matchIndexEnd);
 
                 var context = {
                     filterRepresentation : filterRepresentation,

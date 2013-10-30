@@ -791,7 +791,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["Handlebars"]["templates"]["dataset/filter/sidebar/filter-order-view"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -887,9 +887,10 @@ function program13(depth0,data) {
   return buffer;
   }
 
+  buffer += "<div class=\"order-sidebar-instructions\">\nArrastre las dimensiones para cambiar el orden\n</div>\n\n";
   stack1 = helpers.each.call(depth0, depth0.zones, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { return stack1; }
-  else { return ''; }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  return buffer;
   });
 
 this["Handlebars"]["templates"]["dataset/filter/sidebar/filter-sidebar-category"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -989,7 +990,7 @@ function program3(depth0,data) {
     + "\n        </div>\n    </div>\n\n    <div class=\"filter-sidebar-dimension-content collapse ";
   stack2 = helpers.unless.call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\" >\n        <div class=\"filter-sidebar-dimension-searchbar\"></div>\n\n        <div class=\"filter-sidebar-dimension-actionsbar\">\n            <div class=\"filter-sidebar-dimension-levels\"></div>\n            <div class=\"filter-sidebar-dimension-actions\"></div>\n        </div>\n\n        <div class=\"filter-sidebar-categories\"></div>\n    </div>\n\n</div>";
+  buffer += "\" >\n        <div class=\"filter-sidebar-dimension-searchbar\"></div>\n\n        <div class=\"filter-sidebar-dimension-actionsbar\">\n            <div class=\"filter-sidebar-dimension-levels\"></div>\n            <div class=\"filter-sidebar-dimension-visibleLabelType\"></div>\n            <div class=\"filter-sidebar-dimension-actions\"></div>\n        </div>\n\n        <div class=\"filter-sidebar-categories\"></div>\n    </div>\n\n</div>";
   return buffer;
   });
 

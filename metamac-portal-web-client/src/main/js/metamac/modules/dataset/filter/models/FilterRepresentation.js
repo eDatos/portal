@@ -12,13 +12,28 @@
             childrenSelected : false,
             level : 0,
             matchIndexBegin : undefined,
-            matchIndexEnd : undefined
+            matchIndexEnd : undefined,
+            visibleLabelType : "label"
         },
 
         initialize : function () {
             this.children = new Backbone.Collection();
             this.listenTo(this.children, 'change:selected change:childrenSelected reset', this._updateChildrenSelected);
             this.listenTo(this, 'change:open', this._onChangeOpen);
+            this.listenTo(this, "change:visibleLabelType", this._updateVisibleLabel);
+
+            this._updateVisibleLabel();
+        },
+
+        _updateVisibleLabel : function () {
+            var visibleLabelType = this.get("visibleLabelType");
+            if (visibleLabelType === "idLabel"){
+                this.set("visibleLabel", this.id + " - " + this.get("label"));
+            } else if (visibleLabelType === "id") {
+                this.set("visibleLabel", this.id);
+            } else {
+                this.set("visibleLabel", this.get("label"));
+            }
         },
 
         _updateChildrenSelected : function () {

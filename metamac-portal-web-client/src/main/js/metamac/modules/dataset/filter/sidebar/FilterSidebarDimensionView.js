@@ -100,6 +100,22 @@
                 this.subviews.push(this.levelView);
             }
 
+            var visibleLabelTypeCollection = new Backbone.Collection([
+                {id : "id", title : "Código"},
+                {id : "label", title : "Etiqueta"},
+                {id : "idLabel", title : "Código y etiqueta"}
+            ]);
+            this.visibleLabelTypeView = new App.components.select.views.SelectView({
+                collection : visibleLabelTypeCollection,
+                selectionModel : this.filterDimension,
+                name : "visibleLabelType",
+                el : this.$(".filter-sidebar-dimension-visibleLabelType"),
+                blank : false
+            });
+            this.visibleLabelTypeView.render();
+            this.subviews.push(this.visibleLabelTypeView);
+
+
             this.setMaxHeight(this.maxHeight);
             this._onChangeOpen(this.filterDimension);
 

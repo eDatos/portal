@@ -34,4 +34,34 @@ describe('FilterRepresentation', function () {
 
     });
 
+    describe("visibleLabelType", function () {
+        var filterRepresentation;
+
+        beforeEach(function () {
+            filterRepresentation = new FilterRepresentation({id : "id1", label : "label1"});
+        });
+
+        it('should configure visibleLabel on initialize to default value -> label', function () {
+            expect(filterRepresentation.get("visibleLabel")).to.equal("label1");
+        });
+
+        describe('should change visibleLabel when change visibleLabelType', function () {
+            it('to id', function () {
+                filterRepresentation.set("visibleLabelType", "id");
+                expect(filterRepresentation.get("visibleLabel")).to.equal("id1");
+            });
+
+            it('to label', function () {
+                filterRepresentation.set("visibleLabelType", "label");
+                expect(filterRepresentation.get("visibleLabel")).to.equal("label1");
+            });
+
+            it('to idLabel', function () {
+                filterRepresentation.set("visibleLabelType", "idLabel");
+                expect(filterRepresentation.get("visibleLabel")).to.equal("id1 - label1");
+            });
+
+        });
+    });
+
 });

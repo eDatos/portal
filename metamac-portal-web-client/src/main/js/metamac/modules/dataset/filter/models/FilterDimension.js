@@ -9,7 +9,8 @@
             zone : undefined,
             filterQuery : '',
             filterLevel : undefined,
-            open : false
+            open : false,
+            visibleLabelType : "label"
         },
 
         initialize : function () {
@@ -19,7 +20,7 @@
         _bindEvents : function () {
             this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
             this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
-
+            this.listenTo(this, "change:visibleLabelType", this._onChangeVisibleLabelType);
             this.listenTo(this.get("representations"), "reverse", function () {
                 this.trigger("reverse");
             });
@@ -115,6 +116,14 @@
                 return model.get('level');
             });
             return maxLevelModel.get('level');
+        },
+
+        _onChangeVisibleLabelType : function () {
+            var visibleLabelType = this.get("visibleLabelType");
+            var representations = this.get("representations");
+            representations.each(function (representation) {
+                representation.set("visibleLabelType", visibleLabelType);
+            });
         }
 
     });

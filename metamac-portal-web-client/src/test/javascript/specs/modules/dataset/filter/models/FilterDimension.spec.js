@@ -110,4 +110,13 @@ describe('FilterDimension', function () {
 
     });
 
+    describe("when visibleLabelType change", function () {
+        it('should set visibleLabelType on each filterRepresentation', function () {
+            filterDimension.set("visibleLabelType", "id");
+            representations.each(function (representation) {
+                expect(representation.get("visibleLabelType")).to.equal("id");
+            });
+        });
+    });
+
 });

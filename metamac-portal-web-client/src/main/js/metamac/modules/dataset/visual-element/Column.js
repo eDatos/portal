@@ -63,7 +63,7 @@
 
         _bindEvents : function () {
             var debounceUpdate = _.debounce(this.update, 20);
-            this.listenTo(this.filterDimensions, "change:selected change:zone reverse", debounceUpdate);
+            this.listenTo(this.filterDimensions, "change:selected change:zone change:visibleLabelType reverse", debounceUpdate);
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             var self = this;
@@ -147,11 +147,11 @@
                     serie.data.push({y : y, name : name});
                 });
 
-                serie.name = columnCategory.get('label');
+                serie.name = columnCategory.get('visibleLabel');
                 listSeries.push(serie);
             });
 
-            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'label');
+            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'visibleLabel');
 
             // Changing the options of the chart
             result.series = listSeries;

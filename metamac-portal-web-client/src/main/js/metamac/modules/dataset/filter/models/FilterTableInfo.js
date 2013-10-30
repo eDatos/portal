@@ -75,7 +75,7 @@
                         representations.push.apply(representations, group.dontHasNormCode);
                     }
 
-                    result.representationsValues.push(_.invoke(representations, 'get', 'label'));
+                    result.representationsValues.push(_.invoke(representations, 'get', 'visibleLabel'));
                     result.representationsIds.push(_.invoke(representations, 'get', 'id'));
                     result.representationsLengths.push(representations.length);
                 });
@@ -101,7 +101,7 @@
         _initializeLeftHeaderValues : function () {
             var headerValuesGroupByDimension = this.filterDimensions.zones.get('left').get('dimensions').map(function (dimension) {
                 var selectedRepresentations = dimension.get('representations').where({selected : true});
-                return _.invoke(selectedRepresentations, 'pick', 'label', 'level');
+                return _.invoke(selectedRepresentations, 'pick', 'visibleLabel', 'level');
             });
 
             // plain update of nested dimensions and levels
@@ -115,7 +115,7 @@
 
             // indent using level
             var labels = _.map(headerValues, function (headerValue) {
-                return repeatStr(DIMVAL_INDENT, headerValue.level) + headerValue.label;
+                return repeatStr(DIMVAL_INDENT, headerValue.level) + headerValue.visibleLabel;
             });
 
             this.leftHeaderValues = [labels];

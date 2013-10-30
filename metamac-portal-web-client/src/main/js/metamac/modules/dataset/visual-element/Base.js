@@ -34,7 +34,7 @@
             var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
             var fixedLabels = fixedDimensions.map(function (dimension) {
                 var selectedRepresentations = dimension.get('representations').where({selected : true});
-                return selectedRepresentations[0].get('label');
+                return selectedRepresentations[0].get('visibleLabel');
             });
             return fixedLabels.length ? I18n.t("filter.text.for") + ": " + fixedLabels.join(", ") : "";
         },

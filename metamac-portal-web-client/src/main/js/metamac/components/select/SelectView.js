@@ -11,7 +11,7 @@
             idAttribute : 'id',
             label : 'title',
             multiple : false,
-
+            blank : true
         },
 
         initialize : function () {
@@ -55,7 +55,7 @@
                 };
             }, this);
 
-            if (!this.multiple) {
+            if (!this.multiple && this.blank) {
                 options.unshift({value : '', label : ''});
             }
 
