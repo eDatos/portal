@@ -8,7 +8,7 @@
 
 <div id="recaptcha_div"></div>
 
-<script src="http://codeorigin.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
 <script src="js/authentication.js"></script>
 
 <script type="text/javascript">
@@ -25,7 +25,8 @@
 
         var ajaxParameters = {
             url : "http://localhost:8081/apis/permalinks/v1.0/permalinks",
-            method : "POST",
+            type: "POST",
+            async: true,
             data : JSON.stringify(permalink),
             contentType : "application/json; charset=utf-8",
             dataType : "json"

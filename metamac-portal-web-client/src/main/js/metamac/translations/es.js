@@ -11,6 +11,7 @@ I18n.translations.es = {
             line : "Gráfico de líneas",
             map : "Mapa",
             fullscreen : "Pantalla completa",
+            share : "Compartir",
             accept : "Aceptar",
             cancel : "Cancelar",
             selectAll : "Marcar todo",

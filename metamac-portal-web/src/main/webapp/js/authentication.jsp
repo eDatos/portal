@@ -98,7 +98,7 @@ String CAPTCHA_PUBLIC_KEY = configurationService.getProperty(PortalConfiguration
                                                 deferred.rejectWith(err, result);
                                             }
                                         } else {
-                                            deferred.resolveWith(null, result);
+                                            deferred.resolveWith(null, [result]);
                                         }
                                     });
                                 });

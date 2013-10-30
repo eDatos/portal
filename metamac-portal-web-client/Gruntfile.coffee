@@ -73,6 +73,7 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/OptionsView.js"
                 paths.modules + "/dataset/DatasetInfoView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
+                paths.modules + "/dataset/DatasetShareView.js"
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"
@@ -93,6 +94,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/components/accordion/AccordionView.js"
                 paths.js + "/metamac/components/accordion/AccordionItemView.js"
                 paths.js + "/metamac/components/select/SelectView.js"
+                paths.js + "/metamac/components/modal/ModalView.js"
 
                 # filters
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js"

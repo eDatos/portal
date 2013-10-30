@@ -84,6 +84,20 @@ function program5(depth0,data) {
   return buffer;
   });
 
+this["Handlebars"]["templates"]["components/modal/modal"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"modal-backdrop\"></div>\n<div class=\"modal\">\n    <div class=\"modal-header\"><h2>";
+  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</h2></div>\n    <div class=\"modal-content\">\n        Contenido\n    </div>\n</div>";
+  return buffer;
+  });
+
 this["Handlebars"]["templates"]["components/searchbar/searchbar"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -408,7 +422,7 @@ function program17(depth0,data) {
 this["Handlebars"]["templates"]["dataset/dataset-options"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
 function program1(depth0,data) {
   
@@ -445,7 +459,10 @@ function program3(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"visual-element-options\">\r\n    ";
+  buffer += "<div class=\"visual-element-options\">\r\n    <button class=\"btn visual-element-options-share\" title='";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.share", options) : helperMissing.call(depth0, "message", "filter.button.share", options)))
+    + "'><i class=\"dataset-options-share\"></i></button>\r\n    ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.fullScreen),stack1 == null || stack1 === false ? stack1 : stack1.visible), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n</div>\r\n\r\n<div class=\"change-visual-element\">\r\n    <div class=\"btn-group\" data-toggle=\"buttons-radio\">\r\n        ";
@@ -495,17 +512,17 @@ function program3(depth0,data) {
   return buffer;
   });
 
-this["Handlebars"]["templates"]["dataset/dataset-share-modal"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+this["Handlebars"]["templates"]["dataset/dataset-share"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div>\r\n    <form class=\"form-horizontal\">\r\n        <div class=\"control-group\">\r\n            <label class=\"control-label\" for=\"input01\">\r\n                Permalink <i class=\"icon-permalink\"></i>\r\n            </label>\r\n\r\n            <div class=\"controls\">\r\n                <input type=\"text\" class=\"input-xlarge\" id=\"input01\" value=\"";
+  buffer += "<div>\r\n    <strong>Enlace permanente:</strong>\r\n    <input type=\"text\" size=\"60\" class=\"campo_texto\" value=\"";
   if (stack1 = helpers.url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n            </div>\r\n        </div>\r\n\r\n    <div class=\"control-group\">\r\n        <div class=\"controls\">\r\n            <div class=\"addthis_toolbox addthis_default_style addthis_32x32_style\">\r\n                <a class=\"addthis_button_twitter\"></a>\r\n                <a class=\"addthis_button_facebook\"></a>\r\n                <a class=\"addthis_button_linkedin\"></a>\r\n                <a class=\"addthis_button_gmail\"></a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    </form>\r\n</div>";
+    + "\">\r\n    <div class=\"addthis_toolbox addthis_default_style \">\r\n        <a class=\"addthis_button_facebook_like\" fb:like:layout=\"button_count\"></a>\r\n        <a class=\"addthis_button_tweet\"></a>\r\n        <a class=\"addthis_button_pinterest_pinit\" pi:pinit:layout=\"horizontal\"></a>\r\n        <a class=\"addthis_counter addthis_pill_style\"></a>\r\n    </div>\r\n</div>";
   return buffer;
   });
 

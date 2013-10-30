@@ -52,7 +52,7 @@
             this.router.navigate(link);
 
             var self = this;
-            var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version");
+            var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version", "permalinkId");
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
                     options = _.defaults(options, {
@@ -76,6 +76,9 @@
             if (options.visualizationType) {
                 routeName = routeName + "Type";
             }
+            if (options.permalinkId) {
+                routeName = routeName + "Permalink";
+            }
             return this.router.linkTo(routeName, options);
         },
 
@@ -83,7 +86,7 @@
             var self = this;
             var deferred = $.Deferred();
 
-            var metadata = new App.dataset.Metadata(datasetIdentifier);
+            var metadata = new App.dataset.Metadata(_.pick(datasetIdentifier, "type", "agency", "identifier", "version"));
             if (metadata.equals(this.metadata)) {
                 deferred.resolve();
             } else {
@@ -92,7 +95,19 @@
                     self.filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
                     self.selectionView = new App.modules.selection.SelectionView({controller : self, collection : self.filterDimensions, metadata : metadata});
                     self.visualizationView = new App.modules.dataset.DatasetView({controller : self, filterDimensions : self.filterDimensions, metadata : metadata});
-                    deferred.resolve();
+
+                    if (datasetIdentifier.permalinkId) {
+                        App.modules.dataset.DatasetPermalink.retrievePermalink(datasetIdentifier.permalinkId)
+                            .done(function (selection) {
+                                self.filterDimensions.importJSON(selection);
+                                deferred.resolve();
+                            })
+                            .fail(function () {
+                                deferred.resolve();
+                            });
+                    } else {
+                        deferred.resolve();
+                    }
                 });
             }
             return deferred.promise();

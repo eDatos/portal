@@ -7,6 +7,7 @@
         template : App.templateManager.get('dataset/dataset-options'),
 
         initialize : function (options) {
+            this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
             this.buttons = options.buttons;
 
@@ -16,7 +17,8 @@
         events : {
             "click .change-visual-element button" : "changeType",
             "click .visual-element-options-edit" : "clickFilterLoader",
-            "click .visual-element-options-fs" : "clickFullScreen"
+            "click .visual-element-options-fs" : "clickFullScreen",
+            "click .visual-element-options-share" : "clickShare"
         },
 
         destroy : function () {
@@ -105,6 +107,15 @@
                     this.trigger('launchFullScreen');
                 }
             }
+        },
+
+        clickShare : function (e) {
+            e.preventDefault();
+
+            var title = I18n.t("filter.button.share");
+            var modalContentView = new App.modules.dataset.DatasetShareView({filterDimensions : this.filterDimensions});
+            var modal = new App.components.modal.ModalView({title : title, contentView : modalContentView});
+            modal.show();
         }
 
 

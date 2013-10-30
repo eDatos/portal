@@ -12,11 +12,14 @@
             "datasets/:agency/:identifier/:version/selection" : "datasetSelection",
             "datasets/:agency/:identifier/:version/visualization" : "datasetVisualization",
             "datasets/:agency/:identifier/:version/visualization/:visualizationType" : "datasetVisualizationType",
+            "datasets/:agency/:identifier/:version/visualization/:visualizationType/selection/:permalinkId" : "datasetVisualizationTypePermalink",
 
             "queries/:agency/:identifier" : "query",
             "queries/:agency/:identifier/selection" : "querySelection",
             "queries/:agency/:identifier/visualization" : "queryVisualization",
             "queries/:agency/:identifier/visualization/:visualizationType" : "queryVisualizationType",
+            "queries/:agency/:identifier/visualization/:visualizationType/selection/:permalinkId" : "queryVisualizationTypePermalink",
+
             "*path" : "error"
         },
 
@@ -46,13 +49,13 @@
         },
 
         _nameDatasetArguments : function (args) {
-            var args = this._nameArguments(["agency", "identifier", "version", "visualizationType"], args);
+            var args = this._nameArguments(["agency", "identifier", "version", "visualizationType", "permalinkId"], args);
             args.type = "dataset";
             return args;
         },
 
         _nameQueryArguments : function (args) {
-            var args = this._nameArguments(["agency", "identifier", "visualizationType"], args);
+            var args = this._nameArguments(["agency", "identifier", "visualizationType", "permalinkId"], args);
             args.type = "query";
             return args;
         },
@@ -82,6 +85,11 @@
             this.datasetController.showDatasetVisualization(args);
         },
 
+        datasetVisualizationTypePermalink : function () {
+            var args = this._nameDatasetArguments(arguments);
+            this.datasetController.showDatasetVisualization(args);
+        },
+
         query : function () {
             var args = this._nameQueryArguments(arguments);
             this.datasetController.showDataset(args);
@@ -98,6 +106,11 @@
         },
 
         queryVisualizationType : function () {
+            var args = this._nameQueryArguments(arguments);
+            this.datasetController.showDatasetVisualization(args);
+        },
+
+        queryVisualizationTypePermalink : function () {
             var args = this._nameQueryArguments(arguments);
             this.datasetController.showDatasetVisualization(args);
         },

@@ -131,6 +131,7 @@
             });
 
             this.optionsView = new App.modules.dataset.OptionsView({
+                filterDimensions : this.filterDimensions,
                 optionsModel : this.optionsModel,
                 el : this.$(".dataset-visualization-options-bar"),
                 buttons : this.veElements
