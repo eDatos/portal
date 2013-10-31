@@ -18,6 +18,10 @@
         events : {
             "click .filter-sidebar-category-label" : "toggleSelected",
             "click .category-state" : "toggleSelected",
+
+            "dblclick .filter-sidebar-category-label" : "toggleSelectedElementAndChildren",
+            "dblclick .category-state" : "toggleSelectedElementAndChildren",
+
             "click .category-expand" : "toggleOpen"
         },
 
@@ -53,6 +57,11 @@
                 this.filterRepresentation.toggle('selected');
             }
             this.filterSidebarDimensionView.lastIndex = currentIndex;
+        },
+
+        toggleSelectedElementAndChildren : function (e) {
+            e.preventDefault();
+            this.filterRepresentation.toggleMeAndMyChildren('selected');
         },
 
         _stateClass : function () {

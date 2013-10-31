@@ -65,6 +65,18 @@
             } else {
                 this._close();
             }
+        },
+
+        toggleMeAndMyChildren : function (property) {
+            var newSelectedValue = !this.get(property);
+            this.setMeAndMyChildren(property, newSelectedValue);
+        },
+
+        setMeAndMyChildren : function (property, value) {
+            this.set(property, value);
+            this.children.each(function (child) {
+                child.setMeAndMyChildren(property, value);
+            });
         }
 
     });

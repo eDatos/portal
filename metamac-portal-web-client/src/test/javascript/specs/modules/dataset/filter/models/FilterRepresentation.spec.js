@@ -2,16 +2,16 @@ var FilterRepresentation = App.modules.dataset.filter.models.FilterRepresentatio
 
 describe('FilterRepresentation', function () {
 
+    var filterRepresentation, child1, child2;
+
+    beforeEach(function () {
+        child1 = new FilterRepresentation();
+        child2 = new FilterRepresentation();
+        filterRepresentation = new FilterRepresentation({id : "id1", label : "label1"});
+        filterRepresentation.children.reset([child1, child2]);
+    });
+
     describe('_updateChildrenSelected', function () {
-
-        var filterRepresentation, child1, child2;
-
-        beforeEach(function () {
-            child1 = new FilterRepresentation();
-            child2 = new FilterRepresentation();
-            filterRepresentation = new FilterRepresentation();
-            filterRepresentation.children.reset([child1, child2]);
-        });
 
         it('should set childrenSelected to true if a children is selected', function () {
             child1.set({selected : false, childrenSelected : false});
@@ -35,11 +35,6 @@ describe('FilterRepresentation', function () {
     });
 
     describe("visibleLabelType", function () {
-        var filterRepresentation;
-
-        beforeEach(function () {
-            filterRepresentation = new FilterRepresentation({id : "id1", label : "label1"});
-        });
 
         it('should configure visibleLabel on initialize to default value -> label', function () {
             expect(filterRepresentation.get("visibleLabel")).to.equal("label1");
@@ -62,6 +57,22 @@ describe('FilterRepresentation', function () {
             });
 
         });
+    });
+
+    describe('toggleMeAndMyChildren', function () {
+
+        it('should deselect filterRepresentation and his children', function () {
+            filterRepresentation.set("selected", false);
+            child1.set("selected", true);
+            child2.set("selected", false);
+
+            filterRepresentation.toggleMeAndMyChildren("selected");
+
+            expect(filterRepresentation.get("selected")).to.be.true;
+            expect(child1.get("selected")).to.be.true;
+            expect(child2.get("selected")).to.be.true;
+        });
+
     });
 
 });
