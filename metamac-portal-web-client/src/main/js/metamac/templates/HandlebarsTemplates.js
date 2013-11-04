@@ -230,6 +230,34 @@ function program6(depth0,data) {
   return buffer;
   });
 
+this["Handlebars"]["templates"]["dataset/dataset-download"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.excel)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\n    <input type=\"hidden\" name=\"jsonBody\" value=\"";
+  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\n    <a href=\"#\" class=\"download-xlsx\"><i class=\"icon-xlsx\"></i></a>\n</form>\n\n<form  method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.csv)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\n    <input type=\"hidden\" name=\"jsonBody\" value=\"";
+  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\n     <a href=\"#\" class=\"download-csv\"><i class=\"icon-csv\"></i></a>\n</form>\n\n<form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.px)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\n    <input type=\"hidden\" name=\"jsonBody\" value=\"";
+  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\n     <a href=\"#\" class=\"download-csv\"><i class=\"icon-px\"></i></a>\n</form>\n\n<a href=\"#\" class=\"download-png\"><i class=\"icon-png\"></i></a>\n<a href=\"#\" class=\"download-pdf\"><i class=\"icon-pdf\"></i></a>\n<a href=\"#\" class=\"download-svg\"><i class=\"icon-svg\"></i></a>";
+  return buffer;
+  });
+
 this["Handlebars"]["templates"]["dataset/dataset-export"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -427,19 +455,19 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, options;
-  buffer += "\r\n        <button class=\"btn fs "
+  buffer += "\n        <button class=\"btn fs "
     + escapeExpression(((stack1 = ((stack1 = depth0.fullScreen),stack1 == null || stack1 === false ? stack1 : stack1.btnClass)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " visual-element-options-fs\" title='";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.fullscreen", options) : helperMissing.call(depth0, "message", "filter.button.fullscreen", options)))
-    + "'><i class=\"dataset-options-full-screen\"></i></button>\r\n    ";
+    + "'><i class=\"dataset-options-full-screen\"></i></button>\n    ";
   return buffer;
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <button class=\"btn ";
+  buffer += "\n        <button class=\"btn ";
   if (stack1 = helpers.btnClass) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.btnClass; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -455,20 +483,23 @@ function program3(depth0,data) {
   if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"></i></button>\r\n        ";
+    + "\"></i></button>\n        ";
   return buffer;
   }
 
-  buffer += "<div class=\"visual-element-options\">\r\n    <button class=\"btn visual-element-options-share\" title='";
+  buffer += "<div class=\"visual-element-options\">\n    <button class=\"btn visual-element-options-download\" title='";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.download", options) : helperMissing.call(depth0, "message", "filter.button.download", options)))
+    + "'><i class=\"dataset-options-download\"></i></button>\n    <button class=\"btn visual-element-options-share\" title='";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.share", options) : helperMissing.call(depth0, "message", "filter.button.share", options)))
-    + "'><i class=\"dataset-options-share\"></i></button>\r\n    ";
+    + "'><i class=\"dataset-options-share\"></i></button>\n    ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.fullScreen),stack1 == null || stack1 === false ? stack1 : stack1.visible), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n</div>\r\n\r\n<div class=\"change-visual-element\">\r\n    <div class=\"btn-group\" data-toggle=\"buttons-radio\">\r\n        ";
+  buffer += "\n</div>\n\n<div class=\"change-visual-element\">\n    <div class=\"btn-group\" data-toggle=\"buttons-radio\">\n        ";
   stack2 = helpers.each.call(depth0, depth0.veTypeButton, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n    </div>\r\n</div>\r\n\r\n\r\n\r\n\r\n";
+  buffer += "\n    </div>\n</div>\n\n\n\n\n";
   return buffer;
   });
 

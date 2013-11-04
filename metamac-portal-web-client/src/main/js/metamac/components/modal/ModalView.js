@@ -24,7 +24,6 @@
             var context = {
                 title : this.title
             };
-            console.log("context", context);
             return context;
         },
 

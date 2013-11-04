@@ -74,6 +74,7 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DatasetInfoView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
                 paths.modules + "/dataset/DatasetShareView.js"
+                paths.modules + "/dataset/DatasetDownloadView.js"
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"

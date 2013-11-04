@@ -6,7 +6,7 @@
     App.modules.dataset.DatasetPermalink = {
 
         baseUrl : function () {
-            return App.endpoints["portal"];
+            return App.endpoints["portal"] + "/apis/permalinks/v1.0/permalinks";
         },
 
         retrievePermalink : function (permalinkId) {

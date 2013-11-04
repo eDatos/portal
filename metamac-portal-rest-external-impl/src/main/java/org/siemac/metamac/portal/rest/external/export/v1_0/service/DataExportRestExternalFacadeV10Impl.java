@@ -2,6 +2,8 @@ package org.siemac.metamac.portal.rest.external.export.v1_0.service;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
@@ -23,6 +25,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.io.*;
@@ -45,6 +48,9 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Autowired
     private StatisticalResourcesRestExternalFacade statisticalResourcesRestExternal;
+
+    @Autowired
+    private JacksonJsonProvider jacksonJsonProvider;
 
     @Override
     public Response exportDatasetToTsv(TsvExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
@@ -89,6 +95,19 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
+    public Response exportDatasetToTsvForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(TsvExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        try {
+            TsvExportation tsvExportation = objectMapper.readValue(jsonBody, TsvExportation.class);
+            return exportDatasetToTsv(tsvExportation, agencyID, resourceID, version, lang, filename);
+        } catch (IOException e) {
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                    RestExternalConstants.PARAMETER_SELECTION);
+            throw new RestException(exception, Status.BAD_REQUEST);
+        }
+    }
+
+    @Override
     public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Check and transform selection
@@ -127,6 +146,19 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
+    public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(TsvExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        try {
+            ExcelExportation excelExportation = objectMapper.readValue(jsonBody, ExcelExportation.class);
+            return exportDatasetToExcel(excelExportation, agencyID, resourceID, version, lang, filename);
+        } catch (IOException e) {
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                    RestExternalConstants.PARAMETER_SELECTION);
+            throw new RestException(exception, Status.BAD_REQUEST);
+        }
+    }
+
+    @Override
     public Response exportDatasetToPx(PxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Transform possible selection (not required)
@@ -157,6 +189,19 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             return buildResponseOkWithFile(tmpFile, filename);
         } catch (Exception e) {
             throw manageException(e);
+        }
+    }
+
+    @Override
+    public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(TsvExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        try {
+            PxExportation pxExportation = objectMapper.readValue(jsonBody, PxExportation.class);
+            return exportDatasetToPx(pxExportation, agencyID, resourceID, version, lang, filename);
+        } catch (IOException e) {
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                    RestExternalConstants.PARAMETER_SELECTION);
+            throw new RestException(exception, Status.BAD_REQUEST);
         }
     }
 

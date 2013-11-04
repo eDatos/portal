@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -253,19 +254,26 @@
             <artifactId>commons-dbcp</artifactId>
             <version>${commons-dbcp.version}</version>
         </dependency>
-        
+
         <!-- MISC -->
-       <dependency>
+        <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
         </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>ooxml-schemas</artifactId>
+           <version>1.0</version>
+           <version>1.0</version>
+       </dependency>
+
         <!-- SVG Export -->
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-codec</artifactId>
             <version>${batik-core.version}</version>
         </dependency>
-        
+
         <!-- TESTS -->
         <dependency>
             <groupId>org.siemac.metamac</groupId>
@@ -273,7 +281,7 @@
             <version>${metamac-core-common.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
-        </dependency>   
+        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -512,7 +520,8 @@
                 <version>${fornax-oaw-m2.version}</version>
                 <configuration>
                     <workflowEngine>mwe2</workflowEngine>
-                    <workflowDescriptor>file://${basedir}/src/main/resources/generator/Workflow.mwe2</workflowDescriptor>
+                    <workflowDescriptor>file://${basedir}/src/main/resources/generator/Workflow.mwe2
+                    </workflowDescriptor>
                     <checkFilesets>
                         <checkFileset>
                             <directory>${basedir}</directory>
@@ -539,7 +548,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.6</version><!--$NO-MVN-MAN-VER$ -->
+                <version>1.6</version>
+                <!--$NO-MVN-MAN-VER$ -->
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -549,22 +559,22 @@
                         <configuration>
                             <target>
                                 <!-- Delete spring configuration files -->
-                                <delete file="${basedir}/src/main/resources/spring.properties" />
-                                <delete file="${basedir}/src/main/resources/more.xml" />
+                                <delete file="${basedir}/src/main/resources/spring.properties"/>
+                                <delete file="${basedir}/src/main/resources/more.xml"/>
 
-                                <delete file="${basedir}/src/generated/resources/applicationContext.xml" />
-                                <delete file="${basedir}/src/generated/resources/pub-sub.xml" />
-                                <delete file="${basedir}/src/generated/resources/EntityManagerFactory.xml" />
-                                <delete file="${basedir}/src/generated/resources/Interceptor.xml" />
-                                <delete file="${basedir}/src/generated/resources/beanRefContext.xml" />
-                                <delete file="${basedir}/src/generated/resources/generated-spring.properties" />
+                                <delete file="${basedir}/src/generated/resources/applicationContext.xml"/>
+                                <delete file="${basedir}/src/generated/resources/pub-sub.xml"/>
+                                <delete file="${basedir}/src/generated/resources/EntityManagerFactory.xml"/>
+                                <delete file="${basedir}/src/generated/resources/Interceptor.xml"/>
+                                <delete file="${basedir}/src/generated/resources/beanRefContext.xml"/>
+                                <delete file="${basedir}/src/generated/resources/generated-spring.properties"/>
 
-                                <delete file="${basedir}/src/test/resources/more-test.xml" />
-                                <delete file="${basedir}/src/test/resources/spring-test.properties" />
+                                <delete file="${basedir}/src/test/resources/more-test.xml"/>
+                                <delete file="${basedir}/src/test/resources/spring-test.properties"/>
 
-                                <delete file="${basedir}/src/test/generated/resources/Interceptor-test.xml" />
-                                <delete file="${basedir}/src/test/generated/resources/applicationContext-test.xml" />
-                                <delete file="${basedir}/src/test/generated/resources/EntityManagerFactory-test.xml" />
+                                <delete file="${basedir}/src/test/generated/resources/Interceptor-test.xml"/>
+                                <delete file="${basedir}/src/test/generated/resources/applicationContext-test.xml"/>
+                                <delete file="${basedir}/src/test/generated/resources/EntityManagerFactory-test.xml"/>
                             </target>
                         </configuration>
                     </execution>

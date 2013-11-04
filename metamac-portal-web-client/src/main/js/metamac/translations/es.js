@@ -12,6 +12,7 @@ I18n.translations.es = {
             map : "Mapa",
             fullscreen : "Pantalla completa",
             share : "Compartir",
+            download : "Descarga",
             accept : "Aceptar",
             cancel : "Cancelar",
             selectAll : "Marcar todo",

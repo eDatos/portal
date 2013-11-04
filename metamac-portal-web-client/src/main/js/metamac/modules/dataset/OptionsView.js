@@ -18,7 +18,8 @@
             "click .change-visual-element button" : "changeType",
             "click .visual-element-options-edit" : "clickFilterLoader",
             "click .visual-element-options-fs" : "clickFullScreen",
-            "click .visual-element-options-share" : "clickShare"
+            "click .visual-element-options-share" : "clickShare",
+            "click .visual-element-options-download" : "clickDownload"
         },
 
         destroy : function () {
@@ -114,6 +115,15 @@
 
             var title = I18n.t("filter.button.share");
             var modalContentView = new App.modules.dataset.DatasetShareView({filterDimensions : this.filterDimensions});
+            var modal = new App.components.modal.ModalView({title : title, contentView : modalContentView});
+            modal.show();
+        },
+
+        clickDownload : function (e) {
+            e.preventDefault();
+
+            var title = I18n.t("filter.button.download");
+            var modalContentView = new App.modules.dataset.DatasetDownloadView({filterDimensions : this.filterDimensions});
             var modal = new App.components.modal.ModalView({title : title, contentView : modalContentView});
             modal.show();
         }
