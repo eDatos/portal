@@ -1,21 +1,5 @@
 package org.siemac.metamac.portal.rest.external.export.v1_0.service;
 
-import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPrivate.SERVICE_CONTEXT;
-import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -39,14 +23,25 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPrivate.SERVICE_CONTEXT;
+import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
+
 @Service("dataExportRestExternalFacadeV10")
 public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Autowired
-    private ExportService                          exportService;
+    private ExportService exportService;
 
     @Autowired
-    private PortalConfiguration                    portalConfiguration;
+    private PortalConfiguration portalConfiguration;
 
     @Autowired
     private StatisticalResourcesRestExternalFacade statisticalResourcesRestExternal;
@@ -188,8 +183,15 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     private Dataset retrieveDataset(String agencyID, String resourceID, String version, String lang, String dimensionSelection) throws MetamacException {
+        List<String> langs = new ArrayList<String>();
         String langAlternative = portalConfiguration.retrieveLanguageDefault();
-        return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, Arrays.asList(lang, langAlternative), null, dimensionSelection);
+        if (lang != null) {
+            langs.add(lang);
+        }
+        if (!langAlternative.equals(lang)) {
+            langs.add(langAlternative);
+        }
+        return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, langs, null, dimensionSelection);
     }
 
     private boolean isEmpty(DatasetSelection datasetSelection) {
