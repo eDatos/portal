@@ -1,25 +1,52 @@
-<%@page buffer="none" session="false" taglibs="c,cms,fmt" %>
+<%@ page import="org.apache.cxf.jaxrs.client.JAXRSClientFactory" %>
+<%@ page import="org.siemac.metamac.rest.common.v1_0.domain.InternationalString" %>
+<%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.Collection" %>
+<%@ page import="org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <fmt:setLocale value="${cms.locale}" />
 <cms:formatter var="content" val="value">
-<div>
-    <div class="metamac-container">Cargando...</div>
+    <div>
 
-    <script>
-        <!-- @include ../resources/lazyload.js -->
-    </script>
+        <%!
+            public String localizeTitle(InternationalString internationalString) {
+                return internationalString.getTexts().get(0).getValue();
+            };
+        %>
 
-    <script>
-        LazyLoad.css('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.css</cms:link>', function () {
-            LazyLoad.js('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.js</cms:link>', function () {
-                I18n.defaultLocale = "es";
-                I18n.locale = "es";
+        <%
 
-                App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
-                App.endpoints["srm"] = "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0";
+            //test http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000001
 
-                App.start();
-            });
-        });
-    </script>
-</div>
+            Collection collection = null;
+            try {
+                String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources";
+                StatisticalResourcesV1_0 statisticalResourcesV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, StatisticalResourcesV1_0.class, null, true);
+                String agencyId = request.getParameter("agencyId");
+                String resourceId = request.getParameter("resourceId");
+                List<String> lang = new ArrayList<String>();
+                String fields = "";
+                collection = statisticalResourcesV1_0.retrieveCollection(agencyId, resourceId, lang, fields);
+                request.setAttribute("collection", collection);
+            } catch (Exception e) {
+
+            }
+        %>
+
+        <c:choose>
+            <c:when test="${collection != null}">
+                <%
+                    request.setAttribute("nodes", collection.getData().getNodes().getNodes());
+                %>
+                <jsp:include page="./node.jsp" />
+            </c:when>
+            <c:otherwise>
+                error
+            </c:otherwise>
+        </c:choose>
+
+    </div>
+
 </cms:formatter>
