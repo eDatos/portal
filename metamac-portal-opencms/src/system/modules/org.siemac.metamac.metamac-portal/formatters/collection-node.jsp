@@ -3,12 +3,7 @@
 <%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.CollectionNode" %>
 <%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.Table" %>
 <%@ page import="java.util.List" %>
-
-<%!
-    public String localizeTitle(InternationalString internationalString) {
-        return internationalString.getTexts().get(0).getValue();
-    }
-%>
+<%@ page import="org.siemac.metamac.portal.Helpers" %>
 
 <ul class="capitulos">
     <%
@@ -30,10 +25,10 @@
     <li class="dimension dimension-depth-${nodeDepth} ${openClass}">
         <span class="dimension-title">
             <c:if test="${nodeDepth > 2}"><a href="#" class="tree-icon"></a></c:if>
-            <%= localizeTitle(chapter.getName()) %>
+            <%= Helpers.localizeTitle(chapter.getName()) %>
         </span>
         <% request.setAttribute("nodes", chapter.getNodes().getNodes());%>
-        <jsp:include page="./node.jsp"/>
+        <jsp:include page="./collection-node.jsp"/>
     </li>
 
     <%
@@ -53,7 +48,7 @@
     <li>
         <i class="icon-table"></i>
         <span class="item-numeration">${numerationFixed}</span>
-        <a class="nouline" href="#"><%= localizeTitle(table.getName()) %>
+        <a class="nouline" href="#"><%= Helpers.localizeTitle(table.getName()) %>
         </a>
     </li>
 
