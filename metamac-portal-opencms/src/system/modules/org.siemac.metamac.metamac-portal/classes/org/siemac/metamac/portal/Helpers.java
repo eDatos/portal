@@ -1,6 +1,7 @@
 package org.siemac.metamac.portal;
 
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
+import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Chapter;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Collection;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CollectionNode;
@@ -35,7 +36,11 @@ public class Helpers {
     }
 
     public static String localizeTitle(InternationalString internationalString) {
-        //TODO fetch the spanish language
+        for (LocalisedString text : internationalString.getTexts()) {
+            if (text.getLang().equals("es")) {
+                return text.getValue();
+            }
+        }
         return internationalString.getTexts().get(0).getValue();
     }
 
@@ -46,14 +51,14 @@ public class Helpers {
     public static String tableViewUrl(Table table) {
         if (table.getQuery() != null) {
             String[] hrefParts = table.getDataset().getSelfLink().getHref().split("/");
-            String agency = reverseIndex(hrefParts, 0);
-            String identifier = reverseIndex(hrefParts, 1);
+            String agency = reverseIndex(hrefParts, 1);
+            String identifier = reverseIndex(hrefParts, 0);
             return "view.html#queries/" + agency + "/" + identifier;
         } else if (table.getDataset() != null) {
             String[] hrefParts = table.getDataset().getSelfLink().getHref().split("/");
-            String agency = reverseIndex(hrefParts, 0);
+            String agency = reverseIndex(hrefParts, 2);
             String identifier = reverseIndex(hrefParts, 1);
-            String version = reverseIndex(hrefParts, 2);
+            String version = reverseIndex(hrefParts, 0);
             return "view.html#datasets/" + agency + "/" + identifier + "/" + version;
         }
         return "#";

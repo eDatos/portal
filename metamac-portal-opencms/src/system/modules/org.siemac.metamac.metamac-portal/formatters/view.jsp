@@ -1,4 +1,6 @@
-<%@page buffer="none" session="false" taglibs="c,cms,fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %>
+
 <fmt:setLocale value="${cms.locale}" />
 <cms:formatter var="content" val="value">
     <div>
@@ -16,6 +18,8 @@
 
                     App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0";
                     App.endpoints["srm"] = "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0";
+
+                    console.log("starting app");
 
                     App.start();
                 });

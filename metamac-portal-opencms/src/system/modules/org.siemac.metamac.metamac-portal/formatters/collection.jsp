@@ -10,6 +10,7 @@
 <fmt:setLocale value="${cms.locale}" />
 <cms:formatter var="content" val="value">
     <div>
+
         <%
             //test http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000001
             Collection collection = null;
