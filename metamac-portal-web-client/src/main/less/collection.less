@@ -1,0 +1,98 @@
+.contenido ul.capitulos {
+    list-style: none;
+    margin: 0;
+
+    li {
+        background: none;
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+        //margin-bottom: 5px;
+        margin-bottom: 0;
+    }
+
+    .dimension {
+        font-weight: bold;
+    }
+
+    .dimension-title {
+        font: bold 1em Tahoma, geneva, arial, sans-serif;
+        display: block;
+        margin: 10px 0;
+    }
+
+    .dimension-depth-1 > .dimension-title {
+        font: bold 1em Tahoma, geneva, arial, sans-serif;
+        padding: 0 0 3px 10px;
+        border-bottom: 1px dotted #a4a4a4;
+        background: url(data:image/gif;base64,R0lGODlhBAAKAIABADp7vv///yH5BAEAAAEALAAAAAAEAAoAAAIKjI+ZAMYd3ouwAAA7) no-repeat left top;
+    }
+
+    .dimension-depth-1, .dimension-depth-2 {
+        .capitulos {
+            margin-left: 10px;
+        }
+    }
+
+    .dimension-depth-3 {
+        .capitulos {
+            margin-left: 18px;
+        }
+
+        .dimension-title {
+            margin: 2px 0 3px 0;
+        }
+    }
+
+    .item-numeration {
+        color: #6B6B6B;
+    }
+
+    .dimension-depth-1 {
+        //tree for elements lower than first depth
+
+        .tree-icon {
+            vertical-align: middle;
+            margin-right: 3px;
+            float: left;
+            text-decoration: none;
+
+            &:before {
+                font-size: 13px;
+                color: #808080;
+                cursor: pointer;
+            }
+
+            &:hover:before {
+                color: #003366;
+            }
+        }
+
+        .open {
+            .tree-icon {
+                .icon-collection-minus();
+            }
+        }
+
+        .close {
+            .tree-icon {
+                .icon-collection-plus();
+            }
+
+            .capitulos {
+                display: none;
+            }
+        }
+
+    }
+
+    .icon-collection-table {
+        font-size: 13px;
+        color: #808080;
+        cursor: pointer;
+        &:hover {
+            color: #003366;
+        }
+    }
+
+}

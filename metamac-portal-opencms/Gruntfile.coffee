@@ -7,10 +7,16 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         pom : {}
+        watch :
+            preprocess:
+                files : ["src/system/modules/org.siemac.metamac.metamac-portal/formatters/*"]
+                tasks : ["preprocess"]
+
         compress:
             build:
                 options:
@@ -21,8 +27,11 @@ module.exports = (grunt) ->
                 dest: '/'
         preprocess:
             build:
-                src: 'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/all.jsp',
-                dest: 'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/all.jsp'
+                files:
+                    'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/visualization.jsp' : 'src/system/modules/org.siemac.metamac.metamac-portal/formatters/visualization.jsp'
+                    'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/collection.jsp' : 'src/system/modules/org.siemac.metamac.metamac-portal/formatters/collection.jsp'
+                    'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/collection-node.jsp' : 'src/system/modules/org.siemac.metamac.metamac-portal/formatters/collection-node.jsp'
+
         copy:
             build:
                 files: [
@@ -33,6 +42,18 @@ module.exports = (grunt) ->
                         dest: 'target/tmp/system/modules/org.siemac.metamac.metamac-portal/resources/',
                         cwd: '../metamac-portal-web-client/target/'
                     }
+                    {
+                        expand: true,
+                        src: '**',
+                        dest: 'target/tmp/system/modules/org.siemac.metamac.metamac-portal/lib/',
+                        cwd: 'target/lib'
+                    }
+                    {
+                        expand : true
+                        src : "metamac-portal-opencms-<%= pom.version %>.jar"
+                        dest : "target/tmp/system/modules/org.siemac.metamac.metamac-portal/lib/"
+                        cwd: "target/"
+                    }
                 ]
         uglify:
             build:
@@ -40,8 +61,8 @@ module.exports = (grunt) ->
                     'target/tmp/system/modules/org.siemac.metamac.metamac-portal/resources/lazyload.js': [
                         'target/tmp/system/modules/org.siemac.metamac.metamac-portal/resources/lazyload.js'
                     ]
-        clean:
-            build: ["target"]
+
+
     });
 
     grunt.registerTask "pom",  () ->
@@ -57,6 +78,6 @@ module.exports = (grunt) ->
                 done();
 
 
-    grunt.registerTask("build", ["pom", "clean", "copy", "uglify", "preprocess", "compress"]);
+    grunt.registerTask("build", ["pom", "copy", "uglify", "preprocess", "compress"]);
     grunt.registerTask("default", "build")
 

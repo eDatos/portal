@@ -3,7 +3,10 @@
   "description": "",
   "version": "0.0.1",
   "author": "Arte consultores",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-sftp-deploy": "0.0.10",
+    "grunt-contrib-watch": "~0.5.3"
+  },
   "devDependencies": {
     "grunt-contrib-compress": "~0.5.2",
     "grunt": "~0.4.1",

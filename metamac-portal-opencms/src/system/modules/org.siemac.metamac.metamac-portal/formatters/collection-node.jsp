@@ -4,16 +4,17 @@
 <%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.Table" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.siemac.metamac.portal.Helpers" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <ul class="capitulos">
     <%
         Integer nodeDepth = (Integer)request.getAttribute("nodeDepth");
         if (nodeDepth == null) {
-            request.setAttribute("nodeDepth", 1);
+            nodeDepth = 1;
         } else {
-            request.setAttribute("nodeDepth", nodeDepth + 1);
+            nodeDepth = nodeDepth + 1;
         }
-
+        request.setAttribute("nodeDepth", nodeDepth);
         request.setAttribute("openClass", "open");
 
         List<CollectionNode> nodes = (List<CollectionNode>) request.getAttribute("nodes");
@@ -29,6 +30,9 @@
         </span>
         <% request.setAttribute("nodes", chapter.getNodes().getNodes());%>
         <jsp:include page="./collection-node.jsp"/>
+<%
+    request.setAttribute("nodeDepth", nodeDepth); //reset node depth
+%>
     </li>
 
     <%
@@ -46,9 +50,9 @@
     %>
 
     <li>
-        <i class="icon-table"></i>
+        <i class="icon-collection-table"></i>
         <span class="item-numeration">${numerationFixed}</span>
-        <a class="nouline" href="#"><%= Helpers.localizeTitle(table.getName()) %>
+        <a class="nouline" href="<%= Helpers.tableViewUrl(table) %>"><%= Helpers.localizeTitle(table.getName()) %>
         </a>
     </li>
 
