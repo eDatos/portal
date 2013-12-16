@@ -1,0 +1,11 @@
+========================================================================
+METAMAC-PORTAL -- Visualizador de datos estadísticos
+========================================================================
+
+Visualizador de datos estadísticos desarrollado dentro de METAMAC y que 
+se incrusta dentro de un portal OpenCMS para poder visualizar: tablas de
+datos, gráficos, mapas estadísticos y estructuras de publicaciones.
+
+Por favor, consulta nuestro gestor de incidencia para obtener más información
+de las incidencias con el id [METAMAC-xxx].
+http://jira.arte-consultores.com/browse/METAMAC
