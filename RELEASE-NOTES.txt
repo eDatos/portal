@@ -9,3 +9,43 @@ datos, gráficos, mapas estadísticos y estructuras de publicaciones.
 Por favor, consulta nuestro gestor de incidencia para obtener más información
 de las incidencias con el id [METAMAC-xxx].
 http://jira.arte-consultores.com/browse/METAMAC
+
+------------------------------------------------------------------------------
+Release 1.0.0
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - hito metamac-portal 1.0.0
+
+** Defecto
+    * [METAMAC-959] - Cambiar el contexto de stat4you a metmac-portal
+    * [METAMAC-1824] - Integrar el portal web con la API
+
+** Nueva Funcionalidad
+    * [METAMAC-1833] - Jerarquía en los filtros
+    * [METAMAC-1923] - Crear aplicación web metamac-portal
+    * [METAMAC-1964] - Poder seleccionar, para cada variable, si queremos que se muestren etiquetas, códigos o etiquetas y códigos.
+    * [METAMAC-1965] - Doble click en una categoria marca a todos sus hijos
+    * [METAMAC-1976] - Posibilidad de setear en la WEB los datos por defecto de data
+
+** Soporte
+    * [METAMAC-965] - Contestar e-mail de Alberto sobre adaptar visualizaciones a Banco Mundial
+    * [METAMAC-1113] - Cambio en la configuración de Maven: uniqueVersion
+    * [METAMAC-1171] - Añadir el proyecto a Jenkins
+    * [METAMAC-2003] - Añadir RELEASE-NOTES al proyecto
+
+** Tarea
+    * [METAMAC-941] - Crear proyecto heredado de Stat4you
+    * [METAMAC-942] - Cambiar página principal para solo mostrar una lista de datasets publicados en el sistema y no el buscador
+    * [METAMAC-956] - Cambiar páginad e visualización para conformar con Istac
+    * [METAMAC-1009] - Desplegar, configurar e instalar la demo de Metamac Portal
+    * [METAMAC-1013] - Crear artefacto modificado a partir de fornax-cartridges-sculptor-framework-2.0.0-without-ejb.jar que incluya el bugfix de scultpor con orderbys de propeidades foráneas.
+    * [METAMAC-1574] - Comprobar si es necesario servir las visualizaciones de codelists para el Portal
+    * [METAMAC-1879] - Permalinks
+    * [METAMAC-1896] - Caché de información geográfica de elementos de variable
+    * [METAMAC-2000] - Modificar la estructura changes-in-release de los proyectos
+    * [METAMAC-2071] - Crear scripts en common-metadata para nueva estructura de properties del metamac-portal
+
+** Sub-tarea
+    * [METAMAC-1533] - [PORTAL] Consulta eficiente en la API para obtener todos los codes de un codelist
+
+
