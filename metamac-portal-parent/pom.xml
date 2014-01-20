@@ -10,7 +10,7 @@
 
     <groupId>org.siemac.metamac.metamac-portal</groupId>
     <artifactId>metamac-portal-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>METAMAC :: PORTAL :: PARENT</name>
     <description>METAMAC :: PORTAL :: PARENT</description>
@@ -300,10 +300,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-  <scm>
-    <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-parent/tags/20140120-1048-v1.0.0/metamac-portal-parent</connection>
-    <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-parent/tags/20140120-1048-v1.0.0/metamac-portal-parent</developerConnection>
-    <url>http://svn.arte-consultores.com/viewvc/arte/istac/metamac/metamac-parent/tags/20140120-1048-v1.0.0/metamac-portal-parent</url>
-  </scm>
 </project>
