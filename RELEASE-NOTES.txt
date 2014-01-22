@@ -10,6 +10,16 @@ Por favor, consulta nuestro gestor de incidencia para obtener más información
 de las incidencias con el id [METAMAC-xxx].
 http://jira.arte-consultores.com/browse/METAMAC
 
+
+------------------------------------------------------------------------------
+Release 1.0.1
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - hito metamac-portal - 1.0.1
+
+** Defecto
+    * [METAMAC-2080] - La API de permalinks debe permitir jsonp
+
 ------------------------------------------------------------------------------
 Release 1.0.0
 ------------------------------------------------------------------------------
