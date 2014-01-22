@@ -11,9 +11,9 @@
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
     <jaxrs:server id="restExternalPermalinks" address="/permalinks">
-<!--         <jaxrs:features> -->
-<!--             <cxf:logging /> -->
-<!--         </jaxrs:features> -->
+        <!-- <jaxrs:features> -->
+        <!-- <cxf:logging /> -->
+        <!-- </jaxrs:features> -->
 
         <jaxrs:serviceBeans>
             <ref bean="permalinksRestExternalFacadeV10" />
@@ -28,14 +28,26 @@
             <ref bean="jaxbProvider" />
             <ref bean="jsonProvider" />
             <ref bean="wadlGenerator" />
-            <ref bean="captchaFilter"/>
+            <ref bean="captchaFilter" />
         </jaxrs:providers>
+        
+        <!-- JSONP -->
+        <jaxrs:inInterceptors>
+            <bean class="org.apache.cxf.jaxrs.provider.jsonp.JsonpInInterceptor">
+                <property name="callbackParam" value="_callback"/>
+            </bean>
+        </jaxrs:inInterceptors>
+        <jaxrs:outInterceptors>
+            <bean class="org.apache.cxf.jaxrs.provider.jsonp.JsonpPreStreamInterceptor">
+            </bean>
+            <bean class="org.apache.cxf.jaxrs.provider.jsonp.JsonpPostStreamInterceptor" />
+        </jaxrs:outInterceptors>
     </jaxrs:server>
-    
+
     <jaxrs:server id="restExternalDataExport" address="/export">
-<!--         <jaxrs:features> -->
-<!--             <cxf:logging /> -->
-<!--         </jaxrs:features> -->
+        <!-- <jaxrs:features> -->
+        <!-- <cxf:logging /> -->
+        <!-- </jaxrs:features> -->
 
         <jaxrs:serviceBeans>
             <ref bean="dataExportRestExternalFacadeV10" />
@@ -43,10 +55,10 @@
 
         <jaxrs:providers>
             <ref bean="jaxbProvider" />
-            <ref bean="jsonProvider" />        
+            <ref bean="jsonProvider" />
             <ref bean="wadlGenerator" />
         </jaxrs:providers>
-    </jaxrs:server>    
+    </jaxrs:server>
 
     <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
         <property name="marshallerProperties" ref="marshallerProperties" />
@@ -58,7 +70,7 @@
         <property name="namespacePrefix" value="ns" />
     </bean>
 
-    <bean id="captchaFilter" class="org.siemac.metamac.portal.rest.external.authentication.CaptchaFilter"/>
+    <bean id="captchaFilter" class="org.siemac.metamac.portal.rest.external.authentication.CaptchaFilter" />
 
     <util:map id="marshallerProperties">
         <entry key="jaxb.formatted.output">

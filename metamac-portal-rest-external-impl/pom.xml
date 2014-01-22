@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.siemac.metamac.metamac-portal</groupId>
-		<artifactId>metamac-portal-parent</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
-		<relativePath>../metamac-portal-parent/pom.xml</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.siemac.metamac.metamac-portal</groupId>
+        <artifactId>metamac-portal-parent</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+        <relativePath>../metamac-portal-parent/pom.xml</relativePath>
+    </parent>
 
     <groupId>org.siemac.metamac.metamac-portal</groupId>
     <artifactId>metamac-portal-rest-external-impl</artifactId>
     <packaging>jar</packaging>
-    <name>METAMAC :: PORTAL :: REST :: EXTERNAL IMPL</name>    
+    <name>METAMAC :: PORTAL :: REST :: EXTERNAL IMPL</name>
 
-	<dependencies>
+    <dependencies>
         <!-- Metamac -->
-		<dependency>
-			<groupId>org.siemac.metamac.metamac-portal</groupId>
-			<artifactId>metamac-portal-rest-external-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.metamac-portal</groupId>
+            <artifactId>metamac-portal-rest-external-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.siemac.metamac.metamac-portal</groupId>
             <artifactId>metamac-portal-core</artifactId>
@@ -78,7 +78,7 @@
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        
+
         <!-- JSON -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -99,8 +99,13 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-xc</artifactId>
             <version>${jackson.version}</version>
-        </dependency>        
-        
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-extension-providers</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>org.siemac.metamac</groupId>
@@ -108,7 +113,7 @@
             <type>test-jar</type>
             <version>${metamac-core-common.version}</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-rest-common</artifactId>
@@ -163,7 +168,7 @@
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty.version}</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-servlet_2.5_spec</artifactId>
