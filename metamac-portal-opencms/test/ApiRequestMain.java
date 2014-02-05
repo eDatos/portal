@@ -8,7 +8,7 @@ import java.util.List;
 public class ApiRequestMain {
 
     public static void main(String[] args) {
-        String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources";
+        String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
         StatisticalResourcesV1_0 statisticalResourcesV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, StatisticalResourcesV1_0.class, null, true);
         String agencyId = "ISTAC";
         String resourceId = "C00031A_000001";
