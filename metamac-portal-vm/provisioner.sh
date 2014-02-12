@@ -13,8 +13,10 @@ fi
 
 if [ ! -f opencms.zip ]; then
     wget http://www.opencms.org/downloads/opencms/opencms_8.5.1.zip -O opencms.zip >/dev/null 2>&1
-    unzip opencms.zip -d opencms
-    mv opencms/opencms.war apache-tomcat-6.0.37/webapps/
+    unzip opencms.zip -d opencms	
+    mv opencms/opencms.war apache-tomcat-6.0.37/webapps/opencms/
+	# No está desplegandose automáticamente de forma correcta así que descomprimimos a mano
+	unzip apache-tomcat-6.0.37/webapps/opencms/opencms.war -d apache-tomcat-6.0.37/webapps/opencms/
 fi
 
 apache-tomcat-6.0.37/bin/startup.sh
