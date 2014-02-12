@@ -33,4 +33,6 @@ La aplicación de conecta a diferentes apis para consumir los datos. Las peticio
 
 *TODO: Falta consulta para averiguar el codelist con el orden de las granularidad geográficas*
 
-[http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes?_type=json]()	
+[http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes?_type=json]()
+
+	
