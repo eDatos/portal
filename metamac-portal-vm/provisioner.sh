@@ -7,7 +7,7 @@ apt-get install unzip
 apt-get -q -y install openjdk-6-jre
 
 if [ ! -f apache-tomcat-6.0.37.tar.gz ]; then
-    wget http://ftp.cixug.es/apache/tomcat/tomcat-6/v6.0.37/bin/apache-tomcat-6.0.37.tar.gz >/dev/null 2>&1
+    wget http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.37/bin/apache-tomcat-6.0.37.tar.gz >/dev/null 2>&1
     tar -zxvf apache-tomcat-6.0.37.tar.gz
 fi
 
