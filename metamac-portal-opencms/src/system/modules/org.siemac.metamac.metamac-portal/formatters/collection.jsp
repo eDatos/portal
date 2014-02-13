@@ -12,7 +12,7 @@
     <div>
 
         <%
-            //test http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000001
+            //test http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000002
             Collection collection = null;
             try {
                 String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
@@ -36,7 +36,7 @@
                 <%
                         request.setAttribute("nodes", collection.getData().getNodes().getNodes());
                 %>
-                <jsp:include page="./collection-node.jsp" />
+                <cms:include page="./collection-node.jsp" />
             </c:when>
             <c:otherwise>
                 <div class="contenido">
