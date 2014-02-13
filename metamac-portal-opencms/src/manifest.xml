@@ -636,33 +636,10 @@
             <accesscontrol/>
         </file>
         <file>
-            <source>system/modules/org.siemac.metamac.metamac-portal/lib/metamac-portal-web-client-1.0.1-SNAPSHOT.jar
+            <source>system/modules/org.siemac.metamac.metamac-portal/lib/metamac-portal-opencms-1.0.2-SNAPSHOT.jar
             </source>
             <destination>
-                system/modules/org.siemac.metamac.metamac-portal/lib/metamac-portal-web-client-1.0.1-SNAPSHOT.jar
-            </destination>
-            <type>binary</type>
-            <uuidstructure>b59204bb-5820-11e3-9d02-d539d195231f</uuidstructure>
-            <uuidresource>b59204bc-5820-11e3-9d02-d539d195231f</uuidresource>
-            <datelastmodified>Thu, 28 Nov 2013 11:32:05 GMT</datelastmodified>
-            <userlastmodified>Admin</userlastmodified>
-            <datecreated>Thu, 28 Nov 2013 11:32:05 GMT</datecreated>
-            <usercreated>Admin</usercreated>
-            <flags>0</flags>
-            <properties>
-                <property>
-                    <name>Title</name>
-                    <value><![CDATA[metamac-portal-web-client-1.0.1-SNAPSHOT]]></value>
-                </property>
-            </properties>
-            <relations/>
-            <accesscontrol/>
-        </file>
-        <file>
-            <source>system/modules/org.siemac.metamac.metamac-portal/lib/metamac-portal-opencms-1.0.1-SNAPSHOT.jar
-            </source>
-            <destination>
-                system/modules/org.siemac.metamac.metamac-portal/lib/metamac-portal-opencms-1.0.1-SNAPSHOT.jar
+                system/modules/org.siemac.metamac.metamac-portal/lib/metamac-portal-opencms-1.0.2-SNAPSHOT.jar
             </destination>
             <type>binary</type>
             <uuidstructure>b59204bb-5820-11e3-9d02-d539d1952313</uuidstructure>
@@ -675,7 +652,7 @@
             <properties>
                 <property>
                     <name>Title</name>
-                    <value><![CDATA[metamac-portal-opencms-1.0.1-SNAPSHOT.jar]]></value>
+                    <value><![CDATA[metamac-portal-opencms-1.0.2-SNAPSHOT.jar]]></value>
                 </property>
             </properties>
             <relations/>
