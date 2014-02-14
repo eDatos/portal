@@ -2,23 +2,21 @@
 
 [http://localhost:8082/opencms/setup/](http://localhost:8082/opencms/setup/)
 
-# Importar portal del istac
-
-Administración
+# Acceso a Administración
 [http://localhost:8082/opencms/opencms/system/workplace/views/workplace.jsp](http://localhost:8082/opencms/opencms/system/workplace/views/workplace.jsp)
 
 user: Admin
 password: admin
 
-Importar módulo : es.gobcan.istac.web_2.0.4.zip
-Importar contenidos : contenidos_istac_des-opencms_20130816.zip
+# Importar portal del istac
+Acceder a View -> Administration (Selector en la parte superior)
 
+Module management -> Import Module with HTTP (Está en metamac-portal-opencms/istac/es.gobcan.istac.web_2.0.4.zip)
+Database management -> Import File with HTTP (Está en metamac-portal-opencms/istac/contenidos_istac_des_opencms_20130816.zip)
 
-# OpenCMS instalación del módulo
+# OpenCMS instalación del módulo (metamac-portal-opencms)
 
-[http://localhost:8082/opencms/opencms/system/workplace/views/workplace.jsp](http://localhost:8082/opencms/opencms/system/workplace/views/workplace.jsp)
-
-Ir a  `Administration View`  >  `Module Management` > `Import Module with HTTP`
+Module management -> Import Module with HTTP (Está en metamac-portal-opcenms/target/metamac-portal-opencms-numerodeversion)
 
 **Reiniciar el servidor**
 
@@ -32,38 +30,40 @@ El módulo se compone de dos páginas:
 * **view.html** : Muestra el detalle de queries y collections. Se corresponde con la página 2 y 3
 
 
-View: Explorer
-Site: /sites/default/istac/metamac
+Crear los siguientes  dentro de istac/metamac desde View explorer (offline) -> New
 
-	new > structured contents > metamac
-		Name: metamac.html
-
-Edit metamac.html
-ApiUrl: 
-
-	http://estadisticas.arte-consultores.com/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0
+metamac.html
+- type: structured content -> metamac
+- Edit:
+-- ApiURL: http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources/v1.0
 
 index.html
+- type: containerpage
+- properties -> individual properties -> template -> /system/modules/es.gobcan.istac.web/templates/plantilla_1col.jsp
+- Edit
+-- Containers
+--- Name: centercontainer
+--- Type: center
+--- Elements
+---- content element: /istac/metamac/metamac.html
+---- formatter: /system/modules/org.siemac.metamac.metamac-portal/formatters/collection.jsp
 
-	Containers >
-		name: centercontainer
-		type: center
+view.html
+- type: containerpage
+- properties -> individual properties -> template -> /system/modules/es.gobcan.istac.web/templates/plantilla_1col.jsp
+- Edit
+-- Containers
+--- Name: centercontainer
+--- Type: center
+--- Elements
+---- content element: /istac/metamac/metamac.html
+---- formatter: /system/modules/org.siemac.metamac.metamac-portal/formatters/view.jsp
 
-	Elements >
-		Content element: /istac/metamac/metamac.html
-	    Formatter: /system/modules/org.siemac.metamac.metamac-portal/formatters/collection.jsp
-
-
-Por último hace falta modificar la plantilla que utiliza la vista. Botón derecho, properties
-
-    /system/modules/es.gobcan.istac.web/templates/plantilla_1col.jsp
-
-
-Repetir los pasos anteriores pero esta vez creando el fichero **view.html** y utilizando como formatter **view.jsp**
+Publish
 
 ### Configuración del opencms
 
-Para pertitir que el opencms exporte las fuentes como recursor estáticos modifica el fichero `opencms/WEB-INF/config/opencms-importexport.xml` y añade los nuevos sufijos:
+Para permitir que el opencms exporte las fuentes como recursor estáticos modifica el fichero `opencms/WEB-INF/config/opencms-importexport.xml` y añade los nuevos sufijos:
 
          <staticexport enabled="true">
                     ...
@@ -76,3 +76,4 @@ Para pertitir que el opencms exporte las fuentes como recursor estáticos modifi
                     </defaultsuffixes>
          </staticexport>
 
+Existe una guía quizá más detallada en METAMAC-2125
