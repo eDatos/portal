@@ -25,8 +25,10 @@ public class Helpers {
         if (nodes != null) {
             for(CollectionNode node : nodes){
                 if (node instanceof Chapter) {
-                    Chapter chapter = (Chapter)node;
-                    total += countIndicatorInstances(chapter.getNodes().getNodes());
+                    Chapter chapter = (Chapter) node;
+                    if (chapter.getNodes() != null) {
+                        total += countIndicatorInstances(chapter.getNodes().getNodes());
+                    }
                 } else {
                     total += 1;
                 }

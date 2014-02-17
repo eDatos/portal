@@ -28,11 +28,14 @@
             <c:if test="${nodeDepth > 2}"><a href="#" class="tree-icon"></a></c:if>
             <%= Helpers.localizeTitle(chapter.getName()) %>
         </span>
-        <% request.setAttribute("nodes", chapter.getNodes().getNodes());%>
-        <jsp:include page="./collection-node.jsp"/>
-<%
-    request.setAttribute("nodeDepth", nodeDepth); //reset node depth
-%>
+        <% if (chapter.getNodes() != null) { 
+            request.setAttribute("nodes", chapter.getNodes().getNodes());
+        %>        
+        	<jsp:include page="./collection-node.jsp"/>
+			<%
+    			request.setAttribute("nodeDepth", nodeDepth); //reset node depth
+			%>
+		<% } %>
     </li>
 
     <%
