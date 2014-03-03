@@ -20,7 +20,7 @@
     App.context = "";
     App.resourceContext = "";
 
-    //TODO Migrate to use endpoint properties
+    //TODO Migrate to use endpoint properties (METAMAC-2151)
     App.endpoints = {
         srm : "",
         "statistical-resources" : ""
