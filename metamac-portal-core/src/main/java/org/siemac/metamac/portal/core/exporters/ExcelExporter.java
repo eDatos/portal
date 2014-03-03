@@ -96,7 +96,7 @@ public class ExcelExporter {
     private void observationsAtRow(int observationRowIndex, Row row) {
         for (int j = 0; j < columns; j++) {
             Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(observationRowIndex, j);
-            String observation = datasetAccess.observationAtPermutation(permutationAtCell); // TODO y si no hay decimales?
+            String observation = datasetAccess.observationAtPermutation(permutationAtCell); // TODO y si no hay decimales? (METAMAC-1927)
             if (observation == null) {
                 observation = StringUtils.EMPTY;
             }

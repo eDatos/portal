@@ -61,7 +61,7 @@ public class PxExporter {
     private void writePx(PrintWriter printWriter) {
         writeField(printWriter, "CHARSET", "ANSI");
         writeField(printWriter, "AXIS-VERSION", "2000");
-        writeField(printWriter, "LANGUAGE", datasetAccess.getLangEffective()); // TODO o languages?
+        writeField(printWriter, "LANGUAGE", datasetAccess.getLangEffective()); // TODO o languages? (METAMAC-1927)
         writeFieldResourceId(printWriter, "LANGUAGES", datasetAccess.getDataset().getMetadata().getLanguages());
 
         writeField(printWriter, "CREATION-DATE", datasetAccess.getDataset().getMetadata().getCreatedDate());
@@ -72,13 +72,13 @@ public class PxExporter {
         writeField(printWriter, "AUTOPEN", datasetAccess.getDataset().getMetadata().getRelatedDsd().getAutoOpen());
         writeSubjectAreas(printWriter);
         writeField(printWriter, "COPYRIGHT", datasetAccess.getDataset().getMetadata().getCopyrightDate() != null);
-        // TODO si no hay descripción el PxEdit "construye" un título de la tabla
+        // TODO si no hay descripción el PxEdit "construye" un título de la tabla (METAMAC-1927)
         writeField(printWriter, "DESCRIPTION", datasetAccess.getDataset().getDescription() != null ? datasetAccess.getDataset().getDescription() : datasetAccess.getDataset().getName());
         writeField(printWriter, "TITLE", datasetAccess.getDataset().getName());
         writeField(printWriter, "DESCRIPTIONDEFAULT", Boolean.TRUE);
-        writeField(printWriter, "CONTENTS", "TODO-CONTENTS"); // TODO Content
-        writeField(printWriter, "UNITS", "TODO-UNITS"); // TODO Units
-        writeField(printWriter, "DECIMALS", Integer.valueOf(2)); // TODO Decimals
+        writeField(printWriter, "CONTENTS", "TODO-CONTENTS"); // TODO Content (METAMAC-1927)
+        writeField(printWriter, "UNITS", "TODO-UNITS"); // TODO Units (METAMAC-1927)
+        writeField(printWriter, "DECIMALS", Integer.valueOf(2)); // TODO Decimals (METAMAC-1927)
 
         writeDimensions(printWriter);
         writeDimensionValuesLabels(printWriter);
@@ -163,8 +163,8 @@ public class PxExporter {
     private void writeSubjectAreas(PrintWriter printWriter) {
         Resources subjectAreas = datasetAccess.getDataset().getMetadata().getSubjectAreas();
         if (subjectAreas == null) {
-            writeField(printWriter, "SUBJECT-AREA", datasetAccess.getDataset().getName()); // TODO (en px es obligatorio)
-            writeField(printWriter, "SUBJECT-CODE", datasetAccess.getDataset().getId()); // TODO (en px es obligatorio)
+            writeField(printWriter, "SUBJECT-AREA", datasetAccess.getDataset().getName()); // TODO (en px es obligatorio) (METAMAC-1927)
+            writeField(printWriter, "SUBJECT-CODE", datasetAccess.getDataset().getId()); // TODO (en px es obligatorio) (METAMAC-1927)
             return;
         }
         StringBuilder valueName = new StringBuilder();

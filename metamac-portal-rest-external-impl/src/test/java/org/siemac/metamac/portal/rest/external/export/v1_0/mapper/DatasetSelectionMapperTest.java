@@ -38,7 +38,7 @@ public class DatasetSelectionMapperTest {
             assertDimension(expected, selection);
         }
 
-        // TODO check rows, columns...
+        // TODO check rows, columns...  (METAMAC-1927)
     }
 
     @Test

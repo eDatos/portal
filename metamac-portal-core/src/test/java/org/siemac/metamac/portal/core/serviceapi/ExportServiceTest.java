@@ -550,8 +550,8 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("TITLE=\"title\";", bufferedReader.readLine());
         assertEquals("TITLE[en]=\"title (en)\";", bufferedReader.readLine());
         assertEquals("DESCRIPTIONDEFAULT=YES;", bufferedReader.readLine());
-        assertEquals("CONTENTS=\"TODO-CONTENTS\";", bufferedReader.readLine());
-        assertEquals("UNITS=\"TODO-UNITS\";", bufferedReader.readLine());
+        assertEquals("CONTENTS=\"TODO-CONTENTS\";", bufferedReader.readLine()); // (METAMAC-1927)
+        assertEquals("UNITS=\"TODO-UNITS\";", bufferedReader.readLine()); //  (METAMAC-1927)
         assertEquals("DECIMALS=2;", bufferedReader.readLine());
         assertEquals("STUB=\"CATEGORIA_ALOJAMIENTO\",\"INDICADORES\";", bufferedReader.readLine());
         assertEquals("HEADING=\"DESTINO_ALOJAMIENTO\",\"TIME_PERIOD\";", bufferedReader.readLine());

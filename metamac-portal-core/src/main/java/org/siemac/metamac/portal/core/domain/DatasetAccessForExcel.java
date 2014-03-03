@@ -34,7 +34,7 @@ public class DatasetAccessForExcel extends DatasetAccess {
 
         String observation = getObservations()[offset];
         if (!observation.trim().isEmpty()) {
-            // return Double.valueOf(observation); // TODO se deja como String, ¿si no hay decimales o es un "."?
+            // return Double.valueOf(observation); // TODO se deja como String, ¿si no hay decimales o es un "."? (METAMAC-1927)
             return observation;
         } else {
             return null;
