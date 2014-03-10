@@ -6,16 +6,22 @@
 <%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %>
+<%@ page import="org.opencms.jsp.util.CmsJspContentAccessBean" %>
 
 <fmt:setLocale value="${cms.locale}" />
 <cms:formatter var="content" val="value">
     <div>
 
         <%
+	    	// ${content.value.ApiUrlStatisticalResources}
+	    	CmsJspContentAccessBean contentAccessBean = (CmsJspContentAccessBean) pageContext.getAttribute("content");
+	    	String apiUrlStatisticalResources = contentAccessBean.getValue().get("ApiUrlStatisticalResources").toString();
+	    
             //test http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000002
             Collection collection = null;
             try {
-                String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
+                //String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
+                String statisticalResourcesEndpoint = apiUrlStatisticalResources;
                 StatisticalResourcesV1_0 statisticalResourcesV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, StatisticalResourcesV1_0.class, null, true);
                 String agencyId = request.getParameter("agencyId");
                 String resourceId = request.getParameter("resourceId");
@@ -33,24 +39,33 @@
 
         <c:choose>
             <c:when test="${collection != null}">
+            	<h2 class="tit_conten_1_col"><%= Helpers.localizeTitle(collection.getName()) %></h2>            	
                 <%
                         request.setAttribute("nodes", collection.getData().getNodes().getNodes());
                 %>
                 <cms:include page="./collection-node.jsp" />
             </c:when>
-            <c:otherwise>
-                <div class="contenido">
-                    <h2 class="tit_conten_1_col">Control de Errores</h2>
-                    <h3>Error 404 - Documento No Encontrado</h3>
-                    <p class="justificado">Lo sentimos, el Documento al que está intentado acceder no está disponible.
-                        Esto puede ocurrir por varios  motivos:</p>
-                    <ul>
-                        <li>El documento no existe en el Servidor del Gobierno de Canarias.</li>
-                        <li>El documento puede no estar disponible "Temporalmente".</li>
-                        <li>Ha introducido un URL incorrecto. Compruebe y asegúrese de que está bien escrito.</li>
-                    </ul>
-                    <p class="nota"><strong>Atención:</strong> Si desea informar, por favor, hágalo desde Contacto.</p>
-                </div>
+			<c:otherwise>
+            	<h2 class="tit_conten_1_col">Control de Errores</h2>
+            	<div class="contenido">
+            		<c:choose>
+	            		<c:when test="${content.value.ApiUrlStatisticalResource == ''}">	                	                    
+		                    <h3>Error - Propiedad no configurada</h3>
+		                    <p class="justificado">Lo sentimos, la propiedad ApiUrlStatisticalResource no ha sido configurada correctamente.</p>		                    	                    
+		        		</c:when>
+			        	<c:otherwise>
+			        		<h3>Error 404 - Documento No Encontrado</h3>
+		                    <p class="justificado">Lo sentimos, el Documento al que está intentado acceder no está disponible.
+		                        Esto puede ocurrir por varios  motivos:</p>
+		                    <ul>
+		                        <li>El documento no existe en el Servidor del Gobierno de Canarias.</li>
+		                        <li>El documento puede no estar disponible "Temporalmente".</li>
+		                        <li>Ha introducido un URL incorrecto. Compruebe y asegúrese de que está bien escrito.</li>
+		                    </ul>
+			        	</c:otherwise>
+		        	</c:choose>
+		        	<p class="nota"><strong>Atención:</strong> Si desea informar, por favor, hágalo desde Contacto.</p>	                
+	        	</div>
             </c:otherwise>
         </c:choose>
 

@@ -20,12 +20,12 @@
     App.context = "";
     App.resourceContext = "";
 
-    //TODO Migrate to use endpoint properties (METAMAC-2151)
+    // Start empty, initizialized outside, before App.start
     App.endpoints = {
-        srm : "",
-        "statistical-resources" : ""
+        "structural-resources" : "",
+        "statistical-resources" : "",
+        "statistical-visualizer" : ""
     };
-
 
     App.namespace = function (namespaceString) {
 

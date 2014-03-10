@@ -8,7 +8,7 @@ describe("ShapesApi", function () {
     beforeEach(function () {
         codes = ["TERRITORIO.CODE1", "TERRITORIO.CODE2"];
         ajaxStub = sinon.stub($, "ajax");
-        App.endpoints.srm = "http://srm.com";
+        App.endpoints["structural-resources"] = "http://srm.com";
     });
 
     afterEach(function () {
@@ -25,7 +25,7 @@ describe("ShapesApi", function () {
         ajaxStubReturns(geoJSONResponse);
         shapesApi.getShapes(codes, function () {
             var ajaxParams = ajaxStub.getCall(0).args[0];
-            expect(ajaxParams.url).to.eql(App.endpoints.srm + "/variables/TERRITORIO/variableelements/~all/geoinfo");
+            expect(ajaxParams.url).to.eql(App.endpoints["structural-resources"] + "/variables/TERRITORIO/variableelements/~all/geoinfo");
             expect(ajaxParams.data.query).to.equal("ID IN ('CODE1', 'CODE2')")
             done();
         });

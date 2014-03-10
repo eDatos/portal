@@ -21,13 +21,12 @@
             var identifier  = this.filterDimensions.metadata.identifier();
             var datasetSelection = this.getDatasetSelection();
             var identifierUrlPart = identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
-
             var context = {
                 selection : JSON.stringify(datasetSelection),
                 url : {
-                    csv : App.endpoints["portal"] + "/apis/export/v1.0/tsv/" + identifierUrlPart,
-                    excel : App.endpoints["portal"] + "/apis/export/v1.0/excel/" + identifierUrlPart,
-                    px : App.endpoints["portal"] + "/apis/export/v1.0/px/" + identifierUrlPart
+                    csv : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/tsv/" + identifierUrlPart,
+                    excel : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/excel/" + identifierUrlPart,
+                    px : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/px/" + identifierUrlPart
                 }
             };
             this.$el.html(this.template(context));
@@ -85,7 +84,7 @@
         exportApiCall : function (exportType) {
             //TODO querys?
             var identifier  = this.filterDimensions.metadata.identifier();
-            var url = App.endpoints["portal"] + "/apis/export/v1.0/" + exportType + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
+            var url = App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/" + exportType + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
             var selection = this.getDatasetSelection();
 
             var downloadRequest = $.ajax({

@@ -13,7 +13,9 @@
 
     <xsd:complexType name="OpenCmsMetamacType">
         <xsd:sequence>
-            <xsd:element name="ApiUrl" type="OpenCmsString"/>
+            <xsd:element name="ApiUrlStatisticalResources" type="OpenCmsString"/>
+            <xsd:element name="ApiUrlStructuralResources" type="OpenCmsString"/>
+            <xsd:element name="ApiUrlStatisticalVisualizer" type="OpenCmsString"/>
         </xsd:sequence>
         <xsd:attribute name="language" type="OpenCmsLocale" use="required"/>
     </xsd:complexType>

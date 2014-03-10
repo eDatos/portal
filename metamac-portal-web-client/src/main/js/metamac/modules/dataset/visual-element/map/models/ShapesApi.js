@@ -12,7 +12,7 @@
             var codes = this._extractCodes(normCodes);
             var ajaxParams = {
                 type : "GET",
-                url : App.endpoints.srm + "/variables/" + variableId + "/variableelements/~all/geoinfo",
+                url : App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/~all/geoinfo",
                 data : {
                     query : this._createNormCodesQuery(codes),
                     _type : "json"
@@ -33,7 +33,7 @@
 
         getContainer : function (normCodes, cb) {
             var self = this;
-            var url = App.endpoints.srm + "/variables/~all/variableelements?query=VARIABLE_TYPE%20EQ%20'GEOGRAPHICAL'%20AND%20GEOGRAPHICAL_GRANULARITY_URN%20IS_NULL&limit=1&_type=json";
+            var url = App.endpoints["structural-resources"] + "/variables/~all/variableelements?query=VARIABLE_TYPE%20EQ%20'GEOGRAPHICAL'%20AND%20GEOGRAPHICAL_GRANULARITY_URN%20IS_NULL&limit=1&_type=json";
             $.getJSON(url)
                 .done(function (response) {
                     var urn = response.variableElement[0].urn;
@@ -49,7 +49,7 @@
             var codes = this._extractCodes(normCodes);
             if (codes.length) {
                 var requestParams = {
-                    url : App.endpoints.srm + "/variables/" + variableId + "/variableelements/" + codes[0] + "/geoinfo.json?fields=-geographicalGranularity,-geometry,-point",
+                    url : App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/" + codes[0] + "/geoinfo.json?fields=-geographicalGranularity,-geometry,-point",
                     method : "GET"
                 };
                 $.ajax(requestParams)
@@ -70,7 +70,7 @@
             };
 
             var requestParams = {
-                url : App.endpoints.srm + "/codelists/ISTAC/" + codelist.id + "/" + codelist.version + "/codes?_type=json",
+                url : App.endpoints["structural-resources"] + "/codelists/ISTAC/" + codelist.id + "/" + codelist.version + "/codes?_type=json",
                 method : "GET"
             };
             $.ajax(requestParams).
