@@ -35,7 +35,9 @@ Crear los siguientes  dentro de istac/metamac desde View explorer (offline) -> N
 metamac.html
 - type: structured content -> metamac
 - Edit:
--- ApiURL: http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources/v1.0
+-- ApiUrlStatisticalResources: http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources
+-- ApiUrlStructuralResources: http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal
+-- ApiUrlStatisticalVisualizer: http://estadisticas.arte-consultores.com/statistical-visualizer
 
 index.html
 - type: containerpage
@@ -76,4 +78,4 @@ Para permitir que el opencms exporte las fuentes como recursor estáticos modifi
                     </defaultsuffixes>
          </staticexport>
 
-Existe una guía quizá más detallada en METAMAC-2125
+Existe una guía de instalación, quizás más detallada, en METAMAC-2125
