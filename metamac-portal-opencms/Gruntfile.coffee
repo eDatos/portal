@@ -16,9 +16,9 @@ module.exports = (grunt) ->
             libs: {                               
                 paths:
                     options:
-                       cwd: "target/tmp/system/modules/org.siemac.metamac.metamac-portal/",
+                       cwd: "target/tmp/system/modules/org.siemac.metamac.metamac-portal/lib/",
                        expand : true,
-                    src: ["lib/*.jar"]
+                    src: ["*.jar"]
                 manifestBase : "src/manifest-base.xml",
                 output: "target/tmp/manifest.xml"
             }
@@ -101,17 +101,23 @@ module.exports = (grunt) ->
         append = ""
         for lib in libs
             date = fs.lstatSync(cwd + lib).mtime
+            nameLib = lib.substr(0, lib.length-4)
             append += "
                 <file>
-                    <source>system/modules/org.siemac.metamac.metamac-portal/#{lib}</source>
-                    <destination>system/modules/org.siemac.metamac.metamac-portal/#{lib}</destination>
+                    <source>system/modules/org.siemac.metamac.metamac-portal/lib/#{lib}</source>
+                    <destination>system/modules/org.siemac.metamac.metamac-portal/lib/#{lib}</destination>
                     <type>binary</type>
                     <datelastmodified>#{date}</datelastmodified>
                     <userlastmodified>Admin</userlastmodified>
                     <datecreated>Thu, 28 Nov 2013 11:32:05 GMT</datecreated>
                     <usercreated>Admin</usercreated>
                     <flags>0</flags>
-                    <properties/>
+                    <properties>
+		                <property>
+		                    <name>Title</name>
+		                    <value><![CDATA[#{nameLib}]]></value>
+		                </property>
+		            </properties>
                     <relations/>
                     <accesscontrol/>
                 </file>
