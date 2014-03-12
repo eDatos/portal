@@ -12,6 +12,17 @@ module.exports = (grunt) ->
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         pom : {}
+        buildOpenCMSManifest : {
+            libs: {                               
+                paths:
+                    options:
+                       cwd: "target/tmp/system/modules/org.siemac.metamac.metamac-portal/",
+                       expand : true,
+                    src: ["lib/*.jar"]
+                manifestBase : "src/manifest-base.xml",
+                output: "target/tmp/manifest.xml"
+            }
+        }
         watch :
             preprocess:
                 files : ["src/system/modules/org.siemac.metamac.metamac-portal/formatters/*"]
@@ -35,7 +46,12 @@ module.exports = (grunt) ->
         copy:
             build:
                 files: [
-                    {expand: true, src: '**', dest: 'target/tmp/', cwd: './src'}
+                    {    
+                        expand: true, 
+                        src: '**', 
+                        dest: 'target/tmp/', 
+                        cwd: './src'
+                    }
                     {
                         expand: true,
                         src: '**',
@@ -76,8 +92,37 @@ module.exports = (grunt) ->
                 version = pomTree.project.parent[0].version[0]
                 grunt.config(['pom', 'version'], version);
                 done();
+    
+    grunt.registerMultiTask "buildOpenCMSManifest", "Parse 'lib' folder, create a xml list ready to be attached to a existing openCMS manifest", () ->
+        libs = grunt.file.expand(this.data.paths.options, this.data.paths.src)
+        cwd = this.data.paths.options.cwd
+        manifestBase = grunt.file.read(this.data.manifestBase)
+        output = this.data.output
+        append = ""
+        for lib in libs
+            date = fs.lstatSync(cwd + lib).mtime
+            append += "
+                <file>
+                    <source>system/modules/org.siemac.metamac.metamac-portal/#{lib}</source>
+                    <destination>system/modules/org.siemac.metamac.metamac-portal/#{lib}</destination>
+                    <type>binary</type>
+                    <datelastmodified>#{date}</datelastmodified>
+                    <userlastmodified>Admin</userlastmodified>
+                    <datecreated>Thu, 28 Nov 2013 11:32:05 GMT</datecreated>
+                    <usercreated>Admin</usercreated>
+                    <flags>0</flags>
+                    <properties/>
+                    <relations/>
+                    <accesscontrol/>
+                </file>
+            "
+        append += " </files>
+               </export>"
+            
+        grunt.file.write(output, manifestBase + append)           
+        
 
 
-    grunt.registerTask("build", ["pom", "copy", "uglify", "preprocess", "compress"]);
+    grunt.registerTask("build", ["pom", "copy", "uglify", "preprocess", "buildOpenCMSManifest", "compress"]);
     grunt.registerTask("default", "build")
 
