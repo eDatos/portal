@@ -37,13 +37,17 @@ public class Helpers {
         return total;
     }
 
-    public static String localizeTitle(InternationalString internationalString) {
-        for (LocalisedString text : internationalString.getTexts()) {
-            if (text.getLang().equals("es")) {
-                return text.getValue();
+    public static String localizeText(InternationalString internationalString) {
+        if (internationalString != null) {
+            for (LocalisedString text : internationalString.getTexts()) {
+                if (text.getLang().equals("es")) {
+                    return text.getValue();
+                }
             }
+            return internationalString.getTexts().get(0).getValue();
+        } else {
+            return "";
         }
-        return internationalString.getTexts().get(0).getValue();
     }
 
     public static String reverseIndex(String[] arr, int i) {

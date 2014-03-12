@@ -39,7 +39,8 @@
 
         <c:choose>
             <c:when test="${collection != null}">
-            	<h2 class="tit_conten_1_col"><%= Helpers.localizeTitle(collection.getName()) %></h2>            	
+            	<h2 class="tit_conten_1_col"><%= Helpers.localizeText(collection.getName()) %></h2>
+            	<div class="collection-description"><%= Helpers.localizeText(collection.getDescription()) %></div>                	
                 <%
                         request.setAttribute("nodes", collection.getData().getNodes().getNodes());
                 %>

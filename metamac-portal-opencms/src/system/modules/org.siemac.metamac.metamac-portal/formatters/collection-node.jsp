@@ -25,9 +25,16 @@
 
     <li class="dimension dimension-depth-${nodeDepth} ${openClass}">
         <span class="dimension-title">
-            <c:if test="${nodeDepth > 2}"><a href="#" class="tree-icon"></a></c:if>
-            <%= Helpers.localizeTitle(chapter.getName()) %>
+        	<% if (chapter.getNodes() != null) { %>
+            	<c:if test="${nodeDepth > 2}"><a href="#" class="tree-icon"></a></c:if>
+            <% } %>
+            <%= Helpers.localizeText(chapter.getName()) %>
         </span>
+        <div class="dimension-description">
+	        <c:if test="${nodeDepth <= 2}">
+	        	<%= Helpers.localizeText(chapter.getDescription()) %>
+	        </c:if>
+	    </div>
         <% if (chapter.getNodes() != null) { 
             request.setAttribute("nodes", chapter.getNodes().getNodes());
         %>        
@@ -55,7 +62,7 @@
     <li>
         <i class="icon-collection-table"></i>
         <span class="item-numeration">${numerationFixed}</span>
-        <a class="nouline" href="<%= Helpers.tableViewUrl(table) %>"><%= Helpers.localizeTitle(table.getName()) %>
+        <a class="nouline" href="<%= Helpers.tableViewUrl(table) %>"><%= Helpers.localizeText(table.getName()) %>
         </a>
     </li>
 
