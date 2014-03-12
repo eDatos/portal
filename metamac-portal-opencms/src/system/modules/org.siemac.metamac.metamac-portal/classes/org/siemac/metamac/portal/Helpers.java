@@ -56,7 +56,7 @@ public class Helpers {
 
     public static String tableViewUrl(Table table) {
         if (table.getQuery() != null) {
-            String[] hrefParts = table.getDataset().getSelfLink().getHref().split("/");
+            String[] hrefParts = table.getQuery().getSelfLink().getHref().split("/");
             String agency = reverseIndex(hrefParts, 1);
             String identifier = reverseIndex(hrefParts, 0);
             return "view.html#queries/" + agency + "/" + identifier;
