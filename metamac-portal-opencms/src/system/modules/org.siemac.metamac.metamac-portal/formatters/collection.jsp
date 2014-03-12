@@ -49,7 +49,7 @@
             	<h2 class="tit_conten_1_col">Control de Errores</h2>
             	<div class="contenido">
             		<c:choose>
-	            		<c:when test="${content.value.ApiUrlStatisticalResource == ''}">	                	                    
+	            		<c:when test="${content.value.ApiUrlStatisticalResources == ''}">	                	                    
 		                    <h3>Error - Propiedad no configurada</h3>
 		                    <p class="justificado">Lo sentimos, la propiedad ApiUrlStatisticalResource no ha sido configurada correctamente.</p>		                    	                    
 		        		</c:when>

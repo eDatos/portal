@@ -10,7 +10,7 @@
 		    	|| content.value.ApiUrlStructuralResources == ''
 		    	|| content.value.ApiUrlStatisticalVisualizer == ''}">
 		    	<h3>Error - Propiedad no configurada</h3>
-	            <p class="justificado">Lo sentimos, la propiedad ApiUrlStatisticalResource no ha sido configurada correctamente.</p>
+	            <p class="justificado">Lo sentimos, alguna de las propiedades no ha sido configurada correctamente.</p>
 	       	</c:when>
 			<c:otherwise>		    	   
 		        <div class="metamac-container">Cargando...</div>
