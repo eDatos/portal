@@ -155,10 +155,11 @@
             while (yVisible && i < totalRows) {
                 size = this.delegate.rowHeight(i);
 
-                rows.push({
+               	rows.push({
                     y : y,
                     index : i,
-                    height : size
+                    height : size,
+                    blank: this.dataSource.isBlankRow(i)
                 });
 
                 i = i + 1;
@@ -249,9 +250,13 @@
                     var point = new Point(column.x, row.y);
                     var size = new Size(column.width, row.height);
 
-                    var value = this.dataSource.cellAtIndex(cell);
-                    if (_.isFunction(this.delegate.format)) {
-                        value = this.delegate.format(value);
+                    var value = "";
+                    if (!row.blank) {
+                    	value = this.dataSource.cellAtIndex(cell);
+                    	
+                    	if (_.isFunction(this.delegate.format)) {
+                    		value = this.delegate.format(value);
+                    	}
                     }
 
                     this.ctx.beginPath();

@@ -17,6 +17,15 @@
         leftHeaderValues : function () {
             return this.filterDimensions.getTableInfo().leftHeaderValues;
         },
+        
+        leftHeaderDimensionsLengths: function () {
+        	return this.filterDimensions.getTableInfo().left.representationsLengths;
+        },
+                
+        
+        leftHeaderDimensionsElements: function(dimension) {
+        	return this.filterDimensions.getTableInfo().elementsByLeftDimension(this.leftHeaderDimensionsLengths(), dimension);
+        },
 
         topHeaderRows : function () {
             return this.filterDimensions.getTableInfo().top.representationsValues.length;
@@ -42,6 +51,22 @@
 
         columns : function () {
             return this.filterDimensions.getTableInfo().getTableSize().columns;
+        },
+        
+        isBlankRow : function(row) {
+        	var dimensionElements = 0;
+        	var pos = row; 
+        	// Starts on one because the first one is not nested on another dimension
+        	for (var dimension = 1; dimension < this.leftHeaderDimensionsLengths().length; dimension++) {
+
+        		dimensionElements = this.leftHeaderDimensionsElements(dimension);
+        		
+        		// Check if the current row is the first of this dimension; if not, 'enter' the next nested dimension
+        		pos = pos % dimensionElements;        		
+        		if (pos == dimension - 1)
+        			return true;        		
+        	}
+        	return false;
         },
 
         /**

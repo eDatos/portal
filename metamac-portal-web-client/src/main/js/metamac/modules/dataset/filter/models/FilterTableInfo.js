@@ -217,6 +217,23 @@
             }, 1);
             return size;
         },
+        
+        _dimensionsLeftTotalSize : function (representationsLength) {
+        	console.log(representationsLength);
+            var size = _.reduceRight(representationsLength, function (mem, value) {
+                return value + value * mem;
+            }, 0);
+            return size;
+        },
+        
+        // How many rows are in dimension, included the empty one with its name. Used to calculate the blank rows on the table
+        elementsByLeftDimension : function (representationsLengths, dimension) {
+        	representationsLengths = representationsLengths.slice(dimension);
+            var size = _.reduceRight(representationsLengths, function (mem, value) {
+                return value + value * mem;
+            }, 0);
+            return size + 1;
+        },
 
         /**
          * @return {columns : {Number}, rows : {Number}} Table size
@@ -224,7 +241,7 @@
         getTableSize : function () {
             return {
                 columns : this._dimensionsTotalSize(this.top.representationsLengths),
-                rows : this._dimensionsTotalSize(this.left.representationsLengths)
+                rows : this._dimensionsLeftTotalSize(this.left.representationsLengths)
             };
         }
 
