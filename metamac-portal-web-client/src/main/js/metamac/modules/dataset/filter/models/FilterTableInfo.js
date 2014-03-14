@@ -219,7 +219,6 @@
         },
         
         _dimensionsLeftTotalSize : function (representationsLength) {
-        	console.log(representationsLength);
             var size = _.reduceRight(representationsLength, function (mem, value) {
                 return value + value * mem;
             }, 0);

@@ -77,6 +77,10 @@
     App.Table.DataSource.prototype.topHeaderTooltipValues = function () {
         return this._topHeaderValues;
     };
+    
+    App.Table.DataSource.prototype.isBlankRow = function (row) {
+        return false;
+    };
 
 
 }());

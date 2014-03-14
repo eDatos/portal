@@ -45,7 +45,7 @@ describe('FilterTableInfo', function () {
     });
 
     it("should getTableSize", function () {
-        expect(filterTableInfo.getTableSize()).to.eql({rows : 4, columns : 3});
+        expect(filterTableInfo.getTableSize()).to.eql({columns : 3, rows : 6});
     });
 
     describe('getCategoryIdsForCell', function () {

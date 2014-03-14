@@ -19,6 +19,7 @@ describe("[TableCanvas] View", function () {
         sinon.stub(dataSource, "columns").returns(100);
         sinon.stub(dataSource, "leftHeaderColumns").returns(3);
         sinon.stub(dataSource, "topHeaderRows").returns(3);
+        sinon.stub(dataSource, "isBlankRow").returns(false);
 
         delegate = new Delegate();
         sinon.stub(delegate, "leftHeaderColumnWidth").returns(100);
