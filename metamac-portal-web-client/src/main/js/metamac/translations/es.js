@@ -64,6 +64,7 @@ I18n.translations.es = {
 
     entity : {
         dataset : {
+        	publishers : "Publicadores",
             license : "Licencia",
             language : "Idioma",
             nolicense : "Licencia no disponible",

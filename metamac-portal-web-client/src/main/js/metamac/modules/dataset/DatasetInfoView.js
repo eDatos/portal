@@ -3,7 +3,7 @@
 
     App.namespace("App.modules.dataset");
 
-    var providersWithImgs = ["IBESTAT", "EC"];
+    //var providersWithImgs = ["IBESTAT", "EC"];
 
     App.modules.dataset.DatasetInfoView = Backbone.View.extend({
 
@@ -18,14 +18,14 @@
             this.datasetAttributes = options.datasetAttributes;
         },
 
-        _providerHasImg : function () {
-            return _.contains(providersWithImgs, this.dataset.metadata.getProvider());
-        },
+        // Deprecated
+//        _providerHasImg : function () {
+//            return _.contains(providersWithImgs, this.dataset.metadata.getMantainer());
+//        },
 
         render : function () {
             var context = {
                 metadata : this.dataset.metadata.toJSON(),
-                providerHasImg : this._providerHasImg(),
                 attributes : this.datasetAttributes
             };
             this.$el.html(this.template(context));

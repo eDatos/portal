@@ -117,35 +117,6 @@
             }
         },
 
-        getProvider : function () {
-            return this.localizeLabel(this.metadata.maintainer.name.text);
-        },
-
-        getTitle : function () {
-            return this.localizeLabel(this.options.name.text);
-        },
-
-        getDescription : function () {
-            if (this.options.description) {
-                return this.localizeLabel(this.options.description.text);
-            }
-        },
-
-        getLicense : function () {
-            //return this.localizeLabel(this.metadata.license.text);
-        },
-
-        getLicenseUrl : function () {
-        },
-
-        getPublisher : function () {
-            //TODO multiple publishers??
-            return this.localizeLabel(this.metadata.publisher.resource[0].name.text);
-        },
-
-        getUri : function () {
-            return this.options.urn;
-        },
 
         getIdsAndLocalizedLabels : function (from) {
             var result = _.map(from.id, function (id) {
@@ -242,14 +213,6 @@
             return dimensions;
         },
 
-        getCategories : function () {
-            //TODO
-        },
-
-        getDates : function () {
-            //TODO
-        },
-
         getMeasureDimension : function () {
             var dimensions = this.getDimensionsAndRepresentations();
             return _.findWhere(dimensions, {type : 'MEASURE_DIMENSION'});
@@ -266,22 +229,18 @@
                 }, 1)
                 .value();
             return size;
-        },
-
-        getProviderCitation : function () {
-            //TODO
-        },
+        },        
 
         toJSON : function () {
+        	console.log(this.metadata);
             return {
-                citation : this.getProviderCitation(),
-                provider : this.getProvider(),
+                citation : this.getBibliographicCitation(),
+                publishers : this.getPublishers(),
                 title : this.getTitle(),
                 description : this.getDescription(),
-                categories : this.getCategories(),
+                categories : this.getSubjectAreas(),
                 languages : this.getLanguages(),
                 license : this.getLicense(),
-                licenseUrl : this.getLicenseUrl(),
                 dates : this.getDates(),
                 measureDimension : this.getMeasureDimension(),
                 dimensions : this.getDimensions()
@@ -321,8 +280,110 @@
 
         getAutoOpen : function () {
             return this.metadata.relatedDsd.autoOpen || false;
-        }
+        },
+        
+        getMantainer : function () {
+            return this.localizeLabel(this.metadata.maintainer.name.text);
+        },
+        
+        getStatisticalOperation : function () {
+            return this.localizeLabel(this.metadata.statisticalOperation.name.text);
+        },
 
+        getUri : function () {
+            return this.options.urn;
+        },
+        
+        getTitle : function () {
+            return this.localizeLabel(this.options.name.text);
+        },
+
+        getDescription : function () {
+            if (this.options.description) {
+                return this.localizeLabel(this.options.description.text);
+            }
+        },
+
+        getDates : function () {
+            //TODO
+        	return { validFrom: this.metadata.validFrom, validTo : this.metadata.validTo };
+        },
+        
+        getReplacesVersion : function () {
+        	// TODO - linkable
+        },
+
+        getIsReplacedByVersion : function() {
+        	// TODO - linkable
+        	return this.metadata.isReplacedByVersion;
+        },        
+        
+        getPublishers : function () {
+            //TODO multiple publishers yes, modify this
+        	// Map
+            return this.localizeLabel(this.metadata.publishers.resource[0].name.text);
+        },
+        
+        getPublisherContributors : function () {
+        	// TODO
+        	// Need sample
+        },
+        
+        getMediators : function () {
+        	// TODO
+        	// Need sample
+        },
+        
+        getReplaces : function () {
+        	// TODO        	
+        },
+        
+        getIsReplacedBy : function () {
+        	// TODO
+        },
+        
+        getRightsHolder : function () {
+        	// TODO
+        },
+        
+        getCopyrightDate : function () {
+        	// TODO
+        },
+        
+        getLicense : function () {
+        	// TODO
+        	return this.localizeLabel(this.metadata.license.text);
+        },
+        
+        getAccessRights : function () {
+        	// TODO
+        },
+        
+        getSubjectAreas : function () {
+//       	getCategories : function () {
+            //TODO
+        },
+        
+        getFormatExtentObservations : function () {
+        	// TODO
+        },
+        
+        getDateNextUpdate : function () {
+        	// TODO
+        },
+        
+        getUpdateFrequency : function () {
+        	// TODO
+        },
+        
+        getStatisticOfficiality : function () {
+        	// TODO
+        },
+        
+        getBibliographicCitation : function () {
+            //TODO
+        	return this.localizeLabel(this.metadata.bibliographicCitation.text);
+        }
     };
 
 }());

@@ -31,8 +31,8 @@ describe("Dataset Metadata", function () {
         });
     });
 
-    it('should getProvider', function () {
-        expect(metadata.getProvider()).to.eql('ISTAC');
+    it('should getMantainer', function () {
+        expect(metadata.getMantainer()).to.eql('ISTAC');
     });
 
     it('should getTitle', function () {
@@ -141,7 +141,7 @@ describe("Dataset Metadata", function () {
         expect(metadata.getTotalObservations()).to.equal(3);
     });
 
-    it.skip('should getProviderCitation', function () {
+    it.skip('should getMantainerCitation', function () {
 
     });
 

@@ -153,7 +153,7 @@ App.VisualElement.PieChart = (function () {
             });
 
             // Setting the title (either App or error)
-            var titleText = nan ? I18n.t("filter.text.pieError") : self.dataset.metadata.getProvider();
+            var titleText = nan ? I18n.t("filter.text.pieError") : self.dataset.metadata.getMantainer();
             self._element.setTitle({ text : title}, { text : titleText});
         }
 
