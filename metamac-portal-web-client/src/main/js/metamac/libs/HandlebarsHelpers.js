@@ -5,9 +5,13 @@
 (function () {
     "use strict";
 
-    function htmlDecode(value){
+    function htmlDecode(value){    	
     	  return $('<div/>').html(value).text();
-    }
+    }  
+    
+    Handlebars.registerHelper("safeString", function (value) {
+    	return new Handlebars.SafeString(htmlDecode(Handlebars.Utils.escapeExpression(value)));
+    });
     
     /**
      * InternationalString

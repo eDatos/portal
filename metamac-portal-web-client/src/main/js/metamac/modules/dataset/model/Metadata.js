@@ -100,7 +100,8 @@
                 if (!label) {
                     label = _.first(labels).value
                 }
-                return this._htmlDecode(label);
+
+                return label;
             }
         },
         _htmlDecode : function (value) {
