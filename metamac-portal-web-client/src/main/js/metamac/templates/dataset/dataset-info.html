@@ -1,43 +1,30 @@
 <div class="metadata-group">
-<div class="field">
-    <span class="metadata-title">{{ message "entity.dataset.publishers" }}</span>
+{{ fieldOutput "entity.dataset.statisticalOperation" metadata.statisticalOperation "text" }}
 
-    <div class="metadata-value">        
-        <a href="{{context}}/providers/{{ metadata.publishers }}">{{ metadata.publishers }}</a>
-    </div>
-</div>
+{{ fieldOutput "entity.dataset.validFrom" metadata.dates.validFrom "date" }}
+{{ fieldOutput "entity.dataset.validTo" metadata.dates.validTo "date" }}
 
-{{#if metadata.languages }}
-<div class="field">
-    <span class="metadata-title">{{ message "entity.dataset.language" }}</span>
+{{ fieldOutput "entity.dataset.replacesVersion" metadata.replacesVersion "resource" }}
+{{ fieldOutput "entity.dataset.isReplacedByVersion" metadata.isReplacedByVersion "resource" }}
 
-    <div class="metadata-value">
-        {{#join metadata.languages }}
-        {{ label }}
-        {{/join}}
-    </div>
-</div>
-{{/if}}
 
-<div class="field">
-    <span class="metadata-title">{{ message "entity.dataset.license" }}</span>
+{{ fieldOutput "entity.dataset.publishers" metadata.publishers "resource" }}
+{{ fieldOutput "entity.dataset.contributors" metadata.contributors "resource" }}
+{{ fieldOutput "entity.dataset.mediators" metadata.mediators "resource" }}
 
-    <div class="metadata-value">
-        {{#if metadata.licenseUrl }}
-        <a href="{{ metadata.licenseUrl }}" target="_blank">
-            {{message "entity.dataset.licenseLink"}}
-        </a>
-        {{else}}
-        {{ message "entity.dataset.nolicense" }}
-        {{/if}}
-    </div>
-</div>
+{{ fieldOutput "entity.dataset.replaces" metadata.replaces "resource" }}
+{{ fieldOutput "entity.dataset.isReplacedBy" metadata.isReplacedBy "resource" }}
 
-{{ fieldOutput "entity.dataset.releaseDate" metadata.dates.release "date" }}
-{{ fieldOutput "entity.dataset.publishingDate" metadata.dates.modification "date" }}
-{{ fieldOutput "entity.dataset.providerReleaseDate" metadata.dates.providerRelease "date" }}
-{{ fieldOutput "entity.dataset.providerPublishingDate" metadata.dates.providerModification "date" }}
-{{ fieldOutput "entity.dataset.frecuency" model.dates.frecuency "text" }}
+{{ fieldOutput "entity.dataset.rightsHolder" metadata.rightsHolder "resource" }}
+{{ fieldOutput "entity.dataset.copyrightDate" metadata.copyrightDate "text" }}
+{{ fieldOutput "entity.dataset.license" metadata.license "text" }}
+{{ fieldOutput "entity.dataset.accessRights" metadata.accessRights "text" }}
+{{ fieldOutput "entity.dataset.subjectAreas" metadata.subjectAreas "resource" }}
+{{ fieldOutput "entity.dataset.formatExtentObservations" metadata.formatExtentObservations "text" }}
+{{ fieldOutput "entity.dataset.dateNextUpdate" metadata.dateNextUpdate "date" }}
+{{ fieldOutput "entity.dataset.updateFrequency" metadata.updateFrequency "resource" }}
+{{ fieldOutput "entity.dataset.statisticOfficiality" metadata.statisticOfficiality "text" }}
+{{ fieldOutput "entity.dataset.bibliographicCitation" metadata.bibliographicCitation "text" }}
 
 {{#if metadata.measureDimension.representation }}
 <div class="field">
@@ -77,7 +64,6 @@
     </div>
 </div>
 {{/if}}
-
 
 </div>
 </div>

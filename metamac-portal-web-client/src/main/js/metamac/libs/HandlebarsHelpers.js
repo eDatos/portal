@@ -5,6 +5,10 @@
 (function () {
     "use strict";
 
+    function htmlDecode(value){
+    	  return $('<div/>').html(value).text();
+    }
+    
     /**
      * InternationalString
      *
@@ -103,27 +107,38 @@
      *      {{ fieldOutput "entity.dataset.title" }}
      */
     Handlebars.registerHelper("fieldOutput", function (label, value, type) {
-        label = Handlebars.Utils.escapeExpression(label);
-        value = Handlebars.Utils.escapeExpression(value);
-
+        label = Handlebars.Utils.escapeExpression(label);        
         var result = '';
         if (value) {
             result +=
                 '<div class="field" >' +
                     '<span class="metadata-title">' + I18n.t(label) + '</span>';
+            result +=
+            		'<div class="metadata-value">';
+            
             if (type === "date") {
-                result +=
-                    '<div class="metadata-value">';
-                result += I18n.l("date.formats.default", value) +
-                    '</div>';
+            	value = Handlebars.Utils.escapeExpression(value);
+                result += I18n.l("date.formats.default", value);
             }
-            else {
-                result +=
-                    '<div class="metadata-value">';
+            else if (type === "resource") { 
+            	if (!(value instanceof Array)) {
+            		value = [ value ];
+            	}
+            	var href = Handlebars.Utils.escapeExpression(value[0].href);
+        		var name = Handlebars.Utils.escapeExpression(value[0].name);
+            	result += '<a href=' + href + '>' + name + '</a>';
+            	for (var i = 1; i < value.length; i++) {
+            		var href = Handlebars.Utils.escapeExpression(value[i].href);
+            		var name = Handlebars.Utils.escapeExpression(value[i].name);
+            		result += ', <a href=' + href + '>' + name + '</a>';
+            	}
+            } else {
+            	value = Handlebars.Utils.escapeExpression(value);
                 //result += Handlebars.helpers.iString(value) +
-                result += value +
-                    '</div>';
+                result +=  htmlDecode(value);
             }
+            
+            result += '</div>';
             result +=
                 '</div>';
         }

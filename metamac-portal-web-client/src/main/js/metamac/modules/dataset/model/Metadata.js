@@ -75,34 +75,36 @@
 
         initializeLocalesIndex : function () {
             var selectedLanguages = this.selectedLanguages;
-            this.localesIndex = {
-                primary : selectedLanguages.indexOf(I18n.locale),
-                secondary : selectedLanguages.indexOf(I18n.defaultLocale)
+            this.localesIndex = {            		
+                primary : I18n.locale,
+                secondary : I18n.defaultLocale
             };
-
-            if (this.localesIndex.primary === -1) {
-                this.localesIndex.primary = undefined;
-            }
-
-            if (this.localesIndex.secondary === -1) {
-                this.localesIndex.secondary = undefined;
-            }
         },
 
         localizeLabel : function (labels) {
             if (labels) {
+            	var self = this;
                 var label;
                 if (this.localesIndex.primary) {
-                    label = labels[this.localesIndex.primary].value;
+                	label = _.find(labels, function(label){ 
+                		return label.lang == self.localesIndex.primary;
+                	});
+                	if (label) label = label.value;
                 }
                 if (!label && this.localesIndex.secondary) {
-                    label = labels[this.localesIndex.secondary].value;
+                	label = _.find(labels, function(label){ 
+                		return label.lang == self.localesIndex.secondary;
+                	});
+                	if (label) label = label.value;
                 }
                 if (!label) {
                     label = _.first(labels).value
                 }
-                return label;
+                return this._htmlDecode(label);
             }
+        },
+        _htmlDecode : function (value) {
+        	  return $('<div/>').html(value).text();
         },
 
         getIdentifier : function () {
@@ -237,18 +239,33 @@
         },        
 
         toJSON : function () {
-        	console.log(this.metadata);
             return {
-                citation : this.getBibliographicCitation(),
-                publishers : this.getPublishers(),
+            	statisticalOperation: this.getStatisticalOperation(),
+            	
                 title : this.getTitle(),
                 description : this.getDescription(),
-                categories : this.getSubjectAreas(),
-                languages : this.getLanguages(),
-                license : this.getLicense(),
                 dates : this.getDates(),
+                replacesVersion : this.getReplacesVersion(),
+                isReplacedByVersion : this.getIsReplacedByVersion(),
+                publishers : this.getPublishers(),
+                contributors: this.getContributors(),
+                mediators: this.getMediators(),
+                replaces: this.getReplaces(),
+                isReplacedBy: this.getIsReplacedBy(),
+                rightsHolder: this.getRightsHolder(),
+                copyrightDate : this.getCopyrightDate(),
+                license : this.getLicense(),
+                accessRights: this.getAccessRights(),
+                subjectAreas : this.getSubjectAreas(),
+                formatExtentObservations: this.getFormatExtentObservations(),
+                dateNextUpdate: this.getDateNextUpdate(),
+                updateFrequency: this.getUpdateFrequency(),
+                statisticOfficiality: this.getStatisticOfficiality(),
+                bibliographicCitation: this.getBibliographicCitation(),
+                
+                languages : this.getLanguages(),                
                 measureDimension : this.getMeasureDimension(),
-                dimensions : this.getDimensions()
+                dimensions : this.getDimensions()               
             };
         },
 
@@ -310,84 +327,106 @@
         },
 
         getDates : function () {
-            //TODO
         	return { validFrom: this.metadata.validFrom, validTo : this.metadata.validTo };
         },
         
         getReplacesVersion : function () {
-        	// TODO - linkable
+        	if (this.metadata.replacesVersion) {
+        		return this._getResourceLink(this.metadata.replacesVersion);
+        	}
         },
 
         getIsReplacedByVersion : function() {
-        	// TODO - linkable
-        	return this.metadata.isReplacedByVersion;
-        },        
+        	if (this.metadata.isReplacedByVersion) {
+        		return this._getResourceLink(this.metadata.isReplacedByVersion);
+        	}
+        },       
+        
         
         getPublishers : function () {
-            //TODO multiple publishers yes, modify this
-        	// Map
-            return this.localizeLabel(this.metadata.publishers.resource[0].name.text);
+        	var self = this;
+        	if (this.metadata.publishers) {
+        		return _.map(this.metadata.publishers.resource, function (resource) { return self._getResourceLink(resource); });
+        	}
         },
         
-        getPublisherContributors : function () {
-        	// TODO
-        	// Need sample
+        getContributors : function () {
+        	var self = this;
+        	if (this.metadata.contributors) {
+        		return _.map(this.metadata.contributors.resource, function (resource) { return self._getResourceLink(resource); });
+        	}
         },
         
         getMediators : function () {
-        	// TODO
-        	// Need sample
+        	var self = this;
+        	if (this.metadata.mediators) {
+        		return _.map(this.metadata.mediators.resource, function (resource) { return self._getResourceLink(resource); });
+        	}
         },
         
         getReplaces : function () {
-        	// TODO        	
+        	if (this.metadata.replaces) {
+        		return this._getResourceLink(this.metadata.replaces);
+        	}
         },
         
         getIsReplacedBy : function () {
-        	// TODO
+        	if (this.metadata.isReplacedBy) {
+        		return this._getResourceLink(this.metadata.isReplacedBy);
+        	}
         },
         
         getRightsHolder : function () {
-        	// TODO
+        	if (this.metadata.rightsHolder) {
+        		return this._getResourceLink(this.metadata.rightsHolder);
+        	}
         },
         
         getCopyrightDate : function () {
-        	// TODO
+        	return this.metadata.copyrightDate;
         },
         
         getLicense : function () {
-        	// TODO
         	return this.localizeLabel(this.metadata.license.text);
         },
         
         getAccessRights : function () {
-        	// TODO
+        	return this.localizeLabel(this.metadata.accessRights.text);
         },
         
         getSubjectAreas : function () {
-//       	getCategories : function () {
-            //TODO
+        	var self = this;
+        	if (this.metadata.subjectAreas) {
+        		return _.map(this.metadata.subjectAreas.resource, function (resource) { return self._getResourceLink(resource); });
+        	}
         },
         
         getFormatExtentObservations : function () {
-        	// TODO
+        	return this.metadata.formatExtentObservations;
         },
         
         getDateNextUpdate : function () {
-        	// TODO
+        	return this.metadata.dateNextUpdate;
         },
         
         getUpdateFrequency : function () {
-        	// TODO
+        	if (this.metadata.updateFrequency) {
+        		return this._getResourceLink(this.metadata.updateFrequency);
+        	}
         },
         
         getStatisticOfficiality : function () {
-        	// TODO
+        	return this.localizeLabel(this.metadata.statisticOfficiality.name.text);
         },
         
         getBibliographicCitation : function () {
-            //TODO
         	return this.localizeLabel(this.metadata.bibliographicCitation.text);
+        },
+        
+        _getResourceLink : function (resource) {
+        	if (resource) {
+        		return { href : resource.selfLink.href , name : this.localizeLabel(resource.name.text) };
+        	}
         }
     };
 
