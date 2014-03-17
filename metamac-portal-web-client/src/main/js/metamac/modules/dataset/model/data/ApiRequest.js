@@ -20,7 +20,7 @@
     App.dataset.data.ApiRequest.prototype = {
 
         url : function () {
-            return App.endpoints["statistical-resources"] + this.metadata.urlIdentifierPart();
+            return App.endpoints["statistical-resources"] + this.metadata.urlIdentifierPart() + '.json';
         },
 
         queryParams : function () {
@@ -47,6 +47,8 @@
         fetch : function (callback) {
             var ajaxParams = {
                 url : this.url(),
+                dataType : 'jsonp',
+                jsonp : '_callback',
                 data : this.queryParams(),
                 success : function (response) {
                     var apiResponse = new ApiResponse(response);

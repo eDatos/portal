@@ -40,13 +40,18 @@
         },
 
         url : function () {
-            return App.endpoints["statistical-resources"] + this.urlIdentifierPart() + '?_type=json&fields=-data';
+            return App.endpoints["statistical-resources"] + this.urlIdentifierPart() + '.json?_type=json&fields=-data';
         },
 
         fetch : function () {
             var self = this;
-            var result = $.Deferred();
-            $.getJSON(this.url(), function (response) {
+            var result = $.Deferred();            
+            var req = $.ajax({
+                url : this.url(),
+                dataType : 'jsonp',
+                jsonp : "_callback"
+            });
+            req.success(function (response) {
                 self.parse(response);
                 result.resolveWith(null, [this]);
             });

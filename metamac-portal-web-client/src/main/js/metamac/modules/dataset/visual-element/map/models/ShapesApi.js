@@ -12,7 +12,9 @@
             var codes = this._extractCodes(normCodes);
             var ajaxParams = {
                 type : "GET",
-                url : App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/~all/geoinfo",
+                dataType : 'jsonp',
+                jsonp : '_callback',
+                url : App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/~all/geoinfo.json",
                 data : {
                     query : this._createNormCodesQuery(codes),
                     _type : "json"
@@ -33,9 +35,14 @@
 
         getContainer : function (normCodes, cb) {
             var self = this;
-            var url = App.endpoints["structural-resources"] + "/variables/~all/variableelements?query=VARIABLE_TYPE%20EQ%20'GEOGRAPHICAL'%20AND%20GEOGRAPHICAL_GRANULARITY_URN%20IS_NULL&limit=1&_type=json";
-            $.getJSON(url)
-                .done(function (response) {
+            var url = App.endpoints["structural-resources"] + "/variables/~all/variableelements.json?query=VARIABLE_TYPE%20EQ%20'GEOGRAPHICAL'%20AND%20GEOGRAPHICAL_GRANULARITY_URN%20IS_NULL&limit=1&_type=json";
+            var ajaxParams = {
+            		type : "GET",
+            		url: url,
+                	dataType : 'jsonp',
+                    jsonp : '_callback'            		
+            }
+            $.ajax(ajaxParams).done(function (response) {
                     var urn = response.variableElement[0].urn;
                     cb(null, self._extractNormCodeFromUrn(urn));
                 })
@@ -50,7 +57,9 @@
             if (codes.length) {
                 var requestParams = {
                     url : App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/" + codes[0] + "/geoinfo.json?fields=-geographicalGranularity,-geometry,-point",
-                    method : "GET"
+                    method : "GET",
+                    dataType : 'jsonp',
+                    jsonp : '_callback'
                 };
                 $.ajax(requestParams)
                     .done(function (response) {
@@ -70,8 +79,10 @@
             };
 
             var requestParams = {
-                url : App.endpoints["structural-resources"] + "/codelists/ISTAC/" + codelist.id + "/" + codelist.version + "/codes?_type=json",
-                method : "GET"
+                url : App.endpoints["structural-resources"] + "/codelists/ISTAC/" + codelist.id + "/" + codelist.version + "/codes.json?_type=json",
+                method : "GET",
+            	dataType : 'jsonp',
+                jsonp : '_callback'
             };
             $.ajax(requestParams).
                 done(function (response) {
