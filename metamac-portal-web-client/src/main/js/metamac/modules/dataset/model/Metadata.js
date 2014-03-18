@@ -313,7 +313,7 @@
         
         getStatisticalOperation : function () {
         	if (this.metadata.statisticalOperation) {
-        		return this.localizeLabel(this.metadata.statisticalOperation.name.text);
+        		return this._getResourceLink(this.metadata.statisticalOperation);
         	}
         },
 
