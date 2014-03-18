@@ -306,11 +306,15 @@
         },
         
         getMantainer : function () {
-            return this.localizeLabel(this.metadata.maintainer.name.text);
+        	if (this.metadata.maintainer) {
+        		return this.localizeLabel(this.metadata.maintainer.name.text);
+        	}
         },
         
         getStatisticalOperation : function () {
-            return this.localizeLabel(this.metadata.statisticalOperation.name.text);
+        	if (this.metadata.statisticalOperation) {
+        		return this.localizeLabel(this.metadata.statisticalOperation.name.text);
+        	}
         },
 
         getUri : function () {
@@ -318,7 +322,9 @@
         },
         
         getTitle : function () {
-            return this.localizeLabel(this.options.name.text);
+        	if (this.options.name) {
+        		return this.localizeLabel(this.options.name.text);
+        	}
         },
 
         getDescription : function () {
@@ -388,11 +394,15 @@
         },
         
         getLicense : function () {
-        	return this.localizeLabel(this.metadata.license.text);
+        	if (this.metadata.license) {
+        		return this.localizeLabel(this.metadata.license.text);
+        	}
         },
         
         getAccessRights : function () {
-        	return this.localizeLabel(this.metadata.accessRights.text);
+        	if (this.metadata.accessRights) {
+        		return this.localizeLabel(this.metadata.accessRights.text);
+        	}
         },
         
         getSubjectAreas : function () {
@@ -417,11 +427,15 @@
         },
         
         getStatisticOfficiality : function () {
-        	return this.localizeLabel(this.metadata.statisticOfficiality.name.text);
+        	if (this.metadata.statisticOfficiality) {
+        		return this.localizeLabel(this.metadata.statisticOfficiality.name.text);
+        	}
         },
         
         getBibliographicCitation : function () {
-        	return this.localizeLabel(this.metadata.bibliographicCitation.text);
+        	if (this.metadata.bibliographicCitation) {
+        		return this.localizeLabel(this.metadata.bibliographicCitation.text);
+        	}
         },
         
         _getResourceLink : function (resource) {
