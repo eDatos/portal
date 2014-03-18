@@ -72,14 +72,9 @@
         },
 
         getGranularityOrder : function (cb) {
-            //TODO query to retrieve granularityOrder codelist ID
-            var codelist = {
-                id : "CL_GEO_GRANULARITIES",
-                version : "01.001"
-            };
-
+        	
             var requestParams = {
-                url : App.endpoints["structural-resources"] + "/codelists/ISTAC/" + codelist.id + "/" + codelist.version + "/codes.json?_type=json",
+                url : App.endpoints["structural-resources"] + "/codelists/~all/~all/~all/codes.json?_type=json&query=DEFAULT_GEOGRAPHICAL_GRANULARITIES_CODELIST EQ 'TRUE'",
                 method : "GET",
             	dataType : 'jsonp',
                 jsonp : '_callback'
