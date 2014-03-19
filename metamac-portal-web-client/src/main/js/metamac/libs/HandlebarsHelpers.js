@@ -7,10 +7,14 @@
 
     function htmlDecode(value){    	
     	  return $('<div/>').html(value).text();
-    }  
+    } 
+    
+    function safeString(value) {
+    	return new Handlebars.SafeString(htmlDecode(Handlebars.Utils.escapeExpression(value)));
+    }
     
     Handlebars.registerHelper("safeString", function (value) {
-    	return new Handlebars.SafeString(htmlDecode(Handlebars.Utils.escapeExpression(value)));
+    	return safeString(value);
     });
     
     /**
@@ -89,7 +93,7 @@
      *      <h1>{{ message "entity.dataset.title" }}</h1>
      */
     Handlebars.registerHelper("message", function (message, options) {
-        return I18n.t(message);
+        return safeString(I18n.t(message));
     });
 
     /**

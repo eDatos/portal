@@ -72,6 +72,7 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/OptionsModel.js"
                 paths.modules + "/dataset/OptionsView.js"
                 paths.modules + "/dataset/DatasetInfoView.js"
+                paths.modules + "/dataset/DatasetHelpView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
                 paths.modules + "/dataset/DatasetShareView.js"
                 paths.modules + "/dataset/DatasetDownloadView.js"

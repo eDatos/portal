@@ -35,7 +35,9 @@
                 dataset : this.dataset
             });
             
-            var sideViews = [this.infoView];
+            this.helpView = new App.modules.dataset.DatasetHelpView({});
+            
+            var sideViews = [this.infoView, this.helpView];
             this.sidebarView = new App.components.sidebar.SidebarView({sideViews : sideViews});
         },
 
