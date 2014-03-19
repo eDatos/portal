@@ -33,7 +33,9 @@
 
         show : function () {
             this.render();
-            $("body").append(this.$el);
+            if ($(".full-screen").append(this.$el).length == 0) {
+            	$("body").append(this.$el)
+            };
         },
 
         onClickBackdrop : function () {
