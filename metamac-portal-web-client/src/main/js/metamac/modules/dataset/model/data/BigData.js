@@ -23,7 +23,8 @@
         },
 
         _bindEvents : function () {
-            this.filterDimensions.on('change:selected change:zone', this.onUpdateFilter, this);
+        	if (this.filterDimensions != null)
+        		this.filterDimensions.on('change:selected change:zone', this.onUpdateFilter, this);
         },
 
         isAllSelectedDataLoaded : function () {

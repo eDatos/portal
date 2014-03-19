@@ -1,7 +1,10 @@
 .selection-dimensions {
+	
+	overflow: hidden;
+
     &> div {
         float: left;
-        width: 376px; //magic number?
+        width: 349px; //magic number?
 
         &:nth-child(odd) {
             margin-right: 10px;
@@ -9,7 +12,7 @@
     }
 
     .filter-sidebar-dimension {
-        height: 450px;
+        margin-bottom: 10px;
     }
 
     .filter-sidebar-dimension-title {
@@ -32,4 +35,11 @@
     margin-bottom: 10px;
     text-align: right;
     .clearfix;
+}
+
+.selection-sidebar-container {
+	float: left;
+	width: auto;
+	height: 438px;
+	margin-right: 2px;
 }

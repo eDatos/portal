@@ -55,8 +55,15 @@
                 this.$sidebar.css({width : width, left : -width});
                 this.$content.css('padding-left', menuWidth);
             }
+            this.updateSidebarHeight();
         },
-
+        updateSidebarHeight : function () {
+        	var menuHeight = $(".js-sidebar-container-sibling").height() - parseInt($(".js-sidebar-container-sibling .filter-sidebar-dimension ").css('margin-bottom'), 10);
+        	if (menuHeight) {
+        		this.$el.css({height : menuHeight});
+        	}
+        },
+        
         _onClickSplitter : function (e) {
             e.preventDefault();
 
@@ -98,14 +105,12 @@
             });
         },
 
-        _onChangeCurrentSideView : function () {
-            var sidebarContainer = this.$(".sidebar-container");
+        _onChangeCurrentSideView : function () {            
             var currentSideViewId = this.state.get('currentSideView');
-
             if (currentSideViewId) {
                 var currentView = this._getSideView(currentSideViewId);
                 currentView.render();
-                sidebarContainer.toggleClass("sidebar-slideRight", true);
+                this.$el.toggleClass("sidebar-slideRight", true);
                 this.state.set('visible', true);
                 this.$("li[data-view-id='" + currentSideViewId + "']").addClass("active");
             } else {
@@ -133,19 +138,23 @@
             });
             this.$el.html(this.template(context));
 
+            
+            this.$sidebarContainer = this.$el;
             this.$menu = this.$('.sidebar-menu');
             this.$sidebar = this.$('.sidebar-sidebar');
             this.$sidebarContent = this.$('.sidebar-sidebar-content');
             this.$content = this.$('.sidebar-content');
-
             _.each(this.sideViews, function (view) {
                 view.setElement(this.$sidebarContent);
-            }, this);
+            }, this);            
 
             this.sideViews[0].render();
 
-            this.contentView.setElement(this.$content);
-            this.contentView.render();
+            if (this.contentView != null) {
+            	this.contentView.setElement(this.$content);
+            	this.contentView.render();
+            }
+            return this;
         },
 
         close : function () {

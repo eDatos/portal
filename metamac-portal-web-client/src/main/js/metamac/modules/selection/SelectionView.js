@@ -17,13 +17,26 @@
         initialize : function (options) {
             this.metadata = options.metadata;
             this.controller = options.controller;
+            
+            this.dataset = new App.dataset.Dataset({metadata : this.metadata});                        
+            this._initializeSidebarView();
         },
 
         serializeData : function () {
             var context = {
-                selectAllUrl : App.context + this.metadata.urlIdentifierPart()
+                selectAllUrl : App.context + this.metadata.urlIdentifierPart(),
+                metadata : this.metadata.toJSON()
             };
             return context;
+        },
+        
+        _initializeSidebarView : function () {            
+            this.infoView = new App.modules.dataset.DatasetInfoView({
+                dataset : this.dataset
+            });
+            
+            var sideViews = [this.infoView];
+            this.sidebarView = new App.components.sidebar.SidebarView({sideViews : sideViews});
         },
 
         buildItemView : function (item, ItemViewType, itemViewOptions) {
@@ -48,7 +61,16 @@
                 zones.setDimensionZone("left", dimension);
             }, this);
         },
-
+        
+        onRender: function() {
+        	// We render here the sidebar because marionette provides a built in method
+            this.sidebarView.setElement(this.$('.sidebar-container')).render();          
+        },
+        
+        onShow : function() {
+        	this.sidebarView.updateSidebarHeight();
+        },
+       
         onBeforeClose : function () {
             var models = this.collection.models;
             _(models).first().set({open : true});
