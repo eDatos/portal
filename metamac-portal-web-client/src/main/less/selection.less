@@ -6,9 +6,30 @@
         float: left;
         width: 349px; //magic number?
 
-        &:nth-child(odd) {
-            margin-right: 10px;
+		margin-left: 2px;
+        &:nth-child(even) {
+            margin-right: 8px;
         }
+        
+        .full-screen & {
+        	width: 49%;
+        	min-width: 349px;
+        	margin-right: 8px;
+        }
+    }
+    .selection-options-bar {
+    	margin-left: 0;
+    	margin-bottom: 2px;    	
+    	
+    	.options-bar;
+    	
+    	.full-screen & {
+    		width: 100%;
+    	}
+    	
+    	.btn {
+    	    .options-bar-btn;
+    	}    	
     }
 
     .filter-sidebar-dimension {
@@ -26,20 +47,16 @@
         border-right: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
         height: 400px;
-
+		background-color: white;
     }
-}
-
-.selection-actions {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    text-align: right;
-    .clearfix;
 }
 
 .selection-sidebar-container {
 	float: left;
 	width: auto;
 	height: 438px;
-	margin-right: 2px;
+	
+	.full-screen & {
+		height: 100% !important;
+	}
 }

@@ -26,7 +26,7 @@
 
         renderShare : function (permalinkId) {
             var context = {
-                url : window.location.href + "/selection/" + permalinkId,
+                url : window.location.href + "/permalink/" + permalinkId,
                 title : this.filterDimensions.metadata.getTitle()
             };
             this.$el.html(this.template(context));
@@ -38,8 +38,11 @@
             var share = {
                 url : context.url,
                 title : context.title,
-                templates : {
-                    twitter : context.title + ' ' + context.url + ' (via @istac_es)'
+                passthrough : {
+                    twitter : {
+                    	via : 'istac_es',
+                    	text: context.title + ' ' + context.url
+                    }
                 }
             };
 

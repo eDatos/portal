@@ -6,6 +6,7 @@
             type : '',
             fullScreen : false,
             filter : false,
+            visualize : false,
             options : true
         }
     });

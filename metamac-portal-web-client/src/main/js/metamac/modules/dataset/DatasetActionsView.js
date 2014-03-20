@@ -88,8 +88,11 @@
             var share = {
                 url : context.url,
                 title : context.title,
-                templates : {
-                    twitter : context.title + ' ' + context.url + ' (via @App)'
+                passthrough : {
+                    twitter : {
+                    	via : 'App',
+                    	text: context.title + ' ' + context.url
+                    }
                 }
             };
             addthis.toolbox(".addthis_toolbox", config, share);

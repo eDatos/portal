@@ -37,9 +37,9 @@
         },
 
         showDatasetSelection : function (datasetIdentifier) {
-            var link = this.router.linkTo(datasetIdentifier.type + "Selection", datasetIdentifier);
+            var link = this._linkToDatasetSelection(datasetIdentifier);
             this.router.navigate(link);
-
+            
             var self = this;
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
@@ -76,6 +76,14 @@
             if (options.visualizationType) {
                 routeName = routeName + "Type";
             }
+            if (options.permalinkId) {
+                routeName = routeName + "Permalink";
+            }
+            return this.router.linkTo(routeName, options);
+        },
+        
+        _linkToDatasetSelection : function (options) {
+            var routeName = options.type + "Selection";
             if (options.permalinkId) {
                 routeName = routeName + "Permalink";
             }

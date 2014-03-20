@@ -77,7 +77,8 @@
                         visible : fullScreenVisible,
                         active : fullScreenActive,
                         btnClass : fullScreenActive ? 'active' : ''
-                    }
+                    },
+                    visualize : this.optionsModel.get('visualize')
                 };
                 this.$el.html(this.template(context));
             }
@@ -105,7 +106,7 @@
                 this.trigger('exitFullScreen');
             } else {
                 if (this.fullScreenIsAllowed) {
-                    this.trigger('launchFullScreen');
+                    this.trigger('enterFullScreen');
                 }
             }
         },

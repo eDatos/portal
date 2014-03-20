@@ -157,15 +157,13 @@
     }
 
     .dataset-visualization-options-bar {
-        .clearfix;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: @datasetVisualizationOptionsBarHeight;
-        background: @optionsBarColor;
-        padding: 5px;
-        .box-sizing(border-box);
-        border-left: 0;
+    	.options-bar;
+    	position: absolute;
+    	bottom: 0;
+    	
+    	.btn {
+    	    .options-bar-btn;
+    	}
     }
 
 }
@@ -177,14 +175,6 @@
     .visual-element-options-edit {
         height: 41px;
     }
-}
-
-.dataset-visualization-options-bar .btn{
-    display: inline-block;
-    background-image:none;
-    background-color: @optionsBarColor;
-    box-shadow: none;
-    border:none;
 }
 
 .change-visual-element {
@@ -211,6 +201,12 @@
     width: 37px;
     padding-left: 0;
     font-size: 27px;
+    
+    .btn-with-label & {
+    	font-size: 18px;
+    	padding-top: 2px;
+    	padding-bottom: 2px;
+    }
 
     &:before {
         color: #1e1e1e;
@@ -254,6 +250,10 @@
     .icon-download;
 }
 
+.dataset-options-visualize {
+    .dataset-options-type-icon;
+    .icon-visualize;
+}
 
 .dataset-download {
     font-size: 60px;

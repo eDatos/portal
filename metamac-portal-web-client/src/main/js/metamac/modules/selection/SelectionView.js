@@ -17,9 +17,14 @@
         initialize : function (options) {
             this.metadata = options.metadata;
             this.controller = options.controller;
+            this.filterDimensions = this.controller.filterDimensions;            
             
             this.dataset = new App.dataset.Dataset({metadata : this.metadata});                        
             this._initializeSidebarView();
+
+            this.optionsModel = new App.modules.dataset.OptionsModel({visualize: true});
+            this._initializeOptionsView();
+            this._initializeFullScreen();
         },
 
         serializeData : function () {
@@ -28,6 +33,15 @@
                 metadata : this.metadata.toJSON()
             };
             return context;
+        },
+        
+       	_initializeOptionsView : function () {
+            this.optionsView = new App.modules.dataset.OptionsView({
+            	optionsModel : this.optionsModel,
+                filterDimensions : this.filterDimensions,
+                el : this.$(".selection-options-bar")
+                //,buttons : this.veElements
+            });
         },
         
         _initializeSidebarView : function () {            
@@ -67,6 +81,35 @@
         onRender: function() {
         	// We render here the sidebar because marionette provides a built in method
             this.sidebarView.setElement(this.$('.sidebar-container')).render();          
+            this.optionsView.setElement(this.$('.selection-options-bar')).render();
+            
+            this.fullScreen.setContainer(this.$('.selection-body'));
+            this._unbindEvents();
+            this._bindEvents();
+        },
+        
+        _initializeFullScreen : function () {
+            this.fullScreen = new App.FullScreen();
+        },
+        
+        _bindEvents : function () {
+            // FullScreen
+            this.listenTo(this.optionsView, "enterFullScreen", _.bind(this.fullScreen.enterFullScreen, this.fullScreen));
+            this.listenTo(this.optionsView, "exitFullScreen", _.bind(this.fullScreen.exitFullScreen, this.fullScreen));
+            this.listenTo(this.fullScreen, "didEnterFullScreen", this._onDidEnterFullScreen);
+            this.listenTo(this.fullScreen, "didExitFullScreen", this._onDidExitFullScreen);
+        },
+        
+        _unbindEvents : function () {
+            this.stopListening();
+        },
+        
+        _onDidEnterFullScreen : function () {
+            this.optionsModel.set('fullScreen', true);
+        },
+
+        _onDidExitFullScreen : function () {
+            this.optionsModel.set('fullScreen', false);
         },
         
         onShow : function() {

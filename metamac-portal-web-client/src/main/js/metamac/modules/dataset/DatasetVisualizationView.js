@@ -138,7 +138,7 @@
             });
 
             this.optionsView.render();
-            this.optionsView.on("launchFullScreen", this.enterFullScreen, this);
+            this.optionsView.on("enterFullScreen", this.enterFullScreen, this);
             this.optionsView.on("exitFullScreen", this.exitFullScreen, this);
         }
 

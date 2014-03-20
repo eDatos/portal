@@ -10,15 +10,16 @@
 
             "datasets/:agency/:identifier/:version" : "dataset",
             "datasets/:agency/:identifier/:version/selection" : "datasetSelection",
+            "datasets/:agency/:identifier/:version/selection/permalink/:permalinkId" : "datasetSelectionPermalink",
             "datasets/:agency/:identifier/:version/visualization" : "datasetVisualization",
             "datasets/:agency/:identifier/:version/visualization/:visualizationType" : "datasetVisualizationType",
-            "datasets/:agency/:identifier/:version/visualization/:visualizationType/selection/:permalinkId" : "datasetVisualizationTypePermalink",
+            "datasets/:agency/:identifier/:version/visualization/:visualizationType/permalink/:permalinkId" : "datasetVisualizationTypePermalink",
 
             "queries/:agency/:identifier" : "query",
             "queries/:agency/:identifier/selection" : "querySelection",
             "queries/:agency/:identifier/visualization" : "queryVisualization",
             "queries/:agency/:identifier/visualization/:visualizationType" : "queryVisualizationType",
-            "queries/:agency/:identifier/visualization/:visualizationType/selection/:permalinkId" : "queryVisualizationTypePermalink",
+            "queries/:agency/:identifier/visualization/:visualizationType/permalink/:permalinkId" : "queryVisualizationTypePermalink",
 
             "*path" : "error"
         },
@@ -53,6 +54,12 @@
             args.type = "dataset";
             return args;
         },
+        
+        _nameDatasetSelectionPermalinkArguments : function (args) {
+            var args = this._nameArguments(["agency", "identifier", "version", "permalinkId"], args);
+            args.type = "dataset";
+            return args;
+        },
 
         _nameQueryArguments : function (args) {
             var args = this._nameArguments(["agency", "identifier", "visualizationType", "permalinkId"], args);
@@ -72,6 +79,11 @@
 
         datasetSelection : function () {
             var args = this._nameDatasetArguments(arguments);
+            this.datasetController.showDatasetSelection(args);
+        },
+        
+        datasetSelectionPermalink : function () {
+            var args = this._nameDatasetSelectionPermalinkArguments(arguments);
             this.datasetController.showDatasetSelection(args);
         },
 
