@@ -105,10 +105,12 @@
         },
         
         _onDidEnterFullScreen : function () {
+        	this.sidebarView.updateSidebarHeight();
             this.optionsModel.set('fullScreen', true);
         },
 
         _onDidExitFullScreen : function () {
+        	this.sidebarView.updateSidebarHeight();
             this.optionsModel.set('fullScreen', false);
         },
         
