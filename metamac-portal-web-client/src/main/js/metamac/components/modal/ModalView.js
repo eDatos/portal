@@ -17,7 +17,8 @@
         },
 
         events : {
-            "click .modal-backdrop" : "onClickBackdrop"
+            "click .modal-backdrop" : "onClickBackdrop",
+            "click .modal-close" : "onClickClose"
         },
 
         serializeData : function () {
@@ -40,7 +41,12 @@
 
         onClickBackdrop : function () {
             this.close();
+        },
+
+        onClickClose : function () {
+            this.close();
         }
+        
 
     });
 

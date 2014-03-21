@@ -17,7 +17,8 @@ I18n.translations.es = {
             cancel : "Cancelar",
             selectAll : "Marcar todo",
             deselectAll : "Desmarcar todo",
-            reverseOrder : "Invertir orden"
+            reverseOrder : "Invertir orden",
+            close : "Cerrar"
         },
         text : {
             fixedDimensions : "Valores fijados",
