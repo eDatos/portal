@@ -1,7 +1,14 @@
 I18n.translations || (I18n.translations = {});
 
 I18n.translations.es = {
-
+	
+	number : {
+		format : {
+			separator : ",", /* Decimal */
+			delimiter : ".", /* Thousands */
+			strip_insignificant_zeros : false
+		}
+	},
     filter : {
         button : {
             edit : "Cambiar selección",

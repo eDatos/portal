@@ -20,6 +20,7 @@
             this._initializeVisualElements();
             this._initializeSidebarView();
             this._initializeFullScreen();
+            this._initializeHighChartsLocale();
         },
 
         _initializeVisualElements : function () {
@@ -129,6 +130,15 @@
         _onDidExitFullScreen : function () {
             this.visualizationView._didExitFullScreen();
             this.optionsModel.set('fullScreen', false);
+        },
+        
+        _initializeHighChartsLocale : function() {            
+        	Highcharts.setOptions({
+        		lang: {
+        			thousandsSep: I18n.t("number.format.delimiter"),
+        			decimalPoint: I18n.t("number.format.separator")
+        		}
+        	});
         }
 
     });
