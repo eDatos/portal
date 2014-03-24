@@ -1,7 +1,7 @@
 <%@ page import="org.siemac.metamac.rest.common.v1_0.domain.InternationalString" %>
-<%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.Chapter" %>
-<%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.CollectionNode" %>
-<%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.Table" %>
+<%@ page import="org.siemac.metamac.portal.dto.Chapter" %>
+<%@ page import="org.siemac.metamac.portal.dto.CollectionNode" %>
+<%@ page import="org.siemac.metamac.portal.dto.Table" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.siemac.metamac.portal.Helpers" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

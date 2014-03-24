@@ -26,6 +26,10 @@
             <artifactId>metamac-statistical-resources-rest-external-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
+            <artifactId>metamac-statistical-resources-rest-internal-api</artifactId>
+        </dependency>                            
+        <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
             <version>2.6.0</version>

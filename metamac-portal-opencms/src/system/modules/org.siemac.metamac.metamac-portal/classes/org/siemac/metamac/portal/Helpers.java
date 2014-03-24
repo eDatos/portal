@@ -2,10 +2,10 @@ package org.siemac.metamac.portal;
 
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Chapter;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Collection;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CollectionNode;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Table;
+import org.siemac.metamac.portal.dto.Chapter;
+import org.siemac.metamac.portal.dto.Collection;
+import org.siemac.metamac.portal.dto.CollectionNode;
+import org.siemac.metamac.portal.dto.Table;
 
 import java.util.List;
 

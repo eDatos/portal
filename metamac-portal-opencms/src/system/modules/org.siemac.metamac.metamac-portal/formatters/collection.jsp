@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" %><%@ page import="org.apache.cxf.jaxrs.client.JAXRSClientFactory" %>
 <%@ page import="org.siemac.metamac.portal.Helpers" %>
-<%@ page import="org.siemac.metamac.rest.statistical_resources.v1_0.domain.Collection" %>
-<%@ page import="org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0" %>
+<%@ page import="org.siemac.metamac.portal.mapper.Collection2DtoMapper"%>
+<%@ page import="org.siemac.metamac.portal.dto.Collection" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -10,24 +10,40 @@
 
 <fmt:setLocale value="${cms.locale}" />
 <cms:formatter var="content" val="value">
-    <div>
-
-        <%
+    <div>    
+        <%               
+        	// This page is accesible in http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000002
+        	                	        
 	    	// ${content.value.ApiUrlStatisticalResources}
 	    	CmsJspContentAccessBean contentAccessBean = (CmsJspContentAccessBean) pageContext.getAttribute("content");
 	    	String apiUrlStatisticalResources = contentAccessBean.getValue().get("ApiUrlStatisticalResources").toString();
-	    
-            //test http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000002
+	    	Boolean internalPortal = new Boolean(contentAccessBean.getValue().get("InternalPortal").toString());
+	    		
             Collection collection = null;
+            Collection2DtoMapper collection2DtoMapper = new Collection2DtoMapper();
             try {
                 //String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
-                String statisticalResourcesEndpoint = apiUrlStatisticalResources;
-                StatisticalResourcesV1_0 statisticalResourcesV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, StatisticalResourcesV1_0.class, null, true);
+                String statisticalResourcesEndpoint = apiUrlStatisticalResources;                
+                
                 String agencyId = request.getParameter("agencyId");
                 String resourceId = request.getParameter("resourceId");
                 List<String> lang = new ArrayList<String>();
                 String fields = "";
-                collection = statisticalResourcesV1_0.retrieveCollection(agencyId, resourceId, lang, fields);
+                
+                if (internalPortal) {
+                    
+                    org.siemac.metamac.statistical_resources.rest.internal.v1_0.service.StatisticalResourcesV1_0 statisticalResourcesInternalV1_0;
+                    statisticalResourcesInternalV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, org.siemac.metamac.statistical_resources.rest.internal.v1_0.service.StatisticalResourcesV1_0.class, null, true);
+                	collection = collection2DtoMapper.collectionInternalToDto(statisticalResourcesInternalV1_0.retrieveCollection(agencyId, resourceId, lang, fields));
+                	
+                } else {
+                    
+        	    	org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0 statisticalResourcesExternalV1_0;  
+                    statisticalResourcesExternalV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0.class, null, true);
+                    collection = collection2DtoMapper.collectionExternalToDto(statisticalResourcesExternalV1_0.retrieveCollection(agencyId, resourceId, lang, fields));
+                    
+                }
+                
                 if (collection != null) {
                     request.setAttribute("collection", collection);
                     request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
@@ -36,7 +52,6 @@
 
             }
         %>
-
         <c:choose>
             <c:when test="${collection != null}">
             	<h2 class="tit_conten_1_col"><%= Helpers.localizeText(collection.getName()) %></h2>
