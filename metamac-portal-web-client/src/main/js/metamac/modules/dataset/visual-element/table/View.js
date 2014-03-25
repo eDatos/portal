@@ -40,9 +40,8 @@
 
     App.Table.View.prototype.initializeZones = function () {
 
-        // TODO must be a delegate parameter
-        this.scrollSize = 10;
-        this.spinnerSize = new Size(70, 30);
+        this.scrollSize = this.delegate.scrollSize;
+        this.spinnerSize = this.delegate.spinnerSize;
 
         this.bodyZone = new BodyZone({context : this.ctx, dataSource : this.dataSource, delegate : this.delegate, view : this});
 

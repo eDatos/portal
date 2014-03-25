@@ -6,6 +6,9 @@
     App.Table.Delegate = function () {
         this.size = new App.Table.Size(150, 25);
         this.minSize = new App.Table.Size(50, 25);
+        
+        this.scrollSize = 10;
+        this.spinnerSize = new App.Table.Size(70, 30);
 
         this.style = {
             bodyCell : {
