@@ -15,10 +15,16 @@
         	width: 49%;
         	min-width: 349px;
         }
+        
+        &:last-child .filter-sidebar-dimension-content {
+        	.border-radius(0 0 6px 0);
+        }        
     }
     .selection-options-bar {
     	margin-left: 0;
     	margin-bottom: 2px;    	
+    	
+    	.border-radius(0 6px 0 0);
     	
     	.options-bar;
     	
@@ -48,8 +54,12 @@
         border-left: 1px solid #ccc;
         border-right: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
-        height: 400px;
-		background-color: white;
+        height: 390px;
+		background-color: white;		
+		
+		&.collapse.in {
+			margin-bottom: 10px;
+		}
     }
 }
 

@@ -57,6 +57,7 @@
     background-color: @istacBlueMedium;
     color: #fff;
     .user-select(none);
+    .border-radius(6px 6px 0 0);
 }
 
 .filter-sidebar-dimensions {
@@ -67,7 +68,8 @@
 
     .filter-sidebar-dimension-title {
         .sidebar-title;
-        cursor: pointer;
+        cursor: pointer;        
+        .border-radius(6px 6px 0 0);
     }
 
     .filter-sidebar-dimension-label {
@@ -102,15 +104,17 @@
 	        .filter-sidebar-dimension-actions {
 	            text-align: right;
 	            margin-bottom: 5px;
-	            margin-top: 8px;
+	            margin-top: 6px;
 	            
 	            .btn {
 	            	margin-bottom: 5px;
 	            }	            
 	        }
-	    }
-
+	    }   
     }
+	.filter-sidebar-dimension-content {
+		padding-right: 5px;
+	}
 
     .collapse {
         overflow-y: auto;

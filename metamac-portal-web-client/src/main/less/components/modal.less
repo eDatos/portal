@@ -20,9 +20,9 @@
     left: 50%;
     z-index: @zindex-modal-background;
     max-height: 500px;
-    width: 400px;
+    width: 436px;
     margin-left: -(@modal-width / 2);
-    padding: 20px;
+    .border-radius(6px);
     
     .modal-close {
 	    float: right;
@@ -42,10 +42,16 @@
 	}
 }
 
-.modal-header h2 {
-    margin: 0;
+.modal-header {
+	h2 {
+    	margin: 0;
+    	text-align: left;
+	}
+	border-bottom: 1px solid #eee;    	
+    padding: 20px;
 }
 
 .modal-content {
     text-align: left;
+    padding: 20px;
 }
