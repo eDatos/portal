@@ -40,14 +40,14 @@
         }
 
         formattedNumber = buffer.join(options.delimiter);
-
-        if (decimals) {
-            if (options.decimals) {
-                decimals = decimals.substring(0, options.decimals);
-            }
-            formattedNumber += options.separator + decimals;
+        
+        if (options.decimals) {
+    		decimals = decimals || "";
+        	decimals = decimals.substring(0, options.decimals);    
+            _.times(options.decimals - decimals.length, function () { decimals += "0"; });
         }
-
+        formattedNumber += options.separator + decimals;  
+        
         if (negative) {
             formattedNumber = "-" + formattedNumber;
         }

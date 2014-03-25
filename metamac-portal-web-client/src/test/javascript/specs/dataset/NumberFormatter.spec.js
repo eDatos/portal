@@ -57,6 +57,10 @@ describe("Number Formatter", function () {
             it('should truncate value', function () {
                 expect(strNumberToLocalizedString("3954.6821602645277", {decimals : 2})).to.eql("3.954,68");
             });
+            
+            it('should add zeroes if necessary', function () {
+                expect(strNumberToLocalizedString("3954.68216026", {decimals : 12})).to.eql("3.954,682160260000");
+            });
 
         });
 
