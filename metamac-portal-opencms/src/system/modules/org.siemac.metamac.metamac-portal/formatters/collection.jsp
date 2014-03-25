@@ -8,7 +8,7 @@
 <%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %>
 <%@ page import="org.opencms.jsp.util.CmsJspContentAccessBean" %>
 
-<fmt:setLocale value="${cms.locale}" />
+<fmt:setLocale value="<%= request.getLocale() %>" />
 <cms:formatter var="content" val="value">
     <div>    
         <%               

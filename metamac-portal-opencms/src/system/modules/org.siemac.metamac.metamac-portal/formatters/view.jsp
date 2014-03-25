@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %>
 
-<fmt:setLocale value="${cms.locale}" />
+<fmt:setLocale value="<%= request.getLocale() %>" />
 <cms:formatter var="content" val="value">
     <div>
 
@@ -23,7 +23,7 @@
 		            LazyLoad.css('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.css</cms:link>', function () {
 		                LazyLoad.js('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.js</cms:link>', function () {
 		                    I18n.defaultLocale = "es";
-		                    I18n.locale = "es";
+		                    I18n.locale = "<%= request.getLocale().toString().substring(0, 2) %>";
 							
 		                    // http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources
 		                    App.endpoints["statistical-resources"] = "${content.value.ApiUrlStatisticalResources}/v1.0";
