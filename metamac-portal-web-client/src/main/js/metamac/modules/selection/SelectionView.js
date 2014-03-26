@@ -86,6 +86,9 @@
             this.fullScreen.setContainer(this.$('.selection-body'));
             this._unbindEvents();
             this._bindEvents();
+            
+            this.updatePageTitle();
+            this.updatePageDescription();
         },
         
         _initializeFullScreen : function () {
@@ -143,6 +146,16 @@
         gotoVisualization : function () {
             var controllerParams = this.metadata.identifier();
             this.controller.showDatasetVisualization(controllerParams);
+        },
+        updatePageTitle : function() {
+        	document.title = this.filterDimensions.metadata.getTitle() + " " + I18n.t("page.titleSuffix");
+        },
+        updatePageDescription : function() {
+        	if ($('meta[name=description]').length) {
+        		$('meta[name=description]').attr('description',  this.filterDimensions.metadata.getDescription());
+        	} else {
+        		$('head').append('<meta name="description" content="' + this.filterDimensions.metadata.getDescription() + '" />');
+        	}
         }
 
     });

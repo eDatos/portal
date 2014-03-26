@@ -27,7 +27,8 @@
         renderShare : function (permalinkId) {
             var context = {
                 url : window.location.href + "/permalink/" + permalinkId,
-                title : this.filterDimensions.metadata.getTitle()
+                title : this.filterDimensions.metadata.getTitle(),
+                description : this.filterDimensions.metadata.getDescription()
             };
             this.$el.html(this.template(context));
 
@@ -38,6 +39,7 @@
             var share = {
                 url : context.url,
                 title : context.title,
+                description : context.description,
                 passthrough : {
                     twitter : {
                     	via : 'istac_es',

@@ -8,7 +8,10 @@ I18n.translations.en = {
 			delimiter : ",", /* Thousands */
 			strip_insignificant_zeros : false
 		}
-	},
+	},	
+	page : {
+		titleSuffix : "| ISTAC"
+	},	
     filter : {
         button : {
             edit : "Change selection",

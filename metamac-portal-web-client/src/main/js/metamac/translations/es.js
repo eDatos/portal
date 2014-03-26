@@ -9,6 +9,9 @@ I18n.translations.es = {
 			strip_insignificant_zeros : false
 		}
 	},
+	page : {
+		titleSuffix : "| ISTAC"
+	},	
     filter : {
         button : {
             edit : "Cambiar selección",

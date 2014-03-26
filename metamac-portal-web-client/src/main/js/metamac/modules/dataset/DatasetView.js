@@ -91,6 +91,9 @@
             this.fullScreen.setContainer(this.content.$el);
             this._unbindEvents();
             this._bindEvents();
+            
+            this.updatePageTitle();
+            this.updatePageDescription();
         },
 
         onBeforeClose : function () {
@@ -139,7 +142,18 @@
         			decimalPoint: I18n.t("number.format.separator")
         		}
         	});
+        },
+        updatePageTitle : function() {
+        	document.title = this.filterDimensions.metadata.getTitle() + " " + I18n.t("page.titleSuffix");
+        },
+        updatePageDescription : function() {
+        	if ($('meta[name=description]').length) {
+        		$('meta[name=description]').attr('description',  this.filterDimensions.metadata.getDescription());
+        	} else {
+        		$('head').append('<meta name="description" content="' + this.filterDimensions.metadata.getDescription() + '" />');
+        	}
         }
+        
 
     });
 
