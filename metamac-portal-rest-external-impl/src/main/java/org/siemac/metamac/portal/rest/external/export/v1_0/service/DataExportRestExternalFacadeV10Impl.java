@@ -86,6 +86,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filenamePrefix = FilenameUtils.getBaseName(filename);
             } else {
                 filenamePrefix = "dataset-" + agencyID + "-" + resourceID + "-" + version;
+                filename = filenamePrefix;
             }
             File tsvZip = generateTsvZip(tmpFileObservations, tmpFileAttributes, filenamePrefix);
             return buildResponseOkWithFile(tsvZip, filename + ".zip");
