@@ -43,7 +43,7 @@
                 passthrough : {
                     twitter : {
                     	via : 'istac_es',
-                    	text: context.title + ' ' + context.url
+                    	text: context.title
                     }
                 }
             };
