@@ -148,7 +148,7 @@
             this.controller.showDatasetVisualization(controllerParams);
         },
         updatePageTitle : function() {
-        	document.title = this.filterDimensions.metadata.getTitle() + " " + I18n.t("page.titleSuffix");
+        	document.title = I18n.t("page.titlePreffix") + " " + this.filterDimensions.metadata.getTitle();
         },
         updatePageDescription : function() {
         	if ($('meta[name=description]').length) {

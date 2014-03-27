@@ -10,7 +10,7 @@ I18n.translations.en = {
 		}
 	},	
 	page : {
-		titleSuffix : "| ISTAC"
+		titlePreffix : "ISTAC |"
 	},	
     filter : {
         button : {
