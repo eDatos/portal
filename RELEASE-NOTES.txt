@@ -10,6 +10,47 @@ Por favor, consulta nuestro gestor de incidencia para obtener más información
 de las incidencias con el id [METAMAC-xxx].
 http://jira.arte-consultores.com/browse/METAMAC
 
+------------------------------------------------------------------------------
+Release 1.0.2
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - Versión portal - 1.0.2
+
+** Error
+    * [METAMAC-1876] - Integración con OpenCMS
+    * [METAMAC-1887] - [Página 3] Mostrar metadatos en la pantalla de información
+    * [METAMAC-1972] - [Página 1] Maquetar página 1 del portal
+    * [METAMAC-2028] - [Página 3] Error al visualizar dimensiones jerárquicas en la tabla
+    * [METAMAC-2030] - [Página 3] En los gráficos, cambias las "," de miles por ".".
+    * [METAMAC-2117] - Los manuales tienen los ejemplos de environment.xml incorrecto
+    * [METAMAC-2120] - Corregir error en el valor de las propiedades del datasource en el fichero environment.xml
+    * [METAMAC-2177] - [Exportaciones] El pop-up de exportar crea un scroll vertical sin necesidad y no tiene botón de cerrar
+    * [METAMAC-2178] - [Página 3] Cuando estamos en pantalla completa los paneles que se muestran quedan ocultos
+
+** Mejora
+    * [METAMAC-2023] - [Estilos] El portal debe tener estilos curvos en todos los componentes
+    * [METAMAC-2122] - El manual global debe hacer referencia al componente portal (statistical-visualizer)
+
+** Reuniones
+    * [METAMAC-2125] - 11/02/2014 - Incorporación de Javi al proyecto
+
+** Tarea
+    * [METAMAC-1929] - Identificar en la API el codelist de granularidades geográficas
+    * [METAMAC-2025] - [Página 3] Permalinks y compartir en redes sociales en la página 3
+    * [METAMAC-2082] - Cambio de los nombres de los war
+    * [METAMAC-2111] - Detectar problema con el portal y los enlaces desde el gpe
+    * [METAMAC-2133] - Cambiar driver a oracle 11 para pasar los tests en jenkins
+    * [METAMAC-2151] - Modificar la configuración del portal que actualmente tiene hardcodeado el endpoint de la API del GPE
+    * [METAMAC-2169] - [OpenCMS] Debe crearse correctamente el MANIFEST del módulo
+    * [METAMAC-2179] - [Servidor] Añadir a las respuestas JSON de las API un filtro para devolver en JSONP
+    * [METAMAC-2180] - [Página 2/3] Los textos HTML no se visualizan correctamente
+    * [METAMAC-2198] - [CORE] Desde la aplicación interna del GPE los recursos deben previsualizarse en el portal interno
+    * [METAMAC-2212] - [Página 3] El número de decimales a mostrar debe formatearse según los metadatos showDecimals y showDecimalsPrecision
+
+** Subtarea
+    * [METAMAC-1871] - [API] Mapas
+    * [METAMAC-2197] - [Página 2] El scroll no aparece en pantalla completa
+    * [METAMAC-2209] - Cargar locale portal en función del idioma del navegador
 
 ------------------------------------------------------------------------------
 Release 1.0.1
