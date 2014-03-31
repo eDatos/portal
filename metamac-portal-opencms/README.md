@@ -63,6 +63,8 @@ view.html
 
 Publish
 
+Fallos relativos a Helpers.java pueden ser causados porque no se ha regenerado correctamente el .class asociado. Reiniciar el TomCat suele solucionar esto
+
 ### Configuración del opencms
 
 Para permitir que el opencms exporte las fuentes como recursor estáticos modifica el fichero `opencms/WEB-INF/config/opencms-importexport.xml` y añade los nuevos sufijos:
