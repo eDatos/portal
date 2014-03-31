@@ -175,6 +175,10 @@
             <version>${geronimo-servlet_2.5_spec.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>nl.captcha</groupId>
+            <artifactId>simple-captcha</artifactId>
+            <version>${simple-captcha.version}</version>
+        </dependency>
     </dependencies>
 </project>
