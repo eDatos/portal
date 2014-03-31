@@ -1,3 +1,7 @@
+<%@ page contentType="text/javascript"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="baseURL" value="${fn:replace(pageContext.request.requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}" />
 (function () {
     "use strict";
 
@@ -9,7 +13,7 @@
     function GovernCaptcha() {
     	
     }
-    GovernCaptcha.captchaPictureUrl = 'captcha.jsp';
+    GovernCaptcha.captchaPictureUrl = "${baseURL}/jsp/captcha-gobcan.jsp";
     
     GovernCaptcha.create = function(captchaGeneratedId) {
     	var captchaContainer = "<table> <tr>"+
@@ -61,8 +65,7 @@
             ajaxOptions.headers = {};
         }
 
-        ajaxOptions.headers.recaptcha_response = GovernCaptcha.get_response();
-debugger;
+        ajaxOptions.headers.captcha_gobcan = GovernCaptcha.get_response();
         var authenticatedRequest = $.ajax(ajaxOptions);
 
         authenticatedRequest.done(function (response) {

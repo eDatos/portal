@@ -48,8 +48,14 @@ public class ApplicationStartup implements ServletContextListener {
         // Captcha
         configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_ENABLE);
         if (configurationService.getConfig().getBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE)) {
-            configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
-            configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
+
+            configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
+
+            String provider = configurationService.getConfig().getString(PortalConfigurationConstants.CAPTCHA_PROVIDER);
+            if (PortalConfigurationConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(provider)) {
+                configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
+                configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
+            }
         }
 
         LOG.info("**************************************************************************");
