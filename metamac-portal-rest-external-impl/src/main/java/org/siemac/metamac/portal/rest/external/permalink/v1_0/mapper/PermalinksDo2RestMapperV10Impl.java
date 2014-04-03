@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.portal.rest.external.RestExternalConstants;
 import org.siemac.metamac.rest.common.v1_0.domain.ResourceLink;
+import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
 import org.siemac.metamac.rest.utils.RestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
