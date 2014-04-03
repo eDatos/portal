@@ -5,7 +5,6 @@ import javax.annotation.PostConstruct;
 import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.portal.rest.external.RestExternalConstants;
 import org.siemac.metamac.rest.common.v1_0.domain.ResourceLink;
-import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
 import org.siemac.metamac.rest.utils.RestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class PermalinksDo2RestMapperV10Impl implements PermalinksDo2RestMapperV1
     public void init() throws Exception {
         // ENDPOINTS
         // Permalinks external Api V1.0
-        String portalApiExternalEndpoint = configurationService.retrievePortalExternalApiUrlBase();
+        String portalApiExternalEndpoint = configurationService.retrievePortalExternalApisUrlBase();
         permalinksApiExternalEndpointV10 = RestUtils.createLink(portalApiExternalEndpoint, RestExternalConstants.API_PERMALINKS_NAME + "/" + RestExternalConstants.API_VERSION_1_0);
     }
 
