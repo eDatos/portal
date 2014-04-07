@@ -72,6 +72,13 @@
                 y = Utils.floorIndex(this.incrementalCellSize.rows, absolutePoint.y);
             return new Cell(x, y);
         },
+        
+        absolutePoint2Cell : function (absolutePoint) { 
+        	var point = this.relativePoint2AbsolutePoint(new Point(absolutePoint.x, absolutePoint.y))
+        	var x = Utils.floorIndex(this.incrementalCellSize.columns, point.x),
+        			y = Utils.floorIndex(this.incrementalCellSize.rows, point.y);
+        	return new Cell(x, y);
+        },
 
         cellSize : function (cell) {
             var width = this.delegate.columnWidth(cell.x);
@@ -152,16 +159,24 @@
 
             var i = firstCell.y;
             var y = firstCellPoint.y;
+            
+            // IndexCell to account for the difference that blank rows add
+            var indexCell = i - this.dataSource.blankRowsOffset(firstCell.y);
             while (yVisible && i < totalRows) {
                 size = this.delegate.rowHeight(i);
 
                	rows.push({
                     y : y,
                     index : i,
+                    indexCell : indexCell,
                     height : size,
-                    blank: this.dataSource.isBlankRow(i)
+                    blank : this.dataSource.isBlankRow(i)
                 });
-
+               	
+               	if (!this.dataSource.isBlankRow(i)) {
+               		indexCell++;
+               	}
+               	
                 i = i + 1;
                 y = y + size;
 
@@ -246,7 +261,7 @@
                 var column = paintInfo.columns[j];
                 for (i = 0; i < paintInfo.rows.length; i++) {
                     var row = paintInfo.rows[i];
-                    var cell = new Cell(column.index, row.index);
+                    var cell = new Cell(column.index, row.indexCell);
                     var point = new Point(column.x, row.y);
                     var size = new Size(column.width, row.height);
 
@@ -275,6 +290,20 @@
                         this.ctx.fillText(value, point.x + size.width - marginRight, point.y + size.height / 2);
                     }
                 }
+            }
+        },
+        
+//	    cellAtPoint : function (absolutePoint) {
+//	        // TODO Optimizable no buscando por todas las celdas, sino buscar por columnas
+//	        return _.find(_.flatten(this.lastPaintInfo, true), function (headerCell) {
+//	            var rect = new Rectangle(headerCell.x, headerCell.y, headerCell.width, headerCell.height);
+//	            return rect.containsPoint(absolutePoint);
+//	        });
+//	    },
+        attributesAtPoint : function (absolutePoint) {
+            var bodyCellAtPoint = this.absolutePoint2Cell(absolutePoint);
+            if (bodyCellAtPoint) {
+                return this.dataSource.cellAttributesAtIndex(bodyCellAtPoint);
             }
         }
 

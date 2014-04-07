@@ -26,6 +26,10 @@
         leftHeaderDimensionsElements: function(dimension) {
         	return this.filterDimensions.getTableInfo().elementsByLeftDimension(this.leftHeaderDimensionsLengths(), dimension);
         },
+        
+        leftHeaderDimensionsBlanks: function(dimension) {
+        	return this.filterDimensions.getTableInfo().blanksByLeftDimension(this.leftHeaderDimensionsLengths(), dimension);
+        },
 
         topHeaderRows : function () {
             return this.filterDimensions.getTableInfo().top.representationsValues.length;
@@ -43,6 +47,14 @@
             var tableSize = this.filterDimensions.getTableInfo().getTableSize();
             return (cell.y >= 0 && cell.x >= 0) &&
                 (tableSize.rows > cell.y && tableSize.columns > cell.x);
+        },
+        
+        cellHasAttributes : function (cell) {
+        	return true;
+        },
+        
+        cellAttributesAtIndex : function (cell) {        	
+        	return this.dataset.data.getAttributes({cell : cell});
         },
 
         rows : function () {
@@ -67,6 +79,31 @@
         			return true;        		
         	}
         	return false;
+        },
+        
+        blankRowsOffset : function (row) {
+        	var dimensionElements = 0;
+        	var pos = row; 
+        	var blanks = 0;
+        	
+        	// Starts on one because the first one is not nested on another dimension
+        	var blanksElementsForDimension = 0;
+        	for (var dimension = 1; dimension < this.leftHeaderDimensionsLengths().length; dimension++) {
+
+        		dimensionElements = this.leftHeaderDimensionsElements(dimension);
+        		blanksElementsForDimension = this.leftHeaderDimensionsBlanks(dimension);
+        		
+        		blanks += Math.floor(pos / dimensionElements) * blanksElementsForDimension;
+        		     
+        		pos = pos % dimensionElements;
+        		if (pos == 0) { // Blank row
+        			return blanks;        			 
+        		} else { // "Enter" next dimension level
+        			pos--;
+        			blanks++;
+        		}        		
+        	}
+        	return blanks;
         },
 
         /**

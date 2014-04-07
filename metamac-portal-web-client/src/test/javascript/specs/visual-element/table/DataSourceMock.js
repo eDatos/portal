@@ -81,6 +81,10 @@
     App.Table.DataSource.prototype.isBlankRow = function (row) {
         return false;
     };
+    
+    App.Table.DataSource.prototype.blankRowsOffset = function () {
+        return 0;
+    };    
 
 
 }());
