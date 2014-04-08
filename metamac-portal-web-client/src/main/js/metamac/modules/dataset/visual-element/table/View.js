@@ -31,11 +31,13 @@
 
         this.selection = {
             rows : [],
+            rowsCells : [],
             columns : []
         };
 
         this.initializeZones();
-        this.initializeTooltip();
+        this.initializeMouseOverTooltip();
+        this.initializeClickTooltip();
     };
 
     App.Table.View.prototype.initializeZones = function () {
@@ -131,17 +133,27 @@
         );
     };
 
-    App.Table.View.prototype.initializeTooltip = function () {
+    App.Table.View.prototype.initializeMouseOverTooltip = function () {
         var self = this;
-        this.tooltipDelegate = {
+        this.mouseOverTooltipDelegate = {
             getTitleAtMousePosition : function (position) {
                 return self.getTitleAtMousePosition(position);
             }
         };
-        this.tooltip = new Tooltip({el : this.$canvas, delegate : this.tooltipDelegate});
+        this.mouseOverTooltip = new Tooltip({el : this.$canvas, delegate : this.mouseOverTooltipDelegate, trigger : "mouseOver"});
     };
-
-    // Limpia el cambas completo
+    
+    App.Table.View.prototype.initializeClickTooltip = function () {
+        var self = this;
+        this.clickTooltipDelegate = {
+        	getAttributeAtMousePosition : function (position) {
+        		return self.getAttributeAtMousePosition(position);
+        	} 
+        };
+        this.clickTooltip = new Tooltip({el : this.$canvas, delegate : this.clickTooltipDelegate, trigger : "click"});
+    };
+    
+    // Limpia el canvas completo
     App.Table.View.prototype.clear = function () {
         var canvasSize = this.getSize();
         this.ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
@@ -271,11 +283,13 @@
         this.canvas.width = size.width;
         this.canvas.height = size.height;
         this.update();
-        this.tooltip.setEl(this.$canvas);
+        this.mouseOverTooltip.setEl(this.$canvas);
+        this.clickTooltip.setEl(this.$canvas);
     };
 
     App.Table.View.prototype.isSelectionActive = function (selection) {
         return (!_.difference(selection.rows, this.selection.rows).length) &&
+        	(!_.difference(selection.rowsCells, this.selection.rowsCells).length) &&
             (!_.difference(selection.columns, this.selection.columns).length);
     };
 
@@ -295,6 +309,9 @@
     App.Table.View.prototype.toggleSelection = function (newSelection) {
         this.selection.rows = this.toggleArrays(this.selection.rows, newSelection.rows);
         this.selection.rows.sort();
+        
+        this.selection.rowsCells = this.toggleArrays(this.selection.rowsCells, newSelection.rowsCells);
+        this.selection.rowsCells.sort();
 
         this.selection.columns = this.toggleArrays(this.selection.columns, newSelection.columns);
         this.selection.columns.sort();
@@ -311,18 +328,19 @@
             if (zone === "bodyZone" || zone === "leftHeaderZone" || zone === "topHeaderZone") {
                 if (zone === "bodyZone") {
                     cell = this.bodyZone.relativePoint2Cell(arg);
-                    var isOnlyACellSelected = this.selection.rows.length === 1 && this.selection.columns.length === 1;
-                    var firstCellSelectedEqSelectedCell = this.selection.rows[0] === cell.y && this.selection.columns[0] === cell.x;
+                    var isOnlyACellSelected = this.selection.rowsCells.length === 1 && this.selection.columns.length === 1;
+                    var firstCellSelectedEqSelectedCell = this.selection.rowsCells[0] === cell.y && this.selection.columns[0] === cell.x;
 
                     if (isOnlyACellSelected && firstCellSelectedEqSelectedCell) {
-                        this.selection = {rows : [], columns : []};
+                        this.selection = {rowsCells : [], rows : [], columns : []};
                     } else {
-                        this.selection = {rows : [cell.y], columns : [cell.x]};
+                        this.selection = {rowsCells : [cell.y], columns : [cell.x], rows : [cell.y += this.dataSource.blankRowsOffset(cell.y)]};
                     }
 
                 } else if (zone === "leftHeaderZone") {
                     var rows = this.leftHeaderZone.rowsAtPoint(arg);
-                    this.toggleSelection({rows : rows});
+                    var rowsCells = this.leftHeaderZone.rowsCellsAtPoint(arg);
+                    this.toggleSelection({rows : rows, rowsCells : rowsCells});
                 } else {
                     //topHeaderZone
                     var columns = this.topHeaderZone.columnsAtPoint(arg);
@@ -337,6 +355,19 @@
 
         }
     };
+        
+//    App.Table.View.prototype.showCellAttributes = function (arg) {
+//        var cell;
+//
+//        if (arg instanceof Point) {
+//            var zone = this.zoneFromPoint(arg);
+//            if (zone === "bodyZone" || zone === "leftHeaderZone" || zone === "topHeaderZone") {
+//            	
+//            	console.log("uy!");
+//            	
+//            }
+//        }
+//    };    
 
     App.Table.View.prototype.setMousePosition = function (point, e) {
         this.mouseInCanvas = e.target === this.canvas;
@@ -364,6 +395,24 @@
         }
         return title;
     };
+    
+    App.Table.View.prototype.getAttributeAtMousePosition = function (point) {
+        var attribute;
+        if (this.mouseZone === "bodyZone") {
+        	attribute = this.bodyZone.attributesAtPoint(point);
+        }
+        return attribute;
+    };
+    
+//    App.Table.View.prototype.getAttributesAtMousePosition = function (point) {
+//        var attributes;
+//        if (this.mouseZone === "leftHeaderZone") {
+//            title = this.leftHeaderZone.titleAtPoint(point);
+//        } else if (this.mouseZone === "topHeaderZone") {
+//            title = this.topHeaderZone.titleAtPoint(point);
+//        }
+//        return title;
+//    };
 
     App.Table.View.prototype.setLastClickZone = function (zone) {
         var needRepaint = this.lastClickZone !== zone;
@@ -375,7 +424,8 @@
     };
 
     App.Table.View.prototype.destroy = function () {
-        this.tooltip.destroy();
+        this.clickTooltip.destroy();
+        this.mouseOverTooltip.destroy();
     };
 
     App.Table.View.prototype.columnSeparatorIndex = function (point) {

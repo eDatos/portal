@@ -84,7 +84,13 @@
     
     App.Table.DataSource.prototype.blankRowsOffset = function () {
         return 0;
-    };    
+    }; 
+
+    App.Table.DataSource.prototype.cellHasAttributes = function(cell) {
+        return false;
+    };   
+
+    
 
 
 }());

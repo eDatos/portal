@@ -16,7 +16,7 @@
                 color : "#191919",
                 background : function (cell, view) {
 
-                    var isRowSelected = view.isSelectionActive({rows : [cell.y]});
+                    var isRowSelected = view.isSelectionActive({rowsCells : [cell.y]});
                     var isColumnSelected = view.isSelectionActive({columns : [cell.x]});
 
                     if (isRowSelected && isColumnSelected) {
@@ -114,6 +114,10 @@
 
         format : function (value) {
             return value;
+        },
+
+        formatAttributes : function (attributes) {
+            return attributes.join("<br>");
         },
 
         resizableColumns : function () {

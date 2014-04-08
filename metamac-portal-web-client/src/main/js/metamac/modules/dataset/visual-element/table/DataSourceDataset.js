@@ -49,11 +49,12 @@
                 (tableSize.rows > cell.y && tableSize.columns > cell.x);
         },
         
-        cellHasAttributes : function (cell) {
-        	return true;
+        cellHasAttributes : function (cell) {        	
+            var cellAttributes = this.dataset.data.getAttributes({cell : cell});
+        	return !_.isUndefined(cellAttributes) && _.compact(cellAttributes).length > 0;
         },
         
-        cellAttributesAtIndex : function (cell) {        	
+        cellAttributesAtIndex : function (cell) {
         	return this.dataset.data.getAttributes({cell : cell});
         },
 

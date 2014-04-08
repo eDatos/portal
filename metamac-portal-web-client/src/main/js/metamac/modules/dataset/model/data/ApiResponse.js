@@ -3,8 +3,11 @@
 
     App.namespace("App.dataset.data.ApiResponse");
 
-    App.dataset.data.ApiResponse = function (response) {
+    App.dataset.data.ApiResponse = function (response, metadata) {
         this.response = response;
+        this.attributesValues = !_.isUndefined(response.data.attributes) ? response.data.attributes.attribute : false;
+        this.attributesMetadata = !_.isUndefined(metadata) ? metadata.getAttributes() : false;
+        this.attributes = this.getPrimaryMeasureAttributesValues();
 
         // Mult Factor
         this._mult = null;
@@ -26,6 +29,49 @@
     };
 
     App.dataset.data.ApiResponse.prototype = {
+    		
+//            "attributes" : {
+//            	"total" : 1,
+//            	"attribute" [{
+//            		"id" : "OBS_CONF",
+//            		"value" : " | bar |  |  |  | <br>Br! | <div style='color: red'/>¿Soy rojo?</div> |  |  |  | \escape |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | "
+//    	        },
+//    	        {
+//    	        	"id" : "TITLE",
+//    	        	"value": "Supervalue"
+//    	        }
+//    	        ]
+//            }  	
+    	// Example with attributes http://estadisticas.arte-consultores.com/statistical-resources-internal/apis/statistical-resources-internal/v1.0/datasets/ISTAC/C00031A_000002/001.006.json
+    	getPrimaryMeasureAttributesValues : function () {                 
+    		if (this.attributesValues && this.attributesMetadata) {
+                var primaryMeasureAttributes =_(this.attributesMetadata).where({attachmentLevel: "PRIMARY_MEASURE"});
+                var primaryMeasureAttributesIds =  _.pluck(primaryMeasureAttributes, "id")                
+                var primaryMeasureAttributesRawValues = _.filter(this.attributesValues, function (item) { return _.contains(primaryMeasureAttributesIds, item["id"]); });
+
+                var primaryMeasureAttributesParsedValues = _(primaryMeasureAttributesRawValues).map(this._parsePrimaryMeasureValue, this);
+
+                return this._combinePrimaryMeasureAttributesValues(primaryMeasureAttributesParsedValues);                
+            }
+
+    	},
+
+        _parsePrimaryMeasureValue : function (attributeValue) {
+            var attributeMetadata = this._getAttributeMetadata(attributeValue);
+            attributeValue = attributeValue.value.split(" | ");
+            if (attributeMetadata.attributesValues) { // enumerated resource
+                // TODO Parse enumerate
+            }
+            return attributeValue;
+        },
+
+        _getAttributeMetadata : function (attributeValue) {
+            return _.findWhere(this.attributesMetadata, { id : attributeValue["id"]});
+        },
+
+        _combinePrimaryMeasureAttributesValues : function (primaryMeasureAttributesParsedValues) {
+            return _.zip.apply(_, primaryMeasureAttributesParsedValues);
+        },
 
         getDataById : function (ids) {
             var ds = this.response;
@@ -49,7 +95,15 @@
                 posArray = 0;
 
             posArray = self._transformPosToPosArrays.apply(self, [pos]); // Use "apply" method to pass actual context
-            return { "value" : this.observations[posArray] };
+            return { "value" : this.observations[posArray] , "attributes"  : this.getAttributesByPos(posArray) };
+        },
+
+        getAttributesByPos : function (pos) {
+            if (this.attributes) {
+                 return this.attributes[pos];
+            } else {
+                return "";
+            }            
         },
 
         /*** OTHER METHODS ***/

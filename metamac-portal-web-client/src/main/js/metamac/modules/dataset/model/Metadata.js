@@ -270,6 +270,11 @@
             };
         },
 
+        getAttributes : function () {
+            if (this.metadata.attributes)
+                return this.metadata.attributes.attribute;
+        },
+
         getCategoryByNormCode : function (dimensionId, normCode) {
             var representations = this.getRepresentations(dimensionId);
             var selectedCategory = _.find(representations, function (category) {

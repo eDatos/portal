@@ -45,13 +45,14 @@
         },
 
         fetch : function (callback) {
+            var metadata = this.metadata;
             var ajaxParams = {
                 url : this.url(),
                 dataType : 'jsonp',
                 jsonp : '_callback',
                 data : this.queryParams(),
                 success : function (response) {
-                    var apiResponse = new ApiResponse(response);
+                    var apiResponse = new ApiResponse(response, metadata);
                     if (_.isFunction(callback)) {
                         callback(apiResponse);
                     }

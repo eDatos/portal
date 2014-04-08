@@ -66,17 +66,21 @@
             return new Point(x, y);
         },
 
+        // TODO check this offset
         relativePoint2Cell : function (point) {
             var absolutePoint = this.relativePoint2AbsolutePoint(point);
             var x = Utils.floorIndex(this.incrementalCellSize.columns, absolutePoint.x),
                 y = Utils.floorIndex(this.incrementalCellSize.rows, absolutePoint.y);
+            y -= this.dataSource.blankRowsOffset(y);
             return new Cell(x, y);
         },
-        
+
+        // TODO check this offset        
         absolutePoint2Cell : function (absolutePoint) { 
         	var point = this.relativePoint2AbsolutePoint(new Point(absolutePoint.x, absolutePoint.y))
         	var x = Utils.floorIndex(this.incrementalCellSize.columns, point.x),
         			y = Utils.floorIndex(this.incrementalCellSize.rows, point.y);
+        	y -= this.dataSource.blankRowsOffset(y);
         	return new Cell(x, y);
         },
 
@@ -268,10 +272,15 @@
                     var value = "";
                     if (!row.blank) {
                     	value = this.dataSource.cellAtIndex(cell);
-                    	
+
                     	if (_.isFunction(this.delegate.format)) {
                     		value = this.delegate.format(value);
                     	}
+                    	
+                    	if (this.dataSource.cellHasAttributes(cell)) {
+                    		value = "* " + value;
+                    	}   
+                    	
                     }
 
                     this.ctx.beginPath();
@@ -303,7 +312,7 @@
         attributesAtPoint : function (absolutePoint) {
             var bodyCellAtPoint = this.absolutePoint2Cell(absolutePoint);
             if (bodyCellAtPoint) {
-                return this.dataSource.cellAttributesAtIndex(bodyCellAtPoint);
+                return this.delegate.formatAttributes(_.compact(this.dataSource.cellAttributesAtIndex(bodyCellAtPoint)));
             }
         }
 

@@ -13,9 +13,16 @@
         delay : 300,
 
         initialize : function (options) {
-            this._mouseMove = _.bind(this._mouseMove, this);
+        	this.trigger = options.trigger == "click" ? "click" : "mouseOver";
+        	
+        	if (this.trigger === "click") {
+        		this._click = _.bind(this._click, this);
+        	} else {
+        		this._mouseMove = _.bind(this._mouseMove, this);
+        	}
 
             this._initializeHtml();
+            this._hide();
             this.setEl(options.el);
             this.delegate = options.delegate;
         },
@@ -39,13 +46,20 @@
         },
 
         _initializeHtml : function () {
-            this.$innerTooltip = $('<div class="tooltip-inner"></div>');
+        	this.$tooltipTitle = $('<div class="tooltip-title"></div>');
+        	this.$tooltipBody = $('<div class="tooltip-body"></div>');
+            this.$innerTooltip = $('<div class="tooltip-inner"></div>').append(this.$tooltipTitle);
+            this.$innerTooltip.append(this.$tooltipBody);
             this.$tooltip = $('<div class="tooltip in"></div>').append(this.$innerTooltip);
             this.$body = $('body');
         },
 
-        _attachEvents : function () {
-            this.$container.on('mousemove.tooltip', this._mouseMove);
+        _attachEvents : function () {            
+           	if (this.trigger === "click") {
+           		this.$container.on('click.tooltip', this._click);
+           	} else {
+           		this.$container.on('mousemove.tooltip', this._mouseMove);
+           	}
         },
 
         _detachEvents : function () {
@@ -93,22 +107,45 @@
 
             return position;
         },
-
+        
         _update : function (point) {
             var pointInsideEl = point.x > 0 && point.y > 0 && point.x < this.$el.width() && point.y < this.$el.height();
             if (pointInsideEl) {
-                var title = this.delegate.getTitleAtMousePosition(point);
-                if (title) {
-                    this.$innerTooltip.html(title);
-                    var position = this._getPosition(point);
-                    this.$tooltip.css({
-                        display : 'block',
-                        top : position.y,
-                        left : position.x
-                    });
-                } else {
-                    this._hide();
-                }
+            	if (this.trigger === "click") {            		            	
+            		this._updateByClick(point);
+            	} else {
+	                this._updateByMouseOver(point);
+            	}
+            } else {
+                this._hide();
+            }
+        },
+        
+        _updateByClick : function (point) {
+	        var attribute = this.delegate.getAttributeAtMousePosition(point);
+	        if (attribute) {
+	            this.$innerTooltip.html(attribute);
+	            var position = this._getPosition(point);
+	            this.$tooltip.css({	                        
+	                top : position.y,
+	                left : position.x                    
+	            });
+	            this.$tooltip.toggle();
+	        } else {
+	            this._hide();
+	        }
+        },
+        
+        _updateByMouseOver : function (point) {
+        	var title = this.delegate.getTitleAtMousePosition(point);
+            if (title) {
+                this.$innerTooltip.html(title);
+                var position = this._getPosition(point);
+                this.$tooltip.css({
+                    display : 'block',
+                    top : position.y,
+                    left : position.x
+                });
             } else {
                 this._hide();
             }
@@ -119,6 +156,14 @@
         },
 
         _mouseMove : function (e) {
+            var offset = this._getOffset();
+            var point = {
+                x : e.pageX - offset.left,
+                y : e.pageY - offset.top
+            };
+            this._update(point);
+        },
+        _click : function (e) {
             var offset = this._getOffset();
             var point = {
                 x : e.pageX - offset.left,

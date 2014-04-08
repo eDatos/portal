@@ -235,9 +235,7 @@
         },
         
         blanksByLeftDimension : function (representationsLengths, dimension) {
-        	console.log(representationsLengths);
         	representationsLengths = representationsLengths.slice(dimension);
-        	
             var size = _.reduceRight(representationsLengths, function (mem, value) {
                 return 1 + value * mem;
             }, 0);

@@ -86,6 +86,26 @@
             _.each(neighbourCacheBlocks, function (cacheBlock) {
                 this._loadCacheBlock(cacheBlock, true);
             }, this);
+        }, 
+        
+        getAttributes : function (selection) {
+            var cell = selection.cell || this.filterDimensions.getTableInfo().getCellForCategoryIds(selection.ids);
+
+            var cacheBlock = this.getCache().cacheBlockForCell(cell);            
+            if (this.getCache().isBlockReady(cacheBlock)) {
+                var ids = this.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
+                return cacheBlock.apiResponse.getDataById(ids).attributes;
+            } else if (cacheBlock) {
+                this._loadCacheBlock(cacheBlock, true);
+            }
+
+            if (cacheBlock) {
+            	// load neighbours
+            	var neighbourCacheBlocks = this.getCache().neighbourCacheBlocks(cacheBlock);
+            	_.each(neighbourCacheBlocks, function (cacheBlock) {
+            		this._loadCacheBlock(cacheBlock, true);
+            	}, this);
+            }
         },
 
         getNumberData : function (selection) {
