@@ -59,26 +59,26 @@ describe("[TableCanvas] View", function () {
 
     describe("selection", function () {
         it("should start with an empty selection", function () {
-            expect(view.selection).to.eql({rows : [], columns : []});
+            expect(view.selection).to.eql({rows : [], columns : [], rowsCells : []});
         });
 
         it("should toggle selection", function () {
-            view.toggleSelection({rows : [1, 2, 3], columns : [1, 5, 6]});
-            expect(view.selection).to.eql({rows : [1, 2, 3], columns : [1, 5, 6]});
+            view.toggleSelection({rows : [1, 2, 3], columns : [1, 5, 6], rowsCells : [1, 2, 3]});
+            expect(view.selection).to.eql({rows : [1, 2, 3], columns : [1, 5, 6], rowsCells : [1, 2, 3]});
 
-            view.toggleSelection({rows : [1, 5]});
-            expect(view.selection).to.eql({rows : [1, 2, 3, 5], columns : [1, 5, 6]});
+            view.toggleSelection({rows : [1, 5], rowsCells : [1, 5]});
+            expect(view.selection).to.eql({rows : [1, 2, 3, 5], columns : [1, 5, 6], rowsCells : [1, 2, 3, 5]});
 
-            view.toggleSelection({rows : [1, 5]});
-            expect(view.selection).to.eql({rows : [2, 3], columns : [1, 5, 6]});
+            view.toggleSelection({rows : [1, 5], rowsCells : [1, 5],});
+            expect(view.selection).to.eql({rows : [2, 3], rowsCells : [2, 3], columns : [1, 5, 6]});
 
-            view.toggleSelection({rows : [2, 3, 6], columns: [5, 8]});
-            expect(view.selection).to.eql({rows : [2, 3, 6], columns : [1, 5, 6, 8]});
+            view.toggleSelection({rows : [2, 3, 6], columns: [5, 8], rowsCells : [2, 3, 6]});
+            expect(view.selection).to.eql({rows : [2, 3, 6], columns : [1, 5, 6, 8], rowsCells : [2, 3, 6]});
         });
 
         it("should always keep a order selection", function () {
-            view.toggleSelection({rows : [3, 1, 2], columns : [6, 5, 1]});
-            expect(view.selection).to.eql({rows : [1, 2, 3], columns : [1, 5, 6]});
+            view.toggleSelection({rows : [3, 1, 2], columns : [6, 5, 1], rowsCells : [ 3, 1, 2]});
+            expect(view.selection).to.eql({rows : [1, 2, 3], columns : [1, 5, 6], rowsCells : [1, 2, 3]});
         });
 
         it("is selection active", function () {
