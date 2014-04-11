@@ -5,20 +5,21 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.siemac.metamac.core.common.conf.ConfigurationService;
+import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.util.ApplicationContextProvider;
+import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.constants.PortalConfigurationConstants;
 
 public class ApplicationStartup implements ServletContextListener {
 
-    private static final Log     LOG = LogFactory.getLog(ApplicationStartup.class);
+    private static final Log    LOG = LogFactory.getLog(ApplicationStartup.class);
 
-    private ConfigurationService configurationService;
+    private PortalConfiguration configurationService;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            configurationService = ApplicationContextProvider.getApplicationContext().getBean(ConfigurationService.class);
+            configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
             checkConfiguration();
         } catch (Exception e) {
             // Abort startup application
@@ -26,7 +27,7 @@ public class ApplicationStartup implements ServletContextListener {
         }
     }
 
-    private void checkConfiguration() {
+    private void checkConfiguration() throws MetamacException {
         LOG.info("**************************************************************************");
         LOG.info("[metamac-portal-web] Checking application configuration");
         LOG.info("**************************************************************************");
@@ -47,11 +48,10 @@ public class ApplicationStartup implements ServletContextListener {
 
         // Captcha
         configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_ENABLE);
-        if (configurationService.getConfig().getBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE)) {
-
+        if (configurationService.retrieveCaptchaEnable()) {
             configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
 
-            String provider = configurationService.getConfig().getString(PortalConfigurationConstants.CAPTCHA_PROVIDER);
+            String provider = configurationService.retrieveCaptchaProvider();
             if (PortalConfigurationConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(provider)) {
                 configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
                 configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
