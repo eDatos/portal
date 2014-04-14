@@ -117,7 +117,14 @@
         },
 
         formatAttributes : function (attributes) {
-            return attributes.join("<br>");
+            var formattedAttributes = _(attributes).map(function(attribute) { 
+                if (attribute.href) {
+                    return '<a href="' + attribute.href + '">' + attribute.name + '</a>';
+                } else {
+                    return attribute;
+                }
+            });
+            return formattedAttributes.join("<br>");
         },
 
         resizableColumns : function () {

@@ -105,7 +105,9 @@ I18n.translations.es = {
                 title : "Dimensiones"
             },
     
-    		language : "Idioma",            
+    		language : "Idioma",   
+
+            datasetAttributes : "Atributos a nivel de dataset",
 
         }
     },

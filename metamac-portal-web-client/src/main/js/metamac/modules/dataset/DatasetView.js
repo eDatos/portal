@@ -34,8 +34,7 @@
         _initializeSidebarView : function () {
             // sidebar - infoview
             this.infoView = new App.modules.dataset.DatasetInfoView({
-                dataset : this.dataset,
-                datasetAttributes : this.attributes
+                dataset : this.dataset
             });
 
             // sidebar - filter

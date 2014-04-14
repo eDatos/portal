@@ -19,7 +19,7 @@
             this.controller = options.controller;
             this.filterDimensions = this.controller.filterDimensions;            
             
-            this.dataset = new App.dataset.Dataset({metadata : this.metadata});                        
+            this.dataset = new App.dataset.Dataset({metadata : this.metadata, filterDimensions : this.filterDimensions});                        
             this._initializeSidebarView();
 
             this.optionsModel = new App.modules.dataset.OptionsModel({visualize: true});

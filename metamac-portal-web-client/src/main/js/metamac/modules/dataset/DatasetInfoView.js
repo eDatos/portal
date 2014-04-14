@@ -13,11 +13,18 @@
 
         initialize : function (options) {
             this.dataset = options.dataset;
+            
+            this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes ); 
+        },
+        
+        updateDatasetAttributes : function() {
+            this.datasetAttributes = this.dataset.data.getDatasetAttributes();
         },
 
         render : function () {
             var context = {
-                metadata : this.dataset.metadata.toJSON()
+                metadata : this.dataset.metadata.toJSON(),
+                datasetAttributes : this.datasetAttributes
             };
             this.$el.html(this.template(context));
         }

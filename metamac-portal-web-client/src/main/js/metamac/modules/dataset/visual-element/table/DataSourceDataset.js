@@ -58,6 +58,10 @@
         	return this.dataset.data.getAttributes({cell : cell});
         },
 
+        datasetAttributes : function () {
+            return this.dataset.data.getDatasetAttributes();
+        },
+
         rows : function () {
             return this.filterDimensions.getTableInfo().getTableSize().rows;
         },

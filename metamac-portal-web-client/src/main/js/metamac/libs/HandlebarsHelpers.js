@@ -108,19 +108,38 @@
         }
     });
 
+    function resourceOutput(value) {
+        var result = "";
+        if (!(value instanceof Array)) {
+            value = [ value ];
+        }
+        var href = Handlebars.Utils.escapeExpression(value[0].href);
+        var name = Handlebars.Utils.escapeExpression(value[0].name);
+        result += '<a href=' + href + '>' + name + '</a>';
+        for (var i = 1; i < value.length; i++) {
+            var href = Handlebars.Utils.escapeExpression(value[i].href);
+            var name = Handlebars.Utils.escapeExpression(value[i].name);
+            result += ', <a href=' + href + '>' + name + '</a>';
+        }
+        return result; 
+    };
+
     /**
      * Draw a field with its value
      *
      * usage:
      *      {{ fieldOutput "entity.dataset.title" }}
      */
-    Handlebars.registerHelper("fieldOutput", function (label, value, type) {
+    Handlebars.registerHelper("fieldOutput", function (label, value, type, localizeLabel) {        
         label = Handlebars.Utils.escapeExpression(label);        
+        localizeLabel = _.isUndefined(localizeLabel) ? true : localizeLabel;
         var result = '';
         if (value) {
             result +=
                 '<div class="field" >' +
-                    '<span class="metadata-title">' + I18n.t(label) + '</span>';
+                    '<span class="metadata-title">';
+                result += localizeLabel ? I18n.t(label) : label; 
+            result += '</span>';
             result +=
             		'<div class="metadata-value">';
             
@@ -129,17 +148,7 @@
                 result += I18n.l("date.formats.default", value);
             }
             else if (type === "resource") { 
-            	if (!(value instanceof Array)) {
-            		value = [ value ];
-            	}
-            	var href = Handlebars.Utils.escapeExpression(value[0].href);
-        		var name = Handlebars.Utils.escapeExpression(value[0].name);
-            	result += '<a href=' + href + '>' + name + '</a>';
-            	for (var i = 1; i < value.length; i++) {
-            		var href = Handlebars.Utils.escapeExpression(value[i].href);
-            		var name = Handlebars.Utils.escapeExpression(value[i].name);
-            		result += ', <a href=' + href + '>' + name + '</a>';
-            	}
+                result += resourceOutput(value);
             } else {
             	value = Handlebars.Utils.escapeExpression(value);
                 //result += Handlebars.helpers.iString(value) +

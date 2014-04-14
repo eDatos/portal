@@ -52,5 +52,18 @@
 </div>
 {{/if}}
 
+{{#if datasetAttributes }}
+<div class="field">
+    <div class="metadata-title">
+        <div>{{message "entity.dataset.datasetAttributes"}}</div>
+    </div>
+    <div class="metadata-value">
+        {{#ulList datasetAttributes }}
+        {{ fieldOutput name value "resource" false}}
+        {{/ulList}}
+    </div>
+</div>
+{{/if}}
+
 </div>
 </div>

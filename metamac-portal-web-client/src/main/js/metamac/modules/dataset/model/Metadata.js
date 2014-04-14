@@ -74,7 +74,6 @@
         },
 
         initializeLocalesIndex : function () {
-            var selectedLanguages = this.selectedLanguages;
             this.localesIndex = {            		
                 primary : I18n.locale,
                 secondary : I18n.defaultLocale
