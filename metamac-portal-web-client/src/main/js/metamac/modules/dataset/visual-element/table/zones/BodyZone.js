@@ -269,20 +269,6 @@
                     var point = new Point(column.x, row.y);
                     var size = new Size(column.width, row.height);
 
-                    var value = "";
-                    if (!row.blank) {
-                    	value = this.dataSource.cellAtIndex(cell);
-
-                    	if (_.isFunction(this.delegate.format)) {
-                    		value = this.delegate.format(value);
-                    	}
-                    	
-                    	if (this.dataSource.cellHasAttributes(cell)) {
-                    		value = "* " + value;
-                    	}   
-                    	
-                    }
-
                     this.ctx.beginPath();
                     this.ctx.rect(point.x, point.y, size.width, size.height);
                     if (_.isFunction(this.delegate.style.bodyCell.background)) {
@@ -293,6 +279,28 @@
                     this.ctx.fillStyle = bgColor;
                     this.ctx.fill();
                     this.ctx.closePath();
+
+
+                    var value = "";
+                    if (!row.blank) {
+                        value = this.dataSource.cellAtIndex(cell);
+
+                        if (_.isFunction(this.delegate.format)) {
+                            value = this.delegate.format(value);
+                        }                       
+
+                        if (this.dataSource.cellHasAttributes(cell)) {
+                            this.ctx.beginPath();                  
+                            var marginMark = this.delegate.style.attributeCellMark.margin;
+                            var sizeMark = this.delegate.style.attributeCellMark.size;              
+                            this.ctx.moveTo(point.x + size.width - marginMark, point.y + size.height - marginMark);
+                            this.ctx.lineTo(point.x + size.width - marginMark - sizeMark, point.y + size.height - marginMark);
+                            this.ctx.lineTo(point.x + size.width - marginMark, point.y + size.height - marginMark - sizeMark);
+                            this.ctx.fillStyle = this.delegate.style.attributeCellMark.background;
+                            this.ctx.fill();
+                            this.ctx.closePath();
+                        }   
+                    }
 
                     if (value !== undefined) {
                         this.ctx.fillStyle = this.delegate.style.bodyCell.color;

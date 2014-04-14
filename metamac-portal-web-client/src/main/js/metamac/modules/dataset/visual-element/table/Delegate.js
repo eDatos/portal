@@ -61,6 +61,11 @@
                     left : 5
                 }
             },
+            attributeCellMark : {
+                background : "#0f5b95",
+                margin : 2,
+                size : 5
+            },
             scroll : {
                 color : function (scroll, view) {
                     if (view.mouseZone && view.mouseZone.indexOf(scroll) !== -1) {
