@@ -84,7 +84,7 @@ public class CaptchaGobcanServlet extends HttpServlet {
 
             // *****************************************************
             // only development
-            // proxyLocal();
+             proxyLocal();
             // *****************************************************
 
             URL wsdlLocation = getClass().getResource("/wsdl/captcha-gobcan.wsdl");
