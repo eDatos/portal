@@ -36,7 +36,6 @@
     }
     
     SimpleCaptcha.getResponse = function() {
-    	debugger;
     	return $('#' + this.captchaGeneratedId + ' #codigo').val();
     }
     
@@ -67,7 +66,7 @@
         }
 
         ajaxOptions.headers.captcha_simple_response = SimpleCaptcha.get_response();
-debugger;
+
         var authenticatedRequest = $.ajax(ajaxOptions);
 
         authenticatedRequest.done(function (response) {

@@ -35,7 +35,6 @@
     }
     
     GovernCaptcha.getResponse = function() {
-    	debugger;
     	return $('#' + this.captchaGeneratedId + ' #codigo').val();
     }
     

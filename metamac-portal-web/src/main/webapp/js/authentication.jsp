@@ -1,5 +1,5 @@
 <%@page import="org.siemac.metamac.core.common.exception.MetamacException"%>
-<%@ page import="org.siemac.metamac.core.common.conf.ConfigurationService"%>
+<%@ page import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
 <%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
 <%@ page import="org.siemac.metamac.portal.core.constants.PortalConfigurationConstants"%>
 <%@ page contentType="text/javascript"%>
