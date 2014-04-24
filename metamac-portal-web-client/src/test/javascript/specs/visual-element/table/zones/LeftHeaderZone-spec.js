@@ -314,7 +314,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
     });
 
     it("should return title at position", function () {
-        var leftHeaderZone = new LeftHeaderZone({});
+        var delegate = new Delegate();
+        var leftHeaderZone = new LeftHeaderZone({ delegate : delegate });
         leftHeaderZone.lastPaintInfo = [
             [
                 {

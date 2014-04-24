@@ -81,6 +81,8 @@
                     var column = indexInValue % rowsValuesLength[i];
                     var content = rowsValues[i][column];
 
+                    var cellAttributes =  tooltipValues[i].attributes ? (tooltipValues[i].attributes[column] ? _.compact(tooltipValues[i].attributes[column]) : "") : "";
+
                     result[i].push({
                         index : index,
                         indexEnd : indexEnd,
@@ -89,7 +91,8 @@
                         x : cellX,
                         width : cellWidth,
                         content : content,
-                        tooltip : tooltipValues[i][column]
+                        tooltip : tooltipValues[i].title[column],
+                        attributes : cellAttributes
                     });
                 }
             }
@@ -109,7 +112,7 @@
     App.Table.TopHeaderZone.prototype.titleAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
-            return headerCellAtPoint.tooltip
+            return this.delegate.formatHeaderAttributes({ title : headerCellAtPoint.tooltip , attributes : headerCellAtPoint.attributes})
         }
     };
 
@@ -210,6 +213,18 @@
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
                 this.ctx.fillText(cell.content || "", cell.x + +margin, Math.ceil(cell.y + cell.height / 2));
+
+                 if (cell.attributes != "") {
+                    this.ctx.beginPath();                  
+                    var marginMark = this.delegate.style.attributeCellMark.margin;
+                    var sizeMark = this.delegate.style.attributeCellMark.size;              
+                    this.ctx.moveTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark);
+                    this.ctx.lineTo(cell.x + cell.width - marginMark - sizeMark, cell.y + cell.height - marginMark);
+                    this.ctx.lineTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark - sizeMark);
+                    this.ctx.fillStyle = this.delegate.style.attributeCellMark.background;
+                    this.ctx.fill();
+                    this.ctx.closePath();
+                }   
 
                 this.ctx.restore();
             }

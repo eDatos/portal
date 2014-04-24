@@ -108,20 +108,21 @@
         }
     });
 
-    function resourceOutput(value) {
+    function resourceOutput(values) {
         var result = "";
-        if (!(value instanceof Array)) {
-            value = [ value ];
+        if (!(values instanceof Array)) {
+            values = [ values ];
         }
-        var href = Handlebars.Utils.escapeExpression(value[0].href);
-        var name = Handlebars.Utils.escapeExpression(value[0].name);
-        result += '<a href=' + href + '>' + name + '</a>';
-        for (var i = 1; i < value.length; i++) {
-            var href = Handlebars.Utils.escapeExpression(value[i].href);
-            var name = Handlebars.Utils.escapeExpression(value[i].name);
-            result += ', <a href=' + href + '>' + name + '</a>';
-        }
-        return result; 
+
+        return _.reduce(values, function(memo, value){
+            var href = Handlebars.Utils.escapeExpression(value.href);
+            var name = Handlebars.Utils.escapeExpression(value.name);
+            result = href ? '<a href=' + href + '>' : '';
+            result += name;
+            result += href ? '</a>' : '';
+            memo = memo ? ", " : "";
+            return memo + result;
+        }, "");
     };
 
     /**

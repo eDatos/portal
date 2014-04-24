@@ -122,14 +122,27 @@
         },
 
         formatAttributes : function (attributes) {
-            var formattedAttributes = _(attributes).map(function(attribute) { 
-                if (attribute.href) {
-                    return '<a href="' + attribute.href + '">' + attribute.name + '</a>';
-                } else {
-                    return attribute;
-                }
-            });
-            return formattedAttributes.join("<br>");
+            if (_.isArray(attributes)) {
+                var formattedAttributes = _(_.compact(attributes)).map(function(attribute) { 
+                    if (attribute.href) {
+                        return '<a href="' + attribute.href + '">' + attribute.name + '</a>';
+                    } else {
+                        // It´s more efficient to replace it here on demand than replacing all the attributes on lower levels
+                        return attribute.replace(" \\| "," | ");
+                    }
+                });
+                return formattedAttributes.join("<br>");
+            } else {
+                return attributes;
+            }
+        },
+
+        formatHeaderAttributes : function (options) {
+            var result = options.title;
+            if (options.attributes) {
+                result += '<br>' + this.formatAttributes(options.attributes);                
+            }
+            return result;
         },
 
         resizableColumns : function () {

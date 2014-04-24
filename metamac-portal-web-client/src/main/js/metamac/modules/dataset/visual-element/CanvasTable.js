@@ -114,7 +114,7 @@
 
         hasNewData : function () {
             if (this.view) {
-                this.view.forceRepaintBody();
+                this.view.forceRepaint();
             }
         },
 

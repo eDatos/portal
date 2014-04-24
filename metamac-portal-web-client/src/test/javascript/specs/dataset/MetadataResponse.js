@@ -672,7 +672,358 @@ App.test.response.metadata = {
                 "MAJOR_NEW_RESOURCE"
             ],
             "total" : 1
-        }
+        },
+        "attributes": {
+          "attribute": [
+            {
+              "id": "at1",
+              "name": {
+                "text": [
+                  {
+                    "value": "at1-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DATASET"
+            },
+            {
+              "id": "at2",
+              "name": {
+                "text": [
+                  {
+                    "value": "at2-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DATASET",
+              "attributeValues": {
+                "value": [
+                  {
+                    "id": "A",
+                    "urn": "urn:sdmx:org.sdmx.infomodel.codelist.Code=agency01:abc(01.000).A",
+                    "selfLink": {
+                      "href": "http://apis.metamac.org/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/agency01/abc/01.000/codes/A"
+                    },
+                    "name": {
+                      "text": [
+                        {
+                          "value": "A en Español",
+                          "lang": "es"
+                        }
+                      ]
+                    },
+                    "kind": "structuralResources#code"
+                  },
+                  {
+                    "id": "C",
+                    "urn": "urn:sdmx:org.sdmx.infomodel.codelist.Code=agency01:abc(01.000).C",
+                    "selfLink": {
+                      "href": "http://apis.metamac.org/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/agency01/abc/01.000/codes/C"
+                    },
+                    "name": {
+                      "text": [
+                        {
+                          "value": "C en Español",
+                          "lang": "es"
+                        }
+                      ]
+                    },
+                    "kind": "structuralResources#code"
+                  }
+                ],
+                "total": 2
+              }
+            },
+            {
+              "id": "at3",
+              "name": {
+                "text": [
+                  {
+                    "value": "at3-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DIMENSION",
+              "dimensions": {
+                "dimension": [
+                  {
+                    "dimensionId": "GEO_DIM"
+                  }
+                ],
+                "total": 1
+              }
+            },
+            {
+              "id": "at4",
+              "name": {
+                "text": [
+                  {
+                    "value": "at4-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DIMENSION",
+              "dimensions": {
+                "dimension": [
+                  {
+                    "dimensionId": "GEO_DIM"
+                  },
+                  {
+                    "dimensionId": "dim01"
+                  }
+                ],
+                "total": 2
+              }
+            },
+            {
+              "id": "at5",
+              "name": {
+                "text": [
+                  {
+                    "value": "at5-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DIMENSION",
+              "dimensions": {
+                "dimension": [
+                  {
+                    "dimensionId": "GEO_DIM"
+                  },
+                  {
+                    "dimensionId": "TIME_PERIOD"
+                  }
+                ],
+                "total": 2
+              },
+              "attributeValues": {
+                "value": [
+                  {
+                    "id": "2013Q1",
+                    "name": {
+                      "text": [
+                        {
+                          "value": "2013 Primer cuatrimestre",
+                          "lang": "es"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2013Q2",
+                    "name": {
+                      "text": [
+                        {
+                          "value": "2013 Segundo cuatrimestre",
+                          "lang": "es"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2013Q3",
+                    "name": {
+                      "text": [
+                        {
+                          "value": "2013 Tercer cuatrimestre",
+                          "lang": "es"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "total": 3
+              }
+            },
+            {
+              "id": "at6",
+              "name": {
+                "text": [
+                  {
+                    "value": "at6-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DIMENSION",
+              "dimensions": {
+                "dimension": [
+                  {
+                    "dimensionId": "GEO_DIM"
+                  },
+                  {
+                    "dimensionId": "TIME_PERIOD"
+                  },
+                  {
+                    "dimensionId": "measure01"
+                  }
+                ],
+                "total": 3
+              },
+              "attributeValues": {
+                "value": [
+                  {
+                    "id": "1",
+                    "urn": "urn:sdmx:org.sdmx.infomodel.conceptscheme.Concept=agency01:123(01.000).1",
+                    "selfLink": {
+                      "href": "http://apis.metamac.org/metamac-srm-web/apis/structural-resources-internal/v1.0/conceptschemes/agency01/123/01.000/concepts/1"
+                    },
+                    "name": {
+                      "text": [
+                        {
+                          "value": "1 en Español",
+                          "lang": "es"
+                        }
+                      ]
+                    },
+                    "kind": "structuralResources#concept"
+                  },
+                  {
+                    "id": "2",
+                    "urn": "urn:sdmx:org.sdmx.infomodel.conceptscheme.Concept=agency01:123(01.000).2",
+                    "selfLink": {
+                      "href": "http://apis.metamac.org/metamac-srm-web/apis/structural-resources-internal/v1.0/conceptschemes/agency01/123/01.000/concepts/2"
+                    },
+                    "name": {
+                      "text": [
+                        {
+                          "value": "2 en Español",
+                          "lang": "es"
+                        }
+                      ]
+                    },
+                    "kind": "structuralResources#concept"
+                  },
+                  {
+                    "id": "3",
+                    "urn": "urn:sdmx:org.sdmx.infomodel.conceptscheme.Concept=agency01:123(01.000).3",
+                    "selfLink": {
+                      "href": "http://apis.metamac.org/metamac-srm-web/apis/structural-resources-internal/v1.0/conceptschemes/agency01/123/01.000/concepts/3"
+                    },
+                    "name": {
+                      "text": [
+                        {
+                          "value": "3 en Español",
+                          "lang": "es"
+                        }
+                      ]
+                    },
+                    "kind": "structuralResources#concept"
+                  }
+                ],
+                "total": 3
+              }
+            },
+            {
+              "id": "at7",
+              "name": {
+                "text": [
+                  {
+                    "value": "at7-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DIMENSION",
+              "dimensions": {
+                "dimension": [
+                  {
+                    "dimensionId": "GEO_DIM"
+                  },
+                  {
+                    "dimensionId": "TIME_PERIOD"
+                  },
+                  {
+                    "dimensionId": "measure01"
+                  },
+                  {
+                    "dimensionId": "dim01"
+                  }
+                ],
+                "total": 4
+              }
+            },
+            {
+              "id": "at8",
+              "name": {
+                "text": [
+                  {
+                    "value": "at8-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DIMENSION",
+              "dimensions": {
+                "dimension": [
+                  {
+                    "dimensionId": "GEO_DIM"
+                  },
+                  {
+                    "dimensionId": "TIME_PERIOD"
+                  }
+                ],
+                "total": 2
+              }
+            },
+            {
+              "id": "at9",
+              "name": {
+                "text": [
+                  {
+                    "value": "at9-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "DIMENSION",
+              "dimensions": {
+                "dimension": [
+                  {
+                    "dimensionId": "GEO_DIM"
+                  },
+                  {
+                    "dimensionId": "TIME_PERIOD"
+                  },
+                  {
+                    "dimensionId": "dim01"
+                  }
+                ],
+                "total": 3
+              }
+            },
+            {
+              "id": "at10",
+              "name": {
+                "text": [
+                  {
+                    "value": "at10-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "PRIMARY_MEASURE"
+            },
+            {
+              "id": "at11",
+              "name": {
+                "text": [
+                  {
+                    "value": "at11-concept01 en Español",
+                    "lang": "es"
+                  }
+                ]
+              },
+              "attachmentLevel": "PRIMARY_MEASURE"
+            }
+          ],
+          "total": 11
+        },
     },
     "kind" : "statisticalResources#dataset"
 };

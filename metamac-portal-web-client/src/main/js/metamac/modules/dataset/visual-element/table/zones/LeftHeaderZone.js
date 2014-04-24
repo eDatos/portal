@@ -111,21 +111,21 @@
 
     App.Table.LeftHeaderZone.prototype.titleAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
-        if(headerCellAtPoint) {
-            return headerCellAtPoint.tooltip
+        if (headerCellAtPoint) {
+            return this.delegate.formatAttributes(headerCellAtPoint.tooltip)
         }
     };
 
     App.Table.LeftHeaderZone.prototype.rowsAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
-        if(headerCellAtPoint) {
+        if (headerCellAtPoint) {
             return _.range(headerCellAtPoint.index, headerCellAtPoint.indexEnd);
         }
     };
     
     App.Table.LeftHeaderZone.prototype.rowsCellsAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
-        if(headerCellAtPoint) {
+        if (headerCellAtPoint) {
             return _.range(headerCellAtPoint.index - this.dataSource.blankRowsOffset(headerCellAtPoint.index), 
             			   headerCellAtPoint.indexEnd - this.dataSource.blankRowsOffset(headerCellAtPoint.index));
         }

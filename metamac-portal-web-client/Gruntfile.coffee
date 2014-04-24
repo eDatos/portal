@@ -80,6 +80,7 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DatasetDownloadView.js"
 
                 # data
+                paths.js + "/metamac/modules/dataset/model/data/Attributes.js"
                 paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"
                 paths.js + "/metamac/modules/dataset/model/data/ApiRequest.js"
                 paths.js + "/metamac/modules/dataset/model/data/NumberFormatter.js"
@@ -306,7 +307,8 @@ module.exports = (grunt) ->
                     destHtml : 'src/main/fonts'
                     stylesheet : "less"
                     hashes : false
-                    syntax: "bootstrap"
+                    syntax: "bootstrap",
+                    htmlDemo : true,
                 }
 
 

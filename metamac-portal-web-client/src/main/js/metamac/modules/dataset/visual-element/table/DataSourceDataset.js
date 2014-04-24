@@ -6,6 +6,10 @@
     App.DataSourceDataset = function (options) {
         this.dataset = options.dataset;
         this.filterDimensions = options.filterDimensions;
+
+        if (this.dataset) {
+            this.listenTo(this.dataset.data, "hasNewData", this.updateHeaderAttributes ); 
+        }
     };
 
     App.DataSourceDataset.prototype = {
@@ -39,6 +43,11 @@
             return this.filterDimensions.getTableInfo().top.representationsValues;
         },
 
+        updateHeaderAttributes : function() {
+            this.topHeaderAttributes = this.dataset.data.getDimensionAttributesById(this.filterDimensions.getTableInfo().top.ids);
+            //this.leftHeaderAttributes = this.dataset.data.getDimensionAttributesById(this.filterDimensions.getTableInfo().top.ids);
+        },
+        
         cellAtIndex : function (cell) {
             return this.dataset.data.getStringData({cell : cell});
         },
@@ -117,7 +126,9 @@
          * @returns {Array}
          */
         topHeaderTooltipValues : function () {
-            return this.topHeaderValues();
+            this.updateHeaderAttributes();
+            return this._generateTooltipValues(this.topHeaderValues(),  this.topHeaderAttributes);
+            //return _.map(topHeaderTooltipValues, function(tooltipValue) { return ; } )
         },
 
         /**
@@ -127,6 +138,18 @@
          */
         leftHeaderTooltipValues : function () {
             return this.leftHeaderValues();
+        },
+
+
+        _generateTooltipValues : function (titles, attributes) {            
+            var result = [];
+            var attribute;
+
+            _.each(titles, function(element, index) { 
+                attribute = attributes ? attributes[index] : [];                 
+                result.push({ title : titles[index], attributes : _.zip.apply(_, attribute)}); 
+            });
+            return result;
         }
 
     };

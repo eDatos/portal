@@ -120,6 +120,19 @@
             }
         },
 
+        // Must be a better way that going through the cache
+        getDimensionAttributesById : function(dimensionsIds) {
+            var cell = { x : 0, y : 0 };
+
+            var cacheBlock = this.getCache().cacheBlockForCell(cell);            
+            if (this.getCache().isBlockReady(cacheBlock)) {
+                return cacheBlock.apiResponse.getDimensionAttributesById(dimensionsIds);
+            } else if (cacheBlock) {
+                this._loadCacheBlock(cacheBlock, true);
+            }
+        },
+
+
         getNumberData : function (selection) {
             var value = this.getData(selection);
             return App.dataset.data.NumberFormatter.strToNumber(value);

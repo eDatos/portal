@@ -320,7 +320,7 @@
         attributesAtPoint : function (absolutePoint) {
             var bodyCellAtPoint = this.absolutePoint2Cell(absolutePoint);
             if (bodyCellAtPoint) {
-                return this.delegate.formatAttributes(_.compact(this.dataSource.cellAttributesAtIndex(bodyCellAtPoint)));
+                return this.delegate.formatAttributes(this.dataSource.cellAttributesAtIndex(bodyCellAtPoint));
             }
         }
 

@@ -75,7 +75,7 @@
     };
 
     App.Table.DataSource.prototype.topHeaderTooltipValues = function () {
-        return this._topHeaderValues;
+        return _.map(this._topHeaderValues, function (topHeaderValue) { return { title : topHeaderValue, attributes : ''}});
     };
     
     App.Table.DataSource.prototype.isBlankRow = function (row) {

@@ -62,9 +62,16 @@
            	}
         },
 
+        // IDEA: METAMAC-2276 This won´t scalate properly if for example you have more than one tooltip with the same trigger
+        // This is because consecutive calls to setEl function will detach other tooltips events, not only the events
+        // that the current tooltip have
         _detachEvents : function () {
             if (this.$container) {
-                this.$container.off('.tooltip');
+                if (this.trigger === "click") {
+                    this.$container.off('click.tooltip');
+                } else {
+                    this.$container.off('mousemove.tooltip');
+                }
             }
         },
 
