@@ -51,17 +51,17 @@
                 idArray = ids;
             }
 
-            var pos = this._transformIdToPos.apply(this, [idArray]);
-            return this.getDataByPos(pos);
+            var dimensionPositions = this._transformIdToPos.apply(this, [idArray]);
+            return this.getDataByPos(dimensionPositions);
         },    
 
-        getDataByPos : function (pos) {
+        getDataByPos : function (dimensionPositions) {
             var self = this,
                 ds = self.response,
-                posArray = 0;
+                observationPosition = 0;
 
-            posArray = self._transformPosToPosArrays.apply(self, [pos]); // Use "apply" method to pass actual context
-            return { "value" : this.observations[posArray] , "attributes"  : this.attributes.getPrimaryMeasureAttributesByPos(posArray) };
+            observationPosition = self._transformPosToPosArrays.apply(self, [dimensionPositions]); // Use "apply" method to pass actual context
+            return { "value" : this.observations[observationPosition] , "attributes"  : this.attributes.getCellAttributes(observationPosition, dimensionPositions) };
         },
 
         /*** OTHER METHODS ***/

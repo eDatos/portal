@@ -23,59 +23,95 @@
             });
 
             this.primaryMeasureAttributes = this.getPrimaryMeasureAttributesValues();
+            this.combinatedDimensionsAttributes = this.getCombinatedDimensionsAttributes();
             this.datasetAttributes = this.getDatasetAttributes();
         },
     		
-//            "attributes" : {
-//            	"total" : 1,
-//            	"attribute" [{
-//            		"id" : "OBS_CONF",
-//            		"value" : " | bar |  |  |  | <br>Br! | <div style='color: red'/>¿Soy rojo?</div> |  |  |  | \escape |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | "
-//    	        },
-//    	        {
-//    	        	"id" : "TITLE",
-//    	        	"value": "Supervalue"
-//    	        }
-//    	        ]
-//            }  	
     	// Example with attributes http://estadisticas.arte-consultores.com/statistical-resources-internal/apis/statistical-resources-internal/v1.0/datasets/ISTAC/C00031A_000002/001.006.json
     	getPrimaryMeasureAttributesValues : function () {                 
     		if (this.hasAttributes()) {
-                var primaryMeasureAttributes =_(this.attributes).where({attachmentLevel: "PRIMARY_MEASURE"});
-                var primaryMeasureAttributesIds =  _.pluck(primaryMeasureAttributes, "id")                
-                var primaryMeasureAttributesRawValues = this._filterListByPropertyValues(this.attributes, "id", primaryMeasureAttributesIds);
-                var primaryMeasureAttributesParsedValues = _(primaryMeasureAttributesRawValues).map(this._parsePrimaryMeasureValue, this);
+                var primaryMeasureAttributesRawValues = _.where(this.attributes, {attachmentLevel : "PRIMARY_MEASURE"});
+                var primaryMeasureAttributesParsedValues = _.map(primaryMeasureAttributesRawValues, this._parseAttributeValuesList, this);
 
                 return this._combinePrimaryMeasureAttributesValues(primaryMeasureAttributesParsedValues);                
             }
-
     	},
 
         getPrimaryMeasureAttributesByPos : function (pos) {
-            return this.primaryMeasureAttributes ? this.primaryMeasureAttributes[pos] : "";
+            return this.primaryMeasureAttributes ? (this.primaryMeasureAttributes[pos] ? this.primaryMeasureAttributes[pos] : [] ): [];
         },
 
+        getCombinatedDimensionsAttributesByDimensionsPositions : function (dimensionsPositions) {        
+            var self = this;
+            self.dimensionsPositions = dimensionsPositions;
+            return _.map(this.combinatedDimensionsAttributes, function(combinatedDimensionAttribute) { 
+                self.dimensionsMultiplicators = combinatedDimensionAttribute.dimensionsMultiplicators;
+                var pos = 0;
+                pos = _.reduceRight(self.dimensionsPositions, function(pos, arrayPosition, index) {                    
+                    return pos += self.dimensionsMultiplicators[index] * arrayPosition;                    
+                }, pos, self);
+                return combinatedDimensionAttribute.values[pos];
+            },self);            
+        }, 
+
+        getCellAttributes : function (observationPosition, dimensionsPositions) {        
+            return _.union(this.getPrimaryMeasureAttributesByPos(observationPosition), this.getCombinatedDimensionsAttributesByDimensionsPositions(dimensionsPositions));
+        }, 
+
+        getCombinatedDimensionsAttributes : function (dimensionsPositions) {
+            if (this.hasAttributes()) {
+                var dimensionAttributesRawValues = _.where(this.attributes, {attachmentLevel : "DIMENSION"});
+                var dimensionAttributesRawValuesForCell = this._filterDimensionAttributesForCell(dimensionAttributesRawValues);
+
+                return _(dimensionAttributesRawValuesForCell).map(this._parseCombinatedDimension, this);
+            }
+        },
+
+        _parseCombinatedDimension : function(attribute, index) {
+            var attributeDimensionsIds = _.pluck(attribute.dimensions.dimension, "dimensionId");
+            var dimensionsMultiplicators = this._getDimensionsMultiplicators(attributeDimensionsIds);
+
+            var values = this._parseAttributeValuesList(attribute);
+
+            return { values : values, dimensionsMultiplicators :  dimensionsMultiplicators };
+        },
+
+        _getDimensionsMultiplicators : function(attributeDimensionsIds) {
+            var self = this;
+            self.lastMultiplicator = 1;
+            self.attributeDimensionsIds = attributeDimensionsIds;
+            var dimensions = Array.prototype.slice.call(this.response.data.dimensions.dimension);
+
+            dimensions.reverse();
+
+            var dimensionsMultiplicators = _.map(dimensions, function(dimension) {
+                if (_(self.attributeDimensionsIds).contains(dimension.dimensionId)) {
+                    var result = self.lastMultiplicator;
+                    self.lastMultiplicator *= dimension.representations.total;
+                    return result; 
+                } else { 
+                    return 0;
+                };
+            }, self);
+
+            dimensionsMultiplicators.reverse();
+
+            return dimensionsMultiplicators;
+        },
 
         getDatasetAttributes : function () {
-            if (this.hasAttributes()) {
-                var datasetAttributesMetadata =_(this.attributes).where({attachmentLevel: "DATASET"});
-                var datasetAttributesIds =  _.pluck(datasetAttributesMetadata, "id")                
-                var datasetAttributesRawValues = this._filterListByPropertyValues(this.attributes, "id", datasetAttributesIds);
+            if (this.hasAttributes()) { 
+                var datasetAttributesRawValues = _.where(this.attributes, {attachmentLevel : "DATASET"});
                 var datasetAttributesParsedValues = _(datasetAttributesRawValues).map(this._parseDatasetValue, this);
 
                 return this._combineDatasetAttributesValues(datasetAttributesParsedValues);             
             }
         },
 
-
         getDimensionAttributesById : function(dimensionsIds) {
-            if (this.hasAttributes()) {
-                var dimensionAttributesMetadata =_(this.attributes).where({attachmentLevel: "DIMENSION"});
-                var dimensionAttributesIds =  _.pluck(dimensionAttributesMetadata, "id");              
-                var dimensionAttributesRawValues = this._filterListByPropertyValues(this.attributes, "id", dimensionAttributesIds);
-
+            if (this.hasAttributes()) {                
+                var dimensionAttributesRawValues = _.where(this.attributes, {attachmentLevel : "DIMENSION"});
                 var dimensionAttributesRawValuesForHeader = this._filterDimensionAttributesForHeader(dimensionAttributesRawValues, dimensionsIds);
-
                 var dimensionAttributesParsedValues = _(dimensionAttributesRawValuesForHeader).map(this._parseDimensionValue, this);
 
                 return this._combineDimensionAttributesValues(dimensionAttributesParsedValues);             
@@ -90,8 +126,10 @@
             });
         },
 
-        _filterListByPropertyValues : function (list, property, values) {
-            return _.filter(list, function (item) { return _.contains(values, item[property]); });
+        _filterDimensionAttributesForCell : function (attributes) {                        
+            return _.filter( attributes, function (attribute) { 
+                return attribute.dimensions.total != 1; 
+            });
         },
 
         hasAttributes : function () {
@@ -99,24 +137,10 @@
         },
 
         _parseDimensionValue : function (attributesArray) {
-            var self = this;
-            return _.map(attributesArray, function (attribute) {
-                var attributeValues = self._splitList(attribute.value);
-
-                var attributeEnumerates = attribute.attributeValues;
-                if (attributeEnumerates) { // enumerated resource
-                    attributeEnumerates = _(attributeEnumerates.value).indexBy("id");
-                    attributeValues = _.map(attributeValues, function (attributeRawValue) {                    
-                        return self._getValueForEnumerate(attributeRawValue, attributeEnumerates);
-                    });
-                }
-                
-                return attributeValues;
-            });
+            return _.map(attributesArray, this._parseAttributeValuesList, this);
         },
 
-
-        _parsePrimaryMeasureValue : function (attribute) {
+        _parseAttributeValuesList : function (attribute) {
             var attributeValues = this._splitList(attribute.value);
 
             var attributeEnumerates = attribute.attributeValues;
@@ -131,6 +155,7 @@
             return attributeValues;
         },
 
+        // TODO BEWARE DOUBLE SPACES! - METAMAC-1870
         _splitList : function (list) {
             if (list) {
                 var splittedList = list.replace("\\ | \\"," \\| ");
@@ -184,7 +209,12 @@
 
         _getResourceLink : function (resource) {
             if (resource) {
-                return { href : resource.selfLink.href , name : this.localizeLabel(resource.name.text) };
+                var name = this.localizeLabel(resource.name.text);
+                if (resource.selfLink) {                    
+                    return { href : resource.selfLink.href , name : name };
+                } else {
+                    return name;
+                }
             }
         },             
 

@@ -122,6 +122,26 @@ App.test.response.data = {
                     }
                 },
                 {
+                    "dimensionId": "CATEGORIA_ALOJAMIENTO",
+                    "representations": {
+                        "representation": [
+                            {
+                                "code": "TOTAL",
+                                "index": 0
+                            },
+                            {
+                                "code": "4_5_ESTRELLAS",
+                                "index": 1
+                            },
+                            {
+                                "code": "1_2_3_ESTRELLAS",
+                                "index": 2
+                            }
+                        ],
+                        "total": 3
+                    }
+                },
+                {
                     "dimensionId": "DESTINO_ALOJAMIENTO",
                     "representations": {
                         "representation": [
@@ -157,26 +177,6 @@ App.test.response.data = {
                         "total": 7
                     }
                 },
-                {
-                    "dimensionId": "CATEGORIA_ALOJAMIENTO",
-                    "representations": {
-                        "representation": [
-                            {
-                                "code": "TOTAL",
-                                "index": 0
-                            },
-                            {
-                                "code": "4_5_ESTRELLAS",
-                                "index": 1
-                            },
-                            {
-                                "code": "1_2_3_ESTRELLAS",
-                                "index": 2
-                            }
-                        ],
-                        "total": 3
-                    }
-                }
             ],
             "total": 4
         },
@@ -226,9 +226,13 @@ App.test.response.data = {
             {
               "value": "Value 5 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | Value 6 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | Value 7 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
               "id": "at11"
+            },
+            {                
+                "value": "T1 Gran Canaria | T1 Lanzarote | T1_FUERTEVENTURA | T1 El Hierro | T1 Tenerife | T1 La Gomera | T1 La Palma | T2 Gran Canaria |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ",
+                "id": "at12"
             }
           ],
-          "total": 11
+          "total": 12
         },
     },    
     "kind": "statisticalResources#dataset"

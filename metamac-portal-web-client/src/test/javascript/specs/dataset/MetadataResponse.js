@@ -1020,9 +1020,42 @@ App.test.response.metadata = {
                 ]
               },
               "attachmentLevel": "PRIMARY_MEASURE"
+            },
+            {
+                "id": "at12",
+                "name": {
+                  "text" : [{
+                    "lang": "es",
+                    "value": "at12-concept01 en Español"
+                    }]
+                },
+                "attachmentLevel": "DIMENSION",
+                "dimensions": {
+                  "total": "2",
+                  "dimension": [
+                    { "dimensionId": "TIME_PERIOD" },
+                    { "dimensionId": "DESTINO_ALOJAMIENTO" }
+                  ]
+                },
+                "attributeValues": {
+                    "value": [
+                      {
+                        "id": "T1_FUERTEVENTURA",
+                        "name": {
+                          "text": [
+                            {
+                              "value": "Enumerado t1 fuerteventura",
+                              "lang": "es"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "total": 1
+                }              
             }
           ],
-          "total": 11
+          "total": 12
         },
     },
     "kind" : "statisticalResources#dataset"
