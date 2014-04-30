@@ -121,7 +121,7 @@
         _filterDimensionAttributesForHeader : function (attributes, dimensionIds) {            
             return _.map(dimensionIds, function (dimensionId) {             
                 return _.filter( attributes, function (item) { 
-                    return item.dimensions.total == 1 && dimensionId == item.dimensions.dimension.dimensionId;
+                    return item.dimensions.total == 1 && dimensionId == item.dimensions.dimension[0].dimensionId;
                 });
             });
         },

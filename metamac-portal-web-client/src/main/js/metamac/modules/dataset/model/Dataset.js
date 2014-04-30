@@ -29,7 +29,8 @@
 
         isBigData : function () {
             return true;
-            return this.metadata.getTotalObservations() > 1000;
+            // IDEA: METAMAC-2283, refactorizar para eliminar modelo no usado Data
+            // return this.metadata.getTotalObservations() > 1000;
         }
 
     };
