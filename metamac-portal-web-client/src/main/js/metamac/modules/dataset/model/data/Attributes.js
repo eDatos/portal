@@ -15,11 +15,11 @@
 
             this.initializeLocalesIndex();
             this.attributesValues = !_.isUndefined(this.response.data.attributes) ? this.response.data.attributes.attribute : {};
-            this.attributesMetadata = !_.isUndefined(this.metadata) ? this.metadata.getAttributes() : {};
-            
-            var self = this;                       
+            this.attributesMetadata = !_.isUndefined(this.metadata) ? this.metadata.getAttributes() : {};                        
+
+            var attributesMetadataIndexed = _(this.attributesMetadata).indexBy("id");
             this.attributes = _(this.attributesValues).map(function(attributeValue) {
-                return _.extend({},_.findWhere(self.attributesMetadata, { id : attributeValue["id"]}), attributeValue);
+                return _.extend({}, attributesMetadataIndexed[attributeValue["id"]], attributeValue);
             });
 
             this.primaryMeasureAttributes = this.getPrimaryMeasureAttributesValues();

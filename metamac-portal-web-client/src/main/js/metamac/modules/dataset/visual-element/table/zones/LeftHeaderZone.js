@@ -83,6 +83,10 @@
                     var row = indexInValue % columnsValuesLength[i];
                     var content = columnsValues[i][row];
 
+                    var cellAttributes =  tooltipValues[i][row] ? !_.isEmpty(tooltipValues[i][row].attributes) ? _.compact(tooltipValues[i][row].attributes) : [] : [];
+                    var cellTitle = tooltipValues[i][row] ? tooltipValues[i][row].title : "";
+
+
                     result[i].push({
                         index : index,
                         indexEnd : indexEnd,
@@ -91,7 +95,8 @@
                         x : cellX,
                         width : cellWidth,
                         content : content,
-                        tooltip : tooltipValues[i][row]
+                        tooltip : cellTitle,
+                        attributes : cellAttributes
                     });
                 }
             }
@@ -112,7 +117,7 @@
     App.Table.LeftHeaderZone.prototype.titleAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
-            return this.delegate.formatAttributes(headerCellAtPoint.tooltip)
+            return this.delegate.formatHeaderAttributes({ title : headerCellAtPoint.tooltip , attributes : headerCellAtPoint.attributes})
         }
     };
 
@@ -225,6 +230,18 @@
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
                 this.ctx.fillText(cell.content || "", cell.x + margin, cell.y + margin);
+
+                if (cell.attributes != "") {
+                    this.ctx.beginPath();                  
+                    var marginMark = this.delegate.style.attributeCellMark.margin;
+                    var sizeMark = this.delegate.style.attributeCellMark.size;              
+                    this.ctx.moveTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark);
+                    this.ctx.lineTo(cell.x + cell.width - marginMark - sizeMark, cell.y + cell.height - marginMark);
+                    this.ctx.lineTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark - sizeMark);
+                    this.ctx.fillStyle = this.delegate.style.attributeCellMark.background;
+                    this.ctx.fill();
+                    this.ctx.closePath();
+                }   
 
                 this.ctx.restore();
             }

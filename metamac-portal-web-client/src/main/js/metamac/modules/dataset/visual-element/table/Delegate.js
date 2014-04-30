@@ -139,7 +139,7 @@
 
         formatHeaderAttributes : function (options) {
             var result = options.title;
-            if (options.attributes) {
+            if (!_.isEmpty(options.attributes)) {
                 result += '<br>' + this.formatAttributes(options.attributes);                
             }
             return result;

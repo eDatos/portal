@@ -21,6 +21,10 @@
         leftHeaderValues : function () {
             return this.filterDimensions.getTableInfo().leftHeaderValues;
         },
+
+        leftHeaderValuesByDimension : function() {
+            return this.filterDimensions.getTableInfo().left.representationsValues;
+        },
         
         leftHeaderDimensionsLengths: function () {
         	return this.filterDimensions.getTableInfo().left.representationsLengths;
@@ -45,7 +49,7 @@
 
         updateHeaderAttributes : function() {
             this.topHeaderAttributes = this.dataset.data.getDimensionAttributesById(this.filterDimensions.getTableInfo().top.ids);
-            //this.leftHeaderAttributes = this.dataset.data.getDimensionAttributesById(this.filterDimensions.getTableInfo().top.ids);
+            this.leftHeaderAttributes = this.dataset.data.getDimensionAttributesById(this.filterDimensions.getTableInfo().left.ids);
         },
         
         cellAtIndex : function (cell) {
@@ -128,7 +132,6 @@
         topHeaderTooltipValues : function () {
             this.updateHeaderAttributes();
             return this._generateTooltipValues(this.topHeaderValues(),  this.topHeaderAttributes);
-            //return _.map(topHeaderTooltipValues, function(tooltipValue) { return ; } )
         },
 
         /**
@@ -136,19 +139,36 @@
          * {dimension.label} : {category.label}
          * @returns {Array}
          */
-        leftHeaderTooltipValues : function () {
-            return this.leftHeaderValues();
+        leftHeaderTooltipValues : function () {            
+            this.updateHeaderAttributes();
+            var leftHeaderTooltipValuesByDimension = this._generateTooltipValues(this.leftHeaderValuesByDimension(),  this.leftHeaderAttributes);
+
+            return this._compressLeftHeaderValuesByDimension(leftHeaderTooltipValuesByDimension);
         },
 
-
-        _generateTooltipValues : function (titles, attributes) {            
+        _compressLeftHeaderValuesByDimension : function(valuesByDimension) {
+            var memo = [];
+            return [ _.flatten(_.reduceRight(valuesByDimension, function(memo, values) { 
+                return _.map(values, function(value) {
+                    return [ value ].concat(memo);
+                });
+            }, memo , this)) ];
+        },
+        
+        _generateTooltipValues : function (titlesByDimension, attributesByDimension) {            
             var result = [];
-            var attribute;
+            var attributes;
 
-            _.each(titles, function(element, index) { 
-                attribute = attributes ? attributes[index] : [];                 
-                result.push({ title : titles[index], attributes : _.zip.apply(_, attribute)}); 
+            _.each(titlesByDimension, function(titles, index) { 
+                attributes = attributesByDimension ? _.zip.apply(_, attributesByDimension[index]) : [];              
+                result.push(
+                    _.map(titlesByDimension[index], function(title, index) {
+                        var tooltipAttributes = attributes[index] ? attributes[index] : [];
+                        return { title : title, attributes : tooltipAttributes}
+                    })
+                ); 
             });
+
             return result;
         }
 

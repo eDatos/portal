@@ -62,6 +62,10 @@
         return this._leftHeaderValues;
     };
 
+    App.Table.DataSource.prototype.leftHeaderValuesByDimension = function () {
+        return this._leftHeaderValues;
+    };
+
     App.Table.DataSource.prototype.topHeaderRows = function () {
         return this._topHeaderValues.length;
     };
@@ -71,11 +75,17 @@
     };
 
     App.Table.DataSource.prototype.leftHeaderTooltipValues = function () {
-        return this._leftHeaderValues;
+        return _.map(this._leftHeaderValues, 
+            function (leftHeaderValue) { 
+                return _.map(leftHeaderValue, function(value) {
+                    return { title : value }    
+                })                
+            }
+        );
     };
 
     App.Table.DataSource.prototype.topHeaderTooltipValues = function () {
-        return _.map(this._topHeaderValues, function (topHeaderValue) { return { title : topHeaderValue, attributes : ''}});
+        return _.map(this._topHeaderValues, function (topHeaderValue) { return { title : topHeaderValue }});
     };
     
     App.Table.DataSource.prototype.isBlankRow = function (row) {

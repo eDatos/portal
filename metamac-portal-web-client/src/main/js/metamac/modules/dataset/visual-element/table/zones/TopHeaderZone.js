@@ -81,7 +81,9 @@
                     var column = indexInValue % rowsValuesLength[i];
                     var content = rowsValues[i][column];
 
-                    var cellAttributes =  tooltipValues[i].attributes ? (tooltipValues[i].attributes[column] ? _.compact(tooltipValues[i].attributes[column]) : "") : "";
+                    var cellAttributes =  tooltipValues[i][column] ? !_.isEmpty(tooltipValues[i][column].attributes) ? tooltipValues[i][column].attributes : [] : [];
+                    var cellTitle = tooltipValues[i][column] ? tooltipValues[i][column].title : "";
+
 
                     result[i].push({
                         index : index,
@@ -91,7 +93,7 @@
                         x : cellX,
                         width : cellWidth,
                         content : content,
-                        tooltip : tooltipValues[i].title[column],
+                        tooltip : cellTitle,
                         attributes : cellAttributes
                     });
                 }
@@ -214,7 +216,7 @@
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
                 this.ctx.fillText(cell.content || "", cell.x + +margin, Math.ceil(cell.y + cell.height / 2));
 
-                 if (cell.attributes != "") {
+                if (cell.attributes != "") {
                     this.ctx.beginPath();                  
                     var marginMark = this.delegate.style.attributeCellMark.margin;
                     var sizeMark = this.delegate.style.attributeCellMark.size;              
