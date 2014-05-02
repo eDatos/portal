@@ -58,7 +58,7 @@
             this.updateSidebarHeight();
         },
         updateSidebarHeight : function () {
-        	var menuHeight = $(".js-sidebar-container-sibling").height() - parseInt($(".js-sidebar-container-sibling .filter-sidebar-dimension ").css('margin-bottom'), 10);
+        	var menuHeight = $(".js-sidebar-container-sibling").height();
         	if (menuHeight) {
         		this.$el.css({height : menuHeight});
         	}
