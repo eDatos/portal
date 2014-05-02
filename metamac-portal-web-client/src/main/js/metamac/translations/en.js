@@ -40,7 +40,7 @@ I18n.translations.en = {
             lines : "Lines",
             sectors : "Sectors",
             map : "Territories",
-            for : "For"
+            "for" : "For"
         },
         sidebar : {
             order : {

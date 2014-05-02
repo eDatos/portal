@@ -40,7 +40,7 @@ I18n.translations.es = {
             lines : "Lineas",
             sectors : "Sectores",
             map : "Territorios",
-            for : "Para"
+            "for" : "Para"
         },
         sidebar : {
             order : {
