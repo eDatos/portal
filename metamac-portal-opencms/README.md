@@ -41,7 +41,7 @@ metamac.html
 
 index.html
 - type: containerpage
-- properties -> individual properties -> template -> /system/modules/es.gobcan.istac.web/templates/plantilla_1col.jsp
+- properties -> individual properties -> template -> /system/modules/org.siemac.metamac.metamac-portal/templates/metamac_plantilla_1col.jsp
 - Edit
 -- Containers
 --- Name: centercontainer
@@ -52,7 +52,7 @@ index.html
 
 view.html
 - type: containerpage
-- properties -> individual properties -> template -> /system/modules/es.gobcan.istac.web/templates/plantilla_1col.jsp
+- properties -> individual properties -> template -> /system/modules/org.siemac.metamac.metamac-portal/templates/metamac_plantilla_1col.jsp
 - Edit
 -- Containers
 --- Name: centercontainer

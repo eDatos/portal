@@ -14,7 +14,7 @@
         <group>org.siemac.metamac</group>
         <class/>
         <description><![CDATA[Metamac]]></description>
-        <version>1.0.2</version>
+        <version>1.1.0</version>
         <authorname><![CDATA[Arte Consultores]]></authorname>
         <authoremail><![CDATA[info@arte-consultores.com]]></authoremail>
         <datecreated/>
@@ -390,4 +390,81 @@
             <properties/>
             <relations/>
             <accesscontrol/>
+	    </file>
+		<file>	
+			<source>system/modules/org.siemac.metamac.metamac-portal/templates/metamac_plantilla_1col.jsp</source>	
+			<destination>system/modules/org.siemac.metamac.metamac-portal/templates/metamac_plantilla_1col.jsp</destination>
+	
+			<type>containerpage_template</type>	
+			<datelastmodified>Mon, 05 May 2014 08:53:30 GMT</datelastmodified>	
+			<userlastmodified>Admin</userlastmodified>
+			<datecreated>Wed, 28 Nov 2012 10:11:34 GMT</datecreated>
+			<usercreated>Admin</usercreated>	
+			<flags>0</flags>
+			<properties>
+				<property>
+					<name>Title</name>
+					<value>	
+						<![CDATA[Portal Web ISTAC, plantilla a 1 columnas, adaptación METAMAC]]>
+					</value>	
+				</property>
+				<property>	
+					<name>ade.template.image</name>
+					<value>	
+						<![CDATA[/system/modules/org.opencms.frontend.template3/resources/images/template.png]]>	
+					</value>	
+				</property>
+				<property>
+					<name>template.image</name>
+					<value>
+						<![CDATA[/system/modules/org.siemac.metamac.metamac-portal/resources/images/template.png]]>	
+					</value>	
+				</property>	
+			</properties>	
+			<relations />	
+			<accesscontrol />	
+		</file>
+		<file>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/elements</destination>
+            <type>folder</type>
+            <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
+            <userlastmodified>Admin</userlastmodified>
+            <datecreated>Mon, 19 Aug 2013 07:54:42 GMT</datecreated>
+            <usercreated>Admin</usercreated>
+            <flags>0</flags>
+            <properties/>
+            <relations/>
+            <accesscontrol/>
         </file>
+		<file>
+            <destination>system/modules/org.siemac.metamac.metamac-portal/elements/site-elements</destination>
+            <type>folder</type>
+            <datelastmodified>Mon, 19 Aug 2013 07:54:42 GMT</datelastmodified>
+            <userlastmodified>Admin</userlastmodified>
+            <datecreated>Mon, 19 Aug 2013 07:54:42 GMT</datecreated>
+            <usercreated>Admin</usercreated>
+            <flags>0</flags>
+            <properties/>
+            <relations/>
+            <accesscontrol/>
+        </file>
+		<file>
+			<source>system/modules/org.siemac.metamac.metamac-portal/elements/site-elements/metamac_title_meta.jsp</source>	
+			<destination>system/modules/org.siemac.metamac.metamac-portal/elements/site-elements/metamac_title_meta.jsp</destination>	
+			<type>jsp</type>	
+			<datelastmodified>Mon, 05 May 2014 08:53:30 GMT</datelastmodified>
+			<userlastmodified>Admin</userlastmodified>
+			<datecreated>Fri, 20 Jan 2012 11:57:04 GMT</datecreated>
+			<usercreated>Admin</usercreated>	
+			<flags>0</flags>
+			<properties>
+				<property type="shared">
+					<name>export</name>
+					<value>	
+						<![CDATA[false]]>	
+					</value>	
+				</property>	
+			</properties>	
+			<relations />	
+			<accesscontrol />	
+		</file>
