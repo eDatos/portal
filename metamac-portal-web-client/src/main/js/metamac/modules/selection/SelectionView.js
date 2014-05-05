@@ -83,7 +83,14 @@
             this.sidebarView.setElement(this.$('.sidebar-container')).render();          
             this.optionsView.setElement(this.$('.selection-options-bar')).render();
             
-            this.fullScreen.setContainer(this.$('.selection-body'));
+            this.fullScreen.setContainer($('.metamac-container'));
+            // Workaround: assigning a inner container as selection-body will generate problems when changing pages, because the fullscreen will break because it doesn´t exist.
+            // Thats why its assigned to a parent
+            //            this.fullScreen.setContainer(this.$('.selection-body'));
+            
+            // You can't arrive here while on fullscreen (at this moment), so always fullScreen false on first time
+            //this.optionsModel.set('fullScreen', false);
+
             this._unbindEvents();
             this._bindEvents();
             
@@ -145,8 +152,12 @@
 
         gotoVisualization : function () {
             var controllerParams = this.metadata.identifier();
+
+            controllerParams.fullScreen = this.optionsModel.get('fullScreen');
+
             this.controller.showDatasetVisualization(controllerParams);
         },
+
         updatePageTitle : function() {
         	document.title = I18n.t("page.titlePreffix") + " " + this.filterDimensions.metadata.getTitle();
         },

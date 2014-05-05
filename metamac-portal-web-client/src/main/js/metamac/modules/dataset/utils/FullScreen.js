@@ -14,8 +14,8 @@
         FS_RESIZE_DELAY : 300,
 
         events : {
-            change : 'fullscreenchange webkitfullscreenchange mozfullscreenchange',
-            error : 'mozfullscreenerror webkitfullscreenerror'
+            change : 'fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange',
+            error : 'mozfullscreenerror webkitfullscreenerror MSFullscreenError'
         },
 
         initialize : function (options) {
@@ -46,6 +46,10 @@
 
         _getRequestFullScreen : function () {
             return this.getContainer().requestFullscreen
+                || this.getContainer().requestFullScreen
+                || this.getContainer().webkitRequestFullscreen
+                || this.getContainer().mozRequestFullscreen
+                || this.getContainer().msRequestFullscreen
                 || this.getContainer().webkitRequestFullScreen
                 || this.getContainer().mozRequestFullScreen
                 || this.getContainer().msRequestFullScreen;
@@ -53,8 +57,13 @@
 
         _getRequestExitFullScreen : function () {
             return document.exitFullscreen ||
+                document.cancelFullscreen ||                
+                document.msExitFullscreen ||                
+                document.msCancelFullScreen ||
                 document.mozCancelFullScreen ||
-                document.webkitCancelFullScreen;
+                document.mozExitFullscreen ||
+                document.webkitCancelFullScreen ||
+                document.webkitExitFullscreen;
         },
 
         browserHasFullScreenSupport : function () {

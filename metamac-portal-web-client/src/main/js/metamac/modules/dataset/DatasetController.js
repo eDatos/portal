@@ -56,7 +56,8 @@
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
                     options = _.defaults(options, {
-                        visualizationType : "canvasTable"
+                        visualizationType : "canvasTable",
+                        fullScreen : false
                     });
                     if (self.region.currentView !== self.visualizationView) {
                         self.region.show(self.visualizationView);

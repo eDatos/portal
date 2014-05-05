@@ -100,6 +100,10 @@
         },
 
         showChart : function (options) {
+            if (options.fullScreen) {
+                this.fullScreen.enterFullScreen();
+            }
+
             this.optionsModel.set('type', options.visualizationType);
         },
 
