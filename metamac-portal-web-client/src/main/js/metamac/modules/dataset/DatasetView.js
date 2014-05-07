@@ -80,6 +80,7 @@
 
         serializeData : function () {
             var context = {
+                showHeader : false, // Depends if the server is already painting the title and description
                 metadata : this.metadata.toJSON()
             };
             return context;
@@ -89,10 +90,7 @@
             this.content.show(this.sidebarView);
             this.fullScreen.setContainer(this.content.$el);
             this._unbindEvents();
-            this._bindEvents();
-            
-            this.updatePageTitle();
-            this.updatePageDescription();
+            this._bindEvents();            
         },
 
         onBeforeClose : function () {
@@ -146,9 +144,13 @@
         		}
         	});
         },
+        
+        // Deprecated
         updatePageTitle : function() {
         	document.title = I18n.t("page.titlePreffix") + " " + this.filterDimensions.metadata.getTitle();
         },
+        
+        // Deprecated
         updatePageDescription : function() {
         	if ($('meta[name=description]').length) {
         		$('meta[name=description]').attr('description',  this.filterDimensions.metadata.getDescription());

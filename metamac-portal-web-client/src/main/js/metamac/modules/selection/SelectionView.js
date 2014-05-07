@@ -29,6 +29,7 @@
 
         serializeData : function () {
             var context = {
+                showHeader : App.showHeader,
                 selectAllUrl : App.context + this.metadata.urlIdentifierPart(),
                 metadata : this.metadata.toJSON()
             };

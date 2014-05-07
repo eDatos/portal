@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8" %><%@ page import="org.apache.cxf.jaxrs.client.JAXRSClientFactory" %>
+<%@ page pageEncoding="UTF-8" %>
 <%@ page import="org.siemac.metamac.portal.Helpers" %>
 <%@ page import="org.siemac.metamac.portal.mapper.Collection2DtoMapper"%>
 <%@ page import="org.siemac.metamac.portal.dto.Collection" %>
@@ -11,54 +11,10 @@
 <fmt:setLocale value="<%= request.getLocale() %>" />
 <cms:formatter var="content" val="value">
     <div>    
-        <%               
-        	// This page is accesible in http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000002
-        	                	        
-	    	// ${content.value.ApiUrlStatisticalResources}
-	    	CmsJspContentAccessBean contentAccessBean = (CmsJspContentAccessBean) pageContext.getAttribute("content");
-	    	String apiUrlStatisticalResources = contentAccessBean.getValue().get("ApiUrlStatisticalResources").toString();
-	    	Boolean internalPortal = new Boolean(contentAccessBean.getValue().get("InternalPortal").toString());
-	    		
-            Collection collection = null;
-            Collection2DtoMapper collection2DtoMapper = new Collection2DtoMapper();
-            try {
-                //String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
-                String statisticalResourcesEndpoint = apiUrlStatisticalResources;                
-                
-                String agencyId = request.getParameter("agencyId");
-                String resourceId = request.getParameter("resourceId");
-                List<String> lang = new ArrayList<String>();
-                String fields = "";
-                
-                if (internalPortal) {
-                    
-                    org.siemac.metamac.statistical_resources.rest.internal.v1_0.service.StatisticalResourcesV1_0 statisticalResourcesInternalV1_0;
-                    statisticalResourcesInternalV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, org.siemac.metamac.statistical_resources.rest.internal.v1_0.service.StatisticalResourcesV1_0.class, null, true);
-                	collection = collection2DtoMapper.collectionInternalToDto(statisticalResourcesInternalV1_0.retrieveCollection(agencyId, resourceId, lang, fields));
-                	
-                } else {
-                    
-        	    	org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0 statisticalResourcesExternalV1_0;  
-                    statisticalResourcesExternalV1_0 = JAXRSClientFactory.create(statisticalResourcesEndpoint, org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0.class, null, true);
-                    collection = collection2DtoMapper.collectionExternalToDto(statisticalResourcesExternalV1_0.retrieveCollection(agencyId, resourceId, lang, fields));
-                    
-                }
-                
-                if (collection != null) {
-                    request.setAttribute("collection", collection);
-                    request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
-                }
-            } catch (Exception e) {
-
-            }
-        %>
         <c:choose>
             <c:when test="${collection != null}">
-            	<h2 class="tit_conten_1_col"><%= Helpers.localizeText(collection.getName()) %></h2>
-            	<div class="collection-description"><%= Helpers.localizeText(collection.getDescription()) %></div>                	
-                <%
-                        request.setAttribute("nodes", collection.getData().getNodes().getNodes());
-                %>
+            	<h1 class="tit_conten_1_col">${resourceName}</h1>
+            	<div class="collection-description">${resourceDescription}</div>                	
                 <cms:include page="./collection-node.jsp" />
             </c:when>
 			<c:otherwise>
@@ -84,7 +40,6 @@
 	        	</div>
             </c:otherwise>
         </c:choose>
-
     </div>
 
     <script>
@@ -107,6 +62,4 @@
             });
         });
     </script>
-
-
 </cms:formatter>

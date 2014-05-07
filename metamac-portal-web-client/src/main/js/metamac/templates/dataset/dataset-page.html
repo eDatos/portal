@@ -1,25 +1,27 @@
-<div class="dataset-header">
-    <div>
-
-        <div class="dataset-header-actions"></div>
-
-        <div class="dataset-header-info">
-            <h2 class="dataset-header-title" title="{{ metadata.title }}">{{ metadata.title }}</h2>
-
-            <p class="dataset-header-categories">
-                {{#join metadata.categories }}
-                {{ label }}
-                {{/join}}
-            </p>
-        </div>
-    </div>
-
-    {{#if metadata.description }}
+{{#if showHeader}}
+    <div class="dataset-header">
         <div>
-            <p>{{ safeString metadata.description }}</p>
+
+            <div class="dataset-header-actions"></div>
+
+            <div class="dataset-header-info">
+                <h1 class="dataset-header-title" title="{{ metadata.title }}">{{ metadata.title }}</h1>
+
+                <p class="dataset-header-categories">
+                    {{#join metadata.categories }}
+                    {{ label }}
+                    {{/join}}
+                </p>
+            </div>
         </div>
-    {{/if}}
-</div>
+
+        {{#if metadata.description }}
+            <div>
+                <p>{{ safeString metadata.description }}</p>
+            </div>
+        {{/if}}
+    </div>
+{{/if}}
 
 <div class="dataset-sidebar-visualization-container">
 

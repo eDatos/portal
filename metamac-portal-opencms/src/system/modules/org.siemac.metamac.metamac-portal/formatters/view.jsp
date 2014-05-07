@@ -4,7 +4,6 @@
 <fmt:setLocale value="<%= request.getLocale() %>" />
 <cms:formatter var="content" val="value">
     <div>
-
 	    <c:choose>
 		    <c:when test="${content.value.ApiUrlStatisticalResources == ''
 		    	|| content.value.ApiUrlStructuralResources == ''
@@ -12,7 +11,19 @@
 		    	<h3>Error - Propiedad no configurada</h3>
 	            <p class="justificado">Lo sentimos, alguna de las propiedades no ha sido configurada correctamente.</p>
 	       	</c:when>
-			<c:otherwise>		    	   
+			<c:otherwise>
+			    <c:choose>
+					<c:when test="${!resourceEmpty}">
+						<div class="dataset-header-info">
+			            	<h1 class="dataset-header-title">${resourceName}</h1>
+			            	<c:choose>
+			            		<c:when test="${resourceDescription != ''}">
+			            			<div><p>${resourceDescription}<p></div>
+			            		</c:when>
+			            	</c:choose>
+			            </div>                	
+		            </c:when>
+		        </c:choose>		    	   
 		        <div class="metamac-container">Cargando...</div>
 		
 		        <script>
@@ -33,6 +44,8 @@
 		                    
 		                    // http://estadisticas.arte-consultores.com/statistical-visualizer
 		                    App.endpoints["statistical-visualizer"] = "${content.value.ApiUrlStatisticalVisualizer}";
+		                    
+		                    App.showHeader = false;
 		
 		                    console.log("starting app");
 		

@@ -27,6 +27,8 @@
         "statistical-visualizer" : ""
     };
 
+    App.showHeader = true;
+
     App.namespace = function (namespaceString) {
 
         if (!namespaceString) {

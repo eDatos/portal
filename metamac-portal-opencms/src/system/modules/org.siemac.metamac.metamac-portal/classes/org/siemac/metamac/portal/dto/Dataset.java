@@ -2,11 +2,10 @@ package org.siemac.metamac.portal.dto;
 
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 
-public class Collection {
+public class Dataset {
 
     protected InternationalString name;
     protected InternationalString description;
-    protected CollectionData data;
 
     public InternationalString getName() {
         return name;
@@ -24,10 +23,4 @@ public class Collection {
         this.description = value;
     }
 
-    public CollectionData getData() {
-        return data;
-    }
-    public void setData(CollectionData value) {
-        this.data = value;
-    }
 }
