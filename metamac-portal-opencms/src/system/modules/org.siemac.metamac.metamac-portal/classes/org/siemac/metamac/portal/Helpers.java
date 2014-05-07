@@ -1,4 +1,6 @@
 package org.siemac.metamac.portal;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
@@ -95,8 +97,7 @@ public class Helpers {
     
     // TODO Still have some problems with
     public static String html2text(String html) {
-        //return Jsoup.parse(html).text();
-        return html.replaceAll("\\<.*?>","");
+        return Jsoup.clean(html, Whitelist.none());
     }
     
     public static int numberOfFixedDigitsInNumeration(Collection collection) {
@@ -147,13 +148,13 @@ public class Helpers {
             String[] hrefParts = table.getQuery().getSelfLink().getHref().split("/");
             String agency = reverseIndex(hrefParts, 1);
             String identifier = reverseIndex(hrefParts, 0);
-            return "data.html#queries/" + agency + "/" + identifier;
+            return "data.html?agencyId=" + agency + "&resourceId=" + identifier + "&resourceType=query#queries/" + agency + "/" + identifier;
         } else if (table.getDataset() != null) {
             String[] hrefParts = table.getDataset().getSelfLink().getHref().split("/");
             String agency = reverseIndex(hrefParts, 2);
             String identifier = reverseIndex(hrefParts, 1);
             String version = reverseIndex(hrefParts, 0);
-            return "data.html#datasets/" + agency + "/" + identifier + "/" + version;
+            return "data.html?agencyId=" + agency + "&resourceId=" + identifier + "&version=" + version + "&resourceType=dataset#datasets/" + agency + "/" + identifier + "/" + version;
         }
         return "#";
     }

@@ -45,19 +45,18 @@
 		                    // http://estadisticas.arte-consultores.com/statistical-visualizer
 		                    App.endpoints["statistical-visualizer"] = "${content.value.ApiUrlStatisticalVisualizer}";
 		                    
-		                    App.showHeader = false;
+		                    App.showHeader = ${resourceEmpty};
 		
 		                    console.log("starting app");
 		
 		                    App.start();
 		                    
-		                    LazyLoad.js("${content.value.ApiUrlStatisticalVisualizer}/js/authentication.js");
+		                    LazyLoad.js("${content.value.ApiUrlStatisticalVisualizer}/js/authentication.js", function() {
+		                    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-501fc6f600bacbe9");
+		                    });		                    
 		                });
 		            });		            
 		        </script>
-		        
-		        <% // TODO Parametrize this %>
-		        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-501fc6f600bacbe9"></script>
 	        </c:otherwise>
 	    </c:choose>
     </div>

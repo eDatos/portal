@@ -13,7 +13,7 @@
     <div>    
         <c:choose>
             <c:when test="${collection != null}">
-            	<h1 class="tit_conten_1_col">${resourceName}</h1>
+            	<h2 class="tit_conten_1_col">${resourceName}</h2>
             	<div class="collection-description">${resourceDescription}</div>                	
                 <cms:include page="./collection-node.jsp" />
             </c:when>
