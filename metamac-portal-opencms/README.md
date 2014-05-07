@@ -26,8 +26,8 @@ Module management -> Import Module with HTTP (Está en metamac-portal-opcenms/ta
 
 El módulo se compone de dos páginas:
 
-* **index.html** : Muestra la lista de colecciones. Se corresponde con la página 1
-* **view.html** : Muestra el detalle de queries y collections. Se corresponde con la página 2 y 3
+* **collection.html** : Muestra la lista de colecciones. Se corresponde con la página 1
+* **data.html** : Muestra el detalle de queries y collections. Se corresponde con la página 2 y 3
 
 
 Crear los siguientes  dentro de istac/metamac desde View explorer (offline) -> New
@@ -39,7 +39,7 @@ metamac.html
 -- ApiUrlStructuralResources: http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal
 -- ApiUrlStatisticalVisualizer: http://estadisticas.arte-consultores.com/statistical-visualizer
 
-index.html
+collection.html
 - type: containerpage
 - properties -> individual properties -> template -> /system/modules/org.siemac.metamac.metamac-portal/templates/metamac_plantilla_1col.jsp
 - Edit
@@ -50,7 +50,7 @@ index.html
 ---- content element: /istac/metamac/metamac.html
 ---- formatter: /system/modules/org.siemac.metamac.metamac-portal/formatters/collection.jsp
 
-view.html
+data.html
 - type: containerpage
 - properties -> individual properties -> template -> /system/modules/org.siemac.metamac.metamac-portal/templates/metamac_plantilla_1col.jsp
 - Edit
@@ -59,7 +59,7 @@ view.html
 --- Type: center
 --- Elements
 ---- content element: /istac/metamac/metamac.html
----- formatter: /system/modules/org.siemac.metamac.metamac-portal/formatters/view.jsp
+---- formatter: /system/modules/org.siemac.metamac.metamac-portal/formatters/data.jsp
 
 Publish
 

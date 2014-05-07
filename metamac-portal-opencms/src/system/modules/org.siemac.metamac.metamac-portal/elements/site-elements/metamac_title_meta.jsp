@@ -14,7 +14,7 @@
 	<%               
 		String ATTRIBUTES_PAGE = "metamac.html";	
 	
-		// This page is accesible in http://localhost:8082/opencms/opencms/istac/metamac/index.html?agencyId=ISTAC&resourceId=C00031A_000002
+		// This page is accesible in http://localhost:8082/opencms/opencms/istac/metamac/collection.html?agencyId=ISTAC&resourceId=C00031A_000002&type=collection
 		CmsJspActionElement cms = new CmsJspActionElement(pageContext, request, response);
 	    CmsObject cmso = cms.getCmsObject();
 	    CmsJspVfsAccessBean vfsAccessBean = CmsJspVfsAccessBean.create(cmso);

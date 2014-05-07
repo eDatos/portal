@@ -147,13 +147,13 @@ public class Helpers {
             String[] hrefParts = table.getQuery().getSelfLink().getHref().split("/");
             String agency = reverseIndex(hrefParts, 1);
             String identifier = reverseIndex(hrefParts, 0);
-            return "view.html#queries/" + agency + "/" + identifier;
+            return "data.html#queries/" + agency + "/" + identifier;
         } else if (table.getDataset() != null) {
             String[] hrefParts = table.getDataset().getSelfLink().getHref().split("/");
             String agency = reverseIndex(hrefParts, 2);
             String identifier = reverseIndex(hrefParts, 1);
             String version = reverseIndex(hrefParts, 0);
-            return "view.html#datasets/" + agency + "/" + identifier + "/" + version;
+            return "data.html#datasets/" + agency + "/" + identifier + "/" + version;
         }
         return "#";
     }

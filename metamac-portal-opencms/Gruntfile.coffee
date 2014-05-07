@@ -39,7 +39,7 @@ module.exports = (grunt) ->
         preprocess:
             build:
                 files:
-                    'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/view.jsp' : 'src/system/modules/org.siemac.metamac.metamac-portal/formatters/view.jsp'
+                    'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/data.jsp' : 'src/system/modules/org.siemac.metamac.metamac-portal/formatters/data.jsp'
                     'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/collection.jsp' : 'src/system/modules/org.siemac.metamac.metamac-portal/formatters/collection.jsp'
                     'target/tmp/system/modules/org.siemac.metamac.metamac-portal/formatters/collection-node.jsp' : 'src/system/modules/org.siemac.metamac.metamac-portal/formatters/collection-node.jsp'
 
