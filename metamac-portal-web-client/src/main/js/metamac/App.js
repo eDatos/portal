@@ -27,6 +27,12 @@
         "statistical-visualizer" : ""
     };
 
+    App.queryParams = {
+        "agency" : undefined,
+        "identifier": undefined,
+        "version" : undefined
+    }
+
     App.showHeader = true;
 
     App.namespace = function (namespaceString) {

@@ -46,6 +46,10 @@
 		                    App.endpoints["statistical-visualizer"] = "${content.value.ApiUrlStatisticalVisualizer}";
 		                    
 		                    App.showHeader = ${resourceEmpty};
+		                    
+		                    App.queryParams["agency"] = '<%= request.getParameter("agencyId") %>';
+		                    App.queryParams["identifier"] = '<%= request.getParameter("resourceId") %>';		                    
+		                    App.queryParams["version"] = '<%= request.getParameter("version") %>';
 		
 		                    console.log("starting app");
 		

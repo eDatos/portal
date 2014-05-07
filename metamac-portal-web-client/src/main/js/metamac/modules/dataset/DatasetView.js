@@ -80,7 +80,7 @@
 
         serializeData : function () {
             var context = {
-                showHeader : false, // Depends if the server is already painting the title and description
+                showHeader : App.showHeader, // Depends if the server is already painting the title and description
                 metadata : this.metadata.toJSON()
             };
             return context;

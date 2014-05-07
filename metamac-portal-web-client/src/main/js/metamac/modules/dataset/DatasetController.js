@@ -19,11 +19,12 @@
                 .then(function () {
                     var routeName = App.Inflector.pluralize(datasetIdentifier.type);
 
-                    var routeParts = [routeName, datasetIdentifier.agency, datasetIdentifier.identifier];
+                    //var routeParts = [routeName, datasetIdentifier.agency, datasetIdentifier.identifier];
+                    var routeParts = [routeName];
 
-                    if (datasetIdentifier.version) {
-                        routeParts.push(datasetIdentifier.version);
-                    }
+                    // if (datasetIdentifier.version) {
+                    //     routeParts.push(datasetIdentifier.version);
+                    // }
 
                     if (self.metadata.getAutoOpen()) {
                         routeParts.push("visualization");

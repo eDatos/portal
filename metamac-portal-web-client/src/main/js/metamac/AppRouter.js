@@ -9,17 +9,38 @@
             "collections/:agency/:identifier/:version" : "collection",
 
             "datasets/:agency/:identifier/:version" : "dataset",
+            "datasets" : "dataset",
+
             "datasets/:agency/:identifier/:version/selection" : "datasetSelection",
+            "datasets/selection" : "datasetSelection",
+
             "datasets/:agency/:identifier/:version/selection/permalink/:permalinkId" : "datasetSelectionPermalink",
+            "datasets/selection/permalink/:permalinkId" : "datasetSelectionPermalink",
+
             "datasets/:agency/:identifier/:version/visualization" : "datasetVisualization",
+            "datasets/visualization" : "datasetVisualization",
+
             "datasets/:agency/:identifier/:version/visualization/:visualizationType" : "datasetVisualizationType",
+            "datasets/visualization/:visualizationType" : "datasetVisualizationType",
+
             "datasets/:agency/:identifier/:version/visualization/:visualizationType/permalink/:permalinkId" : "datasetVisualizationTypePermalink",
+            "datasets/visualization/:visualizationType/permalink/:permalinkId" : "datasetVisualizationTypePermalink",
+
 
             "queries/:agency/:identifier" : "query",
+            "queries" : "query",
+
             "queries/:agency/:identifier/selection" : "querySelection",
+            "queries/selection" : "querySelection",
+
             "queries/:agency/:identifier/visualization" : "queryVisualization",
+            "queries/visualization" : "queryVisualization",
+
             "queries/:agency/:identifier/visualization/:visualizationType" : "queryVisualizationType",
+            "queries/visualization/:visualizationType" : "queryVisualizationType",
+
             "queries/:agency/:identifier/visualization/:visualizationType/permalink/:permalinkId" : "queryVisualizationTypePermalink",
+            "queries/visualization/:visualizationType/permalink/:permalinkId" : "queryVisualizationTypePermalink",
 
             "*path" : "error"
         },
@@ -69,61 +90,73 @@
 
         collection : function () {
             var args = this._nameCollectionArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.collectionController.showCollection(args);
         },
 
         dataset : function () {
             var args = this._nameDatasetArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDataset(args);
         },
 
         datasetSelection : function () {
             var args = this._nameDatasetArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetSelection(args);
         },
         
         datasetSelectionPermalink : function () {
             var args = this._nameDatasetSelectionPermalinkArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetSelection(args);
         },
 
         datasetVisualization : function () {
             var args = this._nameDatasetArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
         datasetVisualizationType : function () {
             var args = this._nameDatasetArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
         datasetVisualizationTypePermalink : function () {
             var args = this._nameDatasetArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
         query : function () {
             var args = this._nameQueryArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDataset(args);
         },
 
         querySelection : function () {
             var args = this._nameQueryArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetSelection(args);
         },
 
         queryVisualization : function () {
             var args = this._nameQueryArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
         queryVisualizationType : function () {
             var args = this._nameQueryArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
         queryVisualizationTypePermalink : function () {
             var args = this._nameQueryArguments(arguments);
+            args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
