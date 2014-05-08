@@ -18,7 +18,7 @@
         initialize : function (options) {
             this.$targetEl = options.$targetEl;
             this.$targetEl.append(this.$el);
-            _.bindAll(this);
+            _.bindAll(this, 'mouseMove', 'mouseUp');
             $(document).bind('mousemove', this.mouseMove);
             $(document).bind('mouseup', this.mouseUp);
 

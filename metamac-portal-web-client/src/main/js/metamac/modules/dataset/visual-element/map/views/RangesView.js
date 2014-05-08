@@ -36,7 +36,7 @@
         },
         
         _setUpListeners : function() {
-            _.bindAll(this);
+            _.bindAll(this, '_handleMouseMove', '_handleMouseUp', '_handleMousewheel');
             $(document).bind('mousemove', this._handleMouseMove);
             $(document).bind('mouseup', this._handleMouseUp);
             this.$el.bind('mousewheel', this._handleMousewheel);

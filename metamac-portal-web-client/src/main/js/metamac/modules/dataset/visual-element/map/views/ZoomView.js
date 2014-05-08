@@ -37,7 +37,7 @@
         },
 
         _setUpListeners : function () {
-            _.bindAll(this);
+            _.bindAll(this, '_handleMousewheel');
             this.$el.bind('mousewheel', this._handleMousewheel);
         },
 
