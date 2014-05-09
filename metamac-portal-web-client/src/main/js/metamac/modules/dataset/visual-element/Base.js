@@ -59,8 +59,8 @@
                     text : null
                 },
                 credits : {
-                    text : 'http://www.gobiernodecanarias.com/istac',
-                    href : 'http://www.gobiernodecanarias.com/istac',
+                    text : I18n.t("credits.text"),
+                    href : I18n.t("credits.href"),
                     position : {
                         y : -20,
                         x : -20

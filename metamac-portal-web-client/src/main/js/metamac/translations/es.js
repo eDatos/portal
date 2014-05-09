@@ -2,6 +2,10 @@ I18n.translations || (I18n.translations = {});
 
 I18n.translations.es = {
 	
+    credits : {
+        href : "http://www.gobiernodecanarias.org/istac",
+        text : "http://www.gobiernodecanarias.org/istac"
+    },
 	number : {
 		format : {
 			separator : ",", /* Decimal */
@@ -28,8 +32,13 @@ I18n.translations.es = {
             selectAll : "Marcar todo",
             deselectAll : "Desmarcar todo",
             reverseOrder : "Invertir orden",
-            close : "Cerrar"
+            close : "Cerrar",
+            visualize : "Consultar"
         },
+        download : {
+            selection : "Descargar selección",
+            all : "Descargar todo"
+        },  
         text : {
             fixedDimensions : "Valores fijados",
             leftDimensions : "Filas",

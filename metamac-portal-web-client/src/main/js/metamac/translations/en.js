@@ -2,7 +2,11 @@ I18n.translations || (I18n.translations = {});
 
 I18n.translations.en = {
 	
-	number : {
+	credits : {
+        href : "http://www.gobiernodecanarias.org/istac",
+        text : "http://www.gobiernodecanarias.org/istac"
+    },
+    number : {
 		format : {
 			separator : ".", /* Decimal */
 			delimiter : ",", /* Thousands */
@@ -28,8 +32,13 @@ I18n.translations.en = {
             selectAll : "Select all",
             deselectAll : "Deselect all",
             reverseOrder : "Reverse order",
-            close : "Close"
+            close : "Close",
+            visualize : "Visualize"
         },
+        download : {
+        	selection : "Download selection",
+    	    all : "Download All"
+	    },	
         text : {
             fixedDimensions : "Fixed values",
             leftDimensions : "Rows",

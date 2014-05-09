@@ -8,7 +8,7 @@
 
         render : function () {
             var creditsNode = new SVGNode('text');
-            creditsNode.node.textContent = "http://www.gobiernodecanarias.org/istac";
+            creditsNode.node.textContent = I18n.t("credits.text");
             creditsNode.set({"class" : "credits"});
 
             var elNode = new SVGNode(this.el);
