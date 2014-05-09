@@ -65,10 +65,22 @@
 		<c:when test="${!resourceEmpty}">
 	    	<title>ISTAC | ${resourceName}</title>
 	        <meta name="description" content="${resourceDescription}" />
+
+	        <meta property="og:title" content="ISTAC | ${resourceName}"/>
+	        <meta property="og:description" content="${resourceDescription}"/>
+	        
+	        <meta itemprop="name" content="ISTAC | ${resourceName}">
+			<meta itemprop="description" content="${resourceDescription}">
 		</c:when>
 		<c:otherwise>
 			<title>ISTAC | <cms:info property="opencms.title" /></title>
 	  		<meta name="description" content="<cms:property name="Description" file="search" default="" />" />
+
+	  		<meta property="og:title" content="ISTAC | <cms:info property="opencms.title" />"/>
+	        <meta property="og:description" content="<cms:property name="Description" file="search" default="" />"/>
+	        
+	        <meta itemprop="name" content="ISTAC | <cms:info property="opencms.title" />">
+			<meta itemprop="description" content="<cms:property name="Description" file="search" default="" />">
 	    </c:otherwise>
     </c:choose>   		
   	<meta name="keywords" content="<cms:property name="Keywords" file="search" default="" />">
