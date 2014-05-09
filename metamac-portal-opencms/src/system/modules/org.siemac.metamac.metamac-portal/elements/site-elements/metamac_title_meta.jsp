@@ -3,7 +3,9 @@
 <%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="org.opencms.jsp.util.CmsJspContentAccessBean" %>
+<%@ page import="org.opencms.jsp.util.CmsJspStandardContextBean" %>
 <%@ page import="org.opencms.jsp.util.CmsJspVfsAccessBean" %>
+<%@ page import="org.opencms.file.CmsPropertyDefinition" %>
 <%@ page import="org.opencms.jsp.CmsJspActionElement" %>
 <%@ page import="org.opencms.file.CmsObject" %>
 <%@ page import="org.siemac.metamac.portal.Helpers" %>
@@ -41,12 +43,14 @@
     	        request.setAttribute("resourceEmpty", false);
     	        request.setAttribute("resourceName", Helpers.localizeText(collection.getName()));
     	        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(collection.getDescription())));
-                request.setAttribute("collection", collection);
+                
+    	        request.setAttribute("collection", collection);
                 request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
                 request.setAttribute("nodes", collection.getData().getNodes().getNodes());
     	    }
 	    } else if ("dataset".equals(resourceType)) {
 	        Dataset dataset = Helpers.getDataset(apiUrlStatisticalResources, internalPortal, agencyId, resourceId, version);
+	        
 	        if (dataset != null) {
 		        request.setAttribute("resourceEmpty", false);
 		        request.setAttribute("resourceName", Helpers.localizeText(dataset.getName()));
@@ -54,35 +58,34 @@
 	        }
 	    } else if ("query".equals(resourceType)) {
 	        Query query = Helpers.getQuery(apiUrlStatisticalResources, internalPortal, agencyId, resourceId);
+	        
 	        if (query != null) {
 		        request.setAttribute("resourceEmpty", false);
 		        request.setAttribute("resourceName", Helpers.localizeText(query.getName()));
 		        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(query.getDescription())));	  
 	        }  
-	    }  
+	    } else {	
+	        CmsJspStandardContextBean contextBean = CmsJspStandardContextBean.getInstance(request);
+	        request.setAttribute("resourceName", cmso.readPropertyObject(
+		            cmso.getRequestContext().getUri(),
+	                CmsPropertyDefinition.PROPERTY_TITLE,
+	                true).getValue());
+	        request.setAttribute("resourceDescription", cmso.readPropertyObject(
+		            cmso.getRequestContext().getUri(),
+	                CmsPropertyDefinition.PROPERTY_DESCRIPTION,
+	                true).getValue());	        
+	    }
 	%>
-	<c:choose>
-		<c:when test="${!resourceEmpty}">
-	    	<title>ISTAC | ${resourceName}</title>
-	        <meta name="description" content="${resourceDescription}" />
 
-	        <meta property="og:title" content="ISTAC | ${resourceName}"/>
-	        <meta property="og:description" content="${resourceDescription}"/>
-	        
-	        <meta itemprop="name" content="ISTAC | ${resourceName}">
-			<meta itemprop="description" content="${resourceDescription}">
-		</c:when>
-		<c:otherwise>
-			<title>ISTAC | <cms:info property="opencms.title" /></title>
-	  		<meta name="description" content="<cms:property name="Description" file="search" default="" />" />
+   	<title>ISTAC | ${resourceName}</title>
+    <meta name="description" content="${resourceDescription}" />
 
-	  		<meta property="og:title" content="ISTAC | <cms:info property="opencms.title" />"/>
-	        <meta property="og:description" content="<cms:property name="Description" file="search" default="" />"/>
-	        
-	        <meta itemprop="name" content="ISTAC | <cms:info property="opencms.title" />">
-			<meta itemprop="description" content="<cms:property name="Description" file="search" default="" />">
-	    </c:otherwise>
-    </c:choose>   		
+    <meta property="og:title" content="ISTAC | ${resourceName}"/>
+    <meta property="og:description" content="${resourceDescription}"/>
+       
+    <meta itemprop="name" content="ISTAC | ${resourceName}">
+	<meta itemprop="description" content="${resourceDescription}">
+	
   	<meta name="keywords" content="<cms:property name="Keywords" file="search" default="" />">
   	<meta http-equiv="Content-Type" content="text/html; charset=${cms:vfs(pageContext).requestContext.encoding}">
   	<meta name="robots" content="index, follow">
