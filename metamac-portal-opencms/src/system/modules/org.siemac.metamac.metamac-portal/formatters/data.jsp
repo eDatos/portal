@@ -45,7 +45,8 @@
 						        
 						        CFInstall.check({
 						            mode : "inline",
-						            node : "metamac-container"
+						            node : "metamac-container",
+						            url : "${content.value.ApiUrlStatisticalVisualizer}/chromeFramePrompt.html"
 						        }); 
 
 						    } else {

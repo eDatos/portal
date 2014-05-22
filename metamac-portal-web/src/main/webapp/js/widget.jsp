@@ -47,37 +47,17 @@ function appendIframe(options) {
 	document.getElementById(options.id).innerHTML = iframe;
 }
 
-function appendChromeFrameStyles(options) {
+function promptChromeFrame(options) {	
+
 	var width = options.width || '100%';	
 	var height = options.height || '100%';
-	var css = '#' + options.id + ' .chromeFrame-prompt { width:' + width + 'px; height: ' + height + 'px; background: #c4d0dc; } ';
-	css += '.chromeFrame-prompt-inner { margin: 0 auto;	width: 85%;	background: white; height: 100%; padding: 10px;	min-width: 160px; }';
 
-  	var head = document.head || document.getElementsByTagName('head')[0];
-  	var style = document.createElement('style');
-  	style.type = 'text/css';
-	if (style.styleSheet){
-	  style.styleSheet.cssText = css;
-	} else {
-	  style.appendChild(document.createTextNode(css));
-	}
-  	head.appendChild(style);
-}
+	var checkBrowser = document.createElement('iframe');
+	checkBrowser.setAttribute("src", "${baseURL}/chromeFramePrompt.html");
+	checkBrowser.setAttribute("width", width);
+	checkBrowser.setAttribute("height", height);
+	checkBrowser.setAttribute("frameborder", 0);
 
-function promptChromeFrame(options) {	
-	appendChromeFrameStyles(options);
-
-
-	var checkBrowser = document.createElement('div');		
-	var checkBrowserText = '<div class="chromeFrame-prompt">';
-	checkBrowserText += '<div class="chromeFrame-prompt-inner">';
-	checkBrowserText += 'Su navegador es demasiado antiguo como para disfrutar de todas las funcionalidades del widget.';
-	checkBrowserText += ' Puede instalar Chrome Frame desde <a href="http://descargas.arte-consultores.com/istac/triki.msi">aquí</a>';
-	checkBrowserText += ' o instalar un navegador como <a href="https://www.google.com/chrome/">Chrome</a>,';
-	checkBrowserText += ' <a href="http://www.getfirefox.com/">Firefox</a> u <a href="http://www.opera.com/es">Opera</a>.</div>';
-	checkBrowserText += '</div>';
-
-	checkBrowser.innerHTML = checkBrowserText; 
 	document.getElementById(options.id).appendChild(checkBrowser);
 }
 
