@@ -72,7 +72,7 @@ function promptChromeFrame(options) {
 	var checkBrowserText = '<div class="chromeFrame-prompt">';
 	checkBrowserText += '<div class="chromeFrame-prompt-inner">';
 	checkBrowserText += 'Su navegador es demasiado antiguo como para disfrutar de todas las funcionalidades del widget.';
-	checkBrowserText += ' Puede instalar Chrome Frame desde <a href="http://descargas.arte-consultores.com/istac/triki.msi">aquí</a>';
+	checkBrowserText += ' Puede instalar Chrome Frame desde <a href="http://descargas.arte-consultores.com/istac/triki.msi">aquÃ­</a>';
 	checkBrowserText += ' o instalar un navegador como <a href="https://www.google.com/chrome/">Chrome</a>,';
 	checkBrowserText += ' <a href="http://www.getfirefox.com/">Firefox</a> u <a href="http://www.opera.com/es">Opera</a>.</div>';
 	checkBrowserText += '</div>';
@@ -98,7 +98,7 @@ function datasetWidget(options) {
 			appendChromeFrameObject(options);
 		} else {
 	  		CFInstall.check({
-	  			preventPrompt : true, // prevent default prompt, we´ll use our own
+	  			preventPrompt : true, // prevent default prompt, we'll use our own
 	  			onmissing: promptChromeFrame(options)	  			
 	   		});
 	   	}
