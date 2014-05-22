@@ -26,6 +26,12 @@ module.exports = (grunt) ->
     modules =
         metamac:
             src: [
+                # Polyfills
+                paths.lib + "/polyfills/es5-shim.js"
+                paths.lib + "/polyfills/addEventListener-polyfill.js"
+                paths.lib + "/polyfills/console-shim.js"
+                paths.lib + "/CFInstall.min.js"
+
                 # External libs
                 paths.lib + "/jquery-1.9.0.js"
                 paths.lib + "/i18n.js"
@@ -209,7 +215,7 @@ module.exports = (grunt) ->
 
     concatOptions =
         options:
-            separator: ';'
+            separator: grunt.util.linefeed + ';'
 
     globalConfig =
         mocha:

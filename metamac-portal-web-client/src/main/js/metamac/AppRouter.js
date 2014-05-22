@@ -4,6 +4,7 @@
     App.namespace('App.AppRouter');
 
     App.AppRouter = Backbone.Router.extend({
+        // QueryStringMode, the shorter urls that expect tha identifiers on the query string "?agencyId=ISTAC&resourceId=C00031A_000002&version=001.000"
 
         routes : {
             "collections/:agency/:identifier/:version" : "collection",
@@ -15,16 +16,16 @@
             "datasets/selection" : "datasetSelection",
 
             "datasets/:agency/:identifier/:version/selection/permalink/:permalinkId" : "datasetSelectionPermalink",
-            "datasets/selection/permalink/:permalinkId" : "datasetSelectionPermalink",
+            "datasets/selection/permalink/:permalinkId" : "datasetSelectionPermalinkQueryStringMode",
 
             "datasets/:agency/:identifier/:version/visualization" : "datasetVisualization",
             "datasets/visualization" : "datasetVisualization",
 
             "datasets/:agency/:identifier/:version/visualization/:visualizationType" : "datasetVisualizationType",
-            "datasets/visualization/:visualizationType" : "datasetVisualizationType",
+            "datasets/visualization/:visualizationType" : "datasetVisualizationTypeQueryStringMode",
 
             "datasets/:agency/:identifier/:version/visualization/:visualizationType/permalink/:permalinkId" : "datasetVisualizationTypePermalink",
-            "datasets/visualization/:visualizationType/permalink/:permalinkId" : "datasetVisualizationTypePermalink",
+            "datasets/visualization/:visualizationType/permalink/:permalinkId" : "datasetVisualizationTypePermalinkQueryStringMode",
 
 
             "queries/:agency/:identifier" : "query",
@@ -37,10 +38,11 @@
             "queries/visualization" : "queryVisualization",
 
             "queries/:agency/:identifier/visualization/:visualizationType" : "queryVisualizationType",
-            "queries/visualization/:visualizationType" : "queryVisualizationType",
+            "queries/visualization/:visualizationType" : "queryVisualizationTypeQueryStringMode",
 
             "queries/:agency/:identifier/visualization/:visualizationType/permalink/:permalinkId" : "queryVisualizationTypePermalink",
-            "queries/visualization/:visualizationType/permalink/:permalinkId" : "queryVisualizationTypePermalink",
+            "queries/visualization/:visualizationType/permalink/:permalinkId" : "queryVisualizationTypePermalinkQueryStringMode",
+
 
             "*path" : "error"
         },
@@ -88,6 +90,24 @@
             return args;
         },
 
+        _nameDatasetArgumentsQueryStringMode : function (args) {
+            var args = this._nameArguments(["visualizationType", "permalinkId"], args);
+            args.type = "dataset";
+            return args;
+        },
+        
+        _nameDatasetSelectionPermalinkArgumentsQueryStringMode : function (args) {
+            var args = this._nameArguments(["permalinkId"], args);
+            args.type = "dataset";
+            return args;
+        },
+
+        _nameQueryArgumentsQueryStringMode : function (args) {
+            var args = this._nameArguments(["visualizationType", "permalinkId"], args);
+            args.type = "query";
+            return args;
+        },
+
         collection : function () {
             var args = this._nameCollectionArguments(arguments);
             args = _.defaults(App.queryParams, args);
@@ -108,6 +128,10 @@
         
         datasetSelectionPermalink : function () {
             var args = this._nameDatasetSelectionPermalinkArguments(arguments);
+            this.datasetController.showDatasetSelection(args);
+        },
+        datasetSelectionPermalinkQueryStringMode : function () {
+            var args = this._nameDatasetSelectionPermalinkArgumentsQueryStringMode(arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetSelection(args);
         },
@@ -120,15 +144,24 @@
 
         datasetVisualizationType : function () {
             var args = this._nameDatasetArguments(arguments);
+            this.datasetController.showDatasetVisualization(args);
+        },
+        datasetVisualizationTypeQueryStringMode : function () {
+            var args = this._nameDatasetArgumentsQueryStringMode(arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
         datasetVisualizationTypePermalink : function () {
             var args = this._nameDatasetArguments(arguments);
+            this.datasetController.showDatasetVisualization(args);
+        },
+        datasetVisualizationTypePermalinkQueryStringMode : function () {
+            var args = this._nameDatasetArgumentsQueryStringMode(arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
+
 
         query : function () {
             var args = this._nameQueryArguments(arguments);
@@ -150,12 +183,20 @@
 
         queryVisualizationType : function () {
             var args = this._nameQueryArguments(arguments);
+            this.datasetController.showDatasetVisualization(args);
+        },
+        queryVisualizationTypeQueryStringMode : function () {
+            var args = this._nameQueryArgumentsQueryStringMode(arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
         queryVisualizationTypePermalink : function () {
             var args = this._nameQueryArguments(arguments);
+            this.datasetController.showDatasetVisualization(args);
+        },
+        queryVisualizationTypePermalinkQueryStringMode : function () {
+            var args = this._nameQueryArgumentsQueryStringMode(arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },

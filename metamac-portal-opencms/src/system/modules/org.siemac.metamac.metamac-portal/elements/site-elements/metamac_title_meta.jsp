@@ -78,6 +78,9 @@
 	%>
 
    	<title>ISTAC | ${resourceName}</title>
+   	
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   	    
     <meta name="description" content="${resourceDescription}" />
 
     <meta property="og:title" content="ISTAC | ${resourceName}"/>
@@ -90,3 +93,14 @@
   	<meta http-equiv="Content-Type" content="text/html; charset=${cms:vfs(pageContext).requestContext.encoding}">
   	<meta name="robots" content="index, follow">
   	<meta name="revisit-after" content="7 days">
+
+  	<style>
+  	    .chromeFrameInstallDefaultStyle {
+            width: 100% !important;
+            height: 460px !important;
+            position: relative !important;
+            left: 0 !important;
+            top: 0 !important;
+            margin: 0 !important;
+        }
+    </style>
