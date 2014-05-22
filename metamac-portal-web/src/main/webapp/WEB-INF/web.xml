@@ -39,6 +39,15 @@
         <servlet-name>authentication</servlet-name>
         <url-pattern>/js/authentication.js</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>widget</servlet-name>
+        <jsp-file>/js/widget.js</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>widget</servlet-name>
+        <url-pattern>/js/widget.js</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Captcha</servlet-name>
