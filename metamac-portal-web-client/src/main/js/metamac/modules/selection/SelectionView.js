@@ -29,11 +29,15 @@
 
         serializeData : function () {
             var context = {
-                showHeader : App.showHeader,
+                showHeader : this._showHeader(),
                 selectAllUrl : App.context + this.metadata.urlIdentifierPart(),
                 metadata : this.metadata.toJSON()
             };
             return context;
+        },
+
+        _showHeader: function() {
+            return App.config.showHeader;
         },
         
        	_initializeOptionsView : function () {

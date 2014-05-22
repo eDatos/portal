@@ -33,7 +33,10 @@
         "version" : undefined
     }
 
-    App.showHeader = true;
+    App.config = {
+        "widget" : false,
+        "showHeader" : true
+    }
 
     App.namespace = function (namespaceString) {
 

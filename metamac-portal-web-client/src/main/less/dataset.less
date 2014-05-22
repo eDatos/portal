@@ -156,8 +156,16 @@
         border-right: 1px solid #E5E5E5;
         .border-radius(0 6px 6px 0);
 
+        .dataset-widget & {
+            padding-bottom: 21px;
+        }
+
         h3 {
             margin-top: 0;
+
+            .dataset-widget & {
+                display: none;
+            }
         }
     }
 
@@ -191,6 +199,14 @@
 
 .dataset-sidebar-visualization-container {
     margin-bottom: 20px;
+
+    &.dataset-widget {
+        margin-bottom: 0;
+
+        .sidebar-container {
+            display: block;
+        }
+    }    
 }
 
 .dataset-sidebar-visualization-container.full-screen {
@@ -264,7 +280,6 @@
 .dataset-download {
     font-size: 60px;
     text-align: center;
-    margin-top: 20px;
 
     form {
         display: inline;
@@ -276,5 +291,20 @@
         &:hover {
             color: #0F5B95;
         }
+    }
+
+    .dataset-download-group {
+        margin-top: 20px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+}
+
+.dataset-share {
+    .dataset-share-icons {
+        margin-top: 7px;
     }
 }

@@ -14,7 +14,7 @@
             this.filterDimensions = options.filterDimensions;
             this.metadata = options.metadata;
 
-            this.optionsModel = new App.modules.dataset.OptionsModel();
+            this.optionsModel = new App.modules.dataset.OptionsModel({ widget : App.config.widget});
             this.dataset = new App.dataset.Dataset({metadata : this.metadata, filterDimensions : this.filterDimensions});
 
             this._initializeVisualElements();
@@ -37,17 +37,6 @@
                 dataset : this.dataset
             });
 
-            // sidebar - filter
-            this.filterSidebarView = new App.widget.filter.sidebar.FilterSidebarView({
-                filterDimensions : this.filterDimensions,
-                optionsModel : this.optionsModel
-            });
-
-            this.orderSidebarView = new App.widget.filter.sidebar.OrderSidebarView({
-                filterDimensions : this.filterDimensions,
-                optionsModel : this.optionsModel
-            });
-
             // visualization
             this.visualizationView = new App.modules.dataset.DatasetVisualizationView({
                 dataset : this.dataset,
@@ -57,7 +46,24 @@
             });
 
             // sidebarView
-            var sideViews = [this.infoView, this.filterSidebarView, this.orderSidebarView];
+            var sideViews = [this.infoView];
+            if (!this.optionsModel.get('widget')) {
+
+                // sidebar - filter
+                this.filterSidebarView = new App.widget.filter.sidebar.FilterSidebarView({
+                    filterDimensions : this.filterDimensions,
+                    optionsModel : this.optionsModel
+                });
+
+                this.orderSidebarView = new App.widget.filter.sidebar.OrderSidebarView({
+                    filterDimensions : this.filterDimensions,
+                    optionsModel : this.optionsModel
+                });
+
+                sideViews.push(this.filterSidebarView);
+                sideViews.push(this.orderSidebarView);
+            }
+
             this.sidebarView = new App.components.sidebar.SidebarView({sideViews : sideViews, contentView : this.visualizationView});
         },
 
@@ -80,15 +86,23 @@
 
         serializeData : function () {
             var context = {
-                showHeader : App.showHeader, // Depends if the server is already painting the title and description
+                showHeader : this._showHeader(), // Depends if the server is already painting the title and description
+                isWidget : this.optionsModel.get('widget'),
                 metadata : this.metadata.toJSON()
             };
             return context;
         },
 
+        _showHeader: function() {
+            return App.config.showHeader && !this.optionsModel.get('widget');
+        },
+
         onRender : function () {
             this.content.show(this.sidebarView);
             this.fullScreen.setContainer(this.content.$el);
+            if (this.optionsModel.get('widget')) {
+                this._initializeWidget();
+            }
             this._unbindEvents();
             this._bindEvents();            
         },
@@ -143,6 +157,11 @@
         			decimalPoint: I18n.t("number.format.separator")
         		}
         	});
+        },
+
+        _initializeWidget : function () {
+            this.content.$el.addClass('dataset-widget');
+            this.content.$el.find('.sidebar-container').height($('html').height());            
         },
         
         // Deprecated

@@ -7,7 +7,8 @@
             fullScreen : false,
             filter : false,
             visualize : false,
-            options : true
+            options : true,
+            widget : false
         }
     });
     
