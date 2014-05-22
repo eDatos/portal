@@ -42,7 +42,7 @@
     
     <servlet>
         <servlet-name>widget</servlet-name>
-        <jsp-file>/js/widget.js</jsp-file>
+        <jsp-file>/js/widget.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>widget</servlet-name>
