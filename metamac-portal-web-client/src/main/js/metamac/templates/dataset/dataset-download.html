@@ -1,16 +1,16 @@
 <div class="dataset-download-group">
 	<h3>{{ message "filter.download.selection" }}</h3>
-	<form method="POST" action="{{url.excel}}">
+	<form method="POST" action="{{url.excel}}" target="_parent">
 		<input type="hidden" name="jsonBody" value="{{selection}}">
 		<a href="#" class="download-xlsx"><i class="icon-xlsx"></i></a>
 	</form>
 
-	<form method="POST" action="{{url.csv}}">		
+	<form method="POST" action="{{url.csv}}" target="_parent">		
 		<input type="hidden" name="jsonBody" value="{{selection}}">
 		<a href="#" class="download-csv"><i class="icon-csv"></i></a>
 	</form>
 
-	<form method="POST" action="{{url.px}}">
+	<form method="POST" action="{{url.px}}" target="_parent">
 		<input type="hidden" name="jsonBody" value="{{selection}}">
 	<a href="#" class="download-csv"><i class="icon-px"></i></a>
 	</form>
@@ -21,17 +21,17 @@
 </div>
 <div class="dataset-download-group">
 	<h3>{{ message "filter.download.all" }}</h3>
-	<form method="POST" action="{{url.excel}}">
+	<form method="POST" action="{{url.excel}}" target="_parent">
     	<input type="hidden" name="jsonBody" value="{{emptySelection}}">
     	<a href="#" class="download-xlsx"><i class="icon-xlsx"></i></a>
 	</form>
 
-	<form method="POST" action="{{url.csv}}">
+	<form method="POST" action="{{url.csv}}" target="_parent">
 	    <input type="hidden" name="jsonBody" value="{{emptySelection}}">
 	     <a href="#" class="download-csv"><i class="icon-csv"></i></a>
 	</form>
 
-	<form method="POST" action="{{url.px}}">
+	<form method="POST" action="{{url.px}}" target="_parent">
 	    <input type="hidden" name="jsonBody" value="{{emptySelection}}">
 	     <a href="#" class="download-csv"><i class="icon-px"></i></a>
 	</form>
