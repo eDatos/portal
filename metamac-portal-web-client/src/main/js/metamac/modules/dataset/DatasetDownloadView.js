@@ -23,6 +23,7 @@
             var identifierUrlPart = identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
             var context = {
                 selection : JSON.stringify(datasetSelection),
+                emptySelection : JSON.stringify(this.getEmptyDatasetSelection()),
                 url : {
                     csv : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/tsv/" + identifierUrlPart,
                     excel : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/excel/" + identifierUrlPart,
@@ -52,6 +53,11 @@
             });
 
             return {datasetSelection : result};
+        },
+
+        // Empty selection returns all
+        getEmptyDatasetSelection : function () {
+            return {datasetSelection : null};
         },
 
         clickDownloadButton : function (e) {
