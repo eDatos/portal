@@ -35,7 +35,8 @@
 
     App.config = {
         "widget" : false,
-        "showHeader" : true
+        "showHeader" : true,
+        "chromeFrameObject" : false
     }
 
     App.namespace = function (namespaceString) {

@@ -35,6 +35,7 @@ LazyLoad.js('client/metamac.js', function () {
     App.queryParams["agency"] = getQueryParams("agencyId");
     App.queryParams["identifier"] = getQueryParams("resourceId");
     App.queryParams["version"] = getQueryParams("version");
+    App.config["chromeFrameObject"] = urlParams["chromeFrameObject"];
 	App.config["widget"] = true;
 
 	App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/statistical-resources-internal/apis/statistical-resources-internal/v1.0";

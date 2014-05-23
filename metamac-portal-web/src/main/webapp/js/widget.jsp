@@ -18,6 +18,7 @@ function appendChromeFrameObject(options) {
 	var width = options.width || '100%';	
 	var height = options.height || '100%';
 
+	options.chromeFrameObject = true;
 	var src = getWidgetUrl(options);
 
 	var chromeFrameInstance = '<OBJECT ID="' + options.id + '-chromeFrame" WIDTH="' + width + '" HEIGHT="' + height + '"';
@@ -31,7 +32,8 @@ function appendChromeFrameObject(options) {
 
 function getWidgetUrl(options) {	
 	var endpoint = "${baseURL}/widget.html";
- 	return endpoint + '?' + options.params;
+	endpoint += options.chromeFrameObject ? '?chromeFrameObject=true&' : '?';
+ 	return endpoint + options.params;
 }
 
 
