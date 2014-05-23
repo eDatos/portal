@@ -143,11 +143,19 @@
         _onDidEnterFullScreen : function () {
             this.visualizationView._didEnterFullScreen();
             this.optionsModel.set('fullScreen', true);
+
+            if (this.optionsModel.get('widget')) {
+                this._updateSidebarHeight('');
+            }
         },
 
         _onDidExitFullScreen : function () {
             this.visualizationView._didExitFullScreen();
             this.optionsModel.set('fullScreen', false);
+
+            if (this.optionsModel.get('widget')) {
+                this._updateSidebarHeight($('html').height());
+            }
         },
         
         _initializeHighChartsLocale : function() {            
@@ -161,7 +169,10 @@
 
         _initializeWidget : function () {
             this.content.$el.addClass('dataset-widget');
-            this.content.$el.find('.sidebar-container').height($('html').height());            
+            this._updateSidebarHeight($('html').height());
+        },  
+        _updateSidebarHeight : function (height) {
+            this.content.$el.find('.sidebar-container').height(height);   
         },
         
         // Deprecated

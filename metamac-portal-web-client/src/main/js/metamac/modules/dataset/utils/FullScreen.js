@@ -45,25 +45,39 @@
         },
 
         _getRequestFullScreen : function () {
+            // IE11 Bug on fullscreen iframe https://connect.microsoft.com/IE/feedback/details/838286/ie-11-incorrectly-reports-dom-element-sizes-in-fullscreen-mode-when-fullscreened-element-is-within-an-iframe
+            var msRequest;
+            if (App.config["widget"]) {
+                msRequest = undefined;
+            } else {
+                msRequest = this.getContainer().msRequestFullscreen || this.getContainer().msRequestFullScreen;
+            }
             return this.getContainer().requestFullscreen
                 || this.getContainer().requestFullScreen
                 || this.getContainer().webkitRequestFullscreen
                 || this.getContainer().mozRequestFullscreen
-                || this.getContainer().msRequestFullscreen
                 || this.getContainer().webkitRequestFullScreen
                 || this.getContainer().mozRequestFullScreen
-                || this.getContainer().msRequestFullScreen;
+                || msRequest;
+//              || this._popUpFullScreen; 
         },
 
         _getRequestExitFullScreen : function () {
+            // IE11 Bug on fullscreen iframe https://connect.microsoft.com/IE/feedback/details/838286/ie-11-incorrectly-reports-dom-element-sizes-in-fullscreen-mode-when-fullscreened-element-is-within-an-iframe
+            var msRequest;
+            if (App.config["widget"]) {
+                msRequest = undefined;
+            } else {
+                msRequest = document.msExitFullscreen || document.msCancelFullScreen;
+            }
             return document.exitFullscreen ||
                 document.cancelFullscreen ||                
-                document.msExitFullscreen ||                
-                document.msCancelFullScreen ||
                 document.mozCancelFullScreen ||
                 document.mozExitFullscreen ||
                 document.webkitCancelFullScreen ||
-                document.webkitExitFullscreen;
+                document.webkitExitFullscreen ||
+                msRequest;
+//              || window.close;
         },
 
         browserHasFullScreenSupport : function () {
