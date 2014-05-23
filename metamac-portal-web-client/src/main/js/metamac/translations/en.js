@@ -33,12 +33,19 @@ I18n.translations.en = {
             deselectAll : "Deselect all",
             reverseOrder : "Reverse order",
             close : "Close",
-            visualize : "Visualize"
+            visualize : "Visualize",
+            embed : "Widget"
         },
         download : {
         	selection : "Download selection",
     	    all : "Download All"
-	    },	
+	    },
+        share : {
+            permanent : "Permanent link:"
+        },
+        embed : {
+            instructions : "Select, copy and paste this code on your page:"
+        },	
         text : {
             fixedDimensions : "Fixed values",
             leftDimensions : "Rows",

@@ -19,7 +19,8 @@
             "click .visual-element-options-edit" : "clickFilterLoader",
             "click .visual-element-options-fs" : "clickFullScreen",
             "click .visual-element-options-share" : "clickShare",
-            "click .visual-element-options-download" : "clickDownload"
+            "click .visual-element-options-download" : "clickDownload",
+            "click .visual-element-options-embed" : "clickEmbed",
         },
 
         destroy : function () {
@@ -117,6 +118,15 @@
 
             var title = I18n.t("filter.button.share");
             var modalContentView = new App.modules.dataset.DatasetShareView({filterDimensions : this.filterDimensions});
+            var modal = new App.components.modal.ModalView({title : title, contentView : modalContentView});
+            modal.show();
+        },
+
+        clickEmbed : function (e) {
+            e.preventDefault();
+
+            var title = I18n.t("filter.button.embed");
+            var modalContentView = new App.modules.dataset.DatasetEmbedView({filterDimensions : this.filterDimensions});
             var modal = new App.components.modal.ModalView({title : title, contentView : modalContentView});
             modal.show();
         },

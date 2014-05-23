@@ -1,0 +1,13 @@
+<div class="dataset-embed">
+    <strong>{{ message "filter.embed.instructions" }}</strong>
+    <textarea class="campo_texto" readonly="readonly">
+<div id="{{defaultId}}"></div>
+<script src="{{widgetUrl}}"></script>
+<script>datasetWidget({ 
+	id : "{{defaultId}}", 
+	width: {{defaultWidth}}, 
+	height: {{defaultHeight}}, 
+	params : "{{params}}"
+})</script>
+    </textarea>
+</div>

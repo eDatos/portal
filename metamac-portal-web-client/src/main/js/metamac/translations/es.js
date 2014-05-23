@@ -33,12 +33,19 @@ I18n.translations.es = {
             deselectAll : "Desmarcar todo",
             reverseOrder : "Invertir orden",
             close : "Cerrar",
-            visualize : "Consultar"
+            visualize : "Consultar",
+            embed : "Widget"
         },
         download : {
             selection : "Descargar selección",
             all : "Descargar todo"
         },  
+        share : {
+            permanent : "Enlace permanente:"
+        },
+        embed : {
+            instructions : "Selecciona, copia y pega este código en tu página:dasd"
+        },
         text : {
             fixedDimensions : "Valores fijados",
             leftDimensions : "Filas",
