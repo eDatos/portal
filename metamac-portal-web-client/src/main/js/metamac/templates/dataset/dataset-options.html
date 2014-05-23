@@ -6,6 +6,7 @@
     {{/if}}
 </div>
 
+{{#unless widget}}
 <div class="change-visual-element">
     <div class="btn-group" data-toggle="buttons-radio">
         {{#each veTypeButton}}
@@ -13,6 +14,7 @@
         {{/each}}
     </div>
 </div>
+{{/unless}}
 
 {{#if visualize}}
 <button class="btn btn-with-label selection-visualize-selection" title='{{message "filter.button.visualize"}}'>

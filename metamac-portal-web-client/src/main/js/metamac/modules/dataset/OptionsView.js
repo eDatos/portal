@@ -78,7 +78,8 @@
                         active : fullScreenActive,
                         btnClass : fullScreenActive ? 'active' : ''
                     },
-                    visualize : this.optionsModel.get('visualize')
+                    visualize : this.optionsModel.get('visualize'),
+                    widget : this.optionsModel.get('widget')
                 };
                 this.$el.html(this.template(context));
             }
