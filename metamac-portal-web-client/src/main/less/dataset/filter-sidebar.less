@@ -226,6 +226,17 @@
 
         &[draggable='true'] {
             cursor: move;
+
+            /* Safari bug */
+            -khtml-user-drag: element;
+            -webkit-user-drag: element;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+
+            /* IE9 bug changed divs with a, so this correct the new style */
+            display: block;
+            text-decoration: none;
+            color: black;
         }
 
     }

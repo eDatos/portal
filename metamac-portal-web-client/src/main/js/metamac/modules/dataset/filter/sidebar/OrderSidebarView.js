@@ -122,6 +122,7 @@
         },
 
         _onDragenter : function (e) {
+            e.preventDefault();
             var $currentTarget = $(e.currentTarget);
             $currentTarget.addClass(DRAGOVER_CLASS);
         },
