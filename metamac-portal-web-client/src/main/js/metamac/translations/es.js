@@ -44,7 +44,7 @@ I18n.translations.es = {
             permanent : "Enlace permanente:"
         },
         embed : {
-            instructions : "Selecciona, copia y pega este código en tu página:dasd"
+            instructions : "Selecciona, copia y pega este código en tu página"
         },
         text : {
             fixedDimensions : "Valores fijados",

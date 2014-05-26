@@ -224,6 +224,11 @@
         margin-right: 3px;
         .user-select(none);
 
+        /* IE9 bug changed divs with a, so this correct the new style */
+        display: block;
+        text-decoration: none;
+        color: black;
+
         &[draggable='true'] {
             cursor: move;
 
@@ -232,11 +237,6 @@
             -webkit-user-drag: element;
             -khtml-user-select: none;
             -webkit-user-select: none;
-
-            /* IE9 bug changed divs with a, so this correct the new style */
-            display: block;
-            text-decoration: none;
-            color: black;
         }
 
     }

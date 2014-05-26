@@ -104,7 +104,9 @@
                 this._initializeWidget();
             }
             this._unbindEvents();
-            this._bindEvents();            
+            this._bindEvents();
+
+            App.BrowsersCompatibility.forceFontsRepaint();         
         },
 
         onBeforeClose : function () {

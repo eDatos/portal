@@ -57,6 +57,8 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/libs/DB.js"
                 paths.js + "/metamac/libs/Inflector.js"
 
+                paths.js + "/metamac/libs/BrowsersCompatibility.js"
+                
                 paths.js + "/metamac/mixins/ToggleModel.js"
 
                 paths.js + "/metamac/Controller.js"
