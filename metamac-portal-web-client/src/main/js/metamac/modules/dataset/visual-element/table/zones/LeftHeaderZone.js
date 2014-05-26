@@ -223,9 +223,8 @@
                 }
 
                 this.ctx.fillStyle = bgColor;
-
-                this.ctx.fill();
                 this.ctx.stroke();
+                this.ctx.fill();
                 this.ctx.closePath();
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;

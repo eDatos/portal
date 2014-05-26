@@ -209,12 +209,12 @@
                 }
 
                 this.ctx.fillStyle = bgColor;
-                this.ctx.fill();
                 this.ctx.stroke();
+                this.ctx.fill();
                 this.ctx.closePath();
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
-                this.ctx.fillText(cell.content || "", cell.x + +margin, Math.ceil(cell.y + cell.height / 2));
+                this.ctx.fillText(cell.content || "", cell.x + margin, Math.ceil(cell.y + cell.height / 2));
 
                 if (cell.attributes != "") {
                     this.ctx.beginPath();                  
