@@ -8,17 +8,17 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
 
     @Override
     public boolean retrieveCaptchaEnable() throws MetamacException {
-        return retrievePropertyBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE, Boolean.TRUE);
+        return retrievePropertyBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE);
     }
 
     @Override
     public String retrieveCaptchaProvider() throws MetamacException {
-        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER, Boolean.TRUE);
+        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
     }
 
     @Override
     public String retrieveCaptchaPrivateKey() throws MetamacException {
-        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY, Boolean.TRUE);
+        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
     }
 
 }

@@ -1,70 +1,44 @@
 package org.siemac.metamac.portal.web;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.core.common.util.ApplicationContextProvider;
-import org.siemac.metamac.portal.core.conf.PortalConfiguration;
+import org.siemac.metamac.core.common.listener.ApplicationStartupListener;
 import org.siemac.metamac.portal.core.constants.PortalConfigurationConstants;
 
-public class ApplicationStartup implements ServletContextListener {
-
-    private static final Log    LOG = LogFactory.getLog(ApplicationStartup.class);
-
-    private PortalConfiguration configurationService;
+public class ApplicationStartup extends ApplicationStartupListener {
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        try {
-            configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
-            checkConfiguration();
-        } catch (Exception e) {
-            // Abort startup application
-            throw new RuntimeException(e);
-        }
+    public String projectName() {
+        return "statistical-visualizer";
     }
 
-    private void checkConfiguration() throws MetamacException {
-        LOG.info("**************************************************************************");
-        LOG.info("[metamac-portal-web] Checking application configuration");
-        LOG.info("**************************************************************************");
-
+    @Override
+    public void checkApplicationProperties() throws MetamacException {
         // Datasource
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.DB_DRIVER_NAME);
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.DB_URL);
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.DB_USERNAME);
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.DB_PASSWORD);
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.DB_DIALECT);
+        checkRequiredProperty(PortalConfigurationConstants.DB_DRIVER_NAME);
+        checkRequiredProperty(PortalConfigurationConstants.DB_URL);
+        checkRequiredProperty(PortalConfigurationConstants.DB_USERNAME);
+        checkRequiredProperty(PortalConfigurationConstants.DB_PASSWORD);
+        checkRequiredProperty(PortalConfigurationConstants.DB_DIALECT);
 
         // Api
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_PORTAL_EXTERNAL_APIS);
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_PORTAL_EXTERNAL_APIS);
 
         // Misc
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.METAMAC_EDITION_LANGUAGES);
+        checkRequiredProperty(PortalConfigurationConstants.METAMAC_EDITION_LANGUAGES);
 
         // Captcha
-        configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_ENABLE);
-        if (configurationService.retrieveCaptchaEnable()) {
-            configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
+        checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_ENABLE);
+        if (configurationService.retrievePropertyBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE)) {
+            checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
 
-            String provider = configurationService.retrieveCaptchaProvider();
+            String provider = configurationService.retrieveProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
             if (PortalConfigurationConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(provider)) {
-                configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
-                configurationService.checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
+                checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
+                checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
             }
         }
 
-        LOG.info("**************************************************************************");
-        LOG.info("[metamac-portal-web] Application configuration checked");
-        LOG.info("**************************************************************************");
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
     }
 
 }
