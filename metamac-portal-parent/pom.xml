@@ -16,9 +16,9 @@
     <description>METAMAC :: PORTAL :: PARENT</description>
 
     <properties>
-        <metamac-rest-api.version>1.3.3-SNAPSHOT</metamac-rest-api.version>
-        <metamac-rest-common.version>1.3.3-SNAPSHOT</metamac-rest-common.version>
-        <metamac-core-common.version>2.0.0-SNAPSHOT</metamac-core-common.version>
+        <metamac-rest-api.version>1.3.3</metamac-rest-api.version>
+        <metamac-rest-common.version>1.3.3</metamac-rest-common.version>
+        <metamac-core-common.version>2.0.0</metamac-core-common.version>
         <metamac-statistical-resources.version>1.0.3-SNAPSHOT</metamac-statistical-resources.version>
         
         
