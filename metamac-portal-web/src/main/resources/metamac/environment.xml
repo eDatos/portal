@@ -6,5 +6,8 @@
     <entry key="environment.metamac.configuration.db.password">FILL_ME_WITH_PASSWORD</entry>
     <entry key="environment.metamac.configuration.db.url">jdbc:oracle:thin:@FILL_ME_WITH_HOST:FILL_ME_WITH_PORT:XE</entry>
     <entry key="environment.metamac.configuration.db.driver_name">oracle.jdbc.OracleDriver</entry>
+    
+    <!-- Additional configuration -->
+    <entry key="environment.metamac.portal.installationType">FILL_ME</entry> <!-- Posibles valores: INTERNAL / EXTERNAL -->
 
 </properties>

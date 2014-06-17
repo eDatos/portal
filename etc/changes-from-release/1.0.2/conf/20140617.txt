@@ -1,0 +1,9 @@
+-- ------------------------------------------------------------------------------------
+-- METAMAC-2285 - Permitir que el portal pueda desplegarse como app web (sin opencms)
+-- ------------------------------------------------------------------------------------
+
+En el fichero environment.xml de la aplicación statistical-visualizer se añade la property:
+
+<entry key="environment.metamac.portal.installationType">FILL_ME</entry> <!-- Posibles valores: INTERNAL / EXTERNAL -->
+
+Los posibles valores son: INTERNAL / EXTERNAL
