@@ -18,6 +18,11 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
 
     @Override
     public String retrieveCaptchaPrivateKey() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
+    }
+
+    @Override
+    public String retrieveCaptchaPublicKey() throws MetamacException {
         return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
     }
 

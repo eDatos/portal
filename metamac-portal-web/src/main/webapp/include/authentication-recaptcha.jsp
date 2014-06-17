@@ -1,7 +1,7 @@
-<%@ page import="org.siemac.metamac.core.common.conf.ConfigurationService"%><%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%><%@ page import="org.siemac.metamac.portal.core.constants.PortalConfigurationConstants"%><%@page contentType="text/javascript" %>
+<%@ page import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%><%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%><%@ page import="org.siemac.metamac.portal.core.constants.PortalConfigurationConstants"%><%@page contentType="text/javascript" %>
 <%
-ConfigurationService configurationService = ApplicationContextProvider.getApplicationContext().getBean(ConfigurationService.class);
-String CAPTCHA_PUBLIC_KEY = configurationService.getProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
+PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
+String CAPTCHA_PUBLIC_KEY = configurationService.retrieveCaptchaPublicKey();
 %>
         (function () {
             "use strict";
