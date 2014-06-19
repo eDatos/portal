@@ -12,5 +12,7 @@ public interface PortalConfiguration extends ConfigurationService {
     String retrieveCaptchaPrivateKey() throws MetamacException;
 
     String retrieveCaptchaPublicKey() throws MetamacException;
+    
+    String retrieveInstallationType() throws MetamacException;
 
 }

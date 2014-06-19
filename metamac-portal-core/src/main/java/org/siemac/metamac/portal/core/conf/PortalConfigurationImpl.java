@@ -6,6 +6,8 @@ import org.siemac.metamac.portal.core.constants.PortalConfigurationConstants;
 
 public class PortalConfigurationImpl extends ConfigurationServiceImpl implements PortalConfiguration {
 
+    private static final String ENVIROMENT_CONF_INSTALLATION_TYPE = "environment.metamac.portal.installation_type";
+
     @Override
     public boolean retrieveCaptchaEnable() throws MetamacException {
         return retrievePropertyBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE);
@@ -26,4 +28,17 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
         return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
     }
 
+    @Override
+    public String retrieveInstallationType() throws MetamacException {
+        return (String) environmentConfigurationProperties.getProperty(ENVIROMENT_CONF_INSTALLATION_TYPE);
+    }
+
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        super.afterPropertiesSet();
+//
+//        if (environmentConfigurationProperties.getProperty(ENVIROMENT_CONF_INSTALLATION_TYPE) == null) {
+//            throw new IllegalArgumentException("ERROR One of configuration source is required: \"systemConfigurationFile\" or \"configurationDatasource\", has not been properly initialized");
+//        }
+//    }
 }
