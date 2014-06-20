@@ -3,7 +3,7 @@ Sobrescritura estilos gobierno
 **************************/
 
 #cabecera h1 a {
-	background: transparent url(../images/logo_istac.jpg)
+	background: transparent url(../img/logo_istac.jpg)
 		no-repeat scroll 5px 5px;
 	float: left;
 	height: 74px;

@@ -47,10 +47,10 @@
 	<!-- begin: pie -->			
 	<c:choose>
 	    <c:when test="${Organisation == 'ISTAC'}">
-			<t:pie_istac/>
+			<t:pie_istac baseURL="${baseURL}"/>
 	    </c:when>
 	    <c:when test="${Organisation == 'DREM'}">
-	        <t:pie_drem/>
+	        <t:pie_drem baseURL="${baseURL}"/>
 	    </c:when>
 	</c:choose>
 	<!-- end: pie -->
