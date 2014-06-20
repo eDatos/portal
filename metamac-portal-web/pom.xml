@@ -16,6 +16,12 @@
 
     <dependencies>
         <!-- Metamac -->
+		<dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>metamac-portal-web-client</artifactId>
+            <type>jar</type>
+            <version>${project.version}</version>
+        </dependency>        
         <dependency>
             <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-core-common</artifactId>

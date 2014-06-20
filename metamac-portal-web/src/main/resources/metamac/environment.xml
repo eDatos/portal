@@ -8,6 +8,6 @@
     <entry key="environment.metamac.configuration.db.driver_name">oracle.jdbc.OracleDriver</entry>
     
     <!-- Additional configuration -->
-    <entry key="environment.metamac.portal.installationType">FILL_ME</entry> <!-- Posibles valores: INTERNAL / EXTERNAL -->
+    <entry key="environment.metamac.portal.installation_type">FILL_ME</entry> <!-- Posibles valores: INTERNAL / EXTERNAL -->
 
 </properties>

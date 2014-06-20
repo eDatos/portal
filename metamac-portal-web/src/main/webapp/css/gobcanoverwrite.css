@@ -1,0 +1,913 @@
+/*************************
+Sobrescritura estilos gobierno
+**************************/
+
+#cabecera h1 a {
+	background: transparent url(../images/logo_istac.jpg)
+		no-repeat scroll 5px 5px;
+	float: left;
+	height: 74px;
+	padding: 0 0 7px;
+	text-decoration: none;
+	width: 315px;
+}
+
+#migas ul li strong {
+	color: #000000;
+	font-weight: bold;
+}
+
+.subseccion2 {
+	margin: 0 13px 0 0;
+	width: 47%;
+	float: left;
+}
+
+.subseccion2 p {
+	text-align: justify;
+	line-height: 1.3;
+}
+
+.subseccion2 .subrayado {
+	height: auto;
+}
+
+.ocultar {
+	text-decoration: underline;
+	color: black;
+}
+
+.contenido ol>li {
+	line-height: 1.6;
+	list-style-type: none;
+	margin: 1.2em 0;
+	padding-left: 12px;
+	text-align: justify;
+}
+
+.bloque2 table>tbody>tr>td {
+	padding: 0.25em 0.25em;
+	vertical-align: top;
+	border-style: dotted;
+	border-width: thin;
+}
+
+ul {
+	padding: 3px 0 3px 8px;
+	margin: 0;
+}
+
+hr {
+	color: #CCCCCC;
+	height: 1px;
+}
+
+.izq img {
+	border: 1px solid #0F5B95;
+	float: left;
+	margin: 0.3em 0.8em 0.4em 1em;
+	padding: 2px;
+}
+
+ul.menu_lat_der li.con_img a {
+	display: block;
+	float: left;
+	width: 45%;
+}
+
+#page_navigation a {
+    font-size: 0.8em;
+    font-weight: 400;
+	margin: 2px;
+	color: #0058B0;
+	text-decoration: none;
+}
+
+#page_navigation div {
+	float: left;
+	padding-left: 5px;
+}
+
+.active_page {
+	color: black !important;
+	font-weight: bold;
+
+}
+
+#outstanding {
+	margin: 0 auto;
+	position: relative;
+	width: 760px;
+	z-index: 50;
+}
+
+#destacados {
+	position: absolute;
+	right: 0;
+	top: -96px;
+	width: 364px;
+	z-index: 50;
+}
+
+#destacados h2 {
+	border-bottom: 1px solid #0F5B95;
+	color: #003366;
+	font-size: 124%;
+	font-weight: bold;
+	margin: 6px 16px 8px 0;
+	overflow: hidden;
+	padding: 0 0 2px 4px;
+}
+
+#destacados ul li {
+	background-image: url("../images/flecha_menulat.gif");
+	background-position: 0.2em 50%;
+	background-repeat: no-repeat;
+	color: #003366;
+	margin-bottom: 0.1em;
+	overflow: hidden;
+	padding-left: 10px;
+}
+
+.links ul li a {
+	color: #0F5B95;
+	text-decoration: none;
+	line-height: 1.3em;
+	margin: 0;
+	padding: 0;
+	list-style: none outside none;
+	margin-bottom: 0.8em;
+	padding-top: 0.5em;
+}
+
+#content{
+	/* The main container div */
+	margin:0px auto;
+	width:100%;
+	padding:10px 5px 25px;
+}
+
+#content_indicadores{
+	/* The main container div */
+	margin:0px auto;
+	width:140px;
+	padding:10px 5px 25px;
+}
+
+#menu_indicadores{
+	/* The unordered list that is to be split into pages */
+
+	overflow:hidden;
+	margin:0;
+	padding:0;
+}
+
+ul#menu_indicadores li				{border-bottom: 1px solid #EBEBEB;	line-height:1.5;	list-style-type:none;	padding:3px 0;}
+ul#menu_indicadores li.con_img		{height: 70px;}
+ul#menu_indicadores li.con_img img	{float:left;	margin-right:3px;}
+ul#menu_indicadores li a			{color:#000000;	text-decoration:none;	background: url(../img/listas/flecha_menulat.gif) no-repeat scroll 0 0;	padding:0 0 0 8px;}
+ul#menu_indicadores li.dif a 		{background:transparent url(../images/maslight.gif) no-repeat scroll 0 0;	color:#0058B0;	font-size:0.8em;	font-weight:400;	padding:0 0 0 14px;	text-decoration:none;}
+ul#menu_indicadores li.dif 			{background:transparent none repeat scroll 0 0;	border-bottom:medium none;	margin-right:7px;	text-align:right;}
+ul#menu_indicadores li.dif a:hover 	{text-decoration:underline;}
+
+a.dif {
+    background: url("../images/maslight.gif") no-repeat scroll 0 2px transparent;
+    color: #0058B0;
+    font-size: 0.8em;
+    font-weight: 400;
+    padding: 1px 0 0 14px;
+    text-decoration: none;
+	float:right;
+}
+
+
+.swControls{
+	float:left;
+}
+
+a.swShowPage{
+	/* The links that initiate the page slide */
+	float:left;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-decoration: none;
+    font-size: 0.8em;
+    font-weight: 400;
+	color: #0058B0;
+}
+
+a.swShowPage:hover,
+a.swShowPage.active{
+	font-weight: bold;	
+	color: black !important;
+}
+
+.clear{
+	/* This class clears the floated elements */
+	clear:both;
+}
+
+#content_tabla{
+	margin:0;
+	padding:0;
+}
+
+table.tabla_indicadores {
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    caption-side: top;
+    text-align: left;
+    width: 100%;
+}
+
+table.tabla_indicadores caption {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.5em 0;
+}
+table.tabla_indicadores tbody tr td, table.tabla_indicadores tfoot tr td {
+    font-size: 1em;
+}
+table.tabla_indicadores thead tr th {
+    background: none repeat scroll 0 0 #B9C5D3;
+    font-size: 1em;
+    padding: 1em;
+}
+table.tabla_indicadores tbody th {
+    background: none repeat scroll 0 0 #E3E9EE;
+    font-size: 0.95em;
+    font-weight: bold;
+    padding: 0.5em;
+}
+table.tabla_indicadores tbody tr td {
+    background-color: #FFFFFF;
+    border-bottom: 0 solid #FFFFFF;
+    padding: 1em;
+}
+table.tabla_indicadores thead tr th a, table.tabla_indicadores tbody tr td a {
+    color: #000000;
+}
+table.tabla_indicadores tbody tr.banda td {
+    background-color: #E3E9EE;
+    border-bottom: 0 solid #FFFFFF;
+	padding-bottom: 1px;
+	padding-top: 1px;
+}
+table.tabla_indicadores tbody tr.nobanda td {
+	padding-bottom: 1px;
+	padding-top: 1px;
+}
+table.tabla_indicadores tfoot tr td {
+    border-bottom: 2px solid #EDEDED;
+    border-top: 2px solid #EDEDED;
+    color: #000000;
+    font-size: 1em;
+    padding: 0.7em;
+}
+table.tabla_indicadores a:hover {
+    text-decoration: underline;
+}
+table.tabla_indicadores a {
+    color: #003366;
+    text-decoration: none;
+}
+table.tabla_indicadores .alizq {
+    text-align: left;
+}
+table.tabla_indicadores .alder {
+    text-align: right;
+}
+table.tabla_indicadores .alcen {
+    text-align: center;
+}
+
+.gris{
+	color: #AFAFAF;
+}
+
+.gap{
+	padding-bottom: 4px;
+}
+
+.gap a, .gap a:hover, .gap a:link, .gap a:visited{
+	text-decoration: none !important;
+	color: #AFAFAF;
+}
+
+.indicador{
+	margin: 0; 
+	padding: 0; 
+	border-color: #C4D0DC; 
+	border-width: thin; 
+}
+
+.indicador_lateral{
+	font-size: xx-small;
+	border-bottom-style: dotted; 
+}
+
+.indicador_central{
+	border-bottom-style: none; 
+}
+
+.tituloMedioRealizacion {
+    color: #003366;
+    font-weight: bold;
+    float: left;
+    padding-right: 0.5em;
+}
+
+.descrMedioRealizacion p {
+    margin: 0;
+}
+  
+.tweet,
+.query {
+	font-family: Arial,Helvetica,sans-serif;
+
+}
+
+.tweet_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow-y: hidden;
+	float: left;
+}
+	
+#tweets ul.tweet_list {
+    list-style-image: none;
+    margin: 0;
+    
+}
+
+#tweets ul.tweet_list li {
+    margin: 0px;
+    background-image: none;
+}
+
+.tweet_list .awesome,
+.tweet_list .epic {
+	text-transform: uppercase;
+}
+	
+.tweet_list li {
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0.5em;
+	list-style-type: none;
+}
+		
+.tweet_list li a {
+	font-family: Tahoma,geneva,arial,sans-serif;
+	/*color: #003366;*/
+	/*font-weight: bold;*/
+}
+
+.tweet_list li a, .tweet_list li a:link, .tweet_list li a:visited {
+	color: #003366;
+}
+
+.tweet_list .tweet_odd {
+	background-color: white;
+}
+
+.tweet_list .tweet_even {
+	background-color: #F8F9FB;
+}
+		
+.tweet_list .tweet_avatar {
+	padding-right: .5em; float: left;
+}
+		
+.tweet_list .tweet_avatar img {
+	vertical-align: middle;
+}
+
+.tweet ul li {
+    list-style-image: none;
+    background-image: none;
+}
+
+#twitterFollowers li a {
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+#twitterFollowers li {
+    list-style-type: none;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border-width: 0px;
+}
+
+#twitterFollowersTotal {
+    /*padding-left: 5px;*/
+    padding-top: 10px;
+    /*font-weight: bold;*/
+    /*color: rgb(0, 51, 102);*/
+    text-align: center;
+}
+
+#twitterFollowersTotal a, #twitterFollowersTotal a:link, #twitterFollowersTotal a:visited{
+	font-weight: bold;
+	color: #003366;
+	text-decoration: none;
+}
+
+#twitterFollowersTotal a:hover{
+        text-decoration: underline;
+}
+
+#follow-button {
+    background-color: #F8F8F8;
+    background-image: url("../images/twitterFollow.png");
+    background-position: -20px 3px;
+    background-repeat: no-repeat;
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-family: Arial;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 0.3em 0.3em 0.3em 2em;
+    text-decoration: none;
+    display: block;
+    width: 43px;
+    height: 15px;
+    
+}
+#follow-button .label {
+	padding-left: 7px;
+}
+
+#siguenosTwitter {
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-left: 3em;
+}
+
+.subseccion2 .vcard, #faq .vcard, .verMapa  {
+    margin: 0.5em 1em 1em 2em;
+    line-height: 1.6em;
+    width: 90%
+}
+
+.vcard {
+    line-height: 1.6em;
+    float: left;
+    width: 44%;
+    margin: 2px 2px;
+    padding: 0px 2px;  
+}
+
+.vcard .type {
+    float: left;
+}
+.vcard .street-address {
+    clear: both;
+    float: left;
+}
+.vcard .locality {
+    /*display: block;*/
+    float: left;
+    clear: right;
+}
+.vcard dl {
+    margin: 0;
+    display: block;
+    clear: both;
+}
+.vcard .postal-code {
+    float: left;
+    clear: left;
+    padding-right: 0.2em;
+}
+
+.vcard .tel .type {
+    display: none;
+}
+
+.vcard .org .given-name {
+   display: none;
+}
+
+.descargarContacto a, .verMapa a{
+  color: #0058B0;
+  padding: 0 0 0 5px;
+  text-decoration: none;
+}
+
+
+    /************************************************************************/
+	/*				Enlaces con estilo de botton	   (Añadido ISTAC)   */
+	/************************************************************************/
+a.rounded_button:hover,a:link .rounded_button,a:visited .rounded_button,a:
+	.rounded_button {
+	text-decoration: none !important;
+	font-weight: normal;
+}
+
+a.rounded_button,span.rounded_button-dis {
+	line-height: 12px;
+	/* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 24px) */
+	height: 20px; /* Height of button background height */
+	margin-left: 2px;
+	margin-right: 2px;
+	display: block; /*opera*/
+	display: inline-block; /*ie*/
+	display: -moz-inline-box; /*ff*/
+}
+
+a.rounded_button {
+	background: transparent url('../images/botones/boton_accion.gif')
+		no-repeat right top;
+}
+
+A.rounded_button SPAN {
+	text-decoration: none !important;
+}
+
+span.rounded_button-dis {
+	background: transparent url('../images/botones/boton_accion-dis.gif')
+		no-repeat right top !important;
+}
+
+a.rounded_button {
+	cursor: hand;
+}
+
+a.rounded_button span,span.rounded_button-dis span {
+	height: 12px;
+	display: block;
+	display: inline-block;
+	padding: 4px 16px 4px 11px;
+	line-height: 12px;
+	color: black;
+}
+
+a.rounded_button span {
+	background: transparent url('../images/botones/boton_accion_left.gif')
+		no-repeat left top;
+}
+
+span.rounded_button-dis span {
+	background: transparent
+		url('../images/botones/boton_accion_left-dis.gif') no-repeat left top;
+	color: gray !important;
+	cursor: normal !important;
+}
+
+a.rounded_button:hover {
+	background-position: bottom right;
+}
+
+a.rounded_button:hover span {
+	background-position: bottom left;
+	cursor: pointer;
+}
+
+span.rounded_button-dis {
+	cursor: normal !important;
+}
+
+a.rounded_button-dis {
+	cursor: normal;
+}
+
+/* CSS para nueva sección de noticias */
+.contenido div.noticia .tit_noticia span{
+	margin-left: 5px;
+}
+
+
+ul.buscador_noticias .texto_busqueda, ul.buscador_noticias .selec_temas,ul.buscador_noticias li .texto_fecha{
+	border: 1px solid #A9A9A9;
+    color: #535353;
+    font: 0.9em Arial,Helvetica,sans-serif;
+    height: 14px;
+    margin-top: 1px;
+    width: 134px;
+}
+
+ul.buscador_noticias .selec_temas{
+    height: 20px !important;
+}
+
+ul.buscador_noticias .texto_busqueda{
+    margin-bottom: 5px;
+}
+
+.botonera{
+	width: 100%;
+	text-align: center;
+}
+
+ul.buscador_noticias li .texto_fecha{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 90px !important;
+	
+}
+
+ul.buscador_noticias .buscador_titulo{
+	font-weight: bold;	
+	width: 100%;
+	clear: left;
+}
+
+ul.buscador_noticias .campo span{
+	padding: 2px;
+}
+
+ul.buscador_noticias .campo_fecha{
+	width: 100%;
+}
+
+ul.buscador_noticias .campo_fecha label{
+	width: 40px;
+	font-weight: bold;
+	display: inline-block;
+}
+
+ul.historico_noticias li .meses a {
+	background: none !important;
+}
+
+ul.historico_noticias li .anyo a{
+	font-weight: bold;
+}
+
+ul.historico_noticias div.dif{
+	background: none repeat scroll 0 0 transparent;
+    border-bottom: medium none;
+    margin-right: 7px;
+    text-align: right;
+}
+
+ul.historico_noticias div.dif a{
+    background: url("../images/maslight.gif") no-repeat scroll 0 0 transparent !important;
+    color: #0058B0;
+    font-size: 0.8em;
+    font-weight: 400;
+    padding: 0 0 0 14px;
+    text-decoration: none;
+}
+
+ul.historico_noticias div.anyo span{
+	cursor: pointer;
+	background: url("../images/flecha_menulat.gif") no-repeat scroll 0 0 transparent;
+    color: #000000;
+    padding: 0 0 0 8px;
+    text-decoration: none;
+}
+
+.paginador{
+	width: 100%;
+	text-align: center;
+}
+
+.paginador a {
+	font-weight: bold;
+	color: #003366;
+	text-decoration: none;
+}
+
+.paginador .currentpage{
+    color: #000000;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.noticia{
+	width: 100%;
+}
+
+.noticia .subtitulo{
+	color: #AFAFAF;
+    /*font-style: italic;*/
+    line-height: 1;
+    margin: 7px 0 0 10px;
+    text-align: justify;
+	width: 96%;
+	font-size: 1.1em;
+}
+
+.masNoticias{
+	background: url("../images/maslight.gif") no-repeat scroll 0 0 transparent !important;
+    color: #0058B0;
+    font-size: 0.8em;
+    font-weight: 400;
+    padding: 0 0 0 14px;
+    text-decoration: none;
+}
+
+.compartir{
+	text-align: left;
+	background: url("../images/maqueta/borde_bajo_migas.gif") repeat-x scroll left bottom transparent;
+    margin: 0 0 5px;
+    padding: 0 0 1px;
+    width: 100%;
+}
+
+.compartir .titulo{
+	padding-left: 10px;
+	margin-left: 10px;
+}
+
+.compartir .sharelinks{
+	padding-left: 20px;
+	display: inline;
+}
+
+.compartir .sharelinks a{
+	display: inline;
+	text-decoration: none;
+	border: none;
+}
+
+ul.tag_cloud li{
+	background: none !important;
+}
+
+.tituloOp {
+	text-align: left;
+}
+
+/* Estilos twiiter */
+.userAvatar {
+    float: left;
+    margin-right: 0.3em;
+}
+
+.tweetScreenName {
+    margin-right: 0.3em;
+    display: inline;
+}
+
+.tweetScreenName a, .tweetScreenName a:link, .tweetScreenName a:visited{
+    color: #003366 !important;
+    font-weight: bold !important;
+}
+
+
+.tweetUserName {
+    color: grey;
+    display: inline;
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul {
+    margin: 0px;
+    display: none;
+}
+
+.accionesTweet {
+   /*display: block;
+   position: absolute;
+   margin-left: 320px;*/
+   margin-left: -90px;
+   width: 450px;
+}
+
+.accionesTweet a{
+	font-weight: bold !important;
+}
+
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionFav,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionFav,
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionRetweet,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionRetweet,
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionReply,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionReply {
+    background-position: left center;
+    float: right;
+    padding-left: 1.5em;
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionFav,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionFav {
+    background-image: url("../images/favorito.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionFav:hover,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionFav:hover {
+    background-image: url("../images/favoritoOn.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionRetweet,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionRetweet {
+    background-image: url("../images/retweet.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionRetweet:hover,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionRetweet:hover {
+    background-image: url("../images/retweetOn.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionReply,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionReply {
+     background-image: url("../images/tweet.png");
+}
+
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionReply:hover,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionReply:hover {
+     background-image: url("../images/tweetOn.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.tweetWrapper {
+   min-height: 20px; 
+   min-width: 200px;
+}
+
+.timeActionstWrapper {
+  width: 100%;
+  margin-left: 50px;
+}
+
+.tweetTime {
+    /*color: #003366;*/
+    color: grey;
+    font-weight: bold;
+    float: left;
+    /*margin-left: 50px;*/
+    /*position: absolute;*/
+    display: block;
+    height: 20px;
+}
+
+#nuevoTweet a {
+    color: #003366;
+    text-decoration: none;
+}
+
+#nuevoTweet {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    float: right;
+    margin-right: 10px;
+}
+
+#lblCheckRelated {
+	/*color: #003366;*/
+	font-weight: bold;
+	vertical-align: top;
+}
+
+div#tweets form {
+    float: right;
+    margin-right: 10px;
+}
+
+
+.indice_legal_borde {
+	border-color: rgb(196, 208, 220);
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	margin: 2em 0 2em 0;
+}
+
+.indice_legal {
+	border-color: none;
+	border-style: none;
+	border-width: 0 0 0 0;
+}
+
+.indice_legal ol>li {
+	list-style-type: decimal;
+	text-align: justify;
+	margin: 1em 0 0 1.5em;
+	padding: 0 0 0 0;
+}
+
+.indice_legal_tit {
+	color: #003366;
+	background: url("../img/listas/flecha_menulat.gif") no-repeat scroll left top transparent;
+	font-family: Tahoma,geneva,arial,sans-serif;
+	font-size: 1.2em;
+	padding: 0px 0px 3px 10px;
+	width: 96%;
+	margin: 10px 0px 5px;
+}	
+
+.open {
+	padding: 5px;
+	border: 0;
+}
+
+#pie_istac 			{background-color:#ffdf61;font-size:0.8em;float:left;height:26px;margin:10px 0 0;width:100%;vertical-align:middle;display:inline;}
+#pie_istac .izda 		{color:#000;float:left;padding:6px 0 6px 16px;margin:0;width:40%;display:inline;}
+#pie_istac .dcha 		{float:right;padding:6px 16px 6px 0;margin:0;text-align:right; width:50%;display:inline;}
+#pie_istac .dcha a 		{color:#000; text-decoration:none;  margin-right:7px;}
+#pie_istac .dcha a:hover	{text-decoration:underline;}
+#pie_istac .dcha a img 		{text-decoration:none;vertical-align:middle;border:none;}

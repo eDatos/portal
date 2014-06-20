@@ -48,6 +48,25 @@
         <servlet-name>widget</servlet-name>
         <url-pattern>/js/widget.js</url-pattern>
     </servlet-mapping>
+    
+    
+   <servlet>
+        <servlet-name>data</servlet-name>
+        <jsp-file>/jsp/data.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>data</servlet-name>
+        <url-pattern>/visualizer/data.html</url-pattern>
+    </servlet-mapping>
+    
+   	<servlet>
+        <servlet-name>collection</servlet-name>
+        <jsp-file>/jsp/collection.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>collection</servlet-name>
+        <url-pattern>/visualizer/collection.html</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Captcha</servlet-name>

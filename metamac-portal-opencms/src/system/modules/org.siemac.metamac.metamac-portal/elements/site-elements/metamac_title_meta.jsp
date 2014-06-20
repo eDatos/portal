@@ -1,5 +1,5 @@
 <%@ page buffer="none" session="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="org.opencms.jsp.util.CmsJspContentAccessBean" %>
@@ -36,7 +36,7 @@
 	    String resourceName = "";
 	    String resourceDescription = "";
 	    
-	    // Java 1.6 don´t allow switchs on String
+	    // Java 1.6 donï¿½t allow switchs on String
 	    if ("collection".equals(resourceType)) {
             Collection collection = Helpers.getCollection(apiUrlStatisticalResources, internalPortal, agencyId, resourceId);     	  	
     	    if (collection != null) {	        

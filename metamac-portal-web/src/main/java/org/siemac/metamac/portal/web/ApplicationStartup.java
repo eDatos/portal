@@ -22,8 +22,22 @@ public class ApplicationStartup extends ApplicationStartupListener {
 
         // Api
         checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
-        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_PORTAL_EXTERNAL_APIS);
-
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_PORTAL_EXTERNAL_BASE);
+        
+        // Visualizer (also the api ones)        
+        
+        // TODO METAMAC-2285 Por qué no se puede checkear organisation?
+            // checkRequiredProperty(PortalConfigurationConstants.ORGANISATION);
+        
+        // TODO METAMAC-2285 Puede comprobarse sólo la pareja de endpoints necesaria en función de si es portal interno o externo?
+            // String INSTALLATION_TYPE = configurationService.retrieveInstallationType();
+        
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_EXTERNAL_API);
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_INTERNAL_API);
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_INTERNAL_API);
+        
+        
         // Misc
         checkRequiredProperty(PortalConfigurationConstants.METAMAC_EDITION_LANGUAGES);
 
