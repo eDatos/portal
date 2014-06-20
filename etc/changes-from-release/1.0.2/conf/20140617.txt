@@ -4,6 +4,6 @@
 
 En el fichero environment.xml de la aplicación statistical-visualizer se añade la property:
 
-<entry key="environment.metamac.portal.installationType">FILL_ME</entry> <!-- Posibles valores: INTERNAL / EXTERNAL -->
+<entry key="environment.metamac.portal.installation_type">FILL_ME</entry> <!-- Posibles valores: INTERNAL / EXTERNAL -->
 
 Los posibles valores son: INTERNAL / EXTERNAL
