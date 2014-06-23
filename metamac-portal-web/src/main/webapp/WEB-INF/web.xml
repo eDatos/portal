@@ -41,11 +41,11 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>widget</servlet-name>
+        <servlet-name>widget-js</servlet-name>
         <jsp-file>/js/widget.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>widget</servlet-name>
+        <servlet-name>widget-js</servlet-name>
         <url-pattern>/js/widget.js</url-pattern>
     </servlet-mapping>
     
@@ -66,6 +66,15 @@
     <servlet-mapping>
         <servlet-name>collection</servlet-name>
         <url-pattern>/visualizer/collection.html</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>widget</servlet-name>
+        <jsp-file>/jsp/widget.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>widget</servlet-name>
+        <url-pattern>/widget.html</url-pattern>
     </servlet-mapping>
 
     <servlet>

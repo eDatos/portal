@@ -1,4 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ page import="org.siemac.metamac.core.common.exception.MetamacException"%>
+<%@ page import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
+<%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -10,6 +13,25 @@
     <style>
         html, body { margin : 0; height: 99%;}
     </style>
+    <%
+	    String PORTAL_URL_BASE = "";
+		String STATISTICAL_RESOURCES_API_URL_BASE = "";
+		String SRM_API_URL_BASE = "";
+		PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
+		try {
+	   		PORTAL_URL_BASE = configurationService.retrievePortalExternalUrlBase();
+			STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesExternalApiUrlBase();
+		    SRM_API_URL_BASE = configurationService.retrieveSrmExternalApiUrlBase();
+			
+			request.setAttribute("ApiUrlStatisticalVisualizer", PORTAL_URL_BASE);		
+			request.setAttribute("ApiUrlStatisticalResources", STATISTICAL_RESOURCES_API_URL_BASE);	
+			request.setAttribute("ApiUrlStructuralResources", SRM_API_URL_BASE);
+		} catch (MetamacException e) {
+		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
+		 	request.setAttribute("ApiUrlStatisticalResources", "error");
+		 	request.setAttribute("ApiUrlStructuralResources", "error");
+		}
+	%>
 </head>
 <body>
 
@@ -36,17 +58,17 @@ LazyLoad.js('client/metamac.js', function () {
     App.queryParams["agency"] = getQueryParams("agencyId");
     App.queryParams["identifier"] = getQueryParams("resourceId");
     App.queryParams["version"] = getQueryParams("version");
-    App.config["chromeFrameObject"] = getQueryParams["chromeFrameObject"];
+    App.config["chromeFrameObject"] = getQueryParams("chromeFrameObject");
 	App.config["widget"] = true;
 
-	App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/statistical-resources-internal/apis/statistical-resources-internal/v1.0";
-    App.endpoints["structural-resources"] = "http://estadisticas.arte-consultores.com/structural-resources/apis/structural-resources/v1.0";
-    App.endpoints["statistical-visualizer"] = "http://estadisticas.arte-consultores.com/statistical-visualizer";
+	App.endpoints["statistical-resources"] = "${ApiUrlStatisticalResources}/v1.0";
+    App.endpoints["structural-resources"] = "${ApiUrlStructuralResources}/v1.0";
+    App.endpoints["statistical-visualizer"] = "${ApiUrlStatisticalVisualizer}";
 
     App.start();
 
     LazyLoad.js("js/authentication.js", function() {
-    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-501fc6f600bacbe9");
+    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js");
     });
     
 });
