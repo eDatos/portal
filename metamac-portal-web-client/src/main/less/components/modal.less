@@ -1,6 +1,6 @@
 
 @zindex-modal-background : 100;
-@modal-width: 400px;
+@modal-width: 436px;
 
 .modal-backdrop {
     position: fixed;
@@ -16,12 +16,13 @@
     background-color : white;
     overflow: auto;
     position: fixed;
-    top: 100px;
+    top: 50%;
     left: 50%;
     z-index: @zindex-modal-background;
     max-height: 500px;
-    width: 436px;
+    width: @modal-width;
     margin-left: -(@modal-width / 2);
+    margin-top: -190px;
     .border-radius(6px);
     
     .modal-close {
