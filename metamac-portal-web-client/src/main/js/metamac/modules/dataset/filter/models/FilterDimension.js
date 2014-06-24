@@ -48,9 +48,9 @@
         },
 
         _onChangeFilterQuery : function () {
-            this._unbindEvents(); //unbind to not trigger _onChangeFilterQuery
+            this.stopListening(this, 'change:filterLevel', this._onChangeFilterLevel); //unbind to not trigger _onChangeFilterLevel
             this.set('filterLevel', this.defaults.filterLevel);
-            this._bindEvents();
+            this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
 
             var filterQuery = _.string.slugify(this.get('filterQuery'));
             var filterQueryLength = filterQuery.length;
@@ -90,9 +90,9 @@
         },
 
         _onChangeFilterLevel : function () {
-            this._unbindEvents(); //unbind to not trigger _onChangeFilterQuery
+            this.stopListening(this, 'change:filterQuery', this._onChangeFilterQuery); //unbind to not trigger _onChangeFilterQuery
             this.set('filterQuery', this.defaults.filterQuery);
-            this._bindEvents();
+            this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
 
             var filterLevel = this.get('filterLevel');
             var representations = this.get('representations');
