@@ -30,4 +30,27 @@ public enum SvgExportSupportedMimeType {
     public static SvgExportSupportedMimeType get(String type) {
         return lookup.get(type);
     }
+    
+    public static String getFileExtension(String type) {
+        SvgExportSupportedMimeType mime = SvgExportSupportedMimeType.get(type);
+        String fileExtension; 
+        
+        switch (mime) {
+            case SVG:
+                fileExtension = ".svg";
+                break;
+            case JPEG:
+                fileExtension = ".jpeg";
+                break;
+            case PDF:
+                fileExtension = ".pdf";
+                break;
+            case PNG:
+            default:
+                fileExtension = ".png";
+                break;
+        }
+        
+        return fileExtension;    
+    }
 }

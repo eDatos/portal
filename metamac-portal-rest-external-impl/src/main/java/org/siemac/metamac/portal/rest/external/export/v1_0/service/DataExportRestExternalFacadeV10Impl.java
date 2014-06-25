@@ -10,6 +10,7 @@ import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
 import org.siemac.metamac.portal.rest.external.RestExternalConstants;
 import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionType;
@@ -218,10 +219,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = "chart";
             }
+            
+            filename += SvgExportSupportedMimeType.getFileExtension(mimeType);
+            
             return buildResponseOkWithFile(tmpFile, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
+    }
+    
+    @Override
+    public Response exportSvgToImageForm(String svg, String filename, Float width, String mimeType) {
+        return exportSvgToImage(svg, filename, width, mimeType);
     }
 
     private Response buildResponseOkWithFile(File file, String filename) throws FileNotFoundException {

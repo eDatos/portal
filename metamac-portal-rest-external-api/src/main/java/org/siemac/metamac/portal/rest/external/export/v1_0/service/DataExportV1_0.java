@@ -65,5 +65,13 @@ public interface DataExportV1_0 {
     @Path("image")
     @Consumes({MediaType.WILDCARD})
     Response exportSvgToImage(String svg, @QueryParam("filename") String filename, @QueryParam("width") Float width, @QueryParam("type") String mimeType);
+    
+    /**
+     * Exports svg to image
+     */
+    @POST
+    @Path("image")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportSvgToImageForm(@FormParam("svg") String svg, @QueryParam("filename") String filename, @QueryParam("width") Float width, @QueryParam("type") String mimeType);
 
 }
