@@ -3,6 +3,8 @@
 
     App.namespace('App.modules.dataset.DatasetDownloadView');
 
+    var svgExporter = new App.svg.Exporter();
+
     App.modules.dataset.DatasetDownloadView = Backbone.View.extend({
 
         template : App.templateManager.get("dataset/dataset-download"),
@@ -21,6 +23,7 @@
             var identifier  = this.filterDimensions.metadata.identifier();
             var datasetSelection = this.getDatasetSelection();
             var identifierUrlPart = identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
+            
             var context = {
                 selection : JSON.stringify(datasetSelection),
                 emptySelection : JSON.stringify(this.getEmptyDatasetSelection()),
@@ -30,7 +33,38 @@
                     px : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/px/" + identifierUrlPart
                 }
             };
-            this.$el.html(this.template(context));
+
+            if ($('svg').exists()) {
+                var self = this;
+                svgExporter.addStyleAsync(svgExporter.sanitizeSvgElement($('svg'))).done(function (svg) {
+                    var svgContext = {
+                        svg : svg,
+                        url : {                            
+                            png : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/image" + self._getImageExportApiParams('png'),
+                            pdf : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/image" + self._getImageExportApiParams('pdf'),
+                            svg : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/image" + self._getImageExportApiParams('svg')
+                        }
+                    };
+                    _.extend(context, svgContext);
+                    self.$el.html(self.template(context));
+                });
+            } else {
+                this.$el.html(this.template(context));
+            }
+        },
+
+        _getImageExportApiParams : function(type) {
+            var identifier  = this.filterDimensions.metadata.identifier();            
+            var filename = "chart" + "-" + identifier.agency + "-" + identifier.identifier + "-" + identifier.version; // IDEA Add visualization type to the name
+
+            var mime = svgExporter.mimeTypeFromType(type);
+            var params = '?';
+            params += 'filename=' + encodeURIComponent(filename);
+            params += '&type=' + encodeURIComponent(mime);
+            params += '&width=' + $('svg').width();
+            params += '&scale=2';
+
+            return params;
         },
 
         getDatasetSelection : function () {

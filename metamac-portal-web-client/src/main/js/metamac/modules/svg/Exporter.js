@@ -46,7 +46,7 @@
         addStyleAsync : function (svg) {
             var self = this;
             var response = new $.Deferred();
-            var request = $.get(App.resourceContext + "/assets/css/map.css");
+			var request = $.get(App.endpoints["statistical-visualizer"] + "/client/map.css");
             $.when(request).done(function (css) {
                 var stiledSvg = self._insertStyleInSvg(svg, css);
                 response.resolveWith(null, [stiledSvg]);
@@ -66,10 +66,13 @@
             return mime;
         },
 
+        sanitizeSvgElement : function (svgEl) {
+            return this.sanitizeSvg(svgContent);
+        },
+
+		// Deprecated
         processSvgElement : function (svgEl, type) {
-            var $el = $(svgEl).parent();
-            var svgContent = $el.html();
-            var sanitizedSvg = this.sanitizeSvg(svgContent);
+            var sanitizedSvg = this.sanitizeSvgElement(svgEl);
 
             var self = this;
             this.addStyleAsync(sanitizedSvg).done(function (svg) {

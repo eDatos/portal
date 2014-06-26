@@ -58,6 +58,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/libs/Inflector.js"
 
                 paths.js + "/metamac/libs/BrowsersCompatibility.js"
+                paths.js + "/metamac/libs/jQueryUtils.js"
                 
                 paths.js + "/metamac/mixins/ToggleModel.js"
 
@@ -238,6 +239,11 @@ module.exports = (grunt) ->
                 dest: paths.assets + '/metamac.css'
                 options:
                     yuicompress: true
+            map:
+                src : paths.less + "/dataset/maps-export.less"
+                dest: paths.assets + '/map.css'
+                options:
+                    yuicompress: true
 
         handlebars:
             compile:
@@ -326,8 +332,8 @@ module.exports = (grunt) ->
         grunt.task.run('mocha:spec')
 
     grunt.registerTask 'test', ['concat','mocha:all']
-    grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'handlebars', 'concat']
-    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'handlebars', 'uglify', 'mocha:all']
+    grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'less:map', 'handlebars', 'concat']
+    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'less:map', 'handlebars', 'uglify', 'mocha:all']
 
     grunt.registerTask 'bdd', ['connect', 'open:test', 'watch' ]
     grunt.registerTask 'default', 'build'
