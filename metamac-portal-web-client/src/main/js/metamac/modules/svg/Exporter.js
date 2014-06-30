@@ -67,6 +67,7 @@
         },
 
         sanitizeSvgElement : function (svgEl) {
+            var svgContent = svgEl[0].outerHTML;
             return this.sanitizeSvg(svgContent);
         },
 
