@@ -10,10 +10,7 @@
         _defaultSeriesOptions : {
             mapData: null,
             joinBy: ['code', 'code'],
-            data: null,
-            tooltip: {
-                pointFormat: '{point.properties.label}: {point.value}'
-            }
+            data: null
         },
 
         _defaultMapOptions : {
@@ -76,7 +73,9 @@
                 position : {
                     y : -15
                 }
-            }
+            },
+
+            tooltip: {}          
         },
 
 
@@ -96,7 +95,10 @@
 
             this._onResize = _.debounce(_.bind(this._onResize, this), 200);
             this._updateDataClasses = _.debounce(_.bind(this._updateDataClasses, this), 100);
-            // this._zoomToSerie = _.debounce(_.bind(this._zoomToSerie, this), 100);
+
+            this._defaultMapOptions.tooltip.formatter =  _.partial(function(formatter, mapView) {
+                    return  mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
+                }, _, this);
         },
 
         events : {
@@ -151,6 +153,10 @@
             // }
             // console.log(oldScale, currentScale, x, y)
             this.map.mapZoom(oldScale / currentScale);
+        },
+
+        _tooltipFormatter : function() {
+            return point.properties.label + ':::' + point.value;
         },
 
         zoomExit : function () {
@@ -383,8 +389,6 @@
             var self = this;
             var features =  _.map(geoJson.features, function(item) { 
                 item.properties.code = item.id;
-                // IDEA: METAMAC-2032, this is not very eficient, but currently highmaps don´t allow functions on the label formatter
-                item.properties.label = self.tooltipDelegate._getLabelFromNormCode(item.id);
                 return item;
             });
             geoJson.features = features;
