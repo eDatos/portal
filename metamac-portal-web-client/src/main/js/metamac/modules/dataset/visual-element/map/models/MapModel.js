@@ -91,10 +91,11 @@
             var currentScale = this.get("currentScale");
             var maxScale = this.get("maxScale");
             var minScale = this.get("minScale");
-            if (delta > 0)
+            if (delta > 0) {
                 return (currentScale < maxScale);
-            else
+            } else {
                 return (currentScale > minScale);
+            }
         },
 
         isNewScaleFactorTooBig : function (newScaleFactor) {
@@ -116,21 +117,39 @@
             return Math.log(val) / Math.log(2);
         },
 
-        _createQuantizer : function () {
-            var minValue = this.get("minValue");
-            var maxValue = this.get("maxValue");
-            var currentRangesNum = this.get("currentRangesNum");
-            var values = this.get("values");
-            this.quantizer = d3.scale.quantile().domain(values).range(d3.range(currentRangesNum));
-            return this.quantizer;
+        // _createQuantizer : function () {
+        //     var minValue = this.get("minValue");
+        //     var maxValue = this.get("maxValue");
+        //     var currentRangesNum = this.get("currentRangesNum");
+        //     var values = this.get("values");
+        //     this.quantizer = d3.scale.quantile().domain(values).range(d3.range(currentRangesNum));
+        //     return this.quantizer;
+        // },
+
+        // Taken from https://github.com/jfsiii/d3-quantile/blob/master/index.js
+        _quantile : function(values, p) {
+            var H = (values.length - 1) * p + 1, 
+                h = Math.floor(H), 
+                v = +values[h - 1], 
+                e = H - h;
+            return e ? v + e * (values[h] - v) : v;
+        },
+
+        _createQuantiles : function(values, currentRangesNum) {            
+            var self = this;
+            self.values = _.sortBy(values);
+            self.currentRangesNum = currentRangesNum;
+            return _.map(_.range(1, currentRangesNum), function(value, key, list) {
+                if (value != 0) {
+                    return self._quantile(self.values, value / self.currentRangesNum);
+                }
+            }, self);
         },
 
         createRangeLimits : function () {
             var minValue = this.get("minValue");
             var maxValue = this.get("maxValue");
-            var quantizer = this._createQuantizer();
-            var quantiles = quantizer.quantiles();
-
+            var quantiles = this._createQuantiles(this.get("values"), this.get("currentRangesNum"));
 
             var rangeLimits = _.flatten([minValue, quantiles, maxValue], true);
             return rangeLimits;
