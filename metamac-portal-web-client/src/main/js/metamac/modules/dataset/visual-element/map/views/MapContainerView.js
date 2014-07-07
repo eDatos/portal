@@ -16,7 +16,8 @@
             this.geoJson = options.geoJson;
             this.container = options.container;
             this.dataJson = options.dataJson;
-
+            this.mapType = options.mapType;
+            this.title = options.title;
             this.$el.empty();
             this._initInternalViews();
         },
@@ -24,7 +25,9 @@
         render : function () {
             if (this.mapView.canRender()) {
                 this.zoomView.render();
-                this.rangesView.render();
+                if (this.mapType == 'map') {
+                    this.rangesView.render();
+                }
                 this.mapView.render();
             } else {
                 this.$el.html(this._errorTemplate());
@@ -70,7 +73,9 @@
                 container : this.container,
                 dataJson : this.dataJson,
                 width : this._width,
-                height : this._height
+                height : this._height,
+                mapType : this.mapType,
+                title : this.title
             });
         },
 

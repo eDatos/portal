@@ -35,6 +35,7 @@
         _getLabelFromNormCode : function (normCode) {
             var geographicDimension = this._filterDimensions.dimensionsAtZone('left').at(0);
             var category = this._dataset.metadata.getCategoryByNormCode(geographicDimension.id, normCode);
+            if (_.isUndefined(category)) { return normCode; }
             var representation = geographicDimension.get("representations").get(category.id);
             return representation.get("visibleLabel");
         },

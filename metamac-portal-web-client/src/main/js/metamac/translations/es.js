@@ -24,6 +24,7 @@ I18n.translations.es = {
             column : "Gráfico de columnas",
             line : "Gráfico de líneas",
             map : "Mapa",
+            mapbubble : "Mapa de símbolos",
             fullscreen : "Pantalla completa",
             share : "Compartir",
             download : "Descarga",
@@ -56,6 +57,7 @@ I18n.translations.es = {
             lines : "Lineas",
             sectors : "Sectores",
             map : "Territorios",
+            mapbubble : "Territorios",
             "for" : "Para"
         },
         sidebar : {
@@ -78,6 +80,10 @@ I18n.translations.es = {
                 map : {
                     fixed : "Valores fijados",
                     left : "Territorios"
+                },
+                mapbubble : {
+                    fixed : "Valores fijados",
+                    left : "Territorios"
                 }
 
             },
@@ -89,6 +95,9 @@ I18n.translations.es = {
     },
     ve : {
         map : {
+            nomap : "Mapa no disponible"
+        },
+        mapbubble : {
             nomap : "Mapa no disponible"
         }
     },
@@ -123,7 +132,7 @@ I18n.translations.es = {
     
     		language : "Idioma",   
 
-            datasetAttributes : "Atributos a nivel de dataset",
+            datasetAttributes : "Atributos a nivel de dataset"
 
         }
     },

@@ -87,16 +87,20 @@
             return {zones : zones};
         },
 
+        _isMap : function () {
+            return "map" === this._getCurrentChartType() || "mapbubble" === this._getCurrentChartType();
+        },
+
         render : function () {
             this._unbindEvents();
             this._bindEvents();
-            var context = "map" === this._getCurrentChartType() ? this._renderContextForMap() : this._renderContext();
+            var context = this._isMap() ? this._renderContextForMap() : this._renderContext();
             this.$el.html(this.template(context));
         },
 
         _dimensionsForZone : function (zoneId) {
             var dimensionCollection = this.filterDimensions.dimensionsAtZone(zoneId);
-            var isMap = this._getCurrentChartType() === "map";
+            var isMap = this._isMap();
             var dimensionsForZone = dimensionCollection.map(function (dimensionModel) {
                 var dimension = dimensionModel.toJSON();
                 dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;

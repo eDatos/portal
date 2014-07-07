@@ -8,7 +8,7 @@
 
         render : function () {
             this.destroy();
-            var ranges = this._createRanges();
+            var ranges = this.model.createRanges();
 
             var group = new SVGNode('g');
             group.set({"class" : "legend"});
@@ -87,35 +87,6 @@
             if (this.group) {
                 this.group.node.parentNode.removeChild(this.group.node);
             }
-        },
-
-        _createQuantizer : function () {
-            var minValue = this.model.get("minValue");
-            var maxValue = this.model.get("maxValue");
-            var currentRangesNum = this.model.get("currentRangesNum");
-            var values = this.model.get("values");
-            return d3.scale.quantile().domain(values).range(d3.range(currentRangesNum));
-        },
-
-        _createRanges : function () {
-            var minValue = this.model.get("minValue");
-            var maxValue = this.model.get("maxValue");
-            var quantizer = this._createQuantizer();
-            var quantiles = quantizer.quantiles();
-
-            var ranges = [];
-            var rangeLimits = _.flatten([minValue, quantiles, maxValue], true);
-            for (var i = 0; i < rangeLimits.length - 1; i++) {
-                ranges[i] = this._createRange(rangeLimits[i], rangeLimits[i + 1]);
-            }
-
-            return ranges;
-        },
-
-        _createRange : function (from, to) {
-            var localizedFrom = App.dataset.data.NumberFormatter.strNumberToLocalizedString(from.toFixed(2));
-            var localizedTo = App.dataset.data.NumberFormatter.strNumberToLocalizedString(to.toFixed(2));
-            return localizedFrom + " < " + localizedTo;
         }
 
     });

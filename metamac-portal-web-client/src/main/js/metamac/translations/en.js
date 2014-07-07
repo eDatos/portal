@@ -24,6 +24,7 @@ I18n.translations.en = {
             column : "Columns chart",
             line : "Lines chart",
             map : "Map",
+            mapbubble : "Bubble map",
             fullscreen : "Fullscreen",
             share : "Share",
             download : "Download",
@@ -56,6 +57,7 @@ I18n.translations.en = {
             lines : "Lines",
             sectors : "Sectors",
             map : "Territories",
+            mapbubble : "Territories",
             "for" : "For"
         },
         sidebar : {
@@ -78,6 +80,10 @@ I18n.translations.en = {
                 map : {
                     fixed : "Fixed values",
                     left : "Territories"
+                },
+                mapbubble : {
+                    fixed : "Fixed values",
+                    left : "Territories"
                 }
 
             },
@@ -89,6 +95,9 @@ I18n.translations.en = {
     },
     ve : {
         map : {
+            nomap : "No map available"
+        },
+        mapbubble : {
             nomap : "No map available"
         }
     },
@@ -123,7 +132,7 @@ I18n.translations.en = {
     
     		language : "Language",     
 
-            datasetAttributes : "Dataset level attributes",       
+            datasetAttributes : "Dataset level attributes"
 
         }
     },
@@ -131,7 +140,7 @@ I18n.translations.en = {
         formats : {
         	"default" : "%Y-%m-%d",
             "short" : "%b %d",
-            "long" : "%B %d, %Y",
+            "long" : "%B %d, %Y"
         },
         day_names : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         abbr_day_names: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],

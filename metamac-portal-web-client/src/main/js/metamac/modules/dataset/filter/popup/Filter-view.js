@@ -35,6 +35,7 @@ App.widget.filter.FilterView = Backbone.View.extend({
                 this._renderPieDimensions();
                 break;
             case 'map':
+            case 'mapbubble':
                 this._renderMapContainers();
                 this._renderMapDimensions();
                 break;

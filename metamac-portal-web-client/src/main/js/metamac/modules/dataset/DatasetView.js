@@ -27,6 +27,7 @@
             var visualElements = ["canvasTable", "column", "line"];
             if (_.findWhere(this.metadata.getDimensions(), {type : 'GEOGRAPHIC_DIMENSION'})) {
                 visualElements.push("map");
+                visualElements.push("mapbubble");
             }
             this.visualElements = visualElements;
         },

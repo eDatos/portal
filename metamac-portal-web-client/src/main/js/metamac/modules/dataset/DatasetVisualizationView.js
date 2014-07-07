@@ -30,9 +30,11 @@
                 column : new App.VisualElement.ColumnChart(options),
                 line : new App.VisualElement.LineChart(options),
                 canvasTable : new App.VisualElement.CanvasTable(options),
-                map : new App.VisualElement.Map(options)
+                map : new App.VisualElement.Map(_.extend(options, { mapType : 'map'})),
+                mapbubble : new App.VisualElement.Map(_.extend(options, { mapType : 'mapbubble'}))
             };
             this.ve.map.on('didLoadVe', this._hideSpinner, this);
+            this.ve.mapbubble.on('didLoadVe', this._hideSpinner, this);
         },
 
         _initializeFullScreen : function () {

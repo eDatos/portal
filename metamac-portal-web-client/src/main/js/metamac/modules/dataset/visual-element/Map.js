@@ -13,8 +13,8 @@
             this.filterDimensions = options.filterDimensions;
             this.dataset = options.dataset;
             this.shapes = new App.Map.Shapes();
-
-
+            this.mapType = options.mapType;
+            
             this.visible = false; //unnecesary?
         },
 
@@ -159,14 +159,16 @@
                 container : this._container,
                 dataJson : this._dataJson,
                 width : $(this.el).width(),
-                height : $(this.el).height()
+                height : $(this.el).height(),
+                mapType : this.mapType,
+                title : this.getTitle(),
             });
         },
 
         _setUpListeners : function () {
             if (!this._listenersSetted) {
                 this._listenersSetted = true;
-                this._mapModel.on('change', this._handleTransform, this);
+                this._mapModel.on('change:currentScale', this._handleTransform, this);
                 this._mapModel.on('change:currentRangesNum', this._handleRangesNum, this);
                 this._mapModel.on('zoomExit', this._handleZoomExit, this);
             }

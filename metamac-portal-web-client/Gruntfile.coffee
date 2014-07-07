@@ -47,6 +47,8 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/libs/HandlebarsHelpers.js"
                 paths.js + "/metamac/templates/HandlebarsTemplates.js"
                 paths.js + "/metamac/modules/TemplateManager.js"
+                paths.js + "/libs/highmaps.js"
+                paths.js + "/libs/highmaps.no-conflict.js"
                 paths.js + "/libs/highcharts.js"
                 paths.js + "/libs/d3.v2.js"
                 paths.js + "/libs/jquery.mousewheel.js"

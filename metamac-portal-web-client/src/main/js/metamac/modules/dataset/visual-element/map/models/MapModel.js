@@ -3,10 +3,11 @@
 
     App.Map.MapModel = Backbone.Model.extend({
         defaults : {
-            minScale : 1,
-            maxScale : 32,
+            minScale : 0.1,
+            maxScale : 320,
             scaleFactor : 2,
             currentScale : 1,
+            oldScale : null,
             x : 0,
             y : 0,
             animationDelay : 0,
@@ -15,7 +16,8 @@
             values : [1],
             minRangesNum : 1,
             maxRangesNum : 10,
-            currentRangesNum : 5
+            currentRangesNum : 5,
+            mapType : 'map'
         },
 
         zoomExit : function () {
@@ -30,7 +32,7 @@
             var newScale = currentScale * scaleFactor;
 
             if (this.isRequestedZoomAllowed(1)) {
-                this.set({currentScale : newScale, animationDelay : 500});
+                this.set({currentScale : newScale, oldScale : currentScale, animationDelay : 500});
             }
         },
 
@@ -41,7 +43,7 @@
             var newScale = currentScale / scaleFactor;
 
             if (this.isRequestedZoomAllowed(-1)) {
-                this.set({currentScale : newScale, animationDelay : 500});
+                this.set({currentScale : newScale, oldScale : currentScale, animationDelay : 500});
             }
         },
 
@@ -60,7 +62,7 @@
             var x = this.get("x") - this.scaleMovement(options.xOffset, currentScale) + this.scaleMovement(options.xOffset, newScale);
             var y = this.get("y") - this.scaleMovement(options.yOffset, currentScale) + this.scaleMovement(options.yOffset, newScale);
 
-            this.set({currentScale : newScale, x : x, y : y, animationDelay : 0});
+            this.set({currentScale : newScale, oldScale : currentScale, x : x, y : y, animationDelay : 0});
         },
 
         currentZoomLevel : function () {
@@ -112,6 +114,43 @@
 
         _log2 : function (val) {
             return Math.log(val) / Math.log(2);
+        },
+
+        _createQuantizer : function () {
+            var minValue = this.get("minValue");
+            var maxValue = this.get("maxValue");
+            var currentRangesNum = this.get("currentRangesNum");
+            var values = this.get("values");
+            this.quantizer = d3.scale.quantile().domain(values).range(d3.range(currentRangesNum));
+            return this.quantizer;
+        },
+
+        createRangeLimits : function () {
+            var minValue = this.get("minValue");
+            var maxValue = this.get("maxValue");
+            var quantizer = this._createQuantizer();
+            var quantiles = quantizer.quantiles();
+
+
+            var rangeLimits = _.flatten([minValue, quantiles, maxValue], true);
+            return rangeLimits;
+        },
+
+        createRanges : function () {
+            var ranges = [];
+            var rangeLimits = this.createRangeLimits();
+            for (var i = 0; i < rangeLimits.length - 1; i++) {
+                ranges[i] = this._createRange(rangeLimits[i], rangeLimits[i + 1]);
+            }
+
+            return ranges;
+        },
+
+        // Deprecated?
+        _createRange : function (from, to) {
+            var localizedFrom = App.dataset.data.NumberFormatter.strNumberToLocalizedString(from.toFixed(2));
+            var localizedTo = App.dataset.data.NumberFormatter.strNumberToLocalizedString(to.toFixed(2));
+            return localizedFrom + " < " + localizedTo;
         }
 
     });
