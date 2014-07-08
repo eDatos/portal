@@ -316,6 +316,7 @@
                             id : "featuresContainerSerie", 
                             name : "BubbleContainer",
                             mapData : mapData,
+                            nullColor : '#c6c6c6'
                         }, 
                         this._defaultSeriesOptions);   
 
