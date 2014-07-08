@@ -95,7 +95,6 @@ public class Helpers {
         return JAXRSClientFactory.create(statisticalResourcesEndpoint, org.siemac.metamac.statistical_resources.rest.external.v1_0.service.StatisticalResourcesV1_0.class, null, true);
     }
     
-    // TODO Still have some problems with
     public static String html2text(String html) {
         return Jsoup.clean(html, Whitelist.none());
     }

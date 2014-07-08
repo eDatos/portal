@@ -73,7 +73,8 @@
     	    if (collection != null) {	        
     	        request.setAttribute("resourceEmpty", false);
     	        request.setAttribute("resourceName", Helpers.localizeText(collection.getName()));
-    	        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(collection.getDescription())));
+    	        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(collection.getDescription())));
+    	        request.setAttribute("resourceDescription", Helpers.localizeText(collection.getDescription()));
                 
     	        request.setAttribute("collection", collection);
                 request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
@@ -85,7 +86,8 @@
 	        if (dataset != null) {
 		        request.setAttribute("resourceEmpty", false);
 		        request.setAttribute("resourceName", Helpers.localizeText(dataset.getName()));
-		        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(dataset.getDescription())));	  
+		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(dataset.getDescription())));
+    	        request.setAttribute("resourceDescription", Helpers.localizeText(dataset.getDescription()));
 	        }
 	    } else if ("query".equals(resourceType)) {
 	        Query query = Helpers.getQuery(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);
@@ -93,25 +95,26 @@
 	        if (query != null) {
 		        request.setAttribute("resourceEmpty", false);
 		        request.setAttribute("resourceName", Helpers.localizeText(query.getName()));
-		        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(query.getDescription())));	  
+		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(query.getDescription())));
+    	        request.setAttribute("resourceDescription", Helpers.localizeText(query.getDescription()));  
 	        }  
 	    } else {	
-	        // TODO : This, as properties?
-	        request.setAttribute("resourceName", "Visualizer");
-	        request.setAttribute("resourceDescription", "");	        
+	        request.setAttribute("resourceName", "Visualizador estadístico");
+	        request.setAttribute("resourceDescription", "Visualizador estadístico");
+	        request.setAttribute("resourceDescriptionOnlyText", "Visualizador estadístico");
 	    }
 	%>	
    	<title>${titlePrefix}${resourceName}</title>
    	
    	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
    	    
-    <meta name="description" content="${resourceDescription}" />
+    <meta name="description" content="${resourceDescriptionOnlyText}" />
 
     <meta property="og:title" content="ISTAC | ${resourceName}"/>
-    <meta property="og:description" content="${resourceDescription}"/>
+    <meta property="og:description" content="${resourceDescriptionOnlyText}"/>
        
     <meta itemprop="name" content="ISTAC | ${resourceName}" />
-	<meta itemprop="description" content="${resourceDescription}" />
+	<meta itemprop="description" content="${resourceDescriptionOnlyText}" />
 	
   	<meta name="keywords" content="" />
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

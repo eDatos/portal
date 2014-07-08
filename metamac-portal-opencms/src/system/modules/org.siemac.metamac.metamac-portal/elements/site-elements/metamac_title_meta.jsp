@@ -42,7 +42,8 @@
     	    if (collection != null) {	        
     	        request.setAttribute("resourceEmpty", false);
     	        request.setAttribute("resourceName", Helpers.localizeText(collection.getName()));
-    	        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(collection.getDescription())));
+    	        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(collection.getDescription())));
+    	        request.setAttribute("resourceDescription", Helpers.localizeText(collection.getDescription()));
                 
     	        request.setAttribute("collection", collection);
                 request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
@@ -53,8 +54,9 @@
 	        
 	        if (dataset != null) {
 		        request.setAttribute("resourceEmpty", false);
-		        request.setAttribute("resourceName", Helpers.localizeText(dataset.getName()));
-		        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(dataset.getDescription())));	  
+		        request.setAttribute("resourceName", Helpers.localizeText(dataset.getName())); 
+		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(dataset.getDescription())));
+    	        request.setAttribute("resourceDescription", Helpers.localizeText(dataset.getDescription()));
 	        }
 	    } else if ("query".equals(resourceType)) {
 	        Query query = Helpers.getQuery(apiUrlStatisticalResources, internalPortal, agencyId, resourceId);
@@ -62,7 +64,8 @@
 	        if (query != null) {
 		        request.setAttribute("resourceEmpty", false);
 		        request.setAttribute("resourceName", Helpers.localizeText(query.getName()));
-		        request.setAttribute("resourceDescription", Helpers.html2text(Helpers.localizeText(query.getDescription())));	  
+		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(query.getDescription())));
+    	        request.setAttribute("resourceDescription", Helpers.localizeText(query.getDescription()));
 	        }  
 	    } else {	
 	        CmsJspStandardContextBean contextBean = CmsJspStandardContextBean.getInstance(request);
@@ -73,7 +76,11 @@
 	        request.setAttribute("resourceDescription", cmso.readPropertyObject(
 		            cmso.getRequestContext().getUri(),
 	                CmsPropertyDefinition.PROPERTY_DESCRIPTION,
-	                true).getValue());	        
+	                true).getValue());
+	        request.setAttribute("resourceDescriptionOnlyText", cmso.readPropertyObject(
+		            cmso.getRequestContext().getUri(),
+	                CmsPropertyDefinition.PROPERTY_DESCRIPTION,
+	                true).getValue());
 	    }
 	%>
 
@@ -81,13 +88,13 @@
    	
    	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
    	    
-    <meta name="description" content="${resourceDescription}" />
+    <meta name="description" content="${resourceDescriptionOnlyText}" />
 
     <meta property="og:title" content="ISTAC | ${resourceName}"/>
-    <meta property="og:description" content="${resourceDescription}"/>
+    <meta property="og:description" content="${resourceDescriptionOnlyText}"/>
        
     <meta itemprop="name" content="ISTAC | ${resourceName}">
-	<meta itemprop="description" content="${resourceDescription}">
+	<meta itemprop="description" content="${resourceDescriptionOnlyText}">
 	
   	<meta name="keywords" content="<cms:property name="Keywords" file="search" default="" />">
   	<meta http-equiv="Content-Type" content="text/html; charset=${cms:vfs(pageContext).requestContext.encoding}">
