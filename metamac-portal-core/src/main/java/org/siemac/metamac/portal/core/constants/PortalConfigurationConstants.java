@@ -11,6 +11,8 @@ public class PortalConfigurationConstants extends ConfigurationConstants {
     public static final String DB_DIALECT                 = "metamac.portal.db.dialect";
     public static final String DB_DRIVER_NAME             = "metamac.portal.db.driver_name";
 
+    public static final String INSTALLATION_TYPE          = "environment.metamac.portal.installation_type";
+
     public static final String CAPTCHA_PROVIDER           = "metamac.portal.rest.external.authentication.captcha.provider";
     public static final String CAPTCHA_ENABLE             = "metamac.portal.rest.external.authentication.captcha.enable";
     public static final String CAPTCHA_PUBLIC_KEY         = "metamac.portal.rest.external.authentication.captcha.public_key";
