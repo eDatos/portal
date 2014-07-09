@@ -27,7 +27,7 @@ module.exports = (grunt) ->
         metamac:
             src: [
                 # Polyfills
-                paths.lib + "/polyfills/es5-shim.js"
+                # paths.lib + "/polyfills/es5-shim.js"
                 paths.lib + "/polyfills/addEventListener-polyfill.js"
                 paths.lib + "/polyfills/console-shim.js"
                 paths.lib + "/CFInstall.min.js"
