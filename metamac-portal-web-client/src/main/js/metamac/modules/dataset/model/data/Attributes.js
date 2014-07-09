@@ -155,7 +155,6 @@
             return attributeValues;
         },
 
-        // TODO BEWARE DOUBLE SPACES! - METAMAC-1870
         _splitList : function (list) {
             if (list) {
                 var splittedList = list.replace("\\ | \\"," \\| ");
