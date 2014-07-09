@@ -3,4 +3,7 @@
 <properties>
   <comment>Metamac environment definition</comment>
   <entry key="environment.metamac.data">./data/</entry>
+  
+  <!-- Additional configuration -->
+  <entry key="environment.metamac.portal.installation_type">TEST</entry> <!-- Posibles valores: INTERNAL / EXTERNAL -->
 </properties>

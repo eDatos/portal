@@ -1,7 +1,11 @@
 package org.siemac.metamac.portal.web;
 
+import javax.servlet.ServletContextEvent;
+
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.listener.ApplicationStartupListener;
+import org.siemac.metamac.core.common.util.ApplicationContextProvider;
+import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.constants.PortalConfigurationConstants;
 
 public class ApplicationStartup extends ApplicationStartupListener {
@@ -9,6 +13,20 @@ public class ApplicationStartup extends ApplicationStartupListener {
     @Override
     public String projectName() {
         return "statistical-visualizer";
+    }
+
+    private PortalConfiguration portalConfigurationService;
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+
+        try {
+            portalConfigurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
+        } catch (Exception e) {
+            // Abort startup application
+            throw new RuntimeException(e);
+        }
+        super.contextInitialized(sce);
     }
 
     @Override
@@ -23,28 +41,28 @@ public class ApplicationStartup extends ApplicationStartupListener {
         // Api
         checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
         checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_PORTAL_EXTERNAL_BASE);
-        
-        // Visualizer (also the api ones)               
+
+        // Visualizer (also the api ones)
         checkRequiredProperty(PortalConfigurationConstants.METAMAC_ORGANISATION);
-        
-        // TODO METAMAC-2285 Puede comprobarse sólo la pareja de endpoints necesaria en función de si es portal interno o externo?
-            // String INSTALLATION_TYPE = configurationService.retrieveInstallationType();
-        
-        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_EXTERNAL_API);
-        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_INTERNAL_API);
-        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
-        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_INTERNAL_API);
-        
-        
+        String INSTALLATION_TYPE = portalConfigurationService.retrieveInstallationType();
+
+        if (INSTALLATION_TYPE.equals("EXTERNAL")) {
+            // checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_EXTERNAL_API); // Already checked for metamac-portal-rest-external
+            checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
+        } else if (INSTALLATION_TYPE.equals("INTERNAL")) {
+            checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_INTERNAL_API);
+            checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_INTERNAL_API);
+        }
+
         // Misc
         checkRequiredProperty(PortalConfigurationConstants.METAMAC_EDITION_LANGUAGES);
 
         // Captcha
         checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_ENABLE);
-        if (configurationService.retrievePropertyBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE)) {
+        if (portalConfigurationService.retrieveCaptchaEnable()) {
             checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
 
-            String provider = configurationService.retrieveProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
+            String provider = portalConfigurationService.retrieveCaptchaProvider();
             if (PortalConfigurationConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(provider)) {
                 checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
                 checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);

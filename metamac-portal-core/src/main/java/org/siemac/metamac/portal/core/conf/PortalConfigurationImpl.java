@@ -33,12 +33,12 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
         return (String) environmentConfigurationProperties.getProperty(ENVIROMENT_CONF_INSTALLATION_TYPE);
     }
 
-//    @Override
-//    public void afterPropertiesSet() throws Exception {
-//        super.afterPropertiesSet();
-//
-//        if (environmentConfigurationProperties.getProperty(ENVIROMENT_CONF_INSTALLATION_TYPE) == null) {
-//            throw new IllegalArgumentException("ERROR One of configuration source is required: \"systemConfigurationFile\" or \"configurationDatasource\", has not been properly initialized");
-//        }
-//    }
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        super.afterPropertiesSet();
+
+        if (environmentConfigurationProperties.getProperty(ENVIROMENT_CONF_INSTALLATION_TYPE) == null) {
+            throw new IllegalArgumentException("ERROR One of configuration source is required: \"systemConfigurationFile\" or \"configurationDatasource\", has not been properly initialized");
+        }
+    }
 }
