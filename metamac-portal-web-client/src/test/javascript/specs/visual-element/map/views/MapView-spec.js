@@ -1,5 +1,6 @@
 describe("MapView", function () {
 
+	// TODO: This test is not being currently called anywhere, and with the change to Highmaps, probably it won´t be necessary either
     var model = new App.Map.MapModel();
     model.attributes = {
         minScale : 1,

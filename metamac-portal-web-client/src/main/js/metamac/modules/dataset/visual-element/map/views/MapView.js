@@ -215,24 +215,24 @@
             return [originX, originY];
         },
 
-        _calculateNewScale : function (coordinates, pixels, origin) {
-            var tempProjection = d3.geo.albers()
-                .origin(origin)
-                .translate([0, 0]);
+        //_calculateNewScale : function (coordinates, pixels, origin) {
+            // var tempProjection = d3.geo.albers()
+            //     .origin(origin)
+            //     .translate([0, 0]);
 
-            var currentScale = tempProjection.scale();
-            var currentValX = tempProjection([coordinates.x, coordinates.y])[0];
-            var newScaleX = ((-this._width / 2) * currentScale) / currentValX;
+            // var currentScale = tempProjection.scale();
+            // var currentValX = tempProjection([coordinates.x, coordinates.y])[0];
+            // var newScaleX = ((-this._width / 2) * currentScale) / currentValX;
 
-            var currentValY = tempProjection([coordinates.x, coordinates.y])[1];
-            var newScaleY = ((-this._height / 2) * currentScale) / currentValY;
+            // var currentValY = tempProjection([coordinates.x, coordinates.y])[1];
+            // var newScaleY = ((-this._height / 2) * currentScale) / currentValY;
 
-            if (Math.abs(newScaleX) < Math.abs(newScaleY)) {
-                return Math.abs(newScaleX) / 2.3;
-            } else {
-                return Math.abs(newScaleY) / 2.3;
-            }
-        },
+            // if (Math.abs(newScaleX) < Math.abs(newScaleY)) {
+            //     return Math.abs(newScaleX) / 2.3;
+            // } else {
+            //     return Math.abs(newScaleY) / 2.3;
+            // }
+        //},
 
         // _createProjection : function () {
         //     this._projection = d3.geo.albers()
