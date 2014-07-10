@@ -59,7 +59,7 @@
             return columnValue.length;
         });
 
-        //TODO esto puede que no sea necesario hacerlo cada vez?
+        // IDEA: Maybe this could be call only once
         var columnsValuesLengthAc = Utils.rightProductAcumulate(columnsValuesLength);
 
         var result = [];
@@ -107,7 +107,7 @@
     };
 
     App.Table.LeftHeaderZone.prototype.cellAtPoint = function (absolutePoint) {
-        // TODO Optimizable no buscando por todas las celdas, sino buscar por columnas
+    	// IDEA: For optimizing this we can search for columns instead of all cells 
         return _.find(_.flatten(this.lastPaintInfo, true), function (headerCell) {
             var rect = new Rectangle(headerCell.x, headerCell.y, headerCell.width, headerCell.height);
             return rect.containsPoint(absolutePoint);

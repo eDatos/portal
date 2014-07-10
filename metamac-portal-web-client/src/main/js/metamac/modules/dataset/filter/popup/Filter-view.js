@@ -224,7 +224,7 @@ App.widget.filter.FilterView = Backbone.View.extend({
     },
 
     _handleDragend : function (e) {
-        //TODO: We shouldn't use jQuery selector for this. There are dimension objects.
+        // IDEA: We shouldn't use jQuery selector for this. There are dimension objects.
         var filterView = this;
         var dimensions = $('.div-dimension-short').get();
         $.each(dimensions, function (idx, elem) {
@@ -314,12 +314,13 @@ App.widget.filter.FilterView = Backbone.View.extend({
     },
 
     _createDimension : function (dim, zoneId) {
-        //TODO: Test
+        // TODO: Implement Test
         var $zone = $(zoneId);
         var tempEl = $("<div id='div-dimension-short" + dim.number + "' class='div-dimension-short' draggable='true'  data-number='" + dim.number + "'/>").appendTo($zone);
         var tempDimensionView = new App.widget.filter.FilterDimensionView({model : this.model, el : tempEl, zone : $zone.data("zone") });
         tempDimensionView.render(dim);
-        //TODO: Is an array the best datastructure?
+        
+        // IDEA: Is an array the best datastructure?
         this._dimensionViews.push(tempDimensionView);
     },
 
@@ -328,7 +329,8 @@ App.widget.filter.FilterView = Backbone.View.extend({
         var tempEl = $("<div id='div-dimension-short" + dim.number + "' class='div-dimension-short-static' draggable='false'  data-number='" + dim.number + "'/>").appendTo($zone);
         var tempDimensionView = new App.widget.filter.FilterDimensionView({model : this.model, el : tempEl, zone : $zone.data("zone") });
         tempDimensionView.render(dim);
-        //TODO: Is an array the best datastructure?
+        
+        // IDEA: Is an array the best datastructure?
         this._dimensionViews.push(tempDimensionView);
     },
 

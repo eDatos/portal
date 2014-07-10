@@ -37,9 +37,7 @@
         },
 
         _bindEvents : function () {
-            // TODO
             this.listenTo(this.filterDimensions, "change:zone", _.throttle(this.render, 15));
-            // this.listenTo(this.filterOptions, "reset", this.render);
         },
 
         _unbindEvents : function () {

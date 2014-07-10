@@ -66,7 +66,7 @@
             return new Point(x, y);
         },
 
-        // TODO check this offset
+        // IDEA: Improve implementation. It is not so transparent
         relativePoint2Cell : function (point) {
             var absolutePoint = this.relativePoint2AbsolutePoint(point);
             var x = Utils.floorIndex(this.incrementalCellSize.columns, absolutePoint.x),
@@ -75,7 +75,7 @@
             return new Cell(x, y);
         },
 
-        // TODO check this offset        
+        // IDEA: Improve implementation. It is not so transparent 
         absolutePoint2Cell : function (absolutePoint) { 
         	var point = this.relativePoint2AbsolutePoint(new Point(absolutePoint.x, absolutePoint.y))
         	var x = Utils.floorIndex(this.incrementalCellSize.columns, point.x),
@@ -310,13 +310,6 @@
             }
         },
         
-//	    cellAtPoint : function (absolutePoint) {
-//	        // TODO Optimizable no buscando por todas las celdas, sino buscar por columnas
-//	        return _.find(_.flatten(this.lastPaintInfo, true), function (headerCell) {
-//	            var rect = new Rectangle(headerCell.x, headerCell.y, headerCell.width, headerCell.height);
-//	            return rect.containsPoint(absolutePoint);
-//	        });
-//	    },
         attributesAtPoint : function (absolutePoint) {
             var bodyCellAtPoint = this.absolutePoint2Cell(absolutePoint);
             if (bodyCellAtPoint) {

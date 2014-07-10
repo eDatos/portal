@@ -159,7 +159,7 @@
 
 
             // recursive depth tree traversal
-            var rootRepresentations = representationsByParent["undefined"]; //TODO this is risky
+            var rootRepresentations = representationsByParent["undefined"]; 
             var sortedRepresentations = [];
             var depthTreeTraversal = function (node) {
                 sortedRepresentations.push(node);

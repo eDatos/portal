@@ -30,7 +30,7 @@
             return deferred.promise();
         },
 
-        //TODO deprecate method, will be removed soon
+        // TODO deprecate method, will be removed soon
         isAllSelectedDataLoaded : function () {
             return !_.isUndefined(this.apiResponse);
         },

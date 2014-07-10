@@ -6,8 +6,6 @@
     App.VisualElement.CanvasTable = function (options) {
         this.dataset = options.dataset;
 
-        //this.filterOptions = options.filterOptions; //deprecated
-
         this.filterDimensions = options.filterDimensions;
 
         this._chartOptions = {
@@ -70,11 +68,6 @@
         updatingDimensionPositions : function () {
             this.filterDimensions.zones.get('left').unset('fixedSize');
             this.filterDimensions.zones.get('top').unset('fixedSize');
-
-
-            // TODO
-            //this.filterOptions.setZoneLengthRestriction({left : -1, top : -1});
-            //this.filterOptions.setSelectedCategoriesRestriction({left : -1, top : -1});
         },
 
         updateTitle : function () {

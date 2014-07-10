@@ -6,7 +6,7 @@
     App.Table.DataSource = function (data) {
         this.data = data;
 
-        //TODO pass as parameter
+        // IDEA: This could be pass as parameter
         this._leftHeaderValues = [
             ['a', 'b', 'c', 'd', 'e'],
             ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],

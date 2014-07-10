@@ -98,7 +98,7 @@
             }
 
             // recursive depth tree traversal for hierarchy order
-            var rootRepresentations = representationsByParent["undefined"]; //TODO this is risky
+            var rootRepresentations = representationsByParent["undefined"]; 
             var sortedRepresentations = [];
             var depthTreeTraversal = function (level, node) {
                 node.level = level;

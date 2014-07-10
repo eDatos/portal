@@ -62,7 +62,6 @@
         },
 
         _initMapView : function () {
-            //TODO: Need to create a container DIV and set the width and height of the elements
             var $mapContainer = $('<div class="svgContainer"></div>').appendTo(this.$el);
             this.mapView = new App.Map.MapView({
                 el : $mapContainer,
@@ -90,10 +89,6 @@
         },
 
         _initLeyendView : function () {
-/*            var legendView = App.Map.LegendView({
-                el : this._svg,
-                model : this._mapModel
-            });*/
         },
 
         _initRangesView : function () {

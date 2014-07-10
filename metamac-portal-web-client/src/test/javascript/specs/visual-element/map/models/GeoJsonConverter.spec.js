@@ -89,7 +89,7 @@ describe("GeoJsonConverter", function () {
             ]
         };
 
-        //TODO hierarchy!
+        // TODO: Take in account hierarchy
         shapeList = [
             {
                 normCode : "CODE3_ADM-LEVEL-3",

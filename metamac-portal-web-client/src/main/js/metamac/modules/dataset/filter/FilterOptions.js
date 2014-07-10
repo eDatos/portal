@@ -152,7 +152,6 @@
 
         _simplifyDimensions : function (dimensions) {
             var self = this;
-            //TODO Extend
             return _.map(dimensions, function (dimension) {
                 return self._simplifyDimension(dimension);
             });
@@ -345,7 +344,6 @@
         },
 
         getZoneFromDimension : function (dimension) {
-            // TODO it should return all zones (column, lines, ...)
             var _dimension = this._getDimension(dimension);
             return this._getZoneFromPosition(_dimension.position);
         },

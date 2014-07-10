@@ -92,7 +92,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
      * This method removes the highlighting classes that the dom objects may have during the drop
      */
     _removeHighlights : function (elem) {
-        //TODO: Test
+        // TODO: Implement Test
         $(elem).removeClass("highlight-long");
         $(elem).removeClass("highlight-short");
     },
@@ -116,7 +116,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
     },
 
     _setExpandedCategoriesStylesGeneral : function () {
-        //TODO: Test
+        // TODO: Implement Test
         var $categoriesDivAdvContainer = $('.div-categories-advanced-container', this.$el);
         var $categoriesDiv = $('.div-categories', this.$el);
         var $categoriesOptions = $('.categories-options', this.$el);
@@ -140,7 +140,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
     },
 
     _setExpandedCategoriesStylesLeft : function () {
-        //TODO: Test
+        // TODO: Implement Test
         var $categoriesDivAdvContainer = $('.div-categories-advanced-container-big', this.$el);
         var $categoriesDiv = $('.div-categories-big', this.$el);
         var $categoriesOptions = $('.categories-options', this.$el);
@@ -156,7 +156,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
     },
 
     _expandCategories : function () {
-        //TODO: Test
+        // TODO: Implement Test
         this.trigger('willExpandCategories', this);
         this._setExpandedCategoriesStylesGeneral();
         this.trigger('didExpandCategories', this);
@@ -187,7 +187,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
 
 
     collapseCategories : function () {
-        //TODO: Test
+        // TODO: Implement Test
         if (this._isExpanded) {
             this._isExpanded = false;
             // Deleting scrollbar

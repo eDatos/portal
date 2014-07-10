@@ -54,7 +54,6 @@
         return result;
     };
 
-    //TODO change name
     App.Table.Utils.rightProductAcumulate = function (array) {
         var result = array.slice(1);
         result.push(1);

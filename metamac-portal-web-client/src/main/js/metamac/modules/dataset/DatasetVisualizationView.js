@@ -26,7 +26,6 @@
                 animation : this.options.animation
             };
             this.ve = {
-                //table : new App.VisualElement.Table(options),
                 column : new App.VisualElement.ColumnChart(options),
                 line : new App.VisualElement.LineChart(options),
                 canvasTable : new App.VisualElement.CanvasTable(options),
@@ -38,11 +37,6 @@
         },
 
         _initializeFullScreen : function () {
-//            this.fullScreen = new App.FullScreen({container : this.$el});
-//            this.fullScreen.on('willEnterFullScreen', this._willEnterFullScreen, this);
-//            this.fullScreen.on('didEnterFullScreen', this._didEnterFullScreen, this);
-//            this.fullScreen.on('willExitFullScreen', this._willExitFullScreen, this);
-//            this.fullScreen.on('didExitFullScreen', this._didExitFullScreen, this);
         },
 
         _showSpinner : function () {

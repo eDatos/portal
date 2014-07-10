@@ -152,10 +152,6 @@ App.namespace("App.VisualElement.LineChart");
         updatingDimensionPositions : function () {
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 1);
-
-            //TODO
-            //this.filterOptions.setZoneLengthRestriction({left : 1, top : 1});
-            //this.filterOptions.setSelectedCategoriesRestriction({horizontal : -1, columns : -1});
         },
 
         tooltipFormatter : function () {
