@@ -38,7 +38,7 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
         super.afterPropertiesSet();
 
         if (environmentConfigurationProperties.getProperty(ENVIROMENT_CONF_INSTALLATION_TYPE) == null) {
-            throw new IllegalArgumentException("ERROR One of configuration source is required: \"systemConfigurationFile\" or \"configurationDatasource\", has not been properly initialized");
+            throw new IllegalArgumentException("ERROR: Portal installation type must be specified. Possible values are : \"INTERNAL\" or \"EXTERNAL\" ");
         }
     }
 }
