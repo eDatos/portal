@@ -66,7 +66,7 @@
             return new Point(x, y);
         },
 
-        // IDEA: Improve implementation. It is not so transparent
+        // IDEA: Improve implementation. It is not so transparent METAMAC-2282
         relativePoint2Cell : function (point) {
             var absolutePoint = this.relativePoint2AbsolutePoint(point);
             var x = Utils.floorIndex(this.incrementalCellSize.columns, absolutePoint.x),
@@ -75,7 +75,7 @@
             return new Cell(x, y);
         },
 
-        // IDEA: Improve implementation. It is not so transparent 
+        // IDEA: Improve implementation. It is not so transparent METAMAC-2282
         absolutePoint2Cell : function (absolutePoint) { 
         	var point = this.relativePoint2AbsolutePoint(new Point(absolutePoint.x, absolutePoint.y))
         	var x = Utils.floorIndex(this.incrementalCellSize.columns, point.x),
