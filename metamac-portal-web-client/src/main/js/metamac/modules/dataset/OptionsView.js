@@ -135,7 +135,7 @@
             e.preventDefault();
 
             var title = I18n.t("filter.button.download");
-            var modalContentView = new App.modules.dataset.DatasetDownloadView({filterDimensions : this.filterDimensions});
+            var modalContentView = new App.modules.dataset.DatasetDownloadView({filterDimensions : this.filterDimensions, visualizationType :  this.optionsModel.get('type') });
             var modal = new App.components.modal.ModalView({title : title, contentView : modalContentView});
             modal.show();
         }

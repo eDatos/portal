@@ -17,6 +17,7 @@
 
         initialize : function () {
             this.filterDimensions = this.options.filterDimensions;
+            this.visualizationType = this.options.visualizationType;
         },
 
         render : function () {
@@ -31,10 +32,11 @@
                     csv : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/tsv/" + identifierUrlPart,
                     excel : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/excel/" + identifierUrlPart,
                     px : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/px/" + identifierUrlPart
-                }
+                },
+                buttonConfig : this._getButtonConfiguration()
             };
 
-            if ($('svg').exists()) {
+            if (this._exportableImage()) {
                 var self = this;
                 svgExporter.addStyleAsync(svgExporter.sanitizeSvgElement($('svg'))).done(function (svg) {
                     var svgContext = {
@@ -53,6 +55,22 @@
             }
         },
 
+        _exportableImage : function() {
+            return $('svg').exists();
+        },
+
+        _getButtonConfiguration : function() {
+            var haveDataFormats = _.contains(['canvasTable'], this.visualizationType);
+            var haveMapFormats = false; // TODO: METAMAC-2033
+            var haveImageFormats = this._exportableImage();
+
+            return {
+                dataFormats : haveDataFormats,
+                mapFormats: haveMapFormats,
+                imageFormats: haveImageFormats
+            };
+        },
+ 
         _getImageExportApiParams : function(type) {
             var identifier  = this.filterDimensions.metadata.identifier();            
             var filename = "chart" + "-" + identifier.agency + "-" + identifier.identifier + "-" + identifier.version; // IDEA Add visualization type to the name

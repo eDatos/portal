@@ -1,5 +1,7 @@
 <div class="dataset-download-group">
 	<h3>{{ message "filter.download.selection" }}</h3>
+
+{{#if buttonConfig.dataFormats}}	
 	<form method="POST" action="{{url.excel}}" target="_parent">
 		<input type="hidden" name="jsonBody" value="{{selection}}">
 		<a href="#" class="download-xlsx"><i class="icon-xlsx"></i></a>
@@ -14,28 +16,28 @@
 		<input type="hidden" name="jsonBody" value="{{selection}}">
 	<a href="#" class="download-csv"><i class="icon-px"></i></a>
 	</form>
-	
-	{{#if url.png }} 
+{{/if}}	
+
+{{#if buttonConfig.imageFormats}}
 	<form method="POST" action="{{url.png}}" target="_parent">
 		<input type="hidden" name="svg" value="{{svg}}">
 		<a href="#" class="download-png"><i class="icon-png"></i></a>
 	</form>
-	{{/if}}
 
-	{{#if url.pdf }}
 	<form method="POST" action="{{url.pdf}}" target="_parent">
 		<input type="hidden" name="svg" value="{{svg}}">
 		<a href="#" class="download-pdf"><i class="icon-pdf"></i></a>
 	</form>
-	{{/if}}
 	
-	{{#if url.svg }} 
 	<form method="POST" action="{{url.svg}}" target="_parent">
 		<input type="hidden" name="svg" value="{{svg}}">
 		<a href="#" class="download-svg"><i class="icon-svg"></i></a>
 	</form>
-	{{/if}}
+{{/if}}
+
 </div>
+
+{{#if buttonConfig.dataFormats}}
 <div class="dataset-download-group">
 	<h3>{{ message "filter.download.all" }}</h3>
 	<form method="POST" action="{{url.excel}}" target="_parent">
@@ -53,3 +55,4 @@
 	     <a href="#" class="download-csv"><i class="icon-px"></i></a>
 	</form>
 </div>
+{{/if}}
