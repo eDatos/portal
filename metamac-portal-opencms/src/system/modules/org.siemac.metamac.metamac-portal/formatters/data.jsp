@@ -2,6 +2,8 @@
 <%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %>
 
 <fmt:setLocale value="<%= request.getLocale() %>" />
+<% /* IDEA: Make this automatic */ %>
+<c:set var="packageVersion">2.0.0</c:set>
 <cms:formatter var="content" val="value">
     <div>
 	    <c:choose>
@@ -38,8 +40,8 @@
 		        </script>
 
 		        <script>
-		            LazyLoad.css('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.css</cms:link>', function () {
-		                LazyLoad.js('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.js</cms:link>', function () {
+		            LazyLoad.css('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.css?v=${packageVersion}</cms:link>', function () {
+		                LazyLoad.js('<cms:link>/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.js?v=${packageVersion}</cms:link>', function () {
 
 						    if (lowerThanIE9()) {
 						        
@@ -72,7 +74,7 @@
 			
 			                    App.start();
 			                    
-			                    LazyLoad.js("${content.value.ApiUrlStatisticalVisualizer}/js/authentication.js", function() {
+			                    LazyLoad.js("${content.value.ApiUrlStatisticalVisualizer}/js/authentication.js?v=${packageVersion}", function() {
 			                    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-501fc6f600bacbe9");
 			                    });
 			                }		                    

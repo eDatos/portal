@@ -8,6 +8,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="requestURL">${pageContext.request.requestURL}</c:set>
 <c:set var="baseURL">${fn:replace(requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}</c:set>
+<% /* IDEA: Make this automatic */ %>
+<c:set var="packageVersion">2.0.0</c:set>
 
 <t:metamac_plantilla_1col baseURL="${baseURL}">
 <fmt:setLocale value="${pageContext.request.locale.language}" />
@@ -45,8 +47,8 @@
 					    }
 		        </script>
 		        <script>
-		            LazyLoad.css('${baseURL}/client/metamac.css', function () {
-		                LazyLoad.js('${baseURL}/client/metamac.js', function () {
+		            LazyLoad.css('${baseURL}/client/metamac.css?v=${packageVersion}', function () {
+		                LazyLoad.js('${baseURL}/client/metamac.js?v=${packageVersion}', function () {
 
 						    if (lowerThanIE9()) {
 						        
@@ -79,7 +81,7 @@
 			
 			                    App.start();
 			                    
-			                    LazyLoad.js("${ApiUrlStatisticalVisualizer}/js/authentication.js", function() {
+			                    LazyLoad.js("${ApiUrlStatisticalVisualizer}/js/authentication.js?v=${packageVersion}", function() {
 			                    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js${AddthisCode}");
 			                    });
 			                }		                    
