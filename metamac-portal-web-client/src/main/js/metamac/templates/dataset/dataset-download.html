@@ -4,12 +4,12 @@
 {{#if buttonConfig.dataFormats}}	
 	<form method="POST" action="{{url.excel}}" target="_parent">
 		<input type="hidden" name="jsonBody" value="{{selection}}">
-		<a href="#" class="download-xlsx"><i class="icon-xlsx"></i></a>
+		<a href="#" class="download-xls"><i class="icon-data-xls"></i></a>
 	</form>
 
-	<form method="POST" action="{{url.csv}}" target="_parent">		
+	<form method="POST" action="{{url.tsv}}" target="_parent">		
 		<input type="hidden" name="jsonBody" value="{{selection}}">
-		<a href="#" class="download-csv"><i class="icon-csv"></i></a>
+		<a href="#" class="download-tsv"><i class="icon-data-tsv"></i></a>
 	</form>
 
 	<form method="POST" action="{{url.px}}" target="_parent">
@@ -21,17 +21,17 @@
 {{#if buttonConfig.imageFormats}}
 	<form method="POST" action="{{url.png}}" target="_parent">
 		<input type="hidden" name="svg" value="{{svg}}">
-		<a href="#" class="download-png"><i class="icon-png"></i></a>
+		<a href="#" class="download-png"><i class="icon-{{buttonConfig.iconPreffix}}-png"></i></a>
 	</form>
 
 	<form method="POST" action="{{url.pdf}}" target="_parent">
 		<input type="hidden" name="svg" value="{{svg}}">
-		<a href="#" class="download-pdf"><i class="icon-pdf"></i></a>
+		<a href="#" class="download-pdf"><i class="icon-{{buttonConfig.iconPreffix}}-pdf"></i></a>
 	</form>
 	
 	<form method="POST" action="{{url.svg}}" target="_parent">
 		<input type="hidden" name="svg" value="{{svg}}">
-		<a href="#" class="download-svg"><i class="icon-svg"></i></a>
+		<a href="#" class="download-svg"><i class="icon-{{buttonConfig.iconPreffix}}-svg"></i></a>
 	</form>
 {{/if}}
 
@@ -42,12 +42,12 @@
 	<h3>{{ message "filter.download.all" }}</h3>
 	<form method="POST" action="{{url.excel}}" target="_parent">
     	<input type="hidden" name="jsonBody" value="{{emptySelection}}">
-    	<a href="#" class="download-xlsx"><i class="icon-xlsx"></i></a>
+    	<a href="#" class="download-xls"><i class="icon-data-xls"></i></a>
 	</form>
 
-	<form method="POST" action="{{url.csv}}" target="_parent">
+	<form method="POST" action="{{url.tsv}}" target="_parent">
 	    <input type="hidden" name="jsonBody" value="{{emptySelection}}">
-	     <a href="#" class="download-csv"><i class="icon-csv"></i></a>
+	     <a href="#" class="download-tsv"><i class="icon-data-tsv"></i></a>
 	</form>
 
 	<form method="POST" action="{{url.px}}" target="_parent">

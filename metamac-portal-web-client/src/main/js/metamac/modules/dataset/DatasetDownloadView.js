@@ -29,7 +29,7 @@
                 selection : JSON.stringify(datasetSelection),
                 emptySelection : JSON.stringify(this.getEmptyDatasetSelection()),
                 url : {
-                    csv : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/tsv/" + identifierUrlPart,
+                    tsv : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/tsv/" + identifierUrlPart,
                     excel : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/excel/" + identifierUrlPart,
                     px : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/px/" + identifierUrlPart
                 },
@@ -60,14 +60,29 @@
         },
 
         _getButtonConfiguration : function() {
-            var haveDataFormats = _.contains(['canvasTable'], this.visualizationType);
-            var haveMapFormats = false; // TODO: METAMAC-2033
-            var haveImageFormats = this._exportableImage();
+            var visualizationSupertype = '';
+            switch (this.visualizationType) {
+                case 'canvasTable':
+                    visualizationSupertype = 'data';
+                    break;
+                case 'map':
+                case 'mapbubble':
+                    visualizationSupertype = 'map';
+                    break;
+                default: 
+                    visualizationSupertype = 'graph';
+                    break;
+            }
+
+            var haveDataFormats = visualizationSupertype == 'data';
+            var haveMapFormats =  visualizationSupertype == 'map' && false; // TODO: METAMAC-2033
+            var haveImageFormats = _.contains(['graph', 'map'], visualizationSupertype) && this._exportableImage();
 
             return {
                 dataFormats : haveDataFormats,
                 mapFormats: haveMapFormats,
-                imageFormats: haveImageFormats
+                imageFormats: haveImageFormats,
+                iconPreffix : visualizationSupertype
             };
         },
  
@@ -150,7 +165,7 @@
             this.exportApiCall("excel");
         },
 
-        onClickDownloadCsv : function () {
+        onClickDownloadTsv : function () {
             this.exportApiCall("tsv");
         },
 
