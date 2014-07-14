@@ -64,6 +64,7 @@ LazyLoad.js('client/metamac.js', function () {
 	App.endpoints["statistical-resources"] = "${ApiUrlStatisticalResources}/v1.0";
     App.endpoints["structural-resources"] = "${ApiUrlStructuralResources}/v1.0";
     App.endpoints["statistical-visualizer"] = "${ApiUrlStatisticalVisualizer}";
+    App.endpoints["shared-statistical-visualizer"] = getQueryParams("sharedVisualizerUrl");
 
     App.start();
 

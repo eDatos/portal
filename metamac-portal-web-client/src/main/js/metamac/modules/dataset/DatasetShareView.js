@@ -24,9 +24,22 @@
             return App.modules.dataset.DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
         },
 
+        removeParamFromUrl : function(url, param) {
+            var paramRegex = new RegExp(param + '=[^&]+&');
+            return url.replace(paramRegex,'');
+        },
+
+        getSharedUrl : function (permalinkId) {
+            if (!_.isEmpty(App.endpoints["shared-statistical-visualizer"])) {
+                return App.endpoints["shared-statistical-visualizer"] + this.removeParamFromUrl(window.location.search, 'sharedVisualizerUrl') + window.location.hash + "/permalink/" + permalinkId;
+            } else {
+                return window.location.protocol + '//' + window.location.host + window.location.pathname + this.removeParamFromUrl(window.location.search, 'sharedVisualizerUrl') + window.location.hash + "/permalink/" + permalinkId;
+            }
+        },
+
         renderShare : function (permalinkId) {
             var context = {
-                url : window.location.href + "/permalink/" + permalinkId,
+                url : this.getSharedUrl(permalinkId),
                 title : this.filterDimensions.metadata.getTitle(),
                 description : this.filterDimensions.metadata.getDescription()
             };

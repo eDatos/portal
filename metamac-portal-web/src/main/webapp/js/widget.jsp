@@ -33,8 +33,10 @@ function appendChromeFrameObject(options) {
 
 function getWidgetUrl(options) {	
 	var endpoint = "${baseURL}/widget.html";
-	endpoint += options.chromeFrameObject ? '?chromeFrameObject=true&' : '?';
- 	return endpoint + options.params;
+	var params = '';
+	params += options.chromeFrameObject ? 'chromeFrameObject=true&' : '';
+	params += options.sharedVisualizerUrl ? 'sharedVisualizerUrl=' + options.sharedVisualizerUrl + '&' : '';
+ 	return endpoint + '?' + params + options.params;
 }
 
 

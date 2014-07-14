@@ -28,10 +28,25 @@
             return App.endpoints["statistical-visualizer"] + '/js/widget.js';
         },
 
+        getSharedVisualizerUrl : function() {
+            return [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
+        },
+
+        removeParamFromUrl : function(url, param) {
+            var paramRegex = new RegExp(param + '=[^&]+&');
+            return url.replace(paramRegex,'');
+        },
+
+        getParams : function (permalinkId) {
+            var urlQuery = this.removeParamFromUrl(window.location.search.substr(1), 'sharedVisualizerUrl');
+            return urlQuery + window.location.hash + "/permalink/" + permalinkId;
+        },
+
         renderEmbed : function (permalinkId) {
             var context = {
                 widgetUrl : this.getWidgetUrl(),
-                params : window.location.search.substr(1) + window.location.hash + "/permalink/" + permalinkId,
+                params : this.getParams(permalinkId),
+                sharedVisualizerUrl : this.getSharedVisualizerUrl(),
                 defaultId : 'dataset-widget',
                 defaultWidth : 500,
                 defaultHeight : 400,
