@@ -72,7 +72,7 @@
                 width : this.$sidebar.outerWidth()
             };
 
-            var isParentInFullScreen = this.$el.hasClass("full-screen");
+            var isParentInFullScreen = $('.metamac-container').hasClass("full-screen");
             var $overlayContainer = isParentInFullScreen ? this.$el : $('body');
 
             this.$overlay = $('<div>')
