@@ -56,7 +56,7 @@
             var t = (time * this.speed - i * Math.PI / this.spinnerSize) % Math.PI;
             var alpha = Math.sin(t);
 
-            this.ctx.fillStyle = "rgba(255, 153, 0, " + alpha + ")";
+            this.ctx.fillStyle = "rgba(15, 91, 149, " + alpha + ")";
             var point = this.absolutePoint2RelativePoint(new Point(20 * i, 10));
             this.ctx.fillRect(point.x, point.y, 10, 10);
         }

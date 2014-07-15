@@ -69,9 +69,9 @@
             scroll : {
                 color : function (scroll, view) {
                     if (view.mouseZone && view.mouseZone.indexOf(scroll) !== -1) {
-                        return "#DD7735";
+                        return "#0F5B95";
                     } else if (view.lastClickZone && view.lastClickZone.indexOf(scroll) !== -1) {
-                        return "#DD7735";
+                        return "#0F5B95";
                     } else {
                         return "#CCCCCC";
                     }
