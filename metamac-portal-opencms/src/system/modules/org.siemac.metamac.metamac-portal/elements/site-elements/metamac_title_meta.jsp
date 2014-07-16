@@ -13,6 +13,9 @@
 <%@ page import="org.siemac.metamac.portal.dto.Dataset" %>
 <%@ page import="org.siemac.metamac.portal.dto.Query" %>
 
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 	<%               
 		String ATTRIBUTES_PAGE = "metamac.html";	
 	
@@ -82,6 +85,20 @@
 	                CmsPropertyDefinition.PROPERTY_DESCRIPTION,
 	                true).getValue());
 	    }
+	    
+		// The use of cms.link() here don´t work properly with getRealPath
+		String cssPath = pageContext.getServletContext().getRealPath("/export/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.css");
+		File cssFile = new File(cssPath);
+	
+		String jsPath = pageContext.getServletContext().getRealPath("/export/system/modules/org.siemac.metamac.metamac-portal/resources/metamac.js");
+		File jsFile = new File(jsPath);
+		
+		Date lastModifiedCss = new Date(cssFile.lastModified());
+		Date lastModifiedJs = new Date(jsFile.lastModified());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+		request.setAttribute("cssDate", dateFormat.format(lastModifiedCss));
+		request.setAttribute("jsDate", dateFormat.format(lastModifiedJs));	
 	%>
 
    	<title>ISTAC | ${resourceName}</title>
