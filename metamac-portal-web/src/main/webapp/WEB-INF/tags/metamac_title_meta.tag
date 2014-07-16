@@ -12,7 +12,24 @@
 
 <%@tag import="java.util.logging.Logger"%>
 <%@tag import="java.util.logging.Level"%>
-	
+
+<%@ tag import="java.io.File" %>
+<%@ tag import="java.util.Date" %>
+<%@ tag import="java.text.SimpleDateFormat" %>
+	<%
+		ServletContext context = request.getSession().getServletContext();
+		String cssPath = context.getRealPath("client/metamac.css");
+		File cssFile = new File(cssPath);
+		
+		String jsPath = context.getRealPath("client/metamac.js");
+		File jsFile = new File(jsPath);
+		
+		Date lastModifiedCss = new Date(cssFile.lastModified());
+		Date lastModifiedJs = new Date(jsFile.lastModified());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		request.setAttribute("cssDate", dateFormat.format(lastModifiedCss));
+		request.setAttribute("jsDate", dateFormat.format(lastModifiedJs));
+	%>	
 	<%
 		String PORTAL_URL_BASE = "";
 		String STATISTICAL_RESOURCES_API_URL_BASE = "";
