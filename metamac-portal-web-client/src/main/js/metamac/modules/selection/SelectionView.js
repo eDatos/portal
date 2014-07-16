@@ -19,10 +19,10 @@
             this.controller = options.controller;
             this.filterDimensions = this.controller.filterDimensions;            
             
-            this.dataset = new App.dataset.Dataset({metadata : this.metadata, filterDimensions : this.filterDimensions});                        
-            this._initializeSidebarView();
-
+            this.dataset = new App.dataset.Dataset({metadata : this.metadata, filterDimensions : this.filterDimensions});            
             this.optionsModel = new App.modules.dataset.OptionsModel({visualize: true});
+            
+            this._initializeSidebarView();
             this._initializeOptionsView();
             this._initializeFullScreen();
         },
@@ -57,7 +57,10 @@
             this.helpView = new App.modules.dataset.DatasetHelpView({});
             
             var sideViews = [this.infoView, this.helpView];
-            this.sidebarView = new App.components.sidebar.SidebarView({sideViews : sideViews});
+            this.sidebarView = new App.components.sidebar.SidebarView({
+                sideViews : sideViews,
+                optionsModel : this.optionsModel
+            });
         },
 
         buildItemView : function (item, ItemViewType, itemViewOptions) {
@@ -84,7 +87,7 @@
         },
         
         onRender: function() {
-        	// We render here the sidebar because marionette provides a built in method
+            // We render here the sidebar because marionette provides a built in method
             this.sidebarView.setElement(this.$('.sidebar-container')).render();          
             this.optionsView.setElement(this.$('.selection-options-bar')).render();
             
@@ -93,8 +96,7 @@
             // Thats why its assigned to a parent
             //            this.fullScreen.setContainer(this.$('.selection-body'));
             
-            // You can't arrive here while on fullscreen (at this moment), so always fullScreen false on first time
-            //this.optionsModel.set('fullScreen', false);
+            this.optionsModel.set('fullScreen', false);
 
             this._unbindEvents();
             this._bindEvents();

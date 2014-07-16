@@ -12,6 +12,7 @@
         initialize : function (options) {
             this.sideViews = options.sideViews;
             this.contentView = options.contentView;
+            this.optionsModel = options.optionsModel;
 
             var stateOptions = {
                 sideViewsIds : _.pluck(this.sideViews, "id")
@@ -58,10 +59,10 @@
             this.updateSidebarHeight();
         },
         updateSidebarHeight : function () {
-        	var menuHeight = $(".js-sidebar-container-sibling").height();
-        	if (menuHeight) {
-        		this.$el.css({height : menuHeight});
-        	}
+            var menuHeight = $(".js-sidebar-container-sibling").height();
+            if (menuHeight) {
+                this.$el.css({height : menuHeight});
+            }
         },
         
         _onClickSplitter : function (e) {
@@ -72,8 +73,8 @@
                 width : this.$sidebar.outerWidth()
             };
 
-            var isParentInFullScreen = $('.metamac-container').hasClass("full-screen");
-            var $overlayContainer = isParentInFullScreen ? this.$el : $('body');
+            var isFullScreen = this.optionsModel.get('fullScreen');
+            var $overlayContainer = isFullScreen ? this.$el : $('body');
 
             this.$overlay = $('<div>')
                 .addClass('sidebar-overlay')

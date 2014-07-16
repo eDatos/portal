@@ -65,7 +65,11 @@
                 sideViews.push(this.orderSidebarView);
             }
 
-            this.sidebarView = new App.components.sidebar.SidebarView({sideViews : sideViews, contentView : this.visualizationView});
+            this.sidebarView = new App.components.sidebar.SidebarView({
+                sideViews : sideViews, 
+                contentView : this.visualizationView,
+                optionsModel : this.optionsModel
+            });
         },
 
         _initializeFullScreen : function () {

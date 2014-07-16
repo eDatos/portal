@@ -9,7 +9,7 @@
 
     App.dataset.data.Attributes.prototype = {
 
-          initialize : function ( options ) {
+        initialize : function ( options ) {
             this.response = options.response;
             this.metadata = options.metadata;
 
@@ -26,9 +26,9 @@
             this.combinatedDimensionsAttributes = this.getCombinatedDimensionsAttributes();
             this.datasetAttributes = this.getDatasetAttributes();
         },
-    		
-    	// Example with attributes http://estadisticas.arte-consultores.com/statistical-resources-internal/apis/statistical-resources-internal/v1.0/datasets/ISTAC/C00031A_000002/001.006.json
-    	getPrimaryMeasureAttributesValues : function () {                 
+	
+        // Example with attributes http://estadisticas.arte-consultores.com/statistical-resources-internal/apis/statistical-resources-internal/v1.0/datasets/ISTAC/C00031A_000002/001.006.json
+        getPrimaryMeasureAttributesValues : function () {                 
     		if (this.hasAttributes()) {
                 var primaryMeasureAttributesRawValues = _.where(this.attributes, {attachmentLevel : "PRIMARY_MEASURE"});
                 var primaryMeasureAttributesParsedValues = _.map(primaryMeasureAttributesRawValues, this._parseAttributeValuesList, this);
