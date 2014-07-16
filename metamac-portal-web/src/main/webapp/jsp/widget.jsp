@@ -2,13 +2,32 @@
 <%@ page import="org.siemac.metamac.core.common.exception.MetamacException"%>
 <%@ page import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
 <%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
+
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
     <title>Dataset widget</title>
 
-    <link rel="stylesheet" href="client/metamac.css"/>
+	<%
+		ServletContext context = request.getSession().getServletContext();
+		String cssPath = context.getRealPath("client/metamac.css");
+		File cssFile = new File(cssPath);
+		
+		String jsPath = context.getRealPath("client/metamac.js");
+		File jsFile = new File(jsPath);
+		
+		Date lastModifiedCss = new Date(cssFile.lastModified());
+		Date lastModifiedJs = new Date(jsFile.lastModified());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		request.setAttribute("cssDate", dateFormat.format(lastModifiedCss));
+		request.setAttribute("jsDate", dateFormat.format(lastModifiedJs));
+	%>	
+	
+    <link rel="stylesheet" href="client/metamac.css?d=${cssDate}"/>
 
     <style>
         html, body { margin : 0; height: 99%;}
@@ -50,7 +69,7 @@
 
 <script>
 
-LazyLoad.js('client/metamac.js', function () {
+LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
 
 	I18n.defaultLocale = "es";
     I18n.locale = "es";
@@ -68,7 +87,7 @@ LazyLoad.js('client/metamac.js', function () {
 
     App.start();
 
-    LazyLoad.js("js/authentication.js", function() {
+    LazyLoad.js("js/authentication.js?d=${jsDate}", function() {
     	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js");
     });
     
