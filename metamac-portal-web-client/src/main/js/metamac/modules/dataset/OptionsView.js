@@ -80,7 +80,8 @@
                         btnClass : fullScreenActive ? 'active' : ''
                     },
                     visualize : this.optionsModel.get('visualize'),
-                    widget : this.optionsModel.get('widget')
+                    widget : this.optionsModel.get('widget'),
+                    widgetButton : this.optionsModel.get('widgetButton')
                 };
                 this.$el.html(this.template(context));
             }

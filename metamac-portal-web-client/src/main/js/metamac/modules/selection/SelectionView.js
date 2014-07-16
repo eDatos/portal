@@ -20,8 +20,8 @@
             this.filterDimensions = this.controller.filterDimensions;            
             
             this.dataset = new App.dataset.Dataset({metadata : this.metadata, filterDimensions : this.filterDimensions});            
-            this.optionsModel = new App.modules.dataset.OptionsModel({visualize: true});
-            
+            this.optionsModel = new App.modules.dataset.OptionsModel({ widget : App.config.widget, visualize: true});
+
             this._initializeSidebarView();
             this._initializeOptionsView();
             this._initializeFullScreen();
@@ -37,7 +37,7 @@
         },
 
         _showHeader: function() {
-            return App.config.showHeader;
+            return App.config.showHeader && !this.optionsModel.get('widget');
         },
         
        	_initializeOptionsView : function () {

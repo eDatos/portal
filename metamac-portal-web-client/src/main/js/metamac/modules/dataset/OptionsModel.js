@@ -8,7 +8,8 @@
             filter : false,
             visualize : false,
             options : true,
-            widget : false
+            widget : false,
+            widgetButton : true
         }
     });
     
