@@ -84,7 +84,9 @@
                 representations._unbindEvents();
                 representations.invoke('set', {selected : false}, {trigger : false});
                 _.each(dimensionToImport.selectedCategories, function (category) {
-                    representations.get(category).set({selected : true});
+                    if (!_.isUndefined(representations.get(category))) {
+                        representations.get(category).set({selected : true});
+                    }
                 });
                 representations._bindEvents();
 
