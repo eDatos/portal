@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionType;
 import org.siemac.metamac.rest.exception.RestException;
@@ -26,10 +26,10 @@ public class DatasetSelectionMapper {
         return new DatasetSelectionForExcel(dimensions, attributes);
     }
 
-    public static DatasetSelectionForTsv toDatasetSelectionForTsv(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
+    public static DatasetSelectionForPlainText toDatasetSelectionForPlainText(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
         List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
-        return new DatasetSelectionForTsv(dimensions, attributes);
+        return new DatasetSelectionForPlainText(dimensions, attributes);
     }
 
     public static String toStatisticalResourcesApiDimsParameter(List<DatasetSelectionDimension> dimensions) {

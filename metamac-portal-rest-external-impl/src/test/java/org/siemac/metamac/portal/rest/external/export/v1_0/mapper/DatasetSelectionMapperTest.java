@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttributes;
@@ -55,7 +55,7 @@ public class DatasetSelectionMapperTest {
         source.getAttributes().getAttributes().add(mockAttribute("ATTRIBUTE_02", LabelVisualisationMode.CODE));
 
         // Transform
-        DatasetSelectionForTsv selection = DatasetSelectionMapper.toDatasetSelectionForTsv(source);
+        DatasetSelectionForPlainText selection = DatasetSelectionMapper.toDatasetSelectionForPlainText(source);
 
         // Validate
         assertEquals(source.getDimensions().getDimensions().size(), selection.getDimensions().size());

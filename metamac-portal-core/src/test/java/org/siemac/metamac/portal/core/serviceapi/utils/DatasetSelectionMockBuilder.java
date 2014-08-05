@@ -7,7 +7,7 @@ import java.util.List;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 
 public class DatasetSelectionMockBuilder {
@@ -61,8 +61,8 @@ public class DatasetSelectionMockBuilder {
         return new DatasetSelectionForExcel(dimensions, attributes);
     }
 
-    public DatasetSelectionForTsv buildForTsv() {
-        return new DatasetSelectionForTsv(dimensions, attributes);
+    public DatasetSelectionForPlainText buildForTsv() {
+        return new DatasetSelectionForPlainText(dimensions, attributes);
     }
 
 }

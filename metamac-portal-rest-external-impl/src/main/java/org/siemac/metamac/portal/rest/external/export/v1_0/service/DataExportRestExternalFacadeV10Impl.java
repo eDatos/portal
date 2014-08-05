@@ -1,5 +1,23 @@
 package org.siemac.metamac.portal.rest.external.export.v1_0.service;
 
+import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPrivate.SERVICE_CONTEXT;
+import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
@@ -9,7 +27,8 @@ import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
+import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
 import org.siemac.metamac.portal.rest.external.RestExternalConstants;
@@ -20,91 +39,74 @@ import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection;
 import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
+import org.siemac.metamac.rest.export.v1_0.domain.PlainTextExportation;
 import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
-import org.siemac.metamac.rest.export.v1_0.domain.TsvExportation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPrivate.SERVICE_CONTEXT;
-import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
 
 @Service("dataExportRestExternalFacadeV10")
 public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Autowired
-    private ExportService exportService;
+    private ExportService                          exportService;
 
     @Autowired
-    private PortalConfiguration portalConfiguration;
+    private PortalConfiguration                    portalConfiguration;
 
     @Autowired
     private StatisticalResourcesRestExternalFacade statisticalResourcesRestExternal;
 
     @Autowired
-    private JacksonJsonProvider jacksonJsonProvider;
+    private JacksonJsonProvider                    jacksonJsonProvider;
 
     @Override
-    public Response exportDatasetToTsv(TsvExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToTsv(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        return exportDatasetToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, version, lang, filename);
+    }
+
+    @Override
+    public Response exportDatasetToTsv(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
-            // Transform possible selection (not required)
-            DatasetSelectionForTsv datasetSelectionForTsv = null;
-            String dimensionSelection = null;
-            if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
-                try {
-                    datasetSelectionForTsv = DatasetSelectionMapper.toDatasetSelectionForTsv(exportationBody.getDatasetSelection());
-                    dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForTsv.getDimensions());
-                } catch (Exception e) {
-                    org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                            RestExternalConstants.PARAMETER_SELECTION);
-                    throw new RestException(exception, Status.BAD_REQUEST);
-                }
-            }
-
-            // Retrieve dataset
-            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
-
-            // Export
-            final File tmpFileObservations = File.createTempFile("metamac", "tsv");
-            final File tmpFileAttributes = File.createTempFile("metamac", "tsv");
-            FileOutputStream outputStreamObservations = new FileOutputStream(tmpFileObservations);
-            FileOutputStream outputStreamAttributes = new FileOutputStream(tmpFileAttributes);
-            exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, datasetSelectionForTsv, lang, outputStreamObservations, outputStreamAttributes);
-            outputStreamObservations.close();
-            outputStreamAttributes.close();
-
-            String filenamePrefix = null;
-            if (filename != null) {
-                filenamePrefix = FilenameUtils.getBaseName(filename);
-            } else {
-                filenamePrefix = "dataset-" + agencyID + "-" + resourceID + "-" + version;
-                filename = filenamePrefix;
-            }
-            File tsvZip = generateTsvZip(tmpFileObservations, tmpFileAttributes, filenamePrefix);
-            return buildResponseOkWithFile(tsvZip, filename + ".zip");
-        } catch (Exception e) {
-            throw manageException(e);
+            PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
+            return exportDatasetToPlainText(PlainTextTypeEnum.TSV, tsvExportation, agencyID, resourceID, version, lang, filename);
+        } catch (IOException e) {
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
+            throw new RestException(exception, Status.BAD_REQUEST);
         }
     }
 
     @Override
-    public Response exportDatasetToTsvForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(TsvExportation.class, MediaType.APPLICATION_JSON_TYPE);
+    public Response exportDatasetToCsvComma(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        return exportDatasetToPlainText(PlainTextTypeEnum.CSV_COMMA, exportationBody, agencyID, resourceID, version, lang, filename);
+    }
+
+    @Override
+    public Response exportDatasetToCsvComma(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
-            TsvExportation tsvExportation = objectMapper.readValue(jsonBody, TsvExportation.class);
-            return exportDatasetToTsv(tsvExportation, agencyID, resourceID, version, lang, filename);
+            PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
+            return exportDatasetToPlainText(PlainTextTypeEnum.CSV_COMMA, tsvExportation, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
-            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                    RestExternalConstants.PARAMETER_SELECTION);
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
+            throw new RestException(exception, Status.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public Response exportDatasetToCsvSemicolon(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        return exportDatasetToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, exportationBody, agencyID, resourceID, version, lang, filename);
+    }
+
+    @Override
+    public Response exportDatasetToCsvSemicolon(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        try {
+            PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
+            return exportDatasetToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, tsvExportation, agencyID, resourceID, version, lang, filename);
+        } catch (IOException e) {
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
         }
     }
@@ -149,13 +151,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(TsvExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             ExcelExportation excelExportation = objectMapper.readValue(jsonBody, ExcelExportation.class);
             return exportDatasetToExcel(excelExportation, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
-            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                    RestExternalConstants.PARAMETER_SELECTION);
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
         }
     }
@@ -196,13 +197,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(TsvExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PxExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PxExportation pxExportation = objectMapper.readValue(jsonBody, PxExportation.class);
             return exportDatasetToPx(pxExportation, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
-            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                    RestExternalConstants.PARAMETER_SELECTION);
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
         }
     }
@@ -219,15 +219,15 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = "chart";
             }
-            
+
             filename += SvgExportSupportedMimeType.getFileExtension(mimeType);
-            
+
             return buildResponseOkWithFile(tmpFile, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
-    
+
     @Override
     public Response exportSvgToImageForm(String svg, String filename, Float width, String mimeType) {
         return exportSvgToImage(svg, filename, width, mimeType);
@@ -253,13 +253,13 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return datasetSelection == null || datasetSelection.getDimensions() == null || CollectionUtils.isEmpty(datasetSelection.getDimensions().getDimensions());
     }
 
-    private File generateTsvZip(File fileObservations, File fileAttributes, String filenamePrefix) throws Exception {
+    private File generatePlainTextZip(PlainTextTypeEnum plainTextTypeEnum, File fileObservations, File fileAttributes, String filenamePrefix) throws Exception {
 
         File zipFile = File.createTempFile("metamac", "zip");
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFile));
 
-        addToZip(out, fileObservations, filenamePrefix + "-observations.tsv");
-        addToZip(out, fileAttributes, filenamePrefix + "-attributes.tsv");
+        addToZip(out, fileObservations, filenamePrefix + "-observations." + plainTextTypeEnum.getExtension());
+        addToZip(out, fileAttributes, filenamePrefix + "-attributes." + plainTextTypeEnum.getExtension());
         out.close();
 
         return zipFile;
@@ -280,4 +280,62 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         zip.closeEntry();
         in.close();
     }
+
+    private Response exportDatasetToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang,
+            String filename) {
+        try {
+            // Transform possible selection (not required)
+            DatasetSelectionForPlainText datasetSelectionForPlainText = null;
+            String dimensionSelection = null;
+            if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
+                try {
+                    datasetSelectionForPlainText = DatasetSelectionMapper.toDatasetSelectionForPlainText(exportationBody.getDatasetSelection());
+                    dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+                } catch (Exception e) {
+                    org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                            RestExternalConstants.PARAMETER_SELECTION);
+                    throw new RestException(exception, Status.BAD_REQUEST);
+                }
+            }
+
+            // Retrieve dataset
+            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+
+            // Export
+            final File tmpFileObservations = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
+            final File tmpFileAttributes = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
+            FileOutputStream outputStreamObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outputStreamAttributes = new FileOutputStream(tmpFileAttributes);
+
+            switch (plainTextTypeEnum) {
+                case TSV:
+                    exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    break;
+                case CSV_COMMA:
+                    exportService.exportDatasetToCsvCommaSeparated(SERVICE_CONTEXT, dataset, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    break;
+                case CSV_SEMICOLON:
+                    exportService.exportDatasetToCsvSemicolonSeparated(SERVICE_CONTEXT, dataset, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    break;
+                default:
+                    break;
+            }
+
+            outputStreamObservations.close();
+            outputStreamAttributes.close();
+
+            String filenamePrefix = null;
+            if (filename != null) {
+                filenamePrefix = FilenameUtils.getBaseName(filename);
+            } else {
+                filenamePrefix = "dataset-" + agencyID + "-" + resourceID + "-" + version;
+                filename = filenamePrefix;
+            }
+            File plainTextZip = generatePlainTextZip(plainTextTypeEnum, tmpFileObservations, tmpFileAttributes, filenamePrefix);
+            return buildResponseOkWithFile(plainTextZip, filename + ".zip");
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
 }

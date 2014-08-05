@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.siemac.metamac.core.common.exception.MetamacExceptionItem;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.error.ServiceExceptionParameters;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
@@ -20,9 +21,17 @@ public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidato
 
     public static void checkExportDatasetToTsv(Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream,
             List<MetamacExceptionItem> exceptions) {
-        checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
-        checkMetadataRequired(resultObservationsOutputStream, ServiceExceptionParameters.STREAM, exceptions);
-        checkMetadataRequired(resultAttributesOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkExportDatasetToPlainText(dataset, resultObservationsOutputStream, resultAttributesOutputStream, exceptions);
+    }
+
+    public static void checkExportDatasetToCsvCommaSeparated(Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkExportDatasetToPlainText(dataset, resultObservationsOutputStream, resultAttributesOutputStream, exceptions);
+    }
+
+    public static void checkExportDatasetToCsvSemicolonSeparated(Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkExportDatasetToPlainText(dataset, resultObservationsOutputStream, resultAttributesOutputStream, exceptions);
     }
 
     public static void checkExportDatasetToPx(Dataset dataset, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
@@ -35,4 +44,11 @@ public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidato
         checkMetadataRequired(svg, ServiceExceptionParameters.SVG, exceptions);
         // width, mimeType optional
     }
+
+    private static void checkExportDatasetToPlainText(Dataset dataset, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
+        checkMetadataRequired(resultObservationsOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkMetadataRequired(resultAttributesOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+    }
+
 }

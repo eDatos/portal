@@ -7,16 +7,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.commons.lang.StringUtils;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
+import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.serviceapi.utils.Asserts;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetMockBuilder;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuilder;
@@ -152,21 +155,26 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
     @Override
     public void testExportDatasetToTsv() throws Exception {
-        // Tested in testExportDatasetToTsv* methods
+        // Tested in testExportDatasetToPlainText* methods
+    }
+
+    @Override
+    public void testExportDatasetToCsvCommaSeparated() throws Exception {
+        // Tested in testExportDatasetToPlainText* methods
+    }
+
+    @Override
+    public void testExportDatasetToCsvSemicolonSeparated() throws Exception {
+        // Tested in testExportDatasetToPlainText* methods
     }
 
     @Test
-    public void testExportDatasetToTsvWithCodes() throws Exception {
+    public void testExportDatasetToPlainTextWithCodes() throws Exception {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFileObservations = tempFolder.newFile();
-        File tmpFileAttributes = tempFolder.newFile();
-        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
-        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
-
         //@formatter:off
-        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -190,56 +198,141 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
-        outObservations.close();
-        outAttributes.close();
+        {
+            // TSV
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
-        // Validate attributes with dataset and dimension attachment
-        BufferedReader bufferedReaderObservations = createBufferedReader(tmpFileObservations);
-        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReaderObservations.readLine());
-        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\td1\te1", bufferedReaderObservations.readLine());
-        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\td2\te2", bufferedReaderObservations.readLine());
-        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\td3\te3", bufferedReaderObservations.readLine());
-        assertEquals("ANDALUCIA\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t4\t\t\td4\te4", bufferedReaderObservations.readLine());
-        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\td5\te5", bufferedReaderObservations.readLine());
-        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\td6\te6", bufferedReaderObservations.readLine());
-        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t\tb7\t\td7\te7", bufferedReaderObservations.readLine());
-        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\td8\te8", bufferedReaderObservations.readLine());
-        assertEquals(null, bufferedReaderObservations.readLine());
-        bufferedReaderObservations.close();
+            exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
 
-        // Validate attributes with dataset and dimension attachment
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.TSV.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.TSV.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV comma separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvCommaSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV semicolon separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvSemicolonSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileAttributes);
+        }
+    }
+
+    private void validateAttributesWithDatasetAndDimensionAttachmentCodes(String separator, File tmpFileAttributes) throws Exception, IOException {
         BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
-        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tATTRIBUTE\tATTRIBUTE_VALUE", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\tATTRIBUTE_A\ta1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\tATTRIBUTE_A2\ta2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\tNOTEX\ta3", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t\t\t\tVALUENOTEX\tvn1", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t\t\t\tVALUENOTEX\tvn2", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tda1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t1_2_3_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t4_5_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t1_2_3_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t4_5_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t4_5_ESTRELLAS\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\tca5", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\tINDICE_OCUPACION_PLAZAS\tINDICADORES_A\tioA_1", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t2012\t\t\tCELLNOTE_A\tcnA_1", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t2013\t\t\tCELLNOTE_A\tcnA_2", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t2012\t\t\tCELLNOTE_A\tcnA_3", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t2013\t\t\tCELLNOTE_A\tcnA_4", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_1", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_B\tcnB_2", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t2013\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_3", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t2012\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_5", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_B\tcnB_6", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t2013\t1_2_3_ESTRELLAS\t\tCELLNOTE_B\tcnB_7", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t2013\t4_5_ESTRELLAS\t\tCELLNOTE_B\tcnB_8", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t2012\t1_2_3_ESTRELLAS\t\tCELLNOTE_C\tcnC_1", bufferedReaderAttributes.readLine());
-        assertEquals("ANDALUCIA\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_C\tcnC_2", bufferedReaderAttributes.readLine());
-        assertEquals("ARAGON\t2012\t4_5_ESTRELLAS\t\tCELLNOTE_C\tcnC_6", bufferedReaderAttributes.readLine());
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator + "ATTRIBUTE" + separator + "ATTRIBUTE_VALUE",
+                bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_A" + separator + "a1",
+                bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_A2" + separator + "a2",
+                bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "NOTEX" + separator + "a3",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "VALUENOTEX" + separator + "vn1",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "VALUENOTEX" + separator + "vn2",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "da1",
+                bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator
+                + "ca1", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator
+                + "ca2", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator
+                + "ca3", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator
+                + "ca4", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator
+                + "ca5", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "INDICE_OCUPACION_PLAZAS" + separator + "INDICADORES_A" + separator + "ioA_1",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + "2012" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_1",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + "2013" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_2",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + "2012" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_3",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + "2013" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_4",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + "2012" + separator + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_1",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + "2012" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_2",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + "2013" + separator + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_3",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + "2012" + separator + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_5",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + "2012" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_6", bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + "2013" + separator + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_7",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + "2013" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_8", bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + "2012" + separator + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "cnC_1",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ANDALUCIA" + separator + "2012" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "cnC_2",
+                bufferedReaderAttributes.readLine());
+        assertEquals("ARAGON" + separator + "2012" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "cnC_6", bufferedReaderAttributes.readLine());
         assertEquals(null, bufferedReaderAttributes.readLine());
 
         bufferedReaderAttributes.close();
+    }
+
+    private void validateObservationsWithDatasetAndDimensionAttachmentCodes(String separator, File tmpFileObservations) throws Exception, IOException {
+        BufferedReader bufferedReaderObservations = createBufferedReader(tmpFileObservations);
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator + "OBS_VALUE" + separator + "ATTRIBUTE_B"
+                + separator + "ATTRIBUTE_C" + separator + "ATTRIBUTE_D" + separator + "ATTRIBUTE_E", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA" + separator + "2012" + separator + "1_2_3_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1" + separator + StringUtils.EMPTY
+                + separator + "d1" + separator + "e1", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA" + separator + "2012" + separator + "4_5_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "2" + separator + "b2" + separator + StringUtils.EMPTY
+                + separator + "d2" + separator + "e2", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA" + separator + "2013" + separator + "1_2_3_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3" + separator + StringUtils.EMPTY
+                + separator + "d3" + separator + "e3", bufferedReaderObservations.readLine());
+        assertEquals("ANDALUCIA" + separator + "2013" + separator + "4_5_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "4" + separator + StringUtils.EMPTY + separator
+                + StringUtils.EMPTY + separator + "d4" + separator + "e4", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON" + separator + "2012" + separator + "1_2_3_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "b5" + separator + StringUtils.EMPTY
+                + separator + "d5" + separator + "e5", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON" + separator + "2012" + separator + "4_5_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "6" + separator + "b6" + separator + StringUtils.EMPTY
+                + separator + "d6" + separator + "e6", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON" + separator + "2013" + separator + "1_2_3_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "b7" + separator
+                + StringUtils.EMPTY + separator + "d7" + separator + "e7", bufferedReaderObservations.readLine());
+        assertEquals("ARAGON" + separator + "2013" + separator + "4_5_ESTRELLAS" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "8" + separator + "b8" + separator + StringUtils.EMPTY
+                + separator + "d8" + separator + "e8", bufferedReaderObservations.readLine());
+        assertEquals(null, bufferedReaderObservations.readLine());
+        bufferedReaderObservations.close();
     }
 
     @Test
@@ -247,13 +340,8 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFileObservations = tempFolder.newFile();
-        File tmpFileAttributes = tempFolder.newFile();
-        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
-        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
-
         //@formatter:off
-        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.LABEL).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -277,55 +365,198 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
-        outObservations.close();
-        outAttributes.close();
+        {
+            // TSV
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
-        // Validate attributes with dataset and dimension attachment
-        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
-        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_D\tATTRIBUTE_E", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t1.1\tAttribute b1\t\tAttribute d1\te1", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\t2\tAttribute b2\t\tAttribute d2\te2", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t3\tAttribute b3\t\tAttribute d3\te3", bufferedReader.readLine());
-        assertEquals("Andalucía\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t4\t\t\tAttribute d4\te4", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t5\tAttribute b5\t\tAttribute d5\te5", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\t6\tAttribute b6\t\tAttribute d6\te6", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\t\tAttribute b7\t\tAttribute d7\te7", bufferedReader.readLine());
-        assertEquals("Aragón\tAño 2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\t8\tAttribute b8\t\tAttribute d8\te8", bufferedReader.readLine());
-        assertEquals(null, bufferedReader.readLine());
-        bufferedReader.close();
+            exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
 
-        // Validate attributes with dataset and dimension attachment
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentLabels(PlainTextTypeEnum.TSV.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentLabels(PlainTextTypeEnum.TSV.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // Csv comma separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvCommaSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentLabels(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentLabels(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // Csv semi colon separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvSemicolonSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentLabels(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentLabels(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileAttributes);
+        }
+    }
+
+    private void validateAttributesWithDatasetAndDimensionAttachmentLabels(String separator, File tmpFileAttributes) throws Exception, IOException {
         BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
-        assertEquals("DESTINO_ALOJAMIENTO\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tATTRIBUTE\tATTRIBUTE_VALUE", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\tATTRIBUTE_A\ta1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\tATTRIBUTE_A2\tAttribute a2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\tNOTEX\tNotex a3", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\t\t\t\tVALUENOTEX\tvn1", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\t\t\t\tVALUENOTEX\tvn2", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tDestino 1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t1, 2 y 3 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t4 y 5 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t1, 2 y 3 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t4 y 5 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t4 y 5 estrellas\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\tCategoría 5", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\tÍndice de ocupación de plazas\tINDICADORES_A\tioA_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tAño 2012\t\t\tCELLNOTE_A\tcnA_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tAño 2013\t\t\tCELLNOTE_A\tcnA_2", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tAño 2012\t\t\tCELLNOTE_A\tcnA_3", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tAño 2013\t\t\tCELLNOTE_A\tcnA_4", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_B\tcnB_2", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tAño 2013\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_3", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tAño 2012\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_5", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_B\tcnB_6", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tAño 2013\t1, 2 y 3 estrellas\t\tCELLNOTE_B\tcnB_7", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tAño 2013\t4 y 5 estrellas\t\tCELLNOTE_B\tcnB_8", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tAño 2012\t1, 2 y 3 estrellas\t\tCELLNOTE_C\tCell C1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_C\tCell C2", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tAño 2012\t4 y 5 estrellas\t\tCELLNOTE_C\tCell C6", bufferedReaderAttributes.readLine());
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator + "ATTRIBUTE" + separator + "ATTRIBUTE_VALUE",
+                bufferedReaderAttributes.readLine());
+        assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_A" + separator + "a1", bufferedReaderAttributes.readLine());
+        assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_A2" + separator + "Attribute a2", bufferedReaderAttributes.readLine());
+        assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "NOTEX" + separator + "Notex a3", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "" + separator + "" + separator + "" + separator + "VALUENOTEX" + separator + "vn1", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "" + separator + "" + separator + "" + separator + "VALUENOTEX" + separator + "vn2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "Destino 1", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("" + separator + "" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca1",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("" + separator + "" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca1",
+                    bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("" + separator + "" + separator + "4 y 5 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca2", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("" + separator + "" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca3",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("" + separator + "" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca3",
+                    bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("" + separator + "" + separator + "4 y 5 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca4", bufferedReaderAttributes.readLine());
+        assertEquals("" + separator + "" + separator + "4 y 5 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator + "Categoría 5",
+                bufferedReaderAttributes.readLine());
+        assertEquals("" + separator + "" + separator + "" + separator + "Índice de ocupación de plazas" + separator + "INDICADORES_A" + separator + "ioA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "Año 2012" + separator + "" + separator + "" + separator + "CELLNOTE_A" + separator + "cnA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "Año 2013" + separator + "" + separator + "" + separator + "CELLNOTE_A" + separator + "cnA_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "Año 2012" + separator + "" + separator + "" + separator + "CELLNOTE_A" + separator + "cnA_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "Año 2013" + separator + "" + separator + "" + separator + "CELLNOTE_A" + separator + "cnA_4", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_1",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_1", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_2", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_3",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_3", bufferedReaderAttributes.readLine());
+        }
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_5",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_5", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_6", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_7",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_7", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "Año 2013" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_8", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C1",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C1",
+                    bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C6", bufferedReaderAttributes.readLine());
         assertEquals(null, bufferedReaderAttributes.readLine());
         bufferedReaderAttributes.close();
+    }
+
+    private void validateObservationsWithDatasetAndDimensionAttachmentLabels(String separator, File tmpFileObservations) throws Exception, IOException {
+        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
+
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator + "OBS_VALUE" + separator + "ATTRIBUTE_B"
+                + separator + "ATTRIBUTE_C" + separator + "ATTRIBUTE_D" + separator + "ATTRIBUTE_E", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "1.1" + separator + "Attribute b1"
+                    + separator + "" + separator + "Attribute d1" + separator + "e1", bufferedReader.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "1.1" + separator + "Attribute b1"
+                    + separator + "" + separator + "Attribute d1" + separator + "e1", bufferedReader.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "2" + separator + "Attribute b2" + separator + ""
+                + separator + "Attribute d2" + separator + "e2", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "3" + separator + "Attribute b3"
+                    + separator + "" + separator + "Attribute d3" + separator + "e3", bufferedReader.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "3" + separator + "Attribute b3"
+                    + separator + "" + separator + "Attribute d3" + separator + "e3", bufferedReader.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "Año 2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "4" + separator + "" + separator + "" + separator
+                + "Attribute d4" + separator + "e4", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "5" + separator + "Attribute b5"
+                    + separator + "" + separator + "Attribute d5" + separator + "e5", bufferedReader.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "5" + separator + "Attribute b5" + separator
+                    + "" + separator + "Attribute d5" + separator + "e5", bufferedReader.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "6" + separator + "Attribute b6" + separator + ""
+                + separator + "Attribute d6" + separator + "e6", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "" + separator + "Attribute b7"
+                    + separator + "" + separator + "Attribute d7" + separator + "e7", bufferedReader.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "" + separator + "Attribute b7" + separator
+                    + "" + separator + "Attribute d7" + separator + "e7", bufferedReader.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "Año 2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "8" + separator + "Attribute b8" + separator + ""
+                + separator + "Attribute d8" + separator + "e8", bufferedReader.readLine());
+        assertEquals(null, bufferedReader.readLine());
+        bufferedReader.close();
     }
 
     @Test
@@ -333,13 +564,8 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFileObservations = tempFolder.newFile();
-        File tmpFileAttributes = tempFolder.newFile();
-        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
-        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
-
         //@formatter:off
-        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -363,69 +589,240 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
-        outObservations.close();
-        outAttributes.close();
+        {
+            // TSV
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
-        // Validate attributes with dataset and dimension attachment
-        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
-        assertEquals(
-                "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tTIME_PERIOD_CODE\tCATEGORIA_ALOJAMIENTO\tCATEGORIA_ALOJAMIENTO_CODE\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_B_CODE\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E\tATTRIBUTE_E_CODE",
-                bufferedReader.readLine());
-        assertEquals(
-                "Andalucía\tANDALUCIA\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t1.1\tAttribute b1\tb1\t\tAttribute d1\td1\te1\te1",
-                bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t2\tAttribute b2\tb2\t\tAttribute d2\td2\te2\te2",
-                bufferedReader.readLine());
-        assertEquals(
-                "Andalucía\tANDALUCIA\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t3\tAttribute b3\tb3\t\tAttribute d3\td3\te3\te3",
-                bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t4\t\t\t\tAttribute d4\td4\te4\te4",
-                bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t5\tAttribute b5\tb5\t\tAttribute d5\td5\te5\te5",
-                bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\tAttribute b6\tb6\t\tAttribute d6\td6\te6\te6",
-                bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\tAttribute b7\tb7\t\tAttribute d7\td7\te7\te7",
-                bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tAttribute b8\tb8\t\tAttribute d8\td8\te8\te8",
-                bufferedReader.readLine());
-        assertEquals(null, bufferedReader.readLine());
-        bufferedReader.close();
+            exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
 
-        // Validate attributes with dataset and dimension attachment
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.TSV.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.TSV.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV comma separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvCommaSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV semicolon separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvSemicolonSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileAttributes);
+        }
+    }
+
+    private void validateAttributesWithDatasetAndDimensionAttachmentCodesAndLabels(String separator, File tmpFileAttributes) throws Exception, IOException {
         BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
-        assertEquals(
-                "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tTIME_PERIOD_CODE\tCATEGORIA_ALOJAMIENTO\tCATEGORIA_ALOJAMIENTO_CODE\tINDICADORES\tINDICADORES_CODE\tATTRIBUTE\tATTRIBUTE_VALUE\tATTRIBUTE_VALUE_CODE",
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "DESTINO_ALOJAMIENTO_CODE" + separator + "TIME_PERIOD" + separator + "TIME_PERIOD_CODE" + separator + "CATEGORIA_ALOJAMIENTO" + separator
+                + "CATEGORIA_ALOJAMIENTO_CODE" + separator + "INDICADORES" + separator + "INDICADORES_CODE" + separator + "ATTRIBUTE" + separator + "ATTRIBUTE_VALUE" + separator
+                + "ATTRIBUTE_VALUE_CODE", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_A" + separator + "a1" + separator + "a1", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_A2" + separator + "Attribute a2" + separator + "a2", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "NOTEX" + separator + "Notex a3" + separator + "a3", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "VALUENOTEX" + separator + "vn1" + separator + "vn1", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "VALUENOTEX" + separator + "vn2" + separator + "vn2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "Destino 1" + separator + "da1", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "\"1, 2 y 3 estrellas\"" + separator
+                    + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca1" + separator + "ca1",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "1, 2 y 3 estrellas" + separator
+                    + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca1" + separator + "ca1",
+                    bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS"
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca2" + separator + "ca2",
                 bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t\t\t\t\tATTRIBUTE_A\ta1\ta1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t\t\t\t\tATTRIBUTE_A2\tAttribute a2\ta2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t\t\t\t\tNOTEX\tNotex a3\ta3", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\t\t\tVALUENOTEX\tvn1\tvn1", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t\t\t\t\t\t\tVALUENOTEX\tvn2\tvn2", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tDestino 1\tda1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1\tca1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2\tca2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3\tca3", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4\tca4", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\tCategoría 5\tca5", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t\t\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\tINDICADORES_A\tioA_1\tioA_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t\t\t\t\tCELLNOTE_A\tcnA_1\tcnA_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2013\t2013\t\t\t\t\tCELLNOTE_A\tcnA_2\tcnA_2", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t\t\t\t\tCELLNOTE_A\tcnA_3\tcnA_3", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t\t\t\t\tCELLNOTE_A\tcnA_4\tcnA_4", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_1\tcnB_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_2\tcnB_2", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_3\tcnB_3", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_5\tcnB_5", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_6\tcnB_6", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_7\tcnB_7", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2013\t2013\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_B\tcnB_8\tcnB_8", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t1, 2 y 3 estrellas\t1_2_3_ESTRELLAS\t\t\tCELLNOTE_C\tCell C1\tcnC_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_C\tCell C2\tcnC_2", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\tAño 2012\t2012\t4 y 5 estrellas\t4_5_ESTRELLAS\t\t\tCELLNOTE_C\tCell C6\tcnC_6", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "\"1, 2 y 3 estrellas\"" + separator
+                    + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca3" + separator + "ca3",
+                    bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "1, 2 y 3 estrellas" + separator
+                    + "1_2_3_ESTRELLAS" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca3" + separator + "ca3",
+                    bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS"
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca4" + separator + "ca4",
+                bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS"
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator + "Categoría 5" + separator + "ca5",
+                bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "INDICADORES_A" + separator + "ioA_1" + separator + "ioA_1",
+                bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_1" + separator + "cnA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_2" + separator + "cnA_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_3" + separator + "cnA_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_A" + separator + "cnA_4" + separator + "cnA_4", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_1" + separator + "cnB_1", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_1" + separator + "cnB_1", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_2" + separator + "cnB_2", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_3" + separator + "cnB_3", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_3" + separator + "cnB_3", bufferedReaderAttributes.readLine());
+        }
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_5" + separator + "cnB_5", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_5" + separator + "cnB_5", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_6" + separator + "cnB_6", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_7" + separator + "cnB_7", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_7" + separator + "cnB_7", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_B" + separator + "cnB_8" + separator + "cnB_8", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C2" + separator + "cnC_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C6" + separator + "cnC_6", bufferedReaderAttributes.readLine());
         assertEquals(null, bufferedReaderAttributes.readLine());
         bufferedReaderAttributes.close();
+    }
+
+    private void validateObservationsWithDatasetAndDimensionAttachmentCodesAndLabels(String separator, File tmpFileObservations) throws Exception, IOException {
+        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "DESTINO_ALOJAMIENTO_CODE" + separator + "TIME_PERIOD" + separator + "TIME_PERIOD_CODE" + separator + "CATEGORIA_ALOJAMIENTO" + separator
+                + "CATEGORIA_ALOJAMIENTO_CODE" + separator + "INDICADORES" + separator + "INDICADORES_CODE" + separator + "OBS_VALUE" + separator + "ATTRIBUTE_B" + separator + "ATTRIBUTE_B_CODE"
+                + separator + "ATTRIBUTE_C" + separator + "ATTRIBUTE_C_CODE" + separator + "ATTRIBUTE_D" + separator + "ATTRIBUTE_D_CODE" + separator + "ATTRIBUTE_E" + separator + "ATTRIBUTE_E_CODE",
+                bufferedReader.readLine());
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "Attribute b1" + separator + "b1" + separator + StringUtils.EMPTY
+                    + separator + "Attribute d1" + separator + "d1" + separator + "e1" + separator + "e1", bufferedReader.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "Attribute b1" + separator + "b1" + separator + StringUtils.EMPTY
+                    + separator + "Attribute d1" + separator + "d1" + separator + "e1" + separator + "e1", bufferedReader.readLine());
+        }
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
+                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "2" + separator + "Attribute b2" + separator + "b2" + separator + StringUtils.EMPTY + separator
+                + "Attribute d2" + separator + "d2" + separator + "e2" + separator + "e2", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "Attribute b3" + separator + "b3" + separator + StringUtils.EMPTY
+                    + separator + "Attribute d3" + separator + "d3" + separator + "e3" + separator + "e3", bufferedReader.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "Attribute b3" + separator + "b3" + separator + StringUtils.EMPTY
+                    + separator + "Attribute d3" + separator + "d3" + separator + "e3" + separator + "e3", bufferedReader.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
+                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "4" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + StringUtils.EMPTY + separator + "Attribute d4" + separator + "d4" + separator + "e4" + separator + "e4", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "Attribute b5" + separator + "b5" + separator + StringUtils.EMPTY
+                    + separator + "Attribute d5" + separator + "d5" + separator + "e5" + separator + "e5", bufferedReader.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "Attribute b5" + separator + "b5" + separator + StringUtils.EMPTY
+                    + separator + "Attribute d5" + separator + "d5" + separator + "e5" + separator + "e5", bufferedReader.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
+                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "6" + separator + "Attribute b6" + separator + "b6" + separator + StringUtils.EMPTY + separator
+                + "Attribute d6" + separator + "d6" + separator + "e6" + separator + "e6", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "Attribute b7" + separator + "b7" + separator
+                    + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7" + separator + "e7", bufferedReader.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "Attribute b7" + separator + "b7" + separator
+                    + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7" + separator + "e7", bufferedReader.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
+                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "8" + separator + "Attribute b8" + separator + "b8" + separator + StringUtils.EMPTY + separator
+                + "Attribute d8" + separator + "d8" + separator + "e8" + separator + "e8", bufferedReader.readLine());
+        assertEquals(null, bufferedReader.readLine());
+        bufferedReader.close();
     }
 
     @Test
@@ -433,13 +830,8 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
 
-        File tmpFileObservations = tempFolder.newFile();
-        File tmpFileAttributes = tempFolder.newFile();
-        FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
-        FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
-
         //@formatter:off
-        DatasetSelectionForTsv datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -464,59 +856,225 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .buildForTsv();
         //@formatter:on
 
-        exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
-        outObservations.close();
-        outAttributes.close();
+        {
+            // TSV
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
 
-        // Validate attributes with dataset and dimension attachment
-        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
-        assertEquals(
-                "DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tINDICADORES_CODE\tOBS_VALUE\tATTRIBUTE_B\tATTRIBUTE_C\tATTRIBUTE_C_CODE\tATTRIBUTE_D\tATTRIBUTE_D_CODE\tATTRIBUTE_E",
-                bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t1.1\tb1\t\tAttribute d1\td1\te1", bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t2\tb2\t\tAttribute d2\td2\te2", bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t3\tb3\t\tAttribute d3\td3\te3", bufferedReader.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t4\t\t\tAttribute d4\td4\te4", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t5\tb5\t\tAttribute d5\td5\te5", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t6\tb6\t\tAttribute d6\td6\te6", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2013\t1, 2 y 3 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t\tb7\t\tAttribute d7\td7\te7", bufferedReader.readLine());
-        assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\t8\tb8\t\tAttribute d8\td8\te8", bufferedReader.readLine());
-        assertEquals(null, bufferedReader.readLine());
-        bufferedReader.close();
+            exportService.exportDatasetToTsv(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
 
-        // Validate attributes with dataset and dimension attachment
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileObservations, PlainTextTypeEnum.TSV.getSeparator());
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileAttributes, PlainTextTypeEnum.TSV.getSeparator());
+        }
+
+        {
+            // CSV comma separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvCommaSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileObservations, PlainTextTypeEnum.CSV_COMMA.getSeparator());
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileAttributes, PlainTextTypeEnum.CSV_COMMA.getSeparator());
+        }
+
+        {
+            // CSV semicolon separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportDatasetToCsvSemicolonSeparated(ctx, dataset, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileObservations, PlainTextTypeEnum.CSV_SEMICOLON.getSeparator());
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileAttributes, PlainTextTypeEnum.CSV_SEMICOLON.getSeparator());
+        }
+    }
+
+    private void validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(File tmpFileAttributes, String separator) throws Exception, IOException {
         BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
-        assertEquals("DESTINO_ALOJAMIENTO\tDESTINO_ALOJAMIENTO_CODE\tTIME_PERIOD\tCATEGORIA_ALOJAMIENTO\tINDICADORES\tINDICADORES_CODE\tATTRIBUTE\tATTRIBUTE_VALUE\tATTRIBUTE_VALUE_CODE",
-                bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t\t\tATTRIBUTE_A\t\ta1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t\t\tATTRIBUTE_A2\t\ta2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\t\t\tNOTEX\tNotex a3\t", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\tVALUENOTEX\tvn1\tvn1", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t\t\t\t\tVALUENOTEX\tvn2\tvn2", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t\t\t\t\tATTRIBUTE_DESTINO_ALOJAMIENTO_01\tDestino 1\t", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t1, 2 y 3 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca1\tca1", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t4 y 5 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_01\tca2\tca2", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t1, 2 y 3 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca3\tca3", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t4 y 5 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_02\tca4\tca4", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t4 y 5 estrellas\t\t\tATTRIBUTE_CATEGORIA_ALOJAMIENTO_03\t\tca5", bufferedReaderAttributes.readLine());
-        assertEquals("\t\t\t\tÍndice de ocupación de plazas\tINDICE_OCUPACION_PLAZAS\tINDICADORES_A\tioA_1\tioA_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t\t\t\tCELLNOTE_A\tcnA_1\tcnA_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2013\t\t\t\tCELLNOTE_A\tcnA_2\tcnA_2", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t\t\t\tCELLNOTE_A\tcnA_3\tcnA_3", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t2013\t\t\t\tCELLNOTE_A\tcnA_4\tcnA_4", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_1\tcnB_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_B\tcnB_2\tcnB_2", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2013\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_3\tcnB_3", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_5\tcnB_5", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_B\tcnB_6\tcnB_6", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t2013\t1, 2 y 3 estrellas\t\t\tCELLNOTE_B\tcnB_7\tcnB_7", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t2013\t4 y 5 estrellas\t\t\tCELLNOTE_B\tcnB_8\tcnB_8", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t1, 2 y 3 estrellas\t\t\tCELLNOTE_C\tCell C1\tcnC_1", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía\tANDALUCIA\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_C\tCell C2\tcnC_2", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón\tARAGON\t2012\t4 y 5 estrellas\t\t\tCELLNOTE_C\tCell C6\tcnC_6", bufferedReaderAttributes.readLine());
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "DESTINO_ALOJAMIENTO_CODE" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator
+                + "INDICADORES_CODE" + separator + "ATTRIBUTE" + separator + "ATTRIBUTE_VALUE" + separator + "ATTRIBUTE_VALUE_CODE", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + "ATTRIBUTE_A" + separator + StringUtils.EMPTY + separator + "a1", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + "ATTRIBUTE_A2" + separator + StringUtils.EMPTY + separator + "a2", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + "NOTEX" + separator + "Notex a3" + separator + StringUtils.EMPTY, bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + "VALUENOTEX" + separator + "vn1" + separator + "vn1", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + "VALUENOTEX" + separator + "vn2" + separator + "vn2", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "Destino 1" + separator + StringUtils.EMPTY, bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator
+                    + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca1" + separator + "ca1", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator
+                    + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca1" + separator + "ca1", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca2" + separator + "ca2", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator
+                    + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca3" + separator + "ca3", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator
+                    + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca3" + separator + "ca3", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca4" + separator + "ca4", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
+                + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator + StringUtils.EMPTY + separator + "ca5", bufferedReaderAttributes.readLine());
+        assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "Índice de ocupación de plazas" + separator
+                + "INDICE_OCUPACION_PLAZAS" + separator + "INDICADORES_A" + separator + "ioA_1" + separator + "ioA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + "CELLNOTE_A" + separator + "cnA_1" + separator + "cnA_1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + "CELLNOTE_A" + separator + "cnA_2" + separator + "cnA_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A"
+                + separator + "cnA_3" + separator + "cnA_3", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_A"
+                + separator + "cnA_4" + separator + "cnA_4", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_1" + separator + "cnB_1", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_1" + separator + "cnB_1", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + "CELLNOTE_B" + separator + "cnB_2" + separator + "cnB_2", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_3" + separator + "cnB_3", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_3" + separator + "cnB_3", bufferedReaderAttributes.readLine());
+        }
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_5" + separator + "cnB_5", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_5" + separator + "cnB_5", bufferedReaderAttributes.readLine());
+        }
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B"
+                + separator + "cnB_6" + separator + "cnB_6", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_7" + separator + "cnB_7", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_B" + separator + "cnB_7" + separator + "cnB_7", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_B"
+                + separator + "cnB_8" + separator + "cnB_8", bufferedReaderAttributes.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                    + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
+                + "CELLNOTE_C" + separator + "Cell C2" + separator + "cnC_2", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C"
+                + separator + "Cell C6" + separator + "cnC_6", bufferedReaderAttributes.readLine());
 
         assertEquals(null, bufferedReaderAttributes.readLine());
         bufferedReaderAttributes.close();
+    }
+
+    private void validateObservationsWithDatasetAndDimensionAttachmentCodesAndSomeLabels(File tmpFileObservations, String separator) throws Exception, IOException {
+        BufferedReader bufferedReader = createBufferedReader(tmpFileObservations);
+        assertEquals("DESTINO_ALOJAMIENTO" + separator + "DESTINO_ALOJAMIENTO_CODE" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator
+                + "INDICADORES_CODE" + separator + "OBS_VALUE" + separator + "ATTRIBUTE_B" + separator + "ATTRIBUTE_C" + separator + "ATTRIBUTE_C_CODE" + separator + "ATTRIBUTE_D" + separator
+                + "ATTRIBUTE_D_CODE" + separator + "ATTRIBUTE_E", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1" + separator + StringUtils.EMPTY + separator + "Attribute d1" + separator + "d1" + separator + "e1",
+                    bufferedReader.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1" + separator + StringUtils.EMPTY + separator + "Attribute d1" + separator + "d1" + separator + "e1",
+                    bufferedReader.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
+                + separator + "2" + separator + "b2" + separator + StringUtils.EMPTY + separator + "Attribute d2" + separator + "d2" + separator + "e2", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3" + separator + StringUtils.EMPTY + separator + "Attribute d3" + separator + "d3" + separator + "e3",
+                    bufferedReader.readLine());
+        } else {
+            assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3" + separator + StringUtils.EMPTY + separator + "Attribute d3" + separator + "d3" + separator + "e3",
+                    bufferedReader.readLine());
+        }
+
+        assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
+                + separator + "4" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "Attribute d4" + separator + "d4" + separator + "e4", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "b5" + separator + StringUtils.EMPTY + separator + "Attribute d5" + separator + "d5" + separator + "e5",
+                    bufferedReader.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
+                    + separator + "5" + separator + "b5" + separator + StringUtils.EMPTY + separator + "Attribute d5" + separator + "d5" + separator + "e5", bufferedReader.readLine());
+        }
+
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
+                + separator + "6" + separator + "b6" + separator + StringUtils.EMPTY + separator + "Attribute d6" + separator + "d6" + separator + "e6", bufferedReader.readLine());
+
+        if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
+                    + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "b7" + separator + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7",
+                    bufferedReader.readLine());
+        } else {
+            assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
+                    + separator + StringUtils.EMPTY + separator + "b7" + separator + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7", bufferedReader.readLine());
+        }
+        assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
+                + separator + "8" + separator + "b8" + separator + StringUtils.EMPTY + separator + "Attribute d8" + separator + "d8" + separator + "e8", bufferedReader.readLine());
+        assertEquals(null, bufferedReader.readLine());
+        bufferedReader.close();
     }
 
     @Override
@@ -551,7 +1109,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("TITLE[en]=\"title (en)\";", bufferedReader.readLine());
         assertEquals("DESCRIPTIONDEFAULT=YES;", bufferedReader.readLine());
         assertEquals("CONTENTS=\"TODO-CONTENTS\";", bufferedReader.readLine()); // (METAMAC-1927)
-        assertEquals("UNITS=\"TODO-UNITS\";", bufferedReader.readLine()); //  (METAMAC-1927)
+        assertEquals("UNITS=\"TODO-UNITS\";", bufferedReader.readLine()); // (METAMAC-1927)
         assertEquals("DECIMALS=2;", bufferedReader.readLine());
         assertEquals("STUB=\"CATEGORIA_ALOJAMIENTO\",\"INDICADORES\";", bufferedReader.readLine());
         assertEquals("HEADING=\"DESTINO_ALOJAMIENTO\",\"TIME_PERIOD\";", bufferedReader.readLine());
@@ -690,4 +1248,5 @@ public class ExportServiceTest implements ExportServiceTestBase {
     private BufferedReader createBufferedReader(File file, String encoding) throws Exception {
         return new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
     }
+
 }

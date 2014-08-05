@@ -12,37 +12,45 @@ import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.portal.core.domain.DatasetAccessForTsv;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForTsv;
+import org.siemac.metamac.portal.core.domain.DatasetAccessForPlainText;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
+import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
-public class TsvExporter {
+public class PlainTextExporter {
 
-    private final DatasetAccessForTsv datasetAccess;
+    private final DatasetAccessForPlainText datasetAccess;
 
-    private final String              SEPARATOR                           = "\t";
-    private final String              HEADER_OBSERVATION                  = "OBS_VALUE";
-    private final String              HEADER_ATTRIBUTE_ID                 = "ATTRIBUTE";
-    private final String              HEADER_ATTRIBUTE_VALUE              = "ATTRIBUTE_VALUE";
-    private final String              HEADER_ATTRIBUTE_VALUE_CODE         = "ATTRIBUTE_VALUE_CODE";
-    private final String              HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE = "_CODE";
+    private final String                    ESCAPE_DOUBLE_QUOTES                = "\"";
+    private final String                    HEADER_OBSERVATION                  = "OBS_VALUE";
+    private final String                    HEADER_ATTRIBUTE_ID                 = "ATTRIBUTE";
+    private final String                    HEADER_ATTRIBUTE_VALUE              = "ATTRIBUTE_VALUE";
+    private final String                    HEADER_ATTRIBUTE_VALUE_CODE         = "ATTRIBUTE_VALUE_CODE";
+    private final String                    HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE = "_CODE";
+    private static final boolean            ESCAPE_IF_NECESSARY                 = true;
 
-    public TsvExporter(Dataset dataset, DatasetSelectionForTsv datasetSelection, String lang, String langAlternative) throws MetamacException {
-        this.datasetAccess = new DatasetAccessForTsv(dataset, datasetSelection, lang, langAlternative);
+    private PlainTextTypeEnum               plainTextTypeEnum                   = null;
+
+    public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, String langAlternative) throws MetamacException {
+        this.datasetAccess = new DatasetAccessForPlainText(dataset, datasetSelection, lang, langAlternative);
+        this.plainTextTypeEnum = plainTextTypeEnum;
+        if (this.plainTextTypeEnum == null) {
+            throw new MetamacException(ServiceExceptionType.UNKNOWN, "Plain Text format is required ");
+        }
     }
 
     public void writeObservationsAndAttributesWithObservationAttachmentLevel(OutputStream os) throws MetamacException {
         PrintWriter printWriter = null;
         try {
             printWriter = new PrintWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
-            writeHeaderForTsvObservations(printWriter);
-            writeBodyForTsvObservations(printWriter);
+            writeHeaderForPlainTextObservations(printWriter);
+            writeBodyForPlainTextObservations(printWriter);
         } catch (Exception e) {
-            throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error exporting to tsv");
+            throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error exporting to " + plainTextTypeEnum.getName());
         } finally {
             if (printWriter != null) {
                 printWriter.flush();
@@ -56,12 +64,12 @@ public class TsvExporter {
             printWriter = new PrintWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
 
             int numberOfColumnsToAttributeValue = guessNumberOfColumnsToAttributeValue();
-            writeHeaderForTsvAttributes(printWriter, numberOfColumnsToAttributeValue);
-            writeBodyForTsvAttributesDataset(printWriter, datasetAccess.getAttributesMetadata(), numberOfColumnsToAttributeValue);
-            writeBodyForTsvAttributesDimensions(printWriter, datasetAccess.getAttributesMetadata(), numberOfColumnsToAttributeValue);
-            // NOTE: Attributes observations are exported another tsv
+            writeHeaderForPlainTextAttributes(printWriter, numberOfColumnsToAttributeValue);
+            writeBodyForPlainTextAttributesDataset(printWriter, datasetAccess.getAttributesMetadata(), numberOfColumnsToAttributeValue);
+            writeBodyForPlainTextAttributesDimensions(printWriter, datasetAccess.getAttributesMetadata(), numberOfColumnsToAttributeValue);
+            // NOTE: Attributes observations are exported another plain text
         } catch (Exception e) {
-            throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error exporting to tsv");
+            throw new MetamacException(e, ServiceExceptionType.UNKNOWN, "Error exporting to " + plainTextTypeEnum.getName());
         } finally {
             if (printWriter != null) {
                 printWriter.flush();
@@ -69,15 +77,15 @@ public class TsvExporter {
         }
     }
 
-    private void writeHeaderForTsvObservations(PrintWriter printWriter) {
+    private void writeHeaderForPlainTextObservations(PrintWriter printWriter) {
         StringBuilder header = new StringBuilder();
         for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
             LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
             if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
-                header.append(dimensionId + SEPARATOR);
+                header.append(escapeString(dimensionId, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
             }
             if (labelVisualisation.isCode() && labelVisualisation.isLabel()) {
-                header.append(dimensionId + HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE + SEPARATOR);
+                header.append(escapeString(dimensionId + HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
             }
         }
         header.append(HEADER_OBSERVATION);
@@ -88,16 +96,16 @@ public class TsvExporter {
             String attributeId = attribute.getId();
             LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
             if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
-                header.append(SEPARATOR + attributeId);
+                header.append(plainTextTypeEnum.getSeparator() + escapeString(attributeId, ESCAPE_IF_NECESSARY));
             }
             if (labelVisualisation.isCode() && labelVisualisation.isLabel()) {
-                header.append(SEPARATOR + attributeId + HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE);
+                header.append(plainTextTypeEnum.getSeparator() + escapeString(attributeId + HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE, ESCAPE_IF_NECESSARY));
             }
         }
         printWriter.println(header);
     }
 
-    private void writeBodyForTsvObservations(PrintWriter printWriter) {
+    private void writeBodyForPlainTextObservations(PrintWriter printWriter) {
         Stack<DataOrderingStackElement> stack = new Stack<DataOrderingStackElement>();
         stack.push(new DataOrderingStackElement(null, -1, null));
         ArrayList<String> entryId = new ArrayList<String>(datasetAccess.getDimensionsMetadata().size());
@@ -126,10 +134,10 @@ public class TsvExporter {
                     LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
                     if (labelVisualisation.isLabel()) {
                         String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId);
-                        line.append(dimensionValueLabel + SEPARATOR);
+                        line.append(escapeString(dimensionValueLabel, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
                     }
                     if (labelVisualisation.isCode()) {
-                        line.append(dimensionValueId + SEPARATOR);
+                        line.append(escapeString(dimensionValueId, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
                     }
                 }
 
@@ -138,7 +146,7 @@ public class TsvExporter {
                 if (observation == null) {
                     observation = StringUtils.EMPTY;
                 }
-                line.append(observation);
+                line.append(escapeString(observation, ESCAPE_IF_NECESSARY));
 
                 // Attributes
                 for (Attribute attribute : datasetAccess.getAttributesMetadata()) {
@@ -153,15 +161,16 @@ public class TsvExporter {
                     }
                     if (attributeValue == null) {
                         attributeValue = StringUtils.EMPTY;
-                        line.append(SEPARATOR + attributeValue);
+                        line.append(plainTextTypeEnum.getSeparator() + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
                     } else {
                         LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
                         if (labelVisualisation.isLabel()) {
                             String attributeValueLabel = datasetAccess.getAttributeValueLabel(attributeId, attributeValue);
-                            line.append(attributeValueLabel != null ? SEPARATOR + attributeValueLabel : SEPARATOR + attributeValue);
+                            line.append(attributeValueLabel != null ? plainTextTypeEnum.getSeparator() + escapeString(attributeValueLabel, ESCAPE_IF_NECESSARY) : plainTextTypeEnum.getSeparator()
+                                    + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
                         }
                         if (labelVisualisation.isCode()) {
-                            line.append(SEPARATOR + attributeValue);
+                            line.append(plainTextTypeEnum.getSeparator() + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
                         }
                     }
                 }
@@ -179,26 +188,26 @@ public class TsvExporter {
         }
     }
 
-    private void writeHeaderForTsvAttributes(PrintWriter printWriter, int numberOfColumnsToAttributeValue) {
+    private void writeHeaderForPlainTextAttributes(PrintWriter printWriter, int numberOfColumnsToAttributeValue) {
         StringBuilder header = new StringBuilder();
         for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
             LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
             if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
-                header.append(dimensionId + SEPARATOR);
+                header.append(escapeString(dimensionId, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
             }
             if (labelVisualisation.isCode() && labelVisualisation.isLabel()) {
-                header.append(dimensionId + HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE + SEPARATOR);
+                header.append(escapeString(dimensionId + HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
             }
         }
         header.append(HEADER_ATTRIBUTE_ID);
-        header.append(SEPARATOR + HEADER_ATTRIBUTE_VALUE);
+        header.append(plainTextTypeEnum.getSeparator() + escapeString(HEADER_ATTRIBUTE_VALUE, ESCAPE_IF_NECESSARY));
         if (numberOfColumnsToAttributeValue == 2) {
-            header.append(SEPARATOR + HEADER_ATTRIBUTE_VALUE_CODE); // put this column only when it is necessary
+            header.append(plainTextTypeEnum.getSeparator() + escapeString(HEADER_ATTRIBUTE_VALUE_CODE, ESCAPE_IF_NECESSARY)); // put this column only when it is necessary
         }
         printWriter.println(header);
     }
 
-    private void writeBodyForTsvAttributesDataset(PrintWriter printWriter, List<Attribute> attributes, int numberOfColumnsToAttributeValue) {
+    private void writeBodyForPlainTextAttributesDataset(PrintWriter printWriter, List<Attribute> attributes, int numberOfColumnsToAttributeValue) {
         for (Attribute attribute : attributes) {
             if (!AttributeAttachmentLevelType.DATASET.equals(attribute.getAttachmentLevel())) {
                 continue;
@@ -214,22 +223,22 @@ public class TsvExporter {
                 // Write empty code dimensions
                 LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
                 if (labelVisualisation.isLabel()) {
-                    line.append(SEPARATOR);
+                    line.append(plainTextTypeEnum.getSeparator());
                 }
                 if (labelVisualisation.isCode()) {
-                    line.append(SEPARATOR);
+                    line.append(plainTextTypeEnum.getSeparator());
                 }
             }
             // Attribute Id
-            line.append(attributeId + SEPARATOR);
+            line.append(escapeString(attributeId, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
             // Attribute value
             String attributeValue = attributeValues[0];
-            writeBodyAttributeValueForTsvAttributes(line, attributeId, attributeValue, numberOfColumnsToAttributeValue);
+            writeBodyAttributeValueForPlainTextAttributes(line, attributeId, attributeValue, numberOfColumnsToAttributeValue);
             printWriter.println(line);
         }
     }
 
-    private void writeBodyForTsvAttributesDimensions(PrintWriter printWriter, List<Attribute> attributes, int numberOfColumnsToAttributeValue) {
+    private void writeBodyForPlainTextAttributesDimensions(PrintWriter printWriter, List<Attribute> attributes, int numberOfColumnsToAttributeValue) {
         for (Attribute attribute : attributes) {
             if (!AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel())) {
                 continue;
@@ -240,11 +249,11 @@ public class TsvExporter {
                 continue;
             }
             List<String> dimensionsAttributeOrderedForData = datasetAccess.getDimensionsAttributeOrderedForData(attribute);
-            writeBodyForTsvAttributeDimensions(printWriter, attributeId, attributeValues, dimensionsAttributeOrderedForData, numberOfColumnsToAttributeValue);
+            writeBodyForPlainTextAttributeDimensions(printWriter, attributeId, attributeValues, dimensionsAttributeOrderedForData, numberOfColumnsToAttributeValue);
         }
     }
 
-    private void writeBodyForTsvAttributeDimensions(PrintWriter printWriter, String attributeId, String[] attributeValues, List<String> dimensionsAttributeOrderedForData,
+    private void writeBodyForPlainTextAttributeDimensions(PrintWriter printWriter, String attributeId, String[] attributeValues, List<String> dimensionsAttributeOrderedForData,
             int numberOfColumnsToAttributeValue) {
 
         Stack<DataOrderingStackElement> stack = new Stack<DataOrderingStackElement>();
@@ -275,21 +284,21 @@ public class TsvExporter {
                         if (labelVisualisation.isLabel()) {
                             if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
                                 String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId);
-                                line.append(dimensionValueLabel);
+                                line.append(escapeString(dimensionValueLabel, ESCAPE_IF_NECESSARY));
                             }
-                            line.append(SEPARATOR);
+                            line.append(plainTextTypeEnum.getSeparator());
                         }
                         if (labelVisualisation.isCode()) {
                             if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
-                                line.append(dimensionValueId);
+                                line.append(escapeString(dimensionValueId, ESCAPE_IF_NECESSARY));
                             }
-                            line.append(SEPARATOR);
+                            line.append(plainTextTypeEnum.getSeparator());
                         }
                     }
                     // Attribute Id
-                    line.append(attributeId + SEPARATOR);
+                    line.append(escapeString(attributeId, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
                     // Attribute value
-                    writeBodyAttributeValueForTsvAttributes(line, attributeId, attributeValue, numberOfColumnsToAttributeValue);
+                    writeBodyAttributeValueForPlainTextAttributes(line, attributeId, attributeValue, numberOfColumnsToAttributeValue);
                     printWriter.println(line);
                 }
             } else {
@@ -303,16 +312,18 @@ public class TsvExporter {
         }
     }
 
-    private void writeBodyAttributeValueForTsvAttributes(StringBuilder line, String attributeId, String attributeValueCode, int numberOfColumnsToAttributeValue) {
+    private void writeBodyAttributeValueForPlainTextAttributes(StringBuilder line, String attributeId, String attributeValueCode, int numberOfColumnsToAttributeValue) {
         LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
+        attributeValueCode = escapeString(attributeValueCode, ESCAPE_IF_NECESSARY);
         if (labelVisualisation.isLabel()) {
             String attributeValueLabel = datasetAccess.getAttributeValueLabel(attributeId, attributeValueCode);
+            attributeValueLabel = escapeString(attributeValueLabel, ESCAPE_IF_NECESSARY);
             line.append(attributeValueLabel != null ? attributeValueLabel : attributeValueCode);
             if (numberOfColumnsToAttributeValue == 2) {
-                line.append(SEPARATOR);
+                line.append(plainTextTypeEnum.getSeparator());
             }
         } else if (numberOfColumnsToAttributeValue == 2) {
-            line.append(SEPARATOR);
+            line.append(plainTextTypeEnum.getSeparator());
         }
         if (labelVisualisation.isCode()) {
             line.append(attributeValueCode);
@@ -332,4 +343,23 @@ public class TsvExporter {
         }
         return 1;
     }
+
+    private String escapeString(String source, boolean escapeOnlyIfNecessary) {
+        if (StringUtils.isEmpty(source)) {
+            return source;
+        }
+
+        if (escapeOnlyIfNecessary) {
+            if (!source.contains(plainTextTypeEnum.getSeparator())) {
+                return source;
+            }
+            if (source.startsWith(ESCAPE_DOUBLE_QUOTES) && source.endsWith(ESCAPE_DOUBLE_QUOTES)) {
+                return source; // Already escaped
+            }
+        }
+
+        // Escape always
+        return ESCAPE_DOUBLE_QUOTES + source + ESCAPE_DOUBLE_QUOTES;
+    }
+
 }
