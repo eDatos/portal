@@ -1,9 +1,9 @@
 package org.siemac.metamac.portal.core.serviceapi.utils;
 
-import org.siemac.metamac.portal.core.domain.Permalink;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import org.siemac.metamac.portal.core.domain.Permalink;
 
 public class Asserts {
 
@@ -31,6 +31,12 @@ public class Asserts {
             for (int j = 0; j < expected[0].length; j++) {
                 assertEquals("Value [" + i + ", " + j + "] not equals", expected[i][j], actual[i][j]);
             }
+        }
+    }
+
+    public static void assertBytesArray(byte[] expected, byte[] actual) {
+        if (!new String(expected).equals(new String(actual))) {
+            fail("The bytes aren't the same");
         }
     }
 }

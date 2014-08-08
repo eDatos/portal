@@ -62,11 +62,28 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, LabelVisualisationModeEnum.CODE).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE)
+                .attribute("NOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
                 .buildForExcel();
 
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
+        tmpFile = new File("K:/temp/Excel_TEST/text1.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -74,17 +91,9 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         out.close();
 
-        String[][] content = ExcelUtils.readExcelContent(tmpFile);
-        //@formatter:off
-        String[][] expected = {
-                {null, null, "1_2_3_ESTRELLAS", "4_5_ESTRELLAS"},
-                {"ANDALUCIA", "2012", "1.1", "2"},
-                {null, "2013", "3", "4"},
-                {"ARAGON", "2012", "5", "6"},
-                {null, "2013", "", "8"}
-        };
-        //@formatter:on
-        Asserts.assertArrayEquals(expected, content);
+        // Check excel checksum
+        byte[] expected = new byte[]{60, -54, 18, 59, -43, -68, 103, -118, -84, 35, -117, 83, 127, -76, 50, 23};
+        Asserts.assertBytesArray(expected, ExcelUtils.createExcelContentHash(tmpFile));
     }
 
     @Test
@@ -100,6 +109,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
+        tmpFile = new File("K:/temp/Excel_TEST/text2.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -107,17 +117,9 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         out.close();
 
-        String[][] content = ExcelUtils.readExcelContent(tmpFile);
-        //@formatter:off
-        String[][] expected = {
-                {null, null, "1, 2 y 3 estrellas", "4 y 5 estrellas"},
-                {"Andalucía", "Año 2012", "1.1", "2"},
-                {null, "Año 2013", "3", "4"},
-                {"Aragón", "Año 2012", "5", "6"},
-                {null, "Año 2013", "", "8"}
-        };
-        //@formatter:on
-        Asserts.assertArrayEquals(expected, content);
+        // Check excel checksum
+        byte[] expected = new byte[]{107, -124, -50, -9, -32, -60, -70, -4, -68, 105, -101, -1, -79, 100, -19, -2};
+        Asserts.assertBytesArray(expected, ExcelUtils.createExcelContentHash(tmpFile));
     }
 
     @Test
@@ -133,6 +135,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
+        tmpFile = new File("K:/temp/Excel_TEST/text3.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -140,17 +143,9 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         out.close();
 
-        String[][] content = ExcelUtils.readExcelContent(tmpFile);
-        //@formatter:off
-        String[][] expected = {
-                {null, null, "1, 2 y 3 estrellas (1_2_3_ESTRELLAS)", "4 y 5 estrellas (4_5_ESTRELLAS)"},
-                {"Andalucía (ANDALUCIA)", "Año 2012 (2012)", "1.1", "2"},
-                {null, "Año 2013 (2013)", "3", "4"},
-                {"Aragón (ARAGON)", "Año 2012 (2012)", "5", "6"},
-                {null, "Año 2013 (2013)", "", "8"}
-        };
-        //@formatter:on
-        Asserts.assertArrayEquals(expected, content);
+        // Check excel checksum
+        byte[] expected = new byte[]{53, -110, 121, 91, 120, 4, -66, 112, 0, 90, -111, -33, -17, 52, 80, 25};
+        Asserts.assertBytesArray(expected, ExcelUtils.createExcelContentHash(tmpFile));
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class DatasetSelectionForExcel extends DatasetSelection {
 
+    // We only support a max of 20 dimensions each type
     public static final int            LEFT_DIMENSIONS_START_POSITION  = 0;
     public static final int            TOP_DIMENSIONS_START_POSITION   = 20;
     public static final int            FIXED_DIMENSIONS_START_POSITION = 40;
@@ -25,12 +26,14 @@ public class DatasetSelectionForExcel extends DatasetSelection {
     }
 
     private void initializeMultipliers(List<DatasetSelectionDimension> dimensions) {
-        ListIterator<DatasetSelectionDimension> li = dimensions.listIterator(dimensions.size());
-        int ac = 1;
-        while (li.hasPrevious()) {
-            DatasetSelectionDimension dimension = li.previous();
-            multipliers.put(dimension.getId(), ac);
-            ac *= dimension.getSelectedDimensionValues().size();
+        ListIterator<DatasetSelectionDimension> dimensionsListInterator = dimensions.listIterator(dimensions.size());
+        int incrementCounter = 1;
+
+        // Iterate the list in reverse order: right to left or down to up in the display table for calculate cell spacing
+        while (dimensionsListInterator.hasPrevious()) {
+            DatasetSelectionDimension dimension = dimensionsListInterator.previous();
+            multipliers.put(dimension.getId(), incrementCounter);
+            incrementCounter *= dimension.getSelectedDimensionValues().size();
         }
     }
 
@@ -41,6 +44,11 @@ public class DatasetSelectionForExcel extends DatasetSelection {
         }
     }
 
+    /**
+     * Calculate rows
+     * 
+     * @return the number of total rows in the displayed data table
+     */
     public int getRows() {
         List<DatasetSelectionDimension> leftDimensions = getLeftDimensions();
         if (leftDimensions.size() > 0) {
@@ -51,6 +59,11 @@ public class DatasetSelectionForExcel extends DatasetSelection {
         }
     }
 
+    /**
+     * Calculate columns
+     * 
+     * @return the number of total columns in the displayed data table
+     */
     public int getColumns() {
         List<DatasetSelectionDimension> topDimensions = getTopDimensions();
         if (topDimensions.size() > 0) {
@@ -89,11 +102,18 @@ public class DatasetSelectionForExcel extends DatasetSelection {
 
             @Override
             public int compare(DatasetSelectionDimension datasetSelectionDimension, DatasetSelectionDimension datasetSelectionDimension2) {
-                return datasetSelectionDimension.getPosition() - datasetSelectionDimension2.getPosition();
+                return datasetSelectionDimension.getPosition() - datasetSelectionDimension2.getPosition(); // Ascending sort
             }
         });
     }
 
+    /**
+     * Calculate the key permutation for a cell of data
+     * 
+     * @param row
+     * @param column
+     * @return
+     */
     public Map<String, String> permutationAtCell(int row, int column) {
         Map<String, String> permutation = new HashMap<String, String>();
 
