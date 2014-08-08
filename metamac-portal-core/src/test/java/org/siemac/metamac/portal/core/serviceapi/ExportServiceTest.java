@@ -83,7 +83,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
-        tmpFile = new File("K:/temp/Excel_TEST/text1.xlsx");
+        // tmpFile = new File("K:/temp/Excel_TEST/text1.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -109,7 +109,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
-        tmpFile = new File("K:/temp/Excel_TEST/text2.xlsx");
+        // tmpFile = new File("K:/temp/Excel_TEST/text2.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -135,7 +135,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
-        tmpFile = new File("K:/temp/Excel_TEST/text3.xlsx");
+        // tmpFile = new File("K:/temp/Excel_TEST/text3.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
