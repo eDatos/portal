@@ -83,7 +83,6 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
-        // tmpFile = new File("K:/temp/Excel_TEST/text1.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -109,7 +108,6 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
-        // tmpFile = new File("K:/temp/Excel_TEST/text2.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -135,7 +133,6 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
-        // tmpFile = new File("K:/temp/Excel_TEST/text3.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -144,7 +141,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         out.close();
 
         // Check excel checksum
-        byte[] expected = new byte[]{53, -110, 121, 91, 120, 4, -66, 112, 0, 90, -111, -33, -17, 52, 80, 25};
+        byte[] expected = new byte[]{-66, -1, -51, 126, 26, -33, -48, -44, 11, -107, -128, 26, -3, 121, -59, -89};
         Asserts.assertBytesArray(expected, ExcelUtils.createExcelContentHash(tmpFile));
     }
 
