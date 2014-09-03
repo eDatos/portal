@@ -32,7 +32,7 @@
             ;
 
         number = parts[0];
-        decimals = parts[1];
+        decimals = parts[1]  || '';
 
         while (number.length > 0) {
             buffer.unshift(number.substr(Math.max(0, number.length - 3), 3));
@@ -41,12 +41,15 @@
 
         formattedNumber = buffer.join(options.delimiter);
         
-        if (options.decimals) {
+        if (!_.isUndefined(options.decimals)) {
     		decimals = decimals || "";
         	decimals = decimals.substring(0, options.decimals);    
             _.times(options.decimals - decimals.length, function () { decimals += "0"; });
         }
-        formattedNumber += options.separator + decimals;  
+
+        if (decimals) {
+            formattedNumber += options.separator + decimals;  
+        }
         
         if (negative) {
             formattedNumber = "-" + formattedNumber;

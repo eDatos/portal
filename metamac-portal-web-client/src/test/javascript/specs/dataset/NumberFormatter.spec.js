@@ -38,6 +38,16 @@ describe("Number Formatter", function () {
 
         var strNumberToLocalizedString = App.dataset.data.NumberFormatter.strNumberToLocalizedString;
 
+        it("should parse integer numbers", function() {
+            I18n.locale = 'es';
+            expect(strNumberToLocalizedString("3954")).to.eql("3.954");
+        });
+
+        it("should parse numbers, be careful with the zero", function() {
+            I18n.locale = 'es';
+            expect(strNumberToLocalizedString("3954.0")).to.eql("3.954,0");
+        });
+
         describe('format using locale', function () {
 
             it('spanish', function () {
@@ -60,6 +70,10 @@ describe("Number Formatter", function () {
             
             it('should add zeroes if necessary', function () {
                 expect(strNumberToLocalizedString("3954.68216026", {decimals : 12})).to.eql("3.954,682160260000");
+            });
+
+            it('should work properly with zero decimals', function () {
+                expect(strNumberToLocalizedString("3954.68216026", {decimals : 0})).to.eql("3.954");
             });
 
         });
