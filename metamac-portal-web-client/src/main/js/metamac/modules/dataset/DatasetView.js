@@ -180,23 +180,7 @@
         },  
         _updateSidebarHeight : function (height) {
             this.content.$el.find('.sidebar-container').height(height);   
-        },
-        
-        // Deprecated
-        updatePageTitle : function() {
-        	document.title = I18n.t("page.titlePreffix") + " " + this.filterDimensions.metadata.getTitle();
-        },
-        
-        // Deprecated
-        updatePageDescription : function() {
-        	if ($('meta[name=description]').length) {
-        		$('meta[name=description]').attr('description',  this.filterDimensions.metadata.getDescription());
-        	} else {
-        		$('head').append('<meta name="description" content="' + this.filterDimensions.metadata.getDescription() + '" />');
-        	}
         }
-        
-
     });
 
 }());

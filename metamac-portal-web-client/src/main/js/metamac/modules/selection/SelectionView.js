@@ -100,9 +100,6 @@
 
             this._unbindEvents();
             this._bindEvents();
-            
-            this.updatePageTitle();
-            this.updatePageDescription();
         },
         
         _initializeFullScreen : function () {
@@ -163,19 +160,7 @@
             controllerParams.fullScreen = this.optionsModel.get('fullScreen');
 
             this.controller.showDatasetVisualization(controllerParams);
-        },
-
-        updatePageTitle : function() {
-        	document.title = I18n.t("page.titlePreffix") + " " + this.filterDimensions.metadata.getTitle();
-        },
-        updatePageDescription : function() {
-        	if ($('meta[name=description]').length) {
-        		$('meta[name=description]').attr('description',  this.filterDimensions.metadata.getDescription());
-        	} else {
-        		$('head').append('<meta name="description" content="' + this.filterDimensions.metadata.getDescription() + '" />');
-        	}
         }
-
     });
 
 }());
