@@ -130,8 +130,9 @@
             // if (this.tooltip) {
             //     this.tooltip.destroy();
             // }
-
-            this.map.destroy();
+            if (this.map) {
+                this.map.destroy();
+            }
 
             this.undelegateEvents();
         },
