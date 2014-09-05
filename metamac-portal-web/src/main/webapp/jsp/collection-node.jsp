@@ -8,6 +8,7 @@
 
 <ul class="capitulos">
     <%
+    	Helpers helper = new Helpers(request.getLocale().getLanguage());
         Integer nodeDepth = (Integer)request.getAttribute("nodeDepth");
         if (nodeDepth == null) {
             nodeDepth = 1;
@@ -28,11 +29,11 @@
         	<% if (chapter.getNodes() != null) { %>
             	<c:if test="${nodeDepth > 2}"><a href="#" class="tree-icon"></a></c:if>
             <% } %>
-            <%= Helpers.localizeText(chapter.getName()) %>
+            <%= helper.localizeText(chapter.getName()) %>
         </span>
         <div class="dimension-description">
 	        <c:if test="${nodeDepth <= 2}">
-	        	<%= Helpers.localizeText(chapter.getDescription()) %>
+	        	<%= helper.localizeText(chapter.getDescription()) %>
 	        </c:if>
 	    </div>
         <% if (chapter.getNodes() != null) { 
@@ -62,7 +63,7 @@
     <li>
         <i class="icon-collection-table"></i>
         <span class="item-numeration">${numerationFixed}</span>
-        <a class="nouline" href="<%= Helpers.tableViewUrl(table) %>"><%= Helpers.localizeText(table.getName()) %>
+        <a class="nouline" href="<%= Helpers.tableViewUrl(table) %>"><%= helper.localizeText(table.getName()) %>
         </a>
     </li>
 

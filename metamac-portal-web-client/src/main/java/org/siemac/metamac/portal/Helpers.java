@@ -18,7 +18,22 @@ import org.siemac.metamac.portal.mapper.Query2DtoMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Helpers {    
+public class Helpers {
+    
+    private String language;
+    
+    public Helpers(String language) {
+        if (language.isEmpty()) {
+            this.language = "es";
+        } else {
+            this.language = language;
+        }
+    }
+    
+    public static String getPackageVersion() {
+        Package packageInfo = Package.getPackage("org.siemac.metamac.portal");
+        return packageInfo.getImplementationVersion();
+    }
 
     public static Collection getCollection(String apiUrlStatisticalResources, Boolean internalPortal, String agencyId, String resourceId) {
         Collection collection = null;
@@ -125,10 +140,10 @@ public class Helpers {
         return total;
     }
 
-    public static String localizeText(InternationalString internationalString) {
+    public String localizeText(InternationalString internationalString) {
         if (internationalString != null) {
             for (LocalisedString text : internationalString.getTexts()) {
-                if (text.getLang().equals("es")) {
+                if (text.getLang().equals(this.language)) {
                     return text.getValue();
                 }
             }

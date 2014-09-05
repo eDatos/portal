@@ -17,6 +17,9 @@
 <%@ tag import="java.util.Date" %>
 <%@ tag import="java.text.SimpleDateFormat" %>
 	<%
+	
+		Helpers helper = new Helpers(request.getLocale().getLanguage());
+	
 		ServletContext context = request.getSession().getServletContext();
 		String cssPath = context.getRealPath("client/metamac.css");
 		File cssFile = new File(cssPath);
@@ -89,9 +92,9 @@
             Collection collection = Helpers.getCollection(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);     	  	
     	    if (collection != null) {	        
     	        request.setAttribute("resourceEmpty", false);
-    	        request.setAttribute("resourceName", Helpers.localizeText(collection.getName()));
-    	        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(collection.getDescription())));
-    	        request.setAttribute("resourceDescription", Helpers.localizeText(collection.getDescription()));
+    	        request.setAttribute("resourceName", helper.localizeText(collection.getName()));
+    	        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(collection.getDescription())));
+    	        request.setAttribute("resourceDescription", helper.localizeText(collection.getDescription()));
                 
     	        request.setAttribute("collection", collection);
                 request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
@@ -102,18 +105,18 @@
 	        
 	        if (dataset != null) {
 		        request.setAttribute("resourceEmpty", false);
-		        request.setAttribute("resourceName", Helpers.localizeText(dataset.getName()));
-		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(dataset.getDescription())));
-    	        request.setAttribute("resourceDescription", Helpers.localizeText(dataset.getDescription()));
+		        request.setAttribute("resourceName", helper.localizeText(dataset.getName()));
+		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(dataset.getDescription())));
+    	        request.setAttribute("resourceDescription", helper.localizeText(dataset.getDescription()));
 	        }
 	    } else if ("query".equals(resourceType)) {
 	        Query query = Helpers.getQuery(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);
 	        
 	        if (query != null) {
 		        request.setAttribute("resourceEmpty", false);
-		        request.setAttribute("resourceName", Helpers.localizeText(query.getName()));
-		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(Helpers.localizeText(query.getDescription())));
-    	        request.setAttribute("resourceDescription", Helpers.localizeText(query.getDescription()));  
+		        request.setAttribute("resourceName", helper.localizeText(query.getName()));
+		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(query.getDescription())));
+    	        request.setAttribute("resourceDescription", helper.localizeText(query.getDescription()));  
 	        }  
 	    } else {	
 	        request.setAttribute("resourceName", "Visualizador estadístico");
