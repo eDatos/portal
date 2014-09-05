@@ -68,8 +68,6 @@
             series : [],             
 
             credits : {
-                href : I18n.t("credits.text"),
-                text : I18n.t("credits.text"),
                 position : {
                     y : -15
                 }
@@ -364,6 +362,10 @@
 
             this._defaultMapOptions.chart.renderTo = this.el;
             this._defaultMapOptions.colorAxis.dataClasses = this._generateDataClasses();
+
+            this._defaultMapOptions.credits.text = this._dataset ? this._dataset.metadata.getRightsHolder().name : '';
+//            this._defaultMapOptions.credits.href = this._dataset ? this._dataset.metadata.getRightsHolder().href : '';
+
 
             this.map = new Highmaps.Map(this._defaultMapOptions);
 

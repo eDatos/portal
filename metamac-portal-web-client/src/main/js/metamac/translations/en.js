@@ -1,11 +1,7 @@
 I18n.translations || (I18n.translations = {});
 
 I18n.translations.en = {
-	
-	credits : {
-        href : "http://www.gobiernodecanarias.org/istac",
-        text : "http://www.gobiernodecanarias.org/istac"
-    },
+
     number : {
 		format : {
 			separator : ".", /* Decimal */

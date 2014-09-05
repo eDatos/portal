@@ -210,6 +210,9 @@ App.namespace("App.VisualElement.LineChart");
             this._chartOptions.xAxis.max = detailData.max;
             this._chartOptions.xAxis.tickInterval = detailData.tickInterval;
 
+            this._chartOptions.credits.text = this.dataset ? this.dataset.metadata.getRightsHolder().name : '';
+//            this._chartOptions.credits.href = this.dataset ? this.dataset.metadata.getRightsHolder().href : '';
+
             this.detailChart = new Highcharts.Chart(this._chartOptions);
         },
 

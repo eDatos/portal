@@ -4,11 +4,12 @@
 
     var SVGNode = App.svg.SVGNode;
 
+    // Deprecated
     App.Map.CredistView = Backbone.View.extend({
 
         render : function () {
             var creditsNode = new SVGNode('text');
-            creditsNode.node.textContent = I18n.t("credits.text");
+            creditsNode.node.textContent = "";
             creditsNode.set({"class" : "credits"});
 
             var elNode = new SVGNode(this.el);
