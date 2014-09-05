@@ -13,9 +13,6 @@ I18n.translations.pt = {
                 strip_insignificant_zeros : false
             }
         },  
-        page : {
-            titlePreffix : "ISTAC |"
-        },  
         filter : {
             button : {
                 edit : "Modificar seleção",
@@ -60,8 +57,15 @@ I18n.translations.pt = {
                 mapbubble : "Territorios",
                 "for" : "Para"
             },
-            sidebar : {
+            sidebar : {            
+                info : {
+                    title: "Info"
+                },
+                filter : {
+                    title : "Filtro"
+                },
                 order : {
+                    title : "Ordem",
                     canvasTable : {
                         fixed : "Valores fixos",
                         left : "Linhas",

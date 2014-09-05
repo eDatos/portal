@@ -9,12 +9,13 @@
 
         id : "orderSidebar",
         icon : "filter-sidebar-icon-order",
-        title : "Ordenar",
+        title : I18n.t("filter.sidebar.order.title"),
 
         template : App.templateManager.get("dataset/filter/sidebar/filter-order-view"),
 
         initialize : function (options) {
             this.filterDimensions = options.filterDimensions;
+            this.title = I18n.t("filter.sidebar.order.title");
             this.optionsModel = options.optionsModel;
         },
 

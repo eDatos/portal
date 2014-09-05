@@ -13,9 +13,6 @@ I18n.translations.es = {
 			strip_insignificant_zeros : false
 		}
 	},
-	page : {
-		titlePreffix : "ISTAC |"
-	},	
     filter : {
         button : {
             edit : "Cambiar selección",
@@ -61,7 +58,14 @@ I18n.translations.es = {
             "for" : "Para"
         },
         sidebar : {
+            info : {
+                title: "Info"
+            },
+            filter : {
+                title : "Filtrar"
+            },
             order : {
+                title : "Ordenar",
                 canvasTable : {
                     fixed : "Valores fijados",
                     left : "Filas",
@@ -88,9 +92,9 @@ I18n.translations.es = {
 
             },
             help : {
-        		title : "Ayuda",
-        		body : "<a href='#'>Lorem ipsum dolor</a> sit amet, consectetur adipiscing elit. Ut condimentum accumsan metus, non mollis augue laoreet sit amet. Nulla facilisi. Nunc laoreet dui eget ullamcorper accumsan. Cras eu adipiscing nulla, at commodo est. Mauris tristique diam in quam vestibulum, eget molestie erat semper. Sed ullamcorper quam vitae porta elementum. Ut quam dui, viverra at sem id, viverra aliquet quam. Donec facilisis neque eu ante euismod, nec consectetur elit pharetra. Nunc eget sem a arcu suscipit commodo nec sit amet nulla. Nullam lorem diam, convallis et dui id, convallis sodales nunc. Fusce mi tortor, aliquam id tempus eget, tincidunt porta arcu. Cras tempus, velit at dapibus semper, urna mauris imperdiet erat, sed commodo eros nibh eu nisl. Morbi commodo libero a rhoncus aliquam. Ut hendrerit mauris et odio viverra venenatis."
-        	}
+                title : "Ayuda",
+                body : "<a href='#'>Lorem ipsum dolor</a> sit amet, consectetur adipiscing elit. Ut condimentum accumsan metus, non mollis augue laoreet sit amet. Nulla facilisi. Nunc laoreet dui eget ullamcorper accumsan. Cras eu adipiscing nulla, at commodo est. Mauris tristique diam in quam vestibulum, eget molestie erat semper. Sed ullamcorper quam vitae porta elementum. Ut quam dui, viverra at sem id, viverra aliquet quam. Donec facilisis neque eu ante euismod, nec consectetur elit pharetra. Nunc eget sem a arcu suscipit commodo nec sit amet nulla. Nullam lorem diam, convallis et dui id, convallis sodales nunc. Fusce mi tortor, aliquam id tempus eget, tincidunt porta arcu. Cras tempus, velit at dapibus semper, urna mauris imperdiet erat, sed commodo eros nibh eu nisl. Morbi commodo libero a rhoncus aliquam. Ut hendrerit mauris et odio viverra venenatis."
+            }
         }
     },
     ve : {
@@ -104,7 +108,7 @@ I18n.translations.es = {
 
     entity : {
         dataset : {  
-        	statisticalOperation : "Operación estadística",
+            statisticalOperation : "Operación estadística",
             validFrom : "Válido desde",
             validTo : "Válido hasta",
             replacesVersion : "Reemplaza versión",
@@ -130,7 +134,7 @@ I18n.translations.es = {
                 title : "Dimensiones"
             },
     
-    		language : "Idioma",   
+            language : "Idioma",   
 
             datasetAttributes : "Atributos a nivel de dataset"
 

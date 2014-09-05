@@ -11,7 +11,7 @@
 
         id : "filterSidebar",
         icon : "filter-sidebar-icon-filter",
-        title : "Filtrar",
+        title : I18n.t("filter.sidebar.filter.title"),
 
         initialize : function (options) {
             this.filterDimensions = options.filterDimensions;
@@ -25,6 +25,8 @@
                     filterDimension : dimension
                 });
             }, this);
+
+            this.title = I18n.t("filter.sidebar.filter.title");
 
             //_.last(this.subviews).stateModel.set('collapsed', false); // open last subview
         },
