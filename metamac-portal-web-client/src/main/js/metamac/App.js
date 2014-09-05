@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    I18n.fallbacks = true;
+
     var App = new Backbone.Marionette.Application();
 
     App.addRegions({
