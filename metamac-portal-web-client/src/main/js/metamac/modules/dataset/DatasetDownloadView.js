@@ -62,6 +62,7 @@
         _getButtonConfiguration : function() {
             var visualizationSupertype = '';
             switch (this.visualizationType) {
+                case '': // On selection mode
                 case 'canvasTable':
                     visualizationSupertype = 'data';
                     break;
