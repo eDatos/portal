@@ -108,10 +108,10 @@
    	    
     <meta name="description" content="${resourceDescriptionOnlyText}" />
 
-    <meta property="og:title" content="ISTAC | ${resourceName}"/>
+    <meta property="og:title" content="${titlePrefix}${resourceName}"/>
     <meta property="og:description" content="${resourceDescriptionOnlyText}"/>
        
-    <meta itemprop="name" content="ISTAC | ${resourceName}">
+    <meta itemprop="name" content="${titlePrefix}${resourceName}">
 	<meta itemprop="description" content="${resourceDescriptionOnlyText}">
 	
   	<meta name="keywords" content="<cms:property name="Keywords" file="search" default="" />">

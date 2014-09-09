@@ -47,7 +47,7 @@
 		    internalPortal = INSTALLATION_TYPE.equals("INTERNAL");
 			request.setAttribute("InstallationType", INSTALLATION_TYPE);
 			
-			ORGANISATION = configurationService.retrieveOrganisation();
+			ORGANISATION = configurationService.retrieveOrganisation();			
 			request.setAttribute("Organisation", ORGANISATION);
 			
 			if (ORGANISATION.equals("ISTAC")) {
@@ -130,10 +130,10 @@
    	    
     <meta name="description" content="${resourceDescriptionOnlyText}" />
 
-    <meta property="og:title" content="ISTAC | ${resourceName}"/>
+    <meta property="og:title" content="${titlePrefix}${resourceName}"/>
     <meta property="og:description" content="${resourceDescriptionOnlyText}"/>
        
-    <meta itemprop="name" content="ISTAC | ${resourceName}" />
+    <meta itemprop="name" content="${titlePrefix}${resourceName}" />
 	<meta itemprop="description" content="${resourceDescriptionOnlyText}" />
 	
   	<meta name="keywords" content="" />
