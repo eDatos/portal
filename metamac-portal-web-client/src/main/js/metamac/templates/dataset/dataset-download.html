@@ -40,10 +40,10 @@
 {{#if buttonConfig.dataFormats}}
 <div class="dataset-download-group">
 	<h3>{{ message "filter.download.all" }}</h3>
-	<form method="POST" action="{{url.excel}}" target="_parent">
+<!-- 	<form method="POST" action="{{url.excel}}" target="_parent">
     	<input type="hidden" name="jsonBody" value="{{emptySelection}}">
     	<a href="#" class="download-xls"><i class="icon-data-xls"></i></a>
-	</form>
+	</form> -->
 
 	<form method="POST" action="{{url.tsv}}" target="_parent">
 	    <input type="hidden" name="jsonBody" value="{{emptySelection}}">
