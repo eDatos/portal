@@ -114,7 +114,7 @@ I18n.translations.pt = {
                 mediators: "Mediadores",
                 replaces: "Substitui",
                 isReplacedBy: "Substituído por",
-                rightsHolder: "Titular ddos direitos",
+                rightsHolder: "Titular dos direitos",
                 copyrightDate : "Data de copyright",
                 license : "Licença",
                 nolicense : "Licença indisponível",
@@ -123,7 +123,7 @@ I18n.translations.pt = {
                 formatExtentObservations: "Número de observações",
                 dateNextUpdate: "Data da próxima atualização",
                 updateFrequency: "Frequência de atualização",
-                statisticOfficiality: "Estatística Oficial",
+                statisticOfficiality: "Estatísticas Oficiais",
                 bibliographicCitation: "Citação bibliográfica",
                 
                 dimensions : {
