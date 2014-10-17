@@ -1,9 +1,13 @@
 package org.siemac.metamac.portal.core.domain;
 
 import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapAttributesLabelVisualisationMode;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapAttributesLabels;
 import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapAttributesValuesLabels;
-import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsLabelVisualisationMode;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapAttributesValuesLocalisedLabels;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionLabel;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionToMapDimensionsLabelVisualisationMode;
 import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsValuesLabels;
+import static org.siemac.metamac.portal.core.utils.PortalUtils.buildMapDimensionsValuesLocalisedLabels;
 import static org.siemac.metamac.portal.core.utils.PortalUtils.dataToDataArray;
 
 import java.util.ArrayList;
@@ -13,36 +17,47 @@ import java.util.Map;
 
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
+import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeDimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.ComponentType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionType;
 
 public abstract class DatasetAccess {
 
-    private final String                            lang;
-    private final String                            langAlternative;
+    private final String                                  lang;
+    private final String                                  langAlternative;
 
-    private final Dataset                           dataset;
+    private final Dataset                                 dataset;
 
     // Metadata
-    private List<Dimension>                         dimensionsMetadata;
-    private List<Attribute>                         attributesMetadata;
+    private List<Dimension>                               dimensionsMetadata;
+    private Map<String, Dimension>                        dimensionsMetadataMap;
+    private Dimension                                     measureDimension;
+    private Map<String, String>                           dimensionLabels;
+    private Map<String, Map<String, String>>              dimensionsValuesCurrentLocaleLabels;
+    private Map<String, Map<String, InternationalString>> dimensionsValuesLabels;
+    private Map<String, LabelVisualisationModeEnum>       dimensionsLabelVisualisationMode;
 
-    private Map<String, Map<String, String>>        dimensionsValuesLabels;
-    private Map<String, LabelVisualisationModeEnum> dimensionsLabelVisualisationMode;
-    private Map<String, Map<String, String>>        attributesValuesLabels;
-    private Map<String, LabelVisualisationModeEnum> attributesLabelVisualisationMode;
+    private List<Attribute>                               attributesMetadata;
+    private Map<String, Attribute>                        attributesMetadataMap;
+    private Attribute                                     measureAttribute;
+    private Map<String, String>                           attributesLabels;
+    private Map<String, Map<String, String>>              attributesValuesCurrentLocaleLabels;
+    private Map<String, Map<String, InternationalString>> attributesValuesLabels;
+    private Map<String, LabelVisualisationModeEnum>       attributesLabelVisualisationMode;
 
     // Data
-    private String[]                                observations;
-    private Map<String, String[]>                   attributesValuesByAttributeId;
-    private List<String>                            dimensionsOrderedForData;
-    private Map<String, List<String>>               dimensionValuesOrderedForDataByDimensionId;
+    private String[]                                      observations;
+    private Map<String, String[]>                         attributesValuesByAttributeId;
+    private List<String>                                  dimensionsOrderedForData;
+    private Map<String, List<String>>                     dimensionValuesOrderedForDataByDimensionId;
 
     public DatasetAccess(Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         this.dataset = dataset;
@@ -75,15 +90,47 @@ public abstract class DatasetAccess {
         return dimensionsMetadata;
     }
 
+    public Map<String, Dimension> getDimensionsMetadataMap() {
+        return dimensionsMetadataMap;
+    }
+
     public List<Attribute> getAttributesMetadata() {
         return attributesMetadata;
     }
 
-    public String getDimensionValueLabel(String dimensionId, String dimensionValueId) {
+    public Map<String, Attribute> getAttributesMetadataMap() {
+        return attributesMetadataMap;
+    }
+
+    public Attribute getMeasureAttribute() {
+        return measureAttribute;
+    }
+
+    public Dimension getMeasureDimension() {
+        return measureDimension;
+    }
+
+    public String getDimensionLabel(String dimensionId) {
+        return dimensionLabels.get(dimensionId);
+    }
+
+    public String getDimensionValueLabelCurrentLocale(String dimensionId, String dimensionValueId) {
+        return dimensionsValuesCurrentLocaleLabels.get(dimensionId).get(dimensionValueId);
+    }
+
+    public InternationalString getDimensionValueLabel(String dimensionId, String dimensionValueId) {
         return dimensionsValuesLabels.get(dimensionId).get(dimensionValueId);
     }
 
-    public String getAttributeValueLabel(String attributeId, String attributeValue) {
+    public String getAttributeLabel(String attributeId) {
+        return attributesLabels.get(attributeId);
+    }
+
+    public String getAttributeValueLabelCurrentLocale(String attributeId, String attributeValue) {
+        return attributesValuesCurrentLocaleLabels.get(attributeId).get(attributeValue);
+    }
+
+    public InternationalString getAttributeValue(String attributeId, String attributeValue) {
         return attributesValuesLabels.get(attributeId).get(attributeValue);
     }
 
@@ -133,12 +180,36 @@ public abstract class DatasetAccess {
     }
 
     /**
-     * Inits dimensions and dimensions values
+     * Init dimensions and dimensions values
      */
     private void initializeDimensions(Dataset dataset, DatasetSelection datasetSelection) throws MetamacException {
         this.dimensionsMetadata = dataset.getMetadata().getDimensions().getDimensions();
-        this.dimensionsLabelVisualisationMode = buildMapDimensionsLabelVisualisationMode(datasetSelection, this.dimensionsMetadata);
-        this.dimensionsValuesLabels = buildMapDimensionsValuesLabels(this.dimensionsMetadata, lang, langAlternative);
+
+        Map<String, Dimension> dimensionsMetadataMap = new HashMap<String, Dimension>(dimensionsMetadata.size());
+        Map<String, LabelVisualisationModeEnum> labelVisualisationsMode = new HashMap<String, LabelVisualisationModeEnum>(dimensionsMetadata.size());
+        Map<String, Map<String, String>> dimensionsValuesCurrentLocaleLabels = new HashMap<String, Map<String, String>>(dimensionsMetadata.size());
+        Map<String, Map<String, InternationalString>> dimensionsValuesLabels = new HashMap<String, Map<String, InternationalString>>(dimensionsMetadata.size());
+        Map<String, String> dimensionsLabels = new HashMap<String, String>(dimensionsMetadata.size());
+
+        for (Dimension dimension : dimensionsMetadata) {
+            String dimensionId = dimension.getId();
+
+            dimensionsMetadataMap.put(dimensionId, dimension);
+            labelVisualisationsMode.put(dimensionId, buildMapDimensionToMapDimensionsLabelVisualisationMode(datasetSelection, dimension));
+            dimensionsValuesCurrentLocaleLabels.put(dimension.getId(), buildMapDimensionsValuesLabels(dimension, lang, langAlternative));
+            dimensionsValuesLabels.put(dimension.getId(), buildMapDimensionsValuesLocalisedLabels(dimension));
+            dimensionsLabels.put(dimensionId, buildMapDimensionLabel(dimension, lang, langAlternative));
+
+            if (DimensionType.MEASURE_DIMENSION.equals(dimension.getType())) {
+                this.measureDimension = dimension;
+            }
+        }
+
+        this.dimensionsMetadataMap = dimensionsMetadataMap;
+        this.dimensionsLabelVisualisationMode = labelVisualisationsMode;
+        this.dimensionsValuesCurrentLocaleLabels = dimensionsValuesCurrentLocaleLabels;
+        this.dimensionsValuesLabels = dimensionsValuesLabels;
+        this.dimensionLabels = dimensionsLabels;
     }
 
     /**
@@ -150,6 +221,10 @@ public abstract class DatasetAccess {
         } else {
             this.attributesMetadata = dataset.getMetadata().getAttributes().getAttributes();
         }
+
+        Map<String, Attribute> attributesMetadataMap = new HashMap<String, Attribute>(attributesMetadata.size());
+
+        // Attribute Instances
         this.attributesValuesByAttributeId = new HashMap<String, String[]>(this.attributesMetadata.size());
         for (Attribute attribute : this.attributesMetadata) {
             if (dataset.getData().getAttributes() != null) {
@@ -159,9 +234,21 @@ public abstract class DatasetAccess {
                     }
                 }
             }
+
+            // Measure Attribute
+            if (ComponentType.MEASURE.equals(attribute.getType())) {
+                this.measureAttribute = attribute;
+            }
+
+            // Attributes Metadata Map
+            attributesMetadataMap.put(attribute.getId(), attribute);
         }
+
+        this.attributesMetadataMap = attributesMetadataMap;
         this.attributesLabelVisualisationMode = buildMapAttributesLabelVisualisationMode(datasetSelection, this.attributesMetadata);
-        this.attributesValuesLabels = buildMapAttributesValuesLabels(this.attributesMetadata, lang, langAlternative);
+        this.attributesValuesCurrentLocaleLabels = buildMapAttributesValuesLabels(this.attributesMetadata, lang, langAlternative);
+        this.attributesValuesLabels = buildMapAttributesValuesLocalisedLabels(this.attributesMetadata);
+        this.attributesLabels = buildMapAttributesLabels(this.attributesMetadata, lang, langAlternative);
     }
 
     /**

@@ -1,0 +1,14 @@
+CHARSET="ANSI";
+AXIS-VERSION="2000";
+LANGUAGE="es";
+LANGUAGES="es","en";
+UPDATE-FREQUENCY="Mensual (M)";
+TABLEID="urn:siemac:org.siemac.metamac.infomodel.statisticalresources.Dataset=ISTAC:C00031A_000002(001.006)";
+DECIMALS=2;
+SHOWDECIMALS=2;
+MATRIX="C00031A_000002";
+AGGREGALLOWED="NO";
+AUTOPEN=NO;
+SUBJECT-AREA="Turismo; Política y otras actividades de la comunidad";
+SUBJECT-CODE="Turismo; Política y otras actividades de la comunidad";
+COPYRIGHT=NO;

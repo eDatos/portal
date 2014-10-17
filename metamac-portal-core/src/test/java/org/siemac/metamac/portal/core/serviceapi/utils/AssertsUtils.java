@@ -3,16 +3,18 @@ package org.siemac.metamac.portal.core.serviceapi.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.Iterator;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExcelUtils {
+public class AssertsUtils {
 
     public static String[][] readExcelContent(File tmpFile) throws IOException {
         FileInputStream file = new FileInputStream(tmpFile);
@@ -44,9 +46,8 @@ public class ExcelUtils {
         return result;
     }
 
-    public static byte[] createExcelContentHash(File tmpFile) throws Exception {
-        FileInputStream file = new FileInputStream(tmpFile);
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
+    public static byte[] createExcelContentHash(InputStream inputStream) throws Exception {
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
         XSSFSheet sheet = workbook.getSheetAt(0);
 
         Iterator<Row> rowIterator = sheet.iterator();
@@ -72,6 +73,25 @@ public class ExcelUtils {
 
         MessageDigest complete = MessageDigest.getInstance("MD5");
         return complete.digest(buffer);
+    }
+
+    public static byte[] createExcelContentHash(File tmpFile) throws Exception {
+        FileInputStream file = new FileInputStream(tmpFile);
+        return createExcelContentHash(file);
+    }
+
+    public static byte[] createPlainTextContentHash(InputStream file) throws Exception {
+
+        byte[] buffer = new byte[2048];
+        IOUtils.readFully(file, buffer);
+
+        MessageDigest complete = MessageDigest.getInstance("MD5");
+        return complete.digest(buffer);
+    }
+
+    public static byte[] createPlainTextContentHash(File tmpFile) throws Exception {
+        FileInputStream file = new FileInputStream(tmpFile);
+        return createPlainTextContentHash(file);
     }
 
 }

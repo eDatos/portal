@@ -10,6 +10,7 @@ import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -113,6 +114,25 @@ public class ExcelExporter {
         if (valueName.length() > 0) {
             Row rowSubjectArea = sheet.createRow(headerRow++);
             addStringCell(rowSubjectArea, 0, valueName.toString(), createStyleSolid(COLOR_BLUE_MEDIUM, COLOR_WHITE, true));
+            sheet.addMergedRegion(new CellRangeAddress(headerRow - 1, headerRow - 1, 0, 4));
+        }
+
+        headerRow++; // Blank row
+
+        // Fixed Dimensions
+        StringBuilder fixedDimensionsText = new StringBuilder();
+        for (DatasetSelectionDimension datasetSelectionDimension : datasetSelection.getFixedDimensions()) {
+            String dimensionText = datasetAccess.applyLabelVisualizationModeForDimension(datasetSelectionDimension.getId());
+            String dimensionValueText = datasetAccess.applyLabelVisualizationModeForDimensionValue(datasetSelectionDimension.getId(), datasetSelectionDimension.getSelectedDimensionValues().get(0));
+            fixedDimensionsText.append(dimensionText).append(" = ").append(dimensionValueText).append(", ");
+
+        }
+        fixedDimensionsText.delete(fixedDimensionsText.length() - 3, fixedDimensionsText.length()); // delete last comma and space
+
+        if (fixedDimensionsText.length() > 0) {
+            String by = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_LABEL_PARA, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+            Row rowTitle = sheet.createRow(headerRow++);
+            addStringCell(rowTitle, 0, by + " " + fixedDimensionsText.toString(), null);
             sheet.addMergedRegion(new CellRangeAddress(headerRow - 1, headerRow - 1, 0, 4));
         }
 
@@ -230,7 +250,9 @@ public class ExcelExporter {
                 // Data table cell
                 Row row = sheet.createRow(footerRow++);
                 addStringCell(row, COLUM_OF_BODY_NOTES_START, numberOfDatasetNotes++ + ".-", createStyleSolid(COLOR_BLUE_MEDIUM, COLOR_BLACK, true));
-                addStringCell(row, COLUM_OF_BODY_NOTES_START + 1, attributeValue, createStyleSolid(COLOR_BLUE_LIGHT, null, null));
+                CellStyle styleSolid = createStyleSolid(COLOR_BLUE_LIGHT, null, null);
+                addBorderToCellStyle(styleSolid);
+                addStringCell(row, COLUM_OF_BODY_NOTES_START + 1, attributeValue, styleSolid);
             }
         }
         return footerRow;
@@ -263,13 +285,8 @@ public class ExcelExporter {
         int columIterator = 3;
         Row row = sheet.createRow(footerRow++);
         for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
-            LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
-            if (labelVisualisation.isLabel() || labelVisualisation.isCode()) {
-                addStringCell(row, columIterator++, dimensionId, createStyleSolid(COLOR_BLUE_MEDIUM, COLOR_BLACK, true));
-            }
-            if (labelVisualisation.isCode() && labelVisualisation.isLabel()) {
-                addStringCell(row, columIterator++, dimensionId + HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE, createStyleSolid(COLOR_BLUE_MEDIUM, COLOR_BLACK, true));
-            }
+            String dimensionText = datasetAccess.applyLabelVisualizationModeForDimension(dimensionId);
+            addStringCell(row, columIterator++, dimensionText, createStyleSolid(COLOR_BLUE_MEDIUM, COLOR_BLACK, true));
         }
         return footerRow;
     }
@@ -304,13 +321,17 @@ public class ExcelExporter {
                     // Add keys
                     for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
                         String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
-                        dimensionValueId = datasetAccess.applyLabelVisualizationModeForDimension(dimensionId, dimensionValueId);
-                        addStringCell(row, columnCount++, dimensionValueId, createStyleSolid(COLOR_BLUE_LIGHT, null, null));
+                        dimensionValueId = datasetAccess.applyLabelVisualizationModeForDimensionValue(dimensionId, dimensionValueId);
+                        CellStyle styleSolid = createStyleSolid(COLOR_BLUE_LIGHT, null, null);
+                        addBorderToCellStyle(styleSolid);
+                        addStringCell(row, columnCount++, dimensionValueId, styleSolid);
                     }
 
                     // Attribute value
-                    attributeValue = datasetAccess.applyLabelVisualizationModeForAttribute(attributeId, attributeValue);
-                    addStringCell(row, columnCount, attributeValue, createStyleSolid(COLOR_BLUE_LIGHT, null, null));
+                    attributeValue = datasetAccess.applyLabelVisualizationModeForAttributeValue(attributeId, attributeValue);
+                    CellStyle styleSolid = createStyleSolid(COLOR_BLUE_MEDIUM, null, null);
+                    addBorderToCellStyle(styleSolid);
+                    addStringCell(row, columnCount, attributeValue, styleSolid);
                 }
             } else {
                 String dimensionId = dimensionsAttributeOrderedForData.get(dimensionPosition + 1);
@@ -324,7 +345,6 @@ public class ExcelExporter {
 
         return footerRow;
     }
-
     private void addStringCell(Row row, int column, String cellValue, CellStyle cellStyle) {
         Cell cell = initializeCell(row, column);
         cell.setCellValue(cellValue);
@@ -387,7 +407,9 @@ public class ExcelExporter {
                     cell.setCellType(Cell.CELL_TYPE_STRING);
                 }
             }
-            cell.setCellStyle(createStyleSolid(COLOR_BLUE_LIGHT, null, null));
+            CellStyle styleSolid = createStyleSolid(COLOR_BLUE_LIGHT, null, null);
+            addBorderToCellStyle(styleSolid);
+            cell.setCellStyle(styleSolid);
         }
     }
 
@@ -419,9 +441,9 @@ public class ExcelExporter {
         LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
         String dimensionValueLabel = null;
         if (labelVisualisation.isLabel() && labelVisualisation.isCode()) {
-            dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId) + " (" + dimensionValueId + ")";
+            dimensionValueLabel = datasetAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId) + " (" + dimensionValueId + ")";
         } else if (labelVisualisation.isLabel()) {
-            dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId);
+            dimensionValueLabel = datasetAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
         } else if (labelVisualisation.isCode()) {
             dimensionValueLabel = dimensionValueId;
         }
@@ -436,7 +458,7 @@ public class ExcelExporter {
         footer();
 
         // Adjust column width
-        for (int i = 0; i < maxRightColumnIndexWithContent; i++) {
+        for (int i = 0; i <= maxRightColumnIndexWithContent; i++) {
             sheet.setColumnWidth(i, 16 * 256); // 15 characters of width
         }
 
@@ -490,6 +512,14 @@ public class ExcelExporter {
         }
 
         return style;
+    }
+
+    private void addBorderToCellStyle(CellStyle cellStyle) {
+        XSSFCellStyle styleXSSF = (XSSFCellStyle) cellStyle;
+        styleXSSF.setBorderBottom(BorderStyle.THIN);
+        styleXSSF.setBorderLeft(BorderStyle.THIN);
+        styleXSSF.setBorderRight(BorderStyle.THIN);
+        styleXSSF.setBorderTop(BorderStyle.THIN);
     }
 
     private Cell initializeCell(Row row, int headerColumn) {

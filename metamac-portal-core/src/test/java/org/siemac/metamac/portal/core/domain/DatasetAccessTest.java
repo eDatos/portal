@@ -50,8 +50,8 @@ public class DatasetAccessTest {
 
     @Test
     public void testRepresentationLabel() {
-        assertEquals("Representation A0", datasetAccessForExcel.getDimensionValueLabel("DIM_A", "DIM_A_0"));
-        assertEquals("Representation B1", datasetAccessForExcel.getDimensionValueLabel("DIM_B", "DIM_B_1"));
+        assertEquals("Representation A0", datasetAccessForExcel.getDimensionValueLabelCurrentLocale("DIM_A", "DIM_A_0"));
+        assertEquals("Representation B1", datasetAccessForExcel.getDimensionValueLabelCurrentLocale("DIM_B", "DIM_B_1"));
     }
 
 }

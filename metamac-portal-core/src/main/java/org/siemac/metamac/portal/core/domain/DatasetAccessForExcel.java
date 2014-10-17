@@ -62,12 +62,40 @@ public class DatasetAccessForExcel extends DatasetAccess {
         String attributeValue = null;
         if (attributeValues != null) {
             attributeValue = attributeValues[offset];
-            attributeValue = applyLabelVisualizationModeForAttribute(attributeId, attributeValue);
+            attributeValue = applyLabelVisualizationModeForAttributeValue(attributeId, attributeValue);
         }
         return attributeValue;
     }
 
-    public String applyLabelVisualizationModeForAttribute(String attributeId, String attributeValue) {
+    public String applyLabelVisualizationModeForAttribute(String attributeId) {
+        // Visualisation mode
+        LabelVisualisationModeEnum labelVisualisation = getAttributeLabelVisualisationMode(attributeId);
+        String resultText = null;
+        switch (labelVisualisation) {
+            case CODE:
+                resultText = attributeId;
+                break;
+            case LABEL: {
+                String attributeLabel = getAttributeLabel(attributeId);
+                if (attributeLabel != null) {
+                    resultText = attributeLabel;
+                }
+            }
+                break;
+            case CODE_AND_LABEL: {
+                String attributeLabel = getAttributeLabel(attributeId);
+                if (attributeLabel != null) {
+                    resultText = attributeLabel + " (" + attributeId + ")";
+                }
+            }
+                break;
+            default:
+                break;
+        }
+        return resultText;
+    }
+
+    public String applyLabelVisualizationModeForAttributeValue(String attributeId, String attributeValue) {
         // Visualisation mode
         LabelVisualisationModeEnum labelVisualisation = getAttributeLabelVisualisationMode(attributeId);
         switch (labelVisualisation) {
@@ -75,14 +103,14 @@ public class DatasetAccessForExcel extends DatasetAccess {
                 // no extra action
                 break;
             case LABEL: {
-                String attributeValueLabel = getAttributeValueLabel(attributeId, attributeValue);
+                String attributeValueLabel = getAttributeValueLabelCurrentLocale(attributeId, attributeValue);
                 if (attributeValueLabel != null) {
                     attributeValue = attributeValueLabel;
                 }
             }
                 break;
             case CODE_AND_LABEL: {
-                String attributeValueLabel = getAttributeValueLabel(attributeId, attributeValue);
+                String attributeValueLabel = getAttributeValueLabelCurrentLocale(attributeId, attributeValue);
                 if (attributeValueLabel != null) {
                     attributeValue = attributeValueLabel + " (" + attributeValue + ")";
                 }
@@ -94,21 +122,48 @@ public class DatasetAccessForExcel extends DatasetAccess {
         return attributeValue;
     }
 
-    public String applyLabelVisualizationModeForDimension(String dimensionId, String dimensionValueId) {
+    public String applyLabelVisualizationModeForDimension(String dimensionId) {
+        LabelVisualisationModeEnum labelVisualisation = getDimensionLabelVisualisationMode(dimensionId);
+        String resultText = null;
+        switch (labelVisualisation) {
+            case CODE:
+                resultText = dimensionId;
+                break;
+            case LABEL: {
+                String dimensionValueLabel = getDimensionLabel(dimensionId);
+                if (dimensionValueLabel != null) {
+                    resultText = dimensionValueLabel;
+                }
+            }
+                break;
+            case CODE_AND_LABEL: {
+                String dimensionValueLabel = getDimensionLabel(dimensionId);
+                if (dimensionValueLabel != null) {
+                    resultText = dimensionValueLabel + " (" + dimensionId + ")";
+                }
+            }
+                break;
+            default:
+                break;
+        }
+        return resultText;
+    }
+
+    public String applyLabelVisualizationModeForDimensionValue(String dimensionId, String dimensionValueId) {
         LabelVisualisationModeEnum labelVisualisation = getDimensionLabelVisualisationMode(dimensionId);
         switch (labelVisualisation) {
             case CODE:
                 // no extra action
                 break;
             case LABEL: {
-                String dimensionValueLabel = getDimensionValueLabel(dimensionId, dimensionValueId);
+                String dimensionValueLabel = getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
                 if (dimensionValueLabel != null) {
                     dimensionValueId = dimensionValueLabel;
                 }
             }
                 break;
             case CODE_AND_LABEL: {
-                String dimensionValueLabel = getDimensionValueLabel(dimensionId, dimensionValueId);
+                String dimensionValueLabel = getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
                 if (dimensionValueLabel != null) {
                     dimensionValueId = dimensionValueLabel + " (" + dimensionValueId + ")";
                 }

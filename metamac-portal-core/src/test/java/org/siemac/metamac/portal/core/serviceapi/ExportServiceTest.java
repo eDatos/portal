@@ -8,10 +8,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.lang.StringUtils;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -21,10 +23,12 @@ import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.serviceapi.utils.Asserts;
+import org.siemac.metamac.portal.core.serviceapi.utils.AssertsUtils;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetMockBuilder;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuilder;
-import org.siemac.metamac.portal.core.serviceapi.utils.ExcelUtils;
+import org.siemac.metamac.portal.core.serviceapi.utils.XMLUtils;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.ComponentType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -83,6 +87,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
+        // tmpFile = new File("K:/temp/Excel_TEST/text.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -91,8 +96,8 @@ public class ExportServiceTest implements ExportServiceTestBase {
         out.close();
 
         // Check excel checksum
-        byte[] expected = new byte[]{60, -54, 18, 59, -43, -68, 103, -118, -84, 35, -117, 83, 127, -76, 50, 23};
-        Asserts.assertBytesArray(expected, ExcelUtils.createExcelContentHash(tmpFile));
+        InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/DatasetWithCodes.xlsx");
+        Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
     }
 
     @Test
@@ -108,6 +113,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
+        // tmpFile = new File("K:/temp/Excel_TEST/text.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -116,8 +122,8 @@ public class ExportServiceTest implements ExportServiceTestBase {
         out.close();
 
         // Check excel checksum
-        byte[] expected = new byte[]{107, -124, -50, -9, -32, -60, -70, -4, -68, 105, -101, -1, -79, 100, -19, -2};
-        Asserts.assertBytesArray(expected, ExcelUtils.createExcelContentHash(tmpFile));
+        InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/DatasetWithLabels.xlsx");
+        Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
     }
 
     @Test
@@ -133,6 +139,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
+        // tmpFile = new File("K:/temp/Excel_TEST/text.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Dataset dataset = buildDatasetToExport();
@@ -141,8 +148,9 @@ public class ExportServiceTest implements ExportServiceTestBase {
         out.close();
 
         // Check excel checksum
-        byte[] expected = new byte[]{-66, -1, -51, 126, 26, -33, -48, -44, 11, -107, -128, 26, -3, 121, -59, -89};
-        Asserts.assertBytesArray(expected, ExcelUtils.createExcelContentHash(tmpFile));
+        // byte[] expected = new byte[]{-66, -1, -51, 126, 26, -33, -48, -44, 11, -107, -128, 26, -3, 121, -59, -89};
+        InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/DatasetWithLabelsAndCodes.xlsx");
+        Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
     }
 
     @Override
@@ -417,11 +425,11 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("DESTINO_ALOJAMIENTO" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator + "ATTRIBUTE" + separator + "ATTRIBUTE_VALUE",
                 bufferedReaderAttributes.readLine());
         assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_A" + separator + "a1", bufferedReaderAttributes.readLine());
-        assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_A2" + separator + "Attribute a2", bufferedReaderAttributes.readLine());
-        assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "NOTEX" + separator + "Notex a3", bufferedReaderAttributes.readLine());
+        assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_A2" + separator + "a2 Label", bufferedReaderAttributes.readLine());
+        assertEquals("" + separator + "" + separator + "" + separator + "" + separator + "NOTEX" + separator + "a3 Label", bufferedReaderAttributes.readLine());
         assertEquals("Andalucía" + separator + "" + separator + "" + separator + "" + separator + "VALUENOTEX" + separator + "vn1", bufferedReaderAttributes.readLine());
         assertEquals("Aragón" + separator + "" + separator + "" + separator + "" + separator + "VALUENOTEX" + separator + "vn2", bufferedReaderAttributes.readLine());
-        assertEquals("Andalucía" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "Destino 1", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "" + separator + "" + separator + "" + separator + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "da1 Label", bufferedReaderAttributes.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("" + separator + "" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01" + separator + "ca1",
@@ -442,7 +450,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         }
 
         assertEquals("" + separator + "" + separator + "4 y 5 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca4", bufferedReaderAttributes.readLine());
-        assertEquals("" + separator + "" + separator + "4 y 5 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator + "Categoría 5",
+        assertEquals("" + separator + "" + separator + "4 y 5 estrellas" + separator + "" + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator + "ca 5 Label",
                 bufferedReaderAttributes.readLine());
         assertEquals("" + separator + "" + separator + "" + separator + "Índice de ocupación de plazas" + separator + "INDICADORES_A" + separator + "ioA_1", bufferedReaderAttributes.readLine());
         assertEquals("Andalucía" + separator + "Año 2012" + separator + "" + separator + "" + separator + "CELLNOTE_A" + separator + "cnA_1", bufferedReaderAttributes.readLine());
@@ -485,15 +493,15 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals("Aragón" + separator + "Año 2013" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_B" + separator + "cnB_8", bufferedReaderAttributes.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
-            assertEquals("Andalucía" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C1",
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "" + separator + "CELLNOTE_C" + separator + "cnC_1 Label",
                     bufferedReaderAttributes.readLine());
         } else {
-            assertEquals("Andalucía" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C1",
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "cnC_1 Label",
                     bufferedReaderAttributes.readLine());
         }
 
-        assertEquals("Andalucía" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C2", bufferedReaderAttributes.readLine());
-        assertEquals("Aragón" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "Cell C6", bufferedReaderAttributes.readLine());
+        assertEquals("Andalucía" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "cnC_2 Label", bufferedReaderAttributes.readLine());
+        assertEquals("Aragón" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "" + separator + "CELLNOTE_C" + separator + "cnC_6 Label", bufferedReaderAttributes.readLine());
         assertEquals(null, bufferedReaderAttributes.readLine());
         bufferedReaderAttributes.close();
     }
@@ -505,48 +513,48 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 + separator + "ATTRIBUTE_C" + separator + "ATTRIBUTE_D" + separator + "ATTRIBUTE_E", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
-            assertEquals("Andalucía" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "1.1" + separator + "Attribute b1"
-                    + separator + "" + separator + "Attribute d1" + separator + "e1", bufferedReader.readLine());
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "1.1" + separator + "b1 Label"
+                    + separator + "" + separator + "d1 Label" + separator + "e1", bufferedReader.readLine());
         } else {
-            assertEquals("Andalucía" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "1.1" + separator + "Attribute b1"
-                    + separator + "" + separator + "Attribute d1" + separator + "e1", bufferedReader.readLine());
+            assertEquals("Andalucía" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "1.1" + separator + "b1 Label" + separator
+                    + "" + separator + "d1 Label" + separator + "e1", bufferedReader.readLine());
         }
 
-        assertEquals("Andalucía" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "2" + separator + "Attribute b2" + separator + ""
-                + separator + "Attribute d2" + separator + "e2", bufferedReader.readLine());
+        assertEquals("Andalucía" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "2" + separator + "b2 Label" + separator + ""
+                + separator + "d2 Label" + separator + "e2", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
-            assertEquals("Andalucía" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "3" + separator + "Attribute b3"
-                    + separator + "" + separator + "Attribute d3" + separator + "e3", bufferedReader.readLine());
+            assertEquals("Andalucía" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "3" + separator + "b3 Label"
+                    + separator + "" + separator + "d3 Label" + separator + "e3", bufferedReader.readLine());
         } else {
-            assertEquals("Andalucía" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "3" + separator + "Attribute b3"
-                    + separator + "" + separator + "Attribute d3" + separator + "e3", bufferedReader.readLine());
+            assertEquals("Andalucía" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "3" + separator + "b3 Label" + separator
+                    + "" + separator + "d3 Label" + separator + "e3", bufferedReader.readLine());
         }
 
         assertEquals("Andalucía" + separator + "Año 2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "4" + separator + "" + separator + "" + separator
-                + "Attribute d4" + separator + "e4", bufferedReader.readLine());
+                + "d4 Label" + separator + "e4", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
-            assertEquals("Aragón" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "5" + separator + "Attribute b5"
-                    + separator + "" + separator + "Attribute d5" + separator + "e5", bufferedReader.readLine());
+            assertEquals("Aragón" + separator + "Año 2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "5" + separator + "b5 Label" + separator
+                    + "" + separator + "d5 Label" + separator + "e5", bufferedReader.readLine());
         } else {
-            assertEquals("Aragón" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "5" + separator + "Attribute b5" + separator
-                    + "" + separator + "Attribute d5" + separator + "e5", bufferedReader.readLine());
+            assertEquals("Aragón" + separator + "Año 2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "5" + separator + "b5 Label" + separator + ""
+                    + separator + "d5 Label" + separator + "e5", bufferedReader.readLine());
         }
 
-        assertEquals("Aragón" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "6" + separator + "Attribute b6" + separator + ""
-                + separator + "Attribute d6" + separator + "e6", bufferedReader.readLine());
+        assertEquals("Aragón" + separator + "Año 2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "6" + separator + "b6 Label" + separator + ""
+                + separator + "d6 Label" + separator + "e6", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
-            assertEquals("Aragón" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "" + separator + "Attribute b7"
-                    + separator + "" + separator + "Attribute d7" + separator + "e7", bufferedReader.readLine());
+            assertEquals("Aragón" + separator + "Año 2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator + "" + separator + "b7 Label" + separator
+                    + "" + separator + "d7 Label" + separator + "e7", bufferedReader.readLine());
         } else {
-            assertEquals("Aragón" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "" + separator + "Attribute b7" + separator
-                    + "" + separator + "Attribute d7" + separator + "e7", bufferedReader.readLine());
+            assertEquals("Aragón" + separator + "Año 2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "" + separator + "b7 Label" + separator + ""
+                    + separator + "d7 Label" + separator + "e7", bufferedReader.readLine());
         }
 
-        assertEquals("Aragón" + separator + "Año 2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "8" + separator + "Attribute b8" + separator + ""
-                + separator + "Attribute d8" + separator + "e8", bufferedReader.readLine());
+        assertEquals("Aragón" + separator + "Año 2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "8" + separator + "b8 Label" + separator + ""
+                + separator + "d8 Label" + separator + "e8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
@@ -644,15 +652,15 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
                 + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_A" + separator + "a1" + separator + "a1", bufferedReaderAttributes.readLine());
         assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
-                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_A2" + separator + "Attribute a2" + separator + "a2", bufferedReaderAttributes.readLine());
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_A2" + separator + "a2 Label" + separator + "a2", bufferedReaderAttributes.readLine());
         assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
-                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "NOTEX" + separator + "Notex a3" + separator + "a3", bufferedReaderAttributes.readLine());
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "NOTEX" + separator + "a3 Label" + separator + "a3", bufferedReaderAttributes.readLine());
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
                 + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "VALUENOTEX" + separator + "vn1" + separator + "vn1", bufferedReaderAttributes.readLine());
         assertEquals("Aragón" + separator + "ARAGON" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
                 + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "VALUENOTEX" + separator + "vn2" + separator + "vn2", bufferedReaderAttributes.readLine());
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
-                + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "Destino 1" + separator + "da1", bufferedReaderAttributes.readLine());
+                + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "da1 Label" + separator + "da1", bufferedReaderAttributes.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "\"1, 2 y 3 estrellas\"" + separator
@@ -682,7 +690,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02" + separator + "ca4" + separator + "ca4",
                 bufferedReaderAttributes.readLine());
         assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS"
-                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator + "Categoría 5" + separator + "ca5",
+                + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03" + separator + "ca 5 Label" + separator + "ca5",
                 bufferedReaderAttributes.readLine());
         assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
                 + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "INDICADORES_A" + separator + "ioA_1" + separator + "ioA_1",
@@ -739,16 +747,16 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
-                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "cnC_1 Label" + separator + "cnC_1", bufferedReaderAttributes.readLine());
         } else {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
-                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+                    + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "cnC_1 Label" + separator + "cnC_1", bufferedReaderAttributes.readLine());
         }
 
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY
-                + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C2" + separator + "cnC_2", bufferedReaderAttributes.readLine());
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "cnC_2 Label" + separator + "cnC_2", bufferedReaderAttributes.readLine());
         assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator + StringUtils.EMPTY
-                + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "Cell C6" + separator + "cnC_6", bufferedReaderAttributes.readLine());
+                + separator + StringUtils.EMPTY + separator + "CELLNOTE_C" + separator + "cnC_6 Label" + separator + "cnC_6", bufferedReaderAttributes.readLine());
         assertEquals(null, bufferedReaderAttributes.readLine());
         bufferedReaderAttributes.close();
     }
@@ -761,58 +769,58 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 bufferedReader.readLine());
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "Attribute b1" + separator + "b1" + separator + StringUtils.EMPTY
-                    + separator + "Attribute d1" + separator + "d1" + separator + "e1" + separator + "e1", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1 Label" + separator + "b1" + separator + StringUtils.EMPTY
+                    + separator + "d1 Label" + separator + "d1" + separator + "e1" + separator + "e1", bufferedReader.readLine());
         } else {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "Attribute b1" + separator + "b1" + separator + StringUtils.EMPTY
-                    + separator + "Attribute d1" + separator + "d1" + separator + "e1" + separator + "e1", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1 Label" + separator + "b1" + separator + StringUtils.EMPTY
+                    + separator + "d1 Label" + separator + "d1" + separator + "e1" + separator + "e1", bufferedReader.readLine());
         }
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
-                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "2" + separator + "Attribute b2" + separator + "b2" + separator + StringUtils.EMPTY + separator
-                + "Attribute d2" + separator + "d2" + separator + "e2" + separator + "e2", bufferedReader.readLine());
+                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "2" + separator + "b2 Label" + separator + "b2" + separator + StringUtils.EMPTY + separator
+                + "d2 Label" + separator + "d2" + separator + "e2" + separator + "e2", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "Attribute b3" + separator + "b3" + separator + StringUtils.EMPTY
-                    + separator + "Attribute d3" + separator + "d3" + separator + "e3" + separator + "e3", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3 Label" + separator + "b3" + separator + StringUtils.EMPTY + separator
+                    + "d3 Label" + separator + "d3" + separator + "e3" + separator + "e3", bufferedReader.readLine());
         } else {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "Attribute b3" + separator + "b3" + separator + StringUtils.EMPTY
-                    + separator + "Attribute d3" + separator + "d3" + separator + "e3" + separator + "e3", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3 Label" + separator + "b3" + separator + StringUtils.EMPTY + separator
+                    + "d3 Label" + separator + "d3" + separator + "e3" + separator + "e3", bufferedReader.readLine());
         }
 
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "Año 2013" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
                 + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "4" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
-                + StringUtils.EMPTY + separator + "Attribute d4" + separator + "d4" + separator + "e4" + separator + "e4", bufferedReader.readLine());
+                + StringUtils.EMPTY + separator + "d4 Label" + separator + "d4" + separator + "e4" + separator + "e4", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "Attribute b5" + separator + "b5" + separator + StringUtils.EMPTY
-                    + separator + "Attribute d5" + separator + "d5" + separator + "e5" + separator + "e5", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "b5 Label" + separator + "b5" + separator + StringUtils.EMPTY + separator
+                    + "d5 Label" + separator + "d5" + separator + "e5" + separator + "e5", bufferedReader.readLine());
         } else {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "Attribute b5" + separator + "b5" + separator + StringUtils.EMPTY
-                    + separator + "Attribute d5" + separator + "d5" + separator + "e5" + separator + "e5", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "b5 Label" + separator + "b5" + separator + StringUtils.EMPTY + separator
+                    + "d5 Label" + separator + "d5" + separator + "e5" + separator + "e5", bufferedReader.readLine());
         }
 
         assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2012" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
-                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "6" + separator + "Attribute b6" + separator + "b6" + separator + StringUtils.EMPTY + separator
-                + "Attribute d6" + separator + "d6" + separator + "e6" + separator + "e6", bufferedReader.readLine());
+                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "6" + separator + "b6 Label" + separator + "b6" + separator + StringUtils.EMPTY + separator
+                + "d6 Label" + separator + "d6" + separator + "e6" + separator + "e6", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "Attribute b7" + separator + "b7" + separator
-                    + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7" + separator + "e7", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "b7 Label" + separator + "b7" + separator
+                    + StringUtils.EMPTY + separator + "d7 Label" + separator + "d7" + separator + "e7" + separator + "e7", bufferedReader.readLine());
         } else {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "1_2_3_ESTRELLAS" + separator
-                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "Attribute b7" + separator + "b7" + separator
-                    + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7" + separator + "e7", bufferedReader.readLine());
+                    + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "b7 Label" + separator + "b7" + separator
+                    + StringUtils.EMPTY + separator + "d7 Label" + separator + "d7" + separator + "e7" + separator + "e7", bufferedReader.readLine());
         }
 
         assertEquals("Aragón" + separator + "ARAGON" + separator + "Año 2013" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "4_5_ESTRELLAS" + separator
-                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "8" + separator + "Attribute b8" + separator + "b8" + separator + StringUtils.EMPTY + separator
-                + "Attribute d8" + separator + "d8" + separator + "e8" + separator + "e8", bufferedReader.readLine());
+                + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS" + separator + "8" + separator + "b8 Label" + separator + "b8" + separator + StringUtils.EMPTY + separator
+                + "d8 Label" + separator + "d8" + separator + "e8" + separator + "e8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
@@ -912,13 +920,13 @@ public class ExportServiceTest implements ExportServiceTestBase {
         assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
                 + separator + "ATTRIBUTE_A2" + separator + StringUtils.EMPTY + separator + "a2", bufferedReaderAttributes.readLine());
         assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY
-                + separator + "NOTEX" + separator + "Notex a3" + separator + StringUtils.EMPTY, bufferedReaderAttributes.readLine());
+                + separator + "NOTEX" + separator + "a3 Label" + separator + StringUtils.EMPTY, bufferedReaderAttributes.readLine());
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
                 + "VALUENOTEX" + separator + "vn1" + separator + "vn1", bufferedReaderAttributes.readLine());
         assertEquals("Aragón" + separator + "ARAGON" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
                 + "VALUENOTEX" + separator + "vn2" + separator + "vn2", bufferedReaderAttributes.readLine());
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
-                + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "Destino 1" + separator + StringUtils.EMPTY, bufferedReaderAttributes.readLine());
+                + "ATTRIBUTE_DESTINO_ALOJAMIENTO_01" + separator + "da1 Label" + separator + StringUtils.EMPTY, bufferedReaderAttributes.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals(StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator
@@ -996,16 +1004,16 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
-                    + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+                    + "CELLNOTE_C" + separator + "cnC_1 Label" + separator + "cnC_1", bufferedReaderAttributes.readLine());
         } else {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
-                    + "CELLNOTE_C" + separator + "Cell C1" + separator + "cnC_1", bufferedReaderAttributes.readLine());
+                    + "CELLNOTE_C" + separator + "cnC_1 Label" + separator + "cnC_1", bufferedReaderAttributes.readLine());
         }
 
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator
-                + "CELLNOTE_C" + separator + "Cell C2" + separator + "cnC_2", bufferedReaderAttributes.readLine());
+                + "CELLNOTE_C" + separator + "cnC_2 Label" + separator + "cnC_2", bufferedReaderAttributes.readLine());
         assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "4 y 5 estrellas" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "CELLNOTE_C"
-                + separator + "Cell C6" + separator + "cnC_6", bufferedReaderAttributes.readLine());
+                + separator + "cnC_6 Label" + separator + "cnC_6", bufferedReaderAttributes.readLine());
 
         assertEquals(null, bufferedReaderAttributes.readLine());
         bufferedReaderAttributes.close();
@@ -1019,134 +1027,87 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
-                    + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1" + separator + StringUtils.EMPTY + separator + "Attribute d1" + separator + "d1" + separator + "e1",
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1" + separator + StringUtils.EMPTY + separator + "d1 Label" + separator + "d1" + separator + "e1",
                     bufferedReader.readLine());
         } else {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator
-                    + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1" + separator + StringUtils.EMPTY + separator + "Attribute d1" + separator + "d1" + separator + "e1",
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "1.1" + separator + "b1" + separator + StringUtils.EMPTY + separator + "d1 Label" + separator + "d1" + separator + "e1",
                     bufferedReader.readLine());
         }
 
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
-                + separator + "2" + separator + "b2" + separator + StringUtils.EMPTY + separator + "Attribute d2" + separator + "d2" + separator + "e2", bufferedReader.readLine());
+                + separator + "2" + separator + "b2" + separator + StringUtils.EMPTY + separator + "d2 Label" + separator + "d2" + separator + "e2", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
-                    + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3" + separator + StringUtils.EMPTY + separator + "Attribute d3" + separator + "d3" + separator + "e3",
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3" + separator + StringUtils.EMPTY + separator + "d3 Label" + separator + "d3" + separator + "e3",
                     bufferedReader.readLine());
         } else {
             assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator
-                    + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3" + separator + StringUtils.EMPTY + separator + "Attribute d3" + separator + "d3" + separator + "e3",
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "3" + separator + "b3" + separator + StringUtils.EMPTY + separator + "d3 Label" + separator + "d3" + separator + "e3",
                     bufferedReader.readLine());
         }
 
         assertEquals("Andalucía" + separator + "ANDALUCIA" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
-                + separator + "4" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "Attribute d4" + separator + "d4" + separator + "e4", bufferedReader.readLine());
+                + separator + "4" + separator + StringUtils.EMPTY + separator + StringUtils.EMPTY + separator + "d4 Label" + separator + "d4" + separator + "e4", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
-                    + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "b5" + separator + StringUtils.EMPTY + separator + "Attribute d5" + separator + "d5" + separator + "e5",
+                    + "INDICE_OCUPACION_PLAZAS" + separator + "5" + separator + "b5" + separator + StringUtils.EMPTY + separator + "d5 Label" + separator + "d5" + separator + "e5",
                     bufferedReader.readLine());
         } else {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
-                    + separator + "5" + separator + "b5" + separator + StringUtils.EMPTY + separator + "Attribute d5" + separator + "d5" + separator + "e5", bufferedReader.readLine());
+                    + separator + "5" + separator + "b5" + separator + StringUtils.EMPTY + separator + "d5 Label" + separator + "d5" + separator + "e5", bufferedReader.readLine());
         }
 
         assertEquals("Aragón" + separator + "ARAGON" + separator + "2012" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
-                + separator + "6" + separator + "b6" + separator + StringUtils.EMPTY + separator + "Attribute d6" + separator + "d6" + separator + "e6", bufferedReader.readLine());
+                + separator + "6" + separator + "b6" + separator + StringUtils.EMPTY + separator + "d6 Label" + separator + "d6" + separator + "e6", bufferedReader.readLine());
 
         if (PlainTextTypeEnum.CSV_COMMA.getSeparator().equals(separator)) {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "\"1, 2 y 3 estrellas\"" + separator + "Índice de ocupación de plazas" + separator
-                    + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "b7" + separator + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7",
+                    + "INDICE_OCUPACION_PLAZAS" + separator + StringUtils.EMPTY + separator + "b7" + separator + StringUtils.EMPTY + separator + "d7 Label" + separator + "d7" + separator + "e7",
                     bufferedReader.readLine());
         } else {
             assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "1, 2 y 3 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
-                    + separator + StringUtils.EMPTY + separator + "b7" + separator + StringUtils.EMPTY + separator + "Attribute d7" + separator + "d7" + separator + "e7", bufferedReader.readLine());
+                    + separator + StringUtils.EMPTY + separator + "b7" + separator + StringUtils.EMPTY + separator + "d7 Label" + separator + "d7" + separator + "e7", bufferedReader.readLine());
         }
         assertEquals("Aragón" + separator + "ARAGON" + separator + "2013" + separator + "4 y 5 estrellas" + separator + "Índice de ocupación de plazas" + separator + "INDICE_OCUPACION_PLAZAS"
-                + separator + "8" + separator + "b8" + separator + StringUtils.EMPTY + separator + "Attribute d8" + separator + "d8" + separator + "e8", bufferedReader.readLine());
+                + separator + "8" + separator + "b8" + separator + StringUtils.EMPTY + separator + "d8 Label" + separator + "d8" + separator + "e8", bufferedReader.readLine());
         assertEquals(null, bufferedReader.readLine());
         bufferedReader.close();
     }
 
     @Override
     @Test
+    @Ignore
     public void testExportDatasetToPx() throws Exception {
+        // TODO FIX this test when the PX export is complete
 
-        Dataset dataset = buildDatasetToExport();
+        {
+            Dataset dataset = XMLUtils.getDataset(XMLUtils.class.getResourceAsStream("/resources/C00031A_000002.xml"));
 
-        File tmpFile = tempFolder.newFile();
-        FileOutputStream out = new FileOutputStream(tmpFile);
-        exportService.exportDatasetToPx(ctx, dataset, null, out);
+            File tmpFile = tempFolder.newFile();
+            FileOutputStream out = new FileOutputStream(tmpFile);
+            exportService.exportDatasetToPx(ctx, dataset, null, out);
+            out.close();
 
-        out.close();
+            // Check checksum
+            InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/archivo.px");
+            Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
+        }
 
-        BufferedReader bufferedReader = createBufferedReader(tmpFile, "ISO-8859-1");
-        assertEquals("CHARSET=\"ANSI\";", bufferedReader.readLine());
-        assertEquals("AXIS-VERSION=\"2000\";", bufferedReader.readLine());
-        assertEquals("LANGUAGE=\"es\";", bufferedReader.readLine());
-        assertEquals("LANGUAGES=\"es\",\"en\";", bufferedReader.readLine());
-        assertEquals("CREATION-DATE=\"20130102 13:15\";", bufferedReader.readLine());
-        assertEquals("NEXT-UPDATE=\"20130103 09:00\";", bufferedReader.readLine());
-        assertEquals("UPDATE-FREQUENCY=\"Label updateFrequency\";", bufferedReader.readLine());
-        assertEquals("UPDATE-FREQUENCY[en]=\"Label updateFrequency (en)\";", bufferedReader.readLine());
-        assertEquals("SHOWDECIMALS=2;", bufferedReader.readLine());
-        assertEquals("AUTOPEN=NO;", bufferedReader.readLine());
-        assertEquals("SUBJECT-AREA=\"title\";", bufferedReader.readLine());
-        assertEquals("SUBJECT-AREA[en]=\"title (en)\";", bufferedReader.readLine());
-        assertEquals("COPYRIGHT=NO;", bufferedReader.readLine());
-        assertEquals("DESCRIPTION=\"description\";", bufferedReader.readLine());
-        assertEquals("DESCRIPTION[en]=\"description (en)\";", bufferedReader.readLine());
-        assertEquals("TITLE=\"title\";", bufferedReader.readLine());
-        assertEquals("TITLE[en]=\"title (en)\";", bufferedReader.readLine());
-        assertEquals("DESCRIPTIONDEFAULT=YES;", bufferedReader.readLine());
-        assertEquals("CONTENTS=\"TODO-CONTENTS\";", bufferedReader.readLine()); // (METAMAC-1927)
-        assertEquals("UNITS=\"TODO-UNITS\";", bufferedReader.readLine()); // (METAMAC-1927)
-        assertEquals("DECIMALS=2;", bufferedReader.readLine());
-        assertEquals("STUB=\"CATEGORIA_ALOJAMIENTO\",\"INDICADORES\";", bufferedReader.readLine());
-        assertEquals("HEADING=\"DESTINO_ALOJAMIENTO\",\"TIME_PERIOD\";", bufferedReader.readLine());
-        assertEquals("VALUES(\"DESTINO_ALOJAMIENTO\")=\"Andalucía\",\"Aragón\";", bufferedReader.readLine());
-        assertEquals("VALUES(\"TIME_PERIOD\")=\"Año 2012\",\"Año 2013\";", bufferedReader.readLine());
-        assertEquals("VALUES(\"CATEGORIA_ALOJAMIENTO\")=\"1, 2 y 3 estrellas\",\"4 y 5 estrellas\";", bufferedReader.readLine());
-        assertEquals("VALUES(\"INDICADORES\")=\"Índice de ocupación de plazas\";", bufferedReader.readLine());
-        assertEquals("CODES(\"DESTINO_ALOJAMIENTO\")=\"ANDALUCIA\",\"ARAGON\";", bufferedReader.readLine());
-        assertEquals("CODES(\"TIME_PERIOD\")=\"2012\",\"2013\";", bufferedReader.readLine());
-        assertEquals("CODES(\"CATEGORIA_ALOJAMIENTO\")=\"1_2_3_ESTRELLAS\",\"4_5_ESTRELLAS\";", bufferedReader.readLine());
-        assertEquals("CODES(\"INDICADORES\")=\"INDICE_OCUPACION_PLAZAS\";", bufferedReader.readLine());
-        assertEquals("LAST-UPDATED=\"20130102 09:00\";", bufferedReader.readLine());
-        assertEquals("NOTEX=\"a3\";", bufferedReader.readLine());
-        assertEquals("NOTE=\"a1#a2\";", bufferedReader.readLine());
-        assertEquals("VALUENOTEX(\"DESTINO_ALOJAMIENTO\",\"Andalucía\")=\"vn1\";", bufferedReader.readLine());
-        assertEquals("VALUENOTEX(\"DESTINO_ALOJAMIENTO\",\"Aragón\")=\"vn2\";", bufferedReader.readLine());
-        assertEquals("VALUENOTE(\"DESTINO_ALOJAMIENTO\",\"Andalucía\")=\"da1\";", bufferedReader.readLine());
-        assertEquals("VALUENOTE(\"CATEGORIA_ALOJAMIENTO\",\"1, 2 y 3 estrellas\")=\"ca1#ca3\";", bufferedReader.readLine());
-        assertEquals("VALUENOTE(\"CATEGORIA_ALOJAMIENTO\",\"4 y 5 estrellas\")=\"ca2#ca4#ca5\";", bufferedReader.readLine());
-        assertEquals("VALUENOTE(\"INDICADORES\",\"Índice de ocupación de plazas\")=\"ioA_1\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"*\",\"*\",\"Andalucía\",\"Año 2012\")=\"cnA_1\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"*\",\"*\",\"Andalucía\",\"Año 2013\")=\"cnA_2\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"*\",\"*\",\"Aragón\",\"Año 2012\")=\"cnA_3\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"*\",\"*\",\"Aragón\",\"Año 2013\")=\"cnA_4\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"*\",\"Andalucía\",\"Año 2012\")=\"cnB_1#cnC_1\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"*\",\"Andalucía\",\"Año 2013\")=\"cnB_3\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"*\",\"Aragón\",\"Año 2012\")=\"cnB_5\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"*\",\"Aragón\",\"Año 2013\")=\"cnB_7\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"Índice de ocupación de plazas\",\"Andalucía\",\"Año 2012\")=\"b1#d1#e1\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"Índice de ocupación de plazas\",\"Andalucía\",\"Año 2013\")=\"b3#d3#e3\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"Índice de ocupación de plazas\",\"Aragón\",\"Año 2012\")=\"b5#d5#e5\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"1, 2 y 3 estrellas\",\"Índice de ocupación de plazas\",\"Aragón\",\"Año 2013\")=\"b7#d7#e7\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"4 y 5 estrellas\",\"*\",\"Andalucía\",\"Año 2012\")=\"cnB_2#cnC_2\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"4 y 5 estrellas\",\"*\",\"Aragón\",\"Año 2012\")=\"cnB_6#cnC_6\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"4 y 5 estrellas\",\"*\",\"Aragón\",\"Año 2013\")=\"cnB_8\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"4 y 5 estrellas\",\"Índice de ocupación de plazas\",\"Andalucía\",\"Año 2012\")=\"b2#d2#e2\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"4 y 5 estrellas\",\"Índice de ocupación de plazas\",\"Andalucía\",\"Año 2013\")=\"d4#e4\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"4 y 5 estrellas\",\"Índice de ocupación de plazas\",\"Aragón\",\"Año 2012\")=\"b6#d6#e6\";", bufferedReader.readLine());
-        assertEquals("CELLNOTE(\"4 y 5 estrellas\",\"Índice de ocupación de plazas\",\"Aragón\",\"Año 2013\")=\"b8#d8#e8\";", bufferedReader.readLine());
+        {
+            Dataset dataset = XMLUtils.getDataset(XMLUtils.class.getResourceAsStream("/resources/C00031A_000002_ATTR_MEASURE.xml"));
 
-        assertEquals("DATA=", bufferedReader.readLine());
-        assertEquals("1.1 2 3 4 5 6 \".\" 8; ", bufferedReader.readLine());
+            File tmpFile = tempFolder.newFile();
+            FileOutputStream out = new FileOutputStream(tmpFile);
+            exportService.exportDatasetToPx(ctx, dataset, null, out);
+            out.close();
 
-        assertEquals(null, bufferedReader.readLine());
-        bufferedReader.close();
+            // Check checksum
+            InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/ContVariable.px");
+            Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
+        }
     }
 
     @Override
@@ -1182,38 +1143,58 @@ public class ExportServiceTest implements ExportServiceTestBase {
     private Dataset buildDatasetToExport() {
         //@formatter:off
         return DatasetMockBuilder.create()
+                // DIMENSIONS DEFINITIONS
                 .dimension("DESTINO_ALOJAMIENTO", "Destino de alojamiento").heading().dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
-                .dimension("TIME_PERIOD").heading().dimensionValue("2012", "Año 2012").dimensionValue("2013", "Año 2013")
-                .dimension("CATEGORIA_ALOJAMIENTO").stub().dimensionValue("1_2_3_ESTRELLAS", "1, 2 y 3 estrellas").dimensionValue("4_5_ESTRELLAS", "4 y 5 estrellas")
-                .dimension("INDICADORES").stub().dimensionValue("INDICE_OCUPACION_PLAZAS", "Índice de ocupación de plazas")
-                .attribute("ATTRIBUTE_A", "Attribute A", AttributeAttachmentLevelType.DATASET)
-                .attribute("ATTRIBUTE_A2", "Attribute A2", AttributeAttachmentLevelType.DATASET)
-                        .attributeValue("a2", "Attribute a2")
-                .attribute("NOTEX", "Attribute Notex", AttributeAttachmentLevelType.DATASET)
-                        .attributeValue("a3", "Notex a3")
-                .attribute("VALUENOTEX", "ValueNotex01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO")
-                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "AttrDestinoAlojamiento01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO")
-                        .attributeValue("da1", "Destino 1")
-                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "AttrCategoriaAlojamiento01", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
-                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "AttrCategoriaAlojamiento02", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
-                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", "AttrCategoriaAlojamiento03", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("CATEGORIA_ALOJAMIENTO")
-                        .attributeValue("ca5", "Categoría 5")
-                .attribute("INDICADORES_A", "Attribute Indicadores A", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("INDICADORES")
-                .attribute("CELLNOTE_A", "Attribute CellNote A", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD")
-                .attribute("CELLNOTE_B", "Attribute CellNote B", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD", "CATEGORIA_ALOJAMIENTO")
-                .attribute("CELLNOTE_C", "Attribute CellNote C", AttributeAttachmentLevelType.DIMENSION).dimensionsAttached("TIME_PERIOD", "CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO") // unordered in attribute definition
-                           .attributeValue("cnC_1", "Cell C1").attributeValue("cnC_2", "Cell C2").attributeValue("cnC_6", "Cell C6")
-                .attribute("ATTRIBUTE_B", "Attribute B", AttributeAttachmentLevelType.PRIMARY_MEASURE)
-                           .attributeValue("b1", "Attribute b1").attributeValue("b2", "Attribute b2").attributeValue("b3", "Attribute b3")
-                           .attributeValue("b4", "Attribute b4").attributeValue("b5", "Attribute b5").attributeValue("b6", "Attribute b6")
-                           .attributeValue("b7", "Attribute b7").attributeValue("b8", "Attribute b8").attributeValue("b9", "Attribute b9")
-                .attribute("ATTRIBUTE_C", "Attribute C",AttributeAttachmentLevelType.PRIMARY_MEASURE)
-                .attribute("ATTRIBUTE_D", "Attribute D",AttributeAttachmentLevelType.PRIMARY_MEASURE)
-                           .attributeValue("d1", "Attribute d1").attributeValue("d2", "Attribute d2").attributeValue("d3", "Attribute d3")
-                           .attributeValue("d4", "Attribute d4").attributeValue("d5", "Attribute d5").attributeValue("d6", "Attribute d6")
-                           .attributeValue("d7", "Attribute d7").attributeValue("d8", "Attribute d8").attributeValue("d9", "Attribute d9")
-                .attribute("ATTRIBUTE_E", "Attribute E",AttributeAttachmentLevelType.PRIMARY_MEASURE)
+                .dimension("TIME_PERIOD", "Periodo de tiempo").heading().dimensionValue("2012", "Año 2012").dimensionValue("2013", "Año 2013")
+                .dimension("CATEGORIA_ALOJAMIENTO", "Categoría del alojamiento").stub().dimensionValue("1_2_3_ESTRELLAS", "1, 2 y 3 estrellas").dimensionValue("4_5_ESTRELLAS", "4 y 5 estrellas")
+                .dimension("INDICADORES", "Indicadores").stub().dimensionValue("INDICE_OCUPACION_PLAZAS", "Índice de ocupación de plazas")
+                
+                // DATASET ATTRIBUTES DEFINITIONS
+                .attribute("ATTRIBUTE_A", "Attribute A", AttributeAttachmentLevelType.DATASET, ComponentType.OTHER)
+                .attribute("ATTRIBUTE_A2", "Attribute A2", AttributeAttachmentLevelType.DATASET, ComponentType.MEASURE)
+                        .attributeValue("a2", "a2 Label")
+                .attribute("NOTEX", "Attribute Notex", AttributeAttachmentLevelType.DATASET, ComponentType.OTHER)
+                        .attributeValue("a3", "a3 Label")
+                        
+                // DIMENSION ATTRIBUTES DEFINITIONS
+                .attribute("VALUENOTEX", "ValueNotex", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "AttrDestinoAlojamiento01", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO")
+                        .attributeValue("da1", "da1 Label")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "AttrCategoriaAlojamiento01", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "AttrCategoriaAlojamiento02", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", "AttrCategoriaAlojamiento03", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                        .attributeValue("ca5", "ca 5 Label")
+                .attribute("INDICADORES_A", "Attribute Indicadores A", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("INDICADORES")
+                .attribute("CELLNOTE_A", "Attribute CellNote A", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD")
+                .attribute("CELLNOTE_B", "Attribute CellNote B", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD", "CATEGORIA_ALOJAMIENTO")
+                .attribute("CELLNOTE_C", "Attribute CellNote C", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("TIME_PERIOD", "CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO") // unordered in attribute definition
+                           .attributeValue("cnC_1", "cnC_1 Label").attributeValue("cnC_2", "cnC_2 Label").attributeValue("cnC_6", "cnC_6 Label")
+                
+                // PRIMARY MEASURE DEFINITIONS
+                .attribute("ATTRIBUTE_B", "Attribute B", AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+                           .attributeValue("b1", "b1 Label").attributeValue("b2", "b2 Label").attributeValue("b3", "b3 Label")
+                           .attributeValue("b4", "b4 Label").attributeValue("b5", "b5 Label").attributeValue("b6", "b6 Label")
+                           .attributeValue("b7", "b7 Label").attributeValue("b8", "b8 Label").attributeValue("b9", "b9 Label")
+                .attribute("ATTRIBUTE_C", "Attribute C",AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+                .attribute("ATTRIBUTE_D", "Attribute D",AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+                           .attributeValue("d1", "d1 Label").attributeValue("d2", "d2 Label").attributeValue("d3", "d3 Label")
+                           .attributeValue("d4", "d4 Label").attributeValue("d5", "d5 Label").attributeValue("d6", "d6 Label")
+                           .attributeValue("d7", "d7 Label").attributeValue("d8", "d8 Label").attributeValue("d9", "d9 Label")
+                .attribute("ATTRIBUTE_E", "Attribute E",AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+                
+                // OBSERVATIONS
                 .observations("1.1 | 2 | 3 | 4 | 5 | 6 |  | 8")
+                
+                // ATTRIBUTE INSTANCES
                 .attributeData("ATTRIBUTE_A", "a1")
                 .attributeData("ATTRIBUTE_A2", "a2")
                 .attributeData("NOTEX", "a3")

@@ -12,6 +12,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeDimens
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attributes;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentations;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.ComponentType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Data;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttributes;
@@ -46,9 +47,11 @@ public class DatasetMockBuilder {
 
     private DatasetMockBuilder() {
         dataset = new Dataset();
+        dataset.setId("C00031A_000001");
         dataset.setName(internationalString("title"));
         dataset.setDescription(internationalString("description"));
         dataset.setMetadata(new DatasetMetadata());
+        dataset.getMetadata().setStatisticalOperation(mockResource("C00000A"));
         dataset.getMetadata().setLanguages(new Resources());
         dataset.getMetadata().getLanguages().getResources().add(mockResource("es"));
         dataset.getMetadata().getLanguages().getResources().add(mockResource("en"));
@@ -101,8 +104,8 @@ public class DatasetMockBuilder {
         return this;
     }
 
-    public DatasetMockBuilder attribute(String attributeId, AttributeAttachmentLevelType attachementLevel) {
-        return attribute(attributeId, attributeId, attachementLevel);
+    public DatasetMockBuilder attribute(String attributeId, AttributeAttachmentLevelType attachementLevel, ComponentType componentType) {
+        return attribute(attributeId, attributeId, attachementLevel, componentType);
     }
 
     public DatasetMockBuilder dimensionValue(String representationId) {
@@ -139,7 +142,7 @@ public class DatasetMockBuilder {
         return this;
     }
 
-    public DatasetMockBuilder attribute(String attributeId, String attributeLabel, AttributeAttachmentLevelType attachementLevel) {
+    public DatasetMockBuilder attribute(String attributeId, String attributeLabel, AttributeAttachmentLevelType attachementLevel, ComponentType componentType) {
         if (dataset.getMetadata().getAttributes() == null) {
             dataset.getMetadata().setAttributes(new Attributes());
         }
@@ -148,6 +151,7 @@ public class DatasetMockBuilder {
         attribute.setName(internationalString(attributeLabel));
         attribute.setAttachmentLevel(attachementLevel);
         attribute.setAttributeValues(new NonEnumeratedAttributeValues());
+        attribute.setType(componentType);
         dataset.getMetadata().getAttributes().getAttributes().add(attribute);
         lastAttributeMetadata = attribute;
         return this;

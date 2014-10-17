@@ -133,7 +133,7 @@ public class PlainTextExporter {
                     String dimensionValueId = entryId.get(i);
                     LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
                     if (labelVisualisation.isLabel()) {
-                        String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId);
+                        String dimensionValueLabel = datasetAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
                         line.append(escapeString(dimensionValueLabel, ESCAPE_IF_NECESSARY) + plainTextTypeEnum.getSeparator());
                     }
                     if (labelVisualisation.isCode()) {
@@ -165,7 +165,7 @@ public class PlainTextExporter {
                     } else {
                         LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
                         if (labelVisualisation.isLabel()) {
-                            String attributeValueLabel = datasetAccess.getAttributeValueLabel(attributeId, attributeValue);
+                            String attributeValueLabel = datasetAccess.getAttributeValueLabelCurrentLocale(attributeId, attributeValue);
                             line.append(attributeValueLabel != null ? plainTextTypeEnum.getSeparator() + escapeString(attributeValueLabel, ESCAPE_IF_NECESSARY) : plainTextTypeEnum.getSeparator()
                                     + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
                         }
@@ -283,7 +283,7 @@ public class PlainTextExporter {
                         LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
                         if (labelVisualisation.isLabel()) {
                             if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
-                                String dimensionValueLabel = datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId);
+                                String dimensionValueLabel = datasetAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
                                 line.append(escapeString(dimensionValueLabel, ESCAPE_IF_NECESSARY));
                             }
                             line.append(plainTextTypeEnum.getSeparator());
@@ -316,7 +316,7 @@ public class PlainTextExporter {
         LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
         attributeValueCode = escapeString(attributeValueCode, ESCAPE_IF_NECESSARY);
         if (labelVisualisation.isLabel()) {
-            String attributeValueLabel = datasetAccess.getAttributeValueLabel(attributeId, attributeValueCode);
+            String attributeValueLabel = datasetAccess.getAttributeValueLabelCurrentLocale(attributeId, attributeValueCode);
             attributeValueLabel = escapeString(attributeValueLabel, ESCAPE_IF_NECESSARY);
             line.append(attributeValueLabel != null ? attributeValueLabel : attributeValueCode);
             if (numberOfColumnsToAttributeValue == 2) {
