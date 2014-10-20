@@ -178,12 +178,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             }
 
             // Retrieve dataset
-            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+            Dataset dataset = retrieveDataset(agencyID, resourceID, version, null, dimensionSelection); // all langs
 
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, lang, outputStream);
+            exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, null, outputStream); // In PX file, all provided langs are sending
             outputStream.close();
 
             if (filename == null) {
