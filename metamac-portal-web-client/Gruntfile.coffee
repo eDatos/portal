@@ -297,6 +297,11 @@ module.exports = (grunt) ->
         mocha:
             all:
                 src: [ 'src/test/javascript/runner/runner.html' ]
+                options:
+                    log: true
+                    mocha:
+                        ignoreLeaks: true
+                    reporter: 'Dot'
 
 
             spec:
