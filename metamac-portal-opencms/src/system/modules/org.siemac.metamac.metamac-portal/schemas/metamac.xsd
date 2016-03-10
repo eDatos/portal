@@ -16,6 +16,8 @@
             <xsd:element name="ApiUrlStatisticalResources" type="OpenCmsString"/>
             <xsd:element name="ApiUrlStructuralResources" type="OpenCmsString"/>
             <xsd:element name="ApiUrlStatisticalVisualizer" type="OpenCmsString"/>
+            <xsd:element name="ApiUrlPermalinks" type="OpenCmsString"/>
+            <xsd:element name="ApiUrlExport" type="OpenCmsString"/>
             <xsd:element name="InternalPortal" type="OpenCmsBoolean"/>
         </xsd:sequence>
         <xsd:attribute name="language" type="OpenCmsLocale" use="required"/>

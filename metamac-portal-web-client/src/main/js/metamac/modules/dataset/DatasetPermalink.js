@@ -6,7 +6,7 @@
     App.modules.dataset.DatasetPermalink = {
 
         baseUrl : function () {
-            return App.endpoints["statistical-visualizer"] + "/apis/permalinks/v1.0/permalinks";
+            return App.endpoints["permalinks"] + "/permalinks";
         },
 
         retrievePermalink : function (permalinkId) {

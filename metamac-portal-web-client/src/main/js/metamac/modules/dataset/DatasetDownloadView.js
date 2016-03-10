@@ -29,9 +29,9 @@
                 selection : JSON.stringify(datasetSelection),
                 emptySelection : JSON.stringify(this.getEmptyDatasetSelection()),
                 url : {
-                    tsv : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/tsv/" + identifierUrlPart,
-                    excel : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/excel/" + identifierUrlPart,
-                    px : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/px/" + identifierUrlPart
+                    tsv : App.endpoints["export"] + "/tsv/" + identifierUrlPart,
+                    excel : App.endpoints["export"] + "/excel/" + identifierUrlPart,
+                    px : App.endpoints["export"] + "/px/" + identifierUrlPart
                 },
                 buttonConfig : this._getButtonConfiguration()
             };
@@ -42,9 +42,9 @@
                     var svgContext = {
                         svg : svg,
                         url : {                            
-                            png : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/image" + self._getImageExportApiParams('png'),
-                            pdf : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/image" + self._getImageExportApiParams('pdf'),
-                            svg : App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/image" + self._getImageExportApiParams('svg')
+                            png : App.endpoints["export"] + "/image" + self._getImageExportApiParams('png'),
+                            pdf : App.endpoints["export"] + "/image" + self._getImageExportApiParams('pdf'),
+                            svg : App.endpoints["export"] + "/image" + self._getImageExportApiParams('svg')
                         }
                     };
                     _.extend(context, svgContext);
@@ -185,7 +185,7 @@
         exportApiCall : function (exportType) {
             //TODO querys?
             var identifier  = this.filterDimensions.metadata.identifier();
-            var url = App.endpoints["statistical-visualizer"] + "/apis/export/v1.0/" + exportType + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
+            var url = App.endpoints["export"] + "/" + exportType + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
             var selection = this.getDatasetSelection();
 
             var downloadRequest = $.ajax({

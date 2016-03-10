@@ -35,9 +35,11 @@ Crear los siguientes  dentro de istac/metamac desde View explorer (offline) -> N
 metamac.html
 - type: structured content -> metamac
 - Edit:
--- ApiUrlStatisticalResources: http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources
+-- ApiUrlStatisticalResources: http://estadisticas.arte-consultores.com/statistical-resources
 -- ApiUrlStructuralResources: http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal
 -- ApiUrlStatisticalVisualizer: http://estadisticas.arte-consultores.com/statistical-visualizer
+-- ApiUrlPermalinks: http://estadisticas.arte-consultores.com/permalinks
+-- ApiUrlExport: http://estadisticas.arte-consultores.com/export
 
 collection.html
 - type: containerpage

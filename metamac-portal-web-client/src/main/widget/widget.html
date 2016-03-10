@@ -60,25 +60,16 @@ LazyLoad.js('../../../target/metamac.js', function () {
 App.config["widget"] = true;
 
     //App.endpoints["statistical-resources"] = "http://frodgar:8080/metamac-statistical-resources-external-web/apis/statistical-resources/v1.0"
-   //App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources/v1.0";
+   //App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/statistical-resources/v1.0";
    App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/statistical-resources-internal/apis/statistical-resources-internal/v1.0";
 
    
-    App.endpoints["structural-resources"] = "http://estadisticas.arte-consultores.com/structural-resources/apis/structural-resources/v1.0";
-   
+    App.endpoints["structural-resources"] = "http://estadisticas.arte-consultores.com/structural-resources/v1.0";
 
     App.endpoints["structural-resources"] = "http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal/v1.0";
-   // App.endpoints["statistical-visualizer"] = "http://localhost:8082";
     App.endpoints["statistical-visualizer"] = "http://estadisticas.arte-consultores.com/statistical-visualizer";
-//     App.endpoints["statistical-visualizer"] = "http://rcorrod:8090/statistical-visualizer-1.0.2-SNAPSHOT";
-
-//    var datasetIdentifier = {
-//        type : "dataset",
-//        agency : "ISTAC",
-//        identifier : "C00031A_000002",
-//        version : "001.000"
-//    };
-//    App.modules.dataset.DatasetApplication.start({datasetIdentifier : datasetIdentifier});
+    App.endpoints["permalinks"] = "http://estadisticas.arte-consultores.com/permalinks/v1.0";
+    App.endpoints["export"] = "http://estadisticas.arte-consultores.com/export/v1.0";
 
     App.start();
                         });

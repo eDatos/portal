@@ -22,8 +22,8 @@ public class PermalinksDo2RestMapperV10Impl implements PermalinksDo2RestMapperV1
     public void init() throws Exception {
         // ENDPOINTS
         // Permalinks external Api V1.0
-        String portalApiExternalEndpoint = configurationService.retrievePortalExternalApisUrlBase();
-        permalinksApiExternalEndpointV10 = RestUtils.createLink(portalApiExternalEndpoint, RestExternalConstants.API_PERMALINKS_NAME + "/" + RestExternalConstants.API_VERSION_1_0);
+        String permalinksApiExternalEndpoint = configurationService.retrievePortalExternalApisPermalinksUrlBase();
+        permalinksApiExternalEndpointV10 = RestUtils.createLink(permalinksApiExternalEndpoint, RestExternalConstants.API_VERSION_1_0);
     }
 
     @Override

@@ -35,6 +35,8 @@
 	%>	
 	<%
 		String PORTAL_URL_BASE = "";
+        String PERMALINKS_API_URL_BASE = "";
+        String EXPORT_API_URL_BASE = "";
 		String STATISTICAL_RESOURCES_API_URL_BASE = "";
 		String SRM_API_URL_BASE = "";
 		Boolean internalPortal = null;
@@ -57,7 +59,10 @@
 			    request.setAttribute("titlePrefix","DREM | ");
 			}
 		    
-		    PORTAL_URL_BASE = configurationService.retrievePortalExternalUrlBase(); // TODO exists internal?
+		    PORTAL_URL_BASE = configurationService.retrievePortalExternalUrlBase();
+		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
+            EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();       
+            
 		    if (INSTALLATION_TYPE.equals("INTERNAL")) {
 		        STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesInternalApiUrlBase();
 		        SRM_API_URL_BASE = configurationService.retrieveSrmInternalApiUrlBase();
@@ -66,12 +71,16 @@
 		        SRM_API_URL_BASE = configurationService.retrieveSrmExternalApiUrlBase();
 			}
 			
-			request.setAttribute("ApiUrlStatisticalVisualizer", PORTAL_URL_BASE);		
+			request.setAttribute("ApiUrlStatisticalVisualizer", PORTAL_URL_BASE);
+            request.setAttribute("ApiUrlPermalinks", PERMALINKS_API_URL_BASE);
+            request.setAttribute("ApiUrlExport", EXPORT_API_URL_BASE);		
 			request.setAttribute("ApiUrlStatisticalResources", STATISTICAL_RESOURCES_API_URL_BASE);	
 			request.setAttribute("ApiUrlStructuralResources", SRM_API_URL_BASE);
 		
 		} catch (MetamacException e) {
 		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
+		 	request.setAttribute("ApiUrlPermalinks", "error");
+            request.setAttribute("ApiUrlExport", "error");      
 		 	request.setAttribute("ApiUrlStatisticalResources", "error");
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
 		}

@@ -7,6 +7,8 @@
 	    <c:choose>
 		    <c:when test="${content.value.ApiUrlStatisticalResources == ''
 		    	|| content.value.ApiUrlStructuralResources == ''
+                || content.value.ApiUrlPermalinks == ''
+                || content.value.ApiUrlExport == ''
 		    	|| content.value.ApiUrlStatisticalVisualizer == ''}">
 		    	<h3>Error - Propiedad no configurada</h3>
 	            <p class="justificado">Lo sentimos, alguna de las propiedades no ha sido configurada correctamente.</p>
@@ -53,7 +55,7 @@
 			                    I18n.defaultLocale = "es";
 			                    I18n.locale = "<%= request.getLocale().toString().substring(0, 2) %>";
 								
-			                    // http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources
+			                    // http://estadisticas.arte-consultores.com/statistical-resources
 			                    App.endpoints["statistical-resources"] = "${content.value.ApiUrlStatisticalResources}/v1.0";
 			                    
 			                    // http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal
@@ -61,6 +63,12 @@
 			                    
 			                    // http://estadisticas.arte-consultores.com/statistical-visualizer
 			                    App.endpoints["statistical-visualizer"] = "${content.value.ApiUrlStatisticalVisualizer}";
+			                    
+			                    // http://estadisticas.arte-consultores.com/permalinks
+			                    App.endpoints["permalinks"] = "${content.value.ApiUrlPermalinks}/v1.0";
+			                    
+			                    // http://estadisticas.arte-consultores.com/export
+			                    App.endpoints["export"] = "${content.value.ApiUrlExport}/v1.0";
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    
