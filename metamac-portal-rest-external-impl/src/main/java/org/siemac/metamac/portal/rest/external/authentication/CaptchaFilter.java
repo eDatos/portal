@@ -82,7 +82,7 @@ public class CaptchaFilter implements RequestHandler {
             }
 
             if (!valid) {
-                LOG.error("Captcha no valid. Captcha provider = {}, Message {}", captchaProvider, m);
+                LOG.error("Captcha no valid. Captcha provider = {}.", captchaProvider);
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             }
         }
@@ -91,6 +91,7 @@ public class CaptchaFilter implements RequestHandler {
     }
 
     private boolean validateSimple(Message m) {
+        LOG.info("Validating simple captcha");
         HttpHeaders headers = new HttpHeadersImpl(m);
         Object simpleCaptchaAnswer = request.getSession().getAttribute(Captcha.NAME);
         String responseSimple = getSingleHeader(headers, "captcha_simple_response");
@@ -102,6 +103,11 @@ public class CaptchaFilter implements RequestHandler {
                 valid = captcha.isCorrect(responseSimple);
             }
         }
+
+        if (!valid) {
+            LOG.error("Error validating simple captcha. Responsesimple = {}, SimpleCaptchaAnswer = {}", responseSimple, simpleCaptchaAnswer.toString());
+        }
+
         return valid;
     }
 
