@@ -295,6 +295,25 @@ module.exports = (grunt) ->
             test:
                 path: 'http://localhost:<%= connect.server.options.port %>/src/test/javascript/runner/runner.html'
 
+        mocha:
+            all:
+                src: [ 'src/test/javascript/runner/runner.html' ]
+                options:
+                    log: true
+                    mocha:
+                        ignoreLeaks: true
+                    reporter: 'Dot'
+
+
+            spec:
+                src: [ 'src/test/javascript/runner/runner.html' ]
+                options:
+                    log: true
+                    mocha:
+                        ignoreLeaks: true
+                        grep: '<%= globalConfig.mocha.grep %>'
+                    reporter: 'mocha-unfunk-reporter'
+                    
         webfont:
             icons:
                 src: 'icons/*.svg'
@@ -316,7 +335,7 @@ module.exports = (grunt) ->
 
     grunt.registerTask 'test', ['concat','mocha:all']
     grunt.registerTask 'dev', ['clean', 'copy', 'less:dev', 'less:map', 'handlebars', 'concat']
-    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'less:map', 'handlebars', 'mocha:all']
+    grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'less:map', 'handlebars', 'uglify']
 
     grunt.registerTask 'bdd', ['connect', 'open:test', 'watch' ]
     grunt.registerTask 'default', 'build'
