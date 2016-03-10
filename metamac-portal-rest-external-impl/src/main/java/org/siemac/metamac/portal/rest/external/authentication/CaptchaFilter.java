@@ -82,6 +82,7 @@ public class CaptchaFilter implements RequestHandler {
             }
 
             if (!valid) {
+                LOG.error("Captcha no valid. Captcha provider = {}, Message {}", captchaProvider, m);
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             }
         }
