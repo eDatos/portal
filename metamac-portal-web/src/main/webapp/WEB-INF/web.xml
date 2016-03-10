@@ -1,127 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="metamac-portal-web" version="2.5"
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"  
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-    <!-- ********************* SPRING INTEGRATION ******************** -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/config/spring/applicationContext.xml </param-value>
-    </context-param>
+	<!-- ********************* SPRING INTEGRATION ******************** -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/config/spring/applicationContext.xml </param-value>
+	</context-param>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
-    <listener>
-        <listener-class>org.siemac.metamac.portal.web.ApplicationStartup</listener-class>
-    </listener>
-    
-    <!-- Rest -->
-    <servlet>
-        <servlet-name>CXFServlet</servlet-name>
-        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CXFServlet</servlet-name>
-        <url-pattern>/apis/*</url-pattern>
-    </servlet-mapping>
+	<listener>
+		<listener-class>org.siemac.metamac.portal.web.ApplicationStartup</listener-class>
+	</listener>
+
+	<!-- Rest -->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/apis/*</url-pattern>
+	</servlet-mapping>
 
 
-    <servlet>
-        <servlet-name>authentication</servlet-name>
-        <jsp-file>/js/authentication.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>authentication</servlet-name>
-        <url-pattern>/js/authentication.js</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>widget-js</servlet-name>
-        <jsp-file>/js/widget.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>widget-js</servlet-name>
-        <url-pattern>/js/widget.js</url-pattern>
-    </servlet-mapping>
-    
-    
-   <servlet>
-        <servlet-name>data</servlet-name>
-        <jsp-file>/jsp/data.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>data</servlet-name>
-        <url-pattern>/visualizer/data.html</url-pattern>
-    </servlet-mapping>
-    
-   	<servlet>
-        <servlet-name>collection</servlet-name>
-        <jsp-file>/jsp/collection.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>collection</servlet-name>
-        <url-pattern>/visualizer/collection.html</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>widget</servlet-name>
-        <jsp-file>/jsp/widget.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>widget</servlet-name>
-        <url-pattern>/widget.html</url-pattern>
-    </servlet-mapping>
+	<servlet>
+		<servlet-name>authentication</servlet-name>
+		<jsp-file>/js/authentication.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>authentication</servlet-name>
+		<url-pattern>/js/authentication.js</url-pattern>
+	</servlet-mapping>
 
-    <servlet>
-        <servlet-name>Captcha</servlet-name>
-        <servlet-class>org.siemac.metamac.portal.web.servlet.SimpleCaptchaServlet</servlet-class>
-        <!--Dimensions-->
-        <init-param>
-            <param-name>captcha-height</param-name>
-            <param-value>100</param-value>
-        </init-param>
-        <init-param>
-            <param-name>captcha-width</param-name>
-            <param-value>300</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Captcha</servlet-name>
-        <url-pattern>/jsp/captcha-simple.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>CaptchaGobcan</servlet-name>
-        <servlet-class>org.siemac.metamac.portal.web.servlet.CaptchaGobcanServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CaptchaGobcan</servlet-name>
-        <url-pattern>/jsp/captcha-gobcan.jsp</url-pattern>
-    </servlet-mapping>
-    
-    <!-- URL rewriting -->
-    <filter>
-            <filter-name>UrlRewriteFilter</filter-name>
-            <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-    </filter>
-    <filter-mapping>
-            <filter-name>UrlRewriteFilter</filter-name>
-            <url-pattern>/apis/*</url-pattern>
-    </filter-mapping>
-    
-    <error-page>
-        <exception-type>404</exception-type>
-        <location>/error.html</location>
-    </error-page>
-    <error-page>
-        <exception-type>java.lang.Exception</exception-type>
-        <location>/error.html</location>
-    </error-page>
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
+	<servlet>
+		<servlet-name>widget-js</servlet-name>
+		<jsp-file>/js/widget.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>widget-js</servlet-name>
+		<url-pattern>/js/widget.js</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>data</servlet-name>
+		<jsp-file>/jsp/data.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>data</servlet-name>
+		<url-pattern>/visualizer/data.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>collection</servlet-name>
+		<jsp-file>/jsp/collection.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>collection</servlet-name>
+		<url-pattern>/visualizer/collection.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>widget</servlet-name>
+		<jsp-file>/jsp/widget.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>widget</servlet-name>
+		<url-pattern>/widget.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Captcha</servlet-name>
+		<servlet-class>org.siemac.metamac.portal.web.servlet.SimpleCaptchaServlet</servlet-class>
+		<!--Dimensions -->
+		<init-param>
+			<param-name>captcha-height</param-name>
+			<param-value>100</param-value>
+		</init-param>
+		<init-param>
+			<param-name>captcha-width</param-name>
+			<param-value>300</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Captcha</servlet-name>
+		<url-pattern>/jsp/captcha-simple.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CaptchaGobcan</servlet-name>
+		<servlet-class>org.siemac.metamac.portal.web.servlet.CaptchaGobcanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CaptchaGobcan</servlet-name>
+		<url-pattern>/jsp/captcha-gobcan.jsp</url-pattern>
+	</servlet-mapping>
+
+	<!-- URL rewriting -->
+	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/apis/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Cookie rewrite path -->
+	<filter>
+		<filter-name>CookieRewritePathFilter</filter-name>
+		<filter-class>org.siemac.metamac.portal.web.filter.CookieRewritePathFilter</filter-class>
+	</filter>
+		<filter-mapping>
+		<filter-name>CookieRewritePathFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<error-page>
+		<exception-type>404</exception-type>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.html</location>
+	</error-page>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
 </web-app>
