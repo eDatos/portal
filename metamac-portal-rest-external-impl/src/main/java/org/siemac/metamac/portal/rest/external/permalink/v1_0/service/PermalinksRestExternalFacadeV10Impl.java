@@ -1,7 +1,5 @@
 package org.siemac.metamac.portal.rest.external.permalink.v1_0.service;
 
-import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -12,6 +10,8 @@ import org.siemac.metamac.portal.rest.external.service.PortalRestExternalCommonS
 import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.siemac.metamac.portal.rest.external.service.utils.PortalRestExternalUtils.manageException;
 
 @Service("permalinksRestExternalFacadeV10")
 public class PermalinksRestExternalFacadeV10Impl implements PermalinksV1_0 {
@@ -29,8 +29,7 @@ public class PermalinksRestExternalFacadeV10Impl implements PermalinksV1_0 {
     public Permalink retrievePermalinkByIdXml(String id) {
         try {
             org.siemac.metamac.portal.core.domain.Permalink permalinkEntity = commonService.retrievePermalink(id);
-            Permalink permalink = permalinksDo2RestMapper.toPermalink(permalinkEntity);
-            return permalink;
+            return permalinksDo2RestMapper.toPermalink(permalinkEntity);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -54,8 +53,7 @@ public class PermalinksRestExternalFacadeV10Impl implements PermalinksV1_0 {
             permalinkEntity = commonService.createPermalink(permalinkEntity);
 
             // Transform
-            permalink = permalinksDo2RestMapper.toPermalink(permalinkEntity);
-            return permalink;
+            return permalinksDo2RestMapper.toPermalink(permalinkEntity);
         } catch (Exception e) {
             throw manageException(e);
         }
