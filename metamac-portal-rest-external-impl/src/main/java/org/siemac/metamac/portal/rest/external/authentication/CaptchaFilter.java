@@ -105,7 +105,7 @@ public class CaptchaFilter implements RequestHandler {
         }
 
         if (!valid) {
-            LOG.error("Error validating simple captcha. Responsesimple = {}, SimpleCaptchaAnswer = {}", responseSimple, simpleCaptchaAnswer.toString());
+            LOG.error("Error validating simple captcha. Responsesimple = {}, SimpleCaptchaAnswer = {}", responseSimple, simpleCaptchaAnswer);
         }
 
         return valid;
