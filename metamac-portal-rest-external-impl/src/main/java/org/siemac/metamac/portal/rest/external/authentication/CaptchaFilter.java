@@ -97,11 +97,9 @@ public class CaptchaFilter implements RequestHandler {
         String responseSimple = getSingleHeader(headers, "captcha_simple_response");
 
         boolean valid = false;
-        if (responseSimple != null) {
-            if (simpleCaptchaAnswer != null) {
-                Captcha captcha = (Captcha) simpleCaptchaAnswer;
-                valid = captcha.isCorrect(responseSimple);
-            }
+        if (responseSimple != null && simpleCaptchaAnswer != null) {
+            Captcha captcha = (Captcha) simpleCaptchaAnswer;
+            valid = captcha.isCorrect(responseSimple);
         }
 
         if (!valid) {
