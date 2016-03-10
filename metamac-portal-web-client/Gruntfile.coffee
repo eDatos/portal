@@ -294,18 +294,6 @@ module.exports = (grunt) ->
         open:
             test:
                 path: 'http://localhost:<%= connect.server.options.port %>/src/test/javascript/runner/runner.html'
-        mocha:
-            all:
-                src: [ 'src/test/javascript/runner/runner.html' ]
-
-            spec:
-                src: [ 'src/test/javascript/runner/runner.html' ]
-                options:
-                    log: true
-                    mocha:
-                        ignoreLeaks: true
-                        grep: '<%= globalConfig.mocha.grep %>'
-                    reporter: 'mocha-unfunk-reporter'
 
         webfont:
             icons:
