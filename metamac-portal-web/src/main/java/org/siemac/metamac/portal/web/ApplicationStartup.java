@@ -7,8 +7,12 @@ import org.siemac.metamac.core.common.listener.ApplicationStartupListener;
 import org.siemac.metamac.core.common.util.ApplicationContextProvider;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.constants.PortalConfigurationConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ApplicationStartup extends ApplicationStartupListener {
+
+    private static final Logger log = LoggerFactory.getLogger(ApplicationStartup.class);
 
     @Override
     public String projectName() {
@@ -19,7 +23,6 @@ public class ApplicationStartup extends ApplicationStartupListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
         try {
             portalConfigurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
         } catch (Exception e) {
@@ -27,6 +30,13 @@ public class ApplicationStartup extends ApplicationStartupListener {
             throw new RuntimeException(e);
         }
         super.contextInitialized(sce);
+        try {
+            WebUtils.setOrganisation(configurationService.retrieveOrganisation());
+            WebUtils.setExportApiBaseURL(configurationService.retrievePortalExternalApisExportUrlBase());
+            WebUtils.setPermalinksApiBaseURL(configurationService.retrievePortalExternalApisPermalinksUrlBase());
+        } catch (MetamacException e) {
+            log.error("Error retrieving application configuration", e);
+        }
     }
 
     @Override
@@ -68,7 +78,5 @@ public class ApplicationStartup extends ApplicationStartupListener {
                 checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
             }
         }
-
     }
-
 }
