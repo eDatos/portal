@@ -27,7 +27,8 @@ public class SwaggerFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws java.io.IOException, ServletException {
         String path = ((HttpServletRequest) request).getRequestURI();
-        if (StringUtils.endsWithAny(path, getSupportedExportApiiVersions()) || StringUtils.endsWithAny(path, getSupportedPermalinksApiVersions())) {
+        if (StringUtils.isBlank(((HttpServletRequest) request).getQueryString())
+                && (StringUtils.endsWithAny(path, getSupportedExportApiiVersions()) || StringUtils.endsWithAny(path, getSupportedPermalinksApiVersions()))) {
             request.getRequestDispatcher("/docs/api/index.jsp").forward(request, response);
         } else if (path.endsWith("swagger.jsp")) {
             Matcher matcher = swaggerVersionPattern.matcher(path);
