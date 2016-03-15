@@ -1,1306 +1,925 @@
 {
   "swagger": "2.0",
-  "info" : {
-    "description" : "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis\n\t\tdis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec\n\t\tpede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede\n\t\tmollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat\n\t\tvitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.\n\t\tAenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum\n\t\trhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio\n\t\tet ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed\n\t\tfringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,",
-    "version" : "2.1.2-SNAPSHOT",
-    "title" : "Metamac Portal: Export API"
+  "info": {
+    "description": "Realizar exportaciones de los recursos estadísticos resulta una tarea común y de gran utilidad para poder tratar en el día a día con los datos manejados por el organismo. Esta API nos provee la funcionalidad necesaria para poder exportar los recursos estadísticos en diferentes formatos.",
+    "version": "1.0",
+    "title": "API de Exportaciones"
   },
-  "host" : "<%=org.siemac.metamac.portal.web.WebUtils.getExportApiBaseURL()%>",
-  "schemes" : [],
-  "tags" : [
+  "host": "<%=org.siemac.metamac.portal.web.WebUtils.getExportApiBaseURL()%>",
+  "schemes": [],
+  "tags": [
     {
-      "name" : "\/v1.0/csv_comma/{agencyID}/{resourceID}/{version}",
-      "description" : ""
-    }
-    ,
+      "name": "Exportaciones a ficheros PC-Axis",
+      "description": ""
+    },
     {
-      "name" : "\/v1.0/csv_semicolon/{agencyID}/{resourceID}/{version}",
-      "description" : ""
-    }
-    ,
+      "name": "Exportaciones a ficheros de texto plano",
+      "description": ""
+    },
     {
-      "name" : "\/v1.0/excel/{agencyID}/{resourceID}/{version}",
-      "description" : ""
-    }
-    ,
+      "name": "Exportaciones a ficheros Excel",
+      "description": ""
+    },
     {
-      "name" : "\/v1.0/image",
-      "description" : "Exports svg to image"
-    }
-    ,
-    {
-      "name" : "\/v1.0/px/{agencyID}/{resourceID}/{version}",
-      "description" : ""
-    }
-    ,
-    {
-      "name" : "\/v1.0/tsv/{agencyID}/{resourceID}/{version}",
-      "description" : ""
+      "name": "Exportaciones a imágenes",
+      "description": ""
     }
   ],
-  "definitions" : {
-    "xml_ns3_anonymous_CaptchaImage1" : {
-      "type" : "object",
-      "title" : "CaptchaImage1 (Anonymous)",
-      "allOf" : [
+  "definitions": {
+    "CaptchaImage1": {
+      "type": "object",
+      "title": "CaptchaImage1 (Anonymous)",
+      "allOf": [
         {
-          "properties" : {
-            "fFontSize" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+          "properties": {
+            "fFontSize": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-			"description" : "",
-			"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "nHeight" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "nHeight": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-			"description" : "",
-			"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "nWidth" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "nWidth": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-			"description" : "",
-			"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "sFontName" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "sFontName": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "sKeyword" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "sKeyword": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"nWidth\" type=\"{http://www.w3.org/2001/XMLSchema}int\"/>\r\n         &lt;element name=\"nHeight\" type=\"{http://www.w3.org/2001/XMLSchema}int\"/>\r\n         &lt;element name=\"sKeyword\" type=\"{http://www.w3.org/2001/XMLSchema}string\" minOccurs=\"0\"/>\r\n         &lt;element name=\"sFontName\" type=\"{http://www.w3.org/2001/XMLSchema}string\" minOccurs=\"0\"/>\r\n         &lt;element name=\"fFontSize\" type=\"{http://www.w3.org/2001/XMLSchema}float\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns3_anonymous_CaptchaImage1Response" : {
-      "type" : "object",
-      "title" : "CaptchaImage1Response (Anonymous)",
-      "allOf" : [
+      "description": ""
+    },
+    "CaptchaImage1Response": {
+      "type": "object",
+      "title": "CaptchaImage1Response (Anonymous)",
+      "allOf": [
         {
-          "properties" : {
-            "CaptchaImage1Result" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+          "properties": {
+            "CaptchaImage1Result": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"CaptchaImage1Result\" type=\"{http://www.w3.org/2001/XMLSchema}base64Binary\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns3_anonymous_CaptchaImage2" : {
-      "type" : "object",
-      "title" : "CaptchaImage2 (Anonymous)",
-      "allOf" : [
+      "description": ""
+    },
+    "CaptchaImage2": {
+      "type": "object",
+      "title": "CaptchaImage2 (Anonymous)",
+      "allOf": [
         {
-          "properties" : {
-            "nHeight" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+          "properties": {
+            "nHeight": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "nWidth" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "nWidth": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "sKeyword" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "sKeyword": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"nWidth\" type=\"{http://www.w3.org/2001/XMLSchema}int\"/>\r\n         &lt;element name=\"nHeight\" type=\"{http://www.w3.org/2001/XMLSchema}int\"/>\r\n         &lt;element name=\"sKeyword\" type=\"{http://www.w3.org/2001/XMLSchema}string\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns3_anonymous_CaptchaImage2Response" : {
-      "type" : "object",
-      "title" : "CaptchaImage2Response (Anonymous)",
-      "allOf" : [
+      "description": ""
+    },
+    "CaptchaImage2Response": {
+      "type": "object",
+      "title": "CaptchaImage2Response (Anonymous)",
+      "allOf": [
         {
-          "properties" : {
-            "CaptchaImage2Result" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+          "properties": {
+            "CaptchaImage2Result": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"CaptchaImage2Result\" type=\"{http://www.w3.org/2001/XMLSchema}base64Binary\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns3_anonymous_CaptchaImageString" : {
-      "type" : "object",
-      "title" : "CaptchaImageString (Anonymous)",
-      "allOf" : [
+      "description": ""
+    },
+    "CaptchaImageString": {
+      "type": "object",
+      "title": "CaptchaImageString (Anonymous)",
+      "allOf": [
         {
-          "properties" : {
-            "fFontSize" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+          "properties": {
+            "fFontSize": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "nHeight" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "nHeight": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "nWidth" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "nWidth": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "sFontName" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "sFontName": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "sKeyword" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+            "sKeyword": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"nWidth\" type=\"{http://www.w3.org/2001/XMLSchema}int\"/>\r\n         &lt;element name=\"nHeight\" type=\"{http://www.w3.org/2001/XMLSchema}int\"/>\r\n         &lt;element name=\"sKeyword\" type=\"{http://www.w3.org/2001/XMLSchema}string\" minOccurs=\"0\"/>\r\n         &lt;element name=\"sFontName\" type=\"{http://www.w3.org/2001/XMLSchema}string\" minOccurs=\"0\"/>\r\n         &lt;element name=\"fFontSize\" type=\"{http://www.w3.org/2001/XMLSchema}float\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns3_anonymous_CaptchaImageStringResponse" : {
-      "type" : "object",
-      "title" : "CaptchaImageStringResponse (Anonymous)",
-      "allOf" : [
+      "description": ""
+    },
+    "CaptchaImageStringResponse": {
+      "type": "object",
+      "title": "CaptchaImageStringResponse (Anonymous)",
+      "allOf": [
         {
-          "properties" : {
-            "CaptchaImageStringResult" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+          "properties": {
+            "CaptchaImageStringResult": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"CaptchaImageStringResult\" type=\"{http://www.w3.org/2001/XMLSchema}string\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns3_anonymous_GetFontNames" : {
-      "type" : "object",
-      "title" : "GetFontNames (Anonymous)",
-      "allOf" : [
-        {
-        }
+      "description": ""
+    },
+    "GetFontNames": {
+      "type": "object",
+      "title": "GetFontNames (Anonymous)",
+      "allOf": [
+        {}
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns3_anonymous_GetFontNamesResponse" : {
-      "type" : "object",
-      "title" : "GetFontNamesResponse (Anonymous)",
-      "allOf" : [
+      "description": ""
+    },
+    "GetFontNamesResponse": {
+      "type": "object",
+      "title": "GetFontNamesResponse (Anonymous)",
+      "allOf": [
         {
-          "properties" : {
-            "GetFontNamesResult" : {
-              "xml" : {
-                "namespace" : "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
+          "properties": {
+            "GetFontNamesResult": {
+              "xml": {
+                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for anonymous complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType>\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"GetFontNamesResult\" type=\"{http://www.w3.org/2001/XMLSchema}string\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_DatasetSelection" : {
-      "type" : "object",
-      "title" : "DatasetSelection",
-      "allOf" : [
+      "description": ""
+    },
+    "DatasetSelection": {
+      "type": "object",
+      "title": "DatasetSelection",
+      "allOf": [
         {
-          "properties" : {
-            "attributes" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "attributes": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_DatasetSelectionAttributes"
+              "description": "",
+              "$ref": "#/definitions/DatasetSelectionAttributes"
             },
-            "dimensions" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+            "dimensions": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_DatasetSelectionDimensions"
+              "description": "",
+              "$ref": "#/definitions/DatasetSelectionDimensions"
             }
           }
         }
       ],
-      "description" : "<p>Java class for DatasetSelection complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"DatasetSelection\">\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"dimensions\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DatasetSelectionDimensions\"/>\r\n         &lt;element name=\"attributes\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DatasetSelectionAttributes\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_DatasetSelectionAttribute" : {
-      "type" : "object",
-      "title" : "DatasetSelectionAttribute",
-      "allOf" : [
+      "description": ""
+    },
+    "DatasetSelectionAttribute": {
+      "type": "object",
+      "title": "DatasetSelectionAttribute",
+      "allOf": [
         {
-          "properties" : {
-            "attributeId" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "attributeId": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "labelVisualisationMode" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+            "labelVisualisationMode": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_LabelVisualisationMode"
+              "description": "",
+              "$ref": "#/definitions/LabelVisualisationMode"
             }
           }
         }
       ],
-      "description" : "<p>Java class for DatasetSelectionAttribute complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"DatasetSelectionAttribute\">\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"attributeId\" type=\"{http://www.w3.org/2001/XMLSchema}string\"/>\r\n         &lt;element name=\"labelVisualisationMode\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}LabelVisualisationMode\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_DatasetSelectionAttributes" : {
-      "type" : "object",
-      "title" : "DatasetSelectionAttributes",
-      "allOf" : [
+      "description": ""
+    },
+    "DatasetSelectionAttributes": {
+      "type": "object",
+      "title": "DatasetSelectionAttributes",
+      "allOf": [
         {
-          "$ref" : "#/definitions/xml_cdomain_ListBase"
+          "$ref": "#/definitions/ListBase"
         },
         {
-          "properties" : {
-            "attribute" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "attribute": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_DatasetSelectionAttribute"
+              "description": "",
+              "$ref": "#/definitions/DatasetSelectionAttribute"
             }
           }
         }
       ],
-      "description" : "<p>Java class for DatasetSelectionAttributes complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"DatasetSelectionAttributes\">\r\n   &lt;complexContent>\r\n     &lt;extension base=\"{http://www.siemac.org/metamac/rest/common/v1.0/domain}ListBase\">\r\n       &lt;sequence>\r\n         &lt;element name=\"attribute\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DatasetSelectionAttribute\" maxOccurs=\"unbounded\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/extension>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_DatasetSelectionDimension" : {
-      "type" : "object",
-      "title" : "DatasetSelectionDimension",
-      "allOf" : [
+      "description": ""
+    },
+    "DatasetSelectionDimension": {
+      "type": "object",
+      "title": "DatasetSelectionDimension",
+      "allOf": [
         {
-          "properties" : {
-            "dimensionId" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "dimensionId": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "dimensionValues" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+            "dimensionValues": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_DimensionValues"
+              "description": "",
+              "$ref": "#/definitions/DimensionValues"
             },
-            "labelVisualisationMode" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+            "labelVisualisationMode": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_LabelVisualisationMode"
+              "description": "",
+              "$ref": "#/definitions/LabelVisualisationMode"
             },
-            "position" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+            "position": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"type" : "number"
+              "description": "",
+              "type": "number"
             }
           }
         }
       ],
-      "description" : "<p>Java class for DatasetSelectionDimension complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"DatasetSelectionDimension\">\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"dimensionId\" type=\"{http://www.w3.org/2001/XMLSchema}string\"/>\r\n         &lt;element name=\"dimensionValues\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DimensionValues\" minOccurs=\"0\"/>\r\n         &lt;element name=\"labelVisualisationMode\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}LabelVisualisationMode\" minOccurs=\"0\"/>\r\n         &lt;element name=\"position\" type=\"{http://www.w3.org/2001/XMLSchema}int\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_DatasetSelectionDimensions" : {
-      "type" : "object",
-      "title" : "DatasetSelectionDimensions",
-      "allOf" : [
+      "description": ""
+    },
+    "DatasetSelectionDimensions": {
+      "type": "object",
+      "title": "DatasetSelectionDimensions",
+      "allOf": [
         {
-          "$ref" : "#/definitions/xml_cdomain_ListBase"
+          "$ref": "#/definitions/ListBase"
         },
         {
-          "properties" : {
-            "dimension" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "dimension": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_DatasetSelectionDimension"
+              "description": "",
+              "$ref": "#/definitions/DatasetSelectionDimension"
             }
           }
         }
       ],
-      "description" : "<p>Java class for DatasetSelectionDimensions complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"DatasetSelectionDimensions\">\r\n   &lt;complexContent>\r\n     &lt;extension base=\"{http://www.siemac.org/metamac/rest/common/v1.0/domain}ListBase\">\r\n       &lt;sequence>\r\n         &lt;element name=\"dimension\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DatasetSelectionDimension\" maxOccurs=\"unbounded\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/extension>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_DimensionValues" : {
-      "type" : "object",
-      "title" : "DimensionValues",
-      "allOf" : [
+      "description": ""
+    },
+    "DimensionValues": {
+      "type": "object",
+      "title": "DimensionValues",
+      "allOf": [
         {
-          "$ref" : "#/definitions/xml_cdomain_ListBase"
+          "$ref": "#/definitions/ListBase"
         },
         {
-          "properties" : {
-            "dimensionValue" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "dimensionValue": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : "<p>Java class for DimensionValues complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"DimensionValues\">\r\n   &lt;complexContent>\r\n     &lt;extension base=\"{http://www.siemac.org/metamac/rest/common/v1.0/domain}ListBase\">\r\n       &lt;sequence>\r\n         &lt;element name=\"dimensionValue\" type=\"{http://www.w3.org/2001/XMLSchema}string\" maxOccurs=\"unbounded\" minOccurs=\"0\"/>\r\n       &lt;/sequence>\r\n     &lt;/extension>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_ExcelExportation" : {
-      "type" : "object",
-      "title" : "ExcelExportation",
-      "allOf" : [
+      "description": ""
+    },
+    "ExcelExportation": {
+      "type": "object",
+      "title": "ExcelExportation",
+      "allOf": [
         {
-          "properties" : {
-            "datasetSelection" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "datasetSelection": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_DatasetSelection"
+              "description": "",
+              "$ref": "#/definitions/DatasetSelection"
             }
           }
         }
       ],
-      "description" : "<p>Java class for ExcelExportation complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"ExcelExportation\">\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"datasetSelection\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DatasetSelection\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_LabelVisualisationMode" : {
-      "type" : "string",
-      "title" : "LabelVisualisationMode",
-          "enum" : [
-            "CODE",
-            "LABEL",
-            "CODE_AND_LABEL"
-          ],
-      "description" : "<p>Java class for LabelVisualisationMode.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n<p>\r\n<pre>\r\n &lt;simpleType name=\"LabelVisualisationMode\">\r\n   &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}token\">\r\n     &lt;enumeration value=\"CODE\"/>\r\n     &lt;enumeration value=\"LABEL\"/>\r\n     &lt;enumeration value=\"CODE_AND_LABEL\"/>\r\n   &lt;/restriction>\r\n &lt;/simpleType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_PlainTextExportation" : {
-      "type" : "object",
-      "title" : "PlainTextExportation",
-      "allOf" : [
+      "description": ""
+    },
+    "LabelVisualisationMode": {
+      "type": "string",
+      "title": "LabelVisualisationMode",
+      "enum": [
+        "CODE",
+        "LABEL",
+        "CODE_AND_LABEL"
+      ],
+      "description": ""
+    },
+    "PlainTextExportation": {
+      "type": "object",
+      "title": "PlainTextExportation",
+      "allOf": [
         {
-          "properties" : {
-            "datasetSelection" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "datasetSelection": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-"description" : "",
-"$ref" : "#/definitions/xml_ns2_DatasetSelection"
+              "description": "",
+              "$ref": "#/definitions/DatasetSelection"
             }
           }
         }
       ],
-      "description" : "<p>Java class for PlainTextExportation complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"PlainTextExportation\">\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"datasetSelection\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DatasetSelection\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_ns2_PxExportation" : {
-      "type" : "object",
-      "title" : "PxExportation",
-      "allOf" : [
+      "description": ""
+    },
+    "PxExportation": {
+      "type": "object",
+      "title": "PxExportation",
+      "allOf": [
         {
-          "properties" : {
-            "datasetSelection" : {
-              "xml" : {
-                "namespace" : "http://www.siemac.org/metamac/rest/export/v1.0/domain"
+          "properties": {
+            "datasetSelection": {
+              "xml": {
+                "namespace": "http://www.siemac.org/metamac/rest/export/v1.0/domain"
               },
-			"description" : "",
-			"$ref" : "#/definitions/xml_ns2_DatasetSelection"
+              "description": "",
+              "$ref": "#/definitions/DatasetSelection"
             }
           }
         }
       ],
-      "description" : "<p>Java class for PxExportation complex type.\r\n\r\n<p>The following schema fragment specifies the expected content contained within this class.\r\n\r\n<pre>\r\n &lt;complexType name=\"PxExportation\">\r\n   &lt;complexContent>\r\n     &lt;restriction base=\"{http://www.w3.org/2001/XMLSchema}anyType\">\r\n       &lt;sequence>\r\n         &lt;element name=\"datasetSelection\" type=\"{http://www.siemac.org/metamac/rest/export/v1.0/domain}DatasetSelection\"/>\r\n       &lt;/sequence>\r\n     &lt;/restriction>\r\n   &lt;/complexContent>\r\n &lt;/complexType>\r\n <\/pre>"
-    }
-    ,
-    "xml_cdomain_ListBase" : {
-      "type" : "object",
-      "title" : "ListBase",
-      "allOf" : [
+      "description": ""
+    },
+    "ListBase": {
+      "type": "object",
+      "title": "ListBase",
+      "allOf": [
         {
-          "properties" : {
-            "firstLink" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+          "properties": {
+            "firstLink": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "kind" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "kind": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "lastLink" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "lastLink": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "limit" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "limit": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "nextLink" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "nextLink": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "offset" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "offset": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "number"
+              "description": "",
+              "type": "number"
             },
-            "previousLink" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "previousLink": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "selfLink" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "selfLink": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "total" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "total": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "number"
+              "description": "",
+              "type": "number"
             }
           }
         }
       ],
-      "description" : ""
-    }
-    ,
-    "xml_cdomain_ResourceLink" : {
-      "type" : "object",
-      "title" : "ResourceLink",
-      "allOf" : [
+      "description": ""
+    },
+    "ResourceLink": {
+      "type": "object",
+      "title": "ResourceLink",
+      "allOf": [
         {
-          "properties" : {
-            "href" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+          "properties": {
+            "href": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             },
-            "kind" : {
-              "xml" : {
-                "attribute" : true,
-                "namespace" : ""
+            "kind": {
+              "xml": {
+                "attribute": true,
+                "namespace": ""
               },
-			"description" : "",
-			"type" : "string"
+              "description": "",
+              "type": "string"
             }
           }
         }
       ],
-      "description" : ""
+      "description": ""
     }
   },
   "paths": {
-    "/v1.0/csv_comma/{agencyID}/{resourceID}/{version}" : {
-      "post" : {
-        "tags" : [ "\/v1.0/csv_comma/{agencyID}/{resourceID}/{version}" ],
-        "description" : "Exports a dataset to csv comma separated. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes\r\nwith dataset\r\nand dimension attachment level",
-        "operationId" : "resource__v1.0_csv_comma__agencyID___resourceID___version__exportDatasetToCsvComma_POST",
-        "consumes" : [ "application/json", "application/xml" ],
-        "produces" : [ "application/xml" ],
-        "parameters" : [
+    "/v1.0/csv_comma/{agencyID}/{resourceID}/{version}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros de texto plano"
+        ],
+        "description": "Permite realizar la exportación de un dataset en fichero CSV separado por comas.",
+        "operationId": "resource__v1.0_csv_comma__agencyID___resourceID___version__exportDatasetToCsvComma_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
           {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "agencyID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador de la organización mantenedora del recurso a exportar."
           },
           {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
           },
           {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "version",
+            "in": "path",
+            "type": "string",
+            "description": "Versión del recurso a exportar."
           },
           {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
           },
           {
-            "name" : "body",
-            "in" : "body",
-            "schema" : {
-              "type" : "object"
-            },
-            "description" : ""
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
           }
         ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
             },
-            "headers" : {
-            },
-            "description" : "Success"
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
           },
-          "default" : {
-            "description" : "Unexpected error."
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
           }
         }
       }
-      ,
-      "post" : {
-        "tags" : [ "\/v1.0/csv_comma/{agencyID}/{resourceID}/{version}" ],
-        "description" : "",
-        "operationId" : "resource__v1.0_csv_comma__agencyID___resourceID___version__exportDatasetToCsvComma_POST",
-        "produces" : [ "application/xml" ],
-        "parameters" : [
+    },
+    "/v1.0/csv_semicolon/{agencyID}/{resourceID}/{version}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros de texto plano"
+        ],
+        "description": "Permite realizar la exportación de un dataset en fichero CSV separado por puntos y comas.",
+        "operationId": "resource__v1.0_csv_semicolon__agencyID___resourceID___version__exportDatasetToCsvSemicolon_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
           {
-            "name" : "jsonBody",
-            "in" : "formData",
-            "type" : "string",
-            "description" : ""
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "agencyID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador de la organización mantenedora del recurso a exportar."
           },
           {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
           },
           {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "version",
+            "in": "path",
+            "type": "string",
+            "description": "Versión del recurso a exportar."
           },
           {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
           },
           {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
           }
         ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
             },
-            "headers" : {
-            },
-            "description" : "Success"
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
           },
-          "default" : {
-            "description" : "Unexpected error."
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
           }
         }
       }
-    }
-    ,
-    "/v1.0/csv_semicolon/{agencyID}/{resourceID}/{version}" : {
-      "post" : {
-        "tags" : [ "\/v1.0/csv_semicolon/{agencyID}/{resourceID}/{version}" ],
-        "description" : "Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset\r\nand dimension attachment level",
-        "operationId" : "resource__v1.0_csv_semicolon__agencyID___resourceID___version__exportDatasetToCsvSemicolon_POST",
-        "consumes" : [ "application/json", "application/xml" ],
-        "produces" : [ "application/xml" ],
-        "parameters" : [
+    },
+    "/v1.0/excel/{agencyID}/{resourceID}/{version}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros Excel"
+        ],
+        "description": "Permite realizar la exportación de un dataset en fichero Excel.",
+        "operationId": "resource__v1.0_excel__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
           {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "agencyID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador de la organización mantenedora del recurso a exportar."
           },
           {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
           },
           {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "version",
+            "in": "path",
+            "type": "string",
+            "description": "Versión del recurso a exportar."
           },
           {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
           },
           {
-            "name" : "body",
-            "in" : "body",
-            "schema" : {
-              "type" : "object"
-            },
-            "description" : ""
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
           }
         ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
             },
-            "headers" : {
-            },
-            "description" : "Success"
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
           },
-          "default" : {
-            "description" : "Unexpected error."
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
           }
         }
       }
-      ,
-      "post" : {
-        "tags" : [ "\/v1.0/csv_semicolon/{agencyID}/{resourceID}/{version}" ],
-        "description" : "",
-        "operationId" : "resource__v1.0_csv_semicolon__agencyID___resourceID___version__exportDatasetToCsvSemicolon_POST",
-        "produces" : [ "application/xml" ],
-        "parameters" : [
+    },
+    "/v1.0/image": {
+      "post": {
+        "tags": [
+          "Exportaciones a imágenes"
+        ],
+        "description": "Permite realizar una exportación a una imagen SVG.",
+        "operationId": "resource__v1.0_image_exportSvgToImageForm_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
           {
-            "name" : "jsonBody",
-            "in" : "formData",
-            "type" : "string",
-            "description" : ""
+            "name": "svg",
+            "in": "formData",
+            "type": "string",
+            "description": ""
           },
           {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
           },
           {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "type",
+            "in": "query",
+            "type": "string",
+            "description": ""
           },
           {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "width",
+            "in": "query",
+            "type": "string",
+            "description": ""
           }
         ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
             },
-            "headers" : {
-            },
-            "description" : "Success"
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
           },
-          "default" : {
-            "description" : "Unexpected error."
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
           }
         }
       }
-    }
-    ,
-    "/v1.0/excel/{agencyID}/{resourceID}/{version}" : {
-      "post" : {
-        "tags" : [ "\/v1.0/excel/{agencyID}/{resourceID}/{version}" ],
-        "description" : "Exports a dataset to excel",
-        "operationId" : "resource__v1.0_excel__agencyID___resourceID___version__exportDatasetToExcel_POST",
-        "consumes" : [ "application/json", "application/xml" ],
-        "produces" : [ "application/xml" ],
-        "parameters" : [
+    },
+    "/v1.0/px/{agencyID}/{resourceID}/{version}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros PC-Axis"
+        ],
+        "description": "Permite realizar la exportación de un dataset en fichero PC-Axis (.px).",
+        "operationId": "resource__v1.0_px__agencyID___resourceID___version__exportDatasetToPxForm_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
           {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "agencyID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador de la organización mantenedora del recurso a exportar."
           },
           {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
           },
           {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "version",
+            "in": "path",
+            "type": "string",
+            "description": "Versión del recurso a exportar."
           },
           {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
           },
           {
-            "name" : "body",
-            "in" : "body",
-            "schema" : {
-              "type" : "object"
-            },
-            "description" : ""
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
           }
         ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
             },
-            "headers" : {
-            },
-            "description" : "Success"
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
           },
-          "default" : {
-            "description" : "Unexpected error."
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
           }
         }
       }
-      ,
-      "post" : {
-        "tags" : [ "\/v1.0/excel/{agencyID}/{resourceID}/{version}" ],
-        "description" : "",
-        "operationId" : "resource__v1.0_excel__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
-        "produces" : [ "application/xml" ],
-        "parameters" : [
+    },
+    "/v1.0/tsv/{agencyID}/{resourceID}/{version}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros de texto plano"
+        ],
+        "description": "Permite realizar la exportación de un dataset en fichero separado por tabuladores.",
+        "operationId": "resource__v1.0_tsv__agencyID___resourceID___version__exportDatasetToTsv_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
           {
-            "name" : "jsonBody",
-            "in" : "formData",
-            "type" : "string",
-            "description" : ""
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "agencyID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador de la organización mantenedora del recurso a exportar."
           },
           {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
           },
           {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
+            "name": "version",
+            "in": "path",
+            "type": "string",
+            "description": "Versión del recurso a exportar."
           },
           {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
           },
           {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
           }
         ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
             },
-            "headers" : {
-            },
-            "description" : "Success"
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
           },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/v1.0/image" : {
-      "post" : {
-        "tags" : [ "\/v1.0/image" ],
-        "description" : "Exports svg to image",
-        "operationId" : "resource__v1.0_image_exportSvgToImage_POST",
-        "consumes" : [ "application/xml" ],
-        "produces" : [ "application/xml" ],
-        "parameters" : [
-          {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "type",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "width",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "body",
-            "in" : "body",
-            "schema" : {
-			"description" : "",
-			"type" : "string"
-            },
-            "description" : ""
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-      ,
-      "post" : {
-        "tags" : [ "\/v1.0/image" ],
-        "description" : "Exports svg to image",
-        "operationId" : "resource__v1.0_image_exportSvgToImageForm_POST",
-        "produces" : [ "application/xml" ],
-        "parameters" : [
-          {
-            "name" : "svg",
-            "in" : "formData",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "type",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "width",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/v1.0/px/{agencyID}/{resourceID}/{version}" : {
-      "post" : {
-        "tags" : [ "\/v1.0/px/{agencyID}/{resourceID}/{version}" ],
-        "description" : "Exports a dataset to px",
-        "operationId" : "resource__v1.0_px__agencyID___resourceID___version__exportDatasetToPx_POST",
-        "consumes" : [ "application/json", "application/xml" ],
-        "produces" : [ "application/xml" ],
-        "parameters" : [
-          {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "body",
-            "in" : "body",
-            "schema" : {
-              "type" : "object"
-            },
-            "description" : ""
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-      ,
-      "post" : {
-        "tags" : [ "\/v1.0/px/{agencyID}/{resourceID}/{version}" ],
-        "description" : "",
-        "operationId" : "resource__v1.0_px__agencyID___resourceID___version__exportDatasetToPxForm_POST",
-        "produces" : [ "application/xml" ],
-        "parameters" : [
-          {
-            "name" : "jsonBody",
-            "in" : "formData",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-    }
-    ,
-    "/v1.0/tsv/{agencyID}/{resourceID}/{version}" : {
-      "post" : {
-        "tags" : [ "\/v1.0/tsv/{agencyID}/{resourceID}/{version}" ],
-        "description" : "Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset\r\nand dimension attachment level",
-        "operationId" : "resource__v1.0_tsv__agencyID___resourceID___version__exportDatasetToTsv_POST",
-        "consumes" : [ "application/json", "application/xml" ],
-        "produces" : [ "application/xml" ],
-        "parameters" : [
-          {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "body",
-            "in" : "body",
-            "schema" : {
-              "type" : "object"
-            },
-            "description" : ""
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
-          }
-        }
-      }
-      ,
-      "post" : {
-        "tags" : [ "\/v1.0/tsv/{agencyID}/{resourceID}/{version}" ],
-        "description" : "",
-        "operationId" : "resource__v1.0_tsv__agencyID___resourceID___version__exportDatasetToTsv_POST",
-        "produces" : [ "application/xml" ],
-        "parameters" : [
-          {
-            "name" : "jsonBody",
-            "in" : "formData",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "agencyID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "resourceID",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "version",
-            "in" : "path",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "filename",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          },
-          {
-            "name" : "lang",
-            "in" : "query",
-            "type" : "string",
-            "description" : ""
-          }
-        ],
-        "responses" : {
-          "201" : {
-            "schema" : {
-			"description" : "",
-			"type" : "object"
-            },
-            "headers" : {
-            },
-            "description" : "Success"
-          },
-          "default" : {
-            "description" : "Unexpected error."
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
           }
         }
       }
