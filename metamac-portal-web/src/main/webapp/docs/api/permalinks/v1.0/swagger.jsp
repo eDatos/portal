@@ -3,7 +3,7 @@
    "info":{
       "description":"Los permalinks son enlaces permanentes que se generan para asegurarnos que una URL va a ser accesible a lo largo del tiempo.",
       "version":"1.0",
-      "title":"API de Permalinks"
+      "title":"API de Permalinks v1.0"
    },
    "host":"<%=org.siemac.metamac.portal.web.WebUtils.getPermalinksApiBaseURL()%>",
    "schemes":[

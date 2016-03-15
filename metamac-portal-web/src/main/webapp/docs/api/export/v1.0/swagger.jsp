@@ -3,7 +3,7 @@
   "info": {
     "description": "Realizar exportaciones de los recursos estadísticos resulta una tarea común y de gran utilidad para poder tratar en el día a día con los datos manejados por el organismo. Esta API nos provee la funcionalidad necesaria para poder exportar los recursos estadísticos en diferentes formatos.",
     "version": "1.0",
-    "title": "API de Exportaciones"
+    "title": "API de Exportaciones v1.0"
   },
   "host": "<%=org.siemac.metamac.portal.web.WebUtils.getExportApiBaseURL()%>",
   "schemes": [],
