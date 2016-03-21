@@ -479,7 +479,7 @@
                     <execution>
                         <id>default-test</id>
                         <configuration>
-                            <skip>${maven.surefire.execution.oracle.skip}</skip>
+                            <skipTests>${maven.surefire.execution.oracle.skip}</skipTests>
                             <systemPropertyVariables>
                                 <TEST_DATABASE_PROVIDER>ORACLE</TEST_DATABASE_PROVIDER>
                             </systemPropertyVariables>
@@ -492,7 +492,7 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <skip>${maven.surefire.execution.mssql.skip}</skip>
+                            <skipTests>${maven.surefire.execution.mssql.skip}</skipTests>
                             <systemPropertyVariables>
                                 <TEST_DATABASE_PROVIDER>MSSQL</TEST_DATABASE_PROVIDER>
                             </systemPropertyVariables>
