@@ -4,26 +4,26 @@
 <urlrewrite use-query-string="true">
 	<rule>
 		<from>/apis/permalinks/latest/</from>
-		<to type="redirect">/permalinks/v1.0/</to>
+		<to type="redirect">%{context-path}/v1.0/</to>
 	</rule>
 	<rule>
-		<from>/apis/permalinks/latest</from>
-		<to type="redirect">/permalinks/v1.0/</to>
+		<from>/apis/permalinks/latest$</from>
+		<to type="redirect">%{context-path}/v1.0/</to>
 	</rule>
 	<rule>
-		<from>^/apis/permalinks/v1.0$</from>
-		<to type="redirect">/permalinks/v1.0/</to>
+		<from>/apis/permalinks/v1.0$</from>
+		<to type="redirect">%{context-path}/v1.0/</to>
 	</rule>
 	<rule>
 		<from>/apis/export/latest/</from>
-		<to type="redirect">/export/v1.0/</to>
+		<to type="redirect">%{context-path}/v1.0/</to>
 	</rule>
 	<rule>
-		<from>/apis/export/latest</from>
-		<to type="redirect">/export/v1.0/</to>
+		<from>/apis/export/latest$</from>
+		<to type="redirect">%{context-path}/v1.0/</to>
 	</rule>
 	<rule>
-		<from>^/apis/export/v1.0$</from>
-		<to type="redirect">/export/v1.0/</to>
+		<from>/apis/export/v1.0$</from>
+		<to type="redirect">%{context-path}/v1.0/</to>
 	</rule>
 </urlrewrite>
