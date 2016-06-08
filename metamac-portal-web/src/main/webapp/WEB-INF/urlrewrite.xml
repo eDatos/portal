@@ -2,28 +2,5 @@
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
         "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 <urlrewrite use-query-string="true">
-	<rule>
-		<from>/apis/permalinks/latest/</from>
-		<to type="redirect">%{context-path}/v1.0/</to>
-	</rule>
-	<rule>
-		<from>/apis/permalinks/latest$</from>
-		<to type="redirect">%{context-path}/v1.0/</to>
-	</rule>
-	<rule>
-		<from>/apis/permalinks/v1.0$</from>
-		<to type="redirect">%{context-path}/v1.0/</to>
-	</rule>
-	<rule>
-		<from>/apis/export/latest/</from>
-		<to type="redirect">%{context-path}/v1.0/</to>
-	</rule>
-	<rule>
-		<from>/apis/export/latest$</from>
-		<to type="redirect">%{context-path}/v1.0/</to>
-	</rule>
-	<rule>
-		<from>/apis/export/v1.0$</from>
-		<to type="redirect">%{context-path}/v1.0/</to>
-	</rule>
+    <class-rule class="org.siemac.metamac.portal.web.urlrewrite.PortalRewriteRule" />
 </urlrewrite>
