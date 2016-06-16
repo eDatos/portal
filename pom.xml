@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.siemac.metamac.metamac-portal</groupId>
         <artifactId>metamac-portal-parent</artifactId>
-        <version>2.2.2</version>
+        <version>2.2.3-SNAPSHOT</version>
         <relativePath>metamac-portal-parent/pom.xml</relativePath>
     </parent>
 
@@ -24,9 +24,9 @@
     </modules>
 
     <scm>
-        <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-portal/tags/20160616-0857-v2.2.2</connection>
-        <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-portal/tags/20160616-0857-v2.2.2</developerConnection>
-        <url>http://svn.arte-consultores.com/viewvc/arte/istac/metamac/metamac-portal/tags/20160616-0857-v2.2.2</url>
+        <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-portal/trunk/</connection>
+        <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-portal/trunk/</developerConnection>
+        <url>http://svn.arte-consultores.com/viewvc/arte/istac/metamac/metamac-portal/trunk/</url>
     </scm>
 
     <build>
