@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +26,8 @@
   <!-- Some basic translations -->
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lang/translator.js" type='text/javascript'></script>
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lang/es.js" type='text/javascript'></script>
+  
+  <link href="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleCssUrl()%>" media='screen' rel='stylesheet' type='text/css' />
 
   <script type="text/javascript">
     $(function () {
@@ -93,10 +95,14 @@
   });
   </script>
 </head>
-
-<body class="swagger-section">
-
-<div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
-<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+<body>
+	<c:import url="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleHeaderUrl()%>" />
+	
+	<div class="swagger-section">
+		<div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
+		<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+	</div>
+	
+	<c:import url="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleFooterUrl()%>" />
 </body>
 </html>

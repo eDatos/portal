@@ -34,6 +34,10 @@ public class ApplicationStartup extends ApplicationStartupListener {
             WebUtils.setOrganisation(configurationService.retrieveOrganisation());
             WebUtils.setExportApiBaseURL(configurationService.retrievePortalExternalApisExportUrlBase());
             WebUtils.setPermalinksApiBaseURL(configurationService.retrievePortalExternalApisPermalinksUrlBase());
+            
+            WebUtils.setApiStyleHeaderUrl(configurationService.retrieveApiStyleHeaderUrl());
+            WebUtils.setApiStyleCssUrl(configurationService.retrieveApiStyleCssUrl());
+            WebUtils.setApiStyleFooterUrl(configurationService.retrieveApiStyleFooterUrl());
         } catch (MetamacException e) {
             log.error("Error retrieving application configuration", e);
         }

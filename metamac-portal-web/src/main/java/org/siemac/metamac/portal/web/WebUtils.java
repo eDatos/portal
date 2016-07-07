@@ -4,9 +4,8 @@ import java.net.MalformedURLException;
 
 import org.siemac.metamac.core.common.util.swagger.SwaggerUtils;
 
-public class WebUtils {
+public class WebUtils extends org.siemac.metamac.web.common.server.utils.WebUtils {
 
-    protected static String organisation         = null;
     protected static String exportApiBaseUrl     = null;
     protected static String permalinksApiBaseUrl = null;
 
@@ -24,13 +23,5 @@ public class WebUtils {
 
     public static String getPermalinksApiBaseURL() throws MalformedURLException {
         return permalinksApiBaseUrl;
-    }
-
-    public static void setOrganisation(String organisation) {
-        WebUtils.organisation = organisation;
-    }
-
-    public static String getFavicon() {
-        return SwaggerUtils.getFavicon(organisation);
     }
 }
