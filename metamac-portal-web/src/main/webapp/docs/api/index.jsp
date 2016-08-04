@@ -27,8 +27,12 @@
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lang/translator.js" type='text/javascript'></script>
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lang/es.js" type='text/javascript'></script>
   
-  <link href="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleCssUrl()%>" media='screen' rel='stylesheet' type='text/css' />
+  <c:set var="apiStyleCssUrl" value="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleCssUrl()%>" />
 
+  <c:if test="${!empty apiStyleCssUrl}">
+    <link href="<c:out value='${apiStyleCssUrl}'/>" media='screen' rel='stylesheet' type='text/css' />
+  </c:if>
+  
   <script type="text/javascript">
     $(function () {
       var url = window.location.search.match(/url=([^&]+)/);

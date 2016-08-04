@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 
 import org.siemac.metamac.core.common.util.swagger.SwaggerUtils;
 
-public class WebUtils extends org.siemac.metamac.web.common.server.utils.WebUtils {
+public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
 
     protected static String exportApiBaseUrl     = null;
     protected static String permalinksApiBaseUrl = null;
