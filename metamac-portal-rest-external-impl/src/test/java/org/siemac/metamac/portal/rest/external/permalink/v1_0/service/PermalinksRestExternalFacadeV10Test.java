@@ -35,14 +35,14 @@ import org.springframework.context.ApplicationContext;
 
 public class PermalinksRestExternalFacadeV10Test extends MetamacRestBaseTest {
 
-    protected static PermalinksV1_0     permalinksV1_0;
+    protected static PermalinksV1_0 permalinksV1_0;
     protected static ApplicationContext applicationContext = null;
-    private static String               jaxrsServerAddress = "http://localhost:" + ServerResource.PORT + "/apis/permalinks";
-    protected String                    baseApi            = jaxrsServerAddress + "/v1.0";
+    private static String jaxrsServerAddress = "http://localhost:" + ServerResource.PORT + "/apis/permalinks";
+    protected String baseApi = jaxrsServerAddress + "/v1.0";
 
-    private PermalinksService           permalinksService;
+    private PermalinksService permalinksService;
 
-    private static final String         PERMALINK_01       = "permalink01";
+    private static final String PERMALINK_01 = "permalink01";
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @BeforeClass
@@ -114,7 +114,7 @@ public class PermalinksRestExternalFacadeV10Test extends MetamacRestBaseTest {
         for (int i = 0; i < requestUris.length; i++) {
             String requestUri = requestUris[i];
             InputStream responseExpected = PermalinksRestExternalFacadeV10Test.class.getResourceAsStream("/responses/permalinks/v1.0/retrievePermalink.id1.xml");
-            testRequestWithoutJaxbTransformationIdenticalResponses(requestUri, APPLICATION_XML, Status.OK, responseExpected);
+            testRequestWithoutJaxbTransformation(requestUri, APPLICATION_XML, Status.OK, responseExpected);
         }
     }
 
@@ -163,8 +163,8 @@ public class PermalinksRestExternalFacadeV10Test extends MetamacRestBaseTest {
     }
 
     private void mockCreatePermalink() throws MetamacException {
-        when(permalinksService.createPermalink(any(ServiceContext.class), any(org.siemac.metamac.portal.core.domain.Permalink.class))).thenAnswer(
-                new Answer<org.siemac.metamac.portal.core.domain.Permalink>() {
+        when(permalinksService.createPermalink(any(ServiceContext.class), any(org.siemac.metamac.portal.core.domain.Permalink.class)))
+                .thenAnswer(new Answer<org.siemac.metamac.portal.core.domain.Permalink>() {
 
                     @Override
                     public org.siemac.metamac.portal.core.domain.Permalink answer(InvocationOnMock invocation) throws Throwable {
