@@ -97,6 +97,6 @@ Notas de publicación - Metamac - hito metamac-portal 1.0.0
     * [METAMAC-2071] - Crear scripts en common-metadata para nueva estructura de properties del metamac-portal
 
 ** Sub-tarea
-    * [METAMAC-1533] - [PORTAL] Consulta eficiente en la API para obtener todos los codes de un codelist
+    * [METAMAC-1533] - [PORTAL] Consulta eficiente en la API para obtener todos los codes de un codelist 
 
 
