@@ -294,7 +294,8 @@ module.exports = (grunt) ->
         open:
             test:
                 path: 'http://localhost:<%= connect.server.options.port %>/src/test/javascript/runner/runner.html'
-
+            preview:
+                path: 'http://localhost:<%= connect.server.options.port %>/src/main/preview.html#datasets/selection'
         mocha:
             all:
                 src: [ 'src/test/javascript/runner/runner.html' ]
@@ -338,6 +339,7 @@ module.exports = (grunt) ->
     grunt.registerTask 'build', ['clean', 'copy', 'less:pro', 'less:map', 'handlebars', 'uglify']
 
     grunt.registerTask 'bdd', ['connect', 'open:test', 'watch' ]
+    grunt.registerTask 'serve', ['connect', 'open:preview', 'watch' ]
     grunt.registerTask 'default', 'build'
 
     grunt.registerTask 'font', ['webfont', "dev"]
