@@ -9,6 +9,7 @@
 <%@ tag import="org.siemac.metamac.core.common.exception.MetamacException"%>
 <%@ tag import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
 <%@ tag import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
+<%@ tag import="org.siemac.metamac.portal.web.WebUtils" %>
 
 <%@tag import="java.util.logging.Logger"%>
 <%@tag import="java.util.logging.Level"%>
@@ -132,6 +133,29 @@
 	        request.setAttribute("resourceDescription", "Visualizador estadístico");
 	        request.setAttribute("resourceDescriptionOnlyText", "Visualizador estadístico");
 	    }
+	%>
+	<%
+    
+	   request.setAttribute("portalStyleHeaderUrl", WebUtils.getPortalDefaultStyleHeaderUrl());
+       request.setAttribute("portalStyleCssUrl", WebUtils.getPortalDefaultStyleCssUrl());
+       request.setAttribute("portalStyleFooterUrl", WebUtils.getPortalDefaultStyleFooterUrl());
+    
+       String servletPath = request.getServletPath();       
+	   if (servletPath != null) {
+           /* See web.xml for matched url-patterns
+            */
+	       String organizationService = servletPath.split("/")[2];
+	       switch (organizationService) {
+               case "agricultura":
+                   request.setAttribute("portalStyleHeaderUrl", WebUtils.getPortalAgricultureStyleHeaderUrl());
+                   request.setAttribute("portalStyleCssUrl", WebUtils.getPortalAgricultureStyleCssUrl());
+                   request.setAttribute("portalStyleFooterUrl", WebUtils.getPortalAgricultureStyleFooterUrl());
+                   break;
+               default:
+                   break;
+	       }
+	   }
+
 	%>	
    	<title>${titlePrefix}${resourceName}</title>
    	

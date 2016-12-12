@@ -63,7 +63,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>data</servlet-name>
-		<url-pattern>/visualizer/data.html</url-pattern>
+        <!-- There is no /visualizer/*/data.html for url patterns -->
+		<url-pattern>/visualizer/data.html</url-pattern>        
+        <url-pattern>/visualizer/agricultura/data.html</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -72,7 +74,8 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>collection</servlet-name>
-		<url-pattern>/visualizer/collection.html</url-pattern>
+		<url-pattern>/visualizer/collection.html</url-pattern>        
+        <url-pattern>/visualizer/agricultura/collection.html</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

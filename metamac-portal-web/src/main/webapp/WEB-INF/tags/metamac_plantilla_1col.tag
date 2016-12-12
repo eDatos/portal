@@ -19,19 +19,24 @@
 	</c:choose>
 </head>
 <body>
-<!-- was there -->
-<!-- begin: #contenido -->		    		
-<div id="contenido">
 
 	<!-- begin: #cabecera -->
-	<c:choose>
-	    <c:when test="${Organisation == 'ISTAC'}">
-			<t:cabecera_istac/>
-	    </c:when>
-	    <c:when test="${Organisation == 'DREM'}">
-	        <t:cabecera_drem/>
-	    </c:when>
+    <c:choose>    	
+        <c:when test="${!empty portalStyleHeaderUrl}">
+            <c:import charEncoding="UTF-8" url="${portalStyleHeaderUrl}" />
+        </c:when>
+        <c:otherwise>
+            <c:choose>
+        	    <c:when test="${Organisation == 'ISTAC'}">
+                    <t:cabecera_istac/>
+        	    </c:when>
+        	    <c:when test="${Organisation == 'DREM'}">
+        	        <t:cabecera_drem/>
+        	    </c:when>
+            </c:choose>
+        </c:otherwise>           
 	</c:choose>
+        
 	<!-- end: #cabecera -->
 
 	<!-- begin: #bloq_interior -->	
@@ -44,18 +49,22 @@
 	</div>
 	<!-- end: #bloq_interior -->
 		
-	<!-- begin: pie -->			
-	<c:choose>
-	    <c:when test="${Organisation == 'ISTAC'}">
-			<t:pie_istac baseURL="${baseURL}"/>
-	    </c:when>
-	    <c:when test="${Organisation == 'DREM'}">
-	        <t:pie_drem baseURL="${baseURL}"/>
-	    </c:when>
-	</c:choose>
-	<!-- end: pie -->
-		
-<!-- end: #contenido -->			
-</div>		
+	<!-- begin: pie -->
+    <c:choose>      
+        <c:when test="${!empty portalStyleFooterUrl}">
+            <c:import charEncoding="UTF-8" url="${portalStyleHeaderUrl}" />
+        </c:when>
+        <c:otherwise>			
+        	<c:choose>
+        	    <c:when test="${Organisation == 'ISTAC'}">
+                    <t:pie_istac baseURL="${baseURL}"/>
+        	    </c:when>
+        	    <c:when test="${Organisation == 'DREM'}">
+        	        <t:pie_drem baseURL="${baseURL}"/>
+        	    </c:when>
+        	</c:choose>        
+        </c:otherwise>
+    </c:choose>    
+	<!-- end: pie -->       	
 </body>
 </html>

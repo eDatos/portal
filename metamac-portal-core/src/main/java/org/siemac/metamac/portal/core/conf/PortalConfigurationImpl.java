@@ -34,6 +34,36 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
     }
 
     @Override
+    public String retrievePortalDefaultStyleHeaderUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_DEFAULT_STYLE_HEADER_URL);
+    }
+
+    @Override
+    public String retrievePortalDefaultStyleCssUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_DEFAULT_STYLE_CSS_URL);
+    }
+
+    @Override
+    public String retrievePortalDefaultStyleFooterUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_DEFAULT_STYLE_FOOTER_URL);
+    }
+
+    @Override
+    public String retrievePortalAgricultureStyleHeaderUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_AGRICULTURE_STYLE_HEADER_URL);
+    }
+
+    @Override
+    public String retrievePortalAgricultureStyleCssUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_AGRICULTURE_STYLE_CSS_URL);
+    }
+
+    @Override
+    public String retrievePortalAgricultureStyleFooterUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_AGRICULTURE_STYLE_FOOTER_URL);
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
 

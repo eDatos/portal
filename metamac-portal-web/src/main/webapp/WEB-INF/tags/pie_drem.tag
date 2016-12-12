@@ -3,3 +3,6 @@
 <div id="pie_drem" class="footer">
 	<div class="izda">&copy; 2014 Direção Regional de Estatística - Portugal</div>	
 </div>
+        
+<!-- end: #contenido -->            
+</div>  
