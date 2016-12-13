@@ -6,7 +6,8 @@
         template : "dataset/dataset-page",
 
         regions : {
-            content : ".dataset-sidebar-visualization-container"
+            content : ".dataset-sidebar-visualization-container",
+            optionsBar: ".dataset-visualization-options-bar"
         },
 
         initialize : function (options) {
@@ -38,12 +39,20 @@
                 dataset : this.dataset
             });
 
+            // Options bar
+            this.optionsView = new App.modules.dataset.OptionsView({
+                filterDimensions : this.filterDimensions,
+                optionsModel : this.optionsModel,
+                buttons : this.visualElements
+            });
+
             // visualization
             this.visualizationView = new App.modules.dataset.DatasetVisualizationView({
                 dataset : this.dataset,
                 filterDimensions : this.filterDimensions,
                 optionsModel : this.optionsModel,
-                veElements : this.visualElements
+                veElements : this.visualElements,
+                optionsView: this.optionsView
             });
 
             // sidebarView
@@ -104,7 +113,8 @@
 
         onRender : function () {
             this.content.show(this.sidebarView);
-            this.fullScreen.setContainer(this.content.$el);
+            this.optionsBar.show(this.optionsView);
+            this.fullScreen.setContainer($('.metamac-container'));
             if (this.optionsModel.get('widget')) {
                 this._initializeWidget();
             }
@@ -121,6 +131,7 @@
         showChart : function (options) {
             if (options.fullScreen) {
                 this.fullScreen.enterFullScreen();
+                this.optionsModel.set('fullScreen', options.fullScreen);
             }
 
             this.optionsModel.set('type', options.visualizationType);

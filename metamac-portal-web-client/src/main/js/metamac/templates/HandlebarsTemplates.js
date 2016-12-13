@@ -689,7 +689,7 @@ function program6(depth0,data) {
 
   stack1 = helpers['if'].call(depth0, depth0.showHeader, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n<div class=\"dataset-sidebar-visualization-container\">\r\n\r\n</div>\r\n\r\n";
+  buffer += "\r\n<div class=\"dataset-visualization-container\">\r\n    <div class=\"dataset-sidebar-visualization-container\">\r\n\r\n    </div>\r\n    <div class=\"dataset-visualization-options-bar\">\r\n\r\n    </div>\r\n</div>\r\n";
   stack1 = helpers.unless.call(depth0, depth0.isWidget, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
@@ -718,7 +718,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"dataset-visualization\">\r\n    <div class=\"dataset-visualization-visual-element\">\r\n\r\n    </div>\r\n    <div class=\"dataset-visualization-options-bar\">\r\n\r\n    </div>\r\n</div>";
+  return "<div class=\"dataset-visualization\">\r\n    <div class=\"dataset-visualization-visual-element\">\r\n\r\n    </div>\r\n</div>";
   });
 
 this["Handlebars"]["templates"]["dataset/dataset-widget-page"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

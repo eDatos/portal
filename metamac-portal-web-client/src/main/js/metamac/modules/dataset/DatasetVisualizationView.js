@@ -15,6 +15,8 @@
 
             this.optionsModel = options.optionsModel;
             this.veElements = options.veElements;
+            options.optionsView.on("enterFullScreen", this.enterFullScreen, this);
+            options.optionsView.on("exitFullScreen", this.exitFullScreen, this);
 
             this._initializeVisualElements();
         },
@@ -125,17 +127,6 @@
             _.each(this.ve, function (ve) {
                 ve.setEl(veEl);
             });
-
-            this.optionsView = new App.modules.dataset.OptionsView({
-                filterDimensions : this.filterDimensions,
-                optionsModel : this.optionsModel,
-                el : this.$(".dataset-visualization-options-bar"),
-                buttons : this.veElements
-            });
-
-            this.optionsView.render();
-            this.optionsView.on("enterFullScreen", this.enterFullScreen, this);
-            this.optionsView.on("exitFullScreen", this.exitFullScreen, this);
         }
 
     });
