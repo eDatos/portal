@@ -28,6 +28,7 @@
                 animation : this.options.animation
             };
             this.ve = {
+                info : new App.VisualElement.Info(options),
                 column : new App.VisualElement.ColumnChart(options),
                 line : new App.VisualElement.LineChart(options),
                 canvasTable : new App.VisualElement.CanvasTable(options),

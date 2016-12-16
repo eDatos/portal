@@ -12,6 +12,7 @@ I18n.translations.en = {
     filter : {
         button : {
             edit : "Change selection",
+            info : "Info",
             table : "Datatable",
             canvasTable : "Datatable",
             column : "Columns chart",

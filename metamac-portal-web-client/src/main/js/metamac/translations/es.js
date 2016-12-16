@@ -12,6 +12,7 @@ I18n.translations.es = {
     filter : {
         button : {
             edit : "Cambiar selección",
+            info : "Información",
             table : "Tabla de datos",
             canvasTable : "Tabla de datos",
             column : "Gráfico de columnas",

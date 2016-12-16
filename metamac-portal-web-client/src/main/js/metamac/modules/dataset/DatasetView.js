@@ -25,7 +25,7 @@
         },
 
         _initializeVisualElements : function () {
-            var visualElements = ["canvasTable", "column", "line"];
+            var visualElements = ["info", "canvasTable", "column", "line"];
             if (_.findWhere(this.metadata.getDimensions(), {type : 'GEOGRAPHIC_DIMENSION'})) {
                 visualElements.push("map");
                 visualElements.push("mapbubble");
@@ -34,11 +34,6 @@
         },
 
         _initializeSidebarView : function () {
-            // sidebar - infoview
-            this.infoView = new App.modules.dataset.DatasetInfoView({
-                dataset : this.dataset
-            });
-
             // Options bar
             this.optionsView = new App.modules.dataset.OptionsView({
                 filterDimensions : this.filterDimensions,
@@ -56,7 +51,7 @@
             });
 
             // sidebarView
-            var sideViews = [this.infoView];
+            var sideViews = [];
             if (!this.optionsModel.get('widget')) {
 
                 // sidebar - filter

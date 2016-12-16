@@ -27,6 +27,7 @@
                 animation : this._options.animation
             };
             this.ve = {
+                info : new App.VisualElement.Info(options),
                 column : new App.VisualElement.ColumnChart(options),
                 pie : new App.VisualElement.PieChart(options),
                 line : new App.VisualElement.LineChart(options),

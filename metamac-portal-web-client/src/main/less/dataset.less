@@ -92,6 +92,13 @@
 }
 
 .metadata-group {
+    padding: 5px;
+    height: 100%;
+
+    .dataset-visualization-visual-element & {
+        overflow-y: scroll;
+    }
+
     h3 {
         background: #ddd;
         .border-radius(4px 4px 4px 4px);
@@ -256,6 +263,11 @@
     &:hover:before {
         color: @istacBlueDarkest;
     }
+}
+
+.dataset-options-type-info {
+    .dataset-options-type-icon;
+    .icon-info;
 }
 
 .dataset-options-type-canvasTable {
