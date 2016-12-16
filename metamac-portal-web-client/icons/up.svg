@@ -1,51 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   id="Layer_1"
-   x="0px"
-   y="0px"
-   width="48px"
-   height="48px"
-   viewBox="0 0 48 48"
-   enable-background="new 0 0 48 48"
-   xml:space="preserve"
-   inkscape:version="0.48.2 r9819"
-   sodipodi:docname="modif_up.svg"><metadata
-   id="metadata23"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
-   id="defs21" /><sodipodi:namedview
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1"
-   objecttolerance="10"
-   gridtolerance="10"
-   guidetolerance="10"
-   inkscape:pageopacity="0"
-   inkscape:pageshadow="2"
-   inkscape:window-width="1920"
-   inkscape:window-height="1020"
-   id="namedview19"
-   showgrid="false"
-   inkscape:zoom="4.9166667"
-   inkscape:cx="-10.014756"
-   inkscape:cy="14.63254"
-   inkscape:window-x="-4"
-   inkscape:window-y="-4"
-   inkscape:window-maximized="1"
-   inkscape:current-layer="Layer_1" />
-
-<path
-   style="color:#000000;fill:#003366;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-   d="M 24,47.96875 C 37.245471,47.96875 47.96875,37.245471 47.96875,24 47.96875,10.754529 37.245471,0 24,0 10.754529,0 0,10.754529 0,24 0,37.245471 10.754529,47.96875 24,47.96875 z m 0.03125,-5.6875 -0.09375,0 c -1.746507,0 -3.15625,-1.796433 -3.15625,-4.03125 l 0,-20.625 -7,8.3125 c -0.998966,1.190521 -2.880848,1.247633 -4.21875,0.125 L 9.5,26 C 8.162098,24.877367 7.876034,23.034271 8.875,21.84375 l 12.75,-15.1875 c 0.558469,-0.665557 1.389117,-0.98917 2.25,-0.9375 0.02104,-5.25e-4 0.04135,0 0.0625,0 l 0.09375,0 c 0.03056,0 0.0634,-0.0011 0.09375,0 0.850128,-0.042665 1.666835,0.279754 2.21875,0.9375 l 12.75,15.1875 c 0.998966,1.190521 0.712903,3.033617 -0.625,4.15625 l -0.0625,0.0625 c -1.337902,1.122633 -3.219784,1.065521 -4.21875,-0.125 l -7,-8.3125 0,20.625 c 0,2.234817 -1.409743,4.03125 -3.15625,4.03125 z"
-   id="path6391"
-   inkscape:connector-curvature="0" /></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="410pt" height="410pt" viewBox="0 0 410 410" version="1.1">
+<g id="surface1">
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,20%,40%);fill-opacity:1;" d="M 205 409.734375 C 318.136719 409.734375 409.734375 318.136719 409.734375 205 C 409.734375 91.863281 318.136719 0 205 0 C 91.863281 0 0 91.863281 0 205 C 0 318.136719 91.863281 409.734375 205 409.734375 Z M 205.265625 361.152344 L 204.464844 361.152344 C 189.546875 361.152344 177.507812 345.808594 177.507812 326.71875 L 177.507812 150.546875 L 117.714844 221.550781 C 109.183594 231.71875 93.109375 232.207031 81.679688 222.617188 L 81.144531 222.082031 C 69.71875 212.496094 67.273438 196.75 75.808594 186.582031 L 184.714844 56.855469 C 189.484375 51.171875 196.578125 48.40625 203.933594 48.847656 C 204.113281 48.84375 204.285156 48.847656 204.464844 48.847656 L 205.265625 48.847656 C 205.527344 48.847656 205.808594 48.839844 206.066406 48.847656 C 213.328125 48.484375 220.304688 51.238281 225.019531 56.855469 L 333.925781 186.582031 C 342.457031 196.75 340.015625 212.496094 328.585938 222.082031 L 328.054688 222.617188 C 316.625 232.207031 300.550781 231.71875 292.019531 221.550781 L 232.226562 150.546875 L 232.226562 326.71875 C 232.226562 345.808594 220.183594 361.152344 205.265625 361.152344 Z M 205.265625 361.152344 "/>
+</g>
+</svg>

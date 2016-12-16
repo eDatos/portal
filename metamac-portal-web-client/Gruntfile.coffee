@@ -327,6 +327,8 @@ module.exports = (grunt) ->
                     hashes : false
                     syntax: "bootstrap",
                     htmlDemo : true,
+                    autoHint : false,
+                    types: 'eot,woff,ttf,svg';
                 }
 
 
