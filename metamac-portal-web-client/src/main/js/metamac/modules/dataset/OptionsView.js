@@ -107,9 +107,11 @@
         clickFullScreen : function (e) {
             if (this.isFullScreen()) {
                 this.trigger('exitFullScreen');
+                this.$el.find('.visual-element-options-fs').removeClass("active");
             } else {
                 if (this.fullScreenIsAllowed) {
                     this.trigger('enterFullScreen');
+                    this.$el.find('.visual-element-options-fs').addClass("active");
                 }
             }
         },

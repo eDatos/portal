@@ -139,9 +139,6 @@
     background-color: @s4yDarkOrange;
 }
 
-@datasetVisualizationOptionsBarHeight: 50px;
-@optionsBarColor: @istacGrey;
-
 .dataset-visualization {
     position: relative;
     height: 100%;
@@ -179,12 +176,30 @@
         .options-bar;
         .border-radius(0 0 6px 6px);        
         .btn {
-            .options-bar-btn;    	    
+            .options-bar-btn;
+
+            &.visual-element-options-fs {
+                .options-bar-btn-side-right;  
+                &.active {
+                    .options-bar-btn-side-active;
+                }
+            }
+            &.dataset-options-filter {
+                .options-bar-btn-side-left;    
+                &.active {
+                    .options-bar-btn-side-active;
+                }
+            }    	    
         }    
     }
 }
 
 // Options bar
+.dataset-options {
+    .pull-left;
+    padding-right: 5px;
+}
+
 .visual-element-options {
     .pull-right;
 
@@ -196,6 +211,7 @@
 .change-visual-element {
     .pull-left;
     max-width: 400px;
+    font-size: @lIconHeight;
 }
 
 
@@ -221,22 +237,25 @@
 }
 
 .dataset-options-type-icon {
-    height: 28px;
-    width: 37px;
+    height: @mIconHeight;
+    width: @mIconWidth;
     padding-left: 0;
-    font-size: 27px;
+    font-size: @mIconHeight;
     
     .btn-with-label & {
-    	font-size: 18px;
+    	font-size: @mIconHeight - 5px;
     	padding-top: 2px;
     	padding-bottom: 2px;
     }
 
     &:before {
-        color: #1e1e1e;
+        color: @istacGreyDark;
         padding: 2px 6px;
-    }
+    }    
 
+    &:hover:before {
+        color: @istacBlueDarkest;
+    }
 }
 
 .dataset-options-type-canvasTable {
@@ -267,6 +286,11 @@
 .dataset-options-full-screen {
     .dataset-options-type-icon;
     .icon-full-screen;
+}
+
+.options-filter {
+    .dataset-options-type-icon;
+    .icon-cogwheel;
 }
 
 .dataset-options-share {
@@ -317,10 +341,10 @@
 
 
 .dataset-share-icon {
-    height: 28px;
-    width: 37px;
+    height: @mIconHeight;
+    width: @mIconWidth;
     padding-left: 0;
-    font-size: 27px;
+    font-size: @mIconHeight;
     
     &:before {
         color: #1e1e1e;

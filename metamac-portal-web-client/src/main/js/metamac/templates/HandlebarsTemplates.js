@@ -628,7 +628,7 @@ function program8(depth0,data) {
   buffer += "\r\n    ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.fullScreen),stack1 == null || stack1 === false ? stack1 : stack1.visible), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n</div>\r\n\r\n";
+  buffer += "\r\n</div>\r\n\r\n<!--<div class=\"dataset-options\">\r\n    <button class=\"btn dataset-options-filter\" title='ei'><i class=\"options-filter\"></i></button>\r\n</div>-->\r\n\r\n";
   stack2 = helpers.unless.call(depth0, depth0.widget, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n";
