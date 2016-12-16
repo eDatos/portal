@@ -1,10 +1,12 @@
+@import "../variables";
+
 .mapColorsHSL(@v: 90%, @h: 210, @s: 100%) {
     fill: hsl(@h, @s, @v);
     background: hsl(@h, @s, @v);
 }
 
 .legend {
-    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+    font-family: @istacFontSansSerifFamily;
     font-size: 12px;
     fill: #3E576F;
 }
@@ -16,7 +18,7 @@
 }
 
 .credits {
-    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+    font-family: @istacFontSansSerifFamily;
     font-size: 10px;
     color: #909090;
     fill: #909090;
