@@ -63,6 +63,11 @@ I18n.translations.es = {
             },
             order : {
                 title : "Ordenar",
+                info : {
+                    fixed : "",
+                    left : "",
+                    top : ""
+                },
                 canvasTable : {
                     fixed : "Valores fijados",
                     left : "Filas",

@@ -63,6 +63,11 @@ I18n.translations.pt = {
                 },
                 order : {
                     title : "Ordem",
+                    info : {
+                        fixed : "",
+                        left : "",
+                        top : ""
+                    },
                     canvasTable : {
                         fixed : "Valores fixos",
                         left : "Linhas",

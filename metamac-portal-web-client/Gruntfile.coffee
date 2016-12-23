@@ -83,6 +83,7 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DatasetView.js"
                 paths.modules + "/dataset/OptionsModel.js"
                 paths.modules + "/dataset/OptionsView.js"
+                paths.modules + "/dataset/DimensionsView.js"
                 paths.modules + "/dataset/DatasetInfoView.js"
                 paths.modules + "/dataset/DatasetHelpView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
@@ -104,6 +105,7 @@ module.exports = (grunt) ->
 
                 # components
                 paths.js + "/metamac/components/tooltip/Tooltip.js"
+                paths.js + "/metamac/components/scrollbuttons/Scrollbuttons.js"
                 paths.js + "/metamac/components/sidebar/SidebarStateModel.js"
                 paths.js + "/metamac/components/sidebar/SidebarView.js"
                 paths.js + "/metamac/components/searchbar/SearchbarView.js"

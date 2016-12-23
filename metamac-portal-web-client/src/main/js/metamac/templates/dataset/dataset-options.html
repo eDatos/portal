@@ -9,9 +9,11 @@
     {{/if}}
 </div>
 
-<!--<div class="dataset-options">
-    <button class="btn dataset-options-filter" title='ei'><i class="options-filter"></i></button>
-</div>-->
+{{#unless visualize}}
+<div class="dataset-options">
+    <button class="btn dataset-options-filter {{filter.btnClass}}" title='{{message "filter.sidebar.filter.title"}}'><i class="options-filter"></i></button>
+</div>
+{{/unless}}
 
 {{#unless widget}}
 <div class="change-visual-element">

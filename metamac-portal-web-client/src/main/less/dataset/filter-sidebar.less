@@ -198,65 +198,7 @@
 //    }
 //}
 
-.order-sidebar-zone {
 
-    background-color: @istacGreyDark;
-
-    &.fixed {
-        padding-top: 3px;
-    }
-
-    h2 {
-        .sidebar-title;
-        margin: 0;
-        margin-bottom: 3px;
-    }
-
-    ul {
-        margin: 0;
-        list-style: none;
-    }
-
-    .order-sidebar-dimension {
-        background-color: #F5F5F5;
-        border: 1px solid #EBEBEB;
-        padding: 5px;
-        margin-bottom: 3px;
-        margin-left: 3px;
-        margin-right: 3px;
-        .user-select(none);
-
-        /* IE9 bug changed divs with a, so this correct the new style */
-        display: block;
-        text-decoration: none;
-        color: black;
-
-        &[draggable='true'] {
-            cursor: move;
-
-            /* Safari bug */
-            -khtml-user-drag: element;
-            -webkit-user-drag: element;
-            -khtml-user-select: none;
-            -webkit-user-select: none;
-        }
-
-    }
-
-    padding-bottom: 30px;
-    margin-bottom: 20px;
-}
-
-
-.order-sidebar-zone.drag-over, .order-sidebar-dimension.drag-over {
-    opacity: 0.8;
-    border: 1px dashed #fff;
-}
-
-.order-sidebar-dimension.drag-over {
-    opacity: 0.8;
-    border: 1px dashed #286996;
-}
 
 //icons
 .filter-sidebar-category-icon {

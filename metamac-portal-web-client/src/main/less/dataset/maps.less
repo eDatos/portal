@@ -48,9 +48,10 @@ svg { overflow: hidden; } // IE FIX
     cursor: move;
 }
 
+@dimensionsBarHeight : 80px;
 #zoom-container {
     position: absolute;
-    top: 0;
+    top: @dimensionsBarHeight;
     left: 0;
     width: 30px;
     height: 130px;
@@ -132,7 +133,7 @@ svg { overflow: hidden; } // IE FIX
 
 #ranges-container {
     position: absolute;
-    bottom: 62px;
+    bottom: 14px;
     right: 8px;
     min-width: 100px;
     height: 45px;

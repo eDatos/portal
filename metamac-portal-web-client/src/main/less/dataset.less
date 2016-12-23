@@ -154,9 +154,7 @@
     .dataset-visualization-visual-element {
         height: 100%;
         .box-sizing(border-box);
-        border-top: 1px solid #E5E5E5;
-        border-right: 1px solid #E5E5E5;
-
+        border: 1px solid @istacGreyLight;
         background: white;
 
         .dataset-widget & {
@@ -178,6 +176,13 @@
     padding-bottom: @datasetVisualizationOptionsBarHeight;
     box-sizing: border-box;
     .clearfix;
+
+    .dataset-visualization-dimensions {
+        background: white;
+        position: absolute;
+        width: 100%;
+        .order-dimensions;
+    }
     
     .dataset-visualization-options-bar {
         .options-bar;
@@ -222,12 +227,19 @@
 }
 
 
+@dimensionsBarHeight: 80px;
 .dataset-sidebar-visualization-container {
     &.dataset-widget {
         margin-bottom: 0;
 
         .sidebar-container {
             display: block;
+        }
+    }
+
+    &.has-dimensions {
+        .dataset-visualization-visual-element {
+            padding-top: @dimensionsBarHeight;
         }
     }
 }

@@ -181,7 +181,7 @@ App.namespace("App.VisualElement.LineChart");
                 .appendTo(this.$el);
 
             this.$masterContainer = $('<div id="master-container">')
-                .css({ position : 'absolute', top : detailHeight + this.$title.height(), height : this.config.masterHeight, width : '100%' })
+                .css({ position : 'absolute', bottom : 0, height : this.config.masterHeight, width : '100%' })
                 .appendTo(this.$el);
         },
 
@@ -219,7 +219,7 @@ App.namespace("App.VisualElement.LineChart");
         _updateSize : function () {
             var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height();
             this.$detailContainer.css({height : detailHeight});
-            this.$masterContainer.css({ top : detailHeight + this.$title.height()});
+            //this.$masterContainer.css({ top : detailHeight + this.$title.height()});
 
             this.detailChart.setSize(this.$detailContainer.width(), this.$detailContainer.height(), false);
             this.masterChart.setSize(this.$masterContainer.width(), this.$masterContainer.height(), false);
