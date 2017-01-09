@@ -52,7 +52,7 @@
 	<!-- begin: pie -->
     <c:choose>      
         <c:when test="${!empty portalStyleFooterUrl}">
-            <c:import charEncoding="UTF-8" url="${portalStyleHeaderUrl}" />
+            <c:import charEncoding="UTF-8" url="${portalStyleFooterUrl}" />
         </c:when>
         <c:otherwise>			
         	<c:choose>
