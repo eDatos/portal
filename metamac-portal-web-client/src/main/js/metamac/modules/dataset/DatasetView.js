@@ -159,7 +159,8 @@
 
             var type = this.optionsModel.get('type');
             if (type) {
-                this.visualizationView.activeVisualElement(type);
+                this.optionsModel.set('filter', true);
+                this.visualizationView.activeVisualElement(type);                
                 this.visualizationView.load();
                 this.dimensionsView.render();
 
