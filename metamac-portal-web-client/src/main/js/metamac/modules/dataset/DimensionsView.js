@@ -26,14 +26,42 @@
             "dragenter .order-sidebar-zone.draggable" : "_onDragenter",
             "dragover .order-sidebar-zone.draggable" : "_onDragover",
             "dragleave .order-sidebar-zone.draggable" : "_onDragleave",
-            "drop .order-sidebar-zone.draggable" : "_onDrop"
+            "drop .order-sidebar-zone.draggable" : "_onDrop",
+
+            "click a.order-sidebar-dimension" : "_dontFollowLinks",
+            "change .fixed-dimension-select-category" : "_onChange"
+        },
+
+        _dontFollowLinks : function(e) {
+            e.preventDefault();
+        },
+
+        _onChange : function(e) {
+            var currentTarget = $(e.currentTarget);
+            var selectedCategoryId = currentTarget.val();
+            var dimensionId = currentTarget.data("dimension-id");
+            if (dimensionId) {
+                var representations = this.filterDimensions.get(dimensionId).get('representations');
+                var selectedCategory = representations.findWhere({ id  : selectedCategoryId});
+                if (!_.isUndefined(representations.get(selectedCategory))) {
+                    representations.get(selectedCategory).set({selected : true});
+                }
+            }
         },
 
         destroy : function () {
             this._unbindEvents();
         },
 
+        _updateSelectedCategory : function(filterDimensionId, e) {
+            this.$el.find('select[data-dimension-id=' + filterDimensionId + ']').val(e.get('id'));
+        },
+
         _bindEvents : function () {
+            var self = this;
+            this.filterDimensions.each(function(filterDimension) {
+                self.listenTo(filterDimension.get('representations'), "change:selected", _.partial(self._updateSelectedCategory, filterDimension.get('id')));
+            });
             this.listenTo(this.filterDimensions, "change:zone", _.throttle(this.render, 15));
             this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);
         },
@@ -155,6 +183,7 @@
                 dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;
                 if (zoneId === "fixed") {
                     dimension.selectedCategory = dimensionModel.get('representations').findWhere({selected : true}).toJSON();
+                    dimension.representations = dimensionModel.get('representations').toJSON();
                 }
                 return dimension;
             });

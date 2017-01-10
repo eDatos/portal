@@ -7,11 +7,13 @@
             {{#each dimensions }}
                 <a href="#" class="order-sidebar-dimension {{#if draggable}}draggable{{/if}}" {{#if draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
                 title="{{label}}{{#if selectedCategory }} - {{ selectedCategory.label }} {{/if}}">
-                    {{#if selectedCategory }}
-                        {{ label }}
-                        <div class="fixed-dimension-selected-category">{{ selectedCategory.label }}</div>
-                    {{ else }}
-                        {{ label }}
+                    {{ label }}
+                    {{#if selectedCategory }}                        
+                        <select class="fixed-dimension-select-category" data-dimension-id="{{ ../id }}">
+                            {{#each representations}}
+                                <option value="{{ id }}" {{#compare ../selectedCategory.id "==" id}}selected{{/compare}}>{{ label }}</option>
+                            {{/each}}
+                        </select>
                     {{/if}}
                 </a>
             {{/each}}
