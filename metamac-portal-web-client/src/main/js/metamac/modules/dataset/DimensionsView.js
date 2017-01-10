@@ -29,7 +29,10 @@
             "drop .order-sidebar-zone.draggable" : "_onDrop",
 
             "click a.order-sidebar-dimension" : "_dontFollowLinks",
-            "change .fixed-dimension-select-category" : "_onChange"
+            "change .fixed-dimension-select-category" : "_onChange",
+
+            "focusin .order-sidebar-dimension" : "_onFocusin",
+            "focusout .order-sidebar-dimension" : "_onFocusout"
         },
 
         _dontFollowLinks : function(e) {
@@ -49,6 +52,14 @@
             }
         },
 
+        _onFocusin : function(e) {
+            $(e.currentTarget).addClass('active');
+        },
+
+        _onFocusout : function(e) {
+            $(e.currentTarget).removeClass('active');
+        },
+
         destroy : function () {
             this._unbindEvents();
         },
@@ -61,7 +72,7 @@
             var self = this;
             this.filterDimensions.each(function(filterDimension) {
                 self.listenTo(filterDimension.get('representations'), "change:selected", _.partial(self._updateSelectedCategory, filterDimension.get('id')));
-            });
+            });            
             this.listenTo(this.filterDimensions, "change:zone", _.throttle(this.render, 15));
             this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);
         },

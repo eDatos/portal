@@ -39,6 +39,10 @@
             .order-sidebar-dimensions {
                 height: @dimensionHeight + 16px;
             }
+
+            .order-sidebar-dimension.active {
+                .border-radius(10px 10px 0 0);
+            }
         }
 
         .order-sidebar-dimension {
@@ -56,6 +60,10 @@
 
             background-color: @istacGrey;
             color: white;
+
+            &.active {
+                background-color: @istacBlueMedium;
+            }
         
             border: 1px solid @istacGrey;
 
