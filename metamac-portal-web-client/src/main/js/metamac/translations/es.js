@@ -69,26 +69,26 @@ I18n.translations.es = {
                     top : ""
                 },
                 canvasTable : {
-                    fixed : "Valores fijados",
+                    fixed : "Fijadas",
                     left : "Filas",
                     top : "Columnas"
                 },
                 column : {
-                    fixed : "Valores fijados",
+                    fixed : "Fijadas",
                     left : "Eje horizontal",
                     top : "Columnas"
                 },
                 line : {
-                    fixed : "Valores fijados",
+                    fixed : "Fijadas",
                     left : "Eje horizontal",
                     top : "Lineas"
                 },
                 map : {
-                    fixed : "Valores fijados",
+                    fixed : "Fijadas",
                     left : "Territorios"
                 },
                 mapbubble : {
-                    fixed : "Valores fijados",
+                    fixed : "Fijadas",
                     left : "Territorios"
                 }
 

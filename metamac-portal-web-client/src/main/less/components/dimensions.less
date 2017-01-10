@@ -1,11 +1,12 @@
-@dimensionWidth: 190px;
+@dimensionPillWidth: 130px;
+@dimensionTitleWidth: 100px;
 @dimensionHeight: 23px;
 @h2LeftPadding: 8px;
 .order-dimensions {
     .order-sidebar-zone {
         h2 {
             margin: 0;
-            width: @dimensionWidth - @h2LeftPadding;
+            width: @dimensionTitleWidth - @h2LeftPadding;
             float: left;
 
             overflow: hidden;
@@ -26,21 +27,27 @@
         .order-sidebar-dimensions {
             white-space: nowrap;
             margin-bottom: 1px;
-            margin-left: @dimensionWidth + 1px;
+            margin-left: @dimensionTitleWidth + 1px;
             height: @dimensionHeight;
 
             border: 1px solid @istacGrey;
             color: @istacGrey;
-          //  padding: 3px;            
+        }
+
+        &.fixed {
+            h2,
+            .order-sidebar-dimensions {
+                height: @dimensionHeight + 16px;
+            }
         }
 
         .order-sidebar-dimension {
-            margin: 3px 2px;
+            margin: 2px 2px;
             padding: 2px;
 
             /* IE9 bug changed divs with a, so this correct the new style */
             display: inline-block;
-            width: @dimensionWidth;
+            width: @dimensionPillWidth;
             text-overflow: ellipsis;
             overflow: hidden;
 
@@ -49,6 +56,18 @@
 
             background-color: @istacGrey;
             color: white;
+        
+            border: 1px solid @istacGrey;
+
+            .fixed-dimension-selected-category {
+                background: white;
+                color: @istacGrey;
+                margin: 1px -2px -2px -2px;
+                padding: 2px;
+
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
     }
 }

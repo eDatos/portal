@@ -1,15 +1,15 @@
 {{#each zones}}
     <div class="order-sidebar-zone {{#if draggable}}draggable{{/if}} {{#if isFixed}}fixed{{/if}}" data-zone="{{ id }}">
-
-        {{#unless isFixed}}
-        <h2><i class="{{ icon }}"></i> {{ label }}</h2>
-        {{/unless}}
+        
+        <h2><i class="{{ icon }}"></i> {{ label }}</h2>       
 
         <div class="order-sidebar-dimensions">
             {{#each dimensions }}
-                <a href="#" class="order-sidebar-dimension {{#if draggable}}draggable{{/if}}" {{#if draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}">
+                <a href="#" class="order-sidebar-dimension {{#if draggable}}draggable{{/if}}" {{#if draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
+                title="{{label}}{{#if selectedCategory }} - {{ selectedCategory.label }} {{/if}}">
                     {{#if selectedCategory }}
-                        {{ label }} : <small>{{ selectedCategory.label }}</small>
+                        {{ label }}
+                        <div class="fixed-dimension-selected-category">{{ selectedCategory.label }}</div>
                     {{ else }}
                         {{ label }}
                     {{/if}}
