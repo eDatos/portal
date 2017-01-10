@@ -57,26 +57,26 @@
         icons : {
             info: {},
             canvasTable : {
-                fixed : "",
+                fixed : "lock",
                 left : "rows",
                 top : "columns"
             },
             column : {
-                fixed : "",
+                fixed : "lock",
                 left : "",
                 top : ""
             },
             line : {
-                fixed : "",
+                fixed : "lock",
                 left : "",
                 top : ""
             },
             map : {
-                fixed : "",
+                fixed : "lock",
                 left : ""
             },
             mapbubble : {
-                fixed : "",
+                fixed : "lock",
                 left : ""
             }
         },
