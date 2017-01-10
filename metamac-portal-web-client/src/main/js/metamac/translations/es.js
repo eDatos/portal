@@ -75,12 +75,12 @@ I18n.translations.es = {
                 },
                 column : {
                     fixed : "Fijadas",
-                    left : "Eje horizontal",
+                    left : "Eje X",
                     top : "Columnas"
                 },
                 line : {
                     fixed : "Fijadas",
-                    left : "Eje horizontal",
+                    left : "Eje X",
                     top : "Lineas"
                 },
                 map : {

@@ -63,12 +63,12 @@
             },
             column : {
                 fixed : "lock",
-                left : "",
+                left : "axis-x",
                 top : ""
             },
             line : {
                 fixed : "lock",
-                left : "",
+                left : "axis-x",
                 top : ""
             },
             map : {
