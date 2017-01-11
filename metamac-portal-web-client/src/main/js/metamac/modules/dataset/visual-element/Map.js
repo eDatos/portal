@@ -32,20 +32,20 @@
             this.load();
         },
 
-        updatingDimensionPositions : function () {
+        updatingDimensionPositions : function () {                      
+            this._applyVisualizationRestrictions();
+
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 0);
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');   
 
-            this._forceGeographicDimensionInLeftZone();
+            this._selectAllNotFixedRepresentations();         
         },
 
-        _forceGeographicDimensionInLeftZone : function () {
-            var geographicDimensions = this.filterDimensions.where({type : "GEOGRAPHIC_DIMENSION"});
-            if (geographicDimensions.length == 0) {
-                throw new Error("No geographic dimension");
-            }
-            var geographicDimension = geographicDimensions[0];
-            this.filterDimensions.zones.setDimensionZone('left', geographicDimension);
+        
+        _applyVisualizationRestrictions : function() {
+            this._moveAllDimensionsToZone('fixed');
+            this._forceGeographicDimensionInZone('left');
         },
 
         load : function () {

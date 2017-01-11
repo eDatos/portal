@@ -103,20 +103,20 @@
             column : {
                 fixed : "lock",
                 left : "axis-x",
-                top : ""
+                top : "axis-y"
             },
             line : {
                 fixed : "lock",
                 left : "axis-x",
-                top : ""
+                top : "line"
             },
             map : {
                 fixed : "lock",
-                left : ""
+                left : "map"
             },
             mapbubble : {
                 fixed : "lock",
-                left : ""
+                left : "map"
             }
         },
 
@@ -134,32 +134,60 @@
             return _.isUndefined(icon) ? "" : "icon-" + icon;
         },
 
-        _renderContextForMap : function () {
-            var zonesIds = ["left", "fixed"];
-
-            var zones = _.map(zonesIds, function (zone) {
-                return {
-                    id : zone,
-                    label : this._getLabelFromZone(zone),
-                    icon : this._getIconFromZone(zone),
-                    draggable : zone === "left",
-                    dimensions : this._dimensionsForZone(zone),
-                    isFixed : zone === "fixed"
-                };
-            }, this);
-
-            return {zones : zones};
+        _getZonesByChartType : function() {
+            switch (this._getCurrentChartType()) {
+                case "canvasTable":
+                    return ["top", "left"];
+                case "info":
+                    return [];
+                case "map":
+                case "mapbubble":
+                    return ["left", "fixed"];
+                default:
+                    return ["top", "left", "fixed"];
+            }
+        },
+        
+        _zoneIsDraggableByChartType : function(zone) {
+            var IS_DRAGGABLE = {
+                canvasTable : {
+                    top : true,
+                    left : true
+                },
+                column : {
+                    top : true,
+                    left : true,
+                    fixed : true
+                },
+                line : {
+                    top : true,
+                    left : false,
+                    fixed : true
+                },
+                map : {
+                    left : true,
+                    fixed : false
+                },
+                mapbubble : {
+                    left : true,
+                    fixed : false
+                }
+            };
+            var isDraggable = this._getCurrentChartType() ? IS_DRAGGABLE[this._getCurrentChartType()][zone] : false;
+            if (_.isUndefined(isDraggable)) {
+                throw "Is draggable undefined for zone " + zone + " and chart type " + this._getCurrentChartType();
+            }
+            return isDraggable;
         },
 
         _renderContext : function () {
-            var zonesIds = ["top", "left", "fixed"];
-
+            var zonesIds = this._getZonesByChartType();
             var zones = _.map(zonesIds, function (zone) {
                 return {
                     id : zone,
                     label : this._getLabelFromZone(zone),
                     icon : this._getIconFromZone(zone),
-                    draggable : true,
+                    draggable : this._zoneIsDraggableByChartType(zone),
                     dimensions : this._dimensionsForZone(zone),
                     isFixed : zone === "fixed"
                 };
@@ -175,7 +203,7 @@
         render : function () {
             this._unbindEvents();
             this._bindEvents();
-            var context = this._isMap() ? this._renderContextForMap() : this._renderContext();
+            var context = this._renderContext();
             this.$el.html(this.template(context));
             this.scrollbuttons = [];
             var self = this;
@@ -229,17 +257,18 @@
             var currentTarget = $(e.currentTarget);
             var transferDimensionId = e.originalEvent.dataTransfer.getData("Text");
             var transferDimension = this.filterDimensions.get(transferDimensionId);
-
-            if (currentTarget.data("dimension-id")) {
-                // swap two dimensions
-                var toDimensionId = currentTarget.data("dimension-id");
-                var toDimension = this.filterDimensions.get(toDimensionId);
-                this.filterDimensions.zones.swapDimensions(transferDimension, toDimension);
-            } else {
-                //move to a zone
-                var zone = currentTarget.data("zone");
-                this.filterDimensions.zones.setDimensionZone(zone, transferDimension);
-            }
+            if (transferDimension) {
+                if (currentTarget.data("dimension-id")) {
+                    // swap two dimensions
+                    var toDimensionId = currentTarget.data("dimension-id");
+                    var toDimension = this.filterDimensions.get(toDimensionId);
+                    this.filterDimensions.zones.swapDimensions(transferDimension, toDimension);
+                } else {
+                    //move to a zone
+                    var zone = currentTarget.data("zone");
+                    this.filterDimensions.zones.setDimensionZone(zone, transferDimension);
+                }
+            } // Non draggable        
             return false;
         },
 

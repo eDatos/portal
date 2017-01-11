@@ -79,8 +79,21 @@
         },
 
         updatingDimensionPositions : function () {
+            this._applyVisualizationRestrictions();
+            
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 1);
+            this.filterDimensions.zones.get('fixed').unset('fixedSize'); 
+
+            this._selectAllNotFixedRepresentations();           
+        },
+
+        _applyVisualizationRestrictions : function() {
+            this._moveAllDimensionsToZone('left');
+
+            this._forceMeasureDimensionInZone('top');
+            this._forceTimeDimensionInZone('fixed');
+            this._forceGeographicDimensionInZone('fixed');
         },
 
         render : function () {

@@ -108,6 +108,45 @@
         setEl : function (el) {
             this.$el = $(el);
             this.el = this.$el[0];
+        },
+
+        _forceDimensionTypeInZone : function(dimensionType, zone) {
+            var dimensions = this.filterDimensions.where({type : dimensionType});
+            if (dimensions.length == 0) {
+                throw new Error("No " + dimensionType + " dimension");
+            }
+            var dimension = dimensions[0];
+            this.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
+        },
+        
+        _selectAllNotFixedRepresentations : function() {
+            var nonFixedDimensions = _(this.filterDimensions
+                .filter(function(dimension) {
+                    return dimension.type !== "fixed";
+            }));
+            
+            nonFixedDimensions.each(function(dimension) {
+                dimension.get('representations').selectAll();
+            });
+        },
+
+        _moveAllDimensionsToZone : function(zone) {
+            var self = this;
+            this.filterDimensions.each(function(dimension) {
+                self.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
+            });
+        },
+
+        _forceMeasureDimensionInZone : function(zone) {
+            this._forceDimensionTypeInZone("MEASURE_DIMENSION", zone);
+        },
+
+        _forceTimeDimensionInZone : function(zone) {
+            this._forceDimensionTypeInZone("TIME_DIMENSION", zone);
+        },
+
+        _forceGeographicDimensionInZone : function(zone) {
+            this._forceDimensionTypeInZone("GEOGRAPHIC_DIMENSION", zone);
         }
 
     };

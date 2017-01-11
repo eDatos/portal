@@ -5,7 +5,7 @@
 
         <div class="order-sidebar-dimensions">
             {{#each dimensions }}
-                <a href="#" class="order-sidebar-dimension {{#if draggable}}draggable{{/if}}" {{#if draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
+                <a href="#" class="order-sidebar-dimension {{#if ../draggable}}draggable{{/if}}" {{#if ../draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
                 title="{{label}}{{#if selectedCategory }} - {{ selectedCategory.label }} {{/if}}">
                     {{ label }}
                     {{#if selectedCategory }}                        

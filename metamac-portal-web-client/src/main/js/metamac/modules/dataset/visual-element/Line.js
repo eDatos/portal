@@ -150,9 +150,22 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         updatingDimensionPositions : function () {
+            this._applyVisualizationRestrictions();
+
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 1);
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');   
+
+            this._selectAllNotFixedRepresentations();         
         },
+
+        _applyVisualizationRestrictions : function() {
+            this._moveAllDimensionsToZone('top');
+
+            this._forceMeasureDimensionInZone('fixed');
+            this._forceTimeDimensionInZone('left');
+            this._forceGeographicDimensionInZone('fixed');            
+        }, 
 
         tooltipFormatter : function () {
             return '<strong>' + this.series.name + ', ' + this.x + '</strong>:<br/>' + this.point.name;
