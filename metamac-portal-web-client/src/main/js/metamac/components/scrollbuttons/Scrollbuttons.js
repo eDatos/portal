@@ -51,7 +51,7 @@
             var self = this;
             // Force to wait for DOM
             setTimeout(function() {
-                console.log("updateVisibility!", self.scrollContent.offsetWidth, self.scrollContent.offsetLeft, self.scrollContent.scrollWidth, Date.now()); 
+              //  console.log("updateVisibility!", self.scrollContent.offsetWidth, self.scrollContent.offsetLeft, self.scrollContent.scrollWidth, Date.now()); 
                 if (!self._hasLeftOverflow()) {
                     self.$leftButton.fadeOut();
                 } else {
