@@ -116,7 +116,7 @@
             this._assignPositions(leftDimensions, this.positionLimit.left.begin);
             this._assignPositions(topDimensions, this.positionLimit.top.begin);
 
-            var dimensionsOutOfPosition = _.findWhere(this.dimensions, function (dimension) {
+            var dimensionsOutOfPosition = _.filter(this.dimensions, function (dimension) {
                 return _.isUndefined(dimension.position);
             });
             this._assignPositions(dimensionsOutOfPosition, this.positionLimit.fixed.begin);
