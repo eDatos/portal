@@ -30,23 +30,12 @@
             this.stopListening();
         },
 
-        _isFixedDimension : function () {
-            var zone = this.filterDimension.get('zone');
-            if (zone) {
-                return zone.id === 'fixed';
-            }
-        },
-
-        _isTimeDimension : function () {
-            return this.filterDimension.get("type") === "TIME_DIMENSION";
-        },
-
         render : function (){
             this._unbindEvents();
             this._bindEvents();
             var context = {
-                isFixedDimension : this._isFixedDimension(),
-                isTimeDimension : this._isTimeDimension()
+                isFixedDimension : this.filterDimension.isFixedDimension(),
+                isTimeDimension : this.filterDimension.isTimeDimension()
             };
             this.$el.html(this.template(context));
         },

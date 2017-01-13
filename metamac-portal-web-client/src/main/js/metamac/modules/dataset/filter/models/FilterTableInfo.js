@@ -39,10 +39,10 @@
         },
 
         _initializeTableInfo : function () {
-            var fixedPermutations = {};
-            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
+            var fixedPermutations = {};            
+            var fixedDimensions = this.filterDimensions.getAllFixedDimensionsCopy();
 
-            fixedDimensions.each(function (dimension) {
+            fixedDimensions.forEach(function (dimension) {
                 var selectedModels = dimension.get('representations').where({selected : true});
                 fixedPermutations[dimension.id] = selectedModels[0].id; // Fixed dimensions has limit 1
             });

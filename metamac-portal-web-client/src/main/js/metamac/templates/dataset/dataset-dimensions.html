@@ -10,7 +10,7 @@
                     {{ label }}
                     {{#if selectedCategory }}                        
                         <select class="fixed-dimension-select-category" data-dimension-id="{{ ../id }}">
-                            {{#each representations}}
+                            {{#each representationsList}}
                                 <option value="{{ id }}" {{#compare ../selectedCategory.id "==" id}}selected{{/compare}}>{{ label }}</option>
                             {{/each}}
                         </select>

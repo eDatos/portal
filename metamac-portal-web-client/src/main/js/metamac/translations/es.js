@@ -81,6 +81,7 @@ I18n.translations.es = {
                 line : {
                     fixed : "Fijadas",
                     left : "Eje X",
+                    axisy : "Eje Y",
                     top : "Lineas"
                 },
                 map : {

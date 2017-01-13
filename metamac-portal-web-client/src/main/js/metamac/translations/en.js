@@ -75,12 +75,13 @@ I18n.translations.en = {
                 },
                 column : {
                     fixed : "Fixed values",
-                    left : "Horizontal axis",
-                    top : "Columns"
+                    left : "X axis",
+                    top : "Y axis"
                 },
                 line : {
                     fixed : "Fixed values",
-                    left : "Horizontal axis",
+                    left : "X axis",
+                    axisy : "Y axis",
                     top : "Lines"
                 },
                 map : {

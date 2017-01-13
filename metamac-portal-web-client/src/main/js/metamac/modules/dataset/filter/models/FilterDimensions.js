@@ -34,6 +34,18 @@
             return this.zones.get(zoneId).get('dimensions');
         },
 
+        isFixedZone : function(zoneId) {
+            return this.zones.get(zoneId).isFixed();
+        },
+
+        getAllFixedDimensionsCopy : function () {
+            var fixedDimensions = [];
+            this.zones.getFixedZones().forEach(function(zone) {
+                fixedDimensions = fixedDimensions.concat(_.clone(zone.get('dimensions').models));
+            });
+            return fixedDimensions;
+        },
+
         getTableInfo : function () {
             if (!this.tableInfo) {
                 this.tableInfo = new App.modules.dataset.filter.models.FilterTableInfo({filterDimensions : this});
@@ -60,6 +72,7 @@
         _zoneIdFromPosition : function (position) {
             if (position < 20) return 'left';
             if (position < 40) return 'top';
+            if (position >= 60 && position < 80) return 'axisy';
             return 'fixed';
         },
 
@@ -96,7 +109,7 @@
 
         exportJSON : function () {
             var exportResult = {};
-            var zoneOffsets = {left : 0, top : 20, fixed : 40};
+            var zoneOffsets = {left : 0, top : 20, fixed : 40, axisy : 60};
             this.each(function (dimension) {
                 var selectedCategories = dimension.get('representations').where({selected : true});
                 var selectedCategoriesIds = _.pluck(selectedCategories, 'id');

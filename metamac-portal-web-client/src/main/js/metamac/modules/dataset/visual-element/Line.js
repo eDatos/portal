@@ -154,7 +154,8 @@ App.namespace("App.VisualElement.LineChart");
 
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 1);
-            this.filterDimensions.zones.get('fixed').unset('fixedSize');   
+            this.filterDimensions.zones.get('axisy').set('fixedSize', 1);
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');               
 
             this._selectAllNotFixedRepresentations();         
         },
@@ -162,7 +163,7 @@ App.namespace("App.VisualElement.LineChart");
         _applyVisualizationRestrictions : function() {
             this._moveAllDimensionsToZone('top');
 
-            this._forceMeasureDimensionInZone('fixed');
+            this._forceMeasureDimensionInZone('axisy');
             this._forceTimeDimensionInZone('left');
             this._forceGeographicDimensionInZone('fixed');            
         }, 

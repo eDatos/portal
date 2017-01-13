@@ -79,11 +79,14 @@
             // Remove restrictions
             zones.get("left").set({fixedSize : undefined, selectedLimit : Infinity});
             zones.get("top").set({fixedSize : undefined, selectedLimit : Infinity});
-
-            var fixedDimensions = _.clone(zones.get("fixed").get("dimensions").models);
-            _.each(fixedDimensions, function (dimension) {
-                zones.setDimensionZone("left", dimension);
-            }, this);
+            
+            zones
+                .getFixedZones()
+                .forEach(function(zone) {
+                    zone.get('dimensions').each(function (dimension) {
+                        zones.setDimensionZone("left", dimension);
+                    }, this);
+                });
         },
         
         onRender: function() {

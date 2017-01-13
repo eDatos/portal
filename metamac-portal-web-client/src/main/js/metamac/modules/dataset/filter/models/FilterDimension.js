@@ -17,6 +17,18 @@
             this._bindEvents();
         },
 
+        isFixedDimension : function() {
+            if (this.get('zone')) {
+                return this.get('zone').isFixed();
+            } else {
+                return false;
+            }
+        },
+
+        isTimeDimension : function () {
+            return this.get("type") === "TIME_DIMENSION";
+        },
+
         _bindEvents : function () {
             this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
             this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);

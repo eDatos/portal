@@ -158,7 +158,9 @@
             }
 
             var type = this.optionsModel.get('type');
-            if (type) {
+            if (type) {                
+                this._toggleClassByChartType(type);
+
                 this.optionsModel.set('filter', true);
                 this.visualizationView.activeVisualElement(type);                
                 this.visualizationView.load();
@@ -168,6 +170,15 @@
                 controllerParams.visualizationType = type;
                 this.controller.changeDatasetVisualization(controllerParams);
             }
+        },
+
+        _toggleClassByChartType : function (type) {
+            var CLASS_PREFFIX = "dataset-visualization-type-";
+            var regex = new RegExp("(^|\\s)" + CLASS_PREFFIX + "\\S+", 'g');
+            this.content.$el.removeClass(function (index, className) {
+                return (className.match(regex) || []).join(' ');
+            });
+            this.content.$el.addClass(CLASS_PREFFIX + type);
         },
 
         _onDidEnterFullScreen : function () {

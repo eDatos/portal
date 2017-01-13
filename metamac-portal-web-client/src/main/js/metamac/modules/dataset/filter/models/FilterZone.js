@@ -40,6 +40,10 @@
             dimension.get('representations').setSelectedLimit(this.get('selectedLimit'));
         },
 
+        isFixed : function() {
+            return this.get('selectedLimit') === 1;
+        },
+
         leftoverDimensions : function () {
             var begin = _.isUndefined(this.get('fixedSize'))? 0 : this.get('fixedSize');
             return this.get('dimensions').slice(begin);

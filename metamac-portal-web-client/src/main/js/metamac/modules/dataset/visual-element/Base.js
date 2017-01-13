@@ -22,8 +22,7 @@
 
         getFixedPermutation : function () {
             var fixedPermutation = {};
-            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
-            fixedDimensions.each(function (dimension) {
+            this.filterDimensions.getAllFixedDimensionsCopy().forEach(function (dimension) {
                 var selectedRepresentations = dimension.get('representations').where({selected : true});
                 fixedPermutation[dimension.id] = selectedRepresentations[0].id;
             });
@@ -31,8 +30,7 @@
         },
 
         getTitle : function () {
-            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
-            var fixedLabels = fixedDimensions.map(function (dimension) {
+            var fixedLabels =  this.filterDimensions.getAllFixedDimensionsCopy().map(function (dimension) {
                 var selectedRepresentations = dimension.get('representations').where({selected : true});
                 return selectedRepresentations[0].get('visibleLabel');
             });
@@ -119,10 +117,11 @@
             this.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
         },
         
+        // TODO : Will be changed when the selected representations and the ones used for drawing, change
         _selectAllNotFixedRepresentations : function() {
             var nonFixedDimensions = _(this.filterDimensions
                 .filter(function(dimension) {
-                    return dimension.type !== "fixed";
+                    return dimension.type !== "fixed" && dimension.type !== "axisy";
             }));
             
             nonFixedDimensions.each(function(dimension) {

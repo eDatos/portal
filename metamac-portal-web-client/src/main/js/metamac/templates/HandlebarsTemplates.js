@@ -343,7 +343,7 @@ function program11(depth0,data,depth1) {
   buffer += "                        \r\n                        <select class=\"fixed-dimension-select-category\" data-dimension-id=\""
     + escapeExpression(((stack1 = depth1.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">\r\n                            ";
-  stack2 = helpers.each.call(depth0, depth0.representations, {hash:{},inverse:self.noop,fn:self.programWithDepth(12, program12, data, depth0),data:data});
+  stack2 = helpers.each.call(depth0, depth0.representationsList, {hash:{},inverse:self.noop,fn:self.programWithDepth(12, program12, data, depth0),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n                        </select>\r\n                    ";
   return buffer;

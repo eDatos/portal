@@ -108,7 +108,8 @@
             line : {
                 fixed : "lock",
                 left : "axis-x",
-                top : "line"
+                top : "line",
+                axisy : "axis-y"
             },
             map : {
                 fixed : "lock",
@@ -140,6 +141,8 @@
                     return ["top", "left"];
                 case "info":
                     return [];
+                case "line":
+                    return ["top", "left", "axisy", "fixed"];
                 case "map":
                 case "mapbubble":
                     return ["left", "fixed"];
@@ -162,6 +165,7 @@
                 line : {
                     top : true,
                     left : false,
+                    axisy : false,
                     fixed : true
                 },
                 map : {
@@ -189,11 +193,15 @@
                     icon : this._getIconFromZone(zone),
                     draggable : this._zoneIsDraggableByChartType(zone),
                     dimensions : this._dimensionsForZone(zone),
-                    isFixed : zone === "fixed"
+                    isFixed : this._isFixedZone(zone)
                 };
             }, this);
 
             return {zones : zones};
+        },
+
+        _isFixedZone : function(zoneId) {
+            return this.filterDimensions.isFixedZone(zoneId);
         },
 
         _isMap : function () {
@@ -217,12 +225,13 @@
         _dimensionsForZone : function (zoneId) {
             var dimensionCollection = this.filterDimensions.dimensionsAtZone(zoneId);
             var isMap = this._isMap();
+            var self = this;
             var dimensionsForZone = dimensionCollection.map(function (dimensionModel) {
                 var dimension = dimensionModel.toJSON();
                 dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;
-                if (zoneId === "fixed") {
+                if (self._isFixedZone(zoneId)) {
                     dimension.selectedCategory = dimensionModel.get('representations').findWhere({selected : true}).toJSON();
-                    dimension.representations = dimensionModel.get('representations').toJSON();
+                    dimension.representationsList = dimensionModel.get('representations').toJSON();
                 }
                 return dimension;
             });

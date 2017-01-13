@@ -49,6 +49,12 @@
             }
         },
 
+        getFixedZones : function() {
+            return this.filter(function (zone) {
+                return zone.isFixed();
+            });
+        },
+
         _onModelChangeFixedSize : function (zone) {
             var fixedSize = zone.get('fixedSize');
             if (_.isUndefined(fixedSize)) return;
@@ -107,7 +113,8 @@
             var zones = new App.modules.dataset.filter.models.FilterZones([
                 {id : 'left'},
                 {id : 'top'},
-                {id : 'fixed', selectedLimit : 1}
+                {id : 'fixed', selectedLimit : 1},
+                {id : 'axisy', selectedLimit : 1}
             ]);
 
             var leftDimensions = _.map(positions.left, dimensions.get, dimensions);

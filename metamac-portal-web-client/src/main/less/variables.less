@@ -56,7 +56,12 @@
 @optionsBarColor: @istacGreyLight;
 
 // Dimensions Bar
-@dimensionsBarHeight: 96px;
+@dimensionNonFixedHeight: 23px;
+@dimensionFixedHeight: 50px;
+
+@dimensionsBarTypeTable: 2 * @dimensionNonFixedHeight;
+@dimensionsBarTypeLine: 2 * @dimensionNonFixedHeight + 2 * @dimensionFixedHeight;
+@dimensionsBarTypeDefault: 2 * @dimensionNonFixedHeight + @dimensionFixedHeight;
 
 // Navbar
 // -------------------------

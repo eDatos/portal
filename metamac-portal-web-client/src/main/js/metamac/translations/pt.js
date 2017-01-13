@@ -75,12 +75,13 @@ I18n.translations.pt = {
                     },
                     column : {
                         fixed : "Valores fixos",
-                        left : "Eixo horizontal",
-                        top : "Colunas"
+                        left : "Eixo X",
+                        top : "Eixo Y"
                     },
                     line : {
                         fixed : "Valores fixos",
-                        left : "Eixo horizontal",
+                        left : "Eixo X",
+                        axisy : "Eixo Y",
                         top : "Linhas"
                     },
                     map : {

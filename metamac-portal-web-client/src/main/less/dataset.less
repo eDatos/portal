@@ -237,8 +237,18 @@
     }
 
     &.has-dimensions {
+        &.dataset-visualization-type-canvasTable {
+            .dataset-visualization-visual-element {
+                padding-top: @dimensionsBarTypeTable;
+            }
+        }
+        &.dataset-visualization-type-line {
+            .dataset-visualization-visual-element {
+                padding-top: @dimensionsBarTypeLine;
+            }
+        }
         .dataset-visualization-visual-element {
-            padding-top: @dimensionsBarHeight;
+            padding-top: @dimensionsBarTypeDefault;            
         }
     }
 }

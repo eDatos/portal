@@ -89,6 +89,10 @@
                 fixed : {
                     begin : 40,
                     end : 59
+                },
+                axisy : {
+                    begin : 60,
+                    end : 79
                 }
             };
         },
@@ -188,7 +192,8 @@
                 (zone === "columns") ||
                 (zone === "lines") ||
                 (zone === "top") ||
-                (zone === "fixed");
+                (zone === "fixed") ||
+                (zone === "axisy");
         },
 
         _getDimensionsInZone : function (zone) {
@@ -355,6 +360,8 @@
                 return "top";
             } else if (position >= this.positionLimit.fixed.begin && position <= this.positionLimit.fixed.end) {
                 return "fixed";
+            } else if (position >= this.positionLimit.axisy.begin && position <= this.positionLimit.axisy.end) {
+                return "axisy";
             }
         },
 
