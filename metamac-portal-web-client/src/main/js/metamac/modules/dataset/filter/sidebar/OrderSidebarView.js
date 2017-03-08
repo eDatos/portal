@@ -104,8 +104,7 @@
                 var dimension = dimensionModel.toJSON();
                 dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;
                 if (dimensionModel.isFixedDimension()) {
-                    dimension.selectedCategory = dimensionModel.get('representations').findWhere({selected : true}).toJSON();
-                    dimension.representationsList = dimensionModel.get('representations').toJSON();
+                    dimension.selectedCategory = dimensionModel.get('representations').findWhere({drawable : true}).toJSON();
                 }
                 return dimension;
             });

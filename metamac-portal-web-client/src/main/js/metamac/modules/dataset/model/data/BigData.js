@@ -24,7 +24,7 @@
 
         _bindEvents : function () {
         	if (this.filterDimensions != null)
-        		this.filterDimensions.on('change:selected change:zone', this.onUpdateFilter, this);
+        		this.filterDimensions.on('change:drawable change:zone', this.onUpdateFilter, this);
         },
 
         isAllSelectedDataLoaded : function () {

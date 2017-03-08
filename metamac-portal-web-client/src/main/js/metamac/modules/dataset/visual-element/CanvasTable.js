@@ -71,8 +71,6 @@
             this.filterDimensions.zones.get('left').unset('fixedSize');
             this.filterDimensions.zones.get('top').unset('fixedSize');
             this.filterDimensions.zones.get('fixed').set('fixedSize', 0);
-
-            this._selectAllNotFixedRepresentations();
         },
         
         _applyVisualizationRestrictions : function() {

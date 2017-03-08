@@ -113,8 +113,8 @@
             var zones = new App.modules.dataset.filter.models.FilterZones([
                 {id : 'left'},
                 {id : 'top'},
-                {id : 'fixed', selectedLimit : 1},
-                {id : 'axisy', selectedLimit : 1}
+                {id : 'fixed', drawableLimit : 1},
+                {id : 'axisy', drawableLimit : 1}
             ]);
 
             var leftDimensions = _.map(positions.left, dimensions.get, dimensions);

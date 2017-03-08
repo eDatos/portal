@@ -47,7 +47,7 @@
                 var representations = this.filterDimensions.get(dimensionId).get('representations');
                 var selectedCategory = representations.findWhere({ id  : selectedCategoryId});
                 if (!_.isUndefined(representations.get(selectedCategory))) {
-                    representations.get(selectedCategory).set({selected : true});
+                    representations.get(selectedCategory).set({drawable : true});
                 }
             }
         },
@@ -65,15 +65,17 @@
         },
 
         _updateSelectedCategory : function(filterDimensionId, e) {
-            this.$el.find('select[data-dimension-id=' + filterDimensionId + ']').val(e.get('id'));
+            if (!_.isUndefined(e)) {
+                this.$el.find('select[data-dimension-id=' + filterDimensionId + ']').val(e.get('id'));
+            }            
         },
 
         _bindEvents : function () {
             var self = this;
             this.filterDimensions.each(function(filterDimension) {
-                self.listenTo(filterDimension.get('representations'), "change:selected", _.partial(self._updateSelectedCategory, filterDimension.get('id')));
-            });            
-            this.listenTo(this.filterDimensions, "change:zone", _.throttle(this.render, 15));
+                filterDimension.get('representations').on("change:drawable", _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));                
+            });
+            this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(this.render, 15));
             this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);
         },
 
@@ -229,9 +231,9 @@
             var dimensionsForZone = dimensionCollection.map(function (dimensionModel) {
                 var dimension = dimensionModel.toJSON();
                 dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;
-                if (self._isFixedZone(zoneId)) {
-                    dimension.selectedCategory = dimensionModel.get('representations').findWhere({selected : true}).toJSON();
-                    dimension.representationsList = dimensionModel.get('representations').toJSON();
+                if (self._isFixedZone(zoneId)) {                    
+                    dimension.selectedCategory = dimensionModel.get('representations').findWhere({drawable : true}).toJSON();
+                    dimension.representationsList = dimensionModel.get('representations').where({'selected': true}).map(function(model) { return model.toJSON(); });
                 }
                 return dimension;
             });

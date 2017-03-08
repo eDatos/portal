@@ -63,7 +63,7 @@
 
         _bindEvents : function () {
             var debounceUpdate = _.debounce(this.update, 20);
-            this.listenTo(this.filterDimensions, "change:selected change:zone change:visibleLabelType reverse", debounceUpdate);
+            this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", debounceUpdate);
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             var self = this;
@@ -83,9 +83,7 @@
             
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 1);
-            this.filterDimensions.zones.get('fixed').unset('fixedSize'); 
-
-            this._selectAllNotFixedRepresentations();           
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');         
         },
 
         _applyVisualizationRestrictions : function() {
@@ -139,8 +137,8 @@
 
             var horizontalDimension = this.filterDimensions.dimensionsAtZone('left').at(0);
             var columnsDimension = this.filterDimensions.dimensionsAtZone('top').at(0);
-            var horizontalDimensionSelectedCategories = horizontalDimension.get('representations').where({selected : true});
-            var columnsDimensionSelectedCategories = columnsDimension.get('representations').where({selected : true});
+            var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
+            var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 
             var listSeries = [];
             _.each(columnsDimensionSelectedCategories, function (columnCategory) {

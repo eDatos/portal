@@ -136,7 +136,12 @@
             representations.each(function (representation) {
                 representation.set("visibleLabelType", visibleLabelType);
             });
+        },
+
+        getDrawableRepresentations : function() {
+            return this.get('representations').getDrawableRepresentations();
         }
+        
 
     });
 

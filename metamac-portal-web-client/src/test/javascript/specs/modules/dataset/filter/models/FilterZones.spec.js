@@ -60,7 +60,7 @@ describe('FilterZones', function () {
             expect(indexInZone(dim2)).to.equal(0);
         });
 
-        it('should update selected limit', function () {
+        it('should update selected limit and drawableLimit', function () {
             var leftZone = zones.get('left');
             var topZone = zones.get('top');
 
@@ -73,10 +73,16 @@ describe('FilterZones', function () {
             expect(dim1.get('representations').selectedLimit).to.equal(1);
             expect(dim2.get('representations').selectedLimit).to.equal(2);
 
+            expect(dim1.get('representations').drawableLimit).to.equal(1);
+            expect(dim2.get('representations').drawableLimit).to.equal(2);
+
             zones.swapDimensions(dim1, dim2);
 
             expect(dim1.get('representations').selectedLimit).to.equal(2);
             expect(dim2.get('representations').selectedLimit).to.equal(1);
+
+            expect(dim1.get('representations').drawableLimit).to.equal(2);
+            expect(dim2.get('representations').drawableLimit).to.equal(1);
         });
         
     });

@@ -66,6 +66,24 @@ describe('FilterDimensions', function () {
             expect(spy.called).to.be.true;
         });
 
+        it('should trigger change event when a representation change the drawable state', function () {
+            var spy = sinon.spy();
+            filterDimensions.each(function(filterDimension) {
+                filterDimension.get('representations').on("change:drawable", spy);
+            });
+            filterDimensions.at(0).get('representations').at(0).toggle('drawable');
+            expect(spy.called).to.be.true;
+        });
+
+        it("should trigger change event when a representations update drawables", function () {
+            var spy = sinon.spy();
+            filterDimensions.each(function(filterDimension) {
+                filterDimension.get('representations').on("change:drawable", spy);
+            });
+            filterDimensions.get('TIME_PERIOD').get('representations')._updateDrawables();
+            expect(spy.called).to.be.true;
+        });
+
     });
 
     describe('exportJSON', function () {
@@ -85,7 +103,8 @@ describe('FilterDimensions', function () {
 
         it('should export selected categories', function () {
             var selectedRepresentationId = dim.get('representations').findWhere({selected : true}).id;
-            expect(exportedJSON[dimId].selectedCategories.length).to.equal(1);
+            // After the change on the fixed dimensions limit regarding the drawable attribute, the selected number are no longer affected
+            expect(exportedJSON[dimId].selectedCategories.length).to.equal(2);
             expect(exportedJSON[dimId].selectedCategories[0]).to.equal(selectedRepresentationId);
         });
 
@@ -94,7 +113,7 @@ describe('FilterDimensions', function () {
             expect(exportedJSON['DESTINO_ALOJAMIENTO'].position).to.equal(1);
             expect(exportedJSON['TIME_PERIOD'].position).to.equal(20);
             expect(exportedJSON['INDICADORES'].position).to.equal(40);
-        });
+        });        
 
     });
 

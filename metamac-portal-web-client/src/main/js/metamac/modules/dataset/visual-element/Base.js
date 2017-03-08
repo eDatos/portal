@@ -22,16 +22,18 @@
 
         getFixedPermutation : function () {
             var fixedPermutation = {};
+            var self = this;
             this.filterDimensions.getAllFixedDimensionsCopy().forEach(function (dimension) {
-                var selectedRepresentations = dimension.get('representations').where({selected : true});
+                var selectedRepresentations = self.getDrawableRepresentations(dimension);
                 fixedPermutation[dimension.id] = selectedRepresentations[0].id;
             });
             return fixedPermutation;
         },
 
         getTitle : function () {
-            var fixedLabels =  this.filterDimensions.getAllFixedDimensionsCopy().map(function (dimension) {
-                var selectedRepresentations = dimension.get('representations').where({selected : true});
+            var self = this;
+            var fixedLabels = this.filterDimensions.getAllFixedDimensionsCopy().map(function (dimension) {
+                var selectedRepresentations = self.getDrawableRepresentations(dimension);
                 return selectedRepresentations[0].get('visibleLabel');
             });
             return fixedLabels.length ? I18n.t("filter.text.for") + ": " + fixedLabels.join(", ") : "";
@@ -116,18 +118,6 @@
             var dimension = dimensions[0];
             this.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
         },
-        
-        // TODO : Will be changed when the selected representations and the ones used for drawing, change
-        _selectAllNotFixedRepresentations : function() {
-            var nonFixedDimensions = _(this.filterDimensions
-                .filter(function(dimension) {
-                    return dimension.type !== "fixed" && dimension.type !== "axisy";
-            }));
-            
-            nonFixedDimensions.each(function(dimension) {
-                dimension.get('representations').selectAll();
-            });
-        },
 
         _moveAllDimensionsToZone : function(zone) {
             var self = this;
@@ -146,6 +136,10 @@
 
         _forceGeographicDimensionInZone : function(zone) {
             this._forceDimensionTypeInZone("GEOGRAPHIC_DIMENSION", zone);
+        },
+
+        getDrawableRepresentations : function(dimension) {
+            return dimension.getDrawableRepresentations();
         }
 
     };

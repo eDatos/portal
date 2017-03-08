@@ -20,7 +20,7 @@
 
         _bindEvents : function () {
             var debounceReload = _.debounce(_.bind(this.reload, this), 20);
-            this.listenTo(this.filterDimensions, "change:selected change:zone", debounceReload);
+            this.listenTo(this.filterDimensions, "change:drawable change:zone", debounceReload);
         },
 
         _unbindEvents : function () {
@@ -37,9 +37,7 @@
 
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 0);
-            this.filterDimensions.zones.get('fixed').unset('fixedSize');   
-
-            this._selectAllNotFixedRepresentations();         
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');
         },
 
         
@@ -128,7 +126,7 @@
         },
 
         _getGeographicSelectedRepresentations : function () {
-            return this._getGeographicDimension().get('representations').where({selected : true});
+            return this._getGeographicDimension().get('representations').where({drawable : true});
         },
 
         _getGeographicDimensionNormCodes : function () {
