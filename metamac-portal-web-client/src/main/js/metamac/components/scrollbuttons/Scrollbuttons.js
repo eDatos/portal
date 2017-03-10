@@ -116,7 +116,6 @@
         },        
 
         updateSize : function() {
-            console.log("updating this", this);
             this._setNewOffset(0);
         }
     };
