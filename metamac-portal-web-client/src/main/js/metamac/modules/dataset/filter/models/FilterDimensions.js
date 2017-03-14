@@ -46,6 +46,12 @@
             return fixedDimensions;
         },
 
+        getAllFixedDimensionsCopyByType : function(type) {
+            return _(this.getAllFixedDimensionsCopy()).filter(function(dimension) { 
+                return dimension.get("type") == type; 
+            });
+        },
+
         getTableInfo : function () {
             if (!this.tableInfo) {
                 this.tableInfo = new App.modules.dataset.filter.models.FilterTableInfo({filterDimensions : this});
