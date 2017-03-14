@@ -16,8 +16,6 @@
         _bindEvents : function () {
             this.listenTo(this, 'change:selected', this._onChangeSelected);
             this.listenTo(this, 'change:drawable', this._onChangeDrawable);
-            this.listenTo(this, 'change:selectedLimit', this.updateDrawableUpperLimit);
-            this.listenTo(this, 'change:drawableLimit', this._updateDrawables);
         },
 
         _unbindEvents : function () {
@@ -85,14 +83,16 @@
             this.selectedLimit = selectedLimit;
             var selectedModels = this._selectedModels();
             _.invoke(selectedModels.slice(selectedLimit), 'set', {selected : false});
+            this.updateDrawableUpperLimit();
         },
 
         setDrawableLimit : function(drawableLimit) {
             this.drawableLimit = this._getUpperDrawableLimit(drawableLimit);
+            this._updateDrawables();
         },
 
         updateDrawableUpperLimit : function() {
-            this.drawableLimit = this._getUpperDrawableLimit(this.drawableLimit);
+            this.setDrawableLimit(this.drawableLimit);
         },
 
         _getUpperDrawableLimit : function(drawableLimit) {
