@@ -26,7 +26,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
 
     _renderCategories : function () {
         var dim = this.model.getDimension(this.dimNum);
-        if ((this.zone == "fixed") && (!this._isExpanded)) {
+        if (this._isFixedZone() && !this._isExpanded) {
             dim.categories = this.model.getSelectedCategories(this.dimNum);
         }
         if (this.text) {
@@ -100,7 +100,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
     _refreshingScrollbar : function (firstTime) {
         // Original size
         var $categoriesDivAdvContainer = $('.div-categories-advanced-container-big', this.$el);
-        if (this.zone !== "left" && this.zone !== "fixed" && !firstTime) {
+        if (this.zone !== "left" && !this._isFixedZone() && !firstTime) {
             var tempWidth = $categoriesDivAdvContainer.width() - 20;
             $categoriesDivAdvContainer.width(tempWidth);
         }
@@ -109,7 +109,7 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
             showArrows : false
         });
         // The scrollbar space
-        if (this.zone !== "left" && this.zone !== "fixed") {
+        if (this.zone !== "left" && !this._isFixedZone()) {
             var tempWidth = $categoriesDivAdvContainer.width();
             $categoriesDivAdvContainer.width(tempWidth + 20);
         }
@@ -222,6 +222,10 @@ App.widget.filter.FilterDimensionView = Backbone.View.extend({
             this._renderCategories();
         }
         return false;
+    },
+
+    _isFixedZone : function() {
+        return this.zone === "fixed" || this.zone === "axisy";
     }
 
 });

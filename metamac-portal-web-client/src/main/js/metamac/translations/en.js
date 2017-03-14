@@ -12,6 +12,7 @@ I18n.translations.en = {
     filter : {
         button : {
             edit : "Change selection",
+            info : "Info",
             table : "Datatable",
             canvasTable : "Datatable",
             column : "Columns chart",
@@ -62,6 +63,11 @@ I18n.translations.en = {
             },
             order : {
                 title : "Sort",
+                info : {
+                    fixed : "",
+                    left : "",
+                    top : ""
+                },
                 canvasTable : {
                     fixed : "Fixed values",
                     left : "Rows",
@@ -69,12 +75,13 @@ I18n.translations.en = {
                 },
                 column : {
                     fixed : "Fixed values",
-                    left : "Horizontal axis",
-                    top : "Columns"
+                    left : "X axis",
+                    top : "Y axis"
                 },
                 line : {
                     fixed : "Fixed values",
-                    left : "Horizontal axis",
+                    left : "X axis",
+                    axisy : "Y axis",
                     top : "Lines"
                 },
                 map : {

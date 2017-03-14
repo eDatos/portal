@@ -13,11 +13,12 @@
             data: null
         },
 
+        // Esta fontFamily debe ser siempre equivalente a @istacFontFamilySansSerifFamily
         _defaultMapOptions : {
             chart : {
                 className : 'map',
                 style : {
-                    fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif',
+                    fontFamily: 'Arial, Helvetica, sans-serif',
                     fontSize: '12px'
                 },
                 animation: false,

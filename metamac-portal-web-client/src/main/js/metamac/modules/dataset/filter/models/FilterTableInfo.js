@@ -39,12 +39,12 @@
         },
 
         _initializeTableInfo : function () {
-            var fixedPermutations = {};
-            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
+            var fixedPermutations = {};            
+            var fixedDimensions = this.filterDimensions.getAllFixedDimensionsCopy();
 
-            fixedDimensions.each(function (dimension) {
-                var selectedModels = dimension.get('representations').where({selected : true});
-                fixedPermutations[dimension.id] = selectedModels[0].id; // Fixed dimensions has limit 1
+            fixedDimensions.forEach(function (dimension) {
+                var drawableModels = dimension.get('representations').where({drawable : true});
+                fixedPermutations[dimension.id] = drawableModels[0].id; // Fixed dimensions has limit 1
             });
 
             this.top = this._initializeTableInfoForDimensions(this.filterDimensions.dimensionsAtZone('top'));
@@ -63,7 +63,7 @@
 
                 dimensions.each(function (dimension) {
                     result.ids.push(dimension.id);
-                    var representations = dimension.get('representations').where({selected : true});
+                    var representations = dimension.get('representations').where({drawable : true});
 
                     if (dimension.get('type') === "TIME_DIMENSION") {
                         var group = _.groupBy(representations, function (representation) {
@@ -100,7 +100,7 @@
 
         _initializeLeftHeaderValues : function () {
             var headerValuesGroupByDimension = this.filterDimensions.zones.get('left').get('dimensions').map(function (dimension) {
-                var selectedRepresentations = dimension.get('representations').where({selected : true});
+                var selectedRepresentations = dimension.get('representations').where({drawable : true});
                 return _.invoke(selectedRepresentations, 'pick', 'visibleLabel', 'level');
             });
 

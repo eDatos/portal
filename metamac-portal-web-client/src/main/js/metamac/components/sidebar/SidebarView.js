@@ -9,6 +9,8 @@
 
         className : "sidebar-container",
 
+        menuWidth : 50, // sidebar.less, @sidebarMenuWidth
+
         initialize : function (options) {
             this.sideViews = options.sideViews;
             this.contentView = options.contentView;
@@ -30,12 +32,23 @@
         _bindEvents : function () {
             this.listenTo(this.state, "change:currentSideView", this._onChangeCurrentSideView);
             this.listenTo(this.state, "change:width", this._updateSidebar);
-            this.listenTo(this.state, "change:visible", this._updateSidebar);
+            this.listenTo(this.state, "change:visible", this._updateVisibility);
+
+            this.listenTo(this.optionsModel, "change:filter", this._onToggleFilter);
+
             this.delegateEvents();
         },
 
         _unbindEvents : function () {
             this.stopListening();
+        },
+
+        _onToggleFilter : function() {
+            if (this.optionsModel.get('filter')) {
+                this.state.set("currentSideView", "filterSidebar");
+            } else {
+                this.state.set("currentSideView", undefined);
+            }
         },
 
         _onClickMenuItem : function (e) {
@@ -45,17 +58,26 @@
 
             this.state.toggleSideView(sideViewId);
         },
+        
+        _updateVisibility : function() {
+            this._updateSidebar();
+            this.optionsModel.set('filter', this.state.get('visible'));
+        },
 
         _updateSidebar : function () {
             var width = this.state.get('width');
-            var menuWidth = this.$menu.width();
-            if (this.state.get('visible')) {
+            var menuWidth = this.optionsModel.get('menu') ? this.menuWidth : 0;
+            if (this.state.get('visible')) {                
                 this.$sidebar.css({width : width, left : menuWidth});
                 this.$content.css('padding-left', menuWidth + width);
             } else {
                 this.$sidebar.css({width : width, left : -width});
                 this.$content.css('padding-left', menuWidth);
             }
+            
+            this.$sidebar.toggleClass('without-menu', !this.optionsModel.get('menu'));
+            this.$content.toggleClass('without-menu', !this.optionsModel.get('menu'));
+
             this.updateSidebarHeight();
         },
         updateSidebarHeight : function () {
@@ -113,7 +135,7 @@
                 currentView.render();
                 this.$el.toggleClass("sidebar-slideRight", true);
                 this.state.set('visible', true);
-                this.$("li[data-view-id='" + currentSideViewId + "']").addClass("active");
+                this.$("li[data-view-id='" + currentSideViewId + "']").addClass("active");                
             } else {
                 this.state.set('visible', false);
             }
@@ -126,14 +148,17 @@
                 }
                 this.$("li[data-view-id='" + previousViewId + "']").removeClass("active");
             }
-
+            
         },
 
         render : function () {
             this._unbindEvents();
             this._bindEvents();
 
-            var context = {};
+            var context = {
+                menu : this.optionsModel.get('menu'),
+                menuClass : this.optionsModel.get('menu') ? '' : 'without-menu'
+            };
             context.menuItems = _.map(this.sideViews, function (view) {
                 return {id : view.id, icon : view.icon, title : view.title};
             });
@@ -155,6 +180,9 @@
             	this.contentView.setElement(this.$content);
             	this.contentView.render();
             }
+
+            this._updateVisibility();
+
             return this;
         },
 

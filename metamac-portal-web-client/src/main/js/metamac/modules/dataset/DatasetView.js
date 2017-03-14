@@ -6,7 +6,9 @@
         template : "dataset/dataset-page",
 
         regions : {
-            content : ".dataset-sidebar-visualization-container"
+            content : ".dataset-sidebar-visualization-container",
+            optionsBar: ".dataset-visualization-options-bar",
+            dimensions: ".dataset-visualization-dimensions"
         },
 
         initialize : function (options) {
@@ -14,7 +16,10 @@
             this.filterDimensions = options.filterDimensions;
             this.metadata = options.metadata;
 
-            this.optionsModel = new App.modules.dataset.OptionsModel({ widget : App.config.widget});
+            this.optionsModel = new App.modules.dataset.OptionsModel({ 
+                widget : App.config.widget, 
+                menu: false
+            });
             this.dataset = new App.dataset.Dataset({metadata : this.metadata, filterDimensions : this.filterDimensions});
 
             this._initializeVisualElements();
@@ -24,7 +29,7 @@
         },
 
         _initializeVisualElements : function () {
-            var visualElements = ["canvasTable", "column", "line"];
+            var visualElements = ["info", "canvasTable", "column", "line"];
             if (_.findWhere(this.metadata.getDimensions(), {type : 'GEOGRAPHIC_DIMENSION'})) {
                 visualElements.push("map");
                 visualElements.push("mapbubble");
@@ -33,9 +38,16 @@
         },
 
         _initializeSidebarView : function () {
-            // sidebar - infoview
-            this.infoView = new App.modules.dataset.DatasetInfoView({
-                dataset : this.dataset
+            // Options bar
+            this.optionsView = new App.modules.dataset.OptionsView({
+                filterDimensions : this.filterDimensions,
+                optionsModel : this.optionsModel,
+                buttons : this.visualElements
+            });
+
+            this.dimensionsView = new App.modules.dataset.DimensionsView({
+                filterDimensions : this.filterDimensions,
+                optionsModel : this.optionsModel
             });
 
             // visualization
@@ -43,11 +55,12 @@
                 dataset : this.dataset,
                 filterDimensions : this.filterDimensions,
                 optionsModel : this.optionsModel,
-                veElements : this.visualElements
+                veElements : this.visualElements,
+                optionsView: this.optionsView
             });
 
             // sidebarView
-            var sideViews = [this.infoView];
+            var sideViews = [];
             if (!this.optionsModel.get('widget')) {
 
                 // sidebar - filter
@@ -83,10 +96,15 @@
             this.listenTo(this.fullScreen, "didEnterFullScreen", this._onDidEnterFullScreen);
             this.listenTo(this.fullScreen, "didExitFullScreen", this._onDidExitFullScreen);
             this.listenTo(this.optionsModel, "change:type", this._onSelectChartType);
+            this.listenTo(this.optionsModel, "change:filter", this._updateDimensionsHeight);            
         },
 
         _unbindEvents : function () {
             this.stopListening();
+        },
+
+        _updateDimensionsHeight : function() {
+            this.content.$el.toggleClass('has-dimensions', this.optionsModel.get('filter'));
         },
 
         serializeData : function () {
@@ -104,7 +122,9 @@
 
         onRender : function () {
             this.content.show(this.sidebarView);
-            this.fullScreen.setContainer(this.content.$el);
+            this.optionsBar.show(this.optionsView);
+            this.dimensions.show(this.dimensionsView);
+            this.fullScreen.setContainer($('.metamac-container'));
             if (this.optionsModel.get('widget')) {
                 this._initializeWidget();
             }
@@ -121,6 +141,7 @@
         showChart : function (options) {
             if (options.fullScreen) {
                 this.fullScreen.enterFullScreen();
+                this.optionsModel.set('fullScreen', options.fullScreen);
             }
 
             this.optionsModel.set('type', options.visualizationType);
@@ -137,9 +158,13 @@
             }
 
             var type = this.optionsModel.get('type');
-            if (type) {
-                this.visualizationView.activeVisualElement(type);
+            if (type) {                
+                this._toggleClassByChartType(type);
+
+                this.optionsModel.set('filter', true);
+                this.visualizationView.activeVisualElement(type);                
                 this.visualizationView.load();
+                this.dimensionsView.render();
 
                 var controllerParams = this.metadata.identifier();
                 controllerParams.visualizationType = type;
@@ -147,13 +172,22 @@
             }
         },
 
+        _toggleClassByChartType : function (type) {
+            var CLASS_PREFFIX = "dataset-visualization-type-";
+            var regex = new RegExp("(^|\\s)" + CLASS_PREFFIX + "\\S+", 'g');
+            this.content.$el.removeClass(function (index, className) {
+                return (className.match(regex) || []).join(' ');
+            });
+            this.content.$el.addClass(CLASS_PREFFIX + type);
+        },
+
         _onDidEnterFullScreen : function () {
             this.visualizationView._didEnterFullScreen();
             this.optionsModel.set('fullScreen', true);
 
             if (this.optionsModel.get('widget')) {
-                this._updateSidebarHeight('');
-            }
+                this._updateSidebarHeight('');                
+            }        
         },
 
         _onDidExitFullScreen : function () {
@@ -161,8 +195,8 @@
             this.optionsModel.set('fullScreen', false);
 
             if (this.optionsModel.get('widget')) {
-                this._updateSidebarHeight($('html').height());
-            }
+                this._updateSidebarHeight($('html').height());        
+            }        
         },
         
         _initializeHighChartsLocale : function() {            
@@ -176,7 +210,7 @@
 
         _initializeWidget : function () {
             this.content.$el.addClass('dataset-widget');
-            this._updateSidebarHeight($('html').height());
+            this._updateSidebarHeight($('html').height());        
         },  
         _updateSidebarHeight : function (height) {
             this.content.$el.find('.sidebar-container').height(height);   

@@ -12,6 +12,7 @@ I18n.translations.pt = {
         filter : {
             button : {
                 edit : "Modificar seleção",
+                info : "Informação",
                 table : "Tabela de dados",
                 canvasTable : "Tabela de dados",
                 column : "Gráfico de colunas",
@@ -62,6 +63,11 @@ I18n.translations.pt = {
                 },
                 order : {
                     title : "Ordem",
+                    info : {
+                        fixed : "",
+                        left : "",
+                        top : ""
+                    },
                     canvasTable : {
                         fixed : "Valores fixos",
                         left : "Linhas",
@@ -69,12 +75,13 @@ I18n.translations.pt = {
                     },
                     column : {
                         fixed : "Valores fixos",
-                        left : "Eixo horizontal",
-                        top : "Colunas"
+                        left : "Eixo X",
+                        top : "Eixo Y"
                     },
                     line : {
                         fixed : "Valores fixos",
-                        left : "Eixo horizontal",
+                        left : "Eixo X",
+                        axisy : "Eixo Y",
                         top : "Linhas"
                     },
                     map : {

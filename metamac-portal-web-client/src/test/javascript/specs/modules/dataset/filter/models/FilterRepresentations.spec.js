@@ -188,4 +188,61 @@ describe('FilterRepresentations', function () {
         });
     });
 
+    describe('getModelsToDraw', function() {
+        it('should calculate properly for drawableLimit = Infinity and selectedLimited = Infinity', function() {
+            var total = filterRepresentations.models.length;
+            var selectedLimit = Infinity;
+            var drawableLimit = Infinity;
+            filterRepresentations.setSelectedLimit(selectedLimit);
+            filterRepresentations.setDrawableLimit(drawableLimit);
+            
+            expect(filterRepresentations._getModelsToDraw().length).to.equal(total);            
+        });
+
+        it('should calculate properly for drawableLimit = Infinity and selectedLimited = Infinity and 3 selected', function() {
+            var total = filterRepresentations.models.length;
+            var nToDraw = 2;
+            var selectedLimit = Infinity;
+            var drawableLimit = Infinity;
+            filterRepresentations.setSelectedLimit(selectedLimit);
+            filterRepresentations.setDrawableLimit(drawableLimit);
+
+            filterRepresentations.invoke('set', {selected : false});
+            r1.set('selected', true);
+            r3.set('selected', true);
+
+            expect(filterRepresentations._getModelsToDraw().length).to.equal(nToDraw);            
+        });
+
+        it('should calculate properly for drawableLimit = 1 and selectedLimited = Infinity', function() {
+            var total = filterRepresentations.models.length;
+            var selectedLimit = Infinity;
+            var drawableLimit = 1;
+            filterRepresentations.setSelectedLimit(selectedLimit);
+            filterRepresentations.setDrawableLimit(drawableLimit);
+
+            expect(filterRepresentations._getModelsToDraw().length).to.equal(1);            
+        });
+
+        it('should calculate properly for drawableLimit = Infinity and selectedLimited = 1', function() {
+            var total = filterRepresentations.models.length;
+            var selectedLimit = 1;
+            var drawableLimit = Infinity;
+            filterRepresentations.setSelectedLimit(selectedLimit);
+            filterRepresentations.setDrawableLimit(drawableLimit);
+
+            expect(filterRepresentations._getModelsToDraw().length).to.equal(1);            
+        });
+
+        it('should calculate properly for drawableLimit = 1 and selectedLimited = 1', function() {
+            var total = filterRepresentations.models.length;
+            var selectedLimit = 1;
+            var drawableLimit = 1;
+            filterRepresentations.setSelectedLimit(selectedLimit);
+            filterRepresentations.setDrawableLimit(drawableLimit);
+
+            expect(filterRepresentations._getModelsToDraw().length).to.equal(1);             
+        });
+    });
+
 });

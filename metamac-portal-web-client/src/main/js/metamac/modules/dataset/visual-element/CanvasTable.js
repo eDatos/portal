@@ -66,8 +66,17 @@
         },
 
         updatingDimensionPositions : function () {
+            this._applyVisualizationRestrictions();
+            
             this.filterDimensions.zones.get('left').unset('fixedSize');
             this.filterDimensions.zones.get('top').unset('fixedSize');
+            this.filterDimensions.zones.get('fixed').set('fixedSize', 0);
+        },
+        
+        _applyVisualizationRestrictions : function() {
+            this._moveAllDimensionsToZone('left');
+
+            this._forceMeasureDimensionInZone('top');
         },
 
         updateTitle : function () {

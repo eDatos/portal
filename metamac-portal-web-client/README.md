@@ -35,4 +35,9 @@ La aplicación de conecta a diferentes apis para consumir los datos. Las peticio
 
 [http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/v1.0/codelists/ISTAC/CL_GEO_GRANULARITIES/01.001/codes?_type=json]()
 
-	
+# Fuentes
+Las fuentes generadas, por su poca variabilidad, se están commiteando.
+
+Para generar las fuentes se hace uso de la librería grunt-webfont.
+
+Dada la complejidad y errores que pueden surgir de intentar hacerla funcionar en windows, se añade en /etc/docker/metamac-portal-web-client/grunt-webfont, un docker que hace de wrapper a la instalación de la librería y dependencias dentro del contendor

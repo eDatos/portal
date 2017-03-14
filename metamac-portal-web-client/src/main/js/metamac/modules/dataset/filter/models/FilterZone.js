@@ -10,12 +10,13 @@
             fixedSize : undefined,
             type : undefined,
             preferredType : undefined,
-            selectedLimit : Infinity
+            selectedLimit : Infinity,
+            drawableLimit : Infinity
         },
 
         initialize : function () {
             this.set('dimensions', new Backbone.Collection());
-            this.on('change:selectedLimit', this._onChangeSelectedLimit, this);
+            this.on('change:selectedLimit change:drawableLimit', this._onChangeLimitForDimension, this);            
         },
 
         remove : function (dimension) {
@@ -32,12 +33,17 @@
             dimension.set('zone', this);
         },
 
-        _onChangeSelectedLimit : function () {
-            this.get('dimensions').each(this._updateLimitForDimension, this)
+        _onChangeLimitForDimension : function () {
+            this.get('dimensions').each(this._updateLimitForDimension, this);
         },
 
         _updateLimitForDimension : function (dimension) {
             dimension.get('representations').setSelectedLimit(this.get('selectedLimit'));
+            dimension.get('representations').setDrawableLimit(this.get('drawableLimit'));
+        },
+
+        isFixed : function() {
+            return this.get('drawableLimit') === 1;
         },
 
         leftoverDimensions : function () {

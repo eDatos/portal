@@ -22,7 +22,7 @@
 
         _bindEvents : function () {
             this.listenTo(this, 'change:open', this._onChangeOpen);
-            this.listenTo(this, 'change:selected change:zone change:visibleLabelType', this._invalidateTableInfo);
+            this.listenTo(this, 'change:drawable change:zone change:visibleLabelType', this._invalidateTableInfo);
             this.listenTo(this, 'reverse', this._invalidateTableInfo);
         },
 
@@ -32,6 +32,24 @@
 
         dimensionsAtZone : function (zoneId) {
             return this.zones.get(zoneId).get('dimensions');
+        },
+
+        isFixedZone : function(zoneId) {
+            return this.zones.get(zoneId).isFixed();
+        },
+
+        getAllFixedDimensionsCopy : function () {
+            var fixedDimensions = [];
+            this.zones.getFixedZones().forEach(function(zone) {
+                fixedDimensions = fixedDimensions.concat(_.clone(zone.get('dimensions').models));
+            });
+            return fixedDimensions;
+        },
+
+        getAllFixedDimensionsCopyByType : function(type) {
+            return _(this.getAllFixedDimensionsCopy()).filter(function(dimension) { 
+                return dimension.get("type") == type; 
+            });
         },
 
         getTableInfo : function () {
@@ -60,6 +78,7 @@
         _zoneIdFromPosition : function (position) {
             if (position < 20) return 'left';
             if (position < 40) return 'top';
+            if (position >= 60 && position < 80) return 'axisy';
             return 'fixed';
         },
 
@@ -96,7 +115,7 @@
 
         exportJSON : function () {
             var exportResult = {};
-            var zoneOffsets = {left : 0, top : 20, fixed : 40};
+            var zoneOffsets = {left : 0, top : 20, fixed : 40, axisy : 60};
             this.each(function (dimension) {
                 var selectedCategories = dimension.get('representations').where({selected : true});
                 var selectedCategoriesIds = _.pluck(selectedCategories, 'id');

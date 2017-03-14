@@ -135,7 +135,7 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _bindEvents : function () {
-            this.listenTo(this.filterDimensions, "change:selected change:zone change:visibleLabelType reverse", _.debounce(this.update, 20));
+            this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", _.debounce(this.update, 20));
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {
@@ -150,9 +150,21 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         updatingDimensionPositions : function () {
+            this._applyVisualizationRestrictions();
+
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 1);
+            this.filterDimensions.zones.get('axisy').set('fixedSize', 1);
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');
         },
+
+        _applyVisualizationRestrictions : function() {
+            this._moveAllDimensionsToZone('top');
+
+            this._forceMeasureDimensionInZone('axisy');
+            this._forceTimeDimensionInZone('left');
+            this._forceGeographicDimensionInZone('fixed');            
+        }, 
 
         tooltipFormatter : function () {
             return '<strong>' + this.series.name + ', ' + this.x + '</strong>:<br/>' + this.point.name;
@@ -181,7 +193,7 @@ App.namespace("App.VisualElement.LineChart");
                 .appendTo(this.$el);
 
             this.$masterContainer = $('<div id="master-container">')
-                .css({ position : 'absolute', top : detailHeight + this.$title.height(), height : this.config.masterHeight, width : '100%' })
+                .css({ position : 'absolute', bottom : 0, height : this.config.masterHeight, width : '100%' })
                 .appendTo(this.$el);
         },
 
@@ -219,7 +231,7 @@ App.namespace("App.VisualElement.LineChart");
         _updateSize : function () {
             var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height();
             this.$detailContainer.css({height : detailHeight});
-            this.$masterContainer.css({ top : detailHeight + this.$title.height()});
+            //this.$masterContainer.css({ top : detailHeight + this.$title.height()});
 
             this.detailChart.setSize(this.$detailContainer.width(), this.$detailContainer.height(), false);
             this.masterChart.setSize(this.$masterContainer.width(), this.$masterContainer.height(), false);
@@ -278,8 +290,8 @@ App.namespace("App.VisualElement.LineChart");
 
             var horizontalDimension = this.filterDimensions.dimensionsAtZone('left').at(0);
             var columnsDimension = this.filterDimensions.dimensionsAtZone('top').at(0);
-            var horizontalDimensionSelectedCategories = horizontalDimension.get('representations').where({selected : true});
-            var columnsDimensionSelectedCategories = columnsDimension.get('representations').where({selected : true});
+            var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
+            var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 
             var listSeries = [];
             _.each(columnsDimensionSelectedCategories, function (columnCategory) {

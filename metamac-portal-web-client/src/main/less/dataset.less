@@ -92,6 +92,13 @@
 }
 
 .metadata-group {
+    padding: 5px;
+    height: 100%;
+
+    .dataset-visualization-visual-element & {
+        overflow-y: scroll;
+    }
+
     h3 {
         background: #ddd;
         .border-radius(4px 4px 4px 4px);
@@ -139,9 +146,6 @@
     background-color: @s4yDarkOrange;
 }
 
-@datasetVisualizationOptionsBarHeight: 50px;
-@optionsBarColor: @istacGrey;
-
 .dataset-visualization {
     position: relative;
     height: 100%;
@@ -149,12 +153,8 @@
 
     .dataset-visualization-visual-element {
         height: 100%;
-        padding-bottom: @datasetVisualizationOptionsBarHeight;
         .box-sizing(border-box);
-        border-top: 1px solid #E5E5E5;
-        border-right: 1px solid #E5E5E5;
-        .border-radius(0 6px 6px 0);
-
+        border: 1px solid @istacGreyLight;
         background: white;
 
         .dataset-widget & {
@@ -169,21 +169,49 @@
             }
         }
     }
+}
+.dataset-visualization-container {
+    position: relative;
+    height: 100%;
+    padding-bottom: @datasetVisualizationOptionsBarHeight;
+    box-sizing: border-box;
+    .clearfix;
 
-    .dataset-visualization-options-bar {
-    	.options-bar;
-    	.border-radius(0 0 6px 0);
-    	position: absolute;
-    	bottom: 0;
-    	
-    	.btn {
-    	    .options-bar-btn;    	    
-    	}
+    .dataset-visualization-dimensions {
+        background: white;
+        position: absolute;
+        width: 100%;
+        .order-dimensions;
     }
+    
+    .dataset-visualization-options-bar {
+        .options-bar;
+        .border-radius(0 0 6px 6px);        
+        .btn {
+            .options-bar-btn;
 
+            &.visual-element-options-fs {
+                .options-bar-btn-side-right;  
+                &.active {
+                    .options-bar-btn-side-active;
+                }
+            }
+            &.dataset-options-filter {
+                .options-bar-btn-side-left;    
+                &.active {
+                    .options-bar-btn-side-active;
+                }
+            }    	    
+        }    
+    }
 }
 
 // Options bar
+.dataset-options {
+    .pull-left;
+    padding-right: 5px;
+}
+
 .visual-element-options {
     .pull-right;
 
@@ -195,47 +223,73 @@
 .change-visual-element {
     .pull-left;
     max-width: 400px;
+    font-size: @lIconHeight;
 }
 
 
 .dataset-sidebar-visualization-container {
-    margin-bottom: 20px;
-
     &.dataset-widget {
         margin-bottom: 0;
 
         .sidebar-container {
             display: block;
         }
-    }    
-}
+    }
 
-.dataset-sidebar-visualization-container.full-screen {
-    height: 100%;
-    width: 100%;
-
-    .sidebar-container {
-        height: 100%;
+    &.has-dimensions {
+        &.dataset-visualization-type-canvasTable {
+            .dataset-visualization-visual-element {
+                padding-top: @dimensionsBarTypeTable;
+            }
+        }
+        &.dataset-visualization-type-line {
+            .dataset-visualization-visual-element {
+                padding-top: @dimensionsBarTypeLine;
+            }
+        }
+        .dataset-visualization-visual-element {
+            padding-top: @dimensionsBarTypeDefault;            
+        }
     }
 }
 
+.metamac-container.full-screen {        
+    height: 100%;
+    width: 100%;
+    .dataset-sidebar-visualization-container {
+        height: 100%;
+        .sidebar-container {
+            height: 100%;         
+        }
+    }    
+}
+
 .dataset-options-type-icon {
-    height: 28px;
-    width: 37px;
+    height: @mIconHeight;
+    width: @mIconWidth;
     padding-left: 0;
-    font-size: 27px;
+    font-size: @mIconHeight;
     
     .btn-with-label & {
-    	font-size: 18px;
+    	font-size: @mIconHeight - 5px;
     	padding-top: 2px;
     	padding-bottom: 2px;
     }
 
     &:before {
-        color: #1e1e1e;
+        color: @istacGreyDark;
         padding: 2px 6px;
+    }    
+    
+    .active &:before,
+    &:hover:before {
+        color: @istacBlueDarkest;
     }
+}
 
+.dataset-options-type-info {
+    .dataset-options-type-icon;
+    .icon-info;
 }
 
 .dataset-options-type-canvasTable {
@@ -266,6 +320,11 @@
 .dataset-options-full-screen {
     .dataset-options-type-icon;
     .icon-full-screen;
+}
+
+.options-filter {
+    .dataset-options-type-icon;
+    .icon-cogwheel;
 }
 
 .dataset-options-share {
@@ -316,10 +375,10 @@
 
 
 .dataset-share-icon {
-    height: 28px;
-    width: 37px;
+    height: @mIconHeight;
+    width: @mIconWidth;
     padding-left: 0;
-    font-size: 27px;
+    font-size: @mIconHeight;
     
     &:before {
         color: #1e1e1e;

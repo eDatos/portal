@@ -225,7 +225,9 @@ describe("Filter Options", function () {
         expect(filterOptions._getZoneFromPosition(39)).to.deep.equal("top");
         expect(filterOptions._getZoneFromPosition(40)).to.deep.equal("fixed");
         expect(filterOptions._getZoneFromPosition(59)).to.deep.equal("fixed");
-        expect(filterOptions._getZoneFromPosition(60)).to.be.undefined;
+        expect(filterOptions._getZoneFromPosition(60)).to.deep.equal("axisy");
+        expect(filterOptions._getZoneFromPosition(79)).to.deep.equal("axisy");
+        expect(filterOptions._getZoneFromPosition(80)).to.be.undefined;
     });
 
     it("removeDimensionCurrentZone", function () {

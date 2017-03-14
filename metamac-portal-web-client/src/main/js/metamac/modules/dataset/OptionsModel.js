@@ -9,7 +9,8 @@
             visualize : false,
             options : true,
             widget : false,
-            widgetButton : true
+            widgetButton : true,
+            menu: true
         }
     });
     

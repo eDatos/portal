@@ -9,6 +9,7 @@
             visible : true,
             open : true,
             selected : true,
+            drawable : true,
             childrenSelected : false,
             level : 0,
             matchIndexBegin : undefined,

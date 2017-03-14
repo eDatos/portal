@@ -63,6 +63,7 @@
             var visualizationSupertype = '';
             switch (this.visualizationType) {
                 case '': // On selection mode
+                case 'info':
                 case 'canvasTable':
                     visualizationSupertype = 'data';
                     break;

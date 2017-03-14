@@ -19,12 +19,14 @@
         toggleSideView : function (viewId) {
             if (_.contains(this.sideViewsIds, viewId)) {
                 if (this.get("currentSideView") === viewId) {
-                    this.set("currentSideView", undefined);
+                    this.set("currentSideView", undefined);                    
                 } else {
                     this.set("currentSideView", viewId);
                 }
+            } else {
+                this.set("currentSideView", undefined);
             }
-        },
+        },        
 
         validate : function (attrs, options) {
             if (attrs.width < attrs.minWidth) {

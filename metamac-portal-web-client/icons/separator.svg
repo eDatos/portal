@@ -1,52 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   id="Layer_1"
-   x="0px"
-   y="0px"
-   width="48px"
-   height="48px"
-   viewBox="0 0 48 48"
-   enable-background="new 0 0 48 48"
-   xml:space="preserve"
-   inkscape:version="0.48.2 r9819"
-   sodipodi:docname="separator.svg"><metadata
-   id="metadata9"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-   id="defs7" /><sodipodi:namedview
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1"
-   objecttolerance="10"
-   gridtolerance="10"
-   guidetolerance="10"
-   inkscape:pageopacity="0"
-   inkscape:pageshadow="2"
-   inkscape:window-width="907"
-   inkscape:window-height="560"
-   id="namedview5"
-   showgrid="false"
-   inkscape:zoom="4.9166667"
-   inkscape:cx="-1.7288136"
-   inkscape:cy="24"
-   inkscape:window-x="0"
-   inkscape:window-y="0"
-   inkscape:window-maximized="0"
-   inkscape:current-layer="Layer_1" />
-
-<g
-   transform="matrix(0,2.1044639,-2.1044639,0,1994.0191,-834.55392)"
-   id="more_1_"><path
-     inkscape:connector-curvature="0"
-     id="path1068"
-     d="m 402.874,936.114 c 0,1.593 -1.292,2.886 -2.885,2.886 -1.594,0 -2.886,-1.293 -2.886,-2.886 0,-1.593 1.292,-2.886 2.886,-2.886 1.593,0.001 2.885,1.293 2.885,2.886 z m 5.094,-2.885 c -1.593,0 -2.885,1.293 -2.885,2.886 0,1.593 1.292,2.886 2.885,2.886 1.594,0 2.886,-1.293 2.886,-2.886 0,-1.593 -1.292,-2.886 -2.886,-2.886 z m 7.979,0 c -1.593,0 -2.886,1.293 -2.886,2.886 0,1.593 1.293,2.886 2.886,2.886 1.594,0 2.886,-1.293 2.886,-2.886 0,-1.593 -1.292,-2.886 -2.886,-2.886 z" /></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="410pt" height="410pt" viewBox="0 0 410 410" version="1.1">
+<g id="surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 205.007812 113.433594 C 176.375 113.433594 153.128906 90.207031 153.128906 61.574219 C 153.128906 32.917969 176.375 9.695312 205.007812 9.695312 C 233.644531 9.695312 256.886719 32.917969 256.886719 61.574219 C 256.867188 90.207031 233.644531 113.433594 205.007812 113.433594 Z M 256.867188 205 C 256.867188 176.363281 233.625 153.140625 204.992188 153.140625 C 176.355469 153.140625 153.113281 176.363281 153.113281 205 C 153.113281 233.652344 176.355469 256.878906 204.992188 256.878906 C 233.625 256.878906 256.867188 233.652344 256.867188 205 Z M 256.867188 348.425781 C 256.867188 319.792969 233.625 296.550781 204.992188 296.550781 C 176.355469 296.550781 153.113281 319.792969 153.113281 348.425781 C 153.113281 377.082031 176.355469 400.304688 204.992188 400.304688 C 233.625 400.304688 256.867188 377.082031 256.867188 348.425781 Z M 256.867188 348.425781 "/>
+</g>
+</svg>

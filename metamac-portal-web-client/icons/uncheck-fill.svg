@@ -1,14 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="48px" height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
-<g>
-	<g>
-		<g>
-			<path d="M37.396,0H10.685C4.795,0,0,4.792,0,10.685v26.711c0,5.895,4.795,10.687,10.685,10.687h26.711
-				c5.892,0,10.687-4.792,10.687-10.687V10.685C48.083,4.792,43.288,0,37.396,0"/>
-		</g>
-	</g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="410pt" height="410pt" viewBox="0 0 410 410" version="1.1">
+<g id="surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 319.425781 0 L 91.269531 0 C 40.957031 0 0 40.933594 0 91.269531 L 0 319.425781 C 0 369.777344 40.957031 410.707031 91.269531 410.707031 L 319.425781 410.707031 C 369.75 410.707031 410.707031 369.777344 410.707031 319.425781 L 410.707031 91.269531 C 410.707031 40.933594 369.75 0 319.425781 0 "/>
 </g>
 </svg>

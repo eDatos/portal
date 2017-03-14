@@ -4,11 +4,13 @@
 @istacBlueDarkest: #003366;
 @istacYellow: #EBCC5C;
 
-@istacGrey: #EBEBEB;
-@istacGreyLight: #F2F2F2;
-@istacGreyDark: #CCCCCC;
+@istacGrey: #ACACAC;
+@istacGreyLight: #EBEBEB;
+@istacGreyDark: #808080;
 
-@istacFont: 11px Arial, Helvetica, sans-serif;
+@istacFontSansSerifFamily: Arial, Helvetica, sans-serif;
+@istacFontSansSerif: 11px @istacFontSansSerifFamily;
+@istacFontSerifFamily: Tahoma, geneva, arial, sans-serif;
 
 // S4y colors
 // -------------------------
@@ -45,6 +47,21 @@
 // -------------------------
 @iconSpritePath: "../../images/glyphicons-halflings.png";
 @iconWhiteSpritePath: "../../images/glyphicons-halflings-white.png";
+
+// Options Bar
+@lIconHeight: 28px;
+@mIconHeight: 18px;
+@mIconWidth: 20px;
+@datasetVisualizationOptionsBarHeight: 40px;
+@optionsBarColor: @istacGreyLight;
+
+// Dimensions Bar
+@dimensionNonFixedHeight: 23px;
+@dimensionFixedHeight: 50px;
+
+@dimensionsBarTypeTable: 2 * @dimensionNonFixedHeight;
+@dimensionsBarTypeLine: 2 * @dimensionNonFixedHeight + 2 * @dimensionFixedHeight;
+@dimensionsBarTypeDefault: 2 * @dimensionNonFixedHeight + @dimensionFixedHeight;
 
 // Navbar
 // -------------------------

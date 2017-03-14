@@ -11,10 +11,11 @@
             this.optionsModel = options.optionsModel;
             this.buttons = options.buttons;
 
-            this.listenTo(this.optionsModel, "change:type", this.render);
+            this._bindEvents();
         },
 
         events : {
+            "click .dataset-options-filter" : "clickFilter",
             "click .change-visual-element button" : "changeType",
             "click .visual-element-options-edit" : "clickFilterLoader",
             "click .visual-element-options-fs" : "clickFullScreen",
@@ -24,6 +25,18 @@
         },
 
         destroy : function () {
+            this._unbindEvents();
+        },
+
+        _bindEvents : function() {
+            this.listenTo(this.optionsModel, "change:type", this.render);
+            this.listenTo(this.optionsModel, "change:fullScreen", this.updateFullscreenButton);
+            this.listenTo(this.optionsModel, "change:filter", this.updateFilterButton);
+
+            this.delegateEvents();
+        },
+
+        _unbindEvents : function() {
             this.stopListening();
         },
 
@@ -44,7 +57,20 @@
             return this.optionsModel.get('options');
         },
 
+        updateFullscreenButton : function() {
+            var $fullScreenButton = this.$el.find('.visual-element-options-fs');
+            $fullScreenButton.toggleClass('active', this.fullScreenIsAllowed() && this.isFullScreen());
+        },
+
+        updateFilterButton : function() {
+            var $filterButton = this.$el.find('.dataset-options-filter');
+            $filterButton.toggleClass('active', this.isFilter());
+        },
+
         render : function () {
+            this._unbindEvents();        
+            this._bindEvents();
+            
             var activeType = this.optionsModel.get('type');
 
             var fullScreenVisible = this.fullScreenIsAllowed();
@@ -85,7 +111,11 @@
                 };
                 this.$el.html(this.template(context));
             }
+            return this;
+        },
 
+        clickFilter : function(e) {
+            this.optionsModel.set('filter', !this.optionsModel.get('filter'));
         },
 
         changeType : function (e) {
@@ -107,9 +137,11 @@
         clickFullScreen : function (e) {
             if (this.isFullScreen()) {
                 this.trigger('exitFullScreen');
+                this.$el.find('.visual-element-options-fs').removeClass("active");
             } else {
                 if (this.fullScreenIsAllowed) {
                     this.trigger('enterFullScreen');
+                    this.$el.find('.visual-element-options-fs').addClass("active");
                 }
             }
         },

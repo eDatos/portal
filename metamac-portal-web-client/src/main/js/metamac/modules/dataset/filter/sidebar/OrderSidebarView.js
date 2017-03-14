@@ -103,8 +103,8 @@
             var dimensionsForZone = dimensionCollection.map(function (dimensionModel) {
                 var dimension = dimensionModel.toJSON();
                 dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;
-                if (zoneId === "fixed") {
-                    dimension.selectedCategory = dimensionModel.get('representations').findWhere({selected : true}).toJSON();
+                if (dimensionModel.isFixedDimension()) {
+                    dimension.selectedCategory = dimensionModel.get('representations').findWhere({drawable : true}).toJSON();
                 }
                 return dimension;
             });

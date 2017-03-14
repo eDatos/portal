@@ -171,6 +171,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
+  buffer += "\r\n<div class=\"sidebar-menu\">\r\n    <ul>\r\n        ";
+  stack1 = helpers.each.call(depth0, depth0.menuItems, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n    </ul>\r\n</div>\r\n";
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = "", stack1;
   buffer += "\r\n        <li class=\"sidebar-menu-item\" data-view-id=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
@@ -187,10 +196,17 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"sidebar-menu\">\r\n    <ul>\r\n        ";
-  stack1 = helpers.each.call(depth0, depth0.menuItems, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.menu, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </ul>\r\n</div>\r\n\r\n<div class=\"sidebar-sidebar\">\r\n    <div class=\"sidebar-sidebar-content\"></div>\r\n    <div class=\"sidebar-splitter\">\r\n        <i class=\"icon-separator\"></i>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"sidebar-content\">\r\n\r\n</div>";
+  buffer += "\r\n\r\n<div class=\"sidebar-sidebar ";
+  if (stack1 = helpers.menuClass) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.menuClass; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\r\n    <div class=\"sidebar-sidebar-content\"></div>\r\n    <div class=\"sidebar-splitter\">\r\n        <i class=\"icon-separator\"></i>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"sidebar-content ";
+  if (stack1 = helpers.menuClass) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.menuClass; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\r\n\r\n</div>";
   return buffer;
   });
 
@@ -231,6 +247,134 @@ function program6(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n</div>\r\n\r\n<div class=\"modal hide\" id=\"shareDatasetModel\">\r\n    <div class=\"modal-header\">\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\r\n        <h3>Compartir</h3>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n    </div>\r\n</div>";
   return buffer;
+  });
+
+this["Handlebars"]["templates"]["dataset/dataset-dimensions"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var stack1, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\r\n    <div class=\"order-sidebar-zone ";
+  stack1 = helpers['if'].call(depth0, depth0.draggable, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " ";
+  stack1 = helpers['if'].call(depth0, depth0.isFixed, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\" data-zone=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\r\n        \r\n        <h2><i class=\"";
+  if (stack1 = helpers.icon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.icon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"></i> ";
+  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</h2>       \r\n\r\n        <div class=\"order-sidebar-dimensions\">\r\n            ";
+  stack1 = helpers.each.call(depth0, depth0.dimensions, {hash:{},inverse:self.noop,fn:self.programWithDepth(6, program6, data, depth0),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n        </div>\r\n    </div>\r\n";
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  
+  return "draggable";
+  }
+
+function program4(depth0,data) {
+  
+  
+  return "fixed";
+  }
+
+function program6(depth0,data,depth1) {
+  
+  var buffer = "", stack1;
+  buffer += "\r\n                <a href=\"#\" class=\"order-sidebar-dimension ";
+  stack1 = helpers['if'].call(depth0, depth1.draggable, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\" ";
+  stack1 = helpers['if'].call(depth0, depth1.draggable, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " data-dimension-id=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" \r\n                title=\"";
+  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1);
+  stack1 = helpers['if'].call(depth0, depth0.selectedCategory, {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\">\r\n                    ";
+  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\r\n                    ";
+  stack1 = helpers['if'].call(depth0, depth0.selectedCategory, {hash:{},inverse:self.noop,fn:self.programWithDepth(11, program11, data, depth0),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n                </a>\r\n            ";
+  return buffer;
+  }
+function program7(depth0,data) {
+  
+  
+  return "draggable=\"true\"";
+  }
+
+function program9(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += " - "
+    + escapeExpression(((stack1 = ((stack1 = depth0.selectedCategory),stack1 == null || stack1 === false ? stack1 : stack1.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " ";
+  return buffer;
+  }
+
+function program11(depth0,data,depth1) {
+  
+  var buffer = "", stack1, stack2;
+  buffer += "                        \r\n                        <select class=\"fixed-dimension-select-category\" data-dimension-id=\""
+    + escapeExpression(((stack1 = depth1.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\r\n                            ";
+  stack2 = helpers.each.call(depth0, depth0.representationsList, {hash:{},inverse:self.noop,fn:self.programWithDepth(12, program12, data, depth0),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n                        </select>\r\n                    ";
+  return buffer;
+  }
+function program12(depth0,data,depth1) {
+  
+  var buffer = "", stack1, stack2, options;
+  buffer += "\r\n                                <option value=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" ";
+  options = {hash:{},inverse:self.noop,fn:self.program(13, program13, data),data:data};
+  stack2 = ((stack1 = helpers.compare || depth1.compare),stack1 ? stack1.call(depth0, ((stack1 = depth1.selectedCategory),stack1 == null || stack1 === false ? stack1 : stack1.id), "==", depth0.id, options) : helperMissing.call(depth0, "compare", ((stack1 = depth1.selectedCategory),stack1 == null || stack1 === false ? stack1 : stack1.id), "==", depth0.id, options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += ">";
+  if (stack2 = helpers.label) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.label; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "</option>\r\n                            ";
+  return buffer;
+  }
+function program13(depth0,data) {
+  
+  
+  return "selected";
+  }
+
+  stack1 = helpers.each.call(depth0, depth0.zones, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { return stack1; }
+  else { return ''; }
   });
 
 this["Handlebars"]["templates"]["dataset/dataset-download"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -573,14 +717,26 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
+  var buffer = "", stack1, options;
+  buffer += "\r\n<div class=\"dataset-options\">\r\n    <button class=\"btn dataset-options-filter "
+    + escapeExpression(((stack1 = ((stack1 = depth0.filter),stack1 == null || stack1 === false ? stack1 : stack1.btnClass)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" title='";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.sidebar.filter.title", options) : helperMissing.call(depth0, "message", "filter.sidebar.filter.title", options)))
+    + "'><i class=\"options-filter\"></i></button>\r\n</div>\r\n";
+  return buffer;
+  }
+
+function program7(depth0,data) {
+  
   var buffer = "", stack1;
   buffer += "\r\n<div class=\"change-visual-element\">\r\n    <div class=\"btn-group\" data-toggle=\"buttons-radio\">\r\n        ";
-  stack1 = helpers.each.call(depth0, depth0.veTypeButton, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  stack1 = helpers.each.call(depth0, depth0.veTypeButton, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n    </div>\r\n</div>\r\n";
   return buffer;
   }
-function program6(depth0,data) {
+function program8(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\r\n        <button class=\"btn ";
@@ -603,7 +759,7 @@ function program6(depth0,data) {
   return buffer;
   }
 
-function program8(depth0,data) {
+function program10(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<button class=\"btn btn-with-label selection-visualize-selection\" title='";
@@ -629,10 +785,13 @@ function program8(depth0,data) {
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.fullScreen),stack1 == null || stack1 === false ? stack1 : stack1.visible), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n</div>\r\n\r\n";
-  stack2 = helpers.unless.call(depth0, depth0.widget, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  stack2 = helpers.unless.call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
+  stack2 = helpers.unless.call(depth0, depth0.widget, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n\r\n";
+  stack2 = helpers['if'].call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n\r\n\r\n\r\n";
   return buffer;
@@ -689,7 +848,7 @@ function program6(depth0,data) {
 
   stack1 = helpers['if'].call(depth0, depth0.showHeader, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n<div class=\"dataset-sidebar-visualization-container\">\r\n\r\n</div>\r\n\r\n";
+  buffer += "\r\n<div class=\"dataset-visualization-container\">\r\n    <div class=\"dataset-sidebar-visualization-container\">\r\n\r\n    </div>\r\n    <div class=\"dataset-visualization-options-bar\">\r\n\r\n    </div>\r\n</div>\r\n";
   stack1 = helpers.unless.call(depth0, depth0.isWidget, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
@@ -718,7 +877,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"dataset-visualization\">\r\n    <div class=\"dataset-visualization-visual-element\">\r\n\r\n    </div>\r\n    <div class=\"dataset-visualization-options-bar\">\r\n\r\n    </div>\r\n</div>";
+  return "<div class=\"dataset-visualization\">\r\n    <div class=\"dataset-visualization-dimensions\">\r\n\r\n    </div>\r\n    <div class=\"dataset-visualization-visual-element\">\r\n\r\n    </div>\r\n</div>";
   });
 
 this["Handlebars"]["templates"]["dataset/dataset-widget-page"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

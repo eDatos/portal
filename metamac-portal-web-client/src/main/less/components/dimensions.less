@@ -1,0 +1,157 @@
+@dimensionPillWidth: 130px;
+@dimensionTitleWidth: 85px;
+@dimensionHeight: 23px;
+@h2LeftPadding: 8px;
+.order-dimensions {
+    .order-sidebar-zone {
+        h2 {
+            margin: 0;
+            width: @dimensionTitleWidth - @h2LeftPadding;
+            float: left;
+
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 11px;
+
+            border: 1px solid @istacGrey;
+            color: @istacGrey;
+            padding-left: @h2LeftPadding;
+            height: @dimensionHeight;
+            line-height: @dimensionHeight;
+
+            i:before {
+                margin-top: -2px;
+            }
+        }
+
+        .order-sidebar-dimensions {
+            white-space: nowrap;
+            margin-bottom: 1px;
+            margin-left: @dimensionTitleWidth + 1px;
+            height: @dimensionHeight;
+
+            border: 1px solid @istacGrey;
+            color: @istacGrey;
+        }
+
+        &.fixed {
+            h2,
+            .order-sidebar-dimensions {
+                height: @dimensionHeight + 16px;
+            }
+
+            .order-sidebar-dimension.active {
+                .border-radius(10px 10px 0 0);
+            }
+        }
+
+        .order-sidebar-dimension {
+            margin: 2px 2px;
+            padding: 2px;
+
+            /* IE9 bug changed divs with a, so this correct the new style */
+            display: inline-block;
+            width: @dimensionPillWidth;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            text-align: center;
+            .border-radius(10px);        
+
+            background-color: @istacGrey;
+            color: white;
+
+            &.active {
+                background-color: @istacBlueMedium;
+            }
+        
+            border: 1px solid @istacGrey;
+
+            .fixed-dimension-select-category {
+                background: white;
+                color: @istacGrey;
+                margin: 1px -2px -2px -2px;
+                padding: 2px;
+
+                text-overflow: ellipsis;
+                overflow: hidden;
+
+                border: none;
+                display: block;
+                width: @dimensionPillWidth + 4px;
+                font-size: 100%;
+            }
+        }
+    }
+}
+
+.sidebar-sidebar-content {
+   .order-sidebar-zone {
+        background-color: @istacGreyDark;
+        h2 {
+            .sidebar-title;
+            margin: 0;
+            margin-bottom: 3px;
+        }
+
+        .order-sidebar-dimension {
+            padding: 5px;
+            border: 1px solid @istacGrey;
+            background-color: @istacGreyLight;
+
+            margin-bottom: 3px;
+            margin-left: 3px;
+            margin-right: 3px;
+
+            /* IE9 bug changed divs with a, so this correct the new style */
+            display: block;
+        }
+
+        padding-bottom: 30px;
+        margin-bottom: 20px;
+    }
+}
+
+.order-sidebar-zone {    
+    &.fixed {
+        padding-top: 3px;
+    }
+
+    ul {
+        margin: 0;
+        list-style: none;
+    }
+
+    .order-sidebar-dimension {                        
+        margin-bottom: 3px;
+        margin-left: 3px;
+        margin-right: 3px;
+        .user-select(none);
+
+        /* IE9 bug changed divs with a, so this correct the new style */
+        display: block;
+        text-decoration: none;
+        color: black;
+
+        &[draggable='true'] {
+            cursor: move;
+
+            /* Safari bug */
+            -khtml-user-drag: element;
+            -webkit-user-drag: element;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+        }
+
+    }
+}
+
+.order-sidebar-zone.drag-over, .order-sidebar-dimension.drag-over {
+    opacity: 0.8;
+    border: 1px dashed #fff;
+}
+
+.order-sidebar-dimension.drag-over {
+    opacity: 0.8;
+    border: 1px dashed #286996;
+}

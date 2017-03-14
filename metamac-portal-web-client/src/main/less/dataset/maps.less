@@ -50,7 +50,7 @@ svg { overflow: hidden; } // IE FIX
 
 #zoom-container {
     position: absolute;
-    top: 0;
+    top: @dimensionsBarTypeDefault;
     left: 0;
     width: 30px;
     height: 130px;
@@ -123,8 +123,7 @@ svg { overflow: hidden; } // IE FIX
         }
 
         .leyend-item-text {
-            font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
-            font-size: 11px;
+            font: @istacFontSansSerif;
             color: #3E576F;
         }
 
@@ -133,7 +132,7 @@ svg { overflow: hidden; } // IE FIX
 
 #ranges-container {
     position: absolute;
-    bottom: 62px;
+    bottom: 14px;
     right: 8px;
     min-width: 100px;
     height: 45px;
@@ -146,8 +145,7 @@ svg { overflow: hidden; } // IE FIX
         display: inline-block;
         margin-right: 10px;
         vertical-align: middle;
-        font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
-        font-size: 11px;
+        font: @istacFontSansSerif;
         color: #1D4D6E;
     }
 

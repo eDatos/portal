@@ -22,18 +22,18 @@
 
         getFixedPermutation : function () {
             var fixedPermutation = {};
-            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
-            fixedDimensions.each(function (dimension) {
-                var selectedRepresentations = dimension.get('representations').where({selected : true});
+            var self = this;
+            this.filterDimensions.getAllFixedDimensionsCopy().forEach(function (dimension) {
+                var selectedRepresentations = self.getDrawableRepresentations(dimension);
                 fixedPermutation[dimension.id] = selectedRepresentations[0].id;
             });
             return fixedPermutation;
         },
 
         getTitle : function () {
-            var fixedDimensions = this.filterDimensions.dimensionsAtZone('fixed');
-            var fixedLabels = fixedDimensions.map(function (dimension) {
-                var selectedRepresentations = dimension.get('representations').where({selected : true});
+            var self = this;
+            var fixedLabels = this.filterDimensions.getAllFixedDimensionsCopy().map(function (dimension) {
+                var selectedRepresentations = self.getDrawableRepresentations(dimension);
                 return selectedRepresentations[0].get('visibleLabel');
             });
             return fixedLabels.length ? I18n.t("filter.text.for") + ": " + fixedLabels.join(", ") : "";
@@ -108,6 +108,38 @@
         setEl : function (el) {
             this.$el = $(el);
             this.el = this.$el[0];
+        },
+
+        _forceDimensionTypeInZone : function(dimensionType, zone) {
+            var dimensions = this.filterDimensions.where({type : dimensionType});
+            if (dimensions.length == 0) {
+                throw new Error("No " + dimensionType + " dimension");
+            }
+            var dimension = dimensions[0];
+            this.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
+        },
+
+        _moveAllDimensionsToZone : function(zone) {
+            var self = this;
+            this.filterDimensions.each(function(dimension) {
+                self.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
+            });
+        },
+
+        _forceMeasureDimensionInZone : function(zone) {
+            this._forceDimensionTypeInZone("MEASURE_DIMENSION", zone);
+        },
+
+        _forceTimeDimensionInZone : function(zone) {
+            this._forceDimensionTypeInZone("TIME_DIMENSION", zone);
+        },
+
+        _forceGeographicDimensionInZone : function(zone) {
+            this._forceDimensionTypeInZone("GEOGRAPHIC_DIMENSION", zone);
+        },
+
+        getDrawableRepresentations : function(dimension) {
+            return dimension.getDrawableRepresentations();
         }
 
     };
