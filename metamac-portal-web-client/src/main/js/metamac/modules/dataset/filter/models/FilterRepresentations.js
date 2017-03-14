@@ -43,7 +43,7 @@
             var modelsToUndraw = this.where({drawable : true});
             var modelsToDraw = this._getModelsToDraw();
             
-            _.invoke(modelsToUndraw, 'set', {drawable : false});            
+            _.invoke(modelsToUndraw, 'set', {drawable : false}, { silent : true});            
             _.invoke(modelsToDraw, 'set', {drawable : true});    
         },
 

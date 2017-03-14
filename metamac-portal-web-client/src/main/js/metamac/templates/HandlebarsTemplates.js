@@ -1269,7 +1269,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["Handlebars"]["templates"]["dataset/filter/sidebar/filter-sidebar-dimension-actions"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -1281,32 +1281,22 @@ function program1(depth0,data) {
   return buffer;
   }
 
-function program3(depth0,data) {
-  
-  var buffer = "", stack1, options;
-  buffer += "\r\n        <a href=\"#\" class=\"btn btn-mini filter-sidebar-selectAll\" title=\"";
+  buffer += "<div class=\"filter-sidebar-dimension-actions\">\r\n    ";
+  stack1 = helpers['if'].call(depth0, depth0.isTimeDimension, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n\r\n    <a href=\"#\" class=\"btn btn-mini filter-sidebar-selectAll\" title=\"";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.selectAll", options) : helperMissing.call(depth0, "message", "filter.button.selectAll", options)))
     + "\">";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.selectAll", options) : helperMissing.call(depth0, "message", "filter.button.selectAll", options)))
-    + "</a>\r\n        <a href=\"#\" class=\"btn btn-mini filter-sidebar-unselectAll\" title=\"";
+    + "</a>\r\n    <a href=\"#\" class=\"btn btn-mini filter-sidebar-unselectAll\" title=\"";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.selectAll", options) : helperMissing.call(depth0, "message", "filter.button.selectAll", options)))
     + "\">";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.button.deselectAll", options) : helperMissing.call(depth0, "message", "filter.button.deselectAll", options)))
-    + "</a>\r\n    ";
-  return buffer;
-  }
-
-  buffer += "<div class=\"filter-sidebar-dimension-actions\">\r\n    ";
-  stack1 = helpers['if'].call(depth0, depth0.isTimeDimension, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n    ";
-  stack1 = helpers.unless.call(depth0, depth0.isFixedDimension, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n</div>";
+    + "</a>\r\n</div>";
   return buffer;
   });
 

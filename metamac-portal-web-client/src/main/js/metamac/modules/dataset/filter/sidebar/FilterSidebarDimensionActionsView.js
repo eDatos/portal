@@ -34,7 +34,6 @@
             this._unbindEvents();
             this._bindEvents();
             var context = {
-                isFixedDimension : this.filterDimension.isFixedDimension(),
                 isTimeDimension : this.filterDimension.isTimeDimension()
             };
             this.$el.html(this.template(context));

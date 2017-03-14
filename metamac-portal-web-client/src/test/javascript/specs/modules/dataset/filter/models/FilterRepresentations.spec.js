@@ -77,6 +77,7 @@ describe('FilterRepresentations', function () {
             filterRepresentations.invoke('set', {selected : true, visible : true});
             filterRepresentations.deselectVisible();
             expect(filterRepresentations.where({selected : true}).length).to.equal(1);
+            expect(filterRepresentations.where({drawable : true}).length).to.equal(1);
         });
 
         it('should leave at least one model selected', function () {
@@ -84,6 +85,7 @@ describe('FilterRepresentations', function () {
             r1.set('selected', true);
             filterRepresentations.deselectVisible();
             expect(filterRepresentations.where({selected : true}).length).to.equal(1);
+            expect(filterRepresentations.where({drawable : true}).length).to.equal(1);
         });
 
     });
