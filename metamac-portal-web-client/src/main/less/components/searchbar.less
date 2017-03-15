@@ -5,8 +5,9 @@
         display: block;
         width: 100%;
         .box-sizing(border-box);
-        padding: 0 20px;
+        padding: 0 6px;
         height: 24px;
+        .border-radius(6px 6px 0 0);
     }
 
 
@@ -17,20 +18,14 @@
         top: 5px;
 
         &:before {
-            color: #444;
+            color: @istacGrey;
             font-size: 14px;
         }
     }
 
-    .searchbar-icon-search {
-        .searchbar-icon;
-        .icon-search;
-        left: 6px;
-    }
-
     .searchbar-icon-clear {
         .searchbar-icon;
-        .icon-remove;
+        .icon-times;
         right: 6px;
     }
 

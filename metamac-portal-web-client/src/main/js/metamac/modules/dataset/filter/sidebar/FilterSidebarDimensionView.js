@@ -99,18 +99,13 @@
                 this.levelView.render();
                 this.subviews.push(this.levelView);
             }
-
-            var visibleLabelTypeCollection = new Backbone.Collection([
-                {id : "id", title : "Código"},
-                {id : "label", title : "Etiqueta"},
-                {id : "idLabel", title : "Código y etiqueta"}
-            ]);
-            this.visibleLabelTypeView = new App.components.select.views.SelectView({
-                collection : visibleLabelTypeCollection,
+ 
+            this.visibleLabelTypeView = new App.components.ToggleableView({
+                inactiveValue : {id : "label", title : "Etiqueta" },
+                activeValue : {id : "idLabel", title : "Código y etiqueta"},
                 selectionModel : this.filterDimension,
                 name : "visibleLabelType",
-                el : this.$(".filter-sidebar-dimension-visibleLabelType"),
-                blank : false
+                el : this.$(".filter-sidebar-dimension-visibleLabelType")
             });
             this.visibleLabelTypeView.render();
             this.subviews.push(this.visibleLabelTypeView);
