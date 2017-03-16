@@ -42,20 +42,21 @@
         },
 
         getCombinatedDimensionsAttributesByDimensionsPositions : function (dimensionsPositions) {        
-            var self = this;
-            self.dimensionsPositions = dimensionsPositions;
             return _.map(this.combinatedDimensionsAttributes, function(combinatedDimensionAttribute) { 
                 self.dimensionsMultiplicators = combinatedDimensionAttribute.dimensionsMultiplicators;
                 var pos = 0;
-                pos = _.reduceRight(self.dimensionsPositions, function(pos, arrayPosition, index) {                    
+                pos = _.reduceRight(this, function(pos, arrayPosition, index) {                    
                     return pos += self.dimensionsMultiplicators[index] * arrayPosition;                    
                 }, pos, self);
                 return combinatedDimensionAttribute.values[pos];
-            },self);            
+            }, dimensionsPositions);            
         }, 
 
         getCellAttributes : function (observationPosition, dimensionsPositions) {        
-            return _.union(this.getPrimaryMeasureAttributesByPos(observationPosition), this.getCombinatedDimensionsAttributesByDimensionsPositions(dimensionsPositions));
+            return { 
+                primaryMeasureAttributes : this.getPrimaryMeasureAttributesByPos(observationPosition), 
+                combinatedDimensionsAttributes : this.getCombinatedDimensionsAttributesByDimensionsPositions(dimensionsPositions)
+            };
         }, 
 
         getCombinatedDimensionsAttributes : function (dimensionsPositions) {

@@ -1,0 +1,18 @@
+{{ title }}{{#if attributes}}
+<br>
+<div>
+    Notas de la categoría
+    <ul>
+    {{#each attributes}}        
+        <li>
+            {{#if href}}
+                <a href="{{href}}" target="_blank">{{name}}</a>
+            {{/if}}
+            {{#unless href}}
+                {{this}}
+            {{/unless}}
+        </li>
+    {{/each}}
+    </ul>
+</div>
+{{/if}}

@@ -146,8 +146,8 @@
     App.Table.View.prototype.initializeClickTooltip = function () {
         var self = this;
         this.clickTooltipDelegate = {
-        	getAttributeAtMousePosition : function (position) {
-        		return self.getAttributeAtMousePosition(position);
+        	getCellInfoAtMousePosition : function (position) {
+        		return self.getCellInfoAtMousePosition(position);
         	} 
         };
         this.clickTooltip = new Tooltip({el : this.$canvas, delegate : this.clickTooltipDelegate, trigger : "click"});
@@ -396,23 +396,13 @@
         return title;
     };
     
-    App.Table.View.prototype.getAttributeAtMousePosition = function (point) {
+    App.Table.View.prototype.getCellInfoAtMousePosition = function (point) {
         var attribute;
         if (this.mouseZone === "bodyZone") {
-        	attribute = this.bodyZone.attributesAtPoint(point);
+        	attribute = this.bodyZone.cellInfoAtPoint(point);
         }
         return attribute;
     };
-    
-//    App.Table.View.prototype.getAttributesAtMousePosition = function (point) {
-//        var attributes;
-//        if (this.mouseZone === "leftHeaderZone") {
-//            title = this.leftHeaderZone.titleAtPoint(point);
-//        } else if (this.mouseZone === "topHeaderZone") {
-//            title = this.topHeaderZone.titleAtPoint(point);
-//        }
-//        return title;
-//    };
 
     App.Table.View.prototype.setLastClickZone = function (zone) {
         var needRepaint = this.lastClickZone !== zone;

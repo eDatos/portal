@@ -1,0 +1,47 @@
+Datos de la observación
+<ul>
+{{#each categories }}
+    <li><b>{{ dimension }}:</b> {{value}}</li>
+{{/each}}
+</ul>
+
+{{#if hasAttributes}}
+    Notas de la observación
+    <ul>
+    {{#if primaryMeasureAttributes}}
+        <li>
+            Atributos a nivel de observación
+            <ul>
+            {{#each primaryMeasureAttributes}}        
+                <li>
+                    {{#if href}}
+                        <a href="{{href}}" target="_blank">{{name}}</a>
+                    {{/if}}
+                    {{#unless href}}
+                        {{this}}
+                    {{/unless}}
+                </li>
+            {{/each}}
+            </ul>
+        </li>
+    {{/if}}
+
+    {{#if combinatedDimensionsAttributes}}
+        <li>
+            <b>Atributos a nivel de dimensión</b>
+            <ul>
+            {{#each combinatedDimensionsAttributes}}
+                <li>
+                    {{#if href}}
+                        <a href="{{href}}" target="_blank">{{name}}</a>
+                    {{/if}}
+                    {{#unless href}}
+                        {{this}}
+                    {{/unless}}
+                </li>
+            {{/each}}
+            </ul>
+        </li>
+    {{/if}}
+    </ul>
+{{/if}}

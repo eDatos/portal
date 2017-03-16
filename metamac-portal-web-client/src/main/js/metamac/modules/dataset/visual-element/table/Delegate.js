@@ -10,6 +10,11 @@
         this.scrollSize = 10;
         this.spinnerSize = new App.Table.Size(70, 30);
 
+        // See variable.less
+        var colors = {
+            istacGrey : "#ACACAC"
+        }
+
         this.style = {
             bodyCell : {
                 font : "12px Helvetica,Arial,sans-serif",
@@ -62,7 +67,7 @@
                 }
             },
             attributeCellMark : {
-                background : "#0f5b95",
+                background : colors.istacGrey,
                 margin : 2,
                 size : 5
             },
@@ -121,28 +126,47 @@
             return value;
         },
 
-        formatAttributes : function (attributes) {
-            if (_.isArray(attributes)) {
-                var formattedAttributes = _(_.compact(attributes)).map(function(attribute) { 
-                    if (attribute.href) {
-                        return '<a href="' + attribute.href + '">' + attribute.name + '</a>';
-                    } else {
-                        // It´s more efficient to replace it here on demand than replacing all the attributes on lower levels
-                        return attribute.replace(" \\| "," | ");
-                    }
-                });
-                return formattedAttributes.join("<br>");
-            } else {
-                return attributes;
-            }
+        formatCellInfo : function (cellInfo) {            
+            var formattedCellAttributes = this.formatCellAttributes(cellInfo.attributes);
+
+            var template = App.templateManager.get("dataset/dataset-cell-info");
+            var context = {
+                primaryMeasureAttributes : formattedCellAttributes.primaryMeasureAttributes,
+                combinatedDimensionsAttributes : formattedCellAttributes.combinatedDimensionsAttributes,
+                categories : cellInfo.categories,
+                hasAttributes : formattedCellAttributes.primaryMeasureAttributes.length || formattedCellAttributes.combinatedDimensionsAttributes.length
+            }            
+            return template(context);
         },
 
-        formatHeaderAttributes : function (options) {
-            var result = options.title;
-            if (!_.isEmpty(options.attributes)) {
-                result += '<br>' + this.formatAttributes(options.attributes);                
+        formatCellAttributes : function (attributes) {
+            return {
+                primaryMeasureAttributes : _(_.compact(attributes.primaryMeasureAttributes)).map(this.formatAttribute),
+                combinatedDimensionsAttributes : _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
+            }                    
+        },
+
+        formatHeaderInfo : function (headerInfo) {
+            var template = App.templateManager.get("dataset/dataset-header-info");
+            var context = {
+                title : headerInfo.title,
+                attributes : this.formatHeaderAttributes(headerInfo.attributes)
             }
-            return result;
+            return template(context);
+        },
+
+        formatHeaderAttributes : function (attributes) {
+            return _(_.compact(attributes))
+                .map(this.formatAttribute);
+        },
+
+
+        formatAttribute : function (attribute) {            
+            if (!attribute.href) {
+                // It´s more efficient to replace it here on demand than replacing all the attributes on lower levels
+                return attribute.replace(" \\| "," | ");
+            }
+            return attribute;
         },
 
         resizableColumns : function () {

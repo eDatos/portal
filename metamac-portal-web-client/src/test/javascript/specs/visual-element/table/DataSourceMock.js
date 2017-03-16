@@ -96,7 +96,7 @@
         return 0;
     }; 
 
-    App.Table.DataSource.prototype.cellHasAttributes = function(cell) {
+    App.Table.DataSource.prototype.cellHasPrimaryAttributes = function(cell) {
         return false;
     };   
 

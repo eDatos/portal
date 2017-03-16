@@ -121,19 +121,13 @@
             this.leftHeaderValues = [labels];
         },
 
-        /**
-         *  @param {Number} cell.x
-         *  @param {Number} cell.y
-         *
-         *  @return { dim1 : ['cat1', 'cat2'], dim2 : ['cat1'] }
-         */
-        getCategoryIdsForCell : function (cell) {
+        getCategoryForCell : function (cell, representationType) {
             var permutation = {},
                 i, index, representation, dimensionId;
 
             for (i = 0; i < this.left.ids.length; i++) {
                 index = (Math.floor(cell.y / this.left.representationsMult[i])) % this.left.representationsLengths[i];
-                representation = this.left.representationsIds[i][index];
+                representation = this.left[representationType][i][index];
                 dimensionId = this.left.ids[i];
                 if (dimensionId) {
                     permutation[dimensionId] = representation;
@@ -142,7 +136,7 @@
 
             for (i = 0; i < this.top.ids.length; i++) {
                 index = (Math.floor(cell.x / this.top.representationsMult[i])) % this.top.representationsLengths[i];
-                representation = this.top.representationsIds[i][index];
+                representation = this.top[representationType][i][index];
                 dimensionId = this.top.ids[i];
                 if (dimensionId) {
                     permutation[dimensionId] = representation;
@@ -152,6 +146,20 @@
             _.extend(permutation, this.fixed);
 
             return permutation;
+        },
+
+        /**
+         *  @param {Number} cell.x
+         *  @param {Number} cell.y
+         *
+         *  @return { dim1 : ['cat1', 'cat2'], dim2 : ['cat1'] }
+         */
+        getCategoryIdsForCell : function (cell) {
+            return this.getCategoryForCell(cell, "representationsIds");
+        },
+
+        getCategoryValuesForCell : function (cell) {
+            return this.getCategoryForCell(cell, "representationsValues");
         },
 
         getCellForCategoryIds : function (ids) {

@@ -61,7 +61,10 @@
                 observationPosition = 0;
 
             observationPosition = self._transformPosToPosArrays.apply(self, [dimensionPositions]); // Use "apply" method to pass actual context
-            return { "value" : this.observations[observationPosition] , "attributes"  : this.attributes.getCellAttributes(observationPosition, dimensionPositions) };
+            return { 
+                value : this.observations[observationPosition], 
+                attributes : this.attributes.getCellAttributes(observationPosition, dimensionPositions) 
+            };
         },
 
         /*** OTHER METHODS ***/

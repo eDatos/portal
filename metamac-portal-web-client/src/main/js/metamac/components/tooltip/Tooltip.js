@@ -129,7 +129,7 @@
         },
         
         _updateByClick : function (point) {
-	        var attribute = this.delegate.getAttributeAtMousePosition(point);
+	        var attribute = this.delegate.getCellInfoAtMousePosition(point);
 	        if (attribute) {
 	            this.$innerTooltip.html(attribute);
 	            var position = this._getPosition(point);

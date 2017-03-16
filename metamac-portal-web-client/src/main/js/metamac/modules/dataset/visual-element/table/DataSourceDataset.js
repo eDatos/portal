@@ -61,14 +61,35 @@
             return (cell.y >= 0 && cell.x >= 0) &&
                 (tableSize.rows > cell.y && tableSize.columns > cell.x);
         },
-        
-        cellHasAttributes : function (cell) {        	
+
+        cellHasPrimaryAttributes : function (cell) {        	
             var cellAttributes = this.dataset.data.getAttributes({cell : cell});
-        	return !_.isUndefined(cellAttributes) && _.compact(cellAttributes).length > 0;
+        	return !_.isUndefined(cellAttributes) 
+                && !_.isUndefined(cellAttributes.primaryMeasureAttributes) 
+                && _.compact(cellAttributes.primaryMeasureAttributes).length > 0;
         },
         
         cellAttributesAtIndex : function (cell) {
         	return this.dataset.data.getAttributes({cell : cell});
+        },
+
+        cellInfoAtIndex : function (cell) {
+            var categoryValues = this.filterDimensions.getTableInfo().getCategoryValuesForCell(cell);
+            var formattedCategories = this._formatCategories(categoryValues);
+            return { 
+                attributes : this.cellAttributesAtIndex(cell),
+                categories : formattedCategories
+            };
+        },
+
+        _formatCategories : function (categoryValues) {
+            var self = this; 
+            return _.map(categoryValues, function(value, key) { 
+                return { 
+                    dimension : self.filterDimensions.get(key).get('label'), 
+                    value : value 
+                }; 
+            });
         },
 
         datasetAttributes : function () {

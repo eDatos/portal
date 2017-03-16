@@ -289,7 +289,7 @@
                             value = this.delegate.format(value);
                         }                       
 
-                        if (this.dataSource.cellHasAttributes(cell)) {
+                        if (this.dataSource.cellHasPrimaryAttributes(cell)) {
                             this.ctx.beginPath();                  
                             var marginMark = this.delegate.style.attributeCellMark.margin;
                             var sizeMark = this.delegate.style.attributeCellMark.size;              
@@ -310,10 +310,10 @@
             }
         },
         
-        attributesAtPoint : function (absolutePoint) {
+        cellInfoAtPoint : function (absolutePoint) {
             var bodyCellAtPoint = this.absolutePoint2Cell(absolutePoint);
             if (bodyCellAtPoint) {
-                return this.delegate.formatAttributes(this.dataSource.cellAttributesAtIndex(bodyCellAtPoint));
+                return this.delegate.formatCellInfo(this.dataSource.cellInfoAtIndex(bodyCellAtPoint));
             }
         }
 

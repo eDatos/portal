@@ -117,7 +117,10 @@
     App.Table.LeftHeaderZone.prototype.titleAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
-            return this.delegate.formatHeaderAttributes({ title : headerCellAtPoint.tooltip , attributes : headerCellAtPoint.attributes})
+            return this.delegate.formatHeaderInfo({ 
+                title : headerCellAtPoint.tooltip, 
+                attributes : headerCellAtPoint.attributes
+            });
         }
     };
 
