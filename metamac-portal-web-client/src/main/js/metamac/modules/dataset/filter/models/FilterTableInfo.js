@@ -106,18 +106,22 @@
 
             // plain update of nested dimensions and levels
             var headerValues = _.reduceRight(headerValuesGroupByDimension, function (memo, headerValuesInDimension) {
-                if (memo.length === 0) return headerValuesInDimension;
                 var levels = _.pluck(headerValuesInDimension, 'level');
-                var maxLevel = maxInArray(levels) + 1;
-                incrementArray(memo, 'level', maxLevel);
-                return combineExpanding(headerValuesInDimension, memo);
+                var orderedLevels = _.uniq(levels).sort();
+                incrementArray(memo, 'level', orderedLevels.length);                
+                var normalizedHeaderValuesInDimension = _.map(headerValuesInDimension, function(headerValue) { 
+                    headerValue.level = _.indexOf(orderedLevels, headerValue.level);
+                    return headerValue;
+                });
+                return combineExpanding(normalizedHeaderValuesInDimension, memo);
             }, []);
-
             // indent using level
             var labels = _.map(headerValues, function (headerValue) {
-                return repeatStr(DIMVAL_INDENT, headerValue.level) + headerValue.visibleLabel;
+                return {
+                    level : headerValue.level,
+                    label : repeatStr(DIMVAL_INDENT, headerValue.level) + headerValue.visibleLabel
+                };
             });
-
             this.leftHeaderValues = [labels];
         },
 

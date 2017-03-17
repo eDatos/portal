@@ -81,7 +81,8 @@
                     var cellHeight = this.incrementalCellSize.rows[indexEnd] - this.incrementalCellSize.rows[index];
 
                     var row = indexInValue % columnsValuesLength[i];
-                    var content = columnsValues[i][row];
+                    var content = columnsValues[i][row].label;
+                    var level = columnsValues[i][row].level;
 
                     var cellAttributes =  tooltipValues[i][row] ? !_.isEmpty(tooltipValues[i][row].attributes) ? _.compact(tooltipValues[i][row].attributes) : [] : [];
                     var cellTitle = tooltipValues[i][row] ? tooltipValues[i][row].title : "";
@@ -95,6 +96,7 @@
                         x : cellX,
                         width : cellWidth,
                         content : content,
+                        level : level,
                         tooltip : cellTitle,
                         attributes : cellAttributes
                     });

@@ -218,8 +218,7 @@
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
                 this.ctx.fillText(cell.content || "", cell.x + margin, Math.ceil(cell.y + cell.height / 2));
-
-                if (cell.attributes != "") {
+                if (cell.attributes.length) {
                     this.ctx.beginPath();                  
                     var marginMark = this.delegate.style.attributeCellMark.margin;
                     var sizeMark = this.delegate.style.attributeCellMark.size;              
