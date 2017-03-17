@@ -12,7 +12,9 @@
 
         // See variable.less
         var colors = {
-            istacGrey : "#ACACAC"
+            istacGrey : "#ACACAC",
+            istacGreyLight : "#EBEBEB",
+            istacBlueMedium : "#0F5B95"
         }
 
         this.style = {
@@ -42,18 +44,28 @@
                 }
             },
             headerCell : {
-                font : "12px Helvetica, Arial, sans-serif",
+                font : {
+                    mainLevel : "Bold 12px Helvetica, Arial, sans-serif",
+                    secondLevel : "Bold 12px Helvetica, Arial, sans-serif",
+                    default : "12px Helvetica, Arial, sans-serif"
+                },
                 color : "#191919",
                 background : function (current, view) {
                     if (view.isSelectionActive(current)) {
-                        return "#C8C8C8";
+                        return colors.istacGreyLight;
                     } else {
-                        return "#E6E6E6";
+                        return "#fff";
                     }
                 },
                 border : {
-                    color : "#C0C0C0",
-                    width : "1px"
+                    color : {
+                        default : colors.istacGrey,
+                        mainLevel : colors.istacBlueMedium
+                    },
+                    width : {
+                        default : 1,
+                        mainLevel : 3
+                    }
                 },
                 shadow : {
                     show : false,
@@ -140,10 +152,12 @@
         },
 
         formatCellAttributes : function (attributes) {
-            return {
-                primaryMeasureAttributes : _(_.compact(attributes.primaryMeasureAttributes)).map(this.formatAttribute),
-                combinatedDimensionsAttributes : _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
-            }                    
+            if (attributes) {
+                return {
+                    primaryMeasureAttributes : _(_.compact(attributes.primaryMeasureAttributes)).map(this.formatAttribute),
+                    combinatedDimensionsAttributes : _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
+                }                    
+            }            
         },
 
         formatHeaderInfo : function (headerInfo) {

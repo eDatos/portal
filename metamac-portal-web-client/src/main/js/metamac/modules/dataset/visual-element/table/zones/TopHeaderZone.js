@@ -26,6 +26,10 @@
         this.calculateIncrementalSize();
     };
 
+    App.Table.TopHeaderZone.prototype.setOffset = function (offset) {
+        this.offset = offset;
+    }
+
     App.Table.TopHeaderZone.prototype.calculateIncrementalSize = function () {
         if (this.dataSource && this.delegate) {
             var self = this;
@@ -73,7 +77,7 @@
                 var indexInValue = Math.floor(column.index / rowsValuesLengthAc[i]);
                 var index = indexInValue * rowsValuesLengthAc[i];
                 if (result[i].length === 0 || _.last(result[i]).index != index) {
-                    var cellX = this.incrementalCellSize.columns[index] - this.bodyZone.origin.x + this.viewPort.x;
+                    var cellX = this.incrementalCellSize.columns[index] - this.bodyZone.origin.x + this.viewPort.x + this.offset.x;
 
                     var indexEnd = index + rowsValuesLengthAc[i];
                     var cellWidth = this.incrementalCellSize.columns[indexEnd] - this.incrementalCellSize.columns[index];
@@ -134,7 +138,7 @@
 
         this.ctx.save();
         this.ctx.beginPath();
-        this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width, this.viewPort.height);
+        this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width + this.offset.x, this.viewPort.height);
         this.ctx.clip();
 
         var paintInfo = this.paintInfo();
@@ -150,11 +154,11 @@
             this.ctx.save();
 
             this.ctx.beginPath();
-            this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width + 0.5, this.viewPort.height + 30);
+            this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width + 0.5 + this.offset.x, this.viewPort.height + 30);
             this.ctx.clip();
 
             this.ctx.beginPath();
-            this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width, this.viewPort.height + 0.5);
+            this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width + this.offset.x, this.viewPort.height + 0.5);
             this.ctx.shadowColor = this.delegate.style.headerCell.shadow.color;
             this.ctx.shadowBlur = this.delegate.style.headerCell.shadow.blur;
             this.ctx.shadowOffsetX = 0;
@@ -169,9 +173,16 @@
         this.ctx.save();
         this.ctx.beginPath();
 
-        this.ctx.rect(this.viewPort.x + 0.5, this.viewPort.y + 0.5, this.viewPort.width - 1, this.viewPort.height + 0.5);
+        this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.mainLevel;
+        this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;   
 
-        this.ctx.strokeStyle = this.delegate.style.headerCell.border.color;
+        this.ctx.rect(
+            this.viewPort.x - this.ctx.lineWidth, 
+            this.viewPort.y, 
+            this.viewPort.width + this.ctx.lineWidth*2 + this.offset.x, 
+            this.viewPort.height
+        );        
+
         this.ctx.closePath();
         this.ctx.stroke();
 
@@ -181,14 +192,13 @@
     App.Table.TopHeaderZone.prototype.paintCells = function (paintInfo) {
         this.ctx.save();
 
-        this.ctx.lineWidth = this.delegate.style.headerCell.border.width;
-        this.ctx.strokeStyle = this.delegate.style.headerCell.border.color;
-        this.ctx.font = this.delegate.style.headerCell.font;
+        this.ctx.lineWidth = this.delegate.style.headerCell.border.width.default;
+        this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.default;
+        this.ctx.font = this.delegate.style.headerCell.font.default;
         this.ctx.textBaseline = "middle";
         this.ctx.textAlign = "left";
 
         var margin = this.delegate.style.headerCell.margin.left;
-        var bgColor;
         for (var i = 0; i < paintInfo.length; i++) {
             var row = paintInfo[i];
 
@@ -204,21 +214,16 @@
                 this.ctx.beginPath();
                 this.ctx.rect(cell.x + 0.5, cell.y + 0.5, cell.width, cell.height);
 
-                if (_.isFunction(this.delegate.style.headerCell.background)) {
-                    var current = { columns : _.range(cell.index, cell.indexEnd) };
-                    bgColor = this.delegate.style.headerCell.background(current, this.view);
-                } else {
-                    bgColor = this.delegate.style.headerCell.background;
-                }
-
-                this.ctx.fillStyle = bgColor;
+                this.ctx.fillStyle = this.delegate.style.headerCell.background({ 
+                    columns : _.range(cell.index, cell.indexEnd) 
+                }, this.view);
                 this.ctx.stroke();
                 this.ctx.fill();
                 this.ctx.closePath();
 
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
                 this.ctx.fillText(cell.content || "", cell.x + margin, Math.ceil(cell.y + cell.height / 2));
-                if (cell.attributes.length) {
+                if (_.compact(cell.attributes).length) {
                     this.ctx.beginPath();                  
                     var marginMark = this.delegate.style.attributeCellMark.margin;
                     var sizeMark = this.delegate.style.attributeCellMark.size;              
@@ -228,7 +233,7 @@
                     this.ctx.fillStyle = this.delegate.style.attributeCellMark.background;
                     this.ctx.fill();
                     this.ctx.closePath();
-                }   
+                } 
 
                 this.ctx.restore();
             }

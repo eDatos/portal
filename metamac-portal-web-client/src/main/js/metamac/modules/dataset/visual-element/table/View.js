@@ -89,12 +89,13 @@
 
         this.topHeaderZone.setViewPort(
             new Rectangle(
-                this.leftHeaderZone.size.width,
+                0,
                 0,
                 canvasSize.width - this.leftHeaderZone.size.width - this.scrollSize,
                 this.topHeaderZone.size.height
             )
         );
+        this.topHeaderZone.setOffset(new Point(this.leftHeaderZone.size.width, 0));
 
         this.bodyZone.setViewPort(
             new Rectangle(

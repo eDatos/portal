@@ -141,25 +141,29 @@
         }
     };
 
+    App.Table.LeftHeaderZone.prototype.getCanvasWidth = function() {
+        return this.view.canvas.width;
+    },
 
     App.Table.LeftHeaderZone.prototype.repaint = function () {
         this.clear();
 
-        this.paintShadow();
+        //this.paintShadow();
         this.ctx.save();
 
         this.ctx.beginPath();
-        this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width + 0.5, this.viewPort.height);
+        this.ctx.rect(this.viewPort.x, this.viewPort.y, this.getCanvasWidth() + 0.5, this.viewPort.height);
         this.ctx.clip();
 
         var paintInfo = this.paintInfo();
+        //this.paintBorders();
         this.paintCells(paintInfo);
-        this.paintBorders();
-
+        
         this.ctx.restore();
         this.needRepaint = false;
     };
 
+    // FIXME Eliminar este método si no se está usando
     App.Table.LeftHeaderZone.prototype.paintShadow = function () {
         if(this.delegate.style.headerCell.shadow.show && this.bodyZone.origin.x !== 0){
             this.ctx.save();
@@ -180,7 +184,8 @@
         }
     }
 
-    App.Table.LeftHeaderZone.prototype.paintBorders = function () {
+    // FIXME Eliminar este método si no va a usarse
+    App.Table.LeftHeaderZone.prototype.paintBorders = function () {        
         var columnsLen = this.dataSource.leftHeaderColumns();
         this.ctx.save();
         this.ctx.beginPath();
@@ -195,47 +200,73 @@
 
     App.Table.LeftHeaderZone.prototype.paintCells = function (paintInfo) {
         this.ctx.save();
-
-        this.ctx.lineWidth = this.delegate.style.headerCell.border.width;
-        this.ctx.strokeStyle = this.delegate.style.headerCell.border.color;
-        this.ctx.font = this.delegate.style.headerCell.font;
+                   
         this.ctx.textBaseline = "top";
         this.ctx.textAlign = "left";
 
         var margin = this.delegate.style.headerCell.margin.left;
-        var bgColor;
 
         for (var i = 0; i < paintInfo.length; i++) {
             var row = paintInfo[i];
 
             for (var j = 0; j < row.length; j++) {
+                this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.default; 
+                this.ctx.lineWidth = this.delegate.style.headerCell.border.width.default;    
+                this.ctx.font = this.delegate.style.headerCell.font.default;
+
                 var cell = row[j];
+                var isBlankRow = this.dataSource.isBlankRow(cell.index);
+                var nextIsBlankRow = row[j+1] ? this.dataSource.isBlankRow(row[j+1].index) : false;
 
                 this.ctx.save();
 
-                this.ctx.beginPath();
-                this.ctx.rect(cell.x, cell.y, cell.width + 0.5, cell.height + 0.5);
-                this.ctx.clip();
-
-                this.ctx.beginPath();
-                this.ctx.rect(cell.x + 0.5, cell.y + 0.5, cell.width, cell.height);
-
-                if (_.isFunction(this.delegate.style.headerCell.background)) {
-                    var current = { rows : _.range(cell.index, cell.indexEnd) };
-                    bgColor = this.delegate.style.headerCell.background(current, this.view);
-                } else {
-                    bgColor = this.delegate.style.headerCell.background;
+                var cellWidth = cell.width;
+                
+                if (isBlankRow) {                    
+                     cellWidth = this.getCanvasWidth();                                                       
                 }
 
-                this.ctx.fillStyle = bgColor;
+                this.ctx.beginPath();
+                this.ctx.rect(cell.x, cell.y, cellWidth, cell.height);
+                this.ctx.clip(); 
+
+                // Inner cell
+                this.ctx.beginPath();        
+                if (isBlankRow) {
+                    this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;   
+                    this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.mainLevel;
+                    if (!nextIsBlankRow) {
+                        this.ctx.rect(cell.x, cell.y + this.ctx.lineWidth, cellWidth, cell.height - this.ctx.lineWidth * 2);
+                    } else {
+                        this.ctx.rect(cell.x, cell.y + this.ctx.lineWidth, cellWidth, cell.height);                    
+                    }                    
+                } else {
+                    this.ctx.rect(cell.x, cell.y, cellWidth - this.ctx.lineWidth, cell.height);
+                }
+                this.ctx.fillStyle = this.delegate.style.headerCell.background({ 
+                    rows : _.range(cell.index, cell.indexEnd) 
+                }, this.view);
                 this.ctx.stroke();
                 this.ctx.fill();
                 this.ctx.closePath();
 
+                // Text
+                switch (cell.level) {
+                    case 0:                        
+                        this.ctx.font = this.delegate.style.headerCell.font.mainLevel;
+                        break;
+                    case 1:
+                        cell.content = cell.content ? cell.content.toUpperCase() : "";
+                        this.ctx.font = this.delegate.style.headerCell.font.secondLevel;
+                        break;
+                    default:
+                        break;
+                }
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
                 this.ctx.fillText(cell.content || "", cell.x + margin, cell.y + margin);
 
-                if (cell.attributes != "") {
+                // Attributes triangle
+                if (_.compact(cell.attributes).length) {
                     this.ctx.beginPath();                  
                     var marginMark = this.delegate.style.attributeCellMark.margin;
                     var sizeMark = this.delegate.style.attributeCellMark.size;              

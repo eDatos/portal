@@ -205,12 +205,13 @@
             var paintInfo = this.paintInfo();
 
             this.paintCells(paintInfo);
-            this.paintGrid(limits);
+            //this.paintGrid(limits);
 
             this.ctx.restore();
             this.needRepaint = false;
         },
 
+        // FIXME Eliminar este método si no se va a usar
         paintGrid : function (limits) {
 
             this.ctx.save();
