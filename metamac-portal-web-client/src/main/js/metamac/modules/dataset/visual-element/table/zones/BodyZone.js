@@ -253,6 +253,14 @@
             this.ctx.restore();
         },
 
+        getPaintInfoRowCell : function(y) {
+            var nonBlankRows = _(this.paintInfo().rows)
+                                    .filter(function (row) { 
+                                        return !row.blank; 
+                                    });
+            return nonBlankRows[y];
+        },
+
         paintCells : function (paintInfo) {
             var x, y, bgColor, i, j;
 

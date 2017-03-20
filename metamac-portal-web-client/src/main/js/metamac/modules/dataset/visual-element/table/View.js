@@ -335,7 +335,13 @@
                     if (isOnlyACellSelected && firstCellSelectedEqSelectedCell) {
                         this.selection = {rowsCells : [], rows : [], columns : []};
                     } else {
-                        this.selection = {rowsCells : [cell.y], columns : [cell.x], rows : [cell.y += this.dataSource.blankRowsOffset(cell.y)]};
+                        var paintInfoRow = this.bodyZone.getPaintInfoRowCell(cell.y);
+                        var selectedRows = paintInfoRow ? [ paintInfoRow.index ] : [];
+                        this.selection = {
+                            rowsCells : [cell.y], 
+                            columns : [cell.x], 
+                            rows : selectedRows
+                        };                        
                     }
 
                 } else if (zone === "leftHeaderZone") {

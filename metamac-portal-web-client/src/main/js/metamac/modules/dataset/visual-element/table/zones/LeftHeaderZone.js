@@ -81,8 +81,8 @@
                     var cellHeight = this.incrementalCellSize.rows[indexEnd] - this.incrementalCellSize.rows[index];
 
                     var row = indexInValue % columnsValuesLength[i];
-                    var content = columnsValues[i][row].label;
-                    var level = columnsValues[i][row].level;
+                    var content = columnsValues[i][row] ? columnsValues[i][row].label : "";
+                    var level = columnsValues[i][row] ? columnsValues[i][row].level : 0;
 
                     var cellAttributes =  tooltipValues[i][row] ? !_.isEmpty(tooltipValues[i][row].attributes) ? _.compact(tooltipValues[i][row].attributes) : [] : [];
                     var cellTitle = tooltipValues[i][row] ? tooltipValues[i][row].title : "";
@@ -242,7 +242,7 @@
                     }                    
                 } else {
                     this.ctx.rect(cell.x, cell.y, cellWidth - this.ctx.lineWidth, cell.height);
-                }
+                }                
                 this.ctx.fillStyle = this.delegate.style.headerCell.background({ 
                     rows : _.range(cell.index, cell.indexEnd) 
                 }, this.view);

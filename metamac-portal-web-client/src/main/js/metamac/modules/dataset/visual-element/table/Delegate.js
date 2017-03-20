@@ -143,10 +143,10 @@
 
             var template = App.templateManager.get("dataset/dataset-cell-info");
             var context = {
-                primaryMeasureAttributes : formattedCellAttributes.primaryMeasureAttributes,
-                combinatedDimensionsAttributes : formattedCellAttributes.combinatedDimensionsAttributes,
+                primaryMeasureAttributes : formattedCellAttributes ? formattedCellAttributes.primaryMeasureAttributes : undefined,
+                combinatedDimensionsAttributes : formattedCellAttributes ? formattedCellAttributes.combinatedDimensionsAttributes : undefined,
                 categories : cellInfo.categories,
-                hasAttributes : formattedCellAttributes.primaryMeasureAttributes.length || formattedCellAttributes.combinatedDimensionsAttributes.length
+                hasAttributes : formattedCellAttributes && (formattedCellAttributes.primaryMeasureAttributes.length || formattedCellAttributes.combinatedDimensionsAttributes.length)
             }            
             return template(context);
         },
