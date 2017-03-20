@@ -43,9 +43,11 @@
             this.stopListening();
         },
 
-        _onToggleFilter : function() {
+        _onToggleFilter : function() {            
             if (this.optionsModel.get('filter')) {
-                this.state.set("currentSideView", "filterSidebar");
+                if (!this.state.get("currentSideView")) {
+                    this.state.set("currentSideView", "filterSidebar");
+                }
             } else {
                 this.state.set("currentSideView", undefined);
             }
@@ -135,7 +137,7 @@
                 currentView.render();
                 this.$el.toggleClass("sidebar-slideRight", true);
                 this.state.set('visible', true);
-                this.$("li[data-view-id='" + currentSideViewId + "']").addClass("active");                
+                this.$("li[data-view-id='" + currentSideViewId + "']").addClass("active");                                                
             } else {
                 this.state.set('visible', false);
             }

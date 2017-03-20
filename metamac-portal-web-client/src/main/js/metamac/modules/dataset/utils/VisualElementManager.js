@@ -24,7 +24,8 @@
                 el : this._options.container.vecontainer,
                 dataset : this.dataset,
                 filterOptions : this.filterOptions,
-                animation : this._options.animation
+                animation : this._options.animation,
+                optionsModel : this.optionsModel
             };
             this.ve = {
                 info : new App.VisualElement.Info(options),

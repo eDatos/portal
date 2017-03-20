@@ -25,7 +25,8 @@
             var options = {
                 dataset : this.dataset,
                 filterDimensions : this.filterDimensions,
-                animation : this.options.animation
+                animation : this.options.animation,
+                optionsModel : this.optionsModel
             };
             this.ve = {
                 info : new App.VisualElement.Info(options),

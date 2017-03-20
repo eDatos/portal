@@ -111,6 +111,7 @@ I18n.translations.en = {
 
     entity : {
         dataset : {  
+            measureDimensionCoverageConcepts: "Measure dimension coverage concepts",
         	statisticalOperation : "Statistical operation",
             validFrom : "Valid from",
             validTo : "Valido to",
@@ -128,10 +129,11 @@ I18n.translations.en = {
             accessRights: "Access rights",
             subjectAreas : "Subject areas",
             formatExtentObservations: "Number of observations",
+            lastUpdate: "Last update date",
             dateNextUpdate: "Next update date",
             updateFrequency: "Update frequency",
             statisticOfficiality: "Statistic officiality",
-            bibliographicCitation: "Bibliographic citation",
+            bibliographicCitation: "Bibliographic citation",            
             
             dimensions : {
                 title : "Dimensions"
@@ -139,8 +141,8 @@ I18n.translations.en = {
     
     		language : "Language",     
 
-            datasetAttributes : "Dataset level attributes"
-
+            datasetAttributes : "Dataset level attributes",
+            apiUrl : "API access for developers"
         }
     },
     date : {

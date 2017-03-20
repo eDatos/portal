@@ -13,14 +13,18 @@
 
         initialize : function (options) {
             this.dataset = options.dataset;
+            this.optionsModel = options.optionsModel;
 
             this.title = I18n.t("filter.sidebar.info.title");
-            
+            this.datasetAttributes = this.dataset.data.getDatasetAttributes();
             this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes ); 
         },
         
         updateDatasetAttributes : function() {
             this.datasetAttributes = this.dataset.data.getDatasetAttributes();
+            if (this.optionsModel.get('type') == this.id) {
+                this.render();
+            }            
         },
 
         render : function () {

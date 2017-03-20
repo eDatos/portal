@@ -6,7 +6,9 @@
     App.VisualElement.Info = function (options) {
         this.initialize(options);
         this._type = 'info';        
-        this.dataset = options.dataset;    
+        this.dataset = options.dataset; 
+        this.datasetAttributes = this.dataset.data.getDatasetAttributes();
+        this.optionsModel = options.optionsModel;
         this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes ); 
     };
 
@@ -17,12 +19,17 @@
         template : App.templateManager.get("dataset/dataset-info"),
 
         load : function () {
-            this._bindEvents();
-            this.render();
+            if (this.$el) {
+                this._bindEvents();
+                this.render();
+            }            
         },
 
         updateDatasetAttributes : function() {
             this.datasetAttributes = this.dataset.data.getDatasetAttributes();
+            if (this.optionsModel.get('type') == this._type) {
+                this.load();
+            }
         },
 
         destroy : function () {
@@ -30,7 +37,7 @@
         },
 
         _bindEvents : function () {
-            this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes );
+            this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes );            
         },
 
         _unbindEvents : function () {

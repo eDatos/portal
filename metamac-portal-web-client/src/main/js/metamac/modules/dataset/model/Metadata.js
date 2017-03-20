@@ -40,7 +40,12 @@
         },
 
         url : function () {
-            return App.endpoints["statistical-resources"] + this.urlIdentifierPart() + '.json?_type=json&fields=-data';
+            return this.getApiUrl().href + '.json?_type=json&fields=-data';
+        },
+
+        getApiUrl : function () {
+            var apiUrl = App.endpoints["statistical-resources"] + this.urlIdentifierPart();
+            return { href : apiUrl, name : apiUrl };
         },
 
         fetch : function () {
@@ -258,6 +263,7 @@
                 accessRights: this.getAccessRights(),
                 subjectAreas : this.getSubjectAreas(),
                 formatExtentObservations: this.getFormatExtentObservations(),
+                lastUpdate: this.getLastUpdate(),
                 dateNextUpdate: this.getDateNextUpdate(),
                 updateFrequency: this.getUpdateFrequency(),
                 statisticOfficiality: this.getStatisticOfficiality(),
@@ -265,7 +271,9 @@
                 
                 languages : this.getLanguages(),                
                 measureDimension : this.getMeasureDimension(),
-                dimensions : this.getDimensions()               
+                dimensions : this.getDimensions(),
+
+                apiUrl : this.getApiUrl()          
             };
         },
 
@@ -418,6 +426,9 @@
         
         getFormatExtentObservations : function () {
         	return this.metadata.formatExtentObservations;
+        },
+        getLastUpdate : function() {
+            return this.metadata.lastUpdate;
         },
         
         getDateNextUpdate : function () {

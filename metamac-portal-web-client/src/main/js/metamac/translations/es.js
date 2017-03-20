@@ -111,6 +111,7 @@ I18n.translations.es = {
 
     entity : {
         dataset : {  
+            measureDimensionCoverageConcepts: "Conceptos que forman el cubrimiento de la unidad de medidad",
             statisticalOperation : "Operación estadística",
             validFrom : "Válido desde",
             validTo : "Válido hasta",
@@ -128,10 +129,11 @@ I18n.translations.es = {
             accessRights: "Derechos de acceso",
             subjectAreas : "Áreas",
             formatExtentObservations: "Número de observaciones",
+            lastUpdate: "Fecha de la última actualización",
             dateNextUpdate: "Fecha de próxima actualización",
             updateFrequency: "Frecuencia de actualización",
             statisticOfficiality: "Oficialidad estadística",
-            bibliographicCitation: "Citación bibliográfica",
+            bibliographicCitation: "Citación bibliográfica",            
             
             dimensions : {
                 title : "Dimensiones"
@@ -139,8 +141,8 @@ I18n.translations.es = {
     
             language : "Idioma",   
 
-            datasetAttributes : "Atributos a nivel de dataset"
-
+            datasetAttributes : "Atributos a nivel de dataset",
+            apiUrl : "Acceso para desarrolladores mediante API"
         }
     },
     date : {

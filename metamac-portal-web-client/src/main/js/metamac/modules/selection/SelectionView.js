@@ -51,7 +51,8 @@
         
         _initializeSidebarView : function () {            
             this.infoView = new App.modules.dataset.DatasetInfoView({
-                dataset : this.dataset
+                dataset : this.dataset,
+                optionsModel : this.optionsModel
             });
             
             this.helpView = new App.modules.dataset.DatasetHelpView({});
