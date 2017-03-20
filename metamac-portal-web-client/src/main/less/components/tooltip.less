@@ -31,9 +31,20 @@
     a { 
         color: white
     }
+
+    .contenido & ol					{ margin: initial;	padding: initial;}
+    .contenido & ul li				{ background: initial;	line-height: initial; list-style-type: initial;	margin: initial; padding-left: initial;	text-align: initial; }
+    .contenido & ul li ul li		{ background: initial; }
+    .contenido & ul li ul li ul li	{ background: initial; }
+
+    .contenido & ul,
     ul {
         padding-left: 20px;
-        margin-bottom: 5px;
+        margin: 0 0 5px 0;
+    }
+    .contenido & ul li,
+    li {
+        margin: 5px;
     }
 }
 
