@@ -17,6 +17,84 @@
             this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
         },
+        
+        configuration : {
+            info : {
+                zones : {},
+            },
+            canvasTable : {
+                zones : {
+                    left : {
+                        icon : "rows",
+                        draggable : true
+                    },
+                    top : {
+                        icon : "columns",
+                        draggable : true
+                    },
+                },
+            },
+            column : {
+                zones : {
+                    fixed : {
+                        icon : "lock",
+                        draggable : true
+                    },
+                    left : {
+                        icon : "axis-x",
+                        draggable : true
+                    },
+                    axisy : {
+                        icon : "axis-y",
+                        draggable : true
+                    },
+                },
+            },
+            line : {
+                zones : {
+                    fixed : {
+                        icon : "lock",
+                        draggable : true
+                    },
+                    left : {
+                        icon : "axis-x",
+                        draggable : false
+                    },
+                    top : {
+                        icon : "line",
+                        draggable : true
+                    },
+                    axisy : {
+                        icon : "axis-y",
+                        draggable : false
+                    },
+                },
+            },
+            map : {
+                zones : {
+                    fixed : {
+                        icon : "lock",
+                        draggable : false
+                    },
+                    left : {
+                        icon : "map",
+                        draggable : true
+                    },
+                },
+            },
+            mapbubble : {
+                zones : {
+                    fixed : {
+                        icon : "lock",
+                        draggable : false
+                    },
+                    left : {
+                        icon : "map",
+                        draggable : true
+                    },
+                },
+            }
+        },
 
         events : {
             "dragstart .order-sidebar-dimension.draggable" : "_onDragstart",
@@ -98,34 +176,6 @@
             return this.optionsModel.get("type");
         },
 
-        icons : {
-            info: {},
-            canvasTable : {
-                fixed : "lock",
-                left : "rows",
-                top : "columns"
-            },
-            column : {
-                fixed : "lock",
-                left : "axis-x",
-                axisy : "axis-y"
-            },
-            line : {
-                fixed : "lock",
-                left : "axis-x",
-                top : "line",
-                axisy : "axis-y"
-            },
-            map : {
-                fixed : "lock",
-                left : "map"
-            },
-            mapbubble : {
-                fixed : "lock",
-                left : "map"
-            }
-        },
-
         _getLabelFromZone : function (zone) {
             var currentChartType = this._getCurrentChartType();
             return I18n.t("filter.sidebar.order." + currentChartType + "." + zone);
@@ -135,56 +185,18 @@
             var currentChartType = this._getCurrentChartType();
             var icon;
             if (currentChartType) {
-                icon = this.icons[currentChartType][zone];
+                icon = this.configuration[currentChartType].zones[zone].icon;
             } 
             return _.isUndefined(icon) ? "" : "icon-" + icon;
         },
 
         _getZonesByChartType : function() {
-            switch (this._getCurrentChartType()) {
-                case "canvasTable":
-                    return ["top", "left"];
-                case "info":
-                    return [];
-                case "column":
-                    return ["left", "axisy", "fixed"];
-                case "line":
-                    return ["top", "left", "axisy", "fixed"];
-                case "map":
-                case "mapbubble":
-                    return ["left", "fixed"];
-                default:
-                    return ["top", "left", "fixed"];
-            }
+            var currentChartType = this._getCurrentChartType();
+            return currentChartType ? Object.keys(this.configuration[currentChartType].zones) : [];
         },
         
         _zoneIsDraggableByChartType : function(zone) {
-            var IS_DRAGGABLE = {
-                canvasTable : {
-                    top : true,
-                    left : true
-                },
-                column : {
-                    left : true,
-                    axisy : true,
-                    fixed : true
-                },
-                line : {
-                    top : true,
-                    left : false,
-                    axisy : false,
-                    fixed : true
-                },
-                map : {
-                    left : true,
-                    fixed : false
-                },
-                mapbubble : {
-                    left : true,
-                    fixed : false
-                }
-            };
-            var isDraggable = this._getCurrentChartType() ? IS_DRAGGABLE[this._getCurrentChartType()][zone] : false;
+            var isDraggable = this._getCurrentChartType() ? this.configuration[this._getCurrentChartType()].zones[zone].draggable : false;
             if (_.isUndefined(isDraggable)) {
                 throw "Is draggable undefined for zone " + zone + " and chart type " + this._getCurrentChartType();
             }
@@ -200,7 +212,8 @@
                     icon : this._getIconFromZone(zone),
                     draggable : this._zoneIsDraggableByChartType(zone),
                     dimensions : this._dimensionsForZone(zone),
-                    isFixed : this._isFixedZone(zone)
+                    isFixed : this._isFixedZone(zone),
+                    
                 };
             }, this);
 
