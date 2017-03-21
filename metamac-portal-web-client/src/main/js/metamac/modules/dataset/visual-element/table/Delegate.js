@@ -14,6 +14,7 @@
         var colors = {
             istacGrey : "#ACACAC",
             istacGreyLight : "#EBEBEB",
+            istacGreyLightest : "#EEEEEE",
             istacBlueMedium : "#0F5B95"
         }
 
@@ -27,9 +28,9 @@
                     var isColumnSelected = view.isSelectionActive({columns : [cell.x]});
 
                     if (isRowSelected && isColumnSelected) {
-                        return "#E8F1FF";
+                        return colors.istacGreyLight;
                     } else if (isRowSelected || isColumnSelected) {
-                        return "#F5F9FF";
+                        return colors.istacGreyLightest;
                     }
                     return "#fff";
                 },

@@ -216,7 +216,7 @@
 
                 var cell = row[j];
                 var isBlankRow = this.dataSource.isBlankRow(cell.index);
-                var nextIsBlankRow = row[j+1] ? this.dataSource.isBlankRow(row[j+1].index) : false;
+                var previousIsBlankRow = row[j-1] ? this.dataSource.isBlankRow(row[j-1].index) : true;
 
                 this.ctx.save();
 
@@ -235,11 +235,11 @@
                 if (isBlankRow) {
                     this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;   
                     this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.mainLevel;
-                    if (!nextIsBlankRow) {
-                        this.ctx.rect(cell.x, cell.y + this.ctx.lineWidth, cellWidth, cell.height - this.ctx.lineWidth * 2);
+                    if (previousIsBlankRow) {
+                        this.ctx.rect(cell.x, cell.y, cellWidth, cell.height - 1);                         
                     } else {
-                        this.ctx.rect(cell.x, cell.y + this.ctx.lineWidth, cellWidth, cell.height);                    
-                    }                    
+                        this.ctx.rect(cell.x, cell.y + 1, cellWidth, cell.height - 2);                         
+                    }                
                 } else {
                     this.ctx.rect(cell.x, cell.y, cellWidth - this.ctx.lineWidth, cell.height);
                 }                
