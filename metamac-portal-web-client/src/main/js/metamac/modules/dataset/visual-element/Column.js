@@ -56,7 +56,7 @@
         destroy : function () {
             this._unbindEvents();
 
-            if (this.chart) {
+            if (this.chart && this.chart.renderTo) {
                 this.chart.destroy();
             }
         },

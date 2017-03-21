@@ -81,7 +81,8 @@
             this.sidebarView = new App.components.sidebar.SidebarView({
                 sideViews : sideViews, 
                 contentView : this.visualizationView,
-                optionsModel : this.optionsModel
+                optionsModel : this.optionsModel,
+                defaultCurrentSideView : "filterSidebar"
             });
         },
 

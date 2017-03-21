@@ -15,6 +15,7 @@
             this.sideViews = options.sideViews;
             this.contentView = options.contentView;
             this.optionsModel = options.optionsModel;
+            this.defaultCurrentSideView = options.defaultCurrentSideView;
 
             var stateOptions = {
                 sideViewsIds : _.pluck(this.sideViews, "id")
@@ -43,14 +44,8 @@
             this.stopListening();
         },
 
-        _onToggleFilter : function() {            
-            if (this.optionsModel.get('filter')) {
-                if (!this.state.get("currentSideView")) {
-                    this.state.set("currentSideView", "filterSidebar");
-                }
-            } else {
-                this.state.set("currentSideView", undefined);
-            }
+        _onToggleFilter : function() {        
+            this.state.set('visible', this.optionsModel.get('filter'));
         },
 
         _onClickMenuItem : function (e) {
@@ -63,7 +58,13 @@
         
         _updateVisibility : function() {
             this._updateSidebar();
-            this.optionsModel.set('filter', this.state.get('visible'));
+            if (this.state.get("visible")) {
+                if (!this.state.get("currentSideView")) {
+                    this.state.set("currentSideView", this.defaultCurrentSideView);
+                }                
+            } else {
+                this.state.set("currentSideView", undefined);
+            }
         },
 
         _updateSidebar : function () {
@@ -174,7 +175,16 @@
             this.$content = this.$('.sidebar-content');
             _.each(this.sideViews, function (view) {
                 view.setElement(this.$sidebarContent);
-            }, this);            
+            }, this);
+
+            this.openerView = new App.components.ToggleableView({
+                inactiveValue : {id : true, title : "Cerrar" },
+                activeValue : {id : false, title : "Abrir"},
+                selectionModel : this.state,
+                name : "visible",
+                el : this.$(".sidebar-opener")
+            });
+            this.openerView.render();
 
             this.sideViews[0].render();
 

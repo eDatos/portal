@@ -1,7 +1,7 @@
 // Component sidebar
 
 @sidebarMenuWidth: 50px;
-@sidebarSidebarWidth: 350px;
+@sidebarSidebarWidth: 316px;
 @sidebarRadius : 6px;
 
 @sidebarMenuColor: @istacBlueMedium;
@@ -127,7 +127,16 @@
         
         .icon-separator;
     }
+}
 
+.sidebar-opener {
+    position: absolute;
+    top: 50%;
+    right: -23px;
+    z-index: -1;
+    button {
+        .border-radius(0 9px 9px 0);   
+    }    
 }
 
 .sidebar-content {

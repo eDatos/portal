@@ -49,7 +49,7 @@
             });
         },
         
-        _initializeSidebarView : function () {            
+        _initializeSidebarView : function () {             
             this.infoView = new App.modules.dataset.DatasetInfoView({
                 dataset : this.dataset,
                 optionsModel : this.optionsModel
@@ -60,7 +60,8 @@
             var sideViews = [this.infoView, this.helpView];
             this.sidebarView = new App.components.sidebar.SidebarView({
                 sideViews : sideViews,
-                optionsModel : this.optionsModel
+                optionsModel : this.optionsModel,
+                defaultCurrentSideView : "info"
             });
         },
 

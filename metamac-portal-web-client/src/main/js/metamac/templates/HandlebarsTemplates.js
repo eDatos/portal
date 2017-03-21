@@ -202,7 +202,7 @@ function program2(depth0,data) {
   if (stack1 = helpers.menuClass) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.menuClass; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n    <div class=\"sidebar-sidebar-content\"></div>\r\n    <div class=\"sidebar-splitter\">\r\n        <i class=\"icon-separator\"></i>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"sidebar-content ";
+    + "\">\r\n    <div class=\"sidebar-sidebar-content\"></div>\r\n    <div class=\"sidebar-splitter\">\r\n        <i class=\"icon-separator\"></i>        \r\n    </div>\r\n    <div class=\"sidebar-opener\"></div>\r\n</div>\r\n\r\n<div class=\"sidebar-content ";
   if (stack1 = helpers.menuClass) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.menuClass; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
