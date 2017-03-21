@@ -76,7 +76,7 @@ I18n.translations.en = {
                 column : {
                     fixed : "Fixed values",
                     left : "X axis",
-                    top : "Y axis"
+                    axisy : "Y axis"
                 },
                 line : {
                     fixed : "Fixed values",

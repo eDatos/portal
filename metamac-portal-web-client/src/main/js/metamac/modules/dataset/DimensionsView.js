@@ -108,7 +108,7 @@
             column : {
                 fixed : "lock",
                 left : "axis-x",
-                top : "axis-y"
+                axisy : "axis-y"
             },
             line : {
                 fixed : "lock",
@@ -146,6 +146,8 @@
                     return ["top", "left"];
                 case "info":
                     return [];
+                case "column":
+                    return ["left", "axisy", "fixed"];
                 case "line":
                     return ["top", "left", "axisy", "fixed"];
                 case "map":
@@ -163,8 +165,8 @@
                     left : true
                 },
                 column : {
-                    top : true,
                     left : true,
+                    axisy : true,
                     fixed : true
                 },
                 line : {

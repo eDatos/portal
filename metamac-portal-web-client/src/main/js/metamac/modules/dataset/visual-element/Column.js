@@ -82,14 +82,15 @@
             this._applyVisualizationRestrictions();
             
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
-            this.filterDimensions.zones.get('top').set('fixedSize', 1);
+            this.filterDimensions.zones.get('top').set('fixedSize', 0);
+            this.filterDimensions.zones.get('axisy').set('fixedSize', 1);
             this.filterDimensions.zones.get('fixed').unset('fixedSize');         
         },
 
         _applyVisualizationRestrictions : function() {
             this._moveAllDimensionsToZone('left');
 
-            this._forceMeasureDimensionInZone('top');
+            this._forceMeasureDimensionInZone('axisy');
             this._forceTimeDimensionInZone('fixed');
             this._forceGeographicDimensionInZone('fixed');
 
@@ -156,7 +157,7 @@
             var fixedPermutation = this.getFixedPermutation();
 
             var horizontalDimension = this.filterDimensions.dimensionsAtZone('left').at(0);
-            var columnsDimension = this.filterDimensions.dimensionsAtZone('top').at(0);
+            var columnsDimension = this.filterDimensions.dimensionsAtZone('axisy').at(0);
             var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
             var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 

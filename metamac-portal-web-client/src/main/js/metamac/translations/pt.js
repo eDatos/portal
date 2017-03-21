@@ -76,7 +76,7 @@ I18n.translations.pt = {
                     column : {
                         fixed : "Valores fixos",
                         left : "Eixo X",
-                        top : "Eixo Y"
+                        axisy : "Eixo Y"
                     },
                     line : {
                         fixed : "Valores fixos",
