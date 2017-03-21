@@ -2,7 +2,8 @@
 @buttonPadding: 1px;
 .scroll-buttons {
     position: relative;
-
+    height: 100%;
+    overflow: hidden;
     .scroll-button-content-wrapper {
         margin: 0 (@buttonWidth - @buttonPadding);
         overflow: hidden;    
@@ -29,12 +30,14 @@
         .scroll-button;
         padding-right: @buttonPadding;
         left: 0;
+        .box-shadow(1px 0px 6px 0px rgba(0,0,0,0.75));
     }
 
     .scroll-button-right {
         .scroll-button;
         padding-left: @buttonPadding;
         right: 0;
+        .box-shadow(-1px 0px 6px 0px rgba(0,0,0,0.75));
     }
 }
 
