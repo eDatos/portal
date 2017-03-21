@@ -1,6 +1,8 @@
 @dimensionPillWidth: 130px;
 @dimensionTitleWidth: 85px;
 @dimensionHeight: 23px;
+@zonesHorizontalPadding: 12px;
+@dimensionTitleWidthColumn: 60px;
 @h2LeftPadding: 8px;
 .order-dimensions {
     .order-sidebar-zone {
@@ -83,6 +85,36 @@
             }
         }
     }
+    
+    .dataset-dimensions-column {
+    
+
+        .dataset-dimensions-column-left {
+            width: @dimensionPillWidth;
+            float: left;
+            .order-sidebar-zone {
+                h2 {
+                    float: none;
+                    width: initial;
+                    margin-right: (-@zonesHorizontalPadding - 2);
+                }
+                .order-sidebar-dimensions {
+                    margin-left: 0;
+                    margin-top: 4px;
+                    margin-right: (-@zonesHorizontalPadding - 2);
+                }
+            }
+        }
+        .dataset-dimensions-column-right {
+            padding-left: @dimensionPillWidth + @zonesHorizontalPadding + 5px;
+            h2 {
+                width: @dimensionTitleWidthColumn;
+            }
+            .order-sidebar-dimensions {                
+                margin-left: @dimensionTitleWidthColumn + 1px + @h2LeftPadding;
+            }
+        }
+    }    
 }
 
 .sidebar-sidebar-content {
@@ -109,7 +141,7 @@
 
         padding-bottom: 30px;
         margin-bottom: 20px;
-    }
+   }
 }
 
 .order-sidebar-zone {    

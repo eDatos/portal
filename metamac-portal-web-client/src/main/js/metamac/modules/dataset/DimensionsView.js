@@ -7,8 +7,11 @@
 
     // TODO: Can we have a common View for for this and OrderSidebarView?
     App.modules.dataset.DimensionsView = Backbone.View.extend({
-
-        template : App.templateManager.get("dataset/dataset-dimensions"),
+        
+        _templateTable : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-table'),
+        _templateColumn : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-column'),        
+        _templateLine : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-line'),
+        _templateMap : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-map'),
 
         initialize : function (options) {
             this.filterDimensions = options.filterDimensions;
@@ -202,6 +205,22 @@
             return {zones : zones};
         },
 
+        _getTemplateByChartType : function(context) {
+            switch (this._getCurrentChartType()) {
+                case "canvasTable":
+                    return this._templateTable(context);
+                case "column":
+                    return this._templateColumn(context);
+                case "line":
+                    return this._templateLine(context);
+                case "map":
+                case "mapbubble":
+                    return this._templateMap(context);
+                default:
+                    return this._templateTable(context);
+            }
+        },
+
         _isFixedZone : function(zoneId) {
             return this.filterDimensions.isFixedZone(zoneId);
         },
@@ -214,10 +233,10 @@
             this._unbindEvents();
             this._bindEvents();
             var context = this._renderContext();
-            this.$el.html(this.template(context));
+            this.$el.html(this._getTemplateByChartType(context));
             this.scrollbuttons = [];
             var self = this;
-            this.$el.find('.order-sidebar-dimensions').each(function() {
+            this.$el.find('.order-sidebar-dimensions.scrollable').each(function() {
                  self.scrollbuttons.push(new App.components.scrollbuttons.Scrollbuttons({el : this}));
             });
 
