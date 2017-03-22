@@ -291,6 +291,11 @@ App.namespace("App.VisualElement.LineChart");
             var horizontalDimension = this.filterDimensions.dimensionsAtZone('left').at(0);
             var columnsDimension = this.filterDimensions.dimensionsAtZone('top').at(0);
             var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
+            if (horizontalDimension.get('type') == "TIME_DIMENSION") {
+                horizontalDimensionSelectedCategories = _.sortBy(horizontalDimensionSelectedCategories, function (representation) {
+                    return representation.normCode;
+                }).reverse();
+            }
             var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 
             var listSeries = [];
