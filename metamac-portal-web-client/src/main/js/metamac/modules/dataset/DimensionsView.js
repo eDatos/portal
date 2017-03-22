@@ -7,11 +7,8 @@
 
     // TODO: Can we have a common View for for this and OrderSidebarView?
     App.modules.dataset.DimensionsView = Backbone.View.extend({
-        
-        _templateTable : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-table'),
-        _templateColumn : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-column'),        
-        _templateLine : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-line'),
-        _templateMap : App.templateManager.get('dataset/dataset-dimensions/dataset-dimensions-map'),
+
+        template : App.templateManager.get('dataset/dataset-dimensions'),
 
         initialize : function (options) {
             this.filterDimensions = options.filterDimensions;
@@ -26,73 +23,99 @@
                 zones : {
                     left : {
                         icon : "rows",
-                        draggable : true
+                        draggable : true,
+                        location : "right",
+                        showHeader : true
                     },
                     top : {
                         icon : "columns",
-                        draggable : true
+                        draggable : true,
+                        location : "right",
+                        showHeader : true
                     },
-                },
+                }                
             },
             column : {
                 zones : {
-                    fixed : {
-                        icon : "lock",
-                        draggable : true
+                    axisy : {
+                        icon : "axis-y",
+                        draggable : false,
+                        location : "left",
+                        showHeader : true
                     },
                     left : {
                         icon : "axis-x",
-                        draggable : true
+                        draggable : true,
+                        location : "right",
+                        showHeader : true
                     },
-                    axisy : {
-                        icon : "axis-y",
-                        draggable : true
-                    },
-                },
+                    fixed : {
+                        icon : "lock",
+                        draggable : true,
+                        location : "right",
+                        showHeader : true
+                    }                    
+                }                
             },
             line : {
                 zones : {
-                    fixed : {
-                        icon : "lock",
-                        draggable : true
-                    },
-                    left : {
-                        icon : "axis-x",
-                        draggable : false
-                    },
-                    top : {
-                        icon : "line",
-                        draggable : true
-                    },
                     axisy : {
                         icon : "axis-y",
-                        draggable : false
+                        draggable : false,
+                        location : "left",
+                        showHeader : true
+                    }, 
+                    left : {
+                        icon : "axis-x",
+                        draggable : false,
+                        location : "left",
+                        showHeader : true
+                    },                                     
+                    top : {
+                        icon : "line",
+                        draggable : true,
+                        location : "right",
+                        showHeader : true
                     },
-                },
+                    fixed : {
+                        icon : "lock",
+                        draggable : true,
+                        location : "right",
+                        showHeader : true
+                    }
+                }                
             },
             map : {
                 zones : {
-                    fixed : {
-                        icon : "lock",
-                        draggable : false
-                    },
                     left : {
                         icon : "map",
-                        draggable : true
+                        draggable : false,
+                        location : "left",
+                        showHeader : true
                     },
-                },
+                    fixed : {
+                        icon : "lock",
+                        draggable : false,
+                        location : "right",
+                        showHeader : true
+                    },
+                }                
             },
             mapbubble : {
                 zones : {
-                    fixed : {
-                        icon : "lock",
-                        draggable : false
-                    },
                     left : {
                         icon : "map",
-                        draggable : true
+                        draggable : false,
+                        location : "left",
+                        showHeader : true
                     },
-                },
+                    fixed : {
+                        icon : "lock",
+                        draggable : false,
+                        location : "right",
+                        showHeader : true
+                    }
+                }                
             }
         },
 
@@ -213,27 +236,37 @@
                     draggable : this._zoneIsDraggableByChartType(zone),
                     dimensions : this._dimensionsForZone(zone),
                     isFixed : this._isFixedZone(zone),
-                    
+                    location : this._getLocationForZone(zone),
+                    showHeader : this._getShowHeader(zone)
                 };
             }, this);
 
-            return {zones : zones};
+            return {
+                leftColumnDimensions : this._getLeftColumnDimensions(zones),
+                zones : zones
+            };
         },
 
-        _getTemplateByChartType : function(context) {
-            switch (this._getCurrentChartType()) {
-                case "canvasTable":
-                    return this._templateTable(context);
-                case "column":
-                    return this._templateColumn(context);
-                case "line":
-                    return this._templateLine(context);
-                case "map":
-                case "mapbubble":
-                    return this._templateMap(context);
-                default:
-                    return this._templateTable(context);
-            }
+        _getLeftColumnDimensions : function(zones) {
+            var currentChartType = this._getCurrentChartType();
+            var leftColumnDimensions = _.reduce(zones, function(memo, zone) {
+                if (zone.location == "left") {
+                    return memo + zone.dimensions.length; 
+                } else {
+                    return memo;
+                }             
+            }, 0)
+            return currentChartType ? leftColumnDimensions : 0;
+        },
+        
+        _getShowHeader : function(zone) {
+            var currentChartType = this._getCurrentChartType();
+            return currentChartType ? this.configuration[currentChartType].zones[zone].showHeader : true;
+        },
+
+        _getLocationForZone : function(zone) {
+            var currentChartType = this._getCurrentChartType();
+            return currentChartType ? this.configuration[currentChartType].zones[zone].location : "right";
         },
 
         _isFixedZone : function(zoneId) {
@@ -248,7 +281,7 @@
             this._unbindEvents();
             this._bindEvents();
             var context = this._renderContext();
-            this.$el.html(this._getTemplateByChartType(context));
+            this.$el.html(this.template(context));
             this.scrollbuttons = [];
             var self = this;
             this.$el.find('.order-sidebar-dimensions.scrollable').each(function() {

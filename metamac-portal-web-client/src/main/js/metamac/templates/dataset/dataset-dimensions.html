@@ -1,14 +1,16 @@
-<div class="dataset-dimensions-column">
-    <div class="dataset-dimensions-column-left">
+<div class="dataset-dimensions">
+    <div class="dataset-dimensions-left dataset-dimensions-left-{{leftColumnDimensions}}">
         {{#each zones}}
-            {{#compare id "==" "axisy"}}
+            {{#compare location "==" "left"}}
             <div class="order-sidebar-zone {{#if draggable}}draggable{{/if}} {{#if isFixed}}fixed{{/if}}" data-zone="{{ id }}">
                 
-                <h2><i class="{{ icon }}"></i> {{ label }}</h2>       
+                {{#if showHeader}}
+                    <h2><i class="{{ icon }}"></i> {{ label }}</h2>       
+                {{/if}}
 
-                <div class="order-sidebar-dimensions">
+                <div class="order-sidebar-dimensions {{#compare dimensions.length '>' '1'}}scrollable{{/compare}}">
                     {{#each dimensions }}
-                        <a href="#" class="order-sidebar-dimension {{#if ../draggable}}draggable{{/if}}" {{#if ../draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
+                        <a href="#" class="order-sidebar-dimension {{#if ../draggable}}draggable dimension-pill{{/if}}" {{#if ../draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
                         title="{{label}}{{#if selectedCategory }} - {{ selectedCategory.label }} {{/if}}">
                             {{ label }}
                             {{#if selectedCategory }}                        
@@ -25,16 +27,18 @@
             {{/compare}}
         {{/each}}
     </div>
-    <div class="dataset-dimensions-column-right">
+    <div class="dataset-dimensions-right dataset-dimensions-left-{{leftColumnDimensions}}">
         {{#each zones}}
-            {{#compare id "!=" "axisy"}}
+            {{#compare location "==" "right"}}
             <div class="order-sidebar-zone {{#if draggable}}draggable{{/if}} {{#if isFixed}}fixed{{/if}}" data-zone="{{ id }}">
                 
-                <h2><i class="{{ icon }}"></i> {{ label }}</h2>       
+                {{#if showHeader}}
+                    <h2><i class="{{ icon }}"></i> {{ label }}</h2>       
+                {{/if}}
 
                 <div class="order-sidebar-dimensions scrollable">
                     {{#each dimensions }}
-                        <a href="#" class="order-sidebar-dimension {{#if ../draggable}}draggable{{/if}}" {{#if ../draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
+                        <a href="#" class="order-sidebar-dimension {{#if ../draggable}}draggable dimension-pill{{/if}}" {{#if ../draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
                         title="{{label}}{{#if selectedCategory }} - {{ selectedCategory.label }} {{/if}}">
                             {{ label }}
                             {{#if selectedCategory }}                        

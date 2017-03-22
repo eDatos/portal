@@ -1,5 +1,7 @@
 @filterSidebarCheckboxSize: 17px;
 @filterSidebarCategoryMargin: 5px;
+@filterSidebarFontSize: 12px;
+@filterSidebarFontSizeTitle: @filterSidebarFontSize * 1.2;
 
 
 .sidebar-container {
@@ -12,7 +14,7 @@
 }
 
 .filter-sidebar {
-    font-size: 12px;
+    font-size: @filterSidebarFontSize;
     height: 100%;
 }
 
@@ -51,7 +53,7 @@
 .sidebar-title {
     padding: 5px;
     margin-bottom: @filterSidebarCategoryMargin;
-    font-size: 14px;
+    font-size: @filterSidebarFontSizeTitle;
     line-height: 1.25em;
     background-color: @istacBlueMedium;
     color: #fff;
@@ -74,7 +76,7 @@
     }
 
     .filter-sidebar-dimension-label {
-        font-size: 12px;
+        font-size: @filterSidebarFontSize;
     }
 
 
