@@ -397,7 +397,7 @@ function program2(depth0,data) {
   stack1 = helpers['if'].call(depth0, depth0.draggable, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
-  stack1 = helpers['if'].call(depth0, depth0.isFixed, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.hasSelector, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" data-zone=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -425,7 +425,7 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   
-  return "fixed";
+  return "has-selector";
   }
 
 function program7(depth0,data) {
@@ -474,6 +474,9 @@ function program11(depth0,data,depth1) {
   buffer += escapeExpression(stack1)
     + "\r\n                            ";
   stack1 = helpers['if'].call(depth0, depth0.selectedCategory, {hash:{},inverse:self.noop,fn:self.programWithDepth(18, program18, data, depth0),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n                            ";
+  stack1 = helpers['if'].call(depth0, depth0.selectedLevel, {hash:{},inverse:self.noop,fn:self.programWithDepth(22, program22, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                        </a>\r\n                    ";
   return buffer;
@@ -534,24 +537,54 @@ function program20(depth0,data) {
   return "selected";
   }
 
-function program22(depth0,data) {
+function program22(depth0,data,depth1) {
+  
+  var buffer = "", stack1, stack2;
+  buffer += "                        \r\n                                <select class=\"dimension-select-level\" data-dimension-id=\""
+    + escapeExpression(((stack1 = depth1.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\r\n                                    ";
+  stack2 = helpers.each.call(depth0, depth0.levelList, {hash:{},inverse:self.noop,fn:self.programWithDepth(23, program23, data, depth0),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n                                </select>\r\n                            ";
+  return buffer;
+  }
+function program23(depth0,data,depth1) {
+  
+  var buffer = "", stack1, stack2, options;
+  buffer += "\r\n                                        <option value=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" ";
+  options = {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data};
+  stack2 = ((stack1 = helpers.compare || depth1.compare),stack1 ? stack1.call(depth0, ((stack1 = depth1.selectedLevel),stack1 == null || stack1 === false ? stack1 : stack1.id), "==", depth0.id, options) : helperMissing.call(depth0, "compare", ((stack1 = depth1.selectedLevel),stack1 == null || stack1 === false ? stack1 : stack1.id), "==", depth0.id, options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += ">";
+  if (stack2 = helpers.label) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.label; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "</option>\r\n                                    ";
+  return buffer;
+  }
+
+function program25(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
   buffer += "\r\n            ";
-  options = {hash:{},inverse:self.noop,fn:self.program(23, program23, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data};
   stack2 = ((stack1 = helpers.compare || depth0.compare),stack1 ? stack1.call(depth0, depth0.location, "==", "right", options) : helperMissing.call(depth0, "compare", depth0.location, "==", "right", options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n        ";
   return buffer;
   }
-function program23(depth0,data) {
+function program26(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, stack2, options;
   buffer += "\r\n            <div class=\"order-sidebar-zone ";
   stack1 = helpers['if'].call(depth0, depth0.draggable, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
-  stack1 = helpers['if'].call(depth0, depth0.isFixed, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.hasSelector, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" data-zone=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -560,10 +593,49 @@ function program23(depth0,data) {
     + "\">\r\n                \r\n                ";
   stack1 = helpers['if'].call(depth0, depth0.showHeader, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n                <div class=\"order-sidebar-dimensions scrollable\">\r\n                    ";
-  stack1 = helpers.each.call(depth0, depth0.dimensions, {hash:{},inverse:self.noop,fn:self.programWithDepth(11, program11, data, depth0),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n\r\n                <div class=\"order-sidebar-dimensions scrollable ";
+  options = {hash:{},inverse:self.noop,fn:self.program(27, program27, data),data:data};
+  stack2 = ((stack1 = helpers.compare || depth0.compare),stack1 ? stack1.call(depth0, depth0.showHeader, "==", false, options) : helperMissing.call(depth0, "compare", depth0.showHeader, "==", false, options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\">\r\n                    ";
+  stack2 = helpers.each.call(depth0, depth0.dimensions, {hash:{},inverse:self.noop,fn:self.programWithDepth(29, program29, data, depth0),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n                </div>\r\n            </div>\r\n            ";
+  return buffer;
+  }
+function program27(depth0,data) {
+  
+  
+  return "no-header";
+  }
+
+function program29(depth0,data,depth1) {
+  
+  var buffer = "", stack1;
+  buffer += "\r\n                        <a href=\"#\" class=\"order-sidebar-dimension ";
+  stack1 = helpers['if'].call(depth0, depth1.draggable, {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\" ";
+  stack1 = helpers['if'].call(depth0, depth1.draggable, {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " data-dimension-id=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" \r\n                        title=\"";
+  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1);
+  stack1 = helpers['if'].call(depth0, depth0.selectedCategory, {hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\">\r\n                            ";
+  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\r\n                            ";
+  stack1 = helpers['if'].call(depth0, depth0.selectedCategory, {hash:{},inverse:self.noop,fn:self.programWithDepth(18, program18, data, depth0),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n                        </a>\r\n                    ";
   return buffer;
   }
 
@@ -579,7 +651,7 @@ function program23(depth0,data) {
   else { stack1 = depth0.leftColumnDimensions; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\">\r\n        ";
-  stack1 = helpers.each.call(depth0, depth0.zones, {hash:{},inverse:self.noop,fn:self.program(22, program22, data),data:data});
+  stack1 = helpers.each.call(depth0, depth0.zones, {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n    </div>\r\n</div>";
   return buffer;
@@ -823,12 +895,12 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"field\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  buffer += "\r\n<h2>Estimadores</h2>\r\n<div class=\"field\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureDimension", options) : helperMissing.call(depth0, "message", "entity.dataset.measureDimension", options)))
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureDimensionCoverageConcepts", options) : helperMissing.call(depth0, "message", "entity.dataset.measureDimensionCoverageConcepts", options)))
     + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
   options = {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data};
-  stack2 = ((stack1 = helpers.join || depth0.join),stack1 ? stack1.call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), options) : helperMissing.call(depth0, "join", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), options));
+  stack2 = ((stack1 = helpers.join || depth0.join),stack1 ? stack1.call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representations), options) : helperMissing.call(depth0, "join", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representations), options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n    </div>\r\n</div>\r\n";
   return buffer;
@@ -847,7 +919,7 @@ function program2(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"field\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  buffer += "\r\n<h2>Conceptos con sus definiciones</h2>\r\n<div class=\"field\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.dimensions.title", options) : helperMissing.call(depth0, "message", "entity.dataset.dimensions.title", options)))
     + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
@@ -861,7 +933,7 @@ function program4(depth0,data) {
 function program6(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"field\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  buffer += "\r\n<h2>Notas de toda la tabla</h2>\r\n<div class=\"field\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.datasetAttributes", options) : helperMissing.call(depth0, "message", "entity.dataset.datasetAttributes", options)))
     + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
@@ -881,7 +953,16 @@ function program7(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"metadata-group\">\r\n";
+  buffer += "<div class=\"metadata-group\">\r\n\r\n";
+  stack2 = helpers['if'].call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representations), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n\r\n";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dimensions), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n\r\n\r\n";
+  stack2 = helpers['if'].call(depth0, depth0.datasetAttributes, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n\r\n<h2>Otros</h2>\r\n";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.statisticalOperation", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticalOperation), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.statisticalOperation", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticalOperation), "resource", options)))
     + "\r\n\r\n";
@@ -931,6 +1012,9 @@ function program7(depth0,data) {
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.formatExtentObservations", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.formatExtentObservations), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.formatExtentObservations", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.formatExtentObservations), "text", options)))
     + "\r\n";
   options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.lastUpdate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.lastUpdate), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.lastUpdate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.lastUpdate), "date", options)))
+    + "\r\n";
+  options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.dateNextUpdate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dateNextUpdate), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.dateNextUpdate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dateNextUpdate), "date", options)))
     + "\r\n";
   options = {hash:{},data:data};
@@ -941,16 +1025,10 @@ function program7(depth0,data) {
     + "\r\n";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.bibliographicCitation", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.bibliographicCitation), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.bibliographicCitation", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.bibliographicCitation), "text", options)))
-    + "\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dimensions), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.datasetAttributes, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n</div>\r\n</div>";
+    + "\r\n";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options)))
+    + "\r\n</div>\r\n";
   return buffer;
   });
 

@@ -28,15 +28,18 @@
         }
 
         .order-sidebar-dimensions {
-            white-space: nowrap;
-            margin-left: @dimensionTitleWidth + 1px;
+            white-space: nowrap;            
             height: @dimensionHeight;
 
             border: 1px solid @istacGrey;
             color: @istacGrey;
+
+            &.has-header {
+                margin-left: @dimensionTitleWidth + 1px;
+            }
         }
 
-        &.fixed {
+        &.has-selector {
             h2,
             .order-sidebar-dimensions {
                 height: @dimensionHeight + 16px;
@@ -141,7 +144,7 @@
                 margin: -1px;
             }
 
-            &.fixed {
+            &.has-selector {
                 padding-top: 0;
                 h2 {
                     height: @dimensionHeight;
@@ -162,9 +165,11 @@
         
         &.dataset-dimensions-left-1,
         &.dataset-dimensions-left-2 {
-            .order-sidebar-zone:last-child {
+            .order-sidebar-zone:last-child { 
+                .order-sidebar-dimensions.no-header, 
                 h2 {
                     .border-radius(0 0 0 9px);
+                    overflow: hidden;
                 }
             }
         }
@@ -173,8 +178,11 @@
             h2 {
                 width: @dimensionTitleWidthColumn;
             }
-            .order-sidebar-dimensions {                
-                margin-left: @dimensionTitleWidthColumn + 1px + @h2LeftPadding;                                       
+            .order-sidebar-dimensions {
+                margin-left: @dimensionTitleWidthColumn + 1px + @h2LeftPadding;
+                &.no-header {                
+                     margin-left: 0;
+                }                                  
             }
         }        
     }    
@@ -209,7 +217,7 @@
 .order-sidebar-zone {    
     margin-bottom: -1px;
 
-    &.fixed {
+    &.has-selector {
         padding-top: 0;
     }
 

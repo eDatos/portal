@@ -91,13 +91,13 @@
                         icon : "map",
                         draggable : false,
                         location : "left",
-                        showHeader : true
+                        showHeader : false
                     },
                     fixed : {
                         icon : "lock",
                         draggable : false,
                         location : "right",
-                        showHeader : true
+                        showHeader : false
                     },
                 }                
             },
@@ -107,13 +107,13 @@
                         icon : "map",
                         draggable : false,
                         location : "left",
-                        showHeader : true
+                        showHeader : false
                     },
                     fixed : {
                         icon : "lock",
                         draggable : false,
                         location : "right",
-                        showHeader : true
+                        showHeader : false
                     }
                 }                
             }
@@ -133,7 +133,8 @@
             "drop .order-sidebar-zone.draggable" : "_onDrop",
 
             "click a.order-sidebar-dimension" : "_dontFollowLinks",
-            "change .fixed-dimension-select-category" : "_onChange",
+            "change .fixed-dimension-select-category" : "_onChangeCategory",
+            "change .dimension-select-level" : "_onChangeLevel",
 
             "focusin .order-sidebar-dimension" : "_onFocusin",
             "focusout .order-sidebar-dimension" : "_onFocusout"
@@ -143,7 +144,7 @@
             e.preventDefault();
         },
 
-        _onChange : function(e) {
+        _onChangeCategory : function(e) {
             var currentTarget = $(e.currentTarget);
             var selectedCategoryId = currentTarget.val();
             var dimensionId = currentTarget.data("dimension-id");
@@ -153,6 +154,18 @@
                 if (!_.isUndefined(representations.get(selectedCategory))) {
                     representations.get(selectedCategory).set({drawable : true});
                 }
+            }
+        },
+
+         _onChangeLevel : function(e) {
+            var currentTarget = $(e.currentTarget);
+            var selectedLevelId = currentTarget.val();
+            var dimensionId = currentTarget.data("dimension-id");
+            if (dimensionId) {
+                var representations = this.filterDimensions.get(dimensionId).get('representations');
+                _.invoke(representations.models, 'set', { drawable : false }, { silent : true });
+                _.invoke(representations.where({ level : parseInt(selectedLevelId)}), 'set', { drawable : true });  
+                this.filterDimensions.trigger("change:drawable");          
             }
         },
 
@@ -170,7 +183,7 @@
 
         _updateSelectedCategory : function(filterDimensionId, e) {
             if (!_.isUndefined(e)) {
-                this.$el.find('select[data-dimension-id=' + filterDimensionId + ']').val(e.get('id'));
+                this.$el.find('select.fixed-dimension-select-category[data-dimension-id=' + filterDimensionId + ']').val(e.get('id'));
             }            
         },
 
@@ -235,7 +248,7 @@
                     icon : this._getIconFromZone(zone),
                     draggable : this._zoneIsDraggableByChartType(zone),
                     dimensions : this._dimensionsForZone(zone),
-                    isFixed : this._isFixedZone(zone),
+                    hasSelector : this._hasSelector(zone),
                     location : this._getLocationForZone(zone),
                     showHeader : this._getShowHeader(zone)
                 };
@@ -269,8 +282,20 @@
             return currentChartType ? this.configuration[currentChartType].zones[zone].location : "right";
         },
 
+        _hasSelector : function(zoneId) {
+            return this._isFixedZone(zoneId) || this._hasHierarchySelector(zoneId);
+        },
+
         _isFixedZone : function(zoneId) {
             return this.filterDimensions.isFixedZone(zoneId);
+        },
+    
+        _hasHierarchySelector : function(zone) {
+            var self = this;
+            return this.filterDimensions.dimensionsAtZone(zone)
+                .reduce(function(memo, dimension) {
+                    return memo || self._needsHierarchySelector(dimension);
+                }, false);
         },
 
         _isMap : function () {
@@ -297,14 +322,41 @@
             var self = this;
             var dimensionsForZone = dimensionCollection.map(function (dimensionModel) {
                 var dimension = dimensionModel.toJSON();
-                dimension.draggable = isMap ? dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION" : true;
-                if (self._isFixedZone(zoneId)) {                    
+                var isGeographicDimension = dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION";
+                dimension.draggable = isMap ? isGeographicDimension : true;
+                
+                if (self._needsHierarchySelector(dimensionModel)) {
+                    dimension.selectedLevel = self._getMorePopulatedLevel(dimensionModel); 
+                    dimension.levelList = self._getLevelCollection(dimensionModel);
+                } else if (self._isFixedZone(zoneId)) {                    
                     dimension.selectedCategory = dimensionModel.get('representations').findWhere({drawable : true}).toJSON();
                     dimension.representationsList = dimensionModel.get('representations').where({'selected': true}).map(function(model) { return model.toJSON(); });
                 }
                 return dimension;
             });
             return dimensionsForZone;
+        },
+
+        _needsHierarchySelector : function(dimension) {
+            if (dimension.get('hierarchy')) {
+                return (this._isMap() && dimension.get('type') == "GEOGRAPHIC_DIMENSION") 
+                || (this._getCurrentChartType() == 'line' && dimension.get('type') == "TIME_DIMENSION");
+            } else {
+                return false;
+            }
+        },
+        
+
+        _getMorePopulatedLevel : function(dimension) {
+            return {id : 1};
+        },
+
+        _getLevelCollection : function(dimension) {
+            var hierarchyLevel = dimension.getMaxHierarchyLevel() + 1;
+            var levelsModels = _(hierarchyLevel).times(function (n) {
+                return {id : n, label : 'Nivel ' + (n + 1)};
+            });
+            return levelsModels;
         },
 
         _onDragstart : function (e) {
