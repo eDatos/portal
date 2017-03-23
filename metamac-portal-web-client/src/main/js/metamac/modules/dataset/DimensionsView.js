@@ -156,16 +156,27 @@
                 }
             }
         },
+        
+        _updateRepresentationsBySelectedLevel : function(dimensionId, selectedLevel) {
+            var representations = this.filterDimensions.get(dimensionId).get('representations');
+            _.invoke(representations.models, 'set', { drawable : false }, { silent : true });
+            _.invoke(representations.where({ level : parseInt(selectedLevel), selected : true}), 'set', { drawable : true });  
 
-         _onChangeLevel : function(e) {
+            this.filterDimensions.trigger("change:drawable");  
+        },
+
+        _updateRepresentations : function (filterDimensionId, e) {
+            // TODO Refactor this to avoid accesing the DOM
+            var selectedLevel = this.$el.find('select.dimension-select-level[data-dimension-id=' + filterDimensionId + ']').val();
+            this._updateRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
+        },
+
+        _onChangeLevel : function(e) {
             var currentTarget = $(e.currentTarget);
-            var selectedLevelId = currentTarget.val();
+            var selectedLevel = currentTarget.val();
             var dimensionId = currentTarget.data("dimension-id");
             if (dimensionId) {
-                var representations = this.filterDimensions.get(dimensionId).get('representations');
-                _.invoke(representations.models, 'set', { drawable : false }, { silent : true });
-                _.invoke(representations.where({ level : parseInt(selectedLevelId)}), 'set', { drawable : true });  
-                this.filterDimensions.trigger("change:drawable");          
+                this._updateRepresentationsBySelectedLevel(dimensionId, selectedLevel);
             }
         },
 
@@ -191,6 +202,7 @@
             var self = this;
             this.filterDimensions.each(function(filterDimension) {
                 filterDimension.get('representations').on("change:drawable", _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));                
+                filterDimension.get('representations').on("change:selected", _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300)); 
             });
             this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(this.render, 15));
             this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);
@@ -344,17 +356,23 @@
             } else {
                 return false;
             }
-        },
-        
-
+        },        
+                
         _getMorePopulatedLevel : function(dimension) {
-            return {id : 1};
+            var selectedLevels = this._getSelectedLevels(dimension);
+            var countedByLevels = _(selectedLevels).countBy();
+            var maxPopulation = _(countedByLevels).max();
+            return _.invert(countedByLevels)[maxPopulation];
         },
+
+        _getSelectedLevels : function(dimension) {
+            return _(dimension.get('representations').where({'selected': true})).invoke("get", "level");
+        },        
 
         _getLevelCollection : function(dimension) {
-            var hierarchyLevel = dimension.getMaxHierarchyLevel() + 1;
-            var levelsModels = _(hierarchyLevel).times(function (n) {
-                return {id : n, label : 'Nivel ' + (n + 1)};
+            var uniqueLevels = _(this._getSelectedLevels(dimension)).uniq().sort();
+            var levelsModels = _(uniqueLevels).map(function (level) {
+                return {level : level, label : 'Nivel ' + (level + 1)};
             });
             return levelsModels;
         },

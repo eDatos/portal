@@ -552,12 +552,12 @@ function program23(depth0,data,depth1) {
   
   var buffer = "", stack1, stack2, options;
   buffer += "\r\n                                        <option value=\"";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\" ";
   options = {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data};
-  stack2 = ((stack1 = helpers.compare || depth1.compare),stack1 ? stack1.call(depth0, ((stack1 = depth1.selectedLevel),stack1 == null || stack1 === false ? stack1 : stack1.id), "==", depth0.id, options) : helperMissing.call(depth0, "compare", ((stack1 = depth1.selectedLevel),stack1 == null || stack1 === false ? stack1 : stack1.id), "==", depth0.id, options));
+  stack2 = ((stack1 = helpers.compare || depth1.compare),stack1 ? stack1.call(depth0, depth1.selectedLevel, "==", depth0.level, options) : helperMissing.call(depth0, "compare", depth1.selectedLevel, "==", depth0.level, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += ">";
   if (stack2 = helpers.label) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
