@@ -52,6 +52,7 @@ module.exports = (grunt) ->
                 paths.js + "/libs/highcharts.js"
                 paths.js + "/libs/jquery.mousewheel.js"
                 paths.js + "/libs/jquery.ba-resize.js"
+                paths.js + "/libs/perfect-scrollbar.jquery.js"
 
                 # Metamac libs
                 paths.js + "/metamac/libs/i18n.js"

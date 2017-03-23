@@ -63,10 +63,11 @@
                     filterRepresentation : filterRepresentation
                 });
                 view.render();
-                $categories.append(view.el);
+                $categories.append(view.el); 
                 return view;
-            }, this);
+            }, this);                        
             this.subviews = this.subviews.concat(this.representationsSubviews);
+            $categories.perfectScrollbar();
 
             this.searchbarView = new App.components.searchbar.SearchbarView({
                 model : this.filterDimension,
@@ -108,13 +109,20 @@
                 el : this.$(".filter-sidebar-dimension-visibleLabelType")
             });
             this.visibleLabelTypeView.render();
-            this.subviews.push(this.visibleLabelTypeView);
+            this.subviews.push(this.visibleLabelTypeView);            
 
 
             this.setMaxHeight(this.maxHeight);
             this._onChangeOpen(this.filterDimension);
-
+    
             return this.el;
+        },
+
+        updateScrollbar: function() {
+            // Wait for DOM
+            setTimeout(function() {
+                this.$(".filter-sidebar-categories").perfectScrollbar('update');
+            }, 10);            
         },
 
         getCollapsedHeight : function () {
@@ -131,12 +139,14 @@
         _onChangeOpen : function (model) {
             if (model.id === this.filterDimension.id) {
                 this.$el.find('.collapse').toggleClass('in', this.filterDimension.get('open'));
+                this.updateScrollbar();
             }
         },
 
         setMaxHeight : function (maxHeight) {
             this.maxHeight = maxHeight;
             this.$('.collapse').css('max-height', maxHeight);
+            this.updateScrollbar();
         },
 
         resetLastIndex : function () {
