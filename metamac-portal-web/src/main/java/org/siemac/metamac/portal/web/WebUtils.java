@@ -17,6 +17,10 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
     protected static String portalAgricultureStyleCssUrl    = null;
     protected static String portalAgricultureStyleFooterUrl = null;
 
+    protected static String portalEnvironmentStyleHeaderUrl = null;
+    protected static String portalEnvironmentStyleCssUrl    = null;
+    protected static String portalEnvironmentStyleFooterUrl = null;
+
     public static void setExportApiBaseURL(String apiBaseUrl) {
         WebUtils.exportApiBaseUrl = SwaggerUtils.normalizeUrl(apiBaseUrl);
     }
@@ -33,51 +37,73 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
         return permalinksApiBaseUrl;
     }
 
-    public static String getPortalDefaultStyleHeaderUrl() {
-        return portalDefaultStyleHeaderUrl;
+    /* Portal specific. See web.xml for matched patterns */
+    public static String getPortalStyleHeaderUrl(String organizationService) {
+        switch (organizationService) {
+            case "agricultura":
+                return portalAgricultureStyleHeaderUrl;
+            case "medioambiente":
+                return portalEnvironmentStyleHeaderUrl;
+            default:
+                return portalDefaultStyleHeaderUrl;
+        }
+    }
+
+    public static String getPortalStyleFooterUrl(String organizationService) {
+        switch (organizationService) {
+            case "agricultura":
+                return portalAgricultureStyleFooterUrl;
+            case "medioambiente":
+                return portalEnvironmentStyleFooterUrl;
+            default:
+                return portalDefaultStyleFooterUrl;
+        }
+    }
+
+    public static String getPortalStyleCssUrl(String organizationService) {
+        switch (organizationService) {
+            case "agricultura":
+                return portalAgricultureStyleCssUrl;
+            case "medioambiente":
+                return portalEnvironmentStyleCssUrl;
+            default:
+                return portalDefaultStyleCssUrl;
+        }
     }
 
     public static void setPortalDefaultStyleHeaderUrl(String portalDefaultStyleHeaderUrl) {
         WebUtils.portalDefaultStyleHeaderUrl = portalDefaultStyleHeaderUrl;
     }
 
-    public static String getPortalDefaultStyleCssUrl() {
-        return portalDefaultStyleCssUrl;
-    }
-
     public static void setPortalDefaultStyleCssUrl(String portalDefaultStyleCssUrl) {
         WebUtils.portalDefaultStyleCssUrl = portalDefaultStyleCssUrl;
-    }
-
-    public static String getPortalDefaultStyleFooterUrl() {
-        return portalDefaultStyleFooterUrl;
     }
 
     public static void setPortalDefaultStyleFooterUrl(String portalDefaultStyleFooterUrl) {
         WebUtils.portalDefaultStyleFooterUrl = portalDefaultStyleFooterUrl;
     }
 
-    public static String getPortalAgricultureStyleHeaderUrl() {
-        return portalAgricultureStyleHeaderUrl;
-    }
-
     public static void setPortalAgricultureStyleHeaderUrl(String portalAgricultureStyleHeaderUrl) {
         WebUtils.portalAgricultureStyleHeaderUrl = portalAgricultureStyleHeaderUrl;
-    }
-
-    public static String getPortalAgricultureStyleCssUrl() {
-        return portalAgricultureStyleCssUrl;
     }
 
     public static void setPortalAgricultureStyleCssUrl(String portalAgricultureStyleCssUrl) {
         WebUtils.portalAgricultureStyleCssUrl = portalAgricultureStyleCssUrl;
     }
 
-    public static String getPortalAgricultureStyleFooterUrl() {
-        return portalAgricultureStyleFooterUrl;
-    }
-
     public static void setPortalAgricultureStyleFooterUrl(String portalAgricultureStyleFooterUrl) {
         WebUtils.portalAgricultureStyleFooterUrl = portalAgricultureStyleFooterUrl;
+    }
+
+    public static void setPortalEnvironmentStyleHeaderUrl(String portalEnvironmentStyleHeaderUrl) {
+        WebUtils.portalEnvironmentStyleHeaderUrl = portalEnvironmentStyleHeaderUrl;
+    }
+
+    public static void setPortalEnvironmentStyleCssUrl(String portalEnvironmentStyleCssUrl) {
+        WebUtils.portalEnvironmentStyleCssUrl = portalEnvironmentStyleCssUrl;
+    }
+
+    public static void setPortalEnvironmentStyleFooterUrl(String portalEnvironmentStyleFooterUrl) {
+        WebUtils.portalEnvironmentStyleFooterUrl = portalEnvironmentStyleFooterUrl;
     }
 }

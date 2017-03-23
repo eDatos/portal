@@ -23,4 +23,9 @@ public interface PortalConfiguration extends ConfigurationService {
     String retrievePortalAgricultureStyleHeaderUrl() throws MetamacException;
     String retrievePortalAgricultureStyleCssUrl() throws MetamacException;
     String retrievePortalAgricultureStyleFooterUrl() throws MetamacException;
+    
+    String retrievePortalEnvironmentStyleHeaderUrl() throws MetamacException;
+    String retrievePortalEnvironmentStyleCssUrl() throws MetamacException;
+    String retrievePortalEnvironmentStyleFooterUrl() throws MetamacException;  
+    
 }

@@ -135,26 +135,15 @@
 	    }
 	%>
 	<%
-    
-	   request.setAttribute("portalStyleHeaderUrl", WebUtils.getPortalDefaultStyleHeaderUrl());
-       request.setAttribute("portalStyleCssUrl", WebUtils.getPortalDefaultStyleCssUrl());
-       request.setAttribute("portalStyleFooterUrl", WebUtils.getPortalDefaultStyleFooterUrl());
-    
+	
+       String organizationService = "";
        String servletPath = request.getServletPath();       
 	   if (servletPath != null) {
-           /* See web.xml for matched url-patterns
-            */
-	       String organizationService = servletPath.split("/")[2];
-	       switch (organizationService) {
-               case "agricultura":
-                   request.setAttribute("portalStyleHeaderUrl", WebUtils.getPortalAgricultureStyleHeaderUrl());
-                   request.setAttribute("portalStyleCssUrl", WebUtils.getPortalAgricultureStyleCssUrl());
-                   request.setAttribute("portalStyleFooterUrl", WebUtils.getPortalAgricultureStyleFooterUrl());
-                   break;
-               default:
-                   break;
-	       }
+	       organizationService = servletPath.split("/")[2];
 	   }
+       request.setAttribute("portalStyleHeaderUrl", WebUtils.getPortalStyleHeaderUrl(organizationService));
+       request.setAttribute("portalStyleCssUrl", WebUtils.getPortalStyleCssUrl(organizationService));
+       request.setAttribute("portalStyleFooterUrl", WebUtils.getPortalStyleFooterUrl(organizationService));
 
 	%>	
    	<title>${titlePrefix}${resourceName}</title>

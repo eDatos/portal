@@ -47,6 +47,10 @@ public class ApplicationStartup extends ApplicationStartupListener {
             WebUtils.setPortalAgricultureStyleCssUrl(portalConfigurationService.retrievePortalAgricultureStyleCssUrl());
             WebUtils.setPortalAgricultureStyleFooterUrl(portalConfigurationService.retrievePortalAgricultureStyleFooterUrl());
 
+            WebUtils.setPortalEnvironmentStyleHeaderUrl(portalConfigurationService.retrievePortalEnvironmentStyleHeaderUrl());
+            WebUtils.setPortalEnvironmentStyleCssUrl(portalConfigurationService.retrievePortalEnvironmentStyleCssUrl());
+            WebUtils.setPortalEnvironmentStyleFooterUrl(portalConfigurationService.retrievePortalEnvironmentStyleFooterUrl());
+
         } catch (MetamacException e) {
             log.error("Error retrieving application configuration", e);
         }
