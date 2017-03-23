@@ -103,17 +103,12 @@
             this.stopListening();
         },
 
-        _updateDimensionsHeight : function() {
-            this.content.$el.toggleClass('has-dimensions', this.optionsModel.get('filter'));
-        },
-
         serializeData : function () {
             var isInfo =  this.optionsModel.get('type') && this.optionsModel.get('type') == "info";
             var context = {
                 showHeader : this._showHeader(), // Depends if the server is already painting the title and description
                 isWidget : this.optionsModel.get('widget'),
-                metadata : this.metadata.toJSON(),
-                hasDimensions : !isInfo
+                metadata : this.metadata.toJSON()
             };
             return context;
         },

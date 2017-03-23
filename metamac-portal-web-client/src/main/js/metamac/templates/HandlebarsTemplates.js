@@ -1189,22 +1189,13 @@ function program4(depth0,data) {
 function program6(depth0,data) {
   
   
-  return "has-dimensions";
-  }
-
-function program8(depth0,data) {
-  
-  
   return "\r\n <div class=\"clearfix dataset-export\">\r\n\r\n</div>\r\n";
   }
 
   stack1 = helpers['if'].call(depth0, depth0.showHeader, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n<div class=\"dataset-visualization-container\">\r\n    <div class=\"dataset-sidebar-visualization-container ";
-  stack1 = helpers['if'].call(depth0, depth0.hasDimensions, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n\r\n    </div>\r\n    <div class=\"dataset-visualization-options-bar\">\r\n\r\n    </div>\r\n</div>\r\n";
-  stack1 = helpers.unless.call(depth0, depth0.isWidget, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
+  buffer += "\r\n<div class=\"dataset-visualization-container\">\r\n    <div class=\"dataset-sidebar-visualization-container\">\r\n\r\n    </div>\r\n    <div class=\"dataset-visualization-options-bar\">\r\n\r\n    </div>\r\n</div>\r\n";
+  stack1 = helpers.unless.call(depth0, depth0.isWidget, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
   });

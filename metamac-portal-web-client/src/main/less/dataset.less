@@ -236,21 +236,20 @@
         }
     }
 
-    &.has-dimensions {
-        &.dataset-visualization-type-canvasTable {
-            .dataset-visualization-visual-element {
-                padding-top: @dimensionsBarTypeTable;
-            }
-        }
-        
-        &.dataset-visualization-type-info {
-            .dataset-visualization-visual-element {
-                padding-top: 0;
-            }
-        }        
+    &.dataset-visualization-type-canvasTable {
         .dataset-visualization-visual-element {
-            padding-top: @dimensionsBarTypeDefault;            
+            padding-top: @dimensionsBarTypeTable;
         }
+    }
+    
+    &.dataset-visualization-type-info {
+        .dataset-visualization-visual-element {
+            padding-top: 0;
+        }
+    }
+            
+    .dataset-visualization-visual-element {
+        padding-top: @dimensionsBarTypeDefault;            
     }
 }
 
