@@ -168,7 +168,9 @@
         _updateRepresentations : function (filterDimensionId, e) {
             // TODO Refactor this to avoid accesing the DOM
             var selectedLevel = this.$el.find('select.dimension-select-level[data-dimension-id=' + filterDimensionId + ']').val();
-            this._updateRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
+            if (selectedLevel) {
+                this._updateRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
+            }            
         },
 
         _onChangeLevel : function(e) {
@@ -357,7 +359,7 @@
                 return false;
             }
         },        
-                
+
         _getMorePopulatedLevel : function(dimension) {
             var selectedLevels = this._getSelectedLevels(dimension);
             var countedByLevels = _(selectedLevels).countBy();
