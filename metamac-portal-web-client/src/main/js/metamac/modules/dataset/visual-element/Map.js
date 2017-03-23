@@ -107,7 +107,7 @@
         destroy : function () {
             this.visible = false;
 
-            if (this._mapContainerView) {
+            if (this._mapContainerView && this._mapContainerView.renderTo) {
                 this._mapContainerView.destroy();
             }
 

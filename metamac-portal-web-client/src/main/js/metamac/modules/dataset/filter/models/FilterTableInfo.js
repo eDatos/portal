@@ -19,10 +19,6 @@
         return (new Array(n + 1)).join(str)
     };
 
-    var maxInArray = function (arr) {
-        return Math.max.apply(null, arr);
-    };
-
     var incrementArray = function (arr, prop, value) {
         _.each(arr, function (e) {
             e[prop] += value;
