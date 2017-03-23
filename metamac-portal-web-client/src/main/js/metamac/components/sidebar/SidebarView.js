@@ -177,15 +177,6 @@
                 view.setElement(this.$sidebarContent);
             }, this);
 
-            this.openerView = new App.components.ToggleableView({
-                inactiveValue : {id : true, title : "Ocultar", icon : "icon-eye-slash"},
-                activeValue : {id : false, title : "Visualizar", icon : "icon-eye"},
-                selectionModel : this.state,
-                name : "visible",
-                el : this.$(".sidebar-opener")
-            });
-            this.openerView.render();
-
             this.sideViews[0].render();
 
             if (this.contentView != null) {

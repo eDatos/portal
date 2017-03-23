@@ -96,8 +96,7 @@
             this.listenTo(this.visualizationView, "exitFullScreen", _.bind(this.fullScreen.exitFullScreen, this.fullScreen));
             this.listenTo(this.fullScreen, "didEnterFullScreen", this._onDidEnterFullScreen);
             this.listenTo(this.fullScreen, "didExitFullScreen", this._onDidExitFullScreen);
-            this.listenTo(this.optionsModel, "change:type", this._onSelectChartType);
-            this.listenTo(this.optionsModel, "change:filter", this._updateDimensionsHeight);            
+            this.listenTo(this.optionsModel, "change:type", this._onSelectChartType);      
         },
 
         _unbindEvents : function () {
@@ -109,10 +108,12 @@
         },
 
         serializeData : function () {
+            var isInfo =  this.optionsModel.get('type') && this.optionsModel.get('type') == "info";
             var context = {
                 showHeader : this._showHeader(), // Depends if the server is already painting the title and description
                 isWidget : this.optionsModel.get('widget'),
-                metadata : this.metadata.toJSON()
+                metadata : this.metadata.toJSON(),
+                hasDimensions : !isInfo
             };
             return context;
         },

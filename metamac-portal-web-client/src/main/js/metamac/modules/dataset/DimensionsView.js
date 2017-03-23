@@ -97,7 +97,7 @@
                         icon : "lock",
                         draggable : false,
                         location : "right",
-                        showHeader : false
+                        showHeader : true
                     },
                 }                
             },
@@ -113,7 +113,7 @@
                         icon : "lock",
                         draggable : false,
                         location : "right",
-                        showHeader : false
+                        showHeader : true
                     }
                 }                
             }
@@ -207,15 +207,6 @@
                 filterDimension.get('representations').on("change:selected", _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300)); 
             });
             this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(this.render, 15));
-            this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);
-        },
-
-        toggleVisibility: function() {
-            if (this.optionsModel.get('filter')) {
-                this.$el.show();
-            } else {
-                this.$el.hide();
-            }
         },
 
         _unbindEvents : function () {
@@ -326,8 +317,6 @@
             this.$el.find('.order-sidebar-dimensions.scrollable').each(function() {
                  self.scrollbuttons.push(new App.components.scrollbuttons.Scrollbuttons({el : this}));
             });
-
-            this.toggleVisibility();
         },
 
         _dimensionsForZone : function (zoneId) {
