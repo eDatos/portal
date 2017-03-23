@@ -33,16 +33,19 @@
             this._unbindEvents();
             this._bindEvents();
 
+            var value = this.model.get(this.modelAttribute);
             var context = {
-                value : this.model.get(this.modelAttribute)
+                value : value
             };
-            this.$el.html(this.template(context));
-            this.$searchInput = this.$("input");
+            this.$el.html(this.template(context));                        
+            this.updateClearVisibility(value);
+            this.$searchInput = this.$("input");            
             this.$searchInput.keyup(_.bind(this.onChangeSearchInput, this));
         },
 
         updateModelAttribute : function (value) {
             this.model.set(this.modelAttribute, value);
+            this.updateClearVisibility(value);
         },
 
         onClearSearchInput : function (e) {
@@ -52,8 +55,16 @@
         },
 
         onChangeSearchInput : function () {
-            var value = this.$searchInput.val();
-            this.updateModelAttribute(value);
+            var value = this.$searchInput.val();            
+            this.updateModelAttribute(value);            
+        },
+
+        updateClearVisibility : function(value) {
+            if (value) {
+                this.$el.find('.searchbar-clear').show();
+            } else {
+                this.$el.find('.searchbar-clear').hide();
+            }
         },
 
         onChangeModelAttribute : function () {
