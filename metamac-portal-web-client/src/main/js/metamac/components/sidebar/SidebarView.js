@@ -178,8 +178,8 @@
             }, this);
 
             this.openerView = new App.components.ToggleableView({
-                inactiveValue : {id : true, title : "Cerrar" },
-                activeValue : {id : false, title : "Abrir"},
+                inactiveValue : {id : true, title : "Ocultar", icon : "icon-eye-slash"},
+                activeValue : {id : false, title : "Visualizar", icon : "icon-eye"},
                 selectionModel : this.state,
                 name : "visible",
                 el : this.$(".sidebar-opener")

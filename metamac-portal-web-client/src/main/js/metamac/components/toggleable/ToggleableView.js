@@ -34,6 +34,14 @@
             if (this.inactiveValue.id === selection) return false;
         },
 
+        getValue : function() {
+            if (this.isToggledOn()) {
+                return this.activeValue;
+            } else {
+                return this.inactiveValue;
+            }
+        },
+
         toggleValue : function() {
             if (this.isToggledOn()) {
                 this.selectionModel.set(this.name, this.inactiveValue.id);
@@ -42,19 +50,21 @@
             }
         },
 
-
         render : function () {
             this.unbindEvents();
             this.bindEvents();
+            var selectedValue = this.getValue();
             var context = {
-                name : this.name,
-                isToggledOn : this.isToggledOn()
+                isToggledOn : this.isToggledOn(),
+                icon : selectedValue.icon,
+                title : selectedValue.title
             };
             this.$el.html(this.template(context));
         },
 
         onChangeSelect : function () {
             this.toggleValue();
+            this.render();
         }
 
     });

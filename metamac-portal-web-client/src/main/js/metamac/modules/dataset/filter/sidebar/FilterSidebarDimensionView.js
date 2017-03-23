@@ -101,8 +101,8 @@
             }
  
             this.visibleLabelTypeView = new App.components.ToggleableView({
-                inactiveValue : {id : "label", title : "Etiqueta" },
-                activeValue : {id : "idLabel", title : "Código y etiqueta"},
+                inactiveValue : {id : "label", title : "Código y etiqueta", icon : "icon-eye" },
+                activeValue : {id : "idLabel", title : "Etiqueta", icon : "icon-eye-slash"},
                 selectionModel : this.filterDimension,
                 name : "visibleLabelType",
                 el : this.$(".filter-sidebar-dimension-visibleLabelType")
