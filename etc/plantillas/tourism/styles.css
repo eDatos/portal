@@ -1,0 +1,1937 @@
+body											{background:url(../img/maqueta/fondo3.gif) #c4d0dc repeat-y center 50%;font:70% Arial, Helvetica, sans-serif;margin:0;text-align:center;}
+a img                                        {border:none;}
+#contenido									{background:#fff;border-style:none;height:auto;margin:0 auto;padding:0;text-align:left;width:762px;}
+
+/******************************************************** CABECERA *****************************************************************************************/
+
+#cabecera									{float:left;margin:0; border-bottom:#d7dddb 1px solid; border-left:#d7dddb 1px solid;border-right:#d7dddb 1px solid;padding-bottom:5px;width:760px;}
+#cabecera #cab_superior 						{text-align: right; width:760px;}
+#cabecera #cab_superior ul 					{margin:7px 0 0 0; padding:0;}
+#cabecera #cab_superior ul li 					{display:inline;font-size:0.9em;list-style-type:none;padding:0 5px 0 0;}
+#cabecera #cab_superior ul li a					{color:#535353; text-decoration:none; margin-right:7px;}
+#cabecera #cab_superior ul li a:hover			{text-decoration:underline;}
+
+#cabecera #menu_contextual 					{background-color:#036;clear:both;float:left;height:22px;width:760px;}
+#cabecera #menu_contextual ul.menu 			{float:left; margin:0; padding:0 1px 0 1px;}
+#cabecera #menu_contextual ul.menu li 			{display:inline; margin-right:5px; text-transform:uppercase;}
+#cabecera #menu_contextual ul.menu li a 			{color:#fff;float:left;font:0.9em Arial, Helvetica, sans-serif;margin-left:3px;padding:5px 21px 3px 22px;text-decoration:none;font-weight:bold;}
+#cabecera #menu_contextual ul.menu li a:hover 	{background-color:#3478B0;margin-left:3px;text-decoration:none;}
+#cabecera #menu_contextual ul.menu li.selec a 	{background-color:#3478B0;color:#fff;display:inline;float:left;font-weight:bold;text-decoration:none;}
+
+#cabecera #menu_contextual #formulario_google 						{float:right}
+#cabecera #menu_contextual #formulario_google .texto					{font:0.9em bold Arial, Helvetica, sans-serif; color:#ffffff;margin-top:1px;}
+#cabecera #menu_contextual #formulario_google .buscar					{border:#535353 1px solid; color:#535353; font:0.9em Arial, Helvetica, sans-serif; margin-top:1px; height:14px;width:108px;}
+#cabecera #menu_contextual #formulario_google .boton_busqueda			{font:0.9em bold Arial, Helvetica, sans-serif;	font-weight: bold; text-transform:uppercase;text-decoration:none;color:#ffffff;padding-right:3px; padding-top:3px;margin-right:3px}
+#cabecera #menu_contextual #formulario_google .boton_busqueda:hover	{background-color:#3478B0;text-decoration:none}
+#cabecera #menu_contextual #formulario_google INPUT.boton 				{margin: 0px 5px 0px 0px; BORDER-RIGHT: #036 1px solid;  BORDER-TOP: #036 1px solid; BORDER-LEFT: #036 1px solid; CURSOR: hand; COLOR:white; BORDER-BOTTOM: #036 1px solid; BACKGROUND-COLOR:#036; font:0.9em bold Arial, Helvetica, sans-serif; font-weight: bold; text-transform:uppercase; height:20px;}
+#cabecera #menu_contextual #formulario_google INPUT.boton:hover		{margin: 0px 5px 0px 0px; BORDER-RIGHT: #3478B0 1px solid;	BORDER-TOP: #3478B0 1px solid; 	BORDER-LEFT: #3478B0 1px solid; 	CURSOR: hand; 	COLOR:white; 	BORDER-BOTTOM: #3478B0 1px solid;	BACKGROUND-COLOR:#3478B0; 	font:0.9em bold Arial, Helvetica, sans-serif; font-weight: bold; text-transform:uppercase; height:20px;}
+#cabecera #menu_contextual #formulario_google INPUT.boton:visited 		{margin: 0px 5px 0px 0px; BORDER-RIGHT: #036 1px solid; BORDER-TOP: #036 1px solid; 	BORDER-LEFT: #036 1px solid; 	CURSOR: hand; 	COLOR:white; 	BORDER-BOTTOM: #036 1px solid; 	BACKGROUND-COLOR:#036; 	font:0.9em bold Arial, Helvetica, sans-serif; font-weight: bold; text-transform:uppercase; height:20px;}
+#cabecera #menu_contextual #formulario_google INPUT.boton:active 		{margin: 0px 5px 0px 0px; BORDER-RIGHT: #036 1px solid; BORDER-TOP: #036 1px solid; 	BORDER-LEFT: #036 1px solid; 	CURSOR: hand; 	COLOR:white; 	BORDER-BOTTOM: #036 1px solid; 	BACKGROUND-COLOR:#036; 	font:0.9em bold Arial, Helvetica, sans-serif; font-weight: bold; text-transform:uppercase; height:20px;}
+#cabecera #menu_contextual #formulario_google INPUT.boton:focus 		{margin: 0px 5px 0px 0px; BORDER-RIGHT: #036 1px solid; BORDER-TOP: #036 1px solid; 	BORDER-LEFT: #036 1px solid; 	CURSOR: hand; 	COLOR:white; 	BORDER-BOTTOM: #036 1px solid; 	BACKGROUND-COLOR:#036; 	font:0.9em bold Arial, Helvetica, sans-serif; font-weight: bold; text-transform:uppercase; height:20px;}
+
+/* ----- Logotipo del Gobierno de Canarias ----- */
+#cabecera h1					{margin:0; padding:0; text-indent:-5000px;}
+#cabecera h1 a 				{background:url(../img/logos/logo.gif) no-repeat;float:left;height:79px;width:150px ;text-decoration:none;}
+/* ----- Logotipo de agencias e institutos ----- */
+#cabecera h1.acecau a 		{background:url(../img/logos/logo_acecau.gif) no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.aciisi a 		{background:url(../img/logos/logo_aciisi.jpg) no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.accc a 			{background:url(../img/logos/logo_accc.jpg) 	no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.acrpat a 		{background:url(../img/logos/logo_acrpat.gif) no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.ces a 			{background:url(../img/logos/logo_ces.gif) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.icap a 			{background:url(../img/logos/logo_icap.jpg) 	no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.icca a 			{background:url(../img/logos/logo_icca.jpg) 	no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.ichh a 			{background:url(../img/logos/logo_ichh.jpg) 	no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.icia a 			{background:url(../img/logos/logo_icia.jpg) 	no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.icm a 			{background:url(../img/logos/logo_icm.jpg) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.icv a 			{background:url(../img/logos/logo_icv.jpg) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.pc a 			{background:url(../img/logos/logo_pc.jpg) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.sce a 			{background:url(../img/logos/logo_sce.jpg) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.acs a 			{background:url(../img/logos/logo_acs.jpg) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.apmun a 			{background:url(../img/logos/logo_apmun.gif) 	no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.eprtvc a 		{background:url(../img/logos/logo_eprtvc.gif) no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.esssc a 			{background:url(../img/logos/logo_esssc.jpg) 	no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+#cabecera h1.ice a 			{background:url(../img/logos/logo_ice.gif) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+
+#cabecera h1.atc-color a 	{background:url(../img/logos/logo_atc_color.jpg) 		no-repeat;float:left;height:79px;text-decoration:none;width:345px;}
+
+
+
+
+
+/* ----- Servicio Canario de Salud ----- */
+#cabecera h1.scs a 			{background:url(../img/logos/logo_scs.gif) 		no-repeat;float:left;height:79px;text-decoration:none;width:150px;}
+
+/*------- Logo sin Claim-----------------*/
+#cabecera h1.logoInterno a 			{background:url(../img/logos/logo_patro_col_der.gif) 		no-repeat;float:left;height:79px;text-decoration:none;width:150px;}
+
+/* ----- Logotipo de las consejerías ----- */
+#cabecera h2.cons a       		{background:url(../img/logos/cpj.gif) no-repeat;float:left;height:79px;text-decoration:none;width:154px;}
+		                      	
+#cabecera h2.cons-cagpa 		{margin:0; padding:0; text-indent:-5000px;} /* Agricultura, Ganadería, Pesca y Alimentación */
+#cabecera h2.cons-cagpa a 	{background:url(../img/logos/capa.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-cbsjv 		{margin:0; padding:0; text-indent:-5000px;} /* Bienestar Social, Juventud y Vivienda */
+#cabecera h2.cons-cbsjv a 	{background:url(../img/logos/cbsjv.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-ceh 		{margin:0; padding:0; text-indent:-5000px;} /* Economía y Hacienda */                                                                      
+#cabecera h2.cons-ceh a 		{background:url(../img/logos/ceh.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-ceucd 		{margin:0; padding:0; text-indent:-5000px;} /* Educación, Universidades, Cultura y Deportes */
+#cabecera h2.cons-ceucd a 	{background:url(../img/logos/ceucd.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-ceic 		{margin:0; padding:0; text-indent:-5000px;} /* Empleo, Industria y Comercio */                                                                
+#cabecera h2.cons-ceic a 		{background:url(../img/logos/ceic.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-cmaot 		{margin:0; padding:0; text-indent:-5000px;} /* Medio Ambiente y Ordenación Territorial */                                                      
+#cabecera h2.cons-cmaot a 	{background:url(../img/logos/cmaot.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-copt 		{margin:0; padding:0; text-indent:-5000px;} /* Obras Públicas y Transportes */                                                                
+#cabecera h2.cons-copt a 		{background:url(../img/logos/copt.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-cpjs 		{margin:0; padding:0; text-indent:-5000px;} /* Presidencia, Justicia y Seguridad */
+#cabecera h2.cons-cpjs a 		{background:url(../img/logos/cpj.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-cs 		{margin:0; padding:0; text-indent:-5000px;} /* Sanidad */                                                                                 
+#cabecera h2.cons-cs a 		{background:url(../img/logos/cs.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+                          	
+#cabecera h2.cons-ct 		{margin:0; padding:0; text-indent:-5000px;} /* Turismo */                                                                                 
+#cabecera h2.cons-ct a 		{background:url(../img/logos/ct.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.gob-submarca	{margin:0; padding:0; text-indent:-5000px;} /* Turismo */                                                                                 
+#cabecera h2.gob-submarca a	{background:url(../img/logos/logo_submarca.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.pres-gob		{margin:0; padding:0; text-indent:-5000px;} /* Presidencia del Gobierno */                                                                                 
+#cabecera h2.pres-gob a		{background:url(../img/logos/pg.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+/******************************************************** Nuevos cambio de Gobierno 2015 *************************************************************/
+
+#cabecera h2.cons-ch 		{margin:0; padding:0; text-indent:-5000px;} /* Hacienda */                                                                      
+#cabecera h2.cons-ch a 		{background:url(../img/logos/ch.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.cons-ctcd {margin:0; padding:0; text-indent:-5000px;} /* Turismo, Cultura y Deportes */
+#cabecera h2.cons-ctcd a {background:url(../img/logos/ctcd.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.cons-cptss {margin:0; padding:0; text-indent:-5000px;} /* Política Territorial, Sostenibilidad y Seguridad */
+#cabecera h2.cons-cptss a {background:url(../img/logos/cptss.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.cons-copt {margin:0; padding:0; text-indent:-5000px;} /* Obras Públicas y Transportes */
+#cabecera h2.cons-copt a {background:url(../img/logos/copt.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.cons-ceu {margin:0; padding:0; text-indent:-5000px;} /* Educación y Universidades */
+#cabecera h2.cons-ceu a {background:url(../img/logos/ceu.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.cons-cepsv {margin:0; padding:0; text-indent:-5000px;} /* Empleo, Políticas Sociales y Vivienda */
+#cabecera h2.cons-cepsv a {background:url(../img/logos/cepsv.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+#cabecera h2.cons-ceicc {margin:0; padding:0; text-indent:-5000px;} /*  Economía, Industria, Comercio y Conocimiento */
+#cabecera h2.cons-ceicc a {background:url(../img/logos/ceicc.gif) no-repeat;float:left;height:79px;text-decoration:none;width:199px;}
+
+
+/******************************************************** CABECERA *****************************************************************************************/
+
+/*********************************************************** FOTO CABECERA *********************************************************************************/
+#anuncio					{float:left; width:762px; height:92px;margin-top:1px}
+#anuncio .oculto				{position:absolute; left:-999px; width:990px;}
+/************************************************************ FIN FOTO CABECERA ****************************************************************************/
+
+/********************************************************* MIGAS *******************************************************************************************/
+#migas 						{background:url(../img/maqueta/borde_bajo_migas.gif) repeat-x left bottom;float:left;margin:0px;padding:0px 0px 7px;width:100%;}
+#migas p.txt 		 		{background:url(../img/auxis/flecha_amarilla.gif) no-repeat left 4px;color:#0058b0;float:left;font-size:1em;margin:0px; padding:9px 5px 0px 17px;}
+#migas ul 			 		{float:left; list-style-type:none; margin:0px; padding:9px 0px 0px 0px;}
+#migas ul li 			 		{color:#000000; display:inline; font-size:1em; margin-left:5px;}
+#migas ul li strong	 			{color:#000;}
+#migas ul li a 			 		{color:#535353;padding-right:5px;text-decoration:none;}
+#migas ul li a:hover 			{text-decoration:underline;}
+/******************************************************* FIN MIGAS *****************************************************************************************/
+
+/*********************************************************** PIE  *********************************************************************************************/
+#pie 						{background-color:#ffdf61; float:left; height:23px; margin:10px 0 0; width:100%;}
+#pie .izda 					{color:#000;float:left;font-size:0.8em;margin:0;padding:6px 0 0 16px;width:40%;}
+#pie .dcha 					{float:right; text-align:right; width:50%;}
+#pie .dcha ul 				{list-style-type:none; margin:0; padding:6px 0 0;}
+#pie .dcha ul li 				{display:inline;font-size:0.8em;padding:0 5px 0 0;}
+#pie .dcha ul li a 				{color:#000; text-decoration:none;  margin-right:7px;}
+#pie .dcha ul li a:hover		{text-decoration:underline;}
+#pie .dcha ul li.nobarra3 		{background:none transparent scroll repeat 0 0;}
+/********************************************************** FIN PIE  ******************************************************************************************/
+
+/********************************************************** LINEA DE PUNTOS ***********************************************************************************/
+#puntos 						{background:url(../img/maqueta/borde_bajo_migas.gif) repeat-x left bottom;float:left;margin:0px 0px 5px 0px;padding:0px;width:100%;}
+/********************************************************** LINEA DE PUNTOS ***********************************************************************************/
+
+/************************************************** FECHA DE ACTUALIZACIÓN  ***********************************************************************************/
+#fechaactual				{clear:both;width:100%;}
+#fechaactual .izdaBandera 	{float:left; text-align:left; margin-top:5px; font-size:0.8em; color:#535353; width:50%;}
+#fechaactual .dchaFecha		{float:left; text-align:right; margin-top:36px; font-size:0.8em; color:#535353; width:50%;}
+#fechaactual .dchaFecha_60 {float:left; text-align:right; margin-top:60px; font-size:0.8em; color:#535353; width:50%;}
+#fechaactual .dcha 			{float:left;text-align:right; margin-top:5px; font-size:0.8em; color:#535353; width:100%;}
+/************************************************ FIN FECHA DE ACTUALIZACIÓN  *********************************************************************************/
+#bloq_interior{ float: left; margin: 15px 0 0 0; padding: 0; width: 762px;}
+
+/*************************************************/
+/* ESTILOS PARA LAS COLUMNAS IZQUIERDA Y DERECHA */
+/*************************************************/
+.columna_pequ					{float:left;width:150px;}
+.fondo_menu						{background:#f8f9fb url(../img/maqueta/bajo_menu.gif) no-repeat scroll left bottom;float:left;margin-bottom:14px;padding-bottom:13px;width:151px;}
+.tit_azul						{background:transparent url(../img/maqueta/pestana_peke_azul.gif) no-repeat scroll 0 0;font-size:1em;height:17px;margin:0;padding:4px 0 0 4px;color: #FFFFFF;font-weight: 700;}
+.tit_ama						{background:transparent url(../img/maqueta/pestana_peke_am.gif) no-repeat scroll 0 0;font-size:1em;height:17px;margin:0;padding:4px 0 0 4px;font-weight: 700;}
+.tit_gris						{background:transparent url(../img/maqueta/pestana_peke_gris.gif) no-repeat scroll 0 0;font-size:1em;height:17px;margin:0;padding:4px 0 0 4px;font-weight: 700;}
+ul.nav, ul.menu_lat_der			{margin:0;	padding:5px 5px 5px 7px;}
+ul.nav li						{background: url(../img/listas/flecha_menulat.gif) no-repeat scroll left 4px;	line-height:1.5;	list-style-type:none;	padding:3px 0 3px 8px;}
+ul.nav * strong					{background-color:#E7EAF1;	padding:0.3em;}
+ul.nav li a						{color:#000000;	text-decoration:none;}
+ul.nav li a:hover, ul.menu_lat_der li a:hover{	text-decoration:underline;}
+ul.nav li.dif a 				{background:transparent url(../img/auxis/maslight.gif) no-repeat scroll 0 0;	color:#0058B0;	font-size:0.8em;	font-weight:400;	padding:0 0 0 14px;	text-decoration:none;}
+ul.nav li.dif 					{background:transparent none repeat scroll 0 0;	border-bottom:medium none;	margin-right:7px;	text-align:right;}
+ul.nav li.dif a:hover 			{text-decoration:underline;}
+ul.menu_lat_der li				{border-bottom: 1px solid #EBEBEB;	line-height:1.5;	list-style-type:none;	padding:3px 0;}
+ul.menu_lat_der li.con_img		{height: 70px;}
+ul.menu_lat_der li.con_img img	{float:left;	margin-right:3px;}
+ul.menu_lat_der li a			{color:#000000;	text-decoration:none;	background: url(../img/listas/flecha_menulat.gif) no-repeat scroll 0 0;	padding:0 0 0 8px;}
+ul.menu_lat_der li.dif a 		{background:transparent url(../img/auxis/maslight.gif) no-repeat scroll 0 0;	color:#0058B0;	font-size:0.8em;	font-weight:400;	padding:0 0 0 14px;	text-decoration:none;}
+ul.menu_lat_der li.dif 			{background:transparent none repeat scroll 0 0;	border-bottom:medium none;	margin-right:7px;	text-align:right;}
+ul.menu_lat_der li.dif a:hover 	{text-decoration:underline;}
+.fondo_columnas					{background: url(../img/maqueta/bajo_caja.gif) no-repeat scroll left bottom;	float: left;	margin-bottom: 17px;	padding-bottom: 12px;	width: 151px;}
+.bordes_columnas				{border-left:1px solid #EBEBEB;	border-right:1px solid #EBEBEB;}
+
+/**********************************/
+/* ESTILOS PARA CONTENIDO CENTRAL */
+/**********************************/
+.bloq_cen					{float:left;margin-left:18px;margin-right:18px;width:423px;}
+.bloq_der_grande			{float:right;margin-left:13px;margin-right:1px;width:588px;}
+.contenido					{clear:left;}
+h2.tit_conten				{background:transparent url(../img/maqueta/pestana_grande.gif) no-repeat scroll 0 0;	float:left;	font-size:1em;	height:24px;	margin:0;	padding:4px 0 0 7px;	width:416px;}
+h2.tit_conten_grande		{background:transparent url(../img/maqueta/pestana_grande1.gif) no-repeat scroll 0 0;	font-size:1em;	height:24px;	margin:0 0;	padding:2px 0 0 7px;	width:588px;	float: left;}
+h2.tit_conten_1_col			{background:transparent url(../img/maqueta/pestana_grande2.gif) no-repeat scroll 0 0;	font-size:1em;	height:24px;	margin:0 0;	padding:2px 0 0 7px;	width:762px;}
+.contenido p				{text-align: justify;line-height: 1.6;margin: 7px 0 0 10px;}
+.contenido h3				{background:transparent url(../img/listas/flecha_menulat.gif) no-repeat scroll left top;	/*border-bottom:1px dotted #A4A4A4;*/	font-family:Tahoma,geneva,arial,sans-serif;	font-size:1em;	padding:0 0 3px 10px;	width:96%;	margin: 10px 0 5px 0;}
+.contenido h4				{font-family: Tahoma,geneva,arial,sans-serif;	font-size:1em;}
+.contenido li a, .contenido p a, h3.tit a, .mas_sobre a{	color:#003366;	text-decoration:none; }
+.contenido li a:hover, .contenido p a:hover, h3.tit a:hover, .mas_sobre a:hover{	text-decoration: underline; }
+.contenido li a:visited, .contenido p a:visited, h3.tit a:visited, .mas_sobre a:visited{	color:#990099;}
+.subrayado 					{background:transparent url(../img/maqueta/borde_bajo_migas.gif) repeat-x scroll left bottom ;	width: 100%; margin: 0 0 5px 0;	padding: 0 0 1px 0; }
+
+/***********************************************************/
+/* ESTILOS PARA LISTADO DE CONTENIDOS CON DIVERSOS NIVELES */
+/***********************************************************/
+.contenido ol					{margin:1em 0 1em 2em;	padding:0;}
+.contenido ul					{margin:1em 0 1em 2em;	padding:0;}
+.contenido ul li				{background:transparent url(../img/listas/li1.gif) no-repeat scroll left 7px;	line-height:1.6;	list-style-type:none;	margin:1.2em 0;	padding-left:12px;	text-align: justify;}
+.contenido ul li ul				{margin:1em 0 1em 2em;	padding:0;}
+.contenido ul li ul li			{background:transparent url(../img/listas/li2.gif) no-repeat scroll left 7px;}
+.contenido ul li ul li ul li	{background:transparent url(../img/listas/li3.gif) no-repeat scroll left 7px;}
+
+/**************************************************/
+/* ESTILOS PARA LISTADO DE CONTENIDOS DESPLEGABLE */
+/**************************************************/
+
+#faq h3 						{border:medium none;	text-decoration:underline;	margin: 0 0 0 0.3em;	cursor: pointer;	}
+#faq h4 						{margin-left:2em;	padding-left:12px;	text-decoration:underline;	cursor: pointer;}
+#faq p 							{margin:0.5em 1em 1em 3em;}
+#faq ol li 						{margin:0.5em 1em 1em 3em;	line-height:1.6;	list-style-type:upper-alpha;}
+
+/****************************/
+/* ESTILOS PARA FORMULARIOS */
+/****************************/
+
+form.formestilo fieldset 		{border: 1px solid #CCCCCC;	margin:0.5em 0;	padding:5px;	background-color:#F0F2F2;	position: relative; }
+form.formestilo fieldset legend	{position: relative; 	top: -1em; 	color: #000000;	font-weight:bold;	margin:0 8px;	padding:0 2px;}
+form.formestilo fieldset div 	{margin:0.5em 0;	padding:0;}
+.centra 						{text-align:center;}
+form.formestilo label 			{padding:0 0.5em;	vertical-align:15%;}
+form.formestilo input.campo_texto{	color: #333333;	padding: 2px;	font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 1em;	background:#FAFAFA none repeat scroll 0 0;	border:1px solid #CCCCCC;}
+form.formestilo select			{font-family:Verdana,Arial,Helvetica,sans-serif;	font-size:1em;	padding:2px;	background:#FAFAFA none repeat scroll 0 0;	width: 70%}
+select.anio						{width: 11% !important;}
+
+/***************************************/
+/* ESTILOS PARA RESULTADO DE BUSQUEDAS */
+/***************************************/
+
+dl.res_detalle{
+	border-bottom:1px solid #A4A4A4;
+}
+
+.contenido dl.res_detalle dt{
+	font-weight:bold;
+}
+
+.contenido dl.res_detalle dd {
+	margin:0.5em 0 0.5em 0.5em;
+}
+
+.contenido ul.lista_res_busqueda {
+	margin:0 2em 2em;
+	/**border-bottom:1px dotted #A4A4A4;*/
+}
+
+.contenido ul.lista_res_busqueda li {
+	background:transparent url(../img/listas/flecha_menulat.gif) no-repeat scroll left 2px;
+	/*border-bottom:1px dotted #A4A4A4;*/
+	/**border-bottom: 0;*/
+	line-height:1.5;
+	margin:0 0 0.7em 0;
+	padding:0 0 0 10px;
+}
+
+/**************************************************/
+/* ESTILOS PARA RESULTADO DE BUSQUEDAS EN LISTADO */
+/**************************************************/
+
+.bloque {
+	/*border-top: 1px dotted #CCCCCC;*/
+	clear: left;
+}
+
+.bloq_cen .bloque .celdas{
+	margin: 0 13px 5px 0;
+	width: 44%;
+}
+
+.bloq_cen .bloque .celdas p{
+	text-align: left;
+}
+
+.bloque .celdas{
+	margin: 0 0 5px 0;
+	width: 49%;
+	float: left;
+}
+
+.celdas p.tit{
+	color:#003366;
+	font-weight:bold;
+	background:transparent url(../img/listas/flecha_menulat.gif) no-repeat scroll left 20%;
+	padding: 0 0 0 8px;
+}
+
+.celdas p{
+	margin-bottom:0;
+	margin-top:12px;
+	margin-left:7px;
+	padding: 0 0 5px 0;
+}
+
+.bloque .celdas ul{
+	margin:5px 0 0;
+	width:90%;
+}
+
+.bloque .celdas ul li{
+	background:transparent url(../img/listas/flecha_menulat.gif) no-repeat scroll 7px 0;
+	float:left;
+	padding:0 0 0 17px;
+	width:105%;
+}
+
+.bloq_cen .bloque .celdas li{
+	text-align: left;
+}
+
+/*********************************/
+/* ESTILOS PARA TEXTO CON IMAGEN */
+/*********************************/
+
+.contenido p img{
+	float: left;
+	margin: 5px 5px 5px 0;
+}
+
+.contenido p img.der {
+	float: right;
+	margin: 5px 0 5px 5px;
+}
+
+.contenido div.noticia {
+	float: left;
+}
+
+.contenido div.noticia  .tit_noticia{
+	/*float:left; */
+	PADDING-RIGHT: 0px;	
+	PADDING-LEFT: 10px;
+	FONT-SIZE: 1em;
+	BACKGROUND: url(../img/listas/texto.gif) no-repeat left top;
+	PADDING-BOTTOM: 3px;
+	MARGIN:  7px 0px  1px;
+	WIDTH: 96%;
+	PADDING-TOP: 0px;
+	FONT-FAMILY: Tahoma,geneva,arial,sans-serif;
+	COLOR: #003366;
+}
+
+.contenido div.noticia  .tit_noticia a {
+	/*color: #003399; */
+	text-decoration: none;
+	margin-left:5px;
+	COLOR: #003366;
+}
+
+.contenido div.noticia  .tit_noticia a:visited {
+	color:#990099;
+}
+
+.contenido div.noticia  .tit_noticia a:hover {
+	text-decoration: underline;
+}
+
+.contenido div.noticia  .img_noticia{
+	text-align:justify;
+	margin: 5px 5px 5px 15px;
+}
+
+.contenido div.noticia  .txt_noticia{
+	text-align:justify;
+	margin: 0px 5px 1px 15px; 
+	line-height: 1.6;
+	
+}
+
+.contenido div.convocatoria {
+	float: left;
+}
+
+.contenido div.noticia img {
+	
+	
+}
+
+/************************************************/
+/* ESTILOS PARA TEXTO CON IMAGEN Y SUBSECCIONES */
+/************************************************/
+
+.subseccion_iz{
+	margin:0 13px 5px 0;
+	width:48%;
+	float: left;
+}
+
+.subseccion_der{
+	margin:0 0 5px 0;
+	width:48%;
+	float: left;
+}
+
+.subseccion_iz_peq {
+	margin:0 13px 5px 0;
+	width:48%;
+	float: left;
+}
+
+.subseccion_der_peq {
+	margin:0 0 5px 0;
+	width:48%;
+	float: left;
+}
+
+.subseccion_iz_peq p, .subseccion_der_peq p {
+	text-align: left;
+}
+
+/*******************************************************************/
+/* ESTILOS PARA SUBSECCIONES CON FOTO Y MENU EN EL LATERAL DERECHO */
+/*******************************************************************/
+
+.bloq_iz_grande{
+	float:left;
+	margin-left:1px;
+	margin-right:13px;
+	width:588px;
+}
+
+.bloque2 {
+	clear: left;
+	float: left;
+	width: 100%;
+}
+
+.bloque2 h4.subtit {
+	color: red;
+	height: 20px;
+	margin:8px 0 8px 5px;
+	float: left;
+	font: bold 1em Tahoma,geneva,arial,sans-serif;
+	width: 100%
+}
+	
+.bloque2 h4.subtit a {
+	color: red;
+	text-decoration: none;
+}
+
+.bloque2 h4.subtit a:link {
+	color: #003366;
+	text-decoration: none;
+}
+
+.bloque2 h4.subtit a:hover {
+	color: #003366;
+	text-decoration: underline;
+}
+
+.bloque2 H4.subtit a:visited {	color: #003366}
+
+.opciones_bloque2{
+	height:5px;
+	width:100%;
+}
+
+.subseccion2{
+	margin:0 13px 5px 0;
+	width:44%;
+	float: left;
+	
+}
+
+.subseccion2 p{
+	text-align: left;
+}
+
+.subseccion2 .subrayado{
+	height: 28px;
+}
+
+.mas_info1 {
+	background: transparent url(../img/auxis/maslight.gif) no-repeat scroll left 1px;
+	color:#003366;
+	font-size:0.9em;
+	font-weight:400;
+	padding-left:14px;
+	text-decoration:none;
+}
+
+.mas_sobre {
+	padding-left:8px;
+	BACKGROUND: url(../img/listas/flecha_menulat.gif) no-repeat 0px 0px;
+	float: right;
+	font-weight: bold;
+	margin-right:10px;
+}
+
+.recursos{
+	float:left;
+	width:100%;
+}
+
+.recursos .recurso{
+	width:100%;
+	margin: 0 25px 0 10px;
+}
+
+.recursos .recurso a{	
+	COLOR: #000000;	
+	TEXT-DECORATION: none
+}
+	
+ .mas_noticias {
+	CLEAR: left;
+	MARGIN-TOP: -25px;
+	BACKGROUND: none transparent scroll repeat 0% 0%;
+	MARGIN-BOTTOM: -3px;
+	TEXT-ALIGN: right
+}
+
+ .mas_noticias a {
+	PADDING-LEFT: 7px;	
+	FONT-WEIGHT: 500;	
+	FONT-SIZE: 1em;	
+	BACKGROUND: url(../img/listas/flecha_menulat.gif) no-repeat left 1px;
+	COLOR: #003366;	
+	TEXT-DECORATION: none
+}
+
+.mas_noticias  a:link {
+	COLOR: #003366;	
+	TEXT-DECORATION: none
+}
+
+.mas_noticias  a:hover {
+	COLOR: #003366;	
+	TEXT-DECORATION: underline
+}
+.mas_noticias  a:visited {
+	COLOR: #003366
+}
+
+.espacio_mas_noticias{
+	width:100%;
+	float:left;
+	height:20px;
+}
+
+.ext {
+	padding:2px 15px 0px 0px;
+	background: url(../img/auxis/external_link.gif) no-repeat right 50%;
+}
+
+span.ext {
+  padding:1px 15px 0px 0px;
+  background: url(../img/auxis/external_link.gif) no-repeat right;
+  display:inline;
+  vertical-align:top;
+}
+
+.morado{
+	color:#800080;
+	font-style: italic;
+}
+
+/**********************************/
+/* ESTILOS PARA TABLAS CON LISTAS */
+/**********************************/
+#tabla ul {margin:0px; padding:5px 0px; background:none; width: 100%; float: left; clear: both; border-bottom: 1px solid #AAAAAA; display:inline-block}
+#tabla ul li {margin:0px; padding:0px 5px; background:none; width:48%; float:left; list-style:none;}
+#tabla ul li p {margin:0px 0px 10px 0px}
+#tabla ul.cabecera {margin-top:10px; padding:2px 0px; border-top:2px solid #AAAAAA; border-bottom:2px solid #AAAAAA}
+#tabla ul.pie {border-bottom:none;}
+#tabla ul.pie li {width:98%;}
+
+#tabla {margin:10px 0px;}
+#tabla h3 {margin:0px; background:none; text-decoration:none;}
+
+#tabla #faq h3.desplega {margin:0px; background:none; text-decoration:underline; color:#003366;}
+#tabla #faq h3.desplega_noline  {margin:0px; background:none; text-decoration:none; color:#003366;}
+#tabla #faq h3 span.desplega_span {text-decoration:underline; color:#003366;}
+
+#tabla.tres_columnas ul li {width: 30%;}
+#tabla.cuatro_columnas ul li {width: 22.6%}
+#tabla ul li.columna_15 {width: 13%;}
+#tabla ul li.columna_20 {width: 18%;}
+#tabla ul li.columna_25 {width: 23%;}
+#tabla ul li.columna_30 {width: 28%;}
+#tabla ul li.columna_35 {width: 33%;}
+#tabla ul li.columna_40 {width: 38%;}
+#tabla ul li.columna_45 {width: 43%;}
+#tabla ul li.columna_50 {width: 48%;}
+#tabla ul li.columna_55 {width: 53%;}
+#tabla ul li.columna_60 {width: 58%;}
+#tabla ul li.columna_65 {width: 63%;}
+#tabla ul li.columna_70 {width: 68%;}
+#tabla ul li.columna_75 {width: 73%;}
+#tabla ul li.columna_80 {width: 78%;}
+#tabla ul li.columna_85 {width: 83%;}
+#tabla ul li.columna_90 {width: 88%;}
+#tabla ul li.columna_95 {width: 93%;}
+#tabla ul li.columna_auto {width: auto;}
+
+/*****************************/
+/* ESTILOS PARA DESPLEGABLES */
+/*****************************/
+ul.desplegables {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul.desplegables li {
+  text-decoration: none;
+  background: none;
+  margin: 7px 0px;
+  padding-left: 10px;
+}
+
+ul.desplegables li ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul.desplegables li ul li {
+  text-decoration: none;
+  background: none;
+  padding-left: 20px;
+}
+
+ul.desplegables li ul li ul li {
+  text-decoration: none;
+  background: none;
+}
+
+h4.nivelDesplegable {
+  color: #003366;
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+}
+
+/**************************/
+/* ESTILOS PARA PAGINADOR */
+/**************************/
+.paginador tr td {
+  color:#003366
+}
+.paginador tr td a {
+  text-decoration:none;
+  color:#003366
+}
+.paginador tr td a:visited{
+  color:#990099;
+}
+.paginador tr td a:hover{
+  text-decoration:underline;
+}
+.paginador tr td.selected {
+  font-weight:bold;
+  text-decoration:none;
+}
+label.label_peq {
+  float:left;
+  width:100px;
+}
+/**************************/
+/*    ALERTAS Y AVISOS    */
+/**************************/
+.avisos {
+  background:#FFEFEF;
+  border:1px dotted #F20808; 
+  padding:0.5em;
+  color:#F20808;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+/******************************************/
+/* ESTILOS PARA TABLAS DE DATOS CON TABLE */
+/******************************************/
+
+table.tabla  {
+  background-color:#FFFFFF;
+  border-collapse:collapse;
+  border-spacing:2px;
+  caption-side:top;
+  margin:1em 0;
+  text-align:left;
+  width:100%;
+}
+
+table.tabla caption {
+  font-size:1em;
+  font-weight:bold;
+  padding:0.5em 0;
+}
+
+table.tabla tbody tr td, table.tabla tfoot tr td {
+  font-size:1em;
+}
+
+table.tabla thead tr th {
+  background:none repeat scroll 0 0 #B9C5D3;
+  font-size:1em;
+  padding:1em;
+}
+
+table.tabla tbody th {
+  background:none repeat scroll 0 0 #E3E9EE;
+  font-size:0.95em;
+  font-weight:bold;
+  padding:0.5em;
+}
+
+table.tabla tbody tr td {
+  background-color:#FFFFFF;
+  border-bottom: 0px solid #FFFFFF;
+  padding:0.7em;
+}
+
+table.tabla thead tr th a, table.tabla tbody tr td a {
+  color:#000000;
+}
+
+table.tabla tbody tr.banda td {
+  background-color:#E3E9EE;
+  border-bottom: 0px solid #FFFFFF;
+  padding:0.7em;
+}
+
+table.tabla tfoot tr td {
+  border-bottom:2px solid #EDEDED;
+  border-top:2px solid #EDEDED;
+  color:#000000;
+  font-size:1em;
+  padding:0.7em;
+}
+
+table.tabla a:hover {
+	text-decoration: underline;
+}
+
+table.tabla a {
+  text-decoration: none;
+	color:#003366;
+}
+
+table.tabla .alizq {
+	text-align:left;
+}
+
+table.tabla .alder {
+	text-align:right;
+}
+
+table.tabla .alcen {
+  text-align:center;
+}
+/*************************
+Sobrescritura estilos gobierno
+**************************/
+
+#cabecera h1 a {
+	background: transparent url(../images/logo_istac.jpg)
+		no-repeat scroll 5px 5px;
+	float: left;
+	height: 74px;
+	padding: 0 0 7px;
+	text-decoration: none;
+/*	width: 315px;*/
+}
+
+#migas ul li strong {
+	color: #000000;
+	font-weight: bold;
+}
+
+.subseccion2 {
+	margin: 0 13px 0 0;
+	width: 47%;
+	float: left;
+}
+
+.subseccion2 p {
+	text-align: justify;
+	line-height: 1.3;
+}
+
+.subseccion2 .subrayado {
+	height: auto;
+}
+
+.ocultar {
+	text-decoration: underline;
+	color: black;
+}
+
+.contenido ol>li {
+	line-height: 1.6;
+	list-style-type: none;
+	margin: 1.2em 0;
+	padding-left: 12px;
+	text-align: justify;
+}
+
+.bloque2 table>tbody>tr>td {
+	padding: 0.25em 0.25em;
+	vertical-align: top;
+	border-style: dotted;
+	border-width: thin;
+}
+
+ul {
+	padding: 3px 0 3px 8px;
+	margin: 0;
+}
+
+hr {
+	color: #CCCCCC;
+	height: 1px;
+}
+
+.izq img {
+	border: 1px solid #0F5B95;
+	float: left;
+	margin: 0.3em 0.8em 0.4em 1em;
+	padding: 2px;
+}
+
+ul.menu_lat_der li.con_img a {
+	display: block;
+	float: left;
+	width: 45%;
+}
+
+#page_navigation a {
+    font-size: 0.8em;
+    font-weight: 400;
+	margin: 2px;
+	color: #0058B0;
+	text-decoration: none;
+}
+
+#page_navigation div {
+	float: left;
+	padding-left: 5px;
+}
+
+.active_page {
+	color: black !important;
+	font-weight: bold;
+
+}
+
+#outstanding {
+	margin: 0 auto;
+	position: relative;
+	width: 760px;
+	z-index: 50;
+}
+
+#destacados {
+	position: absolute;
+	right: 0;
+	top: -96px;
+	width: 364px;
+	z-index: 50;
+}
+
+#destacados h2 {
+	border-bottom: 1px solid #0F5B95;
+	color: #003366;
+	font-size: 124%;
+	font-weight: bold;
+	margin: 6px 16px 8px 0;
+	overflow: hidden;
+	padding: 0 0 2px 4px;
+}
+
+#destacados ul li {
+	background-image: url("../images/flecha_menulat.gif");
+	background-position: 0.2em 50%;
+	background-repeat: no-repeat;
+	color: #003366;
+	margin-bottom: 0.1em;
+	overflow: hidden;
+	padding-left: 10px;
+}
+
+.links ul li a {
+	color: #0F5B95;
+	text-decoration: none;
+	line-height: 1.3em;
+	margin: 0;
+	padding: 0;
+	list-style: none outside none;
+	margin-bottom: 0.8em;
+	padding-top: 0.5em;
+}
+
+#content{
+	/* The main container div */
+	margin:0px auto;
+	width:100%;
+	padding:10px 5px 25px;
+}
+
+#content_indicadores{
+	/* The main container div */
+	margin:0px auto;
+	width:140px;
+	padding:10px 5px 25px;
+}
+
+#menu_indicadores{
+	/* The unordered list that is to be split into pages */
+
+	overflow:hidden;
+	margin:0;
+	padding:0;
+}
+
+ul#menu_indicadores li				{border-bottom: 1px solid #EBEBEB;	line-height:1.5;	list-style-type:none;	padding:3px 0;}
+ul#menu_indicadores li.con_img		{height: 70px;}
+ul#menu_indicadores li.con_img img	{float:left;	margin-right:3px;}
+ul#menu_indicadores li a			{color:#000000;	text-decoration:none;	background: url(../img/listas/flecha_menulat.gif) no-repeat scroll 0 0;	padding:0 0 0 8px;}
+ul#menu_indicadores li.dif a 		{background:transparent url(../images/maslight.gif) no-repeat scroll 0 0;	color:#0058B0;	font-size:0.8em;	font-weight:400;	padding:0 0 0 14px;	text-decoration:none;}
+ul#menu_indicadores li.dif 			{background:transparent none repeat scroll 0 0;	border-bottom:medium none;	margin-right:7px;	text-align:right;}
+ul#menu_indicadores li.dif a:hover 	{text-decoration:underline;}
+
+a.dif {
+    background: url("../images/maslight.gif") no-repeat scroll 0 2px transparent;
+    color: #0058B0;
+    font-size: 0.8em;
+    font-weight: 400;
+    padding: 1px 0 0 14px;
+    text-decoration: none;
+	float:right;
+}
+
+
+.swControls{
+	float:left;
+}
+
+a.swShowPage{
+	/* The links that initiate the page slide */
+	float:left;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-decoration: none;
+    font-size: 0.8em;
+    font-weight: 400;
+	color: #0058B0;
+}
+
+a.swShowPage:hover,
+a.swShowPage.active{
+	font-weight: bold;	
+	color: black !important;
+}
+
+.clear{
+	/* This class clears the floated elements */
+	clear:both;
+}
+
+#content_tabla{
+	margin:0;
+	padding:0;
+}
+
+table.tabla_indicadores {
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    caption-side: top;
+    text-align: left;
+    width: 100%;
+}
+
+table.tabla_indicadores caption {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.5em 0;
+}
+table.tabla_indicadores tbody tr td, table.tabla_indicadores tfoot tr td {
+    font-size: 1em;
+}
+table.tabla_indicadores thead tr th {
+    background: none repeat scroll 0 0 #B9C5D3;
+    font-size: 1em;
+    padding: 1em;
+}
+table.tabla_indicadores tbody th {
+    background: none repeat scroll 0 0 #E3E9EE;
+    font-size: 0.95em;
+    font-weight: bold;
+    padding: 0.5em;
+}
+table.tabla_indicadores tbody tr td {
+    background-color: #FFFFFF;
+    border-bottom: 0 solid #FFFFFF;
+    padding: 1em;
+}
+table.tabla_indicadores thead tr th a, table.tabla_indicadores tbody tr td a {
+    color: #000000;
+}
+table.tabla_indicadores tbody tr.banda td {
+    background-color: #E3E9EE;
+    border-bottom: 0 solid #FFFFFF;
+	padding-bottom: 1px;
+	padding-top: 1px;
+}
+table.tabla_indicadores tbody tr.nobanda td {
+	padding-bottom: 1px;
+	padding-top: 1px;
+}
+table.tabla_indicadores tfoot tr td {
+    border-bottom: 2px solid #EDEDED;
+    border-top: 2px solid #EDEDED;
+    color: #000000;
+    font-size: 1em;
+    padding: 0.7em;
+}
+table.tabla_indicadores a:hover {
+    text-decoration: underline;
+}
+table.tabla_indicadores a {
+    color: #003366;
+    text-decoration: none;
+}
+table.tabla_indicadores .alizq {
+    text-align: left;
+}
+table.tabla_indicadores .alder {
+    text-align: right;
+}
+table.tabla_indicadores .alcen {
+    text-align: center;
+}
+
+.gris{
+	color: #AFAFAF;
+}
+
+.gap{
+	padding-bottom: 4px;
+}
+
+.gap a, .gap a:hover, .gap a:link, .gap a:visited{
+	text-decoration: none !important;
+	color: #AFAFAF;
+}
+
+.indicador{
+	margin: 0; 
+	padding: 0; 
+	border-color: #C4D0DC; 
+	border-width: thin; 
+}
+
+.indicador_lateral{
+	font-size: xx-small;
+	border-bottom-style: dotted; 
+}
+
+.indicador_central{
+	border-bottom-style: none; 
+}
+
+.tituloMedioRealizacion {
+    color: #003366;
+    font-weight: bold;
+    float: left;
+    padding-right: 0.5em;
+}
+
+.descrMedioRealizacion p {
+    margin: 0;
+}
+  
+.tweet,
+.query {
+	font-family: Arial,Helvetica,sans-serif;
+
+}
+
+.tweet_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow-y: hidden;
+	float: left;
+}
+	
+#tweets ul.tweet_list {
+    list-style-image: none;
+    margin: 0;
+    
+}
+
+#tweets ul.tweet_list li {
+    margin: 0px;
+    background-image: none;
+}
+
+.tweet_list .awesome,
+.tweet_list .epic {
+	text-transform: uppercase;
+}
+	
+.tweet_list li {
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0.5em;
+	list-style-type: none;
+}
+		
+.tweet_list li a {
+	font-family: Tahoma,geneva,arial,sans-serif;
+	/*color: #003366;*/
+	/*font-weight: bold;*/
+}
+
+.tweet_list li a, .tweet_list li a:link, .tweet_list li a:visited {
+	color: #003366;
+}
+
+.tweet_list .tweet_odd {
+	background-color: white;
+}
+
+.tweet_list .tweet_even {
+	background-color: #F8F9FB;
+}
+		
+.tweet_list .tweet_avatar {
+	padding-right: .5em; float: left;
+}
+		
+.tweet_list .tweet_avatar img {
+	vertical-align: middle;
+}
+
+.tweet ul li {
+    list-style-image: none;
+    background-image: none;
+}
+
+#twitterFollowers li a {
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+#twitterFollowers li {
+    list-style-type: none;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border-width: 0px;
+}
+
+#twitterFollowersTotal {
+    /*padding-left: 5px;*/
+    padding-top: 10px;
+    /*font-weight: bold;*/
+    /*color: rgb(0, 51, 102);*/
+    text-align: center;
+}
+
+#twitterFollowersTotal a, #twitterFollowersTotal a:link, #twitterFollowersTotal a:visited{
+	font-weight: bold;
+	color: #003366;
+	text-decoration: none;
+}
+
+#twitterFollowersTotal a:hover{
+        text-decoration: underline;
+}
+
+#follow-button {
+    background-color: #F8F8F8;
+    background-image: url("../images/twitterFollow.png");
+    background-position: -20px 3px;
+    background-repeat: no-repeat;
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-family: Arial;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 0.3em 0.3em 0.3em 2em;
+    text-decoration: none;
+    display: block;
+    width: 43px;
+    height: 15px;
+    
+}
+#follow-button .label {
+	padding-left: 7px;
+}
+
+#siguenosTwitter {
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-left: 3em;
+}
+
+.subseccion2 .vcard, #faq .vcard, .verMapa  {
+    margin: 0.5em 1em 1em 2em;
+    line-height: 1.6em;
+    width: 90%
+}
+
+.vcard {
+    line-height: 1.6em;
+    float: left;
+    width: 44%;
+    margin: 2px 2px;
+    padding: 0px 2px;  
+}
+
+.vcard .type {
+    float: left;
+}
+.vcard .street-address {
+    clear: both;
+    float: left;
+}
+.vcard .locality {
+    /*display: block;*/
+    float: left;
+    clear: right;
+}
+.vcard dl {
+    margin: 0;
+    display: block;
+    clear: both;
+}
+.vcard .postal-code {
+    float: left;
+    clear: left;
+    padding-right: 0.2em;
+}
+
+.vcard .tel .type {
+    display: none;
+}
+
+.vcard .org .given-name {
+   display: none;
+}
+
+.descargarContacto a, .verMapa a{
+  color: #0058B0;
+  padding: 0 0 0 5px;
+  text-decoration: none;
+}
+
+
+    /************************************************************************/
+	/*				Enlaces con estilo de botton	   (AÃ±adido ISTAC)   */
+	/************************************************************************/
+a.rounded_button:hover,a:link .rounded_button,a:visited .rounded_button,a:
+	.rounded_button {
+	text-decoration: none !important;
+	font-weight: normal;
+}
+
+a.rounded_button,span.rounded_button-dis {
+	line-height: 12px;
+	/* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 24px) */
+	height: 20px; /* Height of button background height */
+	margin-left: 2px;
+	margin-right: 2px;
+	display: block; /*opera*/
+	display: inline-block; /*ie*/
+	display: -moz-inline-box; /*ff*/
+}
+
+a.rounded_button {
+	background: transparent url('../images/botones/boton_accion.gif')
+		no-repeat right top;
+}
+
+A.rounded_button SPAN {
+	text-decoration: none !important;
+}
+
+span.rounded_button-dis {
+	background: transparent url('../images/botones/boton_accion-dis.gif')
+		no-repeat right top !important;
+}
+
+a.rounded_button {
+	cursor: hand;
+}
+
+a.rounded_button span,span.rounded_button-dis span {
+	height: 12px;
+	display: block;
+	display: inline-block;
+	padding: 4px 16px 4px 11px;
+	line-height: 12px;
+	color: black;
+}
+
+a.rounded_button span {
+	background: transparent url('../images/botones/boton_accion_left.gif')
+		no-repeat left top;
+}
+
+span.rounded_button-dis span {
+	background: transparent
+		url('../images/botones/boton_accion_left-dis.gif') no-repeat left top;
+	color: gray !important;
+	cursor: normal !important;
+}
+
+a.rounded_button:hover {
+	background-position: bottom right;
+}
+
+a.rounded_button:hover span {
+	background-position: bottom left;
+	cursor: pointer;
+}
+
+span.rounded_button-dis {
+	cursor: normal !important;
+}
+
+a.rounded_button-dis {
+	cursor: normal;
+}
+
+/* CSS para nueva secciÃ³n de noticias */
+.contenido div.noticia .tit_noticia span{
+	margin-left: 5px;
+}
+
+
+ul.buscador_noticias .texto_busqueda, ul.buscador_noticias .selec_temas,ul.buscador_noticias li .texto_fecha{
+	border: 1px solid #A9A9A9;
+    color: #535353;
+    font: 0.9em Arial,Helvetica,sans-serif;
+    height: 14px;
+    margin-top: 1px;
+    width: 134px;
+}
+
+ul.buscador_noticias .selec_temas{
+    height: 20px !important;
+}
+
+ul.buscador_noticias .texto_busqueda{
+    margin-bottom: 5px;
+}
+
+.botonera{
+	width: 100%;
+	text-align: center;
+}
+
+ul.buscador_noticias li .texto_fecha{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 90px !important;
+	
+}
+
+ul.buscador_noticias .buscador_titulo{
+	font-weight: bold;	
+	width: 100%;
+	clear: left;
+}
+
+ul.buscador_noticias .campo span{
+	padding: 2px;
+}
+
+ul.buscador_noticias .campo_fecha{
+	width: 100%;
+}
+
+ul.buscador_noticias .campo_fecha label{
+	width: 40px;
+	font-weight: bold;
+	display: inline-block;
+}
+
+ul.historico_noticias li .meses a {
+	background: none !important;
+}
+
+ul.historico_noticias li .anyo a{
+	font-weight: bold;
+}
+
+ul.historico_noticias div.dif{
+	background: none repeat scroll 0 0 transparent;
+    border-bottom: medium none;
+    margin-right: 7px;
+    text-align: right;
+}
+
+ul.historico_noticias div.dif a{
+    background: url("../images/maslight.gif") no-repeat scroll 0 0 transparent !important;
+    color: #0058B0;
+    font-size: 0.8em;
+    font-weight: 400;
+    padding: 0 0 0 14px;
+    text-decoration: none;
+}
+
+ul.historico_noticias div.anyo span{
+	cursor: pointer;
+	background: url("../images/flecha_menulat.gif") no-repeat scroll 0 0 transparent;
+    color: #000000;
+    padding: 0 0 0 8px;
+    text-decoration: none;
+}
+
+.paginador{
+	width: 100%;
+	text-align: center;
+}
+
+.paginador a {
+	font-weight: bold;
+	color: #003366;
+	text-decoration: none;
+}
+
+.paginador .currentpage{
+    color: #000000;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.noticia{
+	width: 100%;
+}
+
+.noticia .subtitulo{
+	color: #AFAFAF;
+    /*font-style: italic;*/
+    line-height: 1;
+    margin: 7px 0 0 10px;
+    text-align: justify;
+	width: 96%;
+	font-size: 1.1em;
+}
+
+.masNoticias{
+	background: url("../images/maslight.gif") no-repeat scroll 0 0 transparent !important;
+    color: #0058B0;
+    font-size: 0.8em;
+    font-weight: 400;
+    padding: 0 0 0 14px;
+    text-decoration: none;
+}
+
+.compartir{
+	text-align: left;
+	background: url("../images/maqueta/borde_bajo_migas.gif") repeat-x scroll left bottom transparent;
+    margin: 0 0 5px;
+    padding: 0 0 1px;
+    width: 100%;
+}
+
+.compartir .titulo{
+	padding-left: 10px;
+	margin-left: 10px;
+}
+
+.compartir .sharelinks{
+	padding-left: 20px;
+	display: inline;
+}
+
+.compartir .sharelinks a{
+	display: inline;
+	text-decoration: none;
+	border: none;
+}
+
+ul.tag_cloud li{
+	background: none !important;
+}
+
+.tituloOp {
+	text-align: left;
+}
+
+/* Estilos twiiter */
+.userAvatar {
+    float: left;
+    margin-right: 0.3em;
+}
+
+.tweetScreenName {
+    margin-right: 0.3em;
+    display: inline;
+}
+
+.tweetScreenName a, .tweetScreenName a:link, .tweetScreenName a:visited{
+    color: #003366 !important;
+    font-weight: bold !important;
+}
+
+
+.tweetUserName {
+    color: grey;
+    display: inline;
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul {
+    margin: 0px;
+    display: none;
+}
+
+.accionesTweet {
+   /*display: block;
+   position: absolute;
+   margin-left: 320px;*/
+   margin-left: -90px;
+   width: 450px;
+}
+
+.accionesTweet a{
+	font-weight: bold !important;
+}
+
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionFav,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionFav,
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionRetweet,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionRetweet,
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionReply,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionReply {
+    background-position: left center;
+    float: right;
+    padding-left: 1.5em;
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionFav,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionFav {
+    background-image: url("../images/favorito.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionFav:hover,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionFav:hover {
+    background-image: url("../images/favoritoOn.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionRetweet,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionRetweet {
+    background-image: url("../images/retweet.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionRetweet:hover,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionRetweet:hover {
+    background-image: url("../images/retweetOn.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionReply,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionReply {
+     background-image: url("../images/tweet.png");
+}
+
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li.actionReply:hover,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li.actionReply:hover {
+     background-image: url("../images/tweetOn.png");
+}
+
+div#tweets ul.tweet_list li.tweet_odd div.accionesTweet ul li,
+div#tweets ul.tweet_list li.tweet_even div.accionesTweet ul li {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.tweetWrapper {
+   min-height: 20px; 
+   min-width: 200px;
+}
+
+.timeActionstWrapper {
+  width: 100%;
+  margin-left: 50px;
+}
+
+.tweetTime {
+    /*color: #003366;*/
+    color: grey;
+    font-weight: bold;
+    float: left;
+    /*margin-left: 50px;*/
+    /*position: absolute;*/
+    display: block;
+    height: 20px;
+}
+
+#nuevoTweet a {
+    color: #003366;
+    text-decoration: none;
+}
+
+#nuevoTweet {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    float: right;
+    margin-right: 10px;
+}
+
+#lblCheckRelated {
+	/*color: #003366;*/
+	font-weight: bold;
+	vertical-align: top;
+}
+
+div#tweets form {
+    float: right;
+    margin-right: 10px;
+}
+
+
+.indice_legal_borde {
+	border-color: rgb(196, 208, 220);
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	margin: 2em 0 2em 0;
+}
+
+.indice_legal {
+	border-color: none;
+	border-style: none;
+	border-width: 0 0 0 0;
+}
+
+.indice_legal ol>li {
+	list-style-type: decimal;
+	text-align: justify;
+	margin: 1em 0 0 1.5em;
+	padding: 0 0 0 0;
+}
+
+.indice_legal_tit {
+	color: #003366;
+	background: url("../img/listas/flecha_menulat.gif") no-repeat scroll left top transparent;
+	font-family: Tahoma,geneva,arial,sans-serif;
+	font-size: 1.2em;
+	padding: 0px 0px 3px 10px;
+	width: 96%;
+	margin: 10px 0px 5px;
+}	
+
+.open {
+	padding: 5px;
+	border: 0;
+}
+
+#pie_istac 			{background-color:#ffdf61;font-size:0.8em;float:left;height:26px;margin:10px 0 0;width:100%;vertical-align:middle;display:inline;}
+#pie_istac .izda 		{color:#000;float:left;padding:6px 0 6px 16px;margin:0;width:40%;display:inline;}
+#pie_istac .dcha 		{float:right;padding:6px 16px 6px 0;margin:0;text-align:right; width:50%;display:inline;}
+#pie_istac .dcha a 		{color:#000; text-decoration:none;  margin-right:7px;}
+#pie_istac .dcha a:hover	{text-decoration:underline;}
+#pie_istac .dcha a img 		{text-decoration:none;vertical-align:middle;border:none;}
+
+/* Swagger integration */
+#cabecera h1 a {
+	/*background: transparent url(http://www.gobiernodecanarias.org/opencms8/export/system/modules/es.gobcan.istac.web/resources/images/logo_istac.jpg) no-repeat scroll 5px 5px;*/
+	background: transparent url(http://www.gobiernodecanarias.org/gcc/img/logos/logo.gif) no-repeat scroll 5px 5px;
+}
+.swagger-section {
+	padding: 20px;
+	padding-top: 124px;
+}
+
+.swagger-section .swagger-ui-wrap {
+    font-size: 16px;
+}
+
+/* Index de las Apis */
+.version-list {
+	padding: 20px;
+	clear: both;
+	font-size: 110%;
+}
+
+.version-list h1 {
+	color: #999999;
+}
+
+.version-list ul {
+	padding: 0 0 0 40px;
+}
+
+.version-list .version-title {
+	margin-bottom: 0;
+}
+
+/* White body */
+#contenido {
+    overflow: hidden;
+    padding: 0 30px;
+}
+
+/* http://www.gobiernodecanarias.org/cmsgobcan/export/system/modules/es.gobcan.portal.tipo/resources/css/custom.css */
+ul.menu_lat_der {
+	padding-right: 0px;
+}
+
+ul.nav li ul {margin:0; padding:4px 0 0 5px;}
+
+ul.nav li ul li {background: url(../imagenes/disc.gif) no-repeat left 9px;}
+
+.subseccion2 .subrayado {
+	height: auto;
+}
+
+#migas ul {
+	float: none;
+}
+
+.contenido .sub_tit {
+	margin: 10px 0px 3px 15px;
+	padding: 0px 0px 0px 10px;
+}
+
+.contenido div.noticia p.midi img {
+	float: none;
+	margin: 0;
+}
+
+.contenido div.noticia p.midi {
+	font:0.9em Arial, Helvetica, sans-serif;
+	margin: 5px 3px 0px 10px;
+}
+
+#banner	{
+	float:left;
+	width:760px;
+}
+
+.captcha {
+	text-align: center;
+	padding: 5px !important;
+}
+
+.captcha img {
+	max-height: 65px;
+}
+
+.captcha input[type="text"] {
+	width: auto !important;
+}
+
+.captcha img {
+	width: 40%;
+}
+		
+#formulario ul li {
+	color: red;
+	list-style-type: disc;
+	background: none;
+}
+
+.formElement {
+	clear: both;
+	width: 100%;
+}
+
+.uploadNote {
+	color: grey;
+	text-align: center;
+}
+
+form.formestilo span {
+	padding-right: 0.5em;
+}
+
+form.formestilo select {
+	width: 80% !important;
+	border: 1px solid #CCCCCC;
+	color: #333333;
+}
+
+form.formestilo input[type="text"] {
+	width: 80%;
+}
+
+form.formestilo input[type="file"] {
+	width: 80% important;
+	background: none repeat scroll 0 0 #FAFAFA;
+	border: 1px solid #CCCCCC;
+	color: #333333;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 1em;
+	padding: 2px;
+}
+
+form.formestilo textarea {
+	width: 80%;
+	background: none repeat scroll 0 0 #FAFAFA;
+	border: 1px solid #CCCCCC;
+	color: #333333;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 1em;
+	padding: 2px;
+}
+
+form.formestilo #listado {
+	width: 80%;
+}
+
+.primeraColumna {
+	width: 30%;
+	float: left;
+	text-align: right;
+}
+
+.segundaColumna {
+	width: 70%;
+	float: left;
+}
+
+.formEnviar {
+	clear: both;
+	text-align: center;
+}
+
+.formNotas {
+	color: red;
+	clear: both;
+	text-align: center;
+}
+
+.subrayado {
+	padding: 0 0 1px 0 !important;
+}
+
+input#adjunto.campo_texto {
+	width: 5em;
+}
+
+div.succes {
+	padding: 5px 5px 5px 30px !important;
+}
+
+div.formEnviar {
+	text-align: center;
+}
+
+form.formestilo fieldset div.ayuda_formulario{
+  	text-align:right;
+	margin: 5px 20px 10px 0;
+  	font-weight: bold;
+	clear: left;
+	background: none transparent scroll repeat 0% 0%;
+	text-align: right;
+  	height:1em;
+}
+
+form.formestilo fieldset div.ayuda_formulario a {
+  text-decoration:none;
+  color:#000000;
+  padding-left: 20px;	
+  padding-top:2px;
+  text-decoration: none;
+}
+
+span.h2-icon {
+	float: right;
+	vertical-align: middle;	
+	margin-right: 12px;
+}
+
+#aviso-cookies {height:auto; width:100%; top:0px; background-color:#AAA; color:white; padding:1px}
+#aviso-cookies a {color:white}
+#aviso-cookies button {margin-bottom:5px}
+
+/* http://www.gobiernodecanarias.org/cmsgobcan/export/system/modules/es.gobcan.portal.tipo/resources/css/tipo_cabecera.css */
+#cabecera #menu_contextual ul.menu {
+	padding: 0;
+}
+
+#cabecera #menu_contextual ul.menu li {
+	margin-right: 0px;
+}
+
+#cabecera #menu_contextual ul.menu li a {
+	padding: 5px 15px 3px;
+}
+
+#headercontainer h1, #headercontainer h2 {
+	vertical-align: middle;
+	margin: 0 0 0 10px;
+	min-width: 150px;
+	height: 80px;
+	float: left;
+}
+
+h2.der {
+	float: none !important;
+	text-align: right !important;
+}
+
+h2.cen {
+	float: none !important;
+	text-align: center !important;
+}
+
+/* Visualizer colors specific */
+.sidebar-menu,
+.filter-sidebar-dimension-title,
+.dataset-visualization-container .dataset-visualization-options-bar .btn.dataset-options-filter.active {
+	background-color: #0F5B95 !important;
+}
+.active .dataset-options-type-canvasTable:before, 
+.dataset-options-type-canvasTable:hover:before { 
+	color: #0F5B95 !important; 
+}
