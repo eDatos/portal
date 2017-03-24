@@ -42,21 +42,43 @@ public class ApplicationStartup extends ApplicationStartupListener {
             WebUtils.setPortalDefaultStyleHeaderUrl(portalConfigurationService.retrievePortalDefaultStyleHeaderUrl());
             WebUtils.setPortalDefaultStyleCssUrl(portalConfigurationService.retrievePortalDefaultStyleCssUrl());
             WebUtils.setPortalDefaultStyleFooterUrl(portalConfigurationService.retrievePortalDefaultStyleFooterUrl());
+        } catch (MetamacException e) {
+            log.error("Error retrieving application configuration", e);
+        }
 
+        setPortalAgricultureStyles();
+        setPortalEnvironmentStyles();
+        setPortalTourismStyles();
+
+    }
+
+    private void setPortalAgricultureStyles() {
+        try {
             WebUtils.setPortalAgricultureStyleHeaderUrl(portalConfigurationService.retrievePortalAgricultureStyleHeaderUrl());
             WebUtils.setPortalAgricultureStyleCssUrl(portalConfigurationService.retrievePortalAgricultureStyleCssUrl());
             WebUtils.setPortalAgricultureStyleFooterUrl(portalConfigurationService.retrievePortalAgricultureStyleFooterUrl());
+        } catch (MetamacException e) {
+            log.error("Error retrieving application Agriculture configuration", e);
+        }
+    }
 
+    private void setPortalEnvironmentStyles() {
+        try {
             WebUtils.setPortalEnvironmentStyleHeaderUrl(portalConfigurationService.retrievePortalEnvironmentStyleHeaderUrl());
             WebUtils.setPortalEnvironmentStyleCssUrl(portalConfigurationService.retrievePortalEnvironmentStyleCssUrl());
             WebUtils.setPortalEnvironmentStyleFooterUrl(portalConfigurationService.retrievePortalEnvironmentStyleFooterUrl());
+        } catch (MetamacException e) {
+            log.error("Error retrieving application Environment configuration", e);
+        }
+    }
 
+    private void setPortalTourismStyles() {
+        try {
             WebUtils.setPortalTourismStyleHeaderUrl(portalConfigurationService.retrievePortalTourismStyleHeaderUrl());
             WebUtils.setPortalTourismStyleCssUrl(portalConfigurationService.retrievePortalTourismStyleCssUrl());
             WebUtils.setPortalTourismStyleFooterUrl(portalConfigurationService.retrievePortalTourismStyleFooterUrl());
-
         } catch (MetamacException e) {
-            log.error("Error retrieving application configuration", e);
+            log.error("Error retrieving application Tourism configuration", e);
         }
     }
 
