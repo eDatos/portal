@@ -32,4 +32,8 @@ public class PortalConfigurationConstants extends ConfigurationConstants {
     public static final String PORTAL_ENVIRONMENT_STYLE_HEADER_URL = "metamac.portal.environment.style.header.url";
     public static final String PORTAL_ENVIRONMENT_STYLE_CSS_URL    = "metamac.portal.environment.style.css.url";
     public static final String PORTAL_ENVIRONMENT_STYLE_FOOTER_URL = "metamac.portal.environment.style.footer.url";
+
+    public static final String PORTAL_TOURISM_STYLE_HEADER_URL     = "metamac.portal.tourism.style.header.url";
+    public static final String PORTAL_TOURISM_STYLE_CSS_URL        = "metamac.portal.tourism.style.css.url";
+    public static final String PORTAL_TOURISM_STYLE_FOOTER_URL     = "metamac.portal.tourism.style.footer.url";
 }

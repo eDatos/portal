@@ -79,6 +79,21 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
     }
 
     @Override
+    public String retrievePortalTourismStyleHeaderUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_TOURISM_STYLE_HEADER_URL);
+    }
+
+    @Override
+    public String retrievePortalTourismStyleCssUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_TOURISM_STYLE_CSS_URL);
+    }
+
+    @Override
+    public String retrievePortalTourismStyleFooterUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_TOURISM_STYLE_FOOTER_URL);
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
 
@@ -86,4 +101,5 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
             throw new IllegalArgumentException("ERROR: Portal installation type must be specified. Possible values are : \"INTERNAL\" or \"EXTERNAL\" ");
         }
     }
+
 }

@@ -67,6 +67,7 @@
 		<url-pattern>/visualizer/data.html</url-pattern>        
         <url-pattern>/visualizer/agricultura/data.html</url-pattern>
         <url-pattern>/visualizer/medioambiente/data.html</url-pattern>
+        <url-pattern>/visualizer/turismo/data.html</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -78,6 +79,7 @@
 		<url-pattern>/visualizer/collection.html</url-pattern>        
         <url-pattern>/visualizer/agricultura/collection.html</url-pattern>
         <url-pattern>/visualizer/medioambiente/collection.html</url-pattern>
+        <url-pattern>/visualizer/turismo/collection.html</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

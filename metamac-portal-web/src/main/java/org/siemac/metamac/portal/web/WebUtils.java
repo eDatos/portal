@@ -21,6 +21,10 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
     protected static String portalEnvironmentStyleCssUrl    = null;
     protected static String portalEnvironmentStyleFooterUrl = null;
 
+    protected static String portalTourismStyleHeaderUrl     = null;
+    protected static String portalTourismStyleCssUrl        = null;
+    protected static String portalTourismStyleFooterUrl     = null;
+
     public static void setExportApiBaseURL(String apiBaseUrl) {
         WebUtils.exportApiBaseUrl = SwaggerUtils.normalizeUrl(apiBaseUrl);
     }
@@ -44,6 +48,8 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
                 return portalAgricultureStyleHeaderUrl;
             case "medioambiente":
                 return portalEnvironmentStyleHeaderUrl;
+            case "turismo":
+                return portalTourismStyleHeaderUrl;
             default:
                 return portalDefaultStyleHeaderUrl;
         }
@@ -55,6 +61,8 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
                 return portalAgricultureStyleFooterUrl;
             case "medioambiente":
                 return portalEnvironmentStyleFooterUrl;
+            case "turismo":
+                return portalTourismStyleFooterUrl;
             default:
                 return portalDefaultStyleFooterUrl;
         }
@@ -66,6 +74,8 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
                 return portalAgricultureStyleCssUrl;
             case "medioambiente":
                 return portalEnvironmentStyleCssUrl;
+            case "turismo":
+                return portalTourismStyleCssUrl;
             default:
                 return portalDefaultStyleCssUrl;
         }
@@ -105,5 +115,17 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
 
     public static void setPortalEnvironmentStyleFooterUrl(String portalEnvironmentStyleFooterUrl) {
         WebUtils.portalEnvironmentStyleFooterUrl = portalEnvironmentStyleFooterUrl;
+    }
+
+    public static void setPortalTourismStyleHeaderUrl(String portalTourismStyleHeaderUrl) {
+        WebUtils.portalTourismStyleHeaderUrl = portalTourismStyleHeaderUrl;
+    }
+
+    public static void setPortalTourismStyleCssUrl(String portalTourismStyleCssUrl) {
+        WebUtils.portalTourismStyleCssUrl = portalTourismStyleCssUrl;
+    }
+
+    public static void setPortalTourismStyleFooterUrl(String portalTourismStyleFooterUrl) {
+        WebUtils.portalTourismStyleFooterUrl = portalTourismStyleFooterUrl;
     }
 }
