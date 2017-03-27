@@ -1756,8 +1756,24 @@ h2.cen {
 .dataset-visualization-container .dataset-visualization-options-bar .btn.dataset-options-filter.active {
     background-color: #467A0E !important;
 }
-.active .dataset-options-type-canvasTable:before,
-.dataset-options-type-canvasTable:hover:before {
-    color: #467A0E !important;
+
+.filter-sidebar-category .filter-sidebar-category-left-actions .level0 {
+  color: #467a0e !important;
 }
+.filter-sidebar-category .filter-sidebar-category-left-actions .level1 {
+  color: #539111 !important;
+}
+.filter-sidebar-category .filter-sidebar-category-left-actions .level2 {
+  color: #60a813 !important;
+}
+.filter-sidebar-category .filter-sidebar-category-left-actions .level3 {
+  color: #6dbf16 !important;
+}
+.filter-sidebar-category .filter-sidebar-category-left-actions .level4 {
+  color: #7bd618 !important;
+}
+.filter-sidebar-category .filter-sidebar-category-left-actions .level5 {
+  color: #87e622 !important;
+}
+
 
