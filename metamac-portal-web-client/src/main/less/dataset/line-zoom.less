@@ -10,7 +10,7 @@
         background-color: rgba(0, 0, 0, 0.1);
     }
 
-    @selectionBorderColorPrimary : #E08728;
+    @selectionBorderColorPrimary : @istacGreyDark;
     @selectionBorderColorSecondary : darken(@selectionBorderColorPrimary, 10%);
     @lineAndArrows : darken(@selectionBorderColorPrimary, 20%);
 
@@ -26,7 +26,7 @@
 
     .bar {
         position: absolute;
-        #gradient > .vertical(@s4yLightOrange, @s4yDarkOrange);
+        #gradient > .vertical(@istacGreyDark, @istacGreyDark);
         cursor: ew-resize;
         z-index: 1;
     }
@@ -49,7 +49,7 @@
     }
 
     .arrowBar {
-        #gradient > .vertical(@s4yLightOrange, @s4yDarkOrange);
+        #gradient > .vertical( @istacGreyDark, @istacGreyDark);
         cursor: pointer;
     }
 
@@ -62,7 +62,7 @@
     }
 
     .arrow {
-        font-size: 11px;
+        font-size: 10px;
         color: @lineAndArrows;
         position: absolute;
         width: 10px;
