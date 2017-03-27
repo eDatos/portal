@@ -1,4 +1,5 @@
 @dimensionPillWidth: 110px;
+@dimensionPillFrameWidth: 4px;
 @dimensionTitleWidth: 85px;
 @dimensionHeight: 23px;
 @zonesHorizontalPadding: 8px;
@@ -84,7 +85,7 @@
 
                 border: none;
                 display: block;
-                width: @dimensionPillWidth + 4px;
+                width: @dimensionPillWidth + @dimensionPillFrameWidth;
                 font-size: 100%;
             }
 
@@ -110,10 +111,10 @@
         }
 
         &.dataset-dimensions-left-1 {
-            width: (@dimensionPillWidth + 4px) * 1 + 2px;
+            width: (@dimensionPillWidth + @dimensionPillFrameWidth) * 1 + 2px;
         }
         &.dataset-dimensions-left-2 {
-            width: (@dimensionPillWidth + 4px) * 2 + 2px;
+            width: (@dimensionPillWidth + @dimensionPillFrameWidth) * 2 + 2px;
         }
 
         &.dataset-dimensions-left-1,
@@ -157,10 +158,10 @@
         padding-left: 0;            
 
         &.dataset-dimensions-left-1 {
-            padding-left: (@dimensionPillWidth + 4px) * 1 + @zonesHorizontalPadding;                            
+            padding-left: (@dimensionPillWidth + @dimensionPillFrameWidth) * 1 + @zonesHorizontalPadding;                            
         }            
         &.dataset-dimensions-left-2 {
-            padding-left: (@dimensionPillWidth + 4px) * 2 + @zonesHorizontalPadding;            
+            padding-left: (@dimensionPillWidth + @dimensionPillFrameWidth) * 2 + @zonesHorizontalPadding;            
             
         }
         
