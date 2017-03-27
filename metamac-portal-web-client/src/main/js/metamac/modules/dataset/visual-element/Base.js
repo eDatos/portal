@@ -36,7 +36,7 @@
                 var selectedRepresentations = self.getDrawableRepresentations(dimension);
                 return selectedRepresentations[0].get('visibleLabel');
             });
-            return fixedLabels.length ? I18n.t("filter.text.for") + ": " + fixedLabels.join(", ") : "";
+            return fixedLabels.length ? fixedLabels.join(", ") : "";
         },
 
         load : function () {
