@@ -59,7 +59,8 @@ I18n.translations.es = {
                 title: "Info"
             },
             filter : {
-                title : "Filtrar"
+                title : "Filtrar",
+                search : "Buscar"
             },
             order : {
                 title : "Ordenar",

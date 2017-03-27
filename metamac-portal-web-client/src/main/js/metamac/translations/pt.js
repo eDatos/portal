@@ -59,7 +59,8 @@ I18n.translations.pt = {
                     title: "Info"
                 },
                 filter : {
-                    title : "Filtro"
+                    title : "Filtro",
+                    search : "Pesquisa"
                 },
                 order : {
                     title : "Ordem",

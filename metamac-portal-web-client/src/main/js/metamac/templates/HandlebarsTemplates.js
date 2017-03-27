@@ -104,14 +104,17 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["Handlebars"]["templates"]["components/searchbar/searchbar"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
   buffer += "<div class=\"searchbar\">\r\n    <input type=\"text\" value=\"";
   if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" placeholder=\"buscar\">\r\n    <a href=\"#\" class=\"searchbar-clear\">\r\n        <i class=\"searchbar-icon-clear\"></i>\r\n    </a>\r\n</div>";
+    + "\" placeholder=\"";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.sidebar.filter.search", options) : helperMissing.call(depth0, "message", "filter.sidebar.filter.search", options)))
+    + "\">\r\n    <a href=\"#\" class=\"searchbar-clear\">\r\n        <i class=\"searchbar-icon-clear\"></i>\r\n    </a>\r\n</div>";
   return buffer;
   });
 

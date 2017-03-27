@@ -59,7 +59,8 @@ I18n.translations.en = {
                 title: "Info"
             },
             filter : {
-                title : "Filter"
+                title : "Filter",
+                search : "Search"
             },
             order : {
                 title : "Sort",
