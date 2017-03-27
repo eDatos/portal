@@ -111,6 +111,10 @@
             this.tableScrollManager = new App.Table.ScrollManager(this.view);
             this.keyboardManager = new App.Table.KeyboardManager({view : this.view });
 
+            var rightsHolder = this.dataset ? this.dataset.metadata.getRightsHolder().name : '';
+            this.$rightsHolder = $('<div class="rights-holder">' + rightsHolder + '</div>');
+            this.$el.append(this.$rightsHolder);
+
             this.view.repaint();
         },
 
