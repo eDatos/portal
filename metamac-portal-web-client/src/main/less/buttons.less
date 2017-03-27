@@ -1,3 +1,5 @@
+@import "variables";
+
 .metamac-container {
 
     .btn {
@@ -6,15 +8,20 @@
         text-align: center;
         vertical-align: middle;
         cursor: pointer;
-        font-size: 12px;
+        font-size: @defaultFontSize;
         border: none;
         white-space: nowrap;
         .user-select(none);
         display: inline-block;
-        line-height: 16px;
+        line-height: @defaultFontSize + 5px;
 
         background-color: @istacGrey;
         color: white;
+
+        i {
+            font-size: @defaultFontSize - 1px;
+            line-height: @defaultFontSize - 1px + 5px;
+        }
 
         &:link, &:visited {
             text-decoration: none;
@@ -59,5 +66,4 @@
     		display : block;
     	}
     }    
-
 }

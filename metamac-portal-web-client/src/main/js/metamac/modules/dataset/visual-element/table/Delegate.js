@@ -18,9 +18,14 @@
             istacBlueMedium : "#0F5B95"
         }
 
+        var font = {
+            family : "Helvetica,Arial,sans-serif",
+            size: "11px"
+        }
+
         this.style = {
             bodyCell : {
-                font : "12px Helvetica,Arial,sans-serif",
+                font : font.size + " " + font.family,
                 color : "#191919",
                 background : function (cell, view) {
 
@@ -46,9 +51,9 @@
             },
             headerCell : {
                 font : {
-                    mainLevel : "Bold 12px Helvetica, Arial, sans-serif",
-                    secondLevel : "Bold 12px Helvetica, Arial, sans-serif",
-                    default : "12px Helvetica, Arial, sans-serif"
+                    mainLevel : "Bold " + font.size + " " + font.family,
+                    secondLevel : "Bold " + font.size + " " + font.family,
+                    default : font.size + " " + font.family,
                 },
                 color : "#191919",
                 background : function (current, view) {
