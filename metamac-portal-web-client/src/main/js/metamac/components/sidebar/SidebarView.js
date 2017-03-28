@@ -133,12 +133,12 @@
 
         _onChangeCurrentSideView : function () {            
             var currentSideViewId = this.state.get('currentSideView');
-            if (currentSideViewId) {
-                var currentView = this._getSideView(currentSideViewId);
+            var currentView = currentSideViewId ? this._getSideView(currentSideViewId) : undefined;
+            if (currentView) {
                 currentView.render();
                 this.$el.toggleClass("sidebar-slideRight", true);
                 this.state.set('visible', true);
-                this.$("li[data-view-id='" + currentSideViewId + "']").addClass("active");                                                
+                this.$("li[data-view-id='" + currentSideViewId + "']").addClass("active");                                                                         
             } else {
                 this.state.set('visible', false);
             }
@@ -146,7 +146,7 @@
             var previousViewId = this.state.previous("currentSideView");
             if (previousViewId) {
                 var previousView = this._getSideView(previousViewId);
-                if (previousView.destroy) {
+                if (previousView && previousView.destroy) {
                     previousView.destroy();
                 }
                 this.$("li[data-view-id='" + previousViewId + "']").removeClass("active");
@@ -177,7 +177,9 @@
                 view.setElement(this.$sidebarContent);
             }, this);
 
-            this.sideViews[0].render();
+            if (this.sideViews.length) {
+                this.sideViews[0].render();
+            }            
 
             if (this.contentView != null) {
             	this.contentView.setElement(this.$content);
