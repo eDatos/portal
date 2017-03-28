@@ -2,8 +2,6 @@ package org.siemac.metamac.portal.web;
 
 import java.net.MalformedURLException;
 
-import org.siemac.metamac.core.common.util.swagger.SwaggerUtils;
-
 public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
 
     protected static String exportApiBaseUrl                = null;
@@ -25,20 +23,20 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
     protected static String portalTourismStyleCssUrl        = null;
     protected static String portalTourismStyleFooterUrl     = null;
 
-    public static void setExportApiBaseURL(String apiBaseUrl) {
-        WebUtils.exportApiBaseUrl = SwaggerUtils.normalizeUrl(apiBaseUrl);
+    public static void setExportApiBaseURL(String exportApiBaseUrl) {
+        WebUtils.exportApiBaseUrl = exportApiBaseUrl;
     }
 
     public static String getExportApiBaseURL() throws MalformedURLException {
-        return exportApiBaseUrl;
+        return normalizeUrl(exportApiBaseUrl);
     }
 
-    public static void setPermalinksApiBaseURL(String apiBaseUrl) {
-        WebUtils.permalinksApiBaseUrl = SwaggerUtils.normalizeUrl(apiBaseUrl);
+    public static void setPermalinksApiBaseURL(String permalinksApiBaseUrl) {
+        WebUtils.permalinksApiBaseUrl = permalinksApiBaseUrl;
     }
 
     public static String getPermalinksApiBaseURL() throws MalformedURLException {
-        return permalinksApiBaseUrl;
+        return normalizeUrl(permalinksApiBaseUrl);
     }
 
     /* Portal specific. See web.xml for matched patterns */

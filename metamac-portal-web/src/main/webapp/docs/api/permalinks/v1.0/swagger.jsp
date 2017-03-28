@@ -6,7 +6,7 @@
       "version":"1.0",
       "title":"API de Permalinks v1.0"
    },
-   "host":"<%=org.siemac.metamac.portal.web.WebUtils.getPermalinksApiBaseURL()%>",
+   "host":"<%=org.siemac.metamac.portal.web.SwaggerUtils.getPermalinksApiBaseURLForSwagger()%>",
    "schemes":[
 
    ],

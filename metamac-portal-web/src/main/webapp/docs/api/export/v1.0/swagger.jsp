@@ -6,7 +6,7 @@
     "version": "1.0",
     "title": "API de Exportaciones v1.0"
   },
-  "host": "<%=org.siemac.metamac.portal.web.WebUtils.getExportApiBaseURL()%>",
+  "host": "<%=org.siemac.metamac.portal.web.SwaggerUtils.getExportApiBaseURLForSwagger()%>",
   "schemes": [],
   "tags": [
     {
