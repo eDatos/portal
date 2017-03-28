@@ -17,7 +17,7 @@
             <c:when test="${collection != null}">
             	<h2 class="tit_conten_1_col">${resourceName}</h2>
             	<div class="collection-description">${resourceDescription}</div>                	
-                <jsp:include page="/jsp/collection-node.jsp" />
+                <jsp:include page="/jsp/visualizer/collection-node.jsp" />
             </c:when>
 			<c:otherwise>
             	<h2 class="tit_conten_1_col">Control de Errores</h2>

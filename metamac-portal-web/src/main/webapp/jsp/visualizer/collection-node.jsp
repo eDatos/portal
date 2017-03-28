@@ -39,7 +39,7 @@
         <% if (chapter.getNodes() != null) { 
             request.setAttribute("nodes", chapter.getNodes().getNodes());
         %>        
-        	<jsp:include page="./collection-node.jsp"/>
+        	<jsp:include page="/jsp/visualizer/collection-node.jsp"/>
 			<%
     			request.setAttribute("nodeDepth", nodeDepth); //reset node depth
 			%>
