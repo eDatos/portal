@@ -1,3 +1,4 @@
+<%@page import="org.siemac.metamac.portal.web.SwaggerUtils"%>
 <%@page pageEncoding="UTF-8"%>
 {
    "swagger":"2.0",
@@ -6,7 +7,7 @@
       "version":"1.0",
       "title":"API de Permalinks v1.0"
    },
-   "host":"<%=org.siemac.metamac.portal.web.SwaggerUtils.getPermalinksApiBaseURLForSwagger()%>",
+   "host":"<%=SwaggerUtils.getPermalinksApiBaseURLForSwagger()%>",
    "schemes":[
 
    ],
