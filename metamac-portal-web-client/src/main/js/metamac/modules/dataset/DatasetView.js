@@ -158,7 +158,6 @@
             if (type) {                
                 this._toggleClassByChartType(type);
 
-                this.optionsModel.set('filter', true);
                 this.visualizationView.activeVisualElement(type);                
                 this.visualizationView.load();
                 this.dimensionsView.render();
