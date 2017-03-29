@@ -44,8 +44,8 @@ class PortalRewriteMatch extends AbstractRewriteMatch {
     }
 
     @Override
-    protected String getApiVersionsListResource(String currentApiPrefix) {
-        switch (currentApiPrefix) {
+    protected String getApiVersionsListResource() {
+        switch (getCurrentApiPrefix()) {
             case EXPORT_API_PREFIX:
                 return "/jsp/export/index.jsp";
             case PERMALINKS_API_PREFIX:
