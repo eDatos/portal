@@ -136,24 +136,6 @@
         <filter-name>CORSFilter</filter-name>
         <url-pattern>/apis/*</url-pattern>
     </filter-mapping>
-    
-    <servlet>
-        <servlet-name>export</servlet-name>
-        <jsp-file>/jsp/export/index.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>export</servlet-name>
-        <url-pattern>/apis/export</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>permalinks</servlet-name>
-        <jsp-file>/jsp/permalinks/index.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>permalinks</servlet-name>
-        <url-pattern>/apis/permalinks</url-pattern>
-    </servlet-mapping>
 
 	<!-- Cookie rewrite path -->
 	<filter>

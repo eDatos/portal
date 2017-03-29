@@ -28,8 +28,9 @@ class PortalRewriteMatch extends AbstractRewriteMatch {
     @Override
     protected String getApiBaseUrl() throws ServletException {
         try {
-            return PERMALINKS_API_PREFIX.equals(getCurrentApiPrefix()) ? getConfigurationService().retrievePortalExternalApisPermalinksUrlBase() : getConfigurationService()
-                    .retrievePortalExternalApisExportUrlBase();
+            return PERMALINKS_API_PREFIX.equals(getCurrentApiPrefix())
+                    ? getConfigurationService().retrievePortalExternalApisPermalinksUrlBase()
+                    : getConfigurationService().retrievePortalExternalApisExportUrlBase();
         } catch (MetamacException e) {
             throw new ServletException("Error retrieving configuration property of the external API URL base", e);
         }
@@ -40,5 +41,17 @@ class PortalRewriteMatch extends AbstractRewriteMatch {
             configurationService = ApplicationContextProvider.getApplicationContext().getBean(ConfigurationService.class);
         }
         return configurationService;
+    }
+
+    @Override
+    protected String getApiVersionsListResource(String currentApiPrefix) {
+        switch (currentApiPrefix) {
+            case EXPORT_API_PREFIX:
+                return "/jsp/export/index.jsp";
+            case PERMALINKS_API_PREFIX:
+                return "/jsp/permalinks/index.jsp";
+            default:
+                return "/index.html";
+        }
     }
 }
