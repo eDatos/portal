@@ -21,18 +21,18 @@
             },
             canvasTable : {
                 zones : {
-                    left : {
-                        icon : "rows",
-                        draggable : true,
-                        location : "right",
-                        showHeader : true
-                    },
                     top : {
                         icon : "columns",
                         draggable : true,
                         location : "right",
                         showHeader : true
                     },
+                    left : {
+                        icon : "rows",
+                        draggable : true,
+                        location : "right",
+                        showHeader : true
+                    }
                 }                
             },
             column : {
