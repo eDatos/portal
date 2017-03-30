@@ -73,7 +73,7 @@ App.namespace("App.VisualElement.LineChart");
                 renderTo : '',
                 type : 'line',
                 borderWidth : 0,
-                backgroundColor : '#F5F5F5',
+                backgroundColor : '#FFFFFF',
                 marginRight : 0
             },
             tooltip : {

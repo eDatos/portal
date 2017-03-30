@@ -13,7 +13,7 @@
                 animation : false,
                 renderTo : '',
                 defaultSeriesType : 'column',
-                backgroundColor : '#F5F5F5'
+                backgroundColor : '#FFFFFF'
             },
             xAxis : {
                 categories : []
