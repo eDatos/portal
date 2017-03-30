@@ -1663,16 +1663,25 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   
+  return " active ";
+  }
+
+function program5(depth0,data) {
+  
+  
   return " in ";
   }
 
   buffer += "<div class=\"filter-sidebar-dimension ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.hierarchy), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\">\r\n    <div class=\"filter-sidebar-dimension-title\">\r\n        <div class=\"filter-sidebar-dimension-label\">\r\n            "
+  buffer += "\">\r\n    <div class=\"filter-sidebar-dimension-title ";
+  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\">\r\n        <div class=\"filter-sidebar-dimension-label\">\r\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"filter-sidebar-dimension-content collapse ";
-  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.dimension),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\" >\r\n        <div class=\"filter-sidebar-dimension-searchbar\"></div>\r\n\r\n        <div class=\"filter-sidebar-dimension-actionsbar\">\r\n            <div class=\"filter-sidebar-dimension-actionsbar-wrapper\">\r\n                <div class=\"filter-sidebar-dimension-actions\"></div>            \r\n                <div class=\"filter-sidebar-dimension-visibleLabelType\"></div>	                	\r\n                <div class=\"filter-sidebar-dimension-levels\"></div>\r\n            </div>\r\n        </div>        \r\n\r\n        <div class=\"filter-sidebar-categories\"></div>\r\n    </div>\r\n\r\n</div>";
   return buffer;

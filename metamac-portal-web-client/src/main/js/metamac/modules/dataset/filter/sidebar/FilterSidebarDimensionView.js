@@ -139,6 +139,7 @@
         _onChangeOpen : function (model) {
             if (model.id === this.filterDimension.id) {
                 this.$el.find('.collapse').toggleClass('in', this.filterDimension.get('open'));
+                this.$el.find('.filter-sidebar-dimension-title').toggleClass('active', this.filterDimension.get('open'));
                 this.updateScrollbar();
             }
         },
