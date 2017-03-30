@@ -34,9 +34,9 @@
             var self = this;
             var fixedLabels = this.filterDimensions.getAllFixedDimensionsCopy().map(function (dimension) {
                 var selectedRepresentations = self.getDrawableRepresentations(dimension);
-                return selectedRepresentations[0].get('visibleLabel');
+                return selectedRepresentations[0].get('visibleLabel') + ".";
             });
-            return fixedLabels.length ? fixedLabels.join(", ") : "";
+            return fixedLabels.length ? fixedLabels.join(" ") : "";
         },
 
         load : function () {
@@ -93,7 +93,11 @@
         },
 
         updateTitle : function () {
-            this.$title.text(this.getTitle());
+            var title = this.getTitle();
+            this.$title.text(title);
+            if (title) {
+                this.$title.prepend('<b>' + I18n.t("filter.text.for") + ': ' + '</b>');
+            }
         },
 
         replaceSeries : function (chart, series) {
