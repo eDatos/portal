@@ -2,11 +2,11 @@
     'use strict';
 
     var GeoJsonConverter = App.Map.GeoJsonConverter;
+    var Constants = App.Constants;
 
     App.namespace('App.Map.MapView');
 
-    App.Map.MapView = Backbone.View.extend({
-
+    App.Map.MapView = Backbone.View.extend({        
         _defaultSeriesOptions : {
             mapData: null,
             joinBy: ['code', 'code'],
@@ -18,8 +18,8 @@
             chart : {
                 className : 'map',
                 style : {
-                    fontFamily: 'Arial, Helvetica, sans-serif',
-                    fontSize: '12px'
+                    fontFamily: Constants.font.family,
+                    fontSize: Constants.font.size
                 },
                 animation: false,
             },
@@ -35,8 +35,8 @@
                 align : 'right',
                 y : -50,
                 x : 7,
-                backgroundColor: 'white',
-                borderColor: 'silver',
+                backgroundColor: Constants.colors.istacWhite,
+                borderColor: Constants.colors.istacGrey,
                 borderWidth: 1,
                 borderRadius: 5,
                 shadow: true,
@@ -49,20 +49,20 @@
             },
 
             colorAxis: {
-                minColor : '#b3d9ff'
+                minColor : Constants.colors.istacBlueWhite
             },
 
             plotOptions : {
                 map : {
-                    color : '#EBCC5C',
+                    color : Constants.colors.istacYellow,
                     states : {
                         hover : {
-                            color: '#EBCC5C'
+                            color: Constants.colors.istacYellow
                         }
                     }
                 },
                 mapbubble : {
-                    color : '#EBCC5C'
+                    color : Constants.colors.istacYellow
                 }
             },
 

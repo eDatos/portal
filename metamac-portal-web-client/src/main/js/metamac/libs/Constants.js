@@ -5,15 +5,18 @@
 
     App.Constants = {
         colors: {
-            istacWhite: "#FFFFFF",
+            istacWhite : "#FFFFFF",
             istacGreyLightest : "#EEEEEE",
             istacGreyLight : "#EBEBEB",
-            istacGreyMedium: "#CCCCCC",
+            istacGreyMedium : "#CCCCCC",
             istacGrey : "#ACACAC",            
-            istacBlack: "#222222",
+            istacBlack : "#222222",
+            istacBlueWhite: "#B3D9FF",
+            istacBlueLightest: "#0088CC",
             istacBlueMedium : "#0F5B95",
             istacBlueDark : "#0A3F67",
-            istacBlueDarkest : "#003366"
+            istacBlueDarkest : "#003366",
+            istacYellow: '#EBCC5C'
         },
 
         font: {

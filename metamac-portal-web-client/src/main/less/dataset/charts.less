@@ -11,13 +11,12 @@
 
 .highlight-short {
     opacity: 0.8 !important;
-    border: 1px dashed @s4yLightOrange !important;
+    border: 1px dashed @istacBlueLightest !important;
 }
 
 .filter-container {
     /*margin: 0 0 10px 0;*/
     margin: 0;
-    /*background-color: #ddd;*/
     /*height: 80%;*/
     height: 100%;
     width: 100%;
@@ -31,7 +30,6 @@
     /*bottom: 20px;*/
     bottom: 0px;
     background: rgba(221, 221, 221, 0.8) !important; /* R, G, B, A */
-    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7fdddddd, endColorstr=#7fdddddd);*/
     z-index: 2;
     cursor: default;
     line-height: 17px;
@@ -45,7 +43,7 @@
 .filter-container span#title-options {
     padding: 5px;
     background: rgba(238, 238, 238, 1); /* R, G, B, A */
-    border: 2px solid #ddd;
+    border: 2px solid @istacGreyMedium;
     float: left;
     border-radius: 7px;
     margin: 13px 0 13px 10px;
@@ -58,7 +56,7 @@
 
 .filter-container div.div-dimension-text {
     /*width: 100%;*/
-    color: #1E4F70;
+    color: @istacBlueDark;
     font-size: 14px;
 
     width: 30%;
@@ -71,8 +69,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    /*background-color: #f69;*/
 
     margin: 0 0 0 5px;
 
@@ -133,9 +129,9 @@
     display: inline-block;
     padding: 3px 10px 4px 10px;
     line-height: 18px;
-    background: #52768E;
+    background: @istacBlueLight;
     border-radius: 4px 4px 0 0;
-    border: 1px solid #1E4F70;
+    border: 1px solid @istacBlueDark;
     border-bottom: none;
     color: @istacWhite;
     margin-top: 10px;
@@ -178,7 +174,7 @@
 
 .filter-container #button-options {
     position: absolute;
-    /*border: 2px solid #ddd;*/
+    /*border: 2px solid @istacGreyMedium;*/
     bottom: 8px;
     right: 75px;
     padding: 3px 5px;
@@ -186,7 +182,7 @@
 }
 
 .filter-container .button-cancel {
-    color: @linkColor;
+    color: @istacBlueLightest;
     text-decoration: none;
     position: absolute;
     bottom: 12px;
@@ -228,8 +224,8 @@
     width: 100%;
     height: 28px;
     float: left;
-    background-color: #1E4F70;
-    border: 2px solid #1E4F70;
+    background-color: @istacBlueDark;
+    border: 2px solid @istacBlueDark;
     margin-bottom: 4px;
     border-radius: 0 5px 5px 5px;
     color: @istacWhite;
@@ -267,7 +263,7 @@
 .filter-container div.div-categories-advanced-container-big {
     background-color: @istacGreyLightest;
     border-radius: 0 5px 5px 5px;
-    border: 1px solid #1E4F70;
+    border: 1px solid @istacBlueDark;
     border-top: 1px solid @istacGreyLightest;
     height: 290px;
     /*overflow: hidden;*/
@@ -337,7 +333,7 @@
     outline: none;
     z-index: 2;
 
-/*     border: 1px solid #1E4F70; */
+/*     border: 1px solid @istacBlueDark; */
 /*     border-top: 1px solid @istacGreyLightest; */
 }
 
@@ -346,7 +342,7 @@
     margin: 3px 5px;
     height: 16px;
     float: left;
-    background-color: @s4yCategoriesOrange;
+    background-color: @istacBlueLightest;
     cursor: pointer;
     border-radius: 5px;
     color: @istacWhite;
@@ -362,10 +358,10 @@
     margin: 3px 5px;
     height: 16px;
     float: left;
-    background-color: #ddd;
+    background-color: @istacGreyMedium;
     cursor: pointer;
     border-radius: 5px;
-    color: #777;
+    color: @istacGreyDark;
     /*opacity: 0.4;*/
     font-size: @defaultFontSize;
     overflow: hidden;
@@ -386,7 +382,7 @@
     width: 10px;
     height: 0;
     border-top: 5px solid transparent;
-    border-left: 5px solid #036;
+    border-left: 5px solid @istacBlueDarkest;
     border-right: 0;
     border-bottom: 5px solid transparent;
     float: right;
@@ -407,7 +403,7 @@
 
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid #036;
+    border-bottom: 5px solid @istacBlueDarkest;
 
     margin: 2px 7px;
     height: 7px;
@@ -426,7 +422,6 @@
 .filter-container div.triangle-top:before {
 /*     font-weight: bold; */
 /*     content: 'x'; */
-/*     color: #036; */
 }
 
 
@@ -455,7 +450,7 @@
     width: 219px;
     height: 100px;
     background: @istacGreyLightest;
-    border: 1px solid #ddd;
+    border: 1px solid @istacGreyMedium;
     border-top: none;
     border-radius: 0 0 3px 3px;
 }

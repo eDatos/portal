@@ -18,19 +18,19 @@ svg { overflow: hidden; } // IE FIX
 }
 
 .map path.active {
-    stroke: @s4yLightOrange;
+    stroke: @istacBlueLightest;
     stroke-width: 0.02px;
 }
 
 #tooltip {
-    background: #555;
+    background: @istacGreyDark;
     border: 1px solid @istacBlack;
     border-radius: 5px;
     pointer-events: none;
     position: absolute;
     text-align: center;
     font-size: 14px;
-    color: #FAFAFA;
+    color: @istacGreyLightest;
     padding: 4px;
     min-height: 10px;
     min-width: 100px;
@@ -101,8 +101,8 @@ svg { overflow: hidden; } // IE FIX
 }
 
 #leyend-container {
-    background-color: #fdfdfd;
-    box-shadow: 1px 1px 1px 0px #888;
+    background-color: @istacGreyLightest;
+    box-shadow: 1px 1px 1px 0px @istacGreyDark;
     .border-radius(4px 4px 4px 4px);
     position: absolute;
     bottom: 65px;
@@ -124,7 +124,7 @@ svg { overflow: hidden; } // IE FIX
 
         .leyend-item-text {
             font: @istacFontSansSerif;
-            color: #3E576F;
+            color: @istacBlueDark;
         }
 
     }
@@ -159,7 +159,7 @@ svg { overflow: hidden; } // IE FIX
     #line {
         height: 2px;
         width: 100%;
-        background: #aaa;
+        background: @istacGrey;
     /*margin-top: 19px;*/
         position: absolute;
         top: 9px;
@@ -172,7 +172,7 @@ svg { overflow: hidden; } // IE FIX
         height: 20px;
     /*         background: @istacGreyLightest; */
         background: @istacWhite;
-        box-shadow: 0 0 2px #888;
+        box-shadow: 0 0 2px @istacGreyDark;
         position: absolute;
         top: 0px;
         left: 0px;
@@ -213,7 +213,7 @@ svg { overflow: hidden; } // IE FIX
     .map-error {
         font-size: 20px;
         color: @istacWhite;
-        background-color: #8d8d8d;
+        background-color: @istacGreyDark;
         padding: 18px;
         border-radius: 5px;
         text-align: center;

@@ -3,9 +3,11 @@ App.namespace("App.VisualElement.LineChart");
 (function () {
     "use strict";
 
+    var Constants = App.Constants;
+
     App.namespace("App.VisualElement.LineChart");
 
-    App.VisualElement.LineChart = function (options) {
+    App.VisualElement.LineChart = function (options) {        
         this.initialize(options);
         this._type = 'line';
 
@@ -73,7 +75,7 @@ App.namespace("App.VisualElement.LineChart");
                 renderTo : '',
                 type : 'line',
                 borderWidth : 0,
-                backgroundColor : '#FFFFFF',
+                backgroundColor : Constants.colors.istacWhite,
                 marginRight : 0
             },
             tooltip : {
@@ -90,7 +92,7 @@ App.namespace("App.VisualElement.LineChart");
                     {
                         value : 0,
                         width : 1,
-                        color : '#808080'
+                        color : Constants.colors.istacGreyDark
                     }
                 ]
             },

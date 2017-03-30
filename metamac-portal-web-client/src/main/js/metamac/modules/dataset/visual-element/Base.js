@@ -1,5 +1,7 @@
 (function () {
 
+    var Constants = App.Constants;
+
     App.namespace("App.VisualElement");
 
     App.VisualElement.Base = function (options) {
@@ -53,8 +55,7 @@
             this.load();
         },
 
-        _initializeChartOptions : function () {
-            var constants = App.Constants;
+        _initializeChartOptions : function () {            
             this._chartOptions = {
                 title : {
                     text : null
@@ -67,7 +68,7 @@
                 },
                 legend : {
                     layout : 'horizontal',
-                    backgroundColor : constants.colors.istacWhite,
+                    backgroundColor : Constants.colors.istacWhite,
                     //align : 'bottom',
                     //verticalAlign : 'bottom',
                     x : 5,
@@ -76,13 +77,13 @@
                     floating : false,
                     shadow : true,
                     navigation : {
-                        activeColor : constants.colors.istacBlueMedium,
+                        activeColor : Constants.colors.istacBlueMedium,
                         animation : true,
                         arrowSize : 12,
-                        inactiveColor : constants.colors.istacGreyMediun,
+                        inactiveColor : Constants.colors.istacGreyMediun,
                         style : {
                             fontWeight : 'bold',
-                            color : '#333',
+                            color : Constants.colors.istacBlack,
                             fontSize : '12px'
                         }
                     }

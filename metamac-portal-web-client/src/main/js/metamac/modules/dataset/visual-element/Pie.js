@@ -45,8 +45,8 @@ App.VisualElement.PieChart = (function () {
                     cursor : 'pointer',
                     dataLabels : {
                         enabled : true,
-                        color : '#000000',
-                        connectorColor : '#000000',
+                        color : constants.colors.istacBlack,
+                        connectorColor : constants.colors.istacBlack,
                         formatter : function () {
                             //return this.point.name +'<br/>'+ Math.round(this.percentage*10)/10 +' %';
                             return $('<span/>').text(this.point.name).html() + ': ' + Math.round(this.percentage * 10) / 10 + ' %';

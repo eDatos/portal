@@ -1,10 +1,11 @@
 (function () {
     "use strict";
 
+    var Constants = App.Constants;
+
     App.namespace("App.Table.Delegate");
 
-    App.Table.Delegate = function () {
-        var constants = App.Constants;
+    App.Table.Delegate = function () {        
         this.size = new App.Table.Size(150, 25);
         this.minSize = new App.Table.Size(50, 25);
         
@@ -13,22 +14,22 @@
 
         this.style = {
             bodyCell : {
-                font : constants.font.size + " " + constants.font.family,
-                color : constants.colors.istacBlack,
+                font : Constants.font.size + " " + Constants.font.family,
+                color : Constants.colors.istacBlack,
                 background : function (cell, view) {
 
                     var isRowSelected = view.isSelectionActive({rowsCells : [cell.y]});
                     var isColumnSelected = view.isSelectionActive({columns : [cell.x]});
 
                     if (isRowSelected && isColumnSelected) {
-                        return constants.colors.istacGreyLight;
+                        return Constants.colors.istacGreyLight;
                     } else if (isRowSelected || isColumnSelected) {
-                        return constants.colors.istacGreyLightest;
+                        return Constants.colors.istacGreyLightest;
                     }
-                    return constants.colors.istacWhite;
+                    return Constants.colors.istacWhite;
                 },
                 border : {
-                    color : constants.colors.istacGreyLight,
+                    color : Constants.colors.istacGreyLight,
                     width : "1px",
                     horizontal : true,
                     vertical : false
@@ -39,22 +40,22 @@
             },
             headerCell : {
                 font : {
-                    mainLevel : "Bold " + constants.font.size + " " + constants.font.family,
-                    secondLevel : "Bold " + constants.font.size + " " + constants.font.family,
-                    default : constants.font.size + " " + constants.font.family,
+                    mainLevel : "Bold " + Constants.font.size + " " + Constants.font.family,
+                    secondLevel : "Bold " + Constants.font.size + " " + Constants.font.family,
+                    default : Constants.font.size + " " + Constants.font.family,
                 },
-                color : constants.colors.istacBlack,
+                color : Constants.colors.istacBlack,
                 background : function (current, view) {
                     if (view.isSelectionActive(current)) {
-                        return constants.colors.istacGreyLight;
+                        return Constants.colors.istacGreyLight;
                     } else {
-                        return constants.colors.istacWhite;
+                        return Constants.colors.istacWhite;
                     }
                 },
                 border : {
                     color : {
-                        default : constants.colors.istacGrey,
-                        mainLevel : constants.colors.istacBlueMedium
+                        default : Constants.colors.istacGrey,
+                        mainLevel : Constants.colors.istacBlueMedium
                     },
                     width : {
                         default : 1,
@@ -73,18 +74,18 @@
                 }
             },
             attributeCellMark : {
-                background : constants.colors.istacGrey,
+                background : Constants.colors.istacGrey,
                 margin : 2,
                 size : 5
             },
             scroll : {
                 color : function (scroll, view) {
                     if (view.mouseZone && view.mouseZone.indexOf(scroll) !== -1) {
-                        return constants.colors.istacBlueMedium;
+                        return Constants.colors.istacBlueMedium;
                     } else if (view.lastClickZone && view.lastClickZone.indexOf(scroll) !== -1) {
-                        return constants.colors.istacBlueMedium;
+                        return Constants.colors.istacBlueMedium;
                     } else {
-                        return constants.colors.istacGreyMedium;
+                        return Constants.colors.istacGreyMedium;
                     }
                 },
                 minSize : 30,
