@@ -24,7 +24,7 @@
                     if (isRowSelected && isColumnSelected) {
                         return Constants.colors.istacGreyLight;
                     } else if (isRowSelected || isColumnSelected) {
-                        return Constants.colors.istacGreyLightest;
+                        return Constants.colors.istacGreyLight;
                     }
                     return Constants.colors.istacWhite;
                 },

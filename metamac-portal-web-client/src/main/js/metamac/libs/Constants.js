@@ -6,7 +6,6 @@
     App.Constants = {
         colors: {
             istacWhite : "#FFFFFF",
-            istacGreyLightest : "#EEEEEE",
             istacGreyLight : "#EBEBEB",
             istacGreyMedium : "#CCCCCC",
             istacGrey : "#ACACAC",            
