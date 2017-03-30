@@ -6,12 +6,12 @@
 
 .highlight-long {
     opacity: 0.8 !important;
-    border: 2px dashed #eee !important;
+    border: 2px dashed @istacGreyLightest !important;
 }
 
 .highlight-short {
     opacity: 0.8 !important;
-    border: 1px dashed #E08728 !important;
+    border: 1px dashed @s4yLightOrange !important;
 }
 
 .filter-container {
@@ -26,7 +26,7 @@
     display: block;
     position: relative;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid @istacGreyMedium;
     position: absolute;
     /*bottom: 20px;*/
     bottom: 0px;
@@ -89,7 +89,7 @@
     height: auto;
 
     /*padding-bottom: 10px;*/
-    background-color: #f5f5f5;
+    background-color: @istacGreyLightest;
     border-radius: 5px;
     width: 30%;
     z-index: 2;
@@ -97,7 +97,7 @@
     padding: 0 0 0 5px;
     padding-bottom: 0px;
     margin: 0 0 0 -1px;
-    border-left: 1px solid #fff;
+    border-left: 1px solid @istacWhite;
 
     position: absolute;
 }
@@ -137,7 +137,7 @@
     border-radius: 4px 4px 0 0;
     border: 1px solid #1E4F70;
     border-bottom: none;
-    color: #fff;
+    color: @istacWhite;
     margin-top: 10px;
     float: left;
 }
@@ -186,7 +186,7 @@
 }
 
 .filter-container .button-cancel {
-    color: #08C;
+    color: @linkColor;
     text-decoration: none;
     position: absolute;
     bottom: 12px;
@@ -195,7 +195,7 @@
 }
 
 .filter-container .button-cancel:hover {
-    color: #005580;
+    color: @istacBlueMedium;
     text-decoration: underline;
 }
 
@@ -232,7 +232,7 @@
     border: 2px solid #1E4F70;
     margin-bottom: 4px;
     border-radius: 0 5px 5px 5px;
-    color: #fff;
+    color: @istacWhite;
 
     padding-bottom: 5px;
 }
@@ -265,10 +265,10 @@
 }
 
 .filter-container div.div-categories-advanced-container-big {
-    background-color: #f5f5f5;
+    background-color: @istacGreyLightest;
     border-radius: 0 5px 5px 5px;
     border: 1px solid #1E4F70;
-    border-top: 1px solid #f5f5f5;
+    border-top: 1px solid @istacGreyLightest;
     height: 290px;
     /*overflow: hidden;*/
     z-index: 2;
@@ -286,7 +286,7 @@
     width: 100%;
     height: 50px;
     position: absolute;
-    background: #eee;
+    background: @istacGreyLightest;
     bottom: 0px;
     border-radius: 0 0 5px 5px;
     padding: 10px;
@@ -302,7 +302,7 @@
     /*width: 60%;*/
     width: 100%;
 
-    background-color: #f5f5f5;
+    background-color: @istacGreyLightest;
     border-radius: 5px;
 
     position: absolute;
@@ -320,7 +320,7 @@
     width: 100%;
     /*float: right;*/
 
-/*     background-color: #f5f5f5; */
+/*     background-color: @istacGreyLightest; */
 /*     border-radius: 0 5px 5px 5px; */
 
     /* The height must be a multiple of the height of the "short-dimension" DIV (24px) */
@@ -338,7 +338,7 @@
     z-index: 2;
 
 /*     border: 1px solid #1E4F70; */
-/*     border-top: 1px solid #f5f5f5; */
+/*     border-top: 1px solid @istacGreyLightest; */
 }
 
 
@@ -349,7 +349,7 @@
     background-color: @s4yCategoriesOrange;
     cursor: pointer;
     border-radius: 5px;
-    color: #fff;
+    color: @istacWhite;
     font-size: @defaultFontSize;
     overflow: hidden;
     white-space: nowrap;
@@ -454,13 +454,13 @@
     left: 0;
     width: 219px;
     height: 100px;
-    background: #eee;
+    background: @istacGreyLightest;
     border: 1px solid #ddd;
     border-top: none;
     border-radius: 0 0 3px 3px;
 }
 
 .dropup .btn-primary .caret {
-    border-top-color: #ffffff;
-    border-bottom-color: #ffffff;
+    border-top-color: @istacWhite;
+    border-bottom-color: @istacWhite;
 }

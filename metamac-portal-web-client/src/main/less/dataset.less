@@ -20,7 +20,7 @@
     .dataset-header-title {
         font-size: 20px;
         line-height: 25px;
-        color: @s4yDarkBlue;
+        color: @istacBlueDarkest;
         max-height: 50px;
         margin-top: 0;
     }
@@ -106,11 +106,11 @@
     }
 
     .field {
-        border-bottom: 1px solid #ebebeb;
+        border-bottom: 1px solid @istacGreyLight;
         box-shadow: 0 1px 0 #FDFDFD;
         .metadata-title {
             display: block;
-            color: @s4yDarkBlue;
+            color: @istacBlueDarkest;
             font-weight: bold;
             margin-top: 8px;
             margin-bottom: 2px;
@@ -155,7 +155,7 @@
         height: 100%;
         .box-sizing(border-box);
         border: 1px solid @istacGrey;
-        background: white;
+        background: @istacWhite;
 
         .dataset-widget & {
             padding-bottom: 21px;
@@ -181,7 +181,7 @@
     .clearfix;
 
     .dataset-visualization-dimensions {
-        background: white;
+        background: @istacWhite;
         position: absolute;
         width: 100%;
         .order-dimensions;
@@ -250,7 +250,7 @@
             margin-right: 20px;
             font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif; // Same as highcharts.js and highmaps.js
             font-size: 9px;
-            color: #909090;
+            color: @istacGrey;
         }
     }
     

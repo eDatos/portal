@@ -16,7 +16,7 @@
         line-height: @defaultFontSize + 5px;
 
         background-color: @istacGrey;
-        color: white;
+        color: @istacWhite;
 
         &:link, &:visited {
             text-decoration: none;
@@ -28,11 +28,10 @@
 
         &:hover,
         &:focus {
-            color: #111;
             text-decoration: none;
             
-            color: #333;
-			background-color: #e6e6e6;
+            color: @istacBlack;
+			background-color: @istacGreyLight;
 			background-position: 0 -15px;
 			.transition(background-position .1s linear);
         }

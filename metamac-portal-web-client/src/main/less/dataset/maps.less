@@ -18,13 +18,13 @@ svg { overflow: hidden; } // IE FIX
 }
 
 .map path.active {
-    stroke: #E08728;
+    stroke: @s4yLightOrange;
     stroke-width: 0.02px;
 }
 
 #tooltip {
     background: #555;
-    border: 1px solid #333;
+    border: 1px solid @istacBlack;
     border-radius: 5px;
     pointer-events: none;
     position: absolute;
@@ -57,7 +57,7 @@ svg { overflow: hidden; } // IE FIX
 
     .zoom-controls {
         font-size: 11px;
-        background-color: #fff;
+        background-color: @istacWhite;
         left: 6px;
         width: 18px;
         height: 18px;
@@ -65,7 +65,7 @@ svg { overflow: hidden; } // IE FIX
         position: absolute;
         line-height: 18px;
         text-align: center;
-        color: #333;
+        color: @istacBlack;
         .user-select(none);
     }
 
@@ -82,7 +82,7 @@ svg { overflow: hidden; } // IE FIX
     }
 
     #zoom-line {
-        background-color: #808080;
+        background-color: @istacGreyDark;
         position: absolute;
         top: 58px;
         left: 13px;
@@ -91,7 +91,7 @@ svg { overflow: hidden; } // IE FIX
     }
 
     #current-zoom {
-        background-color: #fff;
+        background-color: @istacWhite;
         position: absolute;
         top: 95px;
         left: 5px;
@@ -146,7 +146,7 @@ svg { overflow: hidden; } // IE FIX
         margin-right: 10px;
         vertical-align: middle;
         font: @istacFontSansSerif;
-        color: #1D4D6E;
+        color: @istacBlueDarkest;
     }
 
     #line-container {
@@ -170,8 +170,8 @@ svg { overflow: hidden; } // IE FIX
     /*float: left;*/
         width: 5px;
         height: 20px;
-    /*         background: #f5f5f5; */
-        background: #fff;
+    /*         background: @istacGreyLightest; */
+        background: @istacWhite;
         box-shadow: 0 0 2px #888;
         position: absolute;
         top: 0px;
@@ -183,7 +183,7 @@ svg { overflow: hidden; } // IE FIX
         position: absolute;
         top: 20px;
         font-size: 10px;
-        color: #1D4D6E;
+        color: @istacBlueDarkest;
     }
 
     .right-boundary {
@@ -208,14 +208,14 @@ svg { overflow: hidden; } // IE FIX
     box-orient: horizontal;
     box-pack: center;
     box-align: center;
+    
 
-}
-
-.map-error {
-    font-size: 20px;
-    color: #fff;
-    background-color: #8d8d8d;
-    padding: 18px;
-    border-radius: 5px;
-    text-align: center;
+    .map-error {
+        font-size: 20px;
+        color: @istacWhite;
+        background-color: #8d8d8d;
+        padding: 18px;
+        border-radius: 5px;
+        text-align: center;
+    }
 }

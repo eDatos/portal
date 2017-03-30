@@ -4,43 +4,31 @@
     App.namespace("App.Table.Delegate");
 
     App.Table.Delegate = function () {
+        var constants = App.Constants;
         this.size = new App.Table.Size(150, 25);
         this.minSize = new App.Table.Size(50, 25);
         
         this.scrollSize = 10;
         this.spinnerSize = new App.Table.Size(70, 30);
 
-        // See variable.less
-        var colors = {
-            istacGrey : "#ACACAC",
-            istacGreyLight : "#EBEBEB",
-            istacGreyLightest : "#EEEEEE",
-            istacBlueMedium : "#0F5B95"
-        }
-
-        var font = {
-            family : "Helvetica,Arial,sans-serif",
-            size: "11px"
-        }
-
         this.style = {
             bodyCell : {
-                font : font.size + " " + font.family,
-                color : "#191919",
+                font : constants.font.size + " " + constants.font.family,
+                color : constants.colors.istacBlack,
                 background : function (cell, view) {
 
                     var isRowSelected = view.isSelectionActive({rowsCells : [cell.y]});
                     var isColumnSelected = view.isSelectionActive({columns : [cell.x]});
 
                     if (isRowSelected && isColumnSelected) {
-                        return colors.istacGreyLight;
+                        return constants.colors.istacGreyLight;
                     } else if (isRowSelected || isColumnSelected) {
-                        return colors.istacGreyLightest;
+                        return constants.colors.istacGreyLightest;
                     }
-                    return "#fff";
+                    return constants.colors.istacWhite;
                 },
                 border : {
-                    color : "#DDD",
+                    color : constants.colors.istacGreyLight,
                     width : "1px",
                     horizontal : true,
                     vertical : false
@@ -51,22 +39,22 @@
             },
             headerCell : {
                 font : {
-                    mainLevel : "Bold " + font.size + " " + font.family,
-                    secondLevel : "Bold " + font.size + " " + font.family,
-                    default : font.size + " " + font.family,
+                    mainLevel : "Bold " + constants.font.size + " " + constants.font.family,
+                    secondLevel : "Bold " + constants.font.size + " " + constants.font.family,
+                    default : constants.font.size + " " + constants.font.family,
                 },
-                color : "#191919",
+                color : constants.colors.istacBlack,
                 background : function (current, view) {
                     if (view.isSelectionActive(current)) {
-                        return colors.istacGreyLight;
+                        return constants.colors.istacGreyLight;
                     } else {
-                        return "#fff";
+                        return constants.colors.istacWhite;
                     }
                 },
                 border : {
                     color : {
-                        default : colors.istacGrey,
-                        mainLevel : colors.istacBlueMedium
+                        default : constants.colors.istacGrey,
+                        mainLevel : constants.colors.istacBlueMedium
                     },
                     width : {
                         default : 1,
@@ -85,18 +73,18 @@
                 }
             },
             attributeCellMark : {
-                background : colors.istacGrey,
+                background : constants.colors.istacGrey,
                 margin : 2,
                 size : 5
             },
             scroll : {
                 color : function (scroll, view) {
                     if (view.mouseZone && view.mouseZone.indexOf(scroll) !== -1) {
-                        return "#0F5B95";
+                        return constants.colors.istacBlueMedium;
                     } else if (view.lastClickZone && view.lastClickZone.indexOf(scroll) !== -1) {
-                        return "#0F5B95";
+                        return constants.colors.istacBlueMedium;
                     } else {
-                        return "#CCCCCC";
+                        return constants.colors.istacGreyMedium;
                     }
                 },
                 minSize : 30,

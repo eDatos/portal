@@ -54,6 +54,7 @@
         },
 
         _initializeChartOptions : function () {
+            var constants = App.Constants;
             this._chartOptions = {
                 title : {
                     text : null
@@ -66,7 +67,7 @@
                 },
                 legend : {
                     layout : 'horizontal',
-                    backgroundColor : '#FFFFFF',
+                    backgroundColor : constants.colors.istacWhite,
                     //align : 'bottom',
                     //verticalAlign : 'bottom',
                     x : 5,
@@ -75,10 +76,10 @@
                     floating : false,
                     shadow : true,
                     navigation : {
-                        activeColor : '#3E576F',
+                        activeColor : constants.colors.istacBlueMedium,
                         animation : true,
                         arrowSize : 12,
-                        inactiveColor : '#CCC',
+                        inactiveColor : constants.colors.istacGreyMediun,
                         style : {
                             fontWeight : 'bold',
                             color : '#333',
