@@ -55,7 +55,7 @@
                 border : {
                     color : {
                         default : Constants.colors.istacGrey,
-                        mainLevel : Constants.colors.istacBlueMedium
+                        mainLevel : Constants.colors.istacBlueLightest
                     },
                     width : {
                         default : 1,
