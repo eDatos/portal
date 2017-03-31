@@ -80,7 +80,7 @@
                         activeColor : Constants.colors.istacBlueMedium,
                         animation : true,
                         arrowSize : 12,
-                        inactiveColor : Constants.colors.istacGreyMediun,
+                        inactiveColor : Constants.colors.istacGreyMedium,
                         style : {
                             fontWeight : 'bold',
                             color : Constants.colors.istacBlack,

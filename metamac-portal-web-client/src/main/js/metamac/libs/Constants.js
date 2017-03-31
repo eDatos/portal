@@ -7,14 +7,14 @@
         // See variables.less        
         colors: {
             istacBlueWhite: "#B3D9FF",
-            istacBlueLightest: "#56B5E6",
+            istacBlueLight: "#56B5E6",
             istacBlueMedium : "#1C547E",
             istacBlueDark : "#003366",
             istacYellow: '#EBCC5C',
 
             istacWhite : "#FFFFFF",
             istacGreyLight : "#EBEBEB",
-            istacGrey : "#ACACAC", 
+            istacGreyMedium : "#ACACAC", 
             istacGreyDark: "#808080",           
             istacBlack : "#222222"
         },

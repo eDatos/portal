@@ -161,7 +161,7 @@
 
 
 // Mixin for form field states
-.formFieldState(@textColor: @istacGreyDark, @borderColor: @istacGrey, @backgroundColor: @istacGreyLight) {
+.formFieldState(@textColor: @istacGreyDark, @borderColor: @istacGreyMedium, @backgroundColor: @istacGreyLight) {
   // Set the text color
   > label,
   .help-block,
@@ -428,7 +428,7 @@
     background-image: -o-linear-gradient(@deg, @startColor, @endColor); // Opera 11.10
     background-image: linear-gradient(@deg, @startColor, @endColor); // Standard, IE10
   }
-  .vertical-three-colors(@startColor: @istacBlueLight, @midColor: @istacYellow, @colorStop: 50%, @endColor: @istacGrey) {
+  .vertical-three-colors(@startColor: @istacBlueLight, @midColor: @istacYellow, @colorStop: 50%, @endColor: @istacGreyMedium) {
     background-color: mix(@midColor, @endColor, 80%);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), color-stop(@colorStop, @midColor), to(@endColor));
     background-image: -webkit-linear-gradient(@startColor, @midColor @colorStop, @endColor);

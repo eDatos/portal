@@ -54,8 +54,8 @@
                 },
                 border : {
                     color : {
-                        default : Constants.colors.istacGrey,
-                        mainLevel : Constants.colors.istacBlueLightest
+                        default : Constants.colors.istacGreyMedium,
+                        mainLevel : Constants.colors.istacBlueLight
                     },
                     width : {
                         default : 1,
@@ -74,7 +74,7 @@
                 }
             },
             attributeCellMark : {
-                background : Constants.colors.istacGrey,
+                background : Constants.colors.istacGreyMedium,
                 margin : 2,
                 size : 5
             },
@@ -85,7 +85,7 @@
                     } else if (view.lastClickZone && view.lastClickZone.indexOf(scroll) !== -1) {
                         return Constants.colors.istacBlueMedium;
                     } else {
-                        return Constants.colors.istacGrey;
+                        return Constants.colors.istacGreyMedium;
                     }
                 },
                 minSize : 30,

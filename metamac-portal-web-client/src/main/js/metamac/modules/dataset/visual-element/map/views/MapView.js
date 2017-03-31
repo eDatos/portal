@@ -36,7 +36,7 @@
                 y : -50,
                 x : 7,
                 backgroundColor: Constants.colors.istacWhite,
-                borderColor: Constants.colors.istacGrey,
+                borderColor: Constants.colors.istacGreyMedium,
                 borderWidth: 1,
                 borderRadius: 5,
                 shadow: true,
@@ -198,7 +198,7 @@
                             id : "featuresContainerSerie", 
                             name : "BubbleContainer",
                             mapData : mapData,
-                            nullColor : Constants.colors.istacGrey
+                            nullColor : Constants.colors.istacGreyMedium
                         }, 
                         this._defaultSeriesOptions);   
 
