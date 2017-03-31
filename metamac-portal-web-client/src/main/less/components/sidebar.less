@@ -5,7 +5,7 @@
 @sidebarRadius : 6px;
 
 @sidebarMenuColor: @istacBlueDark;
-@sidebarMenuDark: @istacBlack;
+@sidebarMenuBackground: @istacBlueMedium;
 
 .sidebar-container {
     width: 100%;
@@ -33,7 +33,7 @@
         li {
             text-align: center;
             padding: 10px 3px 5px 3px;
-            border-bottom: 1px solid @sidebarMenuDark;
+            border-bottom: 1px solid @sidebarMenuBackground;
             box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
             font-size: 11px;
             cursor: pointer;
@@ -45,7 +45,7 @@
 			}
 
             &.active {
-                background-color: @sidebarMenuDark;
+                background-color: @sidebarMenuBackground;
             }
 
             i {
@@ -80,7 +80,7 @@
 @splitterWidth: 6px;
 
 .sidebar-sidebar {
-    border: 1px solid @istacGreyDark;
+    border: 1px solid @istacGreyMedium;
     position: absolute;
     width: @sidebarSidebarWidth;
     height: 100%;

@@ -10,23 +10,22 @@
         background-color: rgba(0, 0, 0, 0.1);
     }
 
-    @selectionBorderColorPrimary : @istacGreyDark;
-    @selectionBorderColorSecondary : darken(@selectionBorderColorPrimary, 10%);
-    @lineAndArrows : darken(@selectionBorderColorPrimary, 20%);
+    @selectionColor: @istacGreyMedium;
+    @lineAndArrows : @istacGreyDark;
 
     .selection {
         position: absolute;
         border-top: 2px solid;
         border-bottom: 2px solid;
-        border-top-color: @selectionBorderColorPrimary;
-        border-bottom-color: @selectionBorderColorSecondary;
+        border-top-color: @selectionColor;
+        border-bottom-color: @selectionColor;
         .box-sizing(border-box);
         cursor: all-scroll;
     }
 
     .bar {
         position: absolute;
-        #gradient > .vertical(@istacGreyDark, @istacGreyDark);
+        background-color: @selectionColor;
         cursor: ew-resize;
         z-index: 1;
     }
@@ -49,16 +48,16 @@
     }
 
     .arrowBar {
-        #gradient > .vertical( @istacGreyDark, @istacGreyDark);
+        background-color: @selectionColor;
         cursor: pointer;
     }
 
     .arrowBar-left {
-        border-radius: 5px 0 0 5px;
+        .border-radius(5px 0 0 5px);
     }
 
     .arrowBar-right {
-        border-radius: 0 5px 5px 0;
+        .border-radius(0 5px 5px 0);
     }
 
     .arrow {
@@ -68,7 +67,7 @@
         width: 10px;
         height: 10px;
         margin: 32px 0px;
-        border-color: darken(@selectionBorderColorPrimary, 20%);
+        border-color: @lineAndArrows;
         text-shadow: 1px 1px rgba(255, 255, 255, 0.3);
     }
 

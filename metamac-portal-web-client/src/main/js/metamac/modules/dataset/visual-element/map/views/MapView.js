@@ -49,7 +49,8 @@
             },
 
             colorAxis: {
-                minColor : Constants.colors.istacBlueWhite
+                minColor : Constants.colors.istacBlueWhite,
+                maxColor : Constants.colors.istacBlueDark
             },
 
             plotOptions : {
