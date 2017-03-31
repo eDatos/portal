@@ -17,7 +17,7 @@ App.VisualElement.PieChart = (function () {
                 plotShadow : false,
                 marginRight : 250,
                 marginLeft : 250,
-                backgroundColor : '#FFFFFF'
+                backgroundColor : Constants.colors.istacWhite
             },
             credits : {
                 text : 'App.com',

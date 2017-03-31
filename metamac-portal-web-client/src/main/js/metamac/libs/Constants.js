@@ -4,18 +4,19 @@
     App.namespace("App.Constants");
 
     App.Constants = {
+        // See variables.less        
         colors: {
+            istacBlueWhite: "#B3D9FF",
+            istacBlueLightest: "#56B5E6",
+            istacBlueMedium : "#1C547E",
+            istacBlueDark : "#003366",
+            istacYellow: '#EBCC5C',
+
             istacWhite : "#FFFFFF",
             istacGreyLight : "#EBEBEB",
-            istacGreyMedium : "#CCCCCC",
-            istacGrey : "#ACACAC",            
-            istacBlack : "#222222",
-            istacBlueWhite: "#B3D9FF",
-            istacBlueLightest: "#0088CC",
-            istacBlueMedium : "#0F5B95",
-            istacBlueDark : "#0A3F67",
-            istacBlueDarkest : "#003366",
-            istacYellow: '#EBCC5C'
+            istacGrey : "#ACACAC", 
+            istacGreyDark: "#808080",           
+            istacBlack : "#222222"
         },
 
         font: {

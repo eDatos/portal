@@ -1,6 +1,7 @@
 (function () {
     "use strict";
 
+    var Constants = App.Constants;
 
     App.namespace("App.VisualElement.ColumnChart");
 
@@ -13,7 +14,7 @@
                 animation : false,
                 renderTo : '',
                 defaultSeriesType : 'column',
-                backgroundColor : '#FFFFFF'
+                backgroundColor : Constants.colors.istacWhite
             },
             xAxis : {
                 categories : []

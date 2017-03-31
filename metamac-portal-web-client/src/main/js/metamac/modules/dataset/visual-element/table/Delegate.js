@@ -85,7 +85,7 @@
                     } else if (view.lastClickZone && view.lastClickZone.indexOf(scroll) !== -1) {
                         return Constants.colors.istacBlueMedium;
                     } else {
-                        return Constants.colors.istacGreyMedium;
+                        return Constants.colors.istacGrey;
                     }
                 },
                 minSize : 30,
