@@ -46,7 +46,7 @@
                 height: @dimensionHeight + 16px;
             }
 
-            .order-sidebar-dimension.dimension-pill.active {
+            .order-sidebar-dimension.dimension-pill {
                 .border-radius(10px 10px 0 0);
             }
         }
@@ -74,11 +74,12 @@
             }
                     
             .dimension-select-level,
-            .fixed-dimension-select-category {
+            .fixed-dimension-select-category,
+            .select2-container .selection {
                 background: @istacWhite;
                 color: @istacGreyMedium;
-                margin: 2px -1px -2px -2px;
-                padding: 4px 2px;
+                margin: 2px 0 -2px -2px;
+                padding: 4px 0px 2px 0;
 
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -95,8 +96,10 @@
                 margin: 2px;
 
                 .dimension-select-level,
-                .fixed-dimension-select-category{
-                    padding: 2px 2px;
+                .fixed-dimension-select-category,
+                .select2-container .selection {
+                    padding: 0px 2px;
+                    height: inherit;
                 }
             }    
         }
@@ -186,7 +189,7 @@
                      margin-left: 0;
                 }                                  
             }
-        }        
+        }           
     }    
 }
 

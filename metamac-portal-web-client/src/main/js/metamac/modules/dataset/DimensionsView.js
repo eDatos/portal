@@ -317,6 +317,7 @@
             this.$el.find('.order-sidebar-dimensions.scrollable').each(function() {
                  self.scrollbuttons.push(new App.components.scrollbuttons.Scrollbuttons({el : this}));
             });
+            this.$el.find('select').select2();
         },
 
         _dimensionsForZone : function (zoneId) {

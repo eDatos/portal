@@ -1,0 +1,29 @@
+@import "./select2-original";
+
+.select2-container {
+    display: block;
+ 
+    .select2-selection--single {
+        height: inherit;
+    }
+}
+.select2-container--default .select2-selection--single {
+    .border-radius(0);
+    border: none;
+    height: 16px;
+
+    .select2-selection__rendered {
+        line-height: inherit;
+        color: inherit;
+    }
+    .select2-selection__arrow {
+        height: 0;
+        top: 8px;
+    }
+}
+
+.select2-container--open .select2-dropdown {
+    left: -3px;
+    top: -4px;
+    box-sizing: content-box;
+}
