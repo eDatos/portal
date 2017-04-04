@@ -14,7 +14,7 @@
 
         this.style = {
             bodyCell : {
-                font : Constants.font.size + " " + Constants.font.family,
+                font : Constants.font.size + " " + Constants.font.family.sansSerif,
                 color : Constants.colors.istacBlack,
                 background : function (cell, view) {
 
@@ -40,9 +40,9 @@
             },
             headerCell : {
                 font : {
-                    mainLevel : "Bold " + Constants.font.size + " " + Constants.font.family,
-                    secondLevel : "Bold " + Constants.font.size + " " + Constants.font.family,
-                    default : Constants.font.size + " " + Constants.font.family,
+                    mainLevel : "Bold " + Constants.font.size + " " + Constants.font.family.sansSerif,
+                    secondLevel : "Bold " + Constants.font.size + " " + Constants.font.family.sansSerif,
+                    default : Constants.font.size + " " + Constants.font.family.sansSerif,
                 },
                 color : Constants.colors.istacBlack,
                 background : function (current, view) {

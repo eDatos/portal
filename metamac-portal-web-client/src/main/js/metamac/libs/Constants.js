@@ -20,7 +20,10 @@
         },
 
         font: {
-            family : "Helvetica,Arial,sans-serif",
+            family: {
+                sansSerif: "Helvetica,Arial,sans-serif",
+                serif: "serif"
+            },
             size: "11px"
         }
     };

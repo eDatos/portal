@@ -144,7 +144,17 @@ I18n.translations.es = {
 
             datasetAttributes : "Atributos a nivel de dataset",
             apiUrl : "Acceso para desarrolladores mediante API"
-        }
+        },
+        observation : {
+            measure: {
+                title: 'Datos de la observación'
+            },
+            attributes : {         
+                title: 'Notas de la observación',     
+                primaryMeasure : 'Atributos a nivel de observación',
+                combinatedDimensions: 'Atributos a nivel de dimensión',
+            }
+        }        
     },
     date : {
         formats : {

@@ -17,10 +17,6 @@
         _defaultMapOptions : {
             chart : {
                 className : 'map',
-                style : {
-                    fontFamily: Constants.font.family,
-                    fontSize: Constants.font.size
-                },
                 animation: false,
             },
 

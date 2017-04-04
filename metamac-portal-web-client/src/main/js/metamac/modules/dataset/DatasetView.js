@@ -1,4 +1,6 @@
 (function () {
+    var Constants = App.Constants;
+
     App.namespace("App.modules.dataset");
 
     App.modules.dataset.DatasetView = Backbone.Marionette.Layout.extend({
@@ -25,7 +27,7 @@
             this._initializeVisualElements();
             this._initializeSidebarView();
             this._initializeFullScreen();
-            this._initializeHighChartsLocale();
+            this._initializeHighChartsOptions();
         },
 
         _initializeVisualElements : function () {
@@ -140,6 +142,8 @@
                 this.fullScreen.enterFullScreen();
                 this.optionsModel.set('fullScreen', options.fullScreen);
             }
+                        // FIXME
+            this.optionsModel.set('filter', true);
 
             this.optionsModel.set('type', options.visualizationType);
         },
@@ -195,13 +199,20 @@
             }        
         },
         
-        _initializeHighChartsLocale : function() {            
-        	Highcharts.setOptions({
+        _initializeHighChartsOptions : function() {
+            var optionsOnInit = {
         		lang: {
         			thousandsSep: I18n.t("number.format.delimiter"),
         			decimalPoint: I18n.t("number.format.separator")
-        		}
-        	});
+        		},
+                chart: {
+                    style: {
+                        fontFamily: Constants.font.family.sansSerif
+                    }
+                }
+        	};           
+        	Highcharts.setOptions(optionsOnInit);
+            Highmaps.setOptions(optionsOnInit);
         },
 
         _initializeWidget : function () {
