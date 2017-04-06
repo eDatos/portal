@@ -13,6 +13,7 @@
 
         _bindEvents : function () {
             this.on('change:fixedSize', this._onModelChangeFixedSize);
+            this.on('change:maxSize', this._onModelChangeMaxSize);
         },
 
         swapDimensions : function (dimension1, dimension2) {
@@ -35,9 +36,8 @@
             var destZone = this.get(zoneId);
 
             var srcInFixedSize = srcZone ? srcZone.get('fixedSize') === srcZone.get('dimensions').length : false;
-            var destInFixedSize = destZone.get('fixedSize') === destZone.get('dimensions').length;
 
-            if (options.force == false && (srcInFixedSize || destInFixedSize)) {
+            if (options.force == false && (srcInFixedSize || !destZone.canAddDimension())) {
                 var dimensionInDestZone = destZone.get('dimensions').last();
                 if (dimensionInDestZone) {
                     this.swapDimensions(dimension, dimensionInDestZone);
@@ -66,6 +66,17 @@
             } else if (dimensions.length < fixedSize) {
                 this._moveToCompleteFixedSize(zone);
             }
+        },
+
+        _onModelChangeMaxSize : function (zone) {
+            var maxSize = zone.get('maxSize');
+            if (_.isUndefined(maxSize)) return;
+
+            var dimensions = zone.get('dimensions');
+
+            if (dimensions.length > maxSize) {
+                this._moveLeftoverDimensions(zone);
+            } 
         },
 
         applyFixedSizeRestriction : function () {

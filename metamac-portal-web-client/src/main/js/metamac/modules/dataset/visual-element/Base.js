@@ -144,6 +144,19 @@
             this._forceDimensionTypeInZone("GEOGRAPHIC_DIMENSION", zone);
         },
 
+        _preselectBiggestHierarchyGeographicValue : function() {
+            var fixedGeographicDimensions = this.filterDimensions.getAllFixedDimensionsCopyByType("GEOGRAPHIC_DIMENSION");
+            _(fixedGeographicDimensions).each(function(geographicDimension) { 
+                var selectedRepresentations = geographicDimension.get('representations')._selectedModels();              
+                var biggestHierarchyGeographicValue = _(selectedRepresentations).min(function(representation) {
+                    return representation.get("level");
+                });
+                if (biggestHierarchyGeographicValue != Infinity) {
+                    biggestHierarchyGeographicValue.set({drawable : true});
+                }
+            });
+        },
+
         getDrawableRepresentations : function(dimension) {
             return dimension.getDrawableRepresentations();
         }

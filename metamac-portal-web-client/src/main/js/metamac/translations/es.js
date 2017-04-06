@@ -77,7 +77,8 @@ I18n.translations.es = {
                 column : {
                     fixed : "Fijadas",
                     left : "Eje X",
-                    axisy : "Eje Y"
+                    axisy : "Eje Y",
+                    top: "Columnas"
                 },
                 line : {
                     fixed : "Fijadas",
@@ -170,5 +171,4 @@ I18n.translations.es = {
         
         
     }
-
 };

@@ -8,6 +8,7 @@
         defaults : {
             dimensions : undefined,
             fixedSize : undefined,
+            maxSize : undefined,
             type : undefined,
             preferredType : undefined,
             selectedLimit : Infinity,
@@ -52,7 +53,9 @@
         },
 
         canAddDimension : function () {
-            return _.isUndefined(this.get('fixedSize')) || this.get('dimensions').length < this.get('fixedSize');
+            var belowFixedSize = _.isUndefined(this.get('fixedSize')) || this.get('dimensions').length < this.get('fixedSize');
+            var belowMaxSize = _.isUndefined(this.get('maxSize')) || this.get('dimensions').length < this.get('maxSize');
+            return belowFixedSize && belowMaxSize;
         }
 
     });

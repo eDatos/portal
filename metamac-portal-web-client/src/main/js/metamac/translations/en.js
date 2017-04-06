@@ -77,7 +77,8 @@ I18n.translations.en = {
                 column : {
                     fixed : "Fixed values",
                     left : "X axis",
-                    axisy : "Y axis"
+                    axisy : "Y axis",
+                    top : "Columns"
                 },
                 line : {
                     fixed : "Fixed values",
@@ -144,7 +145,17 @@ I18n.translations.en = {
 
             datasetAttributes : "Dataset level attributes",
             apiUrl : "API access for developers"
-        }
+        },
+        observation : {
+            measure: {
+                title: 'Observation data'
+            },
+            attributes : {         
+                title: 'Observation attributes',     
+                primaryMeasure : 'Attributes observation level',
+                combinatedDimensions: 'Attributes dimensions level',
+            }
+        }   
     },
     date : {
         formats : {
@@ -160,5 +171,4 @@ I18n.translations.en = {
         
         
     }
-
 };

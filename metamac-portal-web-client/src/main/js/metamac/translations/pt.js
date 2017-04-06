@@ -77,7 +77,8 @@ I18n.translations.pt = {
                     column : {
                         fixed : "Valores fixos",
                         left : "Eixo X",
-                        axisy : "Eixo Y"
+                        axisy : "Eixo Y",
+                        top : "Colunas"
                     },
                     line : {
                         fixed : "Valores fixos",
@@ -144,7 +145,17 @@ I18n.translations.pt = {
 
                 datasetAttributes : "Atributos ao nível de dataset",
                 apiUrl : "Acesso à API para desenvolvedores"
-            }
+            },
+            observation : {
+                measure: {
+                    title: 'Dados de observação'
+                },
+                attributes : {         
+                    title: 'Atributos de observação',     
+                    primaryMeasure : 'Atributos no nível de observação',
+                    combinatedDimensions: 'Atributos no nível de dimensões',
+                }
+            }  
         },
         date : {
             formats : {

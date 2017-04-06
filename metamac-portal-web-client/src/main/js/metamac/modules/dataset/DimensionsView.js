@@ -46,6 +46,12 @@
                     left : {
                         icon : "axis-x",
                         draggable : true,
+                        location : "left",
+                        showHeader : true
+                    },
+                    top : {
+                        icon : "column",
+                        draggable : true,
                         location : "right",
                         showHeader : true
                     },

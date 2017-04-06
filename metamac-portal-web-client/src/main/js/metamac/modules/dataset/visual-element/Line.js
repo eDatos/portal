@@ -154,10 +154,10 @@ App.namespace("App.VisualElement.LineChart");
         updatingDimensionPositions : function () {
             this._applyVisualizationRestrictions();
 
-            this.filterDimensions.zones.get('left').set('fixedSize', 1);
-            this.filterDimensions.zones.get('top').set('fixedSize', 1);
+            this.filterDimensions.zones.get('top').set('maxSize', 1); // lines      
+            this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
             this.filterDimensions.zones.get('axisy').set('fixedSize', 1);
-            this.filterDimensions.zones.get('fixed').unset('fixedSize');
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');                            
         },
 
         _applyVisualizationRestrictions : function() {
@@ -165,8 +165,14 @@ App.namespace("App.VisualElement.LineChart");
 
             this._forceMeasureDimensionInZone('axisy');
             this._forceTimeDimensionInZone('left');
-            this._forceGeographicDimensionInZone('fixed');            
+            this._forceGeographicDimensionInZone('fixed');
+
+            this._applyVisualizationPreselections();            
         }, 
+
+        _applyVisualizationPreselections : function() {
+            this._preselectBiggestHierarchyGeographicValue();
+        },
 
         tooltipFormatter : function () {
             return '<strong>' + this.series.name + ', ' + this.x + '</strong>:<br/>' + this.point.name;
@@ -292,6 +298,9 @@ App.namespace("App.VisualElement.LineChart");
 
             var horizontalDimension = this.filterDimensions.dimensionsAtZone('left').at(0);
             var columnsDimension = this.filterDimensions.dimensionsAtZone('top').at(0);
+            if (!columnsDimension) {
+                columnsDimension = this.filterDimensions.dimensionsAtZone('fixed').at(0);
+            }
             var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
             if (horizontalDimension.get('type') == "TIME_DIMENSION") {
                 horizontalDimensionSelectedCategories = _.sortBy(horizontalDimensionSelectedCategories, function (representation) {

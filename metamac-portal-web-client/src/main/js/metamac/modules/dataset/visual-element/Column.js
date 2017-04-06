@@ -82,10 +82,11 @@
         updatingDimensionPositions : function () {
             this._applyVisualizationRestrictions();
             
-            this.filterDimensions.zones.get('left').set('fixedSize', 1);
-            this.filterDimensions.zones.get('top').set('fixedSize', 0);
+            this.filterDimensions.zones.get('top').set('maxSize', 0); // columns      
+            this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
             this.filterDimensions.zones.get('axisy').set('fixedSize', 1);
-            this.filterDimensions.zones.get('fixed').unset('fixedSize');         
+            this.filterDimensions.zones.get('fixed').unset('fixedSize');                
+            this.filterDimensions.zones.get('top').set('maxSize', 1); // columns                                                  
         },
 
         _applyVisualizationRestrictions : function() {
@@ -95,25 +96,11 @@
             this._forceTimeDimensionInZone('fixed');
             this._forceGeographicDimensionInZone('fixed');
 
-            this._applyVisualizationSelections();
+            this._applyVisualizationPreselections();
         },
 
-        _applyVisualizationSelections : function() {
+        _applyVisualizationPreselections : function() {
             this._preselectBiggestHierarchyGeographicValue();
-        },
-
-
-        _preselectBiggestHierarchyGeographicValue : function() {
-            var fixedGeographicDimensions = this.filterDimensions.getAllFixedDimensionsCopyByType("GEOGRAPHIC_DIMENSION");
-            _(fixedGeographicDimensions).each(function(geographicDimension) { 
-                var selectedRepresentations = geographicDimension.get('representations')._selectedModels();                
-                var biggestHierarchyGeographicValue = _(selectedRepresentations).min(function(representation) {
-                    return representation.get("level");
-                });
-                if (biggestHierarchyGeographicValue != Infinity) {
-                    biggestHierarchyGeographicValue.set({drawable : true});
-                }
-            });
         },
 
         render : function () {
@@ -158,7 +145,10 @@
             var fixedPermutation = this.getFixedPermutation();
 
             var horizontalDimension = this.filterDimensions.dimensionsAtZone('left').at(0);
-            var columnsDimension = this.filterDimensions.dimensionsAtZone('axisy').at(0);
+            var columnsDimension = this.filterDimensions.dimensionsAtZone('top').at(0);
+            if (!columnsDimension) {
+                columnsDimension = this.filterDimensions.dimensionsAtZone('fixed').at(0);
+            }
             var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
             var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 
