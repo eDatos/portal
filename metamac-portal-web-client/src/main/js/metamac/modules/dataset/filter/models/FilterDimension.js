@@ -59,12 +59,16 @@
             this.trigger.apply(this, arguments);
         },
 
+        _cleanFilterQuery : function(query) {
+            return s.trim(s.cleanDiacritics(query).toLowerCase());
+        },
+
         _onChangeFilterQuery : function () {
             this.stopListening(this, 'change:filterLevel', this._onChangeFilterLevel); //unbind to not trigger _onChangeFilterLevel
             this.set('filterLevel', this.defaults.filterLevel);
             this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
 
-            var filterQuery = _.string.slugify(this.get('filterQuery'));
+            var filterQuery = this._cleanFilterQuery(this.get('filterQuery'));
             var filterQueryLength = filterQuery.length;
 
             var representations = this.get('representations');
@@ -75,7 +79,7 @@
             var setObject = {};
             var visibleModels = [];
             representations.each(function (model) {
-                var matchIndex = _.string.slugify(model.get('label')).indexOf(filterQuery);
+                var matchIndex = this._cleanFilterQuery(model.get('label')).indexOf(filterQuery);
                 var match = matchIndex !== -1;
 
                 if (match) {

@@ -21,7 +21,7 @@
         _enumerateNodes : function (nodes, prefix) {
             if (nodes) {
                 nodes.each(function (node, i) {
-                    var numeration = prefix + _.string.pad(i + 1, 2, '0');
+                    var numeration = prefix + s.pad(i + 1, 2, '0');
                     node.set('numeration', numeration);
                     this._enumerateNodes(node.nodes, numeration + ".");
                 }, this);
