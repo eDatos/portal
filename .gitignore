@@ -141,3 +141,8 @@ Desktop.ini
 ######################
 **/bower_components/**
 /target/
+
+# Visual studio
+
+.vscode
+
