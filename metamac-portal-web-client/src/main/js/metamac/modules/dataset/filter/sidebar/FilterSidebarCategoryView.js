@@ -80,10 +80,11 @@
 
         _collapseClass : function () {
             if (this.filterRepresentation.children.length > 0) {
-                var collapseClass = this.filterRepresentation.get('open') ?
-                    'filter-sidebar-category-icon-collapse' :
-                    'filter-sidebar-category-icon-expand';
-                return collapseClass;
+                if (this.filterRepresentation.get('open')) {
+                    return this.filterRepresentation.get('childrenSelected') ? 'filter-sidebar-category-any-children-icon-collapse' : 'filter-sidebar-category-icon-collapse';
+                } else {
+                    return this.filterRepresentation.get('childrenSelected') ? 'filter-sidebar-category-any-children-icon-expand' : 'filter-sidebar-category-icon-expand';
+                }
             }
         },
 
