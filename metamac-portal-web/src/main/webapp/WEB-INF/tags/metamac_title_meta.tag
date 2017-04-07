@@ -144,6 +144,7 @@
        request.setAttribute("portalStyleHeaderUrl", WebUtils.getPortalStyleHeaderUrl(organizationService));
        request.setAttribute("portalStyleCssUrl", WebUtils.getPortalStyleCssUrl(organizationService));
        request.setAttribute("portalStyleFooterUrl", WebUtils.getPortalStyleFooterUrl(organizationService));
+       request.setAttribute("showRightsHolder", WebUtils.getShowRightsHolder(organizationService));
 
 	%>	
    	<title>${titlePrefix}${resourceName}</title>

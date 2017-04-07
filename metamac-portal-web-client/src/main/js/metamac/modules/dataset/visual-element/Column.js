@@ -124,8 +124,7 @@
                     self._chartOptions.xAxis.categories = data.xAxis;
                     self._chartOptions.chart.renderTo = self.$chartContainer[0];
                     
-                    self._chartOptions.credits.text = self.dataset ? self.dataset.metadata.getRightsHolder().name : '';
-//                    self._chartOptions.credits.href = self.dataset ? self.dataset.metadata.getRightsHolder().href : '';
+                    self._chartOptions.credits.text = self.getRightsHolderText();
 
                     self.chart = new Highcharts.Chart(self._chartOptions);
                     self.$el.on("resize", function () {});

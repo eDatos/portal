@@ -78,6 +78,7 @@
 			                    App.endpoints["permalinks"] = "${ApiUrlExport}/v1.0";
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
+			                    App.config["showRightsHolder"] = ${showRightsHolder};
 			                    
 			                    App.queryParams["agency"] = '${param.agencyId}';
 			                    App.queryParams["identifier"] = '${param.resourceId}';		                    

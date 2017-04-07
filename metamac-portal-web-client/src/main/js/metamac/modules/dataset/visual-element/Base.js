@@ -157,6 +157,10 @@
             });
         },
 
+        getRightsHolderText : function() {
+            return App.config.showRightsHolder && this.dataset ? this.dataset.metadata.getRightsHolder().name : '';
+        },
+
         getDrawableRepresentations : function(dimension) {
             return dimension.getDrawableRepresentations();
         }

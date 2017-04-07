@@ -79,6 +79,17 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
         }
     }
 
+    public static boolean getShowRightsHolder(String organizationService) {
+        switch (organizationService) {
+            case "agricultura":
+            case "medioambiente":
+            case "turismo":
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public static void setPortalDefaultStyleHeaderUrl(String portalDefaultStyleHeaderUrl) {
         WebUtils.portalDefaultStyleHeaderUrl = portalDefaultStyleHeaderUrl;
     }

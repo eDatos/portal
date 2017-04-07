@@ -85,6 +85,7 @@
             this._dataJson = options.dataJson;
             this.mapType = options.mapType;
             this.title = options.title;
+            this.rightsHolder = options.rightsHolder;
 
             this.tooltipDelegate = new App.Map.TooltipDelegate(options);
             // _.bindAll(this, "_calculateColor");
@@ -244,7 +245,7 @@
             this._defaultMapOptions.chart.renderTo = this.el;
             this._defaultMapOptions.colorAxis.dataClasses = this._generateDataClasses();
 
-            this._defaultMapOptions.credits.text = this._dataset ? this._dataset.metadata.getRightsHolder().name : '';
+            this._defaultMapOptions.credits.text = this.rightsHolder;
 
             this.map = new Highmaps.Map(this._defaultMapOptions);
 

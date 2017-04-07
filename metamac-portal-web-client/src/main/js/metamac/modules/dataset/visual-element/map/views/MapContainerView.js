@@ -18,6 +18,7 @@
             this.dataJson = options.dataJson;
             this.mapType = options.mapType;
             this.title = options.title;
+            this.rightsHolder = options.rightsHolder;
             this.$el.empty();
             this._initInternalViews();
         },
@@ -74,7 +75,8 @@
                 width : this._width,
                 height : this._height,
                 mapType : this.mapType,
-                title : this.title
+                title : this.title,
+                rightsHolder: this.rightsHolder
             });
         },
 
