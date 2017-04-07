@@ -7,18 +7,33 @@
         height: inherit;
     }
 }
-.select2-container--default .select2-selection--single {
-    .border-radius(0);
-    border: none;
-    height: 16px;
+.select2-container--default {
+    .select2-selection--single {
+        .border-radius(0);
+        border: none;
+        height: 16px;
 
-    .select2-selection__rendered {
-        line-height: inherit;
-        color: inherit;
+        .select2-selection__rendered {
+            line-height: inherit;
+            color: inherit;
+        }
+        .select2-selection__arrow {
+            height: 0;
+            top: 8px;
+        }
     }
-    .select2-selection__arrow {
-        height: 0;
-        top: 8px;
+    .select2-results__options {
+        margin: 0;
+        list-style: none;
+
+        li {
+            background: none;
+            line-height: inherit;
+            list-style-type: none;
+            margin: 0;
+            padding-left: 0;
+            text-align: center;
+        }
     }
 }
 

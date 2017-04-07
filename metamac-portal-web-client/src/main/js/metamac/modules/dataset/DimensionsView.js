@@ -323,7 +323,9 @@
             this.$el.find('.order-sidebar-dimensions.scrollable').each(function() {
                  self.scrollbuttons.push(new App.components.scrollbuttons.Scrollbuttons({el : this}));
             });
-            this.$el.find('select').select2();
+            this.$el.find('select').select2({                
+                dropdownParent: $('.metamac-container')
+            });
         },
 
         _dimensionsForZone : function (zoneId) {
