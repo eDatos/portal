@@ -41,23 +41,19 @@
      id="namedview9"
      showgrid="false"
      inkscape:zoom="0.43170732"
-     inkscape:cx="277.9661"
+     inkscape:cx="-103.0791"
      inkscape:cy="273.33333"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg7" />
   <path
-     style="fill:#003366;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.33333337"
-     d="M 116.02539 0 C 51.77018 0 -9.4739031e-015 51.77018 0 116.02539 L 0 430.64062 C 0 494.89583 51.77018 546.66602 116.02539 546.66602 L 430.64062 546.66602 C 494.89583 546.66602 546.66602 494.89583 546.66602 430.64062 L 546.66602 116.02539 C 546.66602 51.77018 494.89583 -9.4739031e-015 430.64062 0 L 116.02539 0 z M 129.71875 229.90039 L 416.94727 229.90039 L 416.94727 316.76562 L 129.71875 316.76562 L 129.71875 229.90039 z "
+     style="fill:#003366;fill-opacity:1;stroke-width:0.99999994"
+     d="M -0.66601562 -0.66601562 L -0.66601562 547.33398 L 547.33398 547.33398 L 547.33398 -0.66601562 L -0.66601562 -0.66601562 z M 129.71875 229.90039 L 416.94727 229.90039 L 416.94727 316.76562 L 129.71875 316.76562 L 129.71875 229.90039 z "
      transform="scale(0.74999997)"
-     id="path25" />
+     id="path4487" />
   <path
      style="fill:#003366;fill-opacity:1;fill-rule:nonzero;stroke:none"
      d="M 105.4375,32.03125"
      id="path2" />
-  <path
-     style="fill:#003366;fill-opacity:1;fill-rule:nonzero;stroke:none"
-     d="M 97.289062,172.42578"
-     id="path4" />
 </svg>
