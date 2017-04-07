@@ -72,10 +72,10 @@
 			                    App.endpoints["statistical-visualizer"] = "${ApiUrlStatisticalVisualizer}";
 			                    
 			                    // http://estadisticas.arte-consultores.com/permalinks
-			                    App.endpoints["export"] = "${ApiUrlPermalinks}/v1.0";
+			                    App.endpoints["permalinks"] = "${ApiUrlPermalinks}/v1.0";
 			                    
 			                    // http://estadisticas.arte-consultores.com/export
-			                    App.endpoints["permalinks"] = "${ApiUrlExport}/v1.0";
+			                    App.endpoints["export"] = "${ApiUrlExport}/v1.0";
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};
