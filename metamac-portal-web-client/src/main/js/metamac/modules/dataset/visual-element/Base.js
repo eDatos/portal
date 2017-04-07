@@ -156,6 +156,18 @@
                 }
             });
         },
+        
+        _preselectMostRecentTimeRepresentation : function() {
+            var fixedTimeDimensions = this.filterDimensions.getAllFixedDimensionsCopyByType("TIME_DIMENSION");
+            _(fixedTimeDimensions).each(function(timeDimension) { 
+                var selectedRepresentations = timeDimension.get('representations')._selectedModels();              
+                var mostRecentTimeRepresentation  = timeDimension.get('reversed') 
+                    ? _(selectedRepresentations).last()
+                    : _(selectedRepresentations).first();
+                mostRecentTimeRepresentation.set({drawable : true});
+                debugger;
+            });
+        },
 
         getRightsHolderText : function() {
             return App.config.showRightsHolder && this.dataset ? this.dataset.metadata.getRightsHolder().name : '';

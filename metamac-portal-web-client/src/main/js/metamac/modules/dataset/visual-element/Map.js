@@ -44,7 +44,14 @@
         _applyVisualizationRestrictions : function() {
             this._moveAllDimensionsToZone('fixed');
             this._forceGeographicDimensionInZone('left');
+
+            this._applyVisualizationPreselections();
         },
+
+        _applyVisualizationPreselections : function() {
+            this._preselectMostRecentTimeRepresentation();
+        },
+
 
         load : function () {
             var self = this;

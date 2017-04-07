@@ -41,7 +41,7 @@
                     var representations = self.getSelectedCategories(dimension.id);
 
                     if (dimension.type === "TIME_DIMENSION") {
-                        representations = _.sortBy(representations,function (representation) {
+                        representations = _.sortBy(representations, function (representation) {
                             return representation.normCode;
                         }).reverse();
                     }

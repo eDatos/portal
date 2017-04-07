@@ -10,7 +10,8 @@
             filterQuery : '',
             filterLevel : undefined,
             open : false,
-            visibleLabelType : "label"
+            visibleLabelType : "label",
+            reversed : false
         },
 
         initialize : function () {
@@ -33,13 +34,16 @@
             this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
             this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
             this.listenTo(this, "change:visibleLabelType", this._onChangeVisibleLabelType);
-            this.listenTo(this.get("representations"), "reverse", function () {
-                this.trigger("reverse");
-            });
+            this.listenTo(this.get("representations"), "reverse", this._onReverse);
         },
 
         _unbindEvents : function () {
             this.stopListening();
+        },
+
+        _onReverse : function() {   
+            this.toggle('reversed');
+            this.trigger("reverse");
         },
 
         removeFromZone : function () {

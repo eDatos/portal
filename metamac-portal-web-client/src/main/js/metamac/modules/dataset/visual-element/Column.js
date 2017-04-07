@@ -101,6 +101,7 @@
 
         _applyVisualizationPreselections : function() {
             this._preselectBiggestHierarchyGeographicValue();
+            this._preselectMostRecentTimeRepresentation();
         },
 
         render : function () {
