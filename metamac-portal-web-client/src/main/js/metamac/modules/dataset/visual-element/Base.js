@@ -165,7 +165,6 @@
                     ? _(selectedRepresentations).last()
                     : _(selectedRepresentations).first();
                 mostRecentTimeRepresentation.set({drawable : true});
-                debugger;
             });
         },
 
