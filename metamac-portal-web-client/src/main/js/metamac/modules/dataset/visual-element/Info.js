@@ -50,6 +50,7 @@
                 datasetAttributes : this.datasetAttributes
             };
             this.$el.html(this.template(context));
+            this.$el.find('.metadata-group').perfectScrollbar();
         }
     });
 
