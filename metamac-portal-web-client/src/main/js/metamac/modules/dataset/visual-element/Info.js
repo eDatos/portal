@@ -47,7 +47,8 @@
         render : function () {
             var context = {
                 metadata : this.dataset.metadata.toJSON(),
-                datasetAttributes : this.datasetAttributes
+                datasetAttributes : this.datasetAttributes,
+                rightsHolder: this.getRightsHolderText()
             };
             this.$el.html(this.template(context));
             this.$el.find('.metadata-group').perfectScrollbar();

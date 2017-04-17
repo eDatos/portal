@@ -1045,7 +1045,11 @@ function program7(depth0,data) {
   buffer += "\r\n\r\n";
   stack2 = helpers['if'].call(depth0, depth0.datasetAttributes, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n</div>\r\n</div>";
+  buffer += "\r\n\r\n</div>\r\n</div>\r\n<div class=\"rights-holder\">";
+  if (stack2 = helpers.rightsHolder) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.rightsHolder; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "</div>";
   return buffer;
   });
 

@@ -93,7 +93,7 @@
 
 .metadata-group {
     padding: 5px 20px;
-    height: 95%;
+    height: 94%;
     position: relative;
 
     .dataset-visualization-visual-element & {
@@ -247,18 +247,21 @@
     padding-bottom: @datasetVisualizationOptionsBarHeight;
     box-sizing: border-box;
 
+    .rights-holder {
+        font-family: @highchartsFontFamily;
+        font-size: 9px;
+        color: @istacGreyMedium;
+        text-align: right;
+    }
+
     &.dataset-visualization-type-canvasTable {
         .dataset-visualization-visual-element {
             padding-top: @dimensionsBarTypeTable;
         }
 
         .rights-holder {
-            margin-top: -30px;
-            text-align: right;
+            margin-top: -30px;            
             margin-right: 20px;
-            font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif; // Same as highcharts.js and highmaps.js
-            font-size: 9px;
-            color: @istacGreyMedium;
         }
     }
     
@@ -266,6 +269,12 @@
         .dataset-visualization-visual-element {
             padding-top: 5px;
             padding-right: 5px;
+        }
+
+        .rights-holder {
+            bottom: 7px;
+            right: 21px;
+            position: absolute;
         }
     }
     &.dataset-visualization-type-canvasTable {
