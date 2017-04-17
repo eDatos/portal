@@ -51,6 +51,9 @@
             };
             this.$el.html(this.template(context));
             this.$el.find('.metadata-group').perfectScrollbar();
+            this.$el.find('.metadata-accordion').accordion({
+                collapsible: true
+            });            
         }
     });
 

@@ -34,6 +34,7 @@ module.exports = (grunt) ->
 
                 # External libs
                 paths.lib + "/jquery-1.9.0.js"
+                paths.lib + "/jquery-ui.js"
                 paths.lib + "/i18n.js"
                 paths.lib + "/underscore.js"
                 paths.lib + "/underscore.string.js"
