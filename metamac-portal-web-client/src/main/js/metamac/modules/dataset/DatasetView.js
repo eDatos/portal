@@ -220,7 +220,7 @@
             this._updateSidebarHeight($('html').height());        
         },  
         _updateSidebarHeight : function (height) {
-            this.content.$el.find('.sidebar-container').height(height);   
+            this.content.$el.outerHeight(height);   
         }
     });
 
