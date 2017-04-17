@@ -1078,26 +1078,35 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
+  var buffer = "", stack1;
+  buffer += "\r\n    ";
+  stack1 = helpers.unless.call(depth0, depth0.widget, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n";
+  return buffer;
+  }
+function program6(depth0,data) {
+  
   var buffer = "", stack1, options;
-  buffer += "\r\n<div class=\"dataset-options\">\r\n    <button class=\"btn dataset-options-filter "
+  buffer += "\r\n    <div class=\"dataset-options\">\r\n        <button class=\"btn dataset-options-filter "
     + escapeExpression(((stack1 = ((stack1 = depth0.filter),stack1 == null || stack1 === false ? stack1 : stack1.btnClass)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" title='";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.sidebar.filter.title", options) : helperMissing.call(depth0, "message", "filter.sidebar.filter.title", options)))
-    + "'><i class=\"options-filter\"></i></button>\r\n</div>\r\n";
+    + "'><i class=\"options-filter\"></i></button>\r\n    </div>\r\n    ";
   return buffer;
   }
 
-function program7(depth0,data) {
+function program8(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\r\n<div class=\"change-visual-element\">\r\n    <div class=\"btn-group\" data-toggle=\"buttons-radio\">\r\n        ";
-  stack1 = helpers.each.call(depth0, depth0.veTypeButton, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
+  stack1 = helpers.each.call(depth0, depth0.veTypeButton, {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n    </div>\r\n</div>\r\n";
   return buffer;
   }
-function program8(depth0,data) {
+function program9(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\r\n        <button class=\"btn ";
@@ -1120,7 +1129,7 @@ function program8(depth0,data) {
   return buffer;
   }
 
-function program10(depth0,data) {
+function program11(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<button class=\"btn btn-with-label selection-visualize-selection\" title='";
@@ -1149,10 +1158,10 @@ function program10(depth0,data) {
   stack2 = helpers.unless.call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n";
-  stack2 = helpers.unless.call(depth0, depth0.widget, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
+  stack2 = helpers.unless.call(depth0, depth0.widget, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
+  stack2 = helpers['if'].call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n\r\n\r\n\r\n";
   return buffer;
