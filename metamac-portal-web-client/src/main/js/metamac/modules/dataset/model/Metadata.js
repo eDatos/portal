@@ -108,6 +108,13 @@
                 return label;
             }
         },
+
+        getLocalizedLabel : function (label) {
+            if (label) {
+                return this.localizeLabel(label.text);
+            }            
+        },
+
         _htmlDecode : function (value) {
         	  return $('<div/>').html(value).text();
         },
@@ -248,8 +255,12 @@
             	statisticalOperation: this.getStatisticalOperation(),
             	
                 title : this.getTitle(),
+                subtitle : this.getSubtitle(),
+                abstract: this.getAbstract(),
                 description : this.getDescription(),
                 dates : this.getDates(),
+                version : this.getVersion(),
+                versionRationale : this.getVersionRationale(),
                 replacesVersion : this.getReplacesVersion(),
                 isReplacedByVersion : this.getIsReplacedByVersion(),
                 publishers : this.getPublishers(),
@@ -263,6 +274,8 @@
                 accessRights: this.getAccessRights(),
                 subjectAreas : this.getSubjectAreas(),
                 formatExtentObservations: this.getFormatExtentObservations(),
+                
+                nextVersion: this.getNextVersion(),
                 lastUpdate: this.getLastUpdate(),
                 dateNextUpdate: this.getDateNextUpdate(),
                 updateFrequency: this.getUpdateFrequency(),
@@ -318,9 +331,7 @@
         },
         
         getMantainer : function () {
-        	if (this.metadata.maintainer) {
-        		return this.localizeLabel(this.metadata.maintainer.name.text);
-        	}
+            return this.getLocalizedLabel(this.metadata.maintainer);
         },
         
         getStatisticalOperation : function () {
@@ -334,19 +345,36 @@
         },
         
         getTitle : function () {
-        	if (this.options.name) {
-        		return this.localizeLabel(this.options.name.text);
-        	}
+            return this.getLocalizedLabel(this.options.name);
+        },
+        
+        getSubtitle : function () {
+            return this.getLocalizedLabel(this.metadata.subtitle);
+        },
+
+        getAbstract: function() {
+            return this.getLocalizedLabel(this.metadata.abstract);
         },
 
         getDescription : function () {
-            if (this.options.description) {
-                return this.localizeLabel(this.options.description.text);
-            }
+            return this.getLocalizedLabel(this.options.description);
         },
 
         getDates : function () {
-        	return { validFrom: this.metadata.validFrom, validTo : this.metadata.validTo };
+        	return { 
+                validFrom: this.metadata.validFrom, 
+                validTo : this.metadata.validTo,
+                dateStart : this.metadata.dateStart,
+                dateEnd : this.metadata.dateEnd
+             };
+        },
+
+        getVersion: function() {
+            return this.metadata.version;
+        },
+
+        getVersionRationale : function() {
+            return this.getLocalizedLabel(this.metadata.versionRationale);
         },
         
         getReplacesVersion : function () {
@@ -361,6 +389,9 @@
         	}
         },       
         
+        getNextVersion : function() {
+            return I18n.t("entity.dataset.nextVersion." + this.metadata.nextVersion); // TODO: ¿De donde saco la traducción para NON_SCHEDULED_UPDATE?
+        },
         
         getPublishers : function () {
         	var self = this;
@@ -406,15 +437,11 @@
         },
         
         getLicense : function () {
-        	if (this.metadata.license) {
-        		return this.localizeLabel(this.metadata.license.text);
-        	}
+            return this.getLocalizedLabel(this.metadata.license);
         },
         
         getAccessRights : function () {
-        	if (this.metadata.accessRights) {
-        		return this.localizeLabel(this.metadata.accessRights.text);
-        	}
+            return this.getLocalizedLabel(this.metadata.accessRights);
         },
         
         getSubjectAreas : function () {
@@ -442,15 +469,11 @@
         },
         
         getStatisticOfficiality : function () {
-        	if (this.metadata.statisticOfficiality) {
-        		return this.localizeLabel(this.metadata.statisticOfficiality.name.text);
-        	}
+            return this.getLocalizedLabel(this.metadata.statisticOfficiality.name);
         },
         
         getBibliographicCitation : function () {
-        	if (this.metadata.bibliographicCitation) {
-        		return this.localizeLabel(this.metadata.bibliographicCitation.text);
-        	}
+            return this.getLocalizedLabel(this.metadata.bibliographicCitation);
         },
         
         _getResourceLink : function (resource) {

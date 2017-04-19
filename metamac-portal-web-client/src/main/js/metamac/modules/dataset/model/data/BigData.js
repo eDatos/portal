@@ -108,25 +108,29 @@
             }
         },
 
-        // Must be a better way that going through the cache
         getDatasetAttributes : function() {
-            var cell = { x : 0, y : 0 };
-
-            var cacheBlock = this.getCache().cacheBlockForCell(cell);            
-            if (this.getCache().isBlockReady(cacheBlock)) {
-                return cacheBlock.apiResponse.getDatasetAttributes();
-            } else if (cacheBlock) {
-                this._loadCacheBlock(cacheBlock, true);
-            }
+            return this.getRootCacheBlock(function(rootCacheBlock) {
+                return rootCacheBlock.apiResponse.getDatasetAttributes();
+            });
         },
 
-        // Must be a better way that going through the cache
         getDimensionAttributesById : function(dimensionsIds) {
+             return this.getRootCacheBlock(function(rootCacheBlock) {                 
+                return rootCacheBlock.apiResponse.getDimensionAttributesById(dimensionsIds);
+            });
+        },
+        
+        getDimensionsAttributes : function() {
+            return this.getDimensionAttributesById(_.pluck(this.filterDimensions.models, 'id'));
+        },
+
+        // Simplified access to root block
+        getRootCacheBlock  : function(callback) {
             var cell = { x : 0, y : 0 };
 
             var cacheBlock = this.getCache().cacheBlockForCell(cell);            
             if (this.getCache().isBlockReady(cacheBlock)) {
-                return cacheBlock.apiResponse.getDimensionAttributesById(dimensionsIds);
+                return callback(cacheBlock);
             } else if (cacheBlock) {
                 this._loadCacheBlock(cacheBlock, true);
             }

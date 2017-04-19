@@ -113,10 +113,16 @@ I18n.translations.en = {
 
     entity : {
         dataset : {  
+            title: "Title",
+            subtitle: "Subtitle",
+            abstract: "Abstract",
             measureDimensionCoverageConcepts: "Measure dimension coverage concepts",
         	statisticalOperation : "Statistical operation",
             validFrom : "Valid from",
-            validTo : "Valido to",
+            validTo : "Valid to",
+            dateStart: "Initial period",
+            dateEnd: "End period",
+            versionRationale: "Version rationale",
             replacesVersion : "Replaces version",
             isReplacedByVersion : "Is replaced by version",
             publishers : "Publishers",
@@ -130,21 +136,35 @@ I18n.translations.en = {
             nolicense : "License no available",
             accessRights: "Access rights",
             subjectAreas : "Subject areas",
-            formatExtentObservations: "Number of observations",
+            formatExtentObservations: "Table size",
             lastUpdate: "Last update date",
             dateNextUpdate: "Next update date",
             updateFrequency: "Update frequency",
             statisticOfficiality: "Statistic officiality",
-            bibliographicCitation: "Bibliographic citation",            
-            
-            dimensions : {
-                title : "Dimensions"
+            bibliographicCitation: "Bibliographic citation",
+            measureConcepts: "Measure concepts",
+
+            section : {
+                properties: "Properties",
+                measure: "Measures",
+                dimensions: "Dimensions",
+                updates: {
+                    title: "Updates",
+                    version: "Version"
+                },
+                reuse: "Reuse"
             },
     
-    		language : "Language",     
+    		language : "Language",                 
+            datasetAttributes : "Dataset notes",
+            apiUrl : "API access for developers",
 
-            datasetAttributes : "Dataset level attributes",
-            apiUrl : "API access for developers"
+            nextVersion : {
+                title: "Update",
+                NON_SCHEDULED_UPDATE: "Non scheduled update",
+                NO_UPDATES: "No updates",
+                SCHEDULED_UPDATE: "Scheduled update"
+            }
         },
         observation : {
             measure: {

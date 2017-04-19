@@ -113,10 +113,16 @@ I18n.translations.pt = {
 
         entity : {
             dataset : {  
+                title: "Título",
+                subtitle: "Legenda",
+                abstract: "Abstrato",
                 measureDimensionCoverageConcepts: "Measure dimension coverage concepts",
                 statisticalOperation : "Ooperação estatística",
                 validFrom : "Válido desde",
                 validTo : "Válido até",
+                dateStart: "Período inicial",
+                dateEnd: "Período final",
+                versionRationale: "Versão justificativa",
                 replacesVersion : "Substituir versão",
                 isReplacedByVersion : "É sustituído pela versão",
                 publishers : "Publicadores",
@@ -130,21 +136,36 @@ I18n.translations.pt = {
                 nolicense : "Licença indisponível",
                 accessRights: "Direitos de acesso",
                 subjectAreas : "Áreas",
-                formatExtentObservations: "Número de observações",
+                formatExtentObservations: "Tamanho da tabela",
                 lastUpdate: "Data da última atualização",
                 dateNextUpdate: "Data da próxima atualização",
                 updateFrequency: "Frequência de atualização",
                 statisticOfficiality: "Estatísticas Oficiais",
                 bibliographicCitation: "Citação bibliográfica",                
-                
-                dimensions : {
-                    title : "Dimensões"
+                measureConcepts: "Conceitos de medida",
+
+                section : {
+                    properties: "Propriedades",
+                    measure: "Medidas",
+                    dimensions: "Dimensões",
+                    updates: {
+                        title: "Atualizações",
+                        version: "Versão"
+                    },
+                    reuse: "Reutilização"
                 },
         
                 language : "Idioma",     
 
-                datasetAttributes : "Atributos ao nível de dataset",
-                apiUrl : "Acesso à API para desenvolvedores"
+                datasetAttributes : "Notas do conjunto de dados",
+                apiUrl : "Acesso à API para desenvolvedores",
+                
+                nextVersion : {
+                    title: "Atualizações",
+                    NON_SCHEDULED_UPDATE: "Atualização não agendada",
+                    NO_UPDATES: "Sem atualizações",
+                    SCHEDULED_UPDATE: "Atualização agendada"
+                }
             },
             observation : {
                 measure: {

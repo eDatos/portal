@@ -1,30 +1,24 @@
 <div class="metadata-group">
+{{ fieldOutput "entity.dataset.title" metadata.title "text" }}
+{{ fieldOutput "entity.dataset.subtitle" metadata.subtitle "text" }}
+{{ fieldOutput "entity.dataset.abstract" metadata.abstract "text" }}
 {{ fieldOutput "entity.dataset.statisticalOperation" metadata.statisticalOperation "resource" }}
 
-{{ fieldOutput "entity.dataset.validFrom" metadata.dates.validFrom "date" }}
-{{ fieldOutput "entity.dataset.validTo" metadata.dates.validTo "date" }}
-
-{{ fieldOutput "entity.dataset.replacesVersion" metadata.replacesVersion "resource" }}
-{{ fieldOutput "entity.dataset.isReplacedByVersion" metadata.isReplacedByVersion "resource" }}
-
-
-{{ fieldOutput "entity.dataset.publishers" metadata.publishers "resource" }}
-{{ fieldOutput "entity.dataset.contributors" metadata.contributors "resource" }}
-{{ fieldOutput "entity.dataset.mediators" metadata.mediators "resource" }}
-
-{{ fieldOutput "entity.dataset.replaces" metadata.replaces "resource" }}
-{{ fieldOutput "entity.dataset.isReplacedBy" metadata.isReplacedBy "resource" }}
-
-{{ fieldOutput "entity.dataset.rightsHolder" metadata.rightsHolder "resource" }}
-{{ fieldOutput "entity.dataset.copyrightDate" metadata.copyrightDate "text" }}
-{{ fieldOutput "entity.dataset.license" metadata.license "text" }}
-{{ fieldOutput "entity.dataset.accessRights" metadata.accessRights "text" }}
-{{ fieldOutput "entity.dataset.subjectAreas" metadata.subjectAreas "resource" }}
-{{ fieldOutput "entity.dataset.formatExtentObservations" metadata.formatExtentObservations "text" }}
-{{ fieldOutput "entity.dataset.dateNextUpdate" metadata.dateNextUpdate "date" }}
-{{ fieldOutput "entity.dataset.updateFrequency" metadata.updateFrequency "resource" }}
-{{ fieldOutput "entity.dataset.statisticOfficiality" metadata.statisticOfficiality "text" }}
-{{ fieldOutput "entity.dataset.bibliographicCitation" metadata.bibliographicCitation "text" }}
+<div class="field metadata-accordion">
+    <div class="metadata-title">
+        <div>{{message "entity.dataset.section.properties"}}</div>
+    </div>
+    <div class="metadata-value">
+        <ul>
+            <li>{{ fieldOutput "entity.dataset.statisticOfficiality" metadata.statisticOfficiality "text" }}</li>
+            <li>{{ fieldOutput "entity.dataset.validFrom" metadata.dates.validFrom "date" }}</li>
+            <li>{{ fieldOutput "entity.dataset.validTo" metadata.dates.validTo "date" }}</li>
+            <li>{{ fieldOutput "entity.dataset.dateStart" metadata.dates.dateStart "date" }}</li>
+            <li>{{ fieldOutput "entity.dataset.dateEnd" metadata.dates.dateEnd "date" }}</li>
+            <li>{{ fieldOutput "entity.dataset.formatExtentObservations" metadata.formatExtentObservations "text" }}</li>
+        </ul>
+    </div>
+</div>
 
 {{#if metadata.measureDimension.representation }}
 <div class="field">
@@ -39,15 +33,38 @@
 </div>
 {{/if}}
 
-{{#if metadata.dimensions }}
+{{#if measureDimensions }}
 <div class="field">
     <div class="metadata-title">
-        <div>{{ message "entity.dataset.dimensions.title" }}</div>
+        <div>{{ message "entity.dataset.section.measure" }}</div>
     </div>
     <div class="metadata-value">
-        {{#join metadata.dimensions }}
-        {{ label }}
-        {{/join}}
+        {{#ulList measureDimensions }}
+            {{ conceptLabel }}
+        {{/ulList}}
+    </div>    
+    {{#if measureConcepts }}
+    <div class="metadata-title">
+        <div>{{ message "entity.dataset.measureConcepts" }}</div>
+    </div>
+    <div class="metadata-value">
+        {{#ulList measureConcepts }}
+            {{ this }}
+        {{/ulList}}
+    </div>
+    {{/if}}
+</div>
+{{/if}}
+
+{{#if nonMeasureDimensions }}
+<div class="field">
+    <div class="metadata-title">
+        <div>{{ message "entity.dataset.section.dimensions" }}</div>
+    </div>
+    <div class="metadata-value">
+        {{#ulList nonMeasureDimensions }}
+            {{ conceptLabel }}
+        {{/ulList}}
     </div>
 </div>
 {{/if}}
@@ -59,11 +76,55 @@
     </div>
     <div class="metadata-value">
         {{#ulList datasetAttributes }}
-        {{ fieldOutput name value "resource" false}}
+            {{ fieldOutput name value "resource" false}}
         {{/ulList}}
     </div>
 </div>
 {{/if}}
+
+<h2>{{message "entity.dataset.section.updates.title"}}</h2>
+<div class="field metadata-accordion">
+    <div class="metadata-title">
+        <div>{{message "entity.dataset.section.updates.version"}}</div>
+    </div>
+    <div class="metadata-value">
+        <ul>
+            <li>{{ fieldOutput "entity.dataset.version" metadata.version "text" }}</li>
+            <li>{{ fieldOutput "entity.dataset.versionRationale" metadata.versionRationale "text" }}</li>
+            <li>{{ fieldOutput "entity.dataset.replacesVersion" metadata.replacesVersion "resource" }}</li>
+            <li>{{ fieldOutput "entity.dataset.isReplacedByVersion" metadata.isReplacedByVersion "resource" }}</li>
+            <li>{{ fieldOutput "entity.dataset.replaces" metadata.replaces "resource" }}</li>
+            <li>{{ fieldOutput "entity.dataset.isReplacedBy" metadata.isReplacedBy "resource" }}</li>
+        </ul>
+    </div>
+</div>
+
+<div class="field metadata-accordion">
+    <div class="metadata-title">
+        <div>Actualización de datos</div>
+    </div>
+    <div class="metadata-value">
+        <ul>
+            <li>{{ fieldOutput "entity.dataset.nextVersion.title" metadata.nextVersion "text" }}</li>
+            <li>{{ fieldOutput "entity.dataset.dateNextUpdate" metadata.dateNextUpdate "date" }}</li>
+            <li>{{ fieldOutput "entity.dataset.updateFrequency" metadata.updateFrequency "resource" }}</li>
+        </ul>
+    </div>
+</div>
+
+
+<h2>{{message "entity.dataset.section.reuse"}}</h2>
+{{ fieldOutput "entity.dataset.bibliographicCitation" metadata.bibliographicCitation "text" }}
+{{ fieldOutput "entity.dataset.rightsHolder" metadata.rightsHolder "resource" }}
+{{ fieldOutput "entity.dataset.copyrightDate" metadata.copyrightDate "text" }}
+{{ fieldOutput "entity.dataset.license" metadata.license "text" }}
+{{ fieldOutput "entity.dataset.accessRights" metadata.accessRights "text" }}
+
+<!--<h2>???</h2>
+{{ fieldOutput "entity.dataset.publishers" metadata.publishers "resource" }}
+{{ fieldOutput "entity.dataset.contributors" metadata.contributors "resource" }}
+{{ fieldOutput "entity.dataset.mediators" metadata.mediators "resource" }}
+{{ fieldOutput "entity.dataset.subjectAreas" metadata.subjectAreas "resource" }}-->
 
 </div>
 </div>
