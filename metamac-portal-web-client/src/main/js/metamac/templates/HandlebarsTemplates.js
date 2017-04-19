@@ -1121,6 +1121,9 @@ function program13(depth0,data) {
     + "\r\n";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.accessRights", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.accessRights), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.accessRights", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.accessRights), "text", options)))
+    + "\r\n";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options)))
     + "\r\n\r\n<!--<h2>???</h2>\r\n";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.publishers", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.publishers), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.publishers", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.publishers), "resource", options)))
