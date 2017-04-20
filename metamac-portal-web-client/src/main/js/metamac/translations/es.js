@@ -143,7 +143,10 @@ I18n.translations.es = {
             updateFrequency: "Frecuencia de actualización",
             statisticOfficiality: "Oficialidad estadística",
             bibliographicCitation: "Citación bibliográfica",
-            measureConcepts : "¿Qué miden los datos?",
+            measureConcepts : {
+                title: "¿Qué miden los datos?",
+                annotations: "Notas generales"
+            },
             
             section : {
                 validity: "Validez de los datos",

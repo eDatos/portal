@@ -47,11 +47,25 @@
 {{#if measureConcepts }}
 <div class="field metadata-accordion">
     <div class="metadata-title">
-        <div>{{ message "entity.dataset.measureConcepts" }}</div>
+        <div>{{ message "entity.dataset.measureConcepts.title" }}</div>
     </div>
     <div class="metadata-value">
         {{#ulList measureConcepts }}
-            {{ fieldOutput name description "text" false true}}
+            <div class="field" >
+                {{ fieldOutput name description "text" false true ''}}
+                <ul>
+                    <li>
+                        <span class="metadata-title">
+                            {{ message "entity.dataset.measureConcepts.annotations" }}
+                        </span>
+                    </li>
+                {{#each annotations }}
+                    <li>
+                        <span class="metadata-value">{{ resourceOutput this }}</span>
+                    </li>
+                {{/each}}                        
+                </ul>
+            </div>
         {{/ulList}}
     </div>
 </div>

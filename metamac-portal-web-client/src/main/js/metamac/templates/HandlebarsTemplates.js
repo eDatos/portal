@@ -944,7 +944,7 @@ function program4(depth0,data) {
   var buffer = "", stack1, stack2, options;
   buffer += "\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureConcepts", options) : helperMissing.call(depth0, "message", "entity.dataset.measureConcepts", options)))
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureConcepts.title", options) : helperMissing.call(depth0, "message", "entity.dataset.measureConcepts.title", options)))
     + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
   options = {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data};
   stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.measureConcepts, options) : helperMissing.call(depth0, "ulList", depth0.measureConcepts, options));
@@ -954,28 +954,43 @@ function program4(depth0,data) {
   }
 function program5(depth0,data) {
   
-  var buffer = "", stack1, options;
-  buffer += "\r\n            ";
+  var buffer = "", stack1, stack2, options;
+  buffer += "\r\n            <div class=\"field\" >\r\n                ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.description, "text", false, true, options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.description, "text", false, true, options)))
-    + "\r\n        ";
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.description, "text", false, true, "", options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.description, "text", false, true, "", options)))
+    + "\r\n                <ul>\r\n                    <li>\r\n                        <span class=\"metadata-title\">\r\n                            ";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureConcepts.annotations", options) : helperMissing.call(depth0, "message", "entity.dataset.measureConcepts.annotations", options)))
+    + "\r\n                        </span>\r\n                    </li>\r\n                ";
+  stack2 = helpers.each.call(depth0, depth0.annotations, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "                        \r\n                </ul>\r\n            </div>\r\n        ";
+  return buffer;
+  }
+function program6(depth0,data) {
+  
+  var buffer = "", stack1, options;
+  buffer += "\r\n                    <li>\r\n                        <span class=\"metadata-value\">";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.resourceOutput || depth0.resourceOutput),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "resourceOutput", depth0, options)))
+    + "</span>\r\n                    </li>\r\n                ";
   return buffer;
   }
 
-function program7(depth0,data) {
+function program8(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
   buffer += "\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.dimensions", options) : helperMissing.call(depth0, "message", "entity.dataset.section.dimensions", options)))
     + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
-  options = {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data};
   stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.nonMeasureDimensions, options) : helperMissing.call(depth0, "ulList", depth0.nonMeasureDimensions, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n    </div>\r\n</div>\r\n";
   return buffer;
   }
-function program8(depth0,data) {
+function program9(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n            ";
@@ -985,20 +1000,20 @@ function program8(depth0,data) {
   return buffer;
   }
 
-function program10(depth0,data) {
+function program11(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
   buffer += "\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.datasetAttributes", options) : helperMissing.call(depth0, "message", "entity.dataset.section.datasetAttributes", options)))
     + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
-  options = {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data};
   stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.datasetAttributes, options) : helperMissing.call(depth0, "ulList", depth0.datasetAttributes, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n    </div>\r\n</div>\r\n";
   return buffer;
   }
-function program11(depth0,data) {
+function program12(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n            ";
@@ -1054,10 +1069,10 @@ function program11(depth0,data) {
   stack2 = helpers['if'].call(depth0, depth0.measureConcepts, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.nonMeasureDimensions, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
+  stack2 = helpers['if'].call(depth0, depth0.nonMeasureDimensions, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.datasetAttributes, {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
+  stack2 = helpers['if'].call(depth0, depth0.datasetAttributes, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
   options = {hash:{},data:data};

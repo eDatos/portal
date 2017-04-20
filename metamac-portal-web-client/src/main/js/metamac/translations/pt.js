@@ -142,7 +142,10 @@ I18n.translations.pt = {
                 updateFrequency: "Frequência de atualização",
                 statisticOfficiality: "Estatísticas Oficiais",
                 bibliographicCitation: "Citação bibliográfica",                
-                measureConcepts: "O que é medido pelos dados?",
+                measureConcepts : {
+                    title: "O que é medido pelos dados?",
+                    annotations: "Notas gerais"
+                },
 
                 section : {
                     validity: "Validade dos dados",

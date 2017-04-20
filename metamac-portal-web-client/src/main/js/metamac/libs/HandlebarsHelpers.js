@@ -108,6 +108,10 @@
         }
     });
 
+    Handlebars.registerHelper("resourceOutput", function (values) {
+        return new Handlebars.SafeString(resourceOutput(values));
+    });
+
     function resourceOutput(values) {
         var result = "";
         if (!(values instanceof Array)) {
@@ -131,13 +135,14 @@
      * usage:
      *      {{ fieldOutput "entity.dataset.title" }}
      */
-    Handlebars.registerHelper("fieldOutput", function (label, value, type, localizeLabel, allowEmptyValue) {        
+    Handlebars.registerHelper("fieldOutput", function (label, value, type, localizeLabel, allowEmptyValue, fieldClass) {        
         label = Handlebars.Utils.escapeExpression(label);        
         localizeLabel = _.isUndefined(localizeLabel) ? true : localizeLabel;
+        fieldClass = _.isUndefined(fieldClass) ? "field" : fieldClass;
         var result = '';
         if (value || allowEmptyValue) {
             result +=
-                '<div class="field" >' +
+                '<div class="' + fieldClass + '" >' +
                     '<span class="metadata-title">';
                 result += localizeLabel ? I18n.t(label) : label; 
             result += '</span>';
