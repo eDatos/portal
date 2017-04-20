@@ -30,7 +30,7 @@
         template : App.templateManager.get("dataset/dataset-info"),
 
         load : function () {
-            if (this.optionsModel.get('type') == this._type && this.$el) {
+            if (this.optionsModel.get('type') == this._type) {
                 this.getDimensions();        
                 this.getMeasureConcepts();
                 this._bindEvents();
@@ -98,6 +98,8 @@
         },
 
         render : function () {
+            if (!this.$el) { return; }
+            
             var context = {
                 metadata : this.dataset.metadata.toJSON(),
                 datasetAttributes : this.datasetAttributes,
