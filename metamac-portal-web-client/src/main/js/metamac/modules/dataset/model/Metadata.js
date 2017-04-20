@@ -16,12 +16,25 @@
         },
 
         urlIdentifierPart : function () {
-            var identifier = this.identifier();
+           return this.buildUrlIdentifierPart(this.identifier());
+        },
+
+        buildUrlIdentifierPart : function(identifier) {
             if (identifier.type === "dataset") {
                 return '/datasets/' + identifier.agency + '/' + identifier.identifier + '/' + identifier.version;
             } else if (identifier.type === "query") {
                 return '/queries/' + identifier.agency + '/' + identifier.identifier;
             }
+        },
+
+        buildQueryString : function(identifier) {
+            var version = identifier.type === "dataset" ? [ "version", identifier.version].join('=') : '';
+            return [
+                ['agencyId', identifier.agency].join('='),
+                ['resourceId', identifier.identifier].join('='),
+                version,
+                ['resourceType', identifier.type].join('=')
+            ].join('&');
         },
 
         idAttributes : ["type", "agency", "identifier", "version"],
@@ -385,18 +398,63 @@
         
         getReplacesVersion : function () {
         	if (this.metadata.replacesVersion) {
-        		return this._getResourceLink(this.metadata.replacesVersion);
+        		return this.buildVisualizerUrl(this.metadata.replacesVersion);
         	}
         },
 
         getIsReplacedByVersion : function() {
         	if (this.metadata.isReplacedByVersion) {
-        		return this._getResourceLink(this.metadata.isReplacedByVersion);
+        		return this.buildVisualizerUrl(this.metadata.isReplacedByVersion);
         	}
-        },       
+        },
+
+        getReplaces : function () {
+        	if (this.metadata.replaces) {
+        		return this.buildVisualizerUrl(this.metadata.replaces);
+        	}
+        },
         
+        getIsReplacedBy : function () {
+        	if (this.metadata.isReplacedBy) {
+        		return this.buildVisualizerUrl(this.metadata.isReplacedBy);
+        	}
+        },
+
+        buildVisualizerUrl: function(resource) {
+            if (resource.urn) {
+                var identifier = this.getIdentifierFromUrn(resource.urn);
+                return { 
+                    href : [
+                        location.protocol, 
+                        '//', 
+                        location.host, 
+                        location.pathname,
+                        '?', this.buildQueryString(identifier),
+                        '#', this.buildUrlIdentifierPart(identifier).substr(1), '/visualization/info'
+                    ].join('') ,
+                    name : this.localizeLabel(resource.name.text)
+                }
+            }
+        },            
+
+        getIdentifierFromUrn: function(urn) {
+            var splittedUrn = urn.split("=");
+            var resourcePrefix = splittedUrn[0];
+            var statisticalResource = splittedUrn[1];
+
+            var statisticalResourceRegex = /(\w+):([a-z_0-9]+)\(([0-9\.]+)\)/i;
+            var statisticalResourceMatchs = statisticalResourceRegex.exec(statisticalResource);                
+
+            return {
+                type : _.last(resourcePrefix.split(".")).toLowerCase(),
+                agency : statisticalResourceMatchs[1],
+                identifier : statisticalResourceMatchs[2],
+                version : statisticalResourceMatchs[3]
+            } 
+        },
+
         getNextVersion : function() {
-            return I18n.t("entity.dataset.nextVersion." + this.metadata.nextVersion); // TODO: ¿De donde saco la traducción para NON_SCHEDULED_UPDATE?
+            return I18n.t("entity.dataset.nextVersion." + this.metadata.nextVersion);
         },
         
         getPublishers : function () {
@@ -417,18 +475,6 @@
         	var self = this;
         	if (this.metadata.mediators) {
         		return _.map(this.metadata.mediators.resource, function (resource) { return self.localizeLabel(resource.name.text); });
-        	}
-        },
-        
-        getReplaces : function () {
-        	if (this.metadata.replaces) {
-        		return this._getResourceLink(this.metadata.replaces);
-        	}
-        },
-        
-        getIsReplacedBy : function () {
-        	if (this.metadata.isReplacedBy) {
-        		return this._getResourceLink(this.metadata.isReplacedBy);
         	}
         },
         
