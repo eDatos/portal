@@ -45,8 +45,7 @@
 
         updateDimensions : function(dimensions) {
             this.dimensions = dimensions;
-            this.measureDimensions = _.filter(this.dimensions, function(dimension) { return dimension.type === "MEASURE_DIMENSION"; }),
-            this.nonMeasureDimensions = _.filter(this.dimensions, function(dimension) { return dimension.type !== "MEASURE_DIMENSION"; }),
+            this.nonMeasureDimensions = _.filter(this.dimensions, function(dimension) { return dimension.type !== "MEASURE_DIMENSION"; });
             this.render();
         },
 
@@ -65,7 +64,8 @@
                     var parsedDimensions = _.map(self.dimensions, function(dimension) {
                         var dimensionConcept = _.findWhere(dimensionsConcepts, { id : dimension.conceptIdentity.id });
                         dimension.conceptIdentity = dimensionConcept;
-                        dimension.conceptLabel = generateLabel(dimensionConcept.name, dimensionConcept.description);
+                        dimension.conceptName = App.i18n.localizeText(dimensionConcept.name);
+                        dimension.conceptDescription = App.i18n.localizeText(dimensionConcept.description);
                         return dimension;
                     });
                     self.updateDimensions(parsedDimensions);
@@ -77,7 +77,9 @@
             var self = this;
             this.api.getMeasureConcepts(function(error, concepts) {
                 var parsedConcepts = _.map(concepts, function(concept) {
-                    return generateLabel(concept.name , concept.description);
+                    concept.name = App.i18n.localizeText(concept.name);
+                    concept.description = App.i18n.localizeText(concept.description);
+                    return concept;
                 });
                 self.updateMeasureConcepts(parsedConcepts);
             });
@@ -99,7 +101,6 @@
             var context = {
                 metadata : this.dataset.metadata.toJSON(),
                 datasetAttributes : this.datasetAttributes,
-                measureDimensions : this.measureDimensions,
                 measureConcepts : this.measureConcepts,
                 nonMeasureDimensions : this.nonMeasureDimensions,
 
@@ -109,7 +110,8 @@
             this.$el.html(this.template(context));
             this.$el.find('.metadata-group').perfectScrollbar();
             this.$el.find('.metadata-accordion').accordion({
-                collapsible: true
+                collapsible: true,
+                active: false
             });            
         }
     });

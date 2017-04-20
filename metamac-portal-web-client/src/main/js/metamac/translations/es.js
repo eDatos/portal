@@ -143,23 +143,23 @@ I18n.translations.es = {
             updateFrequency: "Frecuencia de actualización",
             statisticOfficiality: "Oficialidad estadística",
             bibliographicCitation: "Citación bibliográfica",
-            measureConcepts : "Conceptos de medida",
+            measureConcepts : "¿Qué miden los datos?",
             
             section : {
-                properties: "Características",
-                measure: "Medidas",
-                dimensions: "Dimensiones",
-                updates: {
-                    title: "Actualizaciones",
-                    version: "Version"
-                },
-                reuse: "Reutilización"
+                validity: "Validez de los datos",
+                descriptors: "Descriptores de los datos",
+                dimensions: "¿En base a qué se miden los datos?",
+                datasetAttributes : "Notas de tabla",
+                version: "Version",
+                dataUpdates: "Actualización de datos",
+                reuse: "Reutilización",
+                developers : "Información para desarrolladores"
             },
     
             language : "Idioma",   
 
-            datasetAttributes : "Notas de tabla",
-            apiUrl : "Acceso para desarrolladores mediante API",
+            apiDocumentationUrl : "Acceso a la documentación de la API",
+            apiUrl : "Acceso al recurso en la API",
 
             nextVersion : {
                 title: "Actualización",

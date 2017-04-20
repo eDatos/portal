@@ -48,6 +48,11 @@
             return { href : apiUrl, name : apiUrl };
         },
 
+        getApiDocumentationUrl : function() {
+            var apiDocumentationUrl = App.endpoints["statistical-resources"];
+            return { href : apiDocumentationUrl, name : apiDocumentationUrl };
+        },
+
         fetch : function () {
             var self = this;
             var result = $.Deferred();            
@@ -286,7 +291,8 @@
                 measureDimension : this.getMeasureDimension(),
                 dimensions : this.getDimensions(),
 
-                apiUrl : this.getApiUrl()          
+                apiUrl : this.getApiUrl(),
+                apiDocumentationUrl: this.getApiDocumentationUrl()
             };
         },
 
@@ -396,21 +402,21 @@
         getPublishers : function () {
         	var self = this;
         	if (this.metadata.publishers) {
-        		return _.map(this.metadata.publishers.resource, function (resource) { return self._getResourceLink(resource); });
+        		return _.map(this.metadata.publishers.resource, function (resource) { return self.localizeLabel(resource.name.text); });
         	}
         },
         
         getContributors : function () {
         	var self = this;
         	if (this.metadata.contributors) {
-        		return _.map(this.metadata.contributors.resource, function (resource) { return self._getResourceLink(resource); });
+        		return _.map(this.metadata.contributors.resource, function (resource) { return self.localizeLabel(resource.name.text); });
         	}
         },
         
         getMediators : function () {
         	var self = this;
         	if (this.metadata.mediators) {
-        		return _.map(this.metadata.mediators.resource, function (resource) { return self._getResourceLink(resource); });
+        		return _.map(this.metadata.mediators.resource, function (resource) { return self.localizeLabel(resource.name.text); });
         	}
         },
         
@@ -447,7 +453,7 @@
         getSubjectAreas : function () {
         	var self = this;
         	if (this.metadata.subjectAreas) {
-        		return _.map(this.metadata.subjectAreas.resource, function (resource) { return self._getResourceLink(resource); });
+        		return _.map(this.metadata.subjectAreas.resource, function (resource) { return self.localizeLabel(resource.name.text); });
         	}
         },
         

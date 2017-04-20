@@ -142,22 +142,23 @@ I18n.translations.en = {
             updateFrequency: "Update frequency",
             statisticOfficiality: "Statistic officiality",
             bibliographicCitation: "Bibliographic citation",
-            measureConcepts: "Measure concepts",
+            measureConcepts: "What is measured by the data?",
 
             section : {
-                properties: "Properties",
-                measure: "Measures",
-                dimensions: "Dimensions",
-                updates: {
-                    title: "Updates",
-                    version: "Version"
-                },
-                reuse: "Reuse"
+                validity: "Data validity",
+                descriptors: "Data descriptors",                
+                dimensions: "Which are the data variables?",
+                datasetAttributes : "Dataset notes",
+                version: "Version",
+                dataUpdates: "Data updates",
+                reuse: "Reuse",
+                developers: "Info for developers"
             },
     
-    		language : "Language",                 
-            datasetAttributes : "Dataset notes",
-            apiUrl : "API access for developers",
+    		language : "Language",    
+
+            apiDocumentationUrl: "API documentation access",
+            apiUrl : "API access to the resource",
 
             nextVersion : {
                 title: "Update",

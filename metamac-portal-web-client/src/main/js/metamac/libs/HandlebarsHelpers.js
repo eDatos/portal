@@ -131,11 +131,11 @@
      * usage:
      *      {{ fieldOutput "entity.dataset.title" }}
      */
-    Handlebars.registerHelper("fieldOutput", function (label, value, type, localizeLabel) {        
+    Handlebars.registerHelper("fieldOutput", function (label, value, type, localizeLabel, allowEmptyValue) {        
         label = Handlebars.Utils.escapeExpression(label);        
         localizeLabel = _.isUndefined(localizeLabel) ? true : localizeLabel;
         var result = '';
-        if (value) {
+        if (value || allowEmptyValue) {
             result +=
                 '<div class="field" >' +
                     '<span class="metadata-title">';
@@ -151,6 +151,7 @@
             else if (type === "resource") { 
                 result += resourceOutput(value);
             } else {
+                value = _.isArray(value) ? value.join(", ") : value;
             	value = Handlebars.Utils.escapeExpression(value);
                 //result += Handlebars.helpers.iString(value) +
                 result +=  htmlDecode(value);
