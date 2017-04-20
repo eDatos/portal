@@ -1128,7 +1128,7 @@ function program11(depth0,data) {
     + "</li>\r\n            <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options)))
-    + "</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r\n</div>\r\n</div>\r\n<div class=\"rights-holder\">";
+    + "</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"spacer\"></div>\r\n\r\n</div>\r\n</div>\r\n<div class=\"rights-holder\">";
   if (stack2 = helpers.rightsHolder) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.rightsHolder; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)

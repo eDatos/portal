@@ -106,7 +106,7 @@
         padding-left: 5px;
     }
 
-    @infoVerticalPadding: 12px;
+    @infoVerticalPadding: 8px;
     .field {
         border-bottom: 1px solid @istacGreyMedium;
         box-shadow: 0 1px 0 @istacGreyLight;
@@ -115,7 +115,14 @@
             color: @istacBlack;
             font-weight: bold;
             margin-top: @infoVerticalPadding;
-            margin-bottom: 4px;
+            margin-bottom: @infoVerticalPadding - 4px;
+            line-height: 26px;
+
+            &.ui-accordion-header:before {
+                font-size: 24px;
+                margin-top: -3px;
+                vertical-align: middle;
+            }
         }
 
         &.metadata-accordion .metadata-title div {
@@ -125,12 +132,19 @@
 
         .metadata-value {
             display: block;
-            margin-bottom: @infoVerticalPadding;
+            margin-bottom: @infoVerticalPadding + 4px;
             color: @istacGreyDark;
             word-wrap: break-word;
 
             a {
                 color: @istacBlueMedium;
+            }
+            ul {
+                margin-top: 0;
+                li {
+                    background: none;
+                    margin-top: 0;
+                }
             }
         }
     }
@@ -138,6 +152,10 @@
     .field:last-child {
         border-bottom: none;
         box-shadow: none;
+    }
+
+    .spacer {
+        margin-bottom: 50px;
     }
 }
 
