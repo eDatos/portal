@@ -3,13 +3,6 @@
 
     App.namespace("App.VisualElement.Info");
 
-    function generateLabel(name, description) {
-        return _.compact([
-            App.i18n.localizeText(name),
-            App.i18n.localizeText(description)
-        ]).join(" - ");
-    };
-    
     App.VisualElement.Info = function (options) {
         var self = this;
         this.initialize(options);
@@ -52,7 +45,7 @@
         updateDatasetAttributes : function() {
             this.datasetAttributes = this.dataset.data.getDatasetAttributes();
             this.dimensionAttributes = this.dataset.data.getDimensionsAttributes();
-            this.render();
+            this.load();
         },
 
         getDimensions : function() {
