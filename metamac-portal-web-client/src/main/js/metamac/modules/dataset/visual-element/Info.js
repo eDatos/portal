@@ -111,7 +111,8 @@
             this.$el.find('.metadata-group').perfectScrollbar();
             this.$el.find('.metadata-accordion').accordion({
                 collapsible: true,
-                active: false
+                active: false,
+                heightStyle: "content"
             });            
         }
     });
