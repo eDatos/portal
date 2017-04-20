@@ -142,7 +142,7 @@
                 this.fullScreen.enterFullScreen();
                 this.optionsModel.set('fullScreen', options.fullScreen);
             }
-                        // FIXME
+
             this.optionsModel.set('filter', true);
 
             this.optionsModel.set('type', options.visualizationType);
