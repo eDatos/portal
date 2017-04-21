@@ -25,7 +25,7 @@ public class CellCommentDetails {
     }
 
     public String getValue() {
-        if (valueBuilder.length() > 0) {
+        if (valueBuilder != null && valueBuilder.length() > 0) {
             return valueBuilder.toString();
         } else {
             return null;

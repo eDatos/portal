@@ -127,16 +127,17 @@ public class ExcelExporter {
             fixedDimensionsText.append(dimensionText).append(" = ").append(dimensionValueText).append(", ");
 
         }
-        fixedDimensionsText.delete(fixedDimensionsText.length() - 3, fixedDimensionsText.length()); // delete last comma and space
 
         if (fixedDimensionsText.length() > 0) {
+            fixedDimensionsText.delete(fixedDimensionsText.length() - 3, fixedDimensionsText.length()); // delete last comma and space
             String by = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_LABEL_PARA, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
             Row rowTitle = sheet.createRow(headerRow++);
             addStringCell(rowTitle, 0, by + " " + fixedDimensionsText.toString(), null);
             sheet.addMergedRegion(new CellRangeAddress(headerRow - 1, headerRow - 1, 0, 4));
+            headerRow += 1;
         }
 
-        headerRow += 2;
+        headerRow += 1;
         currentRowCount = headerRow;
     }
 
@@ -482,7 +483,7 @@ public class ExcelExporter {
 
     /**
      * Create a cellStyle with solid foreground color and font color
-     * 
+     *
      * @param foregroundColor required
      * @param fontColor optional
      * @return
