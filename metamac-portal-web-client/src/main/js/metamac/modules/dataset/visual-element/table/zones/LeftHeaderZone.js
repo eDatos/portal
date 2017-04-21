@@ -148,7 +148,6 @@
     App.Table.LeftHeaderZone.prototype.repaint = function () {
         this.clear();
 
-        //this.paintShadow();
         this.ctx.save();
 
         this.ctx.beginPath();
@@ -156,46 +155,10 @@
         this.ctx.clip();
 
         var paintInfo = this.paintInfo();
-        //this.paintBorders();
         this.paintCells(paintInfo);
         
         this.ctx.restore();
         this.needRepaint = false;
-    };
-
-    // FIXME Eliminar este método si no se está usando
-    App.Table.LeftHeaderZone.prototype.paintShadow = function () {
-        if(this.delegate.style.headerCell.shadow.show && this.bodyZone.origin.x !== 0){
-            this.ctx.save();
-
-            this.ctx.beginPath();
-            this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width + 0.5 + 30, this.viewPort.height);
-            this.ctx.clip();
-
-            this.ctx.beginPath();
-            this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width, this.viewPort.height);
-            this.ctx.shadowColor = this.delegate.style.headerCell.shadow.color;
-            this.ctx.shadowBlur = this.delegate.style.headerCell.shadow.blur;
-            this.ctx.shadowOffsetX = this.delegate.style.headerCell.shadow.offset;
-            this.ctx.shadowOffsetY = 0;
-            this.ctx.fill();
-
-            this.ctx.restore();
-        }
-    }
-
-    // FIXME Eliminar este método si no va a usarse
-    App.Table.LeftHeaderZone.prototype.paintBorders = function () {        
-        var columnsLen = this.dataSource.leftHeaderColumns();
-        this.ctx.save();
-        this.ctx.beginPath();
-
-        this.ctx.rect(this.viewPort.x + 0.5, this.viewPort.y + 0.5, this.viewPort.width, this.viewPort.height - 1);
-
-        this.ctx.strokeStyle = this.delegate.style.headerCell.border.color;
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.restore();
     };
 
     App.Table.LeftHeaderZone.prototype.paintCells = function (paintInfo) {

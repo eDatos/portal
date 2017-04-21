@@ -205,52 +205,9 @@
             var paintInfo = this.paintInfo();
 
             this.paintCells(paintInfo);
-            //this.paintGrid(limits);
 
             this.ctx.restore();
             this.needRepaint = false;
-        },
-
-        // FIXME Eliminar este método si no se va a usar
-        paintGrid : function (limits) {
-
-            this.ctx.save();
-            this.ctx.beginPath();
-
-            var endCell = new Cell(limits.columns.end, limits.rows.end);
-            var endCellPoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(endCell));
-            var verticalLimit = endCellPoint.y;
-            var horizontalLimit = endCellPoint.x;
-
-            // lineas verticales
-            if (this.delegate.style.bodyCell.border.vertical) {
-                for (var x = limits.columns.begin; x < limits.columns.end; x++) {
-                    var cell = new Cell(x, limits.rows.begin);
-                    var cellRelativePoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(cell));
-
-                    this.ctx.moveTo(cellRelativePoint.x + 0.5, this.viewPort.y);
-                    this.ctx.lineTo(cellRelativePoint.x + 0.5, verticalLimit);
-                }
-            }
-
-            // lineas horizontal
-            if (this.delegate.style.bodyCell.border.horizontal) {
-                for (var y = limits.rows.begin; y < limits.rows.end; y++) {
-                    var cell = new Cell(limits.columns.begin, y);
-                    var cellRelativePoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(cell));
-
-                    this.ctx.moveTo(this.viewPort.x, cellRelativePoint.y + 0.5);
-                    this.ctx.lineTo(horizontalLimit, cellRelativePoint.y + 0.5);
-                }
-            }
-
-            //Box
-            this.ctx.rect(this.viewPort.x + 0.5, this.viewPort.y + 0.5, this.viewPort.width - 1, this.viewPort.height - 1);
-
-            this.ctx.strokeStyle = this.delegate.style.bodyCell.border.color;
-            this.ctx.closePath();
-            this.ctx.stroke();
-            this.ctx.restore();
         },
 
         getPaintInfoRowCell : function(y) {
