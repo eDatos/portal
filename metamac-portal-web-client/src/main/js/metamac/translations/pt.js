@@ -152,7 +152,8 @@ I18n.translations.pt = {
                     descriptors: "Descritores de dados",                
                     dimensions: "Quais são as variáveis ​​de dados?",
                     datasetAttributes : "Notas do conjunto de dados",
-                    version: "Versão",             
+                    version: "Número da versão",   
+                    versionRationale: "Fundamento para a mudança",
                     dataUpdates: "Atualizações de dados",
                     reuse: "Reutilização",
                     developers: "Informações para desenvolvedores"                    
@@ -165,9 +166,11 @@ I18n.translations.pt = {
                 
                 nextVersion : {
                     title: "Atualizações",
-                    NON_SCHEDULED_UPDATE: "Atualização não agendada",
-                    NO_UPDATES: "Sem atualizações",
-                    SCHEDULED_UPDATE: "Atualização agendada"
+                    enum: {
+                        NON_SCHEDULED_UPDATE: "Atualização não agendada",
+                        NO_UPDATES: "Sem atualizações",
+                        SCHEDULED_UPDATE: "Atualização agendada"
+                    }                    
                 }
             },
             observation : {

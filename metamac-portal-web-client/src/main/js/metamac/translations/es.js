@@ -122,8 +122,8 @@ I18n.translations.es = {
             validTo : "Válido hasta",
             dateStart : "Periodo inicial",
             dateEnd : "Periodo final",
-            version : "Identificador",
-            versionRationale : "Descripción",
+            version : "Número de versión",
+            versionRationale : "Motivo del cambio",
             replacesVersion : "Reemplaza versión",
             isReplacedByVersion : "Es reemplazado por versión",
             publishers : "Publicadores",
@@ -166,9 +166,11 @@ I18n.translations.es = {
 
             nextVersion : {
                 title: "Actualización",
-                NON_SCHEDULED_UPDATE: "Sin actualización programada",
-                NO_UPDATES: "Sin actualizaciones",
-                SCHEDULED_UPDATE: "Actualización programada"
+                enum: {
+                    NON_SCHEDULED_UPDATE: "Sin actualización programada",
+                    NO_UPDATES: "Sin actualizaciones",
+                    SCHEDULED_UPDATE: "Actualización programada"
+                }                
             }
         },
         observation : {

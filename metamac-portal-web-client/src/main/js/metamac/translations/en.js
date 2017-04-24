@@ -152,7 +152,8 @@ I18n.translations.en = {
                 descriptors: "Data descriptors",                
                 dimensions: "Which are the data variables?",
                 datasetAttributes : "Dataset notes",
-                version: "Version",
+                version: "Version number",
+                versionRationale: "Rationale for change",
                 dataUpdates: "Data updates",
                 reuse: "Reuse",
                 developers: "Info for developers"
@@ -165,9 +166,11 @@ I18n.translations.en = {
 
             nextVersion : {
                 title: "Update",
-                NON_SCHEDULED_UPDATE: "Non scheduled update",
-                NO_UPDATES: "No updates",
-                SCHEDULED_UPDATE: "Scheduled update"
+                enum: {
+                    NON_SCHEDULED_UPDATE: "Non scheduled update",
+                    NO_UPDATES: "No updates",
+                    SCHEDULED_UPDATE: "Scheduled update"
+                }                
             }
         },
         observation : {

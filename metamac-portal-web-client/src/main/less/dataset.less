@@ -110,12 +110,13 @@
     .field {
         border-bottom: 1px solid @istacGreyMedium;
         box-shadow: 0 1px 0 @istacGreyLight;
+        padding-bottom: @infoVerticalPadding + 4px;
         .metadata-title {
             display: block;
             color: @istacBlack;
             font-weight: bold;
             margin-top: @infoVerticalPadding;
-            margin-bottom: @infoVerticalPadding - 4px;
+            margin-bottom: 0;
             line-height: 26px;
 
             &.ui-accordion-header:before {
@@ -125,14 +126,19 @@
             }
         }
 
-        &.metadata-accordion .metadata-title div {
-            display: inline-block;
-            cursor: pointer;
+        &.metadata-accordion {
+            padding-bottom: 4px;
+            .metadata-title div {
+                display: inline-block;
+                cursor: pointer;
+            }
+            .field {
+                padding-bottom: 0;
+            }
         }
 
         .metadata-value {
             display: block;
-            margin-bottom: @infoVerticalPadding + 4px;
             color: @istacGreyDark;
             word-wrap: break-word;
 
@@ -144,6 +150,7 @@
                 li {
                     background: none;
                     margin-top: 0;
+                    margin-bottom: 0;
                 }
             }
         }

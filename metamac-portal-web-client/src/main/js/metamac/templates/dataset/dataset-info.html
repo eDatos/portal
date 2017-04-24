@@ -53,18 +53,9 @@
         {{#ulList measureConcepts }}
             <div class="field" >
                 {{ fieldOutput name description "text" false true ''}}
-                <ul>
-                    <li>
-                        <span class="metadata-title">
-                            {{ message "entity.dataset.measureConcepts.annotations" }}
-                        </span>
-                    </li>
                 {{#each annotations }}
-                    <li>
                         <span class="metadata-value">{{ resourceOutput this }}</span>
-                    </li>
                 {{/each}}                        
-                </ul>
             </div>
         {{/ulList}}
     </div>
