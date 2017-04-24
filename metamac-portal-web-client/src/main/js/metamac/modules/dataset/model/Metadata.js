@@ -397,12 +397,9 @@
                 return I18n.t("entity.dataset.versionRationale.enum." + versionRationaleType);
             }) : [];
             return [
-                '<b>',
                 types.join(', '),
-                '</b>',
-                '. ',
                 this.getLocalizedLabel(this.metadata.versionRationale)
-            ].join('');
+            ].join('. ');
         },
         
         getReplacesVersion : function () {

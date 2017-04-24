@@ -123,7 +123,7 @@ I18n.translations.pt = {
                 dateStart: "Período inicial",
                 dateEnd: "Período final",
                 versionRationale: {
-                    title: "Versão justificativa",
+                    title: "Fundamento para a mudança",
                     enum: {
                         MAJOR_CATEGORIES : "Grande: Categorias",
                         MAJOR_ESTIMATORS : "Grande: Estimadores",
@@ -157,20 +157,18 @@ I18n.translations.pt = {
                 statisticOfficiality: "Estatísticas Oficiais",
                 bibliographicCitation: "Citação bibliográfica",                
                 measureConcepts : {
-                    title: "O que é medido pelos dados?",
+                    title: "O que é medido pelos dados",
                     annotations: "Notas gerais"
                 },
 
                 section : {
+                    descriptors: "Descritores de tabela",                
                     validity: "Validade dos dados",
-                    descriptors: "Descritores de dados",                
-                    dimensions: "Quais são as variáveis ​​de dados?",
+                    periods: "Períodos de referência",
+                    dimensions: "Quais são as variáveis ​​de dados",
                     datasetAttributes : "Notas do conjunto de dados",
-                    version: "Número da versão",   
-                    versionRationale: "Fundamento para a mudança",
-                    dataUpdates: "Atualizações de dados",
-                    reuse: "Reutilização",
-                    developers: "Informações para desenvolvedores"                    
+                    version: "Número da versão e atualizações de dados",
+                    reuse: "Reutilização e informações para desenvolvedores"                    
                 },
         
                 language : "Idioma",     
@@ -179,7 +177,7 @@ I18n.translations.pt = {
                 apiUrl : "Acesso à API para desenvolvedores",
                 
                 nextVersion : {
-                    title: "Atualizações",
+                    title: "Próxima atualização",
                     enum: {
                         NON_SCHEDULED_UPDATE: "Atualização não agendada",
                         NO_UPDATES: "Sem atualizações",

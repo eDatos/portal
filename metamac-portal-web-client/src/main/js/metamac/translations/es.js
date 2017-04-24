@@ -158,19 +158,18 @@ I18n.translations.es = {
             statisticOfficiality: "Oficialidad estadística",
             bibliographicCitation: "Citación bibliográfica",
             measureConcepts : {
-                title: "¿Qué miden los datos?",
+                title: "Qué miden los datos",
                 annotations: "Notas generales"
             },
             
             section : {
+                descriptors : "Descriptores de la tabla",
                 validity: "Validez de los datos",
-                descriptors: "Descriptores de los datos",
-                dimensions: "¿En base a qué se miden los datos?",
-                datasetAttributes : "Notas de tabla",
-                version: "Version",
-                dataUpdates: "Actualización de datos",
-                reuse: "Reutilización",
-                developers : "Información para desarrolladores"
+                periods: "Periodos de referencia",
+                dimensions: "Respecto a qué se miden los datos",
+                datasetAttributes : "Notas de la tabla",
+                version: "Versionado y actualización de los datos",                
+                reuse: "Reutilización e información para desarrolladores"
             },
     
             language : "Idioma",   
@@ -179,7 +178,7 @@ I18n.translations.es = {
             apiUrl : "Acceso al recurso en la API",
 
             nextVersion : {
-                title: "Actualización",
+                title: "Próxima actualización",
                 enum: {
                     NON_SCHEDULED_UPDATE: "Sin actualización programada",
                     NO_UPDATES: "Sin actualizaciones",

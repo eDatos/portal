@@ -157,20 +157,18 @@ I18n.translations.en = {
             statisticOfficiality: "Statistic officiality",
             bibliographicCitation: "Bibliographic citation",
             measureConcepts : {
-                title: "What is measured by the data?",
+                title: "What is measured by the data",
                 annotations: "General notes"
             },
 
             section : {
+                descriptors: "Table descriptors",                
                 validity: "Data validity",
-                descriptors: "Data descriptors",                
-                dimensions: "Which are the data variables?",
+                periods: "Reference periods",
+                dimensions: "Which are the data variables",
                 datasetAttributes : "Dataset notes",
-                version: "Version number",
-                versionRationale: "Rationale for change",
-                dataUpdates: "Data updates",
-                reuse: "Reuse",
-                developers: "Info for developers"
+                version: "Version number and data updates",
+                reuse: "Reutilization and info for developers"
             },
     
     		language : "Language",    
@@ -179,7 +177,7 @@ I18n.translations.en = {
             apiUrl : "API access to the resource",
 
             nextVersion : {
-                title: "Update",
+                title: "Next update",
                 enum: {
                     NON_SCHEDULED_UPDATE: "Non scheduled update",
                     NO_UPDATES: "No updates",
