@@ -69,13 +69,11 @@
                 legend : {
                     layout : 'horizontal',
                     backgroundColor : Constants.colors.istacWhite,
-                    //align : 'bottom',
-                    //verticalAlign : 'bottom',
                     x : 5,
                     y : 0,
-                    borderWidth : 0,
+                    borderWidth : 1,
+                    borderColor: Constants.colors.istacGreyMedium,
                     floating : false,
-                    shadow : true,
                     navigation : {
                         activeColor : Constants.colors.istacBlueMedium,
                         animation : true,
