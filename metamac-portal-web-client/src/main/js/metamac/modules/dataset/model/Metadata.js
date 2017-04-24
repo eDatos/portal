@@ -454,7 +454,7 @@
         },
 
         getNextVersion : function() {
-            return I18n.t("entity.dataset.nextVersion." + this.metadata.nextVersion);
+            return I18n.t("entity.dataset.nextVersion.enum." + this.metadata.nextVersion);
         },
         
         getPublishers : function () {
