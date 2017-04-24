@@ -186,7 +186,6 @@
     .dataset-visualization-visual-element {
         height: 100%;
         .box-sizing(border-box);
-        border: 1px solid @istacGreyMedium;
         background: @istacWhite;
 
         h3 {
@@ -205,12 +204,22 @@
     position: relative;
     height: 100%;
     box-sizing: border-box;
+
+    border: 1px solid @istacGreyMedium;
+    .border-radius(0 0 10px 10px);
+    overflow: hidden;
     .clearfix;
 
     .dataset-visualization-dimensions {
         background: @istacWhite;
         position: absolute;
         width: 100%;
+
+        .dataset-dimensions {
+            margin-top: -1px;
+            margin-left: -1px;
+            margin-right: -1px;
+        }
         .order-dimensions;
     }
     
