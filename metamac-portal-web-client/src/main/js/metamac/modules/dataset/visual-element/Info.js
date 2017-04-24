@@ -72,12 +72,12 @@
                 var parsedConcepts = _.map(concepts, function(concept) {
                     concept.name = App.i18n.localizeText(concept.name);
                     concept.description = App.i18n.localizeText(concept.description);
-                    concept.annotations = _.map(concept.annotations.annotation, function(annotation) {
+                    concept.annotations = concept.annotations ? _.map(concept.annotations.annotation, function(annotation) {
                         return { 
                             href : annotation.url,
                             name : App.i18n.localizeText(annotation.text)
                         };
-                    });
+                    }) : [];
                     return concept;
                 });
                 self.updateMeasureConcepts(parsedConcepts);
