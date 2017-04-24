@@ -393,7 +393,16 @@
         },
 
         getVersionRationale : function() {
-            return this.getLocalizedLabel(this.metadata.versionRationale);
+            var types = this.metadata.versionRationaleTypes ? _.map(this.metadata.versionRationaleTypes.versionRationaleType, function(versionRationaleType) {
+                return I18n.t("entity.dataset.versionRationale.enum." + versionRationaleType);
+            }) : [];
+            return [
+                '<b>',
+                types.join(', '),
+                '</b>',
+                '. ',
+                this.getLocalizedLabel(this.metadata.versionRationale)
+            ].join('');
         },
         
         getReplacesVersion : function () {

@@ -122,7 +122,21 @@ I18n.translations.pt = {
                 validTo : "Válido até",
                 dateStart: "Período inicial",
                 dateEnd: "Período final",
-                versionRationale: "Versão justificativa",
+                versionRationale: {
+                    title: "Versão justificativa",
+                    enum: {
+                        MAJOR_CATEGORIES : "Grande: Categorias",
+                        MAJOR_ESTIMATORS : "Grande: Estimadores",
+                        MAJOR_NEW_RESOURCE : "Grande: Novo recurso",
+                        MAJOR_OTHER : "Grande: Outras",
+                        MAJOR_VARIABLES : "Grande: Variáveis",
+                        MINOR_DATA_UPDATE : "Pequena: Atualização de dados",
+                        MINOR_ERRATA : "Pequena: Errata",
+                        MINOR_METADATA : "Pequena: Metadados",
+                        MINOR_OTHER : "Pequena: De outros",
+                        MINOR_SERIES_UPDATE : "Pequena: Atualização da série"
+                    }
+                },
                 replacesVersion : "Substituir versão",
                 isReplacedByVersion : "É sustituído pela versão",
                 publishers : "Publicadores",

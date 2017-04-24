@@ -123,7 +123,21 @@ I18n.translations.es = {
             dateStart : "Periodo inicial",
             dateEnd : "Periodo final",
             version : "Número de versión",
-            versionRationale : "Motivo del cambio",
+            versionRationale : {
+                title : "Motivo del cambio",
+                enum: {                   
+                    MAJOR_CATEGORIES: "Mayor: Categorias",
+                    MAJOR_ESTIMATORS: "Mayor: Estimadores",
+                    MAJOR_NEW_RESOURCE: "Mayor: nuevo recurso",
+                    MAJOR_OTHER: "Mayor: Otros",
+                    MAJOR_VARIABLES: "Mayor: Variables",
+                    MINOR_DATA_UPDATE: "Menor: Actualización de datos",
+                    MINOR_ERRATA: "Menor: Erratas",
+                    MINOR_METADATA: "Menor: Metadatos",
+                    MINOR_OTHER: "Menor: Otros",
+                    MINOR_SERIES_UPDATE: "Menor: Actualización de serie"
+                }
+            },
             replacesVersion : "Reemplaza versión",
             isReplacedByVersion : "Es reemplazado por versión",
             publishers : "Publicadores",

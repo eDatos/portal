@@ -122,7 +122,21 @@ I18n.translations.en = {
             validTo : "Valid to",
             dateStart: "Initial period",
             dateEnd: "End period",
-            versionRationale: "Version rationale",
+            versionRationale: {
+                title: "Version rationale",
+                enum: {
+                    MAJOR_CATEGORIES : "Major: Categories",
+                    MAJOR_ESTIMATORS : "Major: Estimators",
+                    MAJOR_NEW_RESOURCE : "Major: New resource",
+                    MAJOR_OTHER : "Major: Others",
+                    MAJOR_VARIABLES : "Major: Variables",
+                    MINOR_DATA_UPDATE : "Minor: Data update",
+                    MINOR_ERRATA : "Minor: Errata",
+                    MINOR_METADATA : "Minor: Metadata",
+                    MINOR_OTHER : "Minor: Other",
+                    MINOR_SERIES_UPDATE : "Minor: Series update"
+                }
+            },
             replacesVersion : "Replaces version",
             isReplacedByVersion : "Is replaced by version",
             publishers : "Publishers",
