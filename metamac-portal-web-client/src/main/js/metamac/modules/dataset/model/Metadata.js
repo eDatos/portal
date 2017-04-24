@@ -350,7 +350,7 @@
         },
         
         getMantainer : function () {
-            return this.getLocalizedLabel(this.metadata.maintainer);
+            return this.getLocalizedLabel(this.metadata.maintainer.name);
         },
         
         getStatisticalOperation : function () {

@@ -23,6 +23,7 @@
         this.dataSource = options.dataSource;
         this.delegate = options.delegate;
         this.view = options.view;
+        this.offset = new Point(0,0);
         this.calculateIncrementalSize();
     };
 
@@ -255,6 +256,16 @@
                 return cellPaintInfo.indexEnd;
             }
         }
+    }
+    
+    App.Table.TopHeaderZone.prototype.containsPoint = function(point) {
+        var offsettedViewport = new Rectangle(
+            this.viewPort.x, 
+            this.viewPort.y, 
+            this.viewPort.width + this.offset.x,
+            this.viewPort.height
+        );
+        return offsettedViewport.containsPoint(point);
     }
 
 }());

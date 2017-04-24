@@ -34,9 +34,30 @@ describe('DataSourceDataset', function () {
             initializeDataSource();
 
             var expectedLeftHeaderValues = [[
-                '1, 2 y 3 estrellas', '  El Hierro', '  La Palma', '  La Gomera', '  Tenerife', '  Gran Canaria', '  Fuerteventura', '  Lanzarote',
-                '4 y 5 Estrellas', '  El Hierro', '  La Palma', '  La Gomera', '  Tenerife', '  Gran Canaria', '  Fuerteventura', '  Lanzarote',
-                'Total', '  El Hierro', '  La Palma', '  La Gomera', '  Tenerife', '  Gran Canaria', '  Fuerteventura', '  Lanzarote'
+                { label : '1, 2 y 3 estrellas', level : 0 },
+                    { label : '  El Hierro', level : 1 },
+                    { label : '  La Palma', level : 1 },
+                    { label : '  La Gomera', level : 1 },
+                    { label : '  Tenerife', level : 1 },
+                    { label : '  Gran Canaria', level : 1 },
+                    { label : '  Fuerteventura', level : 1 },
+                    { label : '  Lanzarote', level : 1 },
+                { label : '4 y 5 Estrellas', level : 0 },
+                    { label : '  El Hierro', level : 1 },
+                    { label : '  La Palma', level : 1 },
+                    { label : '  La Gomera', level : 1 },
+                    { label : '  Tenerife', level : 1 },
+                    { label : '  Gran Canaria', level : 1 },
+                    { label : '  Fuerteventura', level : 1 },
+                    { label : '  Lanzarote', level : 1 },
+                { label : 'Total', level : 0 },
+                    { label : '  El Hierro', level : 1 },
+                    { label : '  La Palma', level : 1 },
+                    { label : '  La Gomera', level : 1 },
+                    { label : '  Tenerife', level : 1 },
+                    { label : '  Gran Canaria', level : 1 },
+                    { label : '  Fuerteventura', level : 1 },
+                    { label : '  Lanzarote', level: 1 }
             ]];
             expect(dataSource.leftHeaderValues()).to.eql(expectedLeftHeaderValues);
         });
@@ -46,28 +67,29 @@ describe('DataSourceDataset', function () {
 
             //TIME, Destino alojamiento, Categoria alojamiento
 
-            var level2 = [
-                '        1, 2 y 3 estrellas',
-                '        4 y 5 Estrellas',
-                '        Total'
-            ];
-            var level1 = [
-                '      El Hierro', level2,
-                '      La Palma', level2,
-                '      La Gomera', level2,
-                '      Tenerife', level2,
-                '      Gran Canaria', level2,
-                '      Fuerteventura', level2,
-                '      Lanzarote', level2
+            var subsublevel = [
+                { label : '        1, 2 y 3 estrellas', level : 4 },
+                { label : '        4 y 5 Estrellas', level : 4 },
+                { label : '        Total', level : 4 }
             ];
 
+            var sublevel = [
+                { label : '      El Hierro' , level : 3 }, subsublevel,
+                { label : '      La Palma' , level : 3 }, subsublevel,
+                { label : '      La Gomera' , level : 3 }, subsublevel,
+                { label : '      Tenerife' , level : 3 }, subsublevel,
+                { label : '      Gran Canaria' , level : 3 }, subsublevel,
+                { label : '      Fuerteventura' , level : 3 }, subsublevel,
+                { label : '      Lanzarote' , level : 3 }, subsublevel
+            ];         
+
             var level0 = [
-                'Time 1', level1,
-                'Time 2', level1,
-                '  Time 2 1', level1,
-                '  Time 2 2', level1,
-                '    Time 2 2 1', level1,
-                'Time 3', level1
+                { label : 'Time 1', level : 0 }, sublevel,
+                { label : 'Time 2', level : 0 }, sublevel,
+                { label : '  Time 2 1', level : 1 }, sublevel,
+                { label : '  Time 2 2', level : 1 }, sublevel,
+                { label : '    Time 2 2 1', level : 2 }, sublevel,
+                { label : 'Time 3', level : 0 }, sublevel
             ];
 
             var expectedLeftHeaderValues = [_.flatten(level0)];

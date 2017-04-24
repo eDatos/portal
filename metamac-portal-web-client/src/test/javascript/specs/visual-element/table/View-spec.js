@@ -36,7 +36,7 @@ describe("[TableCanvas] View", function () {
         expect(view.zones.length).to.eql(5);
 
         expect(view.leftHeaderZone.viewPort).to.eql(new Rectangle(0, 90, 300, canvas.height - 90 - view.scrollSize - view.spinnerSize.height));
-        expect(view.topHeaderZone.viewPort).to.eql(new Rectangle(300, 0, canvas.width - 300 - view.scrollSize, 90));
+        expect(view.topHeaderZone.viewPort).to.eql(new Rectangle(0, 0, canvas.width - 300 - view.scrollSize, 90));
         expect(view.bodyZone.viewPort).to.eql(new Rectangle(300, 90, canvas.width - 300 - view.scrollSize, canvas.height - 90 - view.scrollSize - view.spinnerSize.height));
         expect(view.rightScrollZone.viewPort).to.eql(new Rectangle(canvas.width - 10, 90, 10, canvas.height - 90 - view.scrollSize - view.spinnerSize.height));
         expect(view.bottomScrollZone.viewPort).to.eql(new Rectangle(300, canvas.height - 10 - view.spinnerSize.height, canvas.width - 300 - view.scrollSize, view.scrollSize));
@@ -44,7 +44,7 @@ describe("[TableCanvas] View", function () {
     });
 
     it("should return the zoneName from a point", function () {
-        expect(view.zoneFromPoint(new Point(0, 0))).to.be.undefined;
+        expect(view.zoneFromPoint(new Point(0, 0))).to.equal("topHeaderZone");
         expect(view.zoneFromPoint(new Point(100, 100))).to.equal("leftHeaderZone-separator");
         expect(view.zoneFromPoint(new Point(20, 100))).to.equal("leftHeaderZone");
         expect(view.zoneFromPoint(new Point(450, 0))).to.equal("topHeaderZone-separator");

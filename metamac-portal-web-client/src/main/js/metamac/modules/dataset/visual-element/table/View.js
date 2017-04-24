@@ -251,20 +251,20 @@
             zone = "leftHeaderZone-separator";
         } else if (!_.isUndefined(this.topHeaderZone.separatorIndexInRectangle(pointRectangle))) {
             zone = "topHeaderZone-separator";
-        } else if (this.leftHeaderZone.viewPort.containsPoint(point)) {
+        } else if (this.leftHeaderZone.containsPoint(point)) {
             zone = "leftHeaderZone";
-        } else if (this.topHeaderZone.viewPort.containsPoint(point)) {
+        } else if (this.topHeaderZone.containsPoint(point)) {
             zone = "topHeaderZone";
-        } else if (this.bodyZone.viewPort.containsPoint(point)) {
+        } else if (this.bodyZone.containsPoint(point)) {
             zone = "bodyZone";
-        } else if (this.rightScrollZone.viewPort.containsPoint(point)) {
+        } else if (this.rightScrollZone.containsPoint(point)) {
             scrollRectangle = this.rightScrollZone.scrollRectangle();
             if (scrollRectangle.containsPoint(point)) {
                 zone = "rightScrollZone-scrollBar";
             } else {
                 zone = "rightScrollZone";
             }
-        } else if (this.bottomScrollZone.viewPort.containsPoint(point)) {
+        } else if (this.bottomScrollZone.containsPoint(point)) {
             scrollRectangle = this.bottomScrollZone.scrollRectangle();
             if (scrollRectangle.containsPoint(point)) {
                 zone = "bottomScrollZone-scrollBar";

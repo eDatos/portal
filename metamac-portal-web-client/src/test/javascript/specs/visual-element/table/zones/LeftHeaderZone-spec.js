@@ -82,9 +82,9 @@ describe("[TableCanvas] LeftHeaderZone", function () {
         var dataSource = new DataSource();
         sinon.stub(dataSource, "leftHeaderColumns").returns(3);
         sinon.stub(dataSource, "leftHeaderValues").returns([
-            ['a', 'b', 'c', 'd'],
-            ['0', '1', '2', '3', '4'],
-            ['aa', 'bb', 'cc', 'dd']
+            [{ label : 'a', level : 0 }, { label : 'b', level : 0 }, { label : 'c', level : 0 }, { label : 'd', level : 0 }],
+            [{ label : '0', level : 0 }, { label : '1', level : 0 }, { label : '2', level : 0 }, { label : '3', level : 0 }, { label : '4', level : 0 }],
+            [{ label : 'aa', level : 0 }, { label : 'bb', level : 0 }, { label : 'cc', level : 0 }, { label : 'dd', level : 0 }]
         ]);
         sinon.stub(dataSource, "leftHeaderTooltipValues").returns([
             [{ title : 'tooltip : a' }, { title : 'tooltip : b' }, { title : 'tooltip : c' }, { title : 'tooltip : d' }],
@@ -99,6 +99,7 @@ describe("[TableCanvas] LeftHeaderZone", function () {
         var paintInfo = topHeaderZone.paintInfo();
 
         expect(paintInfo.length).to.eql(3);
+        console.log(paintInfo[2][0])
         expect(paintInfo[0]).to.eql([
             {
                 index : 0,
@@ -109,7 +110,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
                 width : 100,
                 content : 'a',
                 tooltip : 'tooltip : a',
-                attributes : []
+                attributes : [],
+                level : 0
             }
         ]);
 
@@ -123,7 +125,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
                 width : 100,
                 content : '0',
                 tooltip : 'tooltip : 0',
-                attributes : []
+                attributes : [],
+                level : 0
             }
         ]);
 
@@ -136,7 +139,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             width : 100,
             content : 'aa',
             tooltip : 'tooltip : aa',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][1]).to.eql({
@@ -148,7 +152,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             width : 100,
             content : 'bb',
             tooltip : 'tooltip : bb',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][2]).to.eql({
@@ -160,7 +165,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 60,
             content : 'cc',
             tooltip : 'tooltip : cc',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][3]).to.eql({
@@ -172,7 +178,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 60,
             content : 'dd',
             tooltip : 'tooltip : dd',
-            attributes : []
+            attributes : [],
+            level : 0
         });
     });
 
@@ -208,9 +215,9 @@ describe("[TableCanvas] LeftHeaderZone", function () {
         var dataSource = new DataSource();
         sinon.stub(dataSource, "leftHeaderColumns").returns(3);
         sinon.stub(dataSource, "leftHeaderValues").returns([
-            ['a', 'b', 'c', 'd'],
-            ['0', '1', '2', '3', '4'],
-            ['aa', 'bb', 'cc', 'dd']
+            [{ label : 'a', level : 0 }, { label : 'b', level : 0 }, { label : 'c', level : 0 }, { label : 'd', level : 0 }],
+            [{ label : '0', level : 0 }, { label : '1', level : 0 }, { label : '2', level : 0 }, { label : '3', level : 0 }, { label : '4', level : 0 }],
+            [{ label : 'aa', level : 0 }, { label : 'bb', level : 0 }, { label : 'cc', level : 0 }, { label : 'dd', level : 0 }]
         ]);
         sinon.stub(dataSource, "leftHeaderTooltipValues").returns([
             [{ title : 'tooltip : a'}, { title : 'tooltip : b'}, { title : 'tooltip : c'}, { title : 'tooltip : d'}],
@@ -238,7 +245,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
                 height : 1200,
                 content : 'c',
                 tooltip : 'tooltip : c',
-                attributes : []
+                attributes : [],
+                level : 0
             }
         ]);
 
@@ -251,7 +259,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 240,
             content : '2',
             tooltip : 'tooltip : 2',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[1][1]).to.eql({
@@ -263,7 +272,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 240,
             content : '3',
             tooltip : 'tooltip : 3',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][0]).to.eql({
@@ -275,7 +285,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 60,
             content : 'cc',
             tooltip : 'tooltip : cc',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][1]).to.eql({
@@ -287,7 +298,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 60,
             content : 'dd',
             tooltip : 'tooltip : dd',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][2]).to.eql({
@@ -299,7 +311,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 60,
             content : 'aa',
             tooltip : 'tooltip : aa',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][3]).to.eql({
@@ -311,7 +324,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 60,
             content : 'bb',
             tooltip : 'tooltip : bb',
-            attributes : []
+            attributes : [],
+            level : 0
         });
 
         expect(paintInfo[2][4]).to.eql({
@@ -323,7 +337,8 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             height : 60,
             content : 'cc',
             tooltip : 'tooltip : cc',
-            attributes : []
+            attributes : [],
+            level : 0
         });
     });
 

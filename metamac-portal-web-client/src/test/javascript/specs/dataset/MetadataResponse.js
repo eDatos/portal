@@ -34,6 +34,7 @@ App.test.response.metadata = {
         "total" : 1
     },
     "metadata" : {
+        "mantainer" : "ISTAC",
         "relatedDsd" : {
             "showDecimals" : 4,
             "heading" : {

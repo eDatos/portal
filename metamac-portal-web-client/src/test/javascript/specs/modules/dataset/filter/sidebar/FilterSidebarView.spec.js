@@ -41,7 +41,7 @@ describe("FilterSidebarView", function () {
         });
 
         it("should set maxHeight on render", function () {
-            var expectedMaxHeight = 72; //magic number, bad practice
+            var expectedMaxHeight = 76; //magic number, bad practice
             _.each(filterSidebarDimensionView.subviews, function (subview) {
                 expect(subview.maxHeight).to.eql(expectedMaxHeight);
             });

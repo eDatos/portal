@@ -14,7 +14,7 @@ describe('FilterDimension', function () {
 
         it('should set visible only models that match with the query and its parents', function () {
             representations.invoke('set', {visible : true});
-            filterDimension.set({filterQuery : 'time_2'});
+            filterDimension.set({filterQuery : 'time 2'});
 
             var visibleModels = representations.where({visible : true});
             expect(visibleModels.length).to.equal(4);
@@ -32,7 +32,7 @@ describe('FilterDimension', function () {
 
         it('should compare labels case insensitive', function () {
             representations.invoke('set', {visible : true});
-            filterDimension.set({filterQuery : 'TIME_2'});
+            filterDimension.set({filterQuery : 'TIME 2'});
 
             var visibleModels = representations.where({visible : true});
             expect(visibleModels.length).to.equal(4);

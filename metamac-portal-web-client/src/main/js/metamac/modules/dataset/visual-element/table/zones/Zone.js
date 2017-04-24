@@ -100,4 +100,8 @@
         this.ctx.clearRect(this.viewPort.x, this.viewPort.y, this.viewPort.width, this.viewPort.height);
     };
 
+    App.Table.Zone.prototype.containsPoint = function(point) {
+        return this.viewPort.containsPoint(point);
+    }
+
 }());
