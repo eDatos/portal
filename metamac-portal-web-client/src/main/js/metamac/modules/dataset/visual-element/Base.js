@@ -166,6 +166,13 @@
             });
         },
 
+        resetDimensionsLimits : function() {
+            this.filterDimensions.zones.each(function(zone) {
+                zone.unset("fixedSize");
+                zone.unset("maxSize");
+            });
+        },
+
         getRightsHolderText : function() {
             return App.config.showRightsHolder && this.dataset ? this.dataset.metadata.getRightsHolder().name : '';
         },

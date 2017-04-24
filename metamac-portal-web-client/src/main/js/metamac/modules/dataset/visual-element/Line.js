@@ -151,13 +151,13 @@ App.namespace("App.VisualElement.LineChart");
             this.$el.off("resize");
         },
 
-        updatingDimensionPositions : function () {
+        updatingDimensionPositions : function () {ç
             this._applyVisualizationRestrictions();
+            this.resetDimensionsLimits();
 
             this.filterDimensions.zones.get('top').set('maxSize', 1); // lines      
             this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
-            this.filterDimensions.zones.get('axisy').set('fixedSize', 1);
-            this.filterDimensions.zones.get('fixed').unset('fixedSize');                            
+            this.filterDimensions.zones.get('axisy').set('fixedSize', 1);                      
         },
 
         _applyVisualizationRestrictions : function() {

@@ -32,12 +32,12 @@
             this.load();
         },
 
-        updatingDimensionPositions : function () {                      
+        updatingDimensionPositions : function () {   
             this._applyVisualizationRestrictions();
+            this.resetDimensionsLimits();                   
 
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 0);
-            this.filterDimensions.zones.get('fixed').unset('fixedSize');
         },
 
         

@@ -67,9 +67,8 @@
 
         updatingDimensionPositions : function () {
             this._applyVisualizationRestrictions();
-            
-            this.filterDimensions.zones.get('left').unset('fixedSize');
-            this.filterDimensions.zones.get('top').unset('fixedSize');
+            this.resetDimensionsLimits();
+
             this.filterDimensions.zones.get('fixed').set('fixedSize', 0);
         },
         
