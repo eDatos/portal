@@ -642,30 +642,44 @@ function program29(depth0,data) {
   buffer += " ";
   stack1 = helpers['if'].call(depth0, depth0.hasSelector, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\" data-zone=\"";
+  buffer += "\"  data-zone=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                \r\n                ";
+    + "\" ";
+  stack1 = helpers['if'].call(depth0, depth0.width, {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">\r\n                \r\n                ";
   stack1 = helpers['if'].call(depth0, depth0.showHeader, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n                <div class=\"order-sidebar-dimensions scrollable ";
-  options = {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(32, program32, data),data:data};
   stack2 = ((stack1 = helpers.compare || depth0.compare),stack1 ? stack1.call(depth0, depth0.showHeader, "==", false, options) : helperMissing.call(depth0, "compare", depth0.showHeader, "==", false, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\">\r\n                    ";
-  stack2 = helpers.each.call(depth0, depth0.dimensions, {hash:{},inverse:self.noop,fn:self.programWithDepth(32, program32, data, depth0),data:data});
+  stack2 = helpers.each.call(depth0, depth0.dimensions, {hash:{},inverse:self.noop,fn:self.programWithDepth(34, program34, data, depth0),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n                </div>\r\n            </div>\r\n            ";
   return buffer;
   }
 function program30(depth0,data) {
   
+  var buffer = "", stack1;
+  buffer += "style=\"width: ";
+  if (stack1 = helpers.width) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.width; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"";
+  return buffer;
+  }
+
+function program32(depth0,data) {
+  
   
   return "no-header";
   }
 
-function program32(depth0,data,depth1) {
+function program34(depth0,data,depth1) {
   
   var buffer = "", stack1;
   buffer += "\r\n                        <a href=\"#\" class=\"order-sidebar-dimension ";

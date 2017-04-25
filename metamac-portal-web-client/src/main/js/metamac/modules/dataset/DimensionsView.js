@@ -46,14 +46,16 @@
                     left : {
                         icon : "axis-x",
                         draggable : true,
-                        location : "left",
-                        showHeader : true
+                        location : "right",
+                        showHeader : true,
+                        width : "50%"
                     },
                     top : {
                         icon : "column",
                         draggable : true,
                         location : "right",
-                        showHeader : true
+                        showHeader : true,
+                        width : "50%"
                     },
                     fixed : {
                         icon : "lock",
@@ -266,6 +268,10 @@
             return isDraggable;
         },
 
+        _zoneWidthByChartType : function(zone) {
+            return this._getCurrentChartType() ? this.configuration[this._getCurrentChartType()].zones[zone].width : false;
+        },
+
         _renderContext : function () {
             var zonesIds = this._getZonesByChartType();
             var zones = _.map(zonesIds, function (zone) {
@@ -277,7 +283,8 @@
                     dimensions : this._dimensionsForZone(zone),
                     hasSelector : this._hasSelector(zone),
                     location : this._getLocationForZone(zone),
-                    showHeader : this._getShowHeader(zone)
+                    showHeader : this._getShowHeader(zone),
+                    width : this._zoneWidthByChartType(zone)
                 };
             }, this);
 
