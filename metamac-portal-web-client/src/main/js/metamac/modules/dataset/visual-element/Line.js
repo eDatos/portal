@@ -151,7 +151,7 @@ App.namespace("App.VisualElement.LineChart");
             this.$el.off("resize");
         },
 
-        updatingDimensionPositions : function () {ç
+        updatingDimensionPositions : function () {
             this._applyVisualizationRestrictions();
             this.resetDimensionsLimits();
 
