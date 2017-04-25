@@ -1329,10 +1329,10 @@ function program2(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, options;
-  buffer += "\r\n            <div>\r\n                <p>";
+  buffer += "\r\n            <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.safeString || depth0.safeString),stack1 ? stack1.call(depth0, ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.description), options) : helperMissing.call(depth0, "safeString", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.description), options)))
-    + "</p>\r\n            </div>\r\n        ";
+    + "</div>\r\n        ";
   return buffer;
   }
 
