@@ -157,7 +157,7 @@
     @leftActionsWidth: 35px;
 
     .filter-sidebar-category-label {
-        padding-left: @leftActionsWidth + 5;
+        padding-left: @leftActionsWidth;
         padding-right: 15px;
         margin-bottom: 5px;
         line-height: 23px;
@@ -172,7 +172,6 @@
     .filter-sidebar-category-left-actions {
         position: absolute;
         width: @leftActionsWidth;
-        font-size: 16px;
 
         .category-state {
             color: @istacGreyMedium; //default color
@@ -237,60 +236,48 @@
     .filter-sidebar-category-icon;
     &:before {
         margin: 3px 5px 0 0;
-        font-size: 10px;
+        font-size: 11px;
     }
 }
 
 .filter-sidebar-category-icon-check {
-    .filter-sidebar-category-icon;
+    .filter-sidebar-category-icon-min;
     .icon-check-fill;
 }
 
 .filter-sidebar-category-icon-unchecked {
-    .filter-sidebar-category-icon;
+    .filter-sidebar-category-icon-min;
     .icon-uncheck;
 }
 
 .filter-sidebar-category-any-children-icon-check {
-    .filter-sidebar-category-icon;
+    .filter-sidebar-category-icon-min;
     .icon-check-fill;
 }
 
 .filter-sidebar-category-any-children-icon-unchecked {
-    .filter-sidebar-category-icon;
+    .filter-sidebar-category-icon-min;
     .icon-uncheck;
 }
 
 .filter-sidebar-category-icon-expand {
     .filter-sidebar-category-icon-min;
     .icon-plus;
-    &:before {
-        font-size: 16px
-    }
 }
 
 .filter-sidebar-category-any-children-icon-expand {
     .filter-sidebar-category-icon-min;
     .icon-plus-fill;
-    &:before {
-        font-size: 16px
-    }
 }
 
 .filter-sidebar-category-icon-collapse {
     .filter-sidebar-category-icon-min;
     .icon-minus;
-    &:before {
-        font-size: 16px
-    }
 }
 
 .filter-sidebar-category-any-children-icon-collapse {
     .filter-sidebar-category-icon-min;
     .icon-minus-fill;
-    &:before {
-        font-size: 16px
-    }
 }
 
 .order-sidebar-instructions {
