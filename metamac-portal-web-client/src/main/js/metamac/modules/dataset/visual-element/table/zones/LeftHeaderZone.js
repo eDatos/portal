@@ -142,7 +142,7 @@
     };
 
     App.Table.LeftHeaderZone.prototype.getCanvasWidth = function() {
-        return this.view.canvas.width;
+        return this.view.canvas.width - this.delegate.scrollSize;
     },
 
     App.Table.LeftHeaderZone.prototype.repaint = function () {
