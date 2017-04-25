@@ -194,8 +194,8 @@ App.namespace("App.VisualElement.LineChart");
                 });
         },
 
-        _renderContainers : function () {
-            var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height();
+        _renderContainers : function () {            
+            var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height() - this.getRightsHolderHeight();
             this.$detailContainer = $('<div id="detail-container">')
                 .css({height : detailHeight})
                 .appendTo(this.$el);

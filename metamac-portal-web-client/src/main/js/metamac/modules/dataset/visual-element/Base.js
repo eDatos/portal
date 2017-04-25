@@ -62,7 +62,7 @@
                 },
                 credits : {
                     position : {
-                        y : -20,
+                        y : 0,
                         x : -20
                     }
                 },
@@ -179,6 +179,10 @@
 
         getDrawableRepresentations : function(dimension) {
             return dimension.getDrawableRepresentations();
+        },
+
+        getRightsHolderHeight : function() {
+            return 20;
         }
 
     };
