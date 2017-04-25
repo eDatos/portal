@@ -145,7 +145,20 @@
         _preselectBiggestHierarchyGeographicValue : function() {
             var fixedGeographicDimensions = this.filterDimensions.getAllFixedDimensionsCopyByType("GEOGRAPHIC_DIMENSION");
             _(fixedGeographicDimensions).each(function(geographicDimension) { 
-                var selectedRepresentations = geographicDimension.get('representations')._selectedModels();              
+                var selectedRepresentations = geographicDimension.get('representations').getSelectedRepresentations();              
+                var biggestHierarchyGeographicValue = _(selectedRepresentations).min(function(representation) {
+                    return representation.get("level");
+                });
+                if (biggestHierarchyGeographicValue != Infinity) {
+                    biggestHierarchyGeographicValue.set({drawable : true});
+                }
+            });
+        },
+
+        _preselectBiggestHierarchyGeographicValue : function() {
+            var fixedGeographicDimensions = this.filterDimensions.getAllFixedDimensionsCopyByType("GEOGRAPHIC_DIMENSION");
+            _(fixedGeographicDimensions).each(function(geographicDimension) { 
+                var selectedRepresentations = geographicDimension.get('representations').getSelectedRepresentations();              
                 var biggestHierarchyGeographicValue = _(selectedRepresentations).min(function(representation) {
                     return representation.get("level");
                 });
@@ -158,11 +171,27 @@
         _preselectMostRecentTimeRepresentation : function() {
             var fixedTimeDimensions = this.filterDimensions.getAllFixedDimensionsCopyByType("TIME_DIMENSION");
             _(fixedTimeDimensions).each(function(timeDimension) { 
-                var selectedRepresentations = timeDimension.get('representations')._selectedModels();              
+                var selectedRepresentations = timeDimension.get('representations').getSelectedRepresentations();              
                 var mostRecentTimeRepresentation  = timeDimension.get('reversed') 
                     ? _(selectedRepresentations).last()
                     : _(selectedRepresentations).first();
                 mostRecentTimeRepresentation.set({drawable : true});
+            });
+        },
+
+        _preselectMostPopulatedTemporalGranularityRepresentations : function() {
+            var fixedTimeDimensions = this.filterDimensions.getAllNonFixedDimensionsCopyByType("TIME_DIMENSION");
+            _(fixedTimeDimensions).each(function(timeDimension) { 
+                var mostPopulatedTemporalGranularity = timeDimension.get('representations').getMostPopulatedTemporalGranularity();
+                timeDimension.get('representations').updateDrawablesBySelectedGranularity(mostPopulatedTemporalGranularity);
+            });
+        },
+
+        _preselectMostPopulatedGeographicLevelRepresentations : function() {
+            var nonFixedGeographicDimensions = this.filterDimensions.getAllNonFixedDimensionsCopyByType("GEOGRAPHIC_DIMENSION");
+            _(nonFixedGeographicDimensions).each(function(geographicDimension) { 
+                var mostPopulatedLevel = geographicDimension.get('representations').getMostPopulatedGeographicLevel();
+                geographicDimension.get('representations').updateDrawablesBySelectedLevel(mostPopulatedLevel);
             });
         },
 

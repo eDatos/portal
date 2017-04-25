@@ -141,6 +141,7 @@
             "click a.order-sidebar-dimension" : "_dontFollowLinks",
             "change .fixed-dimension-select-category" : "_onChangeCategory",
             "change .dimension-select-level" : "_onChangeLevel",
+            "change .dimension-select-granularity" : "_onChangeGranularity",
 
             "focusin .order-sidebar-dimension" : "_onFocusin",
             "focusout .order-sidebar-dimension" : "_onFocusout"
@@ -156,27 +157,33 @@
             var dimensionId = currentTarget.data("dimension-id");
             if (dimensionId) {
                 var representations = this.filterDimensions.get(dimensionId).get('representations');
+
                 var selectedCategory = representations.findWhere({ id  : selectedCategoryId});
                 if (!_.isUndefined(representations.get(selectedCategory))) {
                     representations.get(selectedCategory).set({drawable : true});
                 }
             }
         },
-        
-        _updateRepresentationsBySelectedLevel : function(dimensionId, selectedLevel) {
-            var representations = this.filterDimensions.get(dimensionId).get('representations');
-            _.invoke(representations.models, 'set', { drawable : false }, { silent : true });
-            _.invoke(representations.where({ level : parseInt(selectedLevel), selected : true}), 'set', { drawable : true });  
 
-            this.filterDimensions.trigger("change:drawable");  
+        _updateDrawableRepresentationsBySelectedLevel : function(dimensionId, selectedLevel) {
+            this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedLevel(selectedLevel);
         },
 
-        _updateRepresentations : function (filterDimensionId, e) {
+        _updateDrawableRepresentationsBySelectedGranularity : function(dimensionId, selectedGranularity) {
+            this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedGranularity(selectedGranularity);
+        },
+
+        _updateRepresentations : function(filterDimensionId, e) {
             // TODO Refactor this to avoid accesing the DOM
             var selectedLevel = this.$el.find('select.dimension-select-level[data-dimension-id=' + filterDimensionId + ']').val();
             if (selectedLevel) {
-                this._updateRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
-            }            
+                this._updateDrawableRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
+            }     
+
+            var selectedGranularity = this.$el.find('select.dimension-select-granularity[data-dimension-id=' + filterDimensionId + ']').val();      
+            if (selectedGranularity) {
+                this._updateDrawableRepresentationsBySelectedGranularity(filterDimensionId, selectedGranularity);
+            }
         },
 
         _onChangeLevel : function(e) {
@@ -184,7 +191,16 @@
             var selectedLevel = currentTarget.val();
             var dimensionId = currentTarget.data("dimension-id");
             if (dimensionId) {
-                this._updateRepresentationsBySelectedLevel(dimensionId, selectedLevel);
+                this._updateDrawableRepresentationsBySelectedLevel(dimensionId, selectedLevel);
+            }
+        },
+
+        _onChangeGranularity : function(e) {
+            var currentTarget = $(e.currentTarget);
+            var selectedLevel = currentTarget.val();
+            var dimensionId = currentTarget.data("dimension-id");
+            if (dimensionId) {
+                this._updateDrawableRepresentationsBySelectedGranularity(dimensionId, selectedLevel);
             }
         },
 
@@ -209,10 +225,10 @@
         _bindEvents : function () {
             var self = this;
             this.filterDimensions.each(function(filterDimension) {
-                filterDimension.get('representations').on("change:drawable", _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));                
-                filterDimension.get('representations').on("change:selected", _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300)); 
+                self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));
+                self.listenTo(self.filterDimensions, 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
             });
-            this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(this.render, 15));
+            this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(this.render, 500));
         },
 
         _unbindEvents : function () {
@@ -305,7 +321,7 @@
             var self = this;
             return this.filterDimensions.dimensionsAtZone(zone)
                 .reduce(function(memo, dimension) {
-                    return memo || self._needsHierarchySelector(dimension);
+                    return memo || self._needsGeographicLevelSelector(dimension) || self._needsTemporalGranularitySelector(dimension);
                 }, false);
         },
 
@@ -337,9 +353,12 @@
                 var isGeographicDimension = dimensionModel.get('type') === "GEOGRAPHIC_DIMENSION";
                 dimension.draggable = isMap ? isGeographicDimension : true;
                 
-                if (self._needsHierarchySelector(dimensionModel)) {
-                    dimension.selectedLevel = self._getMorePopulatedLevel(dimensionModel); 
-                    dimension.levelList = self._getLevelCollection(dimensionModel);
+                if (self._needsGeographicLevelSelector(dimensionModel)) {
+                    dimension.selectedLevel = dimensionModel.get('representations').getMostPopulatedGeographicLevel();
+                    dimension.levelList = self._getGeographicLevelCollection(dimensionModel);
+                } else if (self._needsTemporalGranularitySelector(dimensionModel)) {
+                    dimension.selectedGranularity = dimensionModel.get('representations').getMostPopulatedTemporalGranularity();
+                    dimension.granularityList = self._getGranularityList(dimensionModel);
                 } else if (self._isFixedZone(zoneId)) {                    
                     dimension.selectedCategory = dimensionModel.get('representations').findWhere({drawable : true}).toJSON();
                     dimension.representationsList = dimensionModel.get('representations').where({'selected': true}).map(function(model) { return model.toJSON(); });
@@ -349,32 +368,34 @@
             return dimensionsForZone;
         },
 
-        _needsHierarchySelector : function(dimension) {
-            if (dimension.get('hierarchy')) {
-                return (this._isMap() && dimension.get('type') == "GEOGRAPHIC_DIMENSION") 
-                || (this._getCurrentChartType() == 'line' && dimension.get('type') == "TIME_DIMENSION");
-            } else {
-                return false;
-            }
+        _needsGeographicLevelSelector : function(dimension) {
+            return this._isMap() && dimension.get('type') == "GEOGRAPHIC_DIMENSION";
         },        
-
-        _getMorePopulatedLevel : function(dimension) {
-            var selectedLevels = this._getSelectedLevels(dimension);
-            var countedByLevels = _(selectedLevels).countBy();
-            var maxPopulation = _(countedByLevels).max();
-            return _.invert(countedByLevels)[maxPopulation];
+    
+        _getGeographicLevelCollection : function(dimension) {
+            var selectedLevels = dimension.get('representations').getSelectedGeographicLevels();
+            var uniqueLevels = _(selectedLevels).uniq().sort();
+            return _(uniqueLevels).map(function (level) {
+                return {
+                    level : level, 
+                    label : I18n.t('filter.selector.level', { level : (level + 1) })
+                };
+            });
         },
 
-        _getSelectedLevels : function(dimension) {
-            return _(dimension.get('representations').where({'selected': true})).invoke("get", "level");
-        },        
+        _needsTemporalGranularitySelector : function(dimension) {
+             return this._getCurrentChartType() == 'line' && dimension.get('type') == "TIME_DIMENSION";
+        },
 
-        _getLevelCollection : function(dimension) {
-            var uniqueLevels = _(this._getSelectedLevels(dimension)).uniq().sort();
-            var levelsModels = _(uniqueLevels).map(function (level) {
-                return {level : level, label : 'Nivel ' + (level + 1)};
+        _getGranularityList : function(dimension) {
+            var selectedGranularities = dimension.get('representations').getSelectedTemporalGranularities();
+            var uniqueGranularities = _(selectedGranularities).uniq().sort();
+            return _(uniqueGranularities).map(function (granularity) {
+                return {
+                    granularity : granularity, 
+                    label : I18n.t("entity.granularity.temporal.enum." + granularity)
+                };
             });
-            return levelsModels;
         },
 
         _onDragstart : function (e) {

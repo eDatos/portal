@@ -35,25 +35,21 @@
             this.hasHierarchy = hasHierarchy;
         },
 
-        _selectedModels : function () {
-            return this.where({selected : true});
-        },
-
         _updateDrawables : function() {
             var modelsToUndraw = this.where({drawable : true});
             var modelsToDraw = this._getModelsToDraw();
             
             _.invoke(modelsToUndraw, 'set', {drawable : false}, { silent : true});            
-            _.invoke(modelsToDraw, 'set', {drawable : true});    
+            _.invoke(modelsToDraw, 'set', {drawable : true});  
         },
 
         _getModelsToDraw : function() {
-            var nModelsSelected = this._selectedModels().length;
+            var nModelsSelected = this.getSelectedRepresentations().length;
             var nModelsToDraw = this.drawableLimit - nModelsSelected;
             if (this.drawableLimit == nModelsSelected) {
                 nModelsToDraw += 1; // Draw at least one model
             }
-            return this._selectedModels().slice(0, nModelsToDraw);
+            return this.getSelectedRepresentations().slice(0, nModelsToDraw);
         },
 
         selectAll : function () {
@@ -64,7 +60,7 @@
 
         selectVisible : function () {
             var visibleModels = this.where({visible : true, selected : false});
-            var selectedModels = this._selectedModels();
+            var selectedModels = this.getSelectedRepresentations();
             var visibleModelsToSelect = this.selectedLimit - selectedModels.length;
             var modelsToSelect = visibleModels.slice(0, visibleModelsToSelect);
             _.invoke(modelsToSelect, 'set', {selected : true});
@@ -72,7 +68,7 @@
 
         deselectVisible : function () {
             var visibleModels = this.where({visible : true, selected : true});
-            var selectedModels = this._selectedModels();
+            var selectedModels = this.getSelectedRepresentations();
             if (visibleModels.length === selectedModels.length) {
                 visibleModels.shift(); //leave at least one model selected
             }
@@ -81,7 +77,7 @@
 
         setSelectedLimit : function (selectedLimit) {
             this.selectedLimit = selectedLimit;
-            var selectedModels = this._selectedModels();
+            var selectedModels = this.getSelectedRepresentations();
             _.invoke(selectedModels.slice(selectedLimit), 'set', {selected : false});
             this.updateDrawableUpperLimit();
         },
@@ -106,7 +102,7 @@
         },
 
         _onChangeSelected : function (model) {
-            var selectedModels = this._selectedModels();
+            var selectedModels = this.getSelectedRepresentations();
             if (!model.get('selected') && selectedModels.length === 0) {
                 model.set('selected', true);
             }
@@ -165,10 +161,51 @@
             this.trigger("reverse");
         },
 
+        getSelectedRepresentations : function () {
+            return this.where({selected : true});
+        },
+
         getDrawableRepresentations : function() {
             return this.where({ drawable : true });             
-        }
+        },
+
+        updateDrawablesBySelectedLevel : function(selectedLevel) {
+            _.invoke(this.models, 'set', { drawable : false }, { silent : true });
+            _.invoke(this.where({ level : parseInt(selectedLevel), selected : true}), 'set', { drawable : true });  
+
+            this.trigger("change:drawable");  
+        },
+
+        updateDrawablesBySelectedGranularity : function(selectedGranularity) {
+            _.invoke(this.models, 'set', { drawable : false }, { silent : true });
+            _.invoke(this.where({ temporalGranularity : selectedGranularity, selected : true}), 'set', { drawable : true });  
+
+            this.trigger("change:drawable");  
+        },
+
+        getMostPopulatedGeographicLevel : function() {
+            return this._getMostRepeatedValue(this.getSelectedGeographicLevels());
+        },
         
+        getSelectedGeographicLevels : function() {
+            return _(this.getSelectedRepresentations()).invoke("get", "level");
+        },    
+
+        getMostPopulatedTemporalGranularity : function() {
+            return this._getMostRepeatedValue(this.getSelectedTemporalGranularities());
+        },
+
+        getSelectedTemporalGranularities : function() {
+            return _(this.getSelectedRepresentations()).invoke("get", "temporalGranularity");
+        },   
+
+        _getMostRepeatedValue : function(collection) {
+            var countedBy = _(collection).countBy();
+            var maxPopulation = _(countedBy).max();
+            return _.invert(countedBy)[maxPopulation];
+        },        
+            
+
 
     }, {
         initializeWithRepresentations : function (representations) {

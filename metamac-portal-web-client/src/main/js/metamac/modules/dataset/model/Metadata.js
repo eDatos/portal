@@ -216,7 +216,7 @@
                 }
 
                 representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
-                    var representation = _.pick(dimensionValue, 'id', 'open');
+                    var representation = _.pick(dimensionValue, 'id', 'open', 'temporalGranularity');
                     representation.label = self.localizeLabel(dimensionValue.name.text);
 
                     if (dimensionValue.visualisationParent) {

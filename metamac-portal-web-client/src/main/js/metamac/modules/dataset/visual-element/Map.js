@@ -50,6 +50,7 @@
 
         _applyVisualizationPreselections : function() {
             this._preselectMostRecentTimeRepresentation();
+            this._preselectMostPopulatedGeographicLevelRepresentations();
         },
 
 

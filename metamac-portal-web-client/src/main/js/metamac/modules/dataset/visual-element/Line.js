@@ -172,6 +172,7 @@ App.namespace("App.VisualElement.LineChart");
 
         _applyVisualizationPreselections : function() {
             this._preselectBiggestHierarchyGeographicValue();
+            this._preselectMostPopulatedTemporalGranularityRepresentations();
         },
 
         tooltipFormatter : function () {

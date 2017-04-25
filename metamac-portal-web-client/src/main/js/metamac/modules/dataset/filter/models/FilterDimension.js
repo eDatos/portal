@@ -146,6 +146,10 @@
             });
         },
 
+        getSelectedRepresentations : function() {
+            return this.get('representations').getSelectedRepresentations();
+        },
+        
         getDrawableRepresentations : function() {
             return this.get('representations').getDrawableRepresentations();
         }

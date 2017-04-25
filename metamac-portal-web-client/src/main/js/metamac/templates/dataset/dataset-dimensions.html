@@ -20,10 +20,19 @@
                                     {{/each}}
                                 </select>
                             {{/if}}
+
                             {{#if selectedLevel }}                        
                                 <select class="dimension-select-level" data-dimension-id="{{ ../id }}">
                                     {{#each levelList}}
                                         <option value="{{ level }}" {{#compare ../selectedLevel "==" level}}selected{{/compare}}>{{ label }}</option>
+                                    {{/each}}
+                                </select>
+                            {{/if}}
+                            
+                            {{#if selectedGranularity }}                        
+                                <select class="dimension-select-granularity" data-dimension-id="{{ ../id }}">
+                                    {{#each granularityList}}
+                                        <option value="{{ granularity }}" {{#compare ../selectedGranularity "==" granularity}}selected{{/compare}}>{{ label }}</option>
                                     {{/each}}
                                 </select>
                             {{/if}}

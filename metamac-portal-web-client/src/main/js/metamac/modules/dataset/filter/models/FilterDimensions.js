@@ -52,6 +52,12 @@
             });
         },
 
+        getAllNonFixedDimensionsCopyByType : function(type) {
+            return this.filter(function(dimension) {
+                return dimension.get("type") == type && !dimension.isFixedDimension();
+            });
+        },
+
         getTableInfo : function () {
             if (!this.tableInfo) {
                 this.tableInfo = new App.modules.dataset.filter.models.FilterTableInfo({filterDimensions : this});
