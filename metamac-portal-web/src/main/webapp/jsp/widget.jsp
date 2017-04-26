@@ -86,6 +86,7 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
     App.queryParams["agency"] = getQueryParams("agencyId");
     App.queryParams["identifier"] = getQueryParams("resourceId");
     App.queryParams["version"] = getQueryParams("version");
+	App.queryParams["type"] = getQueryParams("resourceType");
     App.config["chromeFrameObject"] = getQueryParams("chromeFrameObject");
 	App.config["widget"] = true;
 

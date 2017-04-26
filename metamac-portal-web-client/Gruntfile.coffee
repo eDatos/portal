@@ -59,7 +59,6 @@ module.exports = (grunt) ->
                 # Metamac libs
                 paths.js + "/metamac/libs/i18n.js"
                 paths.js + "/metamac/libs/DB.js"
-                paths.js + "/metamac/libs/Inflector.js"
 
                 paths.js + "/metamac/libs/BrowsersCompatibility.js"
                 paths.js + "/metamac/libs/jQueryUtils.js"
@@ -305,7 +304,7 @@ module.exports = (grunt) ->
             test:
                 path: 'http://localhost:<%= connect.server.options.port %>/src/test/javascript/runner/runner.html'
             preview:
-                path: 'http://localhost:<%= connect.server.options.port %>/src/main/preview.html#datasets/selection'
+                path: 'http://localhost:<%= connect.server.options.port %>/src/main/preview.html#selection'
         mocha:
             all:
                 src: [ 'src/test/javascript/runner/runner.html' ]

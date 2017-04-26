@@ -83,6 +83,7 @@
 			                    App.queryParams["agency"] = '${param.agencyId}';
 			                    App.queryParams["identifier"] = '${param.resourceId}';		                    
 			                    App.queryParams["version"] = '${param.version}';
+								App.queryParams["type"] = '${param.resourceType}';
 			
 			                    console.log("starting app");
 			

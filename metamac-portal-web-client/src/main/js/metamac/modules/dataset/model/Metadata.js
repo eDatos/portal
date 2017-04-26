@@ -436,7 +436,7 @@
                         location.host, 
                         location.pathname,
                         '?', this.buildQueryString(identifier),
-                        '#', this.buildUrlIdentifierPart(identifier).substr(1), '/visualization/info'
+                        '#/visualization/info'
                     ].join('') ,
                     name : this.localizeLabel(resource.name.text)
                 }

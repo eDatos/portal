@@ -32,7 +32,8 @@
     App.queryParams = {
         "agency" : undefined,
         "identifier": undefined,
-        "version" : undefined
+        "version" : undefined,
+        "type" : undefined
     }
 
     App.config = {

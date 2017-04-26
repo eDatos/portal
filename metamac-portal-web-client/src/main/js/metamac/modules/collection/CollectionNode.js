@@ -16,7 +16,7 @@
                 var urlParts = _.last(url.split('/'), 2);
                 attributes.agency = urlParts[0];
                 attributes.identifier = urlParts[1];
-                attributes.url = "#queries/" + attributes.agency + "/" + attributes.identifier;
+                attributes.url = "?agencyId=" + attributes.agency + "&resourceId=" + attributes.identifier + "&resourceType=" + attributes.type;
             }
 
             if (response.dataset) {
@@ -26,7 +26,7 @@
                 attributes.agency = urlParts[0];
                 attributes.identifier = urlParts[1];
                 attributes.version = urlParts[2];
-                attributes.url = "#datasets/" + attributes.agency + "/" + attributes.identifier + "/" + attributes.version;
+                attributes.url = "?agencyId=" + attributes.agency + "&resourceId=" + attributes.identifier + "&version=" + attributes.version + "&resourceType=" + attributes.type;
             }
 
             if (response.nodes) {

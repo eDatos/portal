@@ -5,10 +5,8 @@ Para el desarrollo del proyecto utilizar el fichero `src/main/preview.html`.
 
 La aplicación no tiene página principal, por lo que hay que acceder directamente a un recurso. Alguno de los recursos disponibles son:
 
-	src/main/preview.html#/collections/ISTAC/C00031A_000002/001.000	src/main/preview.html#/collections/ISTAC/C00031A_000001/001.000
-	src/main/preview.html#datasets/ISTAC/C00031A_000002/001.000/selection
-	src/main/preview.html#datasets/ISTAC/C00031A_000002/001.000/visualization/canvasTable
-	src/main/preview.html#queries/ISTAC/ULTIMOS_DATOS_ALOJAMIENTO/selection
+	src/main/preview.html#selection
+	src/main/preview.html#visualization/canvasTable
 	
 ## API
 La aplicación de conecta a diferentes apis para consumir los datos. Las peticiones que hay que realizar son
