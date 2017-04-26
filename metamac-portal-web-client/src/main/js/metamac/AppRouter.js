@@ -7,7 +7,7 @@
         // QueryStringMode, the shorter urls that expect tha identifiers on the query string "?agencyId=ISTAC&resourceId=C00031A_000002&version=001.000"
 
         routes : {
-            "collections/:agency/:identifier/:version" : "collection",
+            "collections/:agency/:identifier" : "collection",
 
             "datasets/:agency/:identifier/:version" : "dataset",
             "datasets" : "dataset",

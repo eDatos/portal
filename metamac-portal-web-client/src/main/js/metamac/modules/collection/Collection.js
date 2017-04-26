@@ -6,7 +6,7 @@
     App.modules.collection.Collection = Backbone.Model.extend({
 
         url : function () {
-            return App.endpoints["statistical-resources"] + '/collections/' + this.get('agency') + '/' + this.get('identifier') + '/' + this.get('version') + '?_type=json';
+            return App.endpoints["statistical-resources"] + '/collections/' + this.get('agency') + '/' + this.get('identifier') + '?_type=json';
         },
 
         parse : function (response) {
