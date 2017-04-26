@@ -137,7 +137,8 @@ I18n.translations.en = {
                     MINOR_ERRATA : "Minor: Errata",
                     MINOR_METADATA : "Minor: Metadata",
                     MINOR_OTHER : "Minor: Other",
-                    MINOR_SERIES_UPDATE : "Minor: Series update"
+                    MINOR_SERIES_UPDATE : "Minor: Series update",
+                    undefined: ""
                 }
             },
             replacesVersion : "Replaces version",
@@ -184,7 +185,8 @@ I18n.translations.en = {
                 enum: {
                     NON_SCHEDULED_UPDATE: "Non scheduled update",
                     NO_UPDATES: "No updates",
-                    SCHEDULED_UPDATE: "Scheduled update"
+                    SCHEDULED_UPDATE: "Scheduled update",
+                    undefined: ""
                 }                
             }
         },
@@ -208,6 +210,7 @@ I18n.translations.en = {
                     MONTHLY : "Monthly",
                     WEEKLY : "Weekly",
                     DAILY : "Daily",
+                    undefined: ""
                 }
             }
         }   

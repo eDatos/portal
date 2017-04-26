@@ -396,10 +396,10 @@
             var types = this.metadata.versionRationaleTypes ? _.map(this.metadata.versionRationaleTypes.versionRationaleType, function(versionRationaleType) {
                 return I18n.t("entity.dataset.versionRationale.enum." + versionRationaleType);
             }) : [];
-            return [
+            return _.compact([
                 types.join(', '),
                 this.getLocalizedLabel(this.metadata.versionRationale)
-            ].join('. ');
+            ]).join('. ');
         },
         
         getReplacesVersion : function () {
