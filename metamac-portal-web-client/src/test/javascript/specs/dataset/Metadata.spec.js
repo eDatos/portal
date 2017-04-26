@@ -190,11 +190,11 @@ describe("Dataset Metadata", function () {
                     
                 },
                 "version": "001.000",
-                "versionRationale": "Major: New resource. ",
+                "versionRationale": "Major: New resource",
                 "publishers": [
                     "Instituto Canario de Estadística"
                 ],
-                "nextVersion": "[missing \"en.entity.dataset.nextVersion.enum.undefined\" translation]",
+                "nextVersion": "",
                 "lastUpdate": "2013-07-26T10:48:29.072+01:00",
                 "dateNextUpdate": "2013-07-30T12:00:00+01:00",
                 "updateFrequency": {
@@ -267,7 +267,7 @@ describe("Dataset Metadata", function () {
                     "name": ""
                 }
             };
-            // console.log(JSON.stringify(json), JSON.stringify(expectedJSON));
+            // console.log(JSON.stringify(json)); console.log(JSON.stringify(expectedJSON));
             expect(JSON.stringify(json)).to.eql(JSON.stringify(expectedJSON));
         });
 
