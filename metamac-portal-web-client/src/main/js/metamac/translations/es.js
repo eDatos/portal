@@ -14,7 +14,6 @@ I18n.translations.es = {
             edit : "Cambiar selección",
             info : "Información",
             table : "Tabla de datos",
-            canvasTable : "Tabla de datos",
             column : "Gráfico de columnas",
             line : "Gráfico de líneas",
             map : "Mapa",
@@ -69,7 +68,7 @@ I18n.translations.es = {
                     left : "",
                     top : ""
                 },
-                canvasTable : {
+                table : {
                     fixed : "Fijadas",
                     left : "Filas",
                     top : "Columnas"

@@ -32,7 +32,7 @@
                 info : new App.VisualElement.Info(options),
                 column : new App.VisualElement.ColumnChart(options),
                 line : new App.VisualElement.LineChart(options),
-                canvasTable : new App.VisualElement.CanvasTable(options),
+                table : new App.VisualElement.Table(options),
                 map : new App.VisualElement.Map(_.extend(options, { mapType : 'map'})),
                 mapbubble : new App.VisualElement.Map(_.extend(options, { mapType : 'mapbubble'}))
             };

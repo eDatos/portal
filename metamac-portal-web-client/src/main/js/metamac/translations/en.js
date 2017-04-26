@@ -14,7 +14,6 @@ I18n.translations.en = {
             edit : "Change selection",
             info : "Info",
             table : "Datatable",
-            canvasTable : "Datatable",
             column : "Columns chart",
             line : "Lines chart",
             map : "Map",
@@ -69,7 +68,7 @@ I18n.translations.en = {
                     left : "",
                     top : ""
                 },
-                canvasTable : {
+                table : {
                     fixed : "Fixed values",
                     left : "Rows",
                     top : "Columns"

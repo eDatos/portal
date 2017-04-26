@@ -14,7 +14,7 @@
 
         _exportIsAllowed : function () {
             var activeType = this.model.get('type');
-            return activeType !== 'table' && activeType !== 'canvasTable';
+            return activeType !== 'table';
         },
 
         render : function () {

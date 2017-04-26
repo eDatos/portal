@@ -31,7 +31,7 @@
         },
 
         _initializeVisualElements : function () {
-            var visualElements = ["info", "canvasTable", "column", "line"];
+            var visualElements = ["info", "table", "column", "line"];
             if (_.findWhere(this.metadata.getDimensions(), {type : 'GEOGRAPHIC_DIMENSION'})) {
                 visualElements.push("map");
                 visualElements.push("mapbubble");

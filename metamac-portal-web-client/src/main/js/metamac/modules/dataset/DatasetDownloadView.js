@@ -64,7 +64,7 @@
             switch (this.visualizationType) {
                 case '': // On selection mode
                 case 'info':
-                case 'canvasTable':
+                case 'table':
                     visualizationSupertype = 'data';
                     break;
                 case 'map':

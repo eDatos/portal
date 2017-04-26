@@ -6,7 +6,7 @@ Para el desarrollo del proyecto utilizar el fichero `src/main/preview.html`.
 La aplicación no tiene página principal, por lo que hay que acceder directamente a un recurso. Alguno de los recursos disponibles son:
 
 	src/main/preview.html#selection
-	src/main/preview.html#visualization/canvasTable
+	src/main/preview.html#visualization/table
 	
 ## API
 La aplicación de conecta a diferentes apis para consumir los datos. Las peticiones que hay que realizar son

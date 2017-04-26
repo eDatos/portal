@@ -19,7 +19,7 @@
             info : {
                 zones : {},
             },
-            canvasTable : {
+            table : {
                 zones : {
                     top : {
                         icon : "columns",

@@ -1,9 +1,9 @@
 (function () {
     "use strict";
 
-    App.namespace("App.VisualElement.CanvasTable");
+    App.namespace("App.VisualElement.Table");
 
-    App.VisualElement.CanvasTable = function (options) {
+    App.VisualElement.Table = function (options) {
         this.dataset = options.dataset;
 
         this.filterDimensions = options.filterDimensions;
@@ -21,10 +21,10 @@
             fixedDimensions : {}
         };
 
-        this._type = 'canvasTable';
+        this._type = 'table';
     };
 
-    App.VisualElement.CanvasTable.prototype = {
+    App.VisualElement.Table.prototype = {
 
         load : function () {
             this.render();
@@ -148,7 +148,7 @@
 
     };
 
-    _.extend(App.VisualElement.CanvasTable.prototype, Backbone.Events);
-    _.defaults(App.VisualElement.CanvasTable.prototype, new App.VisualElement.Base());
+    _.extend(App.VisualElement.Table.prototype, Backbone.Events);
+    _.defaults(App.VisualElement.Table.prototype, new App.VisualElement.Base());
 
 }());

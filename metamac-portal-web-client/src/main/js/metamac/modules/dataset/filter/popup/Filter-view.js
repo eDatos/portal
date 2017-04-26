@@ -18,10 +18,6 @@ App.widget.filter.FilterView = Backbone.View.extend({
                 this._renderTableContainers();
                 this._renderTableDimensions();
                 break;
-            case 'canvasTable':
-                this._renderTableContainers();
-                this._renderTableDimensions();
-                break;
             case 'column':
                 this._renderColumnContainers();
                 this._renderColumnDimensions();
@@ -287,7 +283,7 @@ App.widget.filter.FilterView = Backbone.View.extend({
         // This case is an APPEND (but if it is a chart could be a swap) -> In the zone itself
         if ($(elemDestiny).hasClass('div-dimension-long') || $(elemDestiny).hasClass('div-dimension-container')) {
             newParent = elemDestiny;
-            if ((this.type === 'table') || (this.type === 'canvasTable')) {
+            if (this.type === 'table') {
                 swapFlag = 0;
                 targetDimension = null;
             }

@@ -32,7 +32,7 @@
                 column : new App.VisualElement.ColumnChart(options),
                 pie : new App.VisualElement.PieChart(options),
                 line : new App.VisualElement.LineChart(options),
-                canvasTable : new App.VisualElement.CanvasTable(options),
+                table : new App.VisualElement.Table(options),
                 map : new App.VisualElement.Map(options)
             };
             this.ve.map.on('didLoadVe', this._hideSpinner, this);
