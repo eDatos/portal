@@ -81,10 +81,6 @@
             if (optionsEnabled) {
                 var buttons = this.buttons;
 
-                if (this.isFullScreen()) {
-                    buttons = _.without(buttons, "table");
-                }
-
                 var veTypeButtons = _.map(buttons, function (type) {
                     return {
                         title : I18n.t("filter.button." + type),
