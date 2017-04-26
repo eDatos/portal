@@ -527,7 +527,9 @@
         },
         
         getStatisticOfficiality : function () {
-            return this.getLocalizedLabel(this.metadata.statisticOfficiality.name);
+            if (this.metadata.statisticOfficiality) {
+                return this.getLocalizedLabel(this.metadata.statisticOfficiality.name);
+            }            
         },
         
         getBibliographicCitation : function () {

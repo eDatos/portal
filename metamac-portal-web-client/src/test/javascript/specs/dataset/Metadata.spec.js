@@ -163,5 +163,114 @@ describe("Dataset Metadata", function () {
         expect(metadata.getAutoOpen()).to.be.true;
     });
 
+    describe('toJSON', function () {
+        
+        it("shouldn't break if some metadata is empty", function() {
+            metadata = new App.dataset.Metadata();
+            metadata.parse({
+                selectedLanguages : App.test.response.metadata.selectedLanguages,
+                metadata : {
+                    dimensions : App.test.response.metadata.metadata.dimensions,
+                    relatedDsd : App.test.response.metadata.metadata.relatedDsd
+                }
+            });
+            var json = metadata.toJSON();
+        });
+
+        it('should work', function() {
+            var json = metadata.toJSON();
+            var expectedJSON = {
+                "statisticalOperation": {
+                    "href": "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/latest/operations/C00025A",
+                    "name": "Estadística de la Evolución Histórica de la Población"
+                },
+                "title": "Título en español",
+                "description": "Descripción en español",
+                "dates": {
+                    
+                },
+                "version": "001.000",
+                "versionRationale": "Major: New resource. ",
+                "publishers": [
+                    "Instituto Canario de Estadística"
+                ],
+                "nextVersion": "[missing \"en.entity.dataset.nextVersion.enum.undefined\" translation]",
+                "lastUpdate": "2013-07-26T10:48:29.072+01:00",
+                "dateNextUpdate": "2013-07-30T12:00:00+01:00",
+                "updateFrequency": {
+                    "href": "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/latest/codelists/SDMX/CL_FREQ/1.0/codes/M",
+                    "name": "Mensual"
+                },
+                "statisticOfficiality": "Oficialidad",
+                "languages": {
+                    "id": [
+                    "es",
+                    "en"
+                    ],
+                    "label": {
+                    "es": "Español",
+                    "en": "Ingles"
+                    }
+                },
+                "measureDimension": {
+                    "id": "INDICADORES",
+                    "label": "Indicadores",
+                    "type": "MEASURE_DIMENSION",
+                    "hierarchy": false,
+                    "representations": [
+                    {
+                        "id": "INDICE_OCUPACION_HABITACIONES",
+                        "open": true,
+                        "label": "Índice de ocupación de habitaciones",
+                        "decimals": 6
+                    },
+                    {
+                        "id": "INDICE_OCUPACION_PLAZAS",
+                        "open": false,
+                        "label": "Índice de ocupación de plazas",
+                        "decimals": 4
+                    }
+                    ]
+                },
+                "dimensions": [
+                    {
+                    "id": "TIME_PERIOD",
+                    "label": "Periodo de tiempo",
+                    "type": "TIME_DIMENSION",
+                    "hierarchy": true
+                    },
+                    {
+                    "id": "INDICADORES",
+                    "label": "Indicadores",
+                    "type": "MEASURE_DIMENSION",
+                    "hierarchy": false
+                    },
+                    {
+                    "id": "CATEGORIA_ALOJAMIENTO",
+                    "label": "Categoría del alojamiento",
+                    "type": "DIMENSION",
+                    "hierarchy": false
+                    },
+                    {
+                    "id": "DESTINO_ALOJAMIENTO",
+                    "label": "Destino del alojamiento",
+                    "type": "GEOGRAPHIC_DIMENSION",
+                    "hierarchy": false
+                    }
+                ],
+                "apiUrl": {
+                    "href": "undefined",
+                    "name": "undefined"
+                },
+                "apiDocumentationUrl": {
+                    "href": "",
+                    "name": ""
+                }
+            };
+            // console.log(JSON.stringify(json), JSON.stringify(expectedJSON));
+            expect(JSON.stringify(json)).to.eql(JSON.stringify(expectedJSON));
+        });
+
+    });
 
 });
