@@ -59,7 +59,7 @@
         },
 
         visualizationTypePermalink : function() {
-            var args = this._nameArguments(["permalinkId", "visualizationType"], arguments);
+            var args = this._nameArguments(["visualizationType", "permalinkId"], arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(App.queryParams);
         },
