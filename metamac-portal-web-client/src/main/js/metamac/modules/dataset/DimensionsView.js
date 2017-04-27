@@ -400,7 +400,7 @@
             return _(uniqueGranularities).map(function (granularity) {
                 return {
                     granularity : granularity, 
-                    label : I18n.t("entity.granularity.temporal.enum." + granularity)
+                    label : I18n.t("entity.granularity.temporal.enum." + granularity, { defaults: [{ message : ""}]})
                 };
             });
         },

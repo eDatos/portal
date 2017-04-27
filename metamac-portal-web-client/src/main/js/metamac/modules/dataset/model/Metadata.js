@@ -394,7 +394,7 @@
 
         getVersionRationale : function() {
             var types = this.metadata.versionRationaleTypes ? _.map(this.metadata.versionRationaleTypes.versionRationaleType, function(versionRationaleType) {
-                return I18n.t("entity.dataset.versionRationale.enum." + versionRationaleType);
+                return I18n.t("entity.dataset.versionRationale.enum." + versionRationaleType, { defaults: [{ message : ""}]});
             }) : [];
             return _.compact([
                 types.join(', '),
@@ -460,7 +460,7 @@
         },
 
         getNextVersion : function() {
-            return I18n.t("entity.dataset.nextVersion.enum." + this.metadata.nextVersion);
+            return I18n.t("entity.dataset.nextVersion.enum." + this.metadata.nextVersion, { defaults: [{ message : ""}]});
         },
         
         getPublishers : function () {
