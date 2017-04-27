@@ -41,8 +41,7 @@
         },
 
         fullScreenIsAllowed : function () {
-            var activeType = this.optionsModel.get('type');
-            return activeType !== 'table';
+            return true;
         },
 
         isFullScreen : function () {
