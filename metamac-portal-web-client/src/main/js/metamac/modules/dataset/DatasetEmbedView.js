@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var DatasetPermalink = App.modules.dataset.DatasetPermalink;
+
     App.namespace('App.modules.dataset.DatasetEmbedView');
 
     App.modules.dataset.DatasetEmbedView = Backbone.View.extend({
@@ -20,8 +22,8 @@
         },
 
         savePermalink : function () {
-            var permalinkContent = JSON.stringify(this.filterDimensions.exportJSON());
-            return App.modules.dataset.DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
+            var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
+            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);            
         },
 
         getWidgetUrl : function () {

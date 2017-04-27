@@ -98,8 +98,8 @@
 
                     if (datasetIdentifier.permalinkId) {
                         App.modules.dataset.DatasetPermalink.retrievePermalink(datasetIdentifier.permalinkId)
-                            .done(function (selection) {
-                                self.filterDimensions.importJSON(selection);
+                            .done(function (content) {
+                                self.filterDimensions.importJSON(content.selection);
                                 deferred.resolve();
                             })
                             .fail(function () {

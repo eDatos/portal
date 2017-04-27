@@ -5,7 +5,7 @@
 <%@ tag import="org.siemac.metamac.portal.dto.Collection" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Dataset" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Query" %>
-
+<%@ tag import="org.siemac.metamac.portal.dto.Permalink" %>
 <%@ tag import="org.siemac.metamac.core.common.exception.MetamacException"%>
 <%@ tag import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
 <%@ tag import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
@@ -86,16 +86,23 @@
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
 		}
 	%>
+    <%
+        String permalinkId = request.getParameter("permalink");
+        if (permalinkId != null && !permalinkId.isEmpty()) {
+            Permalink permalink = Helpers.getPermalink(PERMALINKS_API_URL_BASE, permalinkId);
+            response.sendRedirect(Helpers.buildUrl(permalink));   
+        }        
+    %>
 	<%               
- 
-	  	String resourceType = request.getParameter("resourceType");
-	    String agencyId = request.getParameter("agencyId");
-	    String resourceId = request.getParameter("resourceId");
-	    String version = request.getParameter("version");
-	        
+      	        
+        String resourceType = request.getParameter("resourceType");
+        String agencyId = request.getParameter("agencyId");
+        String resourceId = request.getParameter("resourceId");
+        String version = request.getParameter("version");  
+
 	    request.setAttribute("resourceEmpty", true);
 	    String resourceName = "";
-	    String resourceDescription = "";
+	    String resourceDescription = "";                     
 	    
 	    // Java 1.6 don't allow switchs on String
 	    if ("collection".equals(resourceType)) {

@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var DatasetPermalink = App.modules.dataset.DatasetPermalink;
+
     App.namespace('App.modules.dataset.DatasetShareView');
 
     App.modules.dataset.DatasetShareView = Backbone.View.extend({
@@ -20,8 +22,8 @@
         },
 
         savePermalink : function () {
-            var permalinkContent = JSON.stringify(this.filterDimensions.exportJSON());
-            return App.modules.dataset.DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
+            var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
+            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
         },
 
         removeParamFromUrl : function(url, param) {
@@ -31,9 +33,9 @@
 
         getSharedUrl : function (permalinkId) {
             if (!_.isEmpty(App.endpoints["shared-statistical-visualizer"])) {
-                return App.endpoints["shared-statistical-visualizer"] + this.removeParamFromUrl(window.location.search, 'sharedVisualizerUrl') + window.location.hash + "/permalink/" + permalinkId;
+                return App.endpoints["shared-statistical-visualizer"] + "?" + "permalink" + "=" + permalinkId;
             } else {
-                return window.location.protocol + '//' + window.location.host + window.location.pathname + this.removeParamFromUrl(window.location.search, 'sharedVisualizerUrl') + window.location.hash + "/permalink/" + permalinkId;
+                return window.location.protocol + '//' + window.location.host + window.location.pathname + "?" + "permalink" + "=" + permalinkId;
             }
         },
 

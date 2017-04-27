@@ -9,6 +9,14 @@
             return App.endpoints["permalinks"] + "/permalinks";
         },
 
+        buildPermalinkContent : function (filterDimensions) {
+            return JSON.stringify({
+                queryParams : App.queryParams,
+                hash : window.location.hash,
+                selection : filterDimensions.exportJSON()
+            });
+        },
+
         retrievePermalink : function (permalinkId) {
             var url = this.baseUrl() + "/" + permalinkId;
             return $.getJSON(url);
