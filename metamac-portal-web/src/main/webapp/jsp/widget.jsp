@@ -3,7 +3,8 @@
 <%@ page import="org.siemac.metamac.core.common.exception.MetamacException"%>
 <%@ page import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
 <%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
-
+<%@ page import="org.siemac.metamac.portal.Helpers" %>
+<%@ page import="org.siemac.metamac.portal.dto.Permalink" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -60,6 +61,13 @@
             request.setAttribute("ApiUrlExport", "error");
 		}
 	%>
+    <%
+        String permalinkId = request.getParameter("permalink");
+        if (permalinkId != null && !permalinkId.isEmpty()) {
+            Permalink permalink = Helpers.getPermalink(PERMALINKS_API_URL_BASE, permalinkId);
+            response.sendRedirect(Helpers.buildUrl(permalink));   
+        }        
+    %>
 </head>
 <body>
 
