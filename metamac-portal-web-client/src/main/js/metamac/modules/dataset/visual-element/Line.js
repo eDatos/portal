@@ -157,7 +157,7 @@ App.namespace("App.VisualElement.LineChart");
 
             this.filterDimensions.zones.get('top').set('maxSize', 1); // lines      
             this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
-            this.filterDimensions.zones.get('axisy').set('fixedSize', 1);                      
+            this.filterDimensions.zones.get('axisy').set('maxSize', 1);                      
         },
 
         _applyVisualizationRestrictions : function() {
