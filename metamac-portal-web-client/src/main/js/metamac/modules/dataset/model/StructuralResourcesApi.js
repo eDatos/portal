@@ -36,9 +36,16 @@
         },
 
         getMeasureConcepts : function(callback) {
-            var measureCoverages = this.metadata.metadata.measureCoverages;
-            if (measureCoverages) {
-                this.getConcepts(measureCoverages.resource, callback);
+            var measureConcept;
+            if (this.metadata.metadata.measureCoverages) {
+                measureConcept = this.metadata.metadata.measureCoverages.resource;
+            } else if (this.metadata.metadata.attributes) {
+                var measureAttribute = _.findWhere(this.metadata.metadata.attributes.attribute, {type : "MEASURE", attachmentLevel : "DATASET"});
+                measureConcept = measureAttribute.attributeValues.value;
+            }
+
+            if (measureConcept) {
+                this.getConcepts(measureConcept, callback);
             }
         },
 
