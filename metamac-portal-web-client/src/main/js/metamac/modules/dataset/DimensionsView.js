@@ -11,8 +11,10 @@
         template : App.templateManager.get('dataset/dataset-dimensions'),
 
         initialize : function (options) {
+            this.dataset = options.dataset;
             this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
+            this.measureAttribute = null;
         },
         
         configuration : {
@@ -41,7 +43,8 @@
                         icon : "axis-y",
                         draggable : false,
                         location : "left",
-                        showHeader : true
+                        showHeader : true,
+                        showMeasureAttribute : true
                     },
                     left : {
                         icon : "axis-x",
@@ -63,7 +66,7 @@
                         location : "right",
                         showHeader : true
                     }                    
-                }                
+                }   
             },
             line : {
                 zones : {
@@ -71,7 +74,8 @@
                         icon : "axis-y",
                         draggable : false,
                         location : "left",
-                        showHeader : true
+                        showHeader : true,
+                        showMeasureAttribute : true
                     }, 
                     left : {
                         icon : "axis-x",
@@ -141,6 +145,7 @@
             "drop .order-sidebar-zone.draggable" : "_onDrop",
 
             "click a.order-sidebar-dimension" : "_dontFollowLinks",
+            "click a.order-sidebar-measure-attribute" : "_dontFollowLinks",
             "change .fixed-dimension-select-category" : "_onChangeCategory",
             "change .dimension-select-level" : "_onChangeLevel",
             "change .dimension-select-granularity" : "_onChangeGranularity",
@@ -151,6 +156,20 @@
 
         _dontFollowLinks : function(e) {
             e.preventDefault();
+        },
+
+        hasNewdata : function() {
+            var measureAttribute = _.findWhere(this.dataset.data.getDatasetAttributes(), {type : "MEASURE"});
+            if (measureAttribute) {
+                this.measureAttribute = {
+                    label : App.i18n.localizeText(measureAttribute.attributeValues.value[0].name)
+                } 
+                this.render();
+            }
+        },
+
+        getMeasureAttribute : function() {
+            return this.measureAttribute;
         },
 
         _onChangeCategory : function(e) {
@@ -230,7 +249,8 @@
                 self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));
                 self.listenTo(self.filterDimensions, 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
             });
-            this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(this.render, 500));
+            this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(self.render, 500));
+            this.listenTo(this.dataset.data, "hasNewData", self.hasNewdata);
         },
 
         _unbindEvents : function () {
@@ -281,6 +301,7 @@
                     icon : this._getIconFromZone(zone),
                     draggable : this._zoneIsDraggableByChartType(zone),
                     dimensions : this._dimensionsForZone(zone),
+                    measureAttribute : this._measureAttributesForZone(zone),
                     hasSelector : this._hasSelector(zone),
                     location : this._getLocationForZone(zone),
                     showHeader : this._getShowHeader(zone),
@@ -289,21 +310,23 @@
             }, this);
 
             return {
-                leftColumnDimensions : this._getLeftColumnDimensions(zones),
+                leftColumns : this._getLeftColumns(zones),
                 zones : zones
             };
         },
 
-        _getLeftColumnDimensions : function(zones) {
+        _getLeftColumns : function(zones) {
             var currentChartType = this._getCurrentChartType();
-            var leftColumnDimensions = _.reduce(zones, function(memo, zone) {
+            var leftColumns = _.reduce(zones, function(memo, zone) {
                 if (zone.location == "left") {
-                    return memo + zone.dimensions.length; 
-                } else {
-                    return memo;
-                }             
+                    memo += zone.dimensions.length; 
+                    if (zone.measureAttribute) {
+                        memo += 1;
+                    }                    
+                }
+                return memo;  
             }, 0)
-            return currentChartType ? leftColumnDimensions : 0;
+            return currentChartType ? leftColumns : 0;
         },
         
         _getShowHeader : function(zone) {
@@ -349,6 +372,14 @@
             this.$el.find('select').select2({                
                 dropdownParent: $('.metamac-container')
             });
+        },
+
+        _measureAttributesForZone : function (zoneId) {
+            var currentChartType = this._getCurrentChartType();
+            var showMeasureAttribute = this.configuration[currentChartType].zones[zoneId].showMeasureAttribute;
+            if (showMeasureAttribute) {
+                return this.getMeasureAttribute();
+            }
         },
 
         _dimensionsForZone : function (zoneId) {

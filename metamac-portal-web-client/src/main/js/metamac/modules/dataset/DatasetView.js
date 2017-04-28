@@ -40,16 +40,12 @@
         },
 
         _initializeSidebarView : function () {
+
             // Options bar
             this.optionsView = new App.modules.dataset.OptionsView({
                 filterDimensions : this.filterDimensions,
                 optionsModel : this.optionsModel,
                 buttons : this.visualElements
-            });
-
-            this.dimensionsView = new App.modules.dataset.DimensionsView({
-                filterDimensions : this.filterDimensions,
-                optionsModel : this.optionsModel
             });
 
             // visualization
@@ -59,6 +55,12 @@
                 optionsModel : this.optionsModel,
                 veElements : this.visualElements,
                 optionsView: this.optionsView
+            });
+
+            this.dimensionsView = new App.modules.dataset.DimensionsView({
+                dataset : this.dataset,
+                filterDimensions : this.filterDimensions,
+                optionsModel : this.optionsModel
             });
 
             // sidebarView

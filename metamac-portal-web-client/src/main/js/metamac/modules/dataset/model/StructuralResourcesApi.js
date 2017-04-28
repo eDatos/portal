@@ -37,7 +37,9 @@
 
         getMeasureConcepts : function(callback) {
             var measureCoverages = this.metadata.metadata.measureCoverages;
-            this.getConcepts(measureCoverages.resource, callback);
+            if (measureCoverages) {
+                this.getConcepts(measureCoverages.resource, callback);
+            }
         },
 
         getConcepts : function(conceptItems, callback) {

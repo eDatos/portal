@@ -85,7 +85,7 @@
             
             this.filterDimensions.zones.get('top').set('maxSize', 0); // columns      
             this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
-            this.filterDimensions.zones.get('axisy').set('fixedSize', 1);    
+            this.filterDimensions.zones.get('axisy').set('maxSize', 1);    
             this.filterDimensions.zones.get('top').set('maxSize', 1); // columns                                                  
         },
 

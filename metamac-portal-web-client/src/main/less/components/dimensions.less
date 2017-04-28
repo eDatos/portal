@@ -50,7 +50,8 @@
                 .border-radius(10px 10px 0 0);
             }
         }
-
+        
+        .order-sidebar-measure-attribute,
         .order-sidebar-dimension {            
             padding: 2px;
 
@@ -105,6 +106,20 @@
                     height: inherit;
                 }
             }    
+        }
+        .order-sidebar-measure-attribute {
+            margin: 0 -1px 0px -1px;
+            display: table;
+            box-sizing: border-box;
+            white-space: normal;
+            height: 100%;   
+                     
+            cursor: default;
+            text-decoration: none;
+            .order-sidebar-measure-attribute-inner {
+                display: table-cell;
+                vertical-align: middle;
+            }
         }
     }
     

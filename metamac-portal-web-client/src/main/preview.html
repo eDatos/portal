@@ -60,14 +60,14 @@
     App.endpoints["structural-resources"] = "http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal/v1.0";
     App.endpoints["statistical-visualizer"] = "http://estadisticas.arte-consultores.com/statistical-visualizer";
     App.endpoints["permalinks"] = "http://estadisticas.arte-consultores.com/permalinks/v1.0";
+//    App.endpoints["permalinks"] = "http://localhost:8080/statistical-visualizer-3.0.1-SNAPSHOT/apis/permalinks/v1.0";
     App.endpoints["export"] = "http://estadisticas.arte-consultores.com/export/v1.0";
+  //  App.endpoints["export"] = "http://localhost:8080/statistical-visualizer-3.0.1-SNAPSHOT/apis/export/v1.0";
 
-    App.queryParams = {
-        "agency" : "ISTAC",
-        "identifier": "C00031A_000002",
-        "version" : "~latest",
-        "type" : "dataset"
-    }
+    App.queryParams = { "agency" : "ISTAC", "identifier": "C00031A_000002", "version" : "~latest", "type" : "dataset" }
+
+    // Ejemplo con atributo de medida en vez de measure dimension
+//   App.queryParams = { "agency" : "ISTAC", "identifier": "C00031A_000004", "version" : "001.000", "type" : "dataset" }
 
  /*   App.queryParams = {
         "agency" : "ISTAC",

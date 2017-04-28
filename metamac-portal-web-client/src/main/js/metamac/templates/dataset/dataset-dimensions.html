@@ -1,5 +1,5 @@
 <div class="dataset-dimensions">
-    <div class="dataset-dimensions-left dataset-dimensions-left-{{leftColumnDimensions}}">
+    <div class="dataset-dimensions-left dataset-dimensions-left-{{leftColumns}}">
         {{#each zones}}
             {{#compare location "==" "left"}}
             <div class="order-sidebar-zone {{#if draggable}}draggable{{/if}} {{#if hasSelector}}has-selector{{/if}}" data-zone="{{ id }}">
@@ -9,6 +9,12 @@
                 {{/if}}
 
                 <div class="order-sidebar-dimensions {{#compare dimensions.length '>' '1'}}scrollable{{/compare}}">
+                    {{#if measureAttribute}}
+                        <a href="#" class="order-sidebar-measure-attribute" title="{{measureAttribute.label}}">
+                            <div class="order-sidebar-measure-attribute-inner">{{measureAttribute.label}}</div>
+                        </a>
+                    {{/if}}
+
                     {{#each dimensions }}
                         <a href="#" class="order-sidebar-dimension {{#if ../draggable}}draggable dimension-pill{{/if}}" {{#if ../draggable}}draggable="true"{{/if}} data-dimension-id="{{id}}" 
                         title="{{label}}{{#if selectedCategory }} - {{ selectedCategory.label }} {{/if}}">
@@ -43,7 +49,7 @@
             {{/compare}}
         {{/each}}
     </div>
-    <div class="dataset-dimensions-right dataset-dimensions-left-{{leftColumnDimensions}}">
+    <div class="dataset-dimensions-right dataset-dimensions-left-{{leftColumns}}">
         {{#each zones}}
             {{#compare location "==" "right"}}
             <div class="order-sidebar-zone {{#if draggable}}draggable{{/if}} {{#if hasSelector}}has-selector{{/if}}"  data-zone="{{ id }}" {{#if width}}style="width: {{ width }}"{{/if}}>
