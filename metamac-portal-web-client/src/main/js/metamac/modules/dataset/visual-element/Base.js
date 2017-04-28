@@ -116,11 +116,10 @@
 
         _forceDimensionTypeInZone : function(dimensionType, zone) {
             var dimensions = this.filterDimensions.where({type : dimensionType});
-            if (dimensions.length == 0) {
-                throw new Error("No " + dimensionType + " dimension");
+            if (dimensions.length != 0) {
+                var dimension = dimensions[0];
+                this.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
             }
-            var dimension = dimensions[0];
-            this.filterDimensions.zones.setDimensionZone(zone, dimension, { force : true });
         },
 
         _moveAllDimensionsToZone : function(zone) {
@@ -203,7 +202,7 @@
         },
 
         getRightsHolderText : function() {
-            return App.config.showRightsHolder && this.dataset ? this.dataset.metadata.getRightsHolder().name : '';
+            return App.config.showRightsHolder && this.dataset && this.dataset.metadata.getRightsHolder() ? this.dataset.metadata.getRightsHolder().name : '';
         },
 
         getDrawableRepresentations : function(dimension) {

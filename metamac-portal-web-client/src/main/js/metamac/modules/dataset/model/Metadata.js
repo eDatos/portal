@@ -90,9 +90,13 @@
         },
 
         initializeCache : function () {
-            var measureDimension = this.getMeasureDimension().id;
+            var measureDimension = this.getMeasureDimension() ? this.getMeasureDimension().id : null;
             this.decimalsForSelection = _.memoize(this.decimalsForSelection, function (selection) {
-                return selection[measureDimension];
+                if (measureDimension) {
+                    return selection[measureDimension];
+                } else {
+                    return JSON.stringify(selection);
+                }                
             });
         },
 
@@ -199,12 +203,15 @@
             return sortedRepresentations;
         },
 
+        getDefaultDecimals : function() {
+            return _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : DECIMALS
+        },
+
         getRepresentations : function (dimensionId) {
             var self = this;
             var dimensions = this.metadata.dimensions.dimension;
             var dimension = _.findWhere(dimensions, {id : dimensionId});
             var representations = [];
-            var defaultDecimals = _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : DECIMALS;
 
             if (dimension && dimension.dimensionValues) {
                 var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
@@ -229,7 +236,7 @@
                     }
 
                     if (isMeasureDimension) {
-                        representation.decimals = _.has(dimensionValue, 'showDecimalsPrecision') ? dimensionValue.showDecimalsPrecision : defaultDecimals;
+                        representation.decimals = _.has(dimensionValue, 'showDecimalsPrecision') ? dimensionValue.showDecimalsPrecision : self.getDefaultDecimals();
                     }
                     return representation;
                 });
@@ -329,15 +336,16 @@
 
         decimalsForSelection : function (selection) {
             var measureDim = this.getMeasureDimension();
-            var selectedDimValueId = selection[measureDim.id];
+            var selectedDimValueId = measureDim ? selection[measureDim.id] : null;
             if (selectedDimValueId) {
                 var selectedDimValue = _.findWhere(measureDim.representations, {id : selectedDimValueId});
                 if (selectedDimValue) {
                     return selectedDimValue.decimals;
                 }
             }
-            return DECIMALS;
+            return this.getDefaultDecimals();
         },
+        
 
         getDimensionsPosition : function () {
             var top = this.metadata.relatedDsd.heading.dimensionId;
