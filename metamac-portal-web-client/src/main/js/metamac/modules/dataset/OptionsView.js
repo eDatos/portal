@@ -69,6 +69,7 @@
         render : function () {
             this._unbindEvents();        
             this._bindEvents();
+            var self = this;
             
             var activeType = this.optionsModel.get('type');
 
@@ -84,7 +85,8 @@
                     return {
                         title : I18n.t("filter.button." + type),
                         type : type,
-                        btnClass : type === activeType ? 'active' : ''
+                        btnClass : type === activeType ? 'active' : '',
+                        enabled : self._isButtonEnabled(type)
                     };
                 });
 
@@ -107,6 +109,11 @@
                 this.$el.html(this.template(context));
             }
             return this;
+        },
+
+        _isButtonEnabled : function(type) {
+            return !this.optionsModel.get('widget')
+                || type == "info" || type == this.optionsModel.get('widgetInitialType');
         },
 
         clickFilter : function(e) {

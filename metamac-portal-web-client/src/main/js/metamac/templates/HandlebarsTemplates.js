@@ -1254,16 +1254,16 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n<div class=\"change-visual-element\">\r\n    <div class=\"btn-group\" data-toggle=\"buttons-radio\">\r\n        ";
-  stack1 = helpers.each.call(depth0, depth0.veTypeButton, {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
+  buffer += "\r\n            ";
+  stack1 = helpers['if'].call(depth0, depth0.enabled, {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </div>\r\n</div>\r\n";
+  buffer += "\r\n        ";
   return buffer;
   }
 function program9(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <button class=\"btn ";
+  buffer += "\r\n            <button class=\"btn ";
   if (stack1 = helpers.btnClass) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.btnClass; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -1279,7 +1279,7 @@ function program9(depth0,data) {
   if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"></i></button>\r\n        ";
+    + "\"></i></button>\r\n            ";
   return buffer;
   }
 
@@ -1311,10 +1311,10 @@ function program11(depth0,data) {
   buffer += "\r\n</div>\r\n\r\n";
   stack2 = helpers.unless.call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n";
-  stack2 = helpers.unless.call(depth0, depth0.widget, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
+  buffer += "\r\n\r\n<div class=\"change-visual-element\">\r\n    <div class=\"btn-group\" data-toggle=\"buttons-radio\">\r\n        ";
+  stack2 = helpers.each.call(depth0, depth0.veTypeButton, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n";
+  buffer += "\r\n    </div>\r\n</div>\r\n\r\n";
   stack2 = helpers['if'].call(depth0, depth0.visualize, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n\r\n\r\n\r\n";

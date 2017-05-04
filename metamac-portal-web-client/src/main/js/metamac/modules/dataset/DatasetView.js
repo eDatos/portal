@@ -147,6 +147,9 @@
 
             this.optionsModel.set('filter', true);
 
+            if (!this.optionsModel.get('widgetInitialType')) {
+                this.optionsModel.set('widgetInitialType', options.visualizationType);
+            }
             this.optionsModel.set('type', options.visualizationType);
         },
 

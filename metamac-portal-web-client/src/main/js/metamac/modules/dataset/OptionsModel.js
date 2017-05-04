@@ -10,6 +10,7 @@
             options : true,
             widget : false,
             widgetButton : true,
+            widgetInitialType : '',
             menu: true
         }
     });

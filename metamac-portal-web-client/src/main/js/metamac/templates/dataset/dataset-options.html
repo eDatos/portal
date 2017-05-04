@@ -17,15 +17,15 @@
     {{/unless}}
 {{/unless}}
 
-{{#unless widget}}
 <div class="change-visual-element">
     <div class="btn-group" data-toggle="buttons-radio">
         {{#each veTypeButton}}
-        <button class="btn {{btnClass}}" data-type="{{type}}" title="{{title}}"><i class="dataset-options-type-{{type}}"></i></button>
+            {{#if enabled}}
+            <button class="btn {{btnClass}}" data-type="{{type}}" title="{{title}}"><i class="dataset-options-type-{{type}}"></i></button>
+            {{/if}}
         {{/each}}
     </div>
 </div>
-{{/unless}}
 
 {{#if visualize}}
 <button class="btn btn-with-label selection-visualize-selection" title='{{message "filter.button.visualize"}}'>
