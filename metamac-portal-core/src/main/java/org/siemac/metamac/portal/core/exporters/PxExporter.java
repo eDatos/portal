@@ -63,8 +63,6 @@ public class PxExporter {
     private final String             ATTRIBUTE_LINE_SEPARATOR = "#";
     private Set<String>              languages                = new HashSet<String>();
     private Map<String, Integer>     languageOrder            = new HashMap<String, Integer>();
-    // this.languages = new HashSet<String>(resourcesToResourcesId);
-    // this.languageOrder = new HashMap<String, Integer>();
 
     public PxExporter(Dataset dataset, String lang, String langAlternative) throws MetamacException {
         this.datasetAccess = new DatasetAccessForPx(dataset, lang, langAlternative);
@@ -598,7 +596,7 @@ public class PxExporter {
         }
         writeAttributesNote(printWriter, attributes);
         writeAttributesValueNote(printWriter, attributes);
-        // writeAttributesCellNote(printWriter, attributes); // TODO CELLNOTES
+        writeAttributesCellNote(printWriter, attributes);
     }
 
     private void writePrecision(PrintWriter printWriter) throws MetamacException {
