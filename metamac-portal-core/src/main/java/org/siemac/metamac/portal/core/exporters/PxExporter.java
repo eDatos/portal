@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeMap;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -60,8 +61,10 @@ public class PxExporter {
 
     private final DatasetAccessForPx datasetAccess;
     private final String             ATTRIBUTE_LINE_SEPARATOR = "#";
-    private Set<String>              languages                = null;
-    private Map<String, Integer>     languageOrder            = null;
+    private Set<String>              languages                = new HashSet<String>();
+    private Map<String, Integer>     languageOrder            = new HashMap<String, Integer>();
+    // this.languages = new HashSet<String>(resourcesToResourcesId);
+    // this.languageOrder = new HashMap<String, Integer>();
 
     public PxExporter(Dataset dataset, String lang, String langAlternative) throws MetamacException {
         this.datasetAccess = new DatasetAccessForPx(dataset, lang, langAlternative);
@@ -376,8 +379,13 @@ public class PxExporter {
             DimensionValues dimensionValues = measureDimension.getDimensionValues();
             if (dimensionValues != null) {
                 if (dimensionValues instanceof EnumeratedDimensionValues) {
-                    EnumeratedDimensionValue enumeratedAttributeValue = ((EnumeratedDimensionValues) dimensionValues).getValues().iterator().next();
-                    value = extractUnitCode(enumeratedAttributeValue.getMeasureQuantity());
+                    EnumeratedDimensionValue enumeratedDimensionValue = ((EnumeratedDimensionValues) dimensionValues).getValues().iterator().next();
+                    // METAMAC-1927 TODO ES He puesto esto porque no viene QUANITY??? Es esto un error
+                    if (enumeratedDimensionValue.getMeasureQuantity() != null) {
+                        value = extractUnitCode(enumeratedDimensionValue.getMeasureQuantity());
+                    } else {
+                        value = enumeratedDimensionValue.getName();
+                    }
                 }
             }
         } else {
@@ -389,7 +397,12 @@ public class PxExporter {
                 if (attributeValues != null) {
                     if (attributeValues instanceof EnumeratedAttributeValues) {
                         EnumeratedAttributeValue enumeratedAttributeValue = ((EnumeratedAttributeValues) attributeValues).getValues().iterator().next();
-                        value = extractUnitCode(enumeratedAttributeValue.getMeasureQuantity());
+                        // METAMAC-1927 TODO ES He puesto esto porque no viene QUANITY??? Es esto un error
+                        if (enumeratedAttributeValue.getMeasureQuantity() != null) {
+                            value = extractUnitCode(enumeratedAttributeValue.getMeasureQuantity());
+                        } else {
+                            value = enumeratedAttributeValue.getName();
+                        }
                     }
                 }
             } else {
@@ -512,25 +525,51 @@ public class PxExporter {
      * @param printWriter
      * @throws MetamacException
      */
+    // private void writeSurvey(PrintWriter printWriter) throws MetamacException {
+    // // Value = TITLE statistical operation (CODE statistical operation)
+    // InternationalString statisticalOperationName = datasetAccess.getDataset().getMetadata().getStatisticalOperation().getName();
+    // String statisticalOperationCode = extractStatisticalOperationCodeFromLink(datasetAccess.getDataset().getMetadata().getStatisticalOperation().getSelfLink());
+    //
+    // String defaultLang = datasetAccess.getLangEffective();
+    // for (LocalisedString localisedString : statisticalOperationName.getTexts()) {
+    // if (filterLanguagesToApply(localisedString)) {
+    // String lang = localisedString.getLang();
+    // StringBuilder valueBuilder = new StringBuilder(localisedString.getValue());
+    // if (defaultLang.equals(lang)) {
+    // if (!StringUtils.isEmpty(statisticalOperationCode)) {
+    // valueBuilder.append(SPACE).append(LEFT_PARENTHESES).append(statisticalOperationCode).append(RIGHT_PARENTHESES);
+    // }
+    // PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SURVEY).withValue(valueBuilder.toString()).build();
+    // writeLine(printWriter, line);
+    // } else {
+    // PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SURVEY).withValue(valueBuilder.toString()).withLang(lang).build();
+    // writeLine(printWriter, line);
+    // }
+    // }
+    // }
+    // }
+
     private void writeSurvey(PrintWriter printWriter) throws MetamacException {
         // Value = TITLE statistical operation (CODE statistical operation)
         InternationalString statisticalOperationName = datasetAccess.getDataset().getMetadata().getStatisticalOperation().getName();
         String statisticalOperationCode = extractStatisticalOperationCodeFromLink(datasetAccess.getDataset().getMetadata().getStatisticalOperation().getSelfLink());
 
         String defaultLang = datasetAccess.getLangEffective();
+        Map<Integer, PxLineContainer> linesMap = new TreeMap<Integer, PxLineContainer>();
         for (LocalisedString localisedString : statisticalOperationName.getTexts()) {
             if (filterLanguagesToApply(localisedString)) {
                 String lang = localisedString.getLang();
                 StringBuilder valueBuilder = new StringBuilder(localisedString.getValue());
+                if (!StringUtils.isEmpty(statisticalOperationCode)) {
+                    valueBuilder.append(SPACE).append(LEFT_PARENTHESES).append(statisticalOperationCode).append(RIGHT_PARENTHESES);
+                }
                 if (defaultLang.equals(lang)) {
-                    if (!StringUtils.isEmpty(statisticalOperationCode)) {
-                        valueBuilder.append(SPACE).append(LEFT_PARENTHESES).append(statisticalOperationCode).append(RIGHT_PARENTHESES);
-                    }
                     PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SURVEY).withValue(valueBuilder.toString()).build();
-                    writeLine(printWriter, line);
+                    // First, default lang
+                    linesMap.put(0, line);
                 } else {
                     PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SURVEY).withValue(valueBuilder.toString()).withLang(lang).build();
-                    writeLine(printWriter, line);
+                    linesMap.put(languageOrder.get(lang), line);
                 }
             }
         }
@@ -798,23 +837,23 @@ public class PxExporter {
 
         String defaultLang = datasetAccess.getLangEffective();
 
-        // First, default lang
-        List<PxLineContainer> lines = new ArrayList<PxLineContainer>((this.languages.size() > 0) ? this.languages.size() : 10);
+        Map<Integer, PxLineContainer> linesMap = new TreeMap<Integer, PxLineContainer>();
         for (LocalisedString localisedString : value.getTexts()) {
             if (filterLanguagesToApply(localisedString)) {
                 String lang = localisedString.getLang();
                 if (defaultLang.equals(lang)) {
                     PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(pxKey).withValue(localisedString.getValue()).build();
-                    lines.set(0, line);
+                    // First, default lang
+                    linesMap.put(0, line);
                 } else {
                     PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(pxKey).withValue(localisedString.getValue()).withLang(lang).build();
-                    lines.set(languageOrder.get(lang), line);
+                    linesMap.put(languageOrder.get(lang), line);
                 }
             }
         }
 
-        for (PxLineContainer line : lines) {
-            writeLine(printWriter, line);
+        for (Map.Entry<Integer, PxLineContainer> line : linesMap.entrySet()) {
+            writeLine(printWriter, line.getValue());
         }
 
     }
@@ -881,9 +920,8 @@ public class PxExporter {
     }
 
     private boolean filterLanguagesToApply(LocalisedString localisedString) {
-        // Checks if the locale is not the default and the PX is a language we support
-        // (!datasetAccess.getLangEffective().equals(localisedString.getLang())) &&
-        return this.languages.contains(localisedString.getLang());
+        // Checks if the default locale or is language in the alternatives languages of PX
+        return (datasetAccess.getLangEffective().equals(localisedString.getLang()) || this.languages.contains(localisedString.getLang()));
     }
 
     private void writeFieldResourceName(PrintWriter printWriter, PxKeysEnum pxKey, Resource value) throws MetamacException {
