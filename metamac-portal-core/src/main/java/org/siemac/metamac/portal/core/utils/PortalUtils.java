@@ -293,4 +293,50 @@ public class PortalUtils {
     public static boolean isDimensionWithEnumeratedRepresentation(Dimension dimension) {
         return (dimension.getDimensionValues() instanceof EnumeratedDimensionValues);
     }
+
+    /**
+     * Concatenates two international Strings, each label in a determinated lang in source plus each label in the same lang in "toadd".
+     * 
+     * @param current, maybe null, then a copy of "toAdd" is returned
+     * @param toAdd
+     * @return
+     */
+    public static InternationalString concatenateInternationalString(InternationalString current, InternationalString toAdd) {
+        InternationalString result = new InternationalString();
+        if (toAdd == null) {
+            return copyInternationalString(current);
+        }
+
+        for (LocalisedString localisedString : toAdd.getTexts()) {
+            String label = getLabel(current, localisedString.getLang());
+            if (label == null) {
+                label = localisedString.getValue();
+            } else {
+                label = label + ". " + localisedString.getValue();
+            }
+            LocalisedString localisedStringResult = new LocalisedString();
+            localisedStringResult.setLang(localisedString.getLang());
+            localisedStringResult.setValue(label);
+            result.getTexts().add(localisedStringResult);
+        }
+        
+        return result;
+    }
+
+    private static InternationalString copyInternationalString(InternationalString current) {
+        if (current == null) {
+            return current;
+        }
+        
+        InternationalString result = new InternationalString();
+        for (LocalisedString localisedString : current.getTexts()) {
+            LocalisedString localisedStringResult = new LocalisedString();
+            localisedStringResult.setLang(localisedString.getLang());
+            localisedStringResult.setValue(localisedString.getValue());
+            result.getTexts().add(localisedStringResult);
+        }
+
+        return result;
+
+    }
 }

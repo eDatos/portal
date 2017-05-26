@@ -21,6 +21,7 @@
         <metamac-core-common.version>5.1.0</metamac-core-common.version>
         <metamac-web-common.version>3.1.0</metamac-web-common.version>
         <metamac-statistical-resources.version>2.0.0</metamac-statistical-resources.version>
+        <metamac-srm-rest-external-api.version>2.0.0</metamac-srm-rest-external-api.version>
         
         
         <!-- TODO: Revisar si es necesario que estas dependencias esten aqui o se pueden pasar al proyecto metamac-parent -->
@@ -245,6 +246,11 @@
                 <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
                 <artifactId>metamac-statistical-resources-rest-external-api</artifactId>
                 <version>${metamac-statistical-resources.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.siemac.metamac.metamac-srm</groupId>
+                <artifactId>metamac-srm-rest-external-api</artifactId>
+                <version>${metamac-srm-rest-external-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>

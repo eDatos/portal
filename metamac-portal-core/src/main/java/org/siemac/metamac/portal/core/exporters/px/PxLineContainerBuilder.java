@@ -8,6 +8,7 @@
 package org.siemac.metamac.portal.core.exporters.px;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PxLineContainerBuilder extends PxLineContainerBuilderBase<PxLineContainerBuilder> {
@@ -70,9 +71,38 @@ class PxLineContainerBuilderBase<GeneratorT extends PxLineContainerBuilderBase<G
     }
 
     @SuppressWarnings("unchecked")
-    public GeneratorT withValue(Object aValue) {
+    public GeneratorT withValue(String aValue) {
         instance.setValue(aValue);
 
         return (GeneratorT) this;
     }
+
+    @SuppressWarnings("unchecked")
+    public GeneratorT withValue(Integer aValue) {
+        instance.setValue(aValue);
+
+        return (GeneratorT) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public GeneratorT withValue(Boolean aValue) {
+        instance.setValue(aValue);
+
+        return (GeneratorT) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public GeneratorT withValue(Date aValue) {
+        instance.setValue(aValue);
+
+        return (GeneratorT) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public GeneratorT withValue(List<String> aValue) {
+        instance.setValue(aValue);
+
+        return (GeneratorT) this;
+    }
+
 }
