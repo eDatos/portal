@@ -30,11 +30,11 @@ import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
+import org.siemac.metamac.portal.core.invocation.StatisticalResourcesRestExternalFacade;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
 import org.siemac.metamac.portal.rest.external.RestExternalConstants;
 import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionType;
 import org.siemac.metamac.portal.rest.external.export.v1_0.mapper.DatasetSelectionMapper;
-import org.siemac.metamac.portal.rest.external.invocation.StatisticalResourcesRestExternalFacade;
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection;
@@ -177,9 +177,9 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 }
             }
 
-            // Retrieve dataset
-            Dataset dataset = retrieveDataset(agencyID, resourceID, version, null, dimensionSelection); // all langs
-
+            // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
+            Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, null, dimensionSelection); // all langs
+            
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);

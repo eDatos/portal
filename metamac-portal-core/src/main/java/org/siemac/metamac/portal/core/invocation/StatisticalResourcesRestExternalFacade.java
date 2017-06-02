@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.rest.external.invocation;
+package org.siemac.metamac.portal.core.invocation;
 
 import java.util.List;
 

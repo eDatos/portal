@@ -11,5 +11,9 @@
     <bean id="exportService" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="org.siemac.metamac.portal.core.serviceapi.ExportService" />
     </bean>
+    
+    <bean id="statisticalResourcesRestExternal" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.siemac.metamac.portal.core.invocation.StatisticalResourcesRestExternalFacade" />
+    </bean>
         
 </beans>
