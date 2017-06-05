@@ -12,29 +12,20 @@
      * @constructor
      */
     App.dataset.data.ApiRequest = function (options) {
-        this.metadata = options.metadata;
-        this.dimensions = options.dimensions;
-        this.ajaxManager = options.ajaxManager;
+        switch (options.metadata.options.type) {
+            case "indicator":
+                this.request = new App.dataset.data.ApiIndicatorRequest(options);
+                break;
+            default:
+                this.request = new App.dataset.data.ApiDatasetRequest(options);
+                break;
+        }
     };
 
     App.dataset.data.ApiRequest.prototype = {
 
-        url : function () {
-            return App.endpoints["statistical-resources"] + this.metadata.urlIdentifierPart() + '.json';
-        },
-
-        queryParams : function () {
-            var result = {};
-            if (this.dimensions) {
-                //MOTIVOS_ESTANCIA:000|001|002:ISLAS_DESTINO_PRINCIPAL:005|006
-                result.dim = _.map(this.dimensions,
-                    function (dimension) {
-                        return dimension.id + ":" + dimension.representations.join("|");
-                    }).join(":");
-            }
-            result.fields = "-metadata";
-            result._type = "json";
-            return result;
+        url: function () {
+            return this.request.url();
         },
 
         isFetching : function () {
@@ -44,30 +35,9 @@
             return true;
         },
 
-        fetch : function (callback) {
-            var metadata = this.metadata;
-            var ajaxParams = {
-                url : this.url(),
-                dataType : 'jsonp',
-                jsonp : '_callback',
-                data : this.queryParams(),
-                success : function (response) {
-                    var apiResponse = new ApiResponse(response, metadata);
-                    if (_.isFunction(callback)) {
-                        callback(apiResponse);
-                    }
-                }
-            };
-
-            var result;
-            if (this.ajaxManager) {
-                this.xhrId = result = this.ajaxManager.add(ajaxParams);
-            } else {
-                result = $.ajax(ajaxParams);
-            }
-            return result;
+        fetch: function (callback) {
+            return this.request.fetch(callback);
         }
-
     };
 
 

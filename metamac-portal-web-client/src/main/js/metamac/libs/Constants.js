@@ -25,6 +25,13 @@
                 serif: "serif"
             },
             size: "11px"
+        },
+
+        api: {
+            type: {
+                INDICATOR: "indicator",
+                DATASET: "dataset"
+            }
         }
     };
 

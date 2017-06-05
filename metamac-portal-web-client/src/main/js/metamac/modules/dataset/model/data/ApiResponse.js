@@ -5,9 +5,27 @@
 
     App.namespace("App.dataset.data.ApiResponse");
 
-    App.dataset.data.ApiResponse = function (response, metadata) {
-        this.response = response;
-        this.attributes = new Attributes({ response : response, metadata : metadata});
+    function typedApiResponseToApiResponse(response, apiType) {
+        switch (apiType) {
+            case App.Constants.api.type.INDICATOR:
+                return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorResponseToResponse(response);
+            default:
+                return response;
+        }
+    }
+
+    function typedResponseToObservations(response, apiType) {
+        switch (apiType) {
+            case App.Constants.api.type.INDICATOR:
+                return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorResponseToObservations(response);
+            default:
+                return response.data.observations.split(" | ");
+        }
+    }
+
+    App.dataset.data.ApiResponse = function (response, metadata, type) {
+        this.response = typedApiResponseToApiResponse(response, type);
+        this.attributes = new Attributes({ response: this.response, metadata: metadata });
 
         // Mult Factor
         this._mult = null;
@@ -21,7 +39,7 @@
         // Receives as parameters the pos to transform (["1", "1"])
         // Returns the array position (5)
         this._transformPosToPosArrays = null;
-        this.observations = this.response.data.observations.split(" | ");
+        this.observations = typedResponseToObservations(this.response, type);
 
         this._createMult();
         this._setUpTransformIdToPos();

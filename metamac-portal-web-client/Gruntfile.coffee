@@ -98,7 +98,10 @@ module.exports = (grunt) ->
                 # data
                 paths.js + "/metamac/modules/dataset/model/data/Attributes.js"
                 paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"
+                paths.js + "/metamac/modules/dataset/model/data/ApiIndicatorResponseToApiResponse.js"
                 paths.js + "/metamac/modules/dataset/model/data/ApiRequest.js"
+                paths.js + "/metamac/modules/dataset/model/data/ApiDatasetRequest.js"
+                paths.js + "/metamac/modules/dataset/model/data/ApiIndicatorRequest.js"
                 paths.js + "/metamac/modules/dataset/model/StructuralResourcesApi.js"
                 paths.js + "/metamac/modules/dataset/model/data/NumberFormatter.js"
                 paths.js + "/metamac/modules/dataset/model/data/BigDataCacheBlock.js"

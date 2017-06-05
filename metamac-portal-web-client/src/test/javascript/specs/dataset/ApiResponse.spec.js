@@ -3,7 +3,7 @@ describe('ApiResponse', function () {
     var apiResponse;
 
     beforeEach(function () {
-        apiResponse = new App.dataset.data.ApiResponse(App.test.response.data);
+        apiResponse = new App.dataset.data.ApiResponse(App.test.response.data, undefined, App.Constants.api.type.dataset);
     });
 
 
