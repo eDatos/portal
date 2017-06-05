@@ -6,20 +6,20 @@
     App.AppRouter = Backbone.Router.extend({
         // The agency, identifier and version needs to come the query string "?resourceType=datasetagencyId=ISTAC&resourceId=C00031A_000002&version=001.000"
 
-        routes : {
+        routes: {
 
-            "" : "home",
+            "": "home",
 
-            "selection" : "selection",
-            "selection/permalink/:permalinkId" : "selectionPermalink",
-            "visualization" : "visualization",
-            "visualization/:visualizationType" : "visualizationType",
-            "visualization/:visualizationType/permalink/:permalinkId" : "visualizationTypePermalink",
+            "selection": "selection",
+            "selection/permalink/:permalinkId": "selectionPermalink",
+            "visualization": "visualization",
+            "visualization/:visualizationType": "visualizationType",
+            "visualization/:visualizationType/permalink/:permalinkId": "visualizationTypePermalink",
 
-            "*path" : "error"
+            "*path": "error"
         },
 
-        initialize : function (options) {
+        initialize: function (options) {
             options || (options = {});
             this.collectionController = options.collectionController;
             this.datasetController = options.datasetController;
@@ -41,8 +41,8 @@
         selection : function() {            
             this.datasetController.showDatasetSelection(App.queryParams);
         },
-        
-        selectionPermalink : function () {
+
+        selectionPermalink: function () {
             var args = this._nameArguments(["permalinkId"], arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetSelection(args);
@@ -52,21 +52,20 @@
             this.datasetController.showDatasetVisualization(App.queryParams);
         },
 
-        visualizationType : function() {
+        visualizationType: function () {
             var args = this._nameArguments(["visualizationType"], arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(args);
         },
 
-        visualizationTypePermalink : function() {
+        visualizationTypePermalink: function () {
             var args = this._nameArguments(["visualizationType", "permalinkId"], arguments);
             args = _.defaults(App.queryParams, args);
             this.datasetController.showDatasetVisualization(App.queryParams);
         },
 
-        error : function () {
+        error: function () {
             console.error("error");
-            this.errorController.showError({errorCode : 404});
         },
 
         linkTo : function (routeName, params) {
@@ -93,12 +92,12 @@
             return results;
         },
 
-        checkQueryParamsValidity : function() {
+        checkQueryParamsValidity: function () {
             switch (App.queryParams.type) {
                 case 'dataset':
-                case 'query':                     
+                case 'query':
                     break;
-                default: 
+                default:
                     return this.error();
             }
 

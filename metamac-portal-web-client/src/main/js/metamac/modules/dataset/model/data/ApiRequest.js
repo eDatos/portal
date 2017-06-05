@@ -28,7 +28,7 @@
             return this.request.url();
         },
 
-        isFetching : function () {
+        isFetching: function () {
             if (this.xhrId) {
                 return this.ajaxManager.isFetching(this.xhrId);
             }

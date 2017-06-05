@@ -48,21 +48,21 @@
 
     App.dataset.data.ApiResponse.prototype = {
 
-        getDatasetAttributes : function() {
+        getDatasetAttributes: function () {
             return this.attributes.getDatasetAttributes();
         },
 
 
-        getDimensionAttributesById : function(dimensionsIds) {
+        getDimensionAttributesById: function (dimensionsIds) {
             return this.attributes.getDimensionAttributesById(dimensionsIds);
         },
 
-        getDataById : function (ids) {
+        getDataById: function (ids) {
             var ds = this.response;
             var idArray;
             // Id Object
             if (_.isObject(ids)) {
-                idArray = _.map(this.dimensionIds, function(dimension){
+                idArray = _.map(this.dimensionIds, function (dimension) {
                     return ids[dimension];
                 });
             } else {
@@ -71,22 +71,22 @@
 
             var dimensionPositions = this._transformIdToPos.apply(this, [idArray]);
             return this.getDataByPos(dimensionPositions);
-        },    
+        },
 
-        getDataByPos : function (dimensionPositions) {
+        getDataByPos: function (dimensionPositions) {
             var self = this,
                 ds = self.response,
                 observationPosition = 0;
 
             observationPosition = self._transformPosToPosArrays.apply(self, [dimensionPositions]); // Use "apply" method to pass actual context
-            return { 
-                value : this.observations[observationPosition], 
-                attributes : this.attributes.getCellAttributes(observationPosition, dimensionPositions) 
+            return {
+                value: this.observations[observationPosition],
+                attributes: this.attributes.getCellAttributes(observationPosition, dimensionPositions)
             };
         },
 
         /*** OTHER METHODS ***/
-        _createMult : function () {
+        _createMult: function () {
             var m = [];
             var mult = 1;
             var n = _.map(this.response.data.dimensions.dimension, function (dimension) {
@@ -105,7 +105,7 @@
             this._mult = m;
         },
 
-        _setUpTransformIdToPos : function () {
+        _setUpTransformIdToPos: function () {
             var body = "";
             var ds = this.response;
             this.dimensionIds = _.map(this.response.data.dimensions.dimension, function (dimension) {
@@ -117,7 +117,7 @@
                     return memo;
                 }, {});
                 memo[dimension.dimensionId] = {
-                    representationIndex : representationIndex
+                    representationIndex: representationIndex
                 };
                 return memo;
             }, {});
@@ -132,7 +132,7 @@
             this._transformIdToPos = new Function("id", body);
         },
 
-        _setUpTransformPosToPosArray : function () {
+        _setUpTransformPosToPosArray: function () {
             var self = this;
             var body = "";
             var ds = this.response;

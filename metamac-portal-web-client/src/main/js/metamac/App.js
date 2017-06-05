@@ -6,15 +6,19 @@
     var App = new Backbone.Marionette.Application();
 
     App.addRegions({
-        mainRegion : ".metamac-container"
+        mainRegion: ".metamac-container"
     });
 
     App.addInitializer(function () {
-        App.collectionController = new App.modules.collection.CollectionController({region : this.mainRegion});
-        App.datasetController = new App.modules.dataset.DatasetController({region : this.mainRegion});
-        App.errorController = new App.modules.error.ErrorController({region : this.mainRegion});
+        App.collectionController = new App.modules.collection.CollectionController({ region: this.mainRegion });
+        App.datasetController = new App.modules.dataset.DatasetController({ region: this.mainRegion });
+        App.errorController = new App.modules.error.ErrorController({ region: this.mainRegion });
 
-        App.router = new App.AppRouter({collectionController : App.collectionController, datasetController : App.datasetController, errorController : App.errorController});
+        App.router = new App.AppRouter({
+            collectionController: App.collectionController,
+            datasetController: App.datasetController,
+            errorController: App.errorController,
+        });
 
         Backbone.history.start();
     });
@@ -24,23 +28,23 @@
 
     // Start empty, initizialized outside, before App.start
     App.endpoints = {
-        "structural-resources" : "",
-        "statistical-resources" : "",
-        "statistical-visualizer" : ""
+        "structural-resources": "",
+        "statistical-resources": "",
+        "statistical-visualizer": ""
     };
 
     App.queryParams = {
-        "agency" : undefined,
+        "agency": undefined,
         "identifier": undefined,
-        "version" : undefined,
-        "type" : undefined
+        "version": undefined,
+        "type": undefined
     }
 
     App.config = {
-        "widget" : false,
-        "showHeader" : true,
-        "showRightsHolder" : true,
-        "chromeFrameObject" : false        
+        "widget": false,
+        "showHeader": true,
+        "showRightsHolder": true,
+        "chromeFrameObject": false
     }
 
     App.namespace = function (namespaceString) {

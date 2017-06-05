@@ -5,12 +5,12 @@
 
     App.modules.dataset.DatasetController = App.Controller.extend({
 
-        initialize : function (options) {
+        initialize: function (options) {
             this.region = options.region;
             this.metadata = undefined;
         },
 
-        showDataset : function (datasetIdentifier) {
+        showDataset: function (datasetIdentifier) {
             var self = this;
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
@@ -23,14 +23,14 @@
                     }
 
                     var route = routeParts.join("/");
-                    Backbone.history.navigate(route, {trigger : true, replace : true});
+                    Backbone.history.navigate(route, { trigger: true, replace: true });
                 });
         },
 
-        showDatasetSelection : function (datasetIdentifier) {
+        showDatasetSelection: function (datasetIdentifier) {
             var link = this._linkToDatasetSelection(datasetIdentifier);
             this.router.navigate(link);
-            
+
             var self = this;
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
@@ -38,7 +38,7 @@
                 });
         },
 
-        showDatasetVisualization : function (options) {
+        showDatasetVisualization: function (options) {
             var link = this._linkToDatasetVisualization(options);
             this.router.navigate(link);
 
@@ -47,8 +47,8 @@
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
                     options = _.defaults(options, {
-                        visualizationType : "table",
-                        fullScreen : false
+                        visualizationType: "table",
+                        fullScreen: false
                     });
                     if (self.region.currentView !== self.visualizationView) {
                         self.region.show(self.visualizationView);
@@ -73,8 +73,8 @@
             }
             return this.router.linkTo(routeName, options);
         },
-        
-        _linkToDatasetSelection : function (options) {
+
+        _linkToDatasetSelection: function (options) {
             var routeName = "selection";
             if (options.permalinkId) {
                 routeName = routeName + "Permalink";
@@ -82,7 +82,7 @@
             return this.router.linkTo(routeName, options);
         },
 
-        _loadMetadata : function (datasetIdentifier) {
+        _loadMetadata: function (datasetIdentifier) {
             var self = this;
             var deferred = $.Deferred();
 
@@ -93,8 +93,8 @@
                 this.metadata = metadata;
                 metadata.fetch().then(function () {
                     self.filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
-                    self.selectionView = new App.modules.selection.SelectionView({controller : self, collection : self.filterDimensions, metadata : metadata});
-                    self.visualizationView = new App.modules.dataset.DatasetView({controller : self, filterDimensions : self.filterDimensions, metadata : metadata});
+                    self.selectionView = new App.modules.selection.SelectionView({ controller: self, collection: self.filterDimensions, metadata: metadata });
+                    self.visualizationView = new App.modules.dataset.DatasetView({ controller: self, filterDimensions: self.filterDimensions, metadata: metadata });
 
                     if (datasetIdentifier.permalinkId) {
                         App.modules.dataset.DatasetPermalink.retrievePermalink(datasetIdentifier.permalinkId)

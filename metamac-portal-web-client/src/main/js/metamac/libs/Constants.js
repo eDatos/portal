@@ -8,15 +8,15 @@
         colors: {
             istacBlueWhite: "#B3D9FF",
             istacBlueLight: "#56B5E6",
-            istacBlueMedium : "#1C547E",
-            istacBlueDark : "#003366",
+            istacBlueMedium: "#1C547E",
+            istacBlueDark: "#003366",
             istacYellow: '#EBCC5C',
 
-            istacWhite : "#FFFFFF",
-            istacGreyLight : "#EBEBEB",
-            istacGreyMedium : "#ACACAC", 
-            istacGreyDark: "#808080",           
-            istacBlack : "#222222"
+            istacWhite: "#FFFFFF",
+            istacGreyLight: "#EBEBEB",
+            istacGreyMedium: "#ACACAC",
+            istacGreyDark: "#808080",
+            istacBlack: "#222222"
         },
 
         font: {

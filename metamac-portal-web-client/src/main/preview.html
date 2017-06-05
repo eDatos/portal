@@ -23,61 +23,64 @@
     </style>
 
 </head>
+
 <body>
 
-<div id="contenido">
-    <div id="cabecera">
+    <div id="contenido">
+        <div id="cabecera">
 
-        <!-- IMAGEN ISTAC -->
-        <h1><a href="http://www.gobiernodecanarias.org/istacc"
-               title="Página principal del Instituto Canario de Estadística (ISTAC) - Opciones de accesibilidad (tecla de acceso: i)"
-               accesskey="i">Instituto Canario de Estadística</a></h1>
-    </div>
+            <!-- IMAGEN ISTAC -->
+            <h1><a href="http://www.gobiernodecanarias.org/istacc" title="Página principal del Instituto Canario de Estadística (ISTAC) - Opciones de accesibilidad (tecla de acceso: i)"
+                    accesskey="i">Instituto Canario de Estadística</a></h1>
+        </div>
 
 
-    <div id="bloq_interior">
-        <div class="contenido">
+        <div id="bloq_interior">
+            <div class="contenido">
 
-            <div class="metamac-container" id="metamac-container">Cargando...</div>
+                <div class="metamac-container" id="metamac-container">Cargando...</div>
 
+            </div>
+        </div>
+        <div id="pie_istac" class="footer">
+            <div class="izda">&copy; Gobierno de Canarias</div>
+            <div class="dcha"><a href="http://opendefinition.org/okd/espanol/" height="13px" target=_blank><img alt="Open Data" src="../../../metamac-portal-web/src/main/webapp/img/open_data.png" /></a>                | <a href="http://www.gobiernodecanarias.org/istac/aviso_legal.html" rel="license">Aviso Legal</a> | <a href="http://www.gobiernodecanarias.org/sugrec/">Sugerencias y Reclamaciones</a>
+            </div>
         </div>
     </div>
-    <div id="pie_istac" class="footer">
-        <div class="izda">&copy; Gobierno de Canarias</div>
-        <div class="dcha"><a href="http://opendefinition.org/okd/espanol/" height="13px" target=_blank><img alt="Open Data" src="../../../metamac-portal-web/src/main/webapp/img/open_data.png" /></a> 
-        | <a href="http://www.gobiernodecanarias.org/istac/aviso_legal.html" rel="license">Aviso Legal</a> 
-        | <a href="http://www.gobiernodecanarias.org/sugrec/">Sugerencias y Reclamaciones</a>
-	</div>
-</div>
-</div>
 
 
-<script>
-    I18n.defaultLocale = "es";
-    I18n.locale = "es";
+    <script>
+        I18n.defaultLocale = "es";
+        I18n.locale = "es";
 
-    App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/statistical-resources/v1.0";
-    App.endpoints["structural-resources"] = "http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal/v1.0";
-    App.endpoints["statistical-visualizer"] = "http://estadisticas.arte-consultores.com/statistical-visualizer";
-    App.endpoints["permalinks"] = "http://estadisticas.arte-consultores.com/permalinks/v1.0";
-//    App.endpoints["permalinks"] = "http://localhost:8080/statistical-visualizer-3.0.1-SNAPSHOT/apis/permalinks/v1.0";
-    App.endpoints["export"] = "http://estadisticas.arte-consultores.com/export/v1.0";
-  //  App.endpoints["export"] = "http://localhost:8080/statistical-visualizer-3.0.1-SNAPSHOT/apis/export/v1.0";
+        App.endpoints["statistical-resources"] = "http://estadisticas.arte-consultores.com/statistical-resources/v1.0";
+        App.endpoints["structural-resources"] = "http://estadisticas.arte-consultores.com/structural-resources-internal/apis/structural-resources-internal/v1.0";
+        App.endpoints["statistical-visualizer"] = "http://estadisticas.arte-consultores.com/statistical-visualizer";
+        App.endpoints["permalinks"] = "http://estadisticas.arte-consultores.com/permalinks/v1.0";
+        //    App.endpoints["permalinks"] = "http://localhost:8080/statistical-visualizer-3.0.1-SNAPSHOT/apis/permalinks/v1.0";
+        App.endpoints["export"] = "http://estadisticas.arte-consultores.com/export/v1.0";
+        //  App.endpoints["export"] = "http://localhost:8080/statistical-visualizer-3.0.1-SNAPSHOT/apis/export/v1.0";
 
-    App.queryParams = { "agency" : "ISTAC", "identifier": "C00031A_000002", "version" : "~latest", "type" : "dataset" }
+        App.endpoints["indicators"] = "http://estadisticas.arte-consultores.com/indicators/v1.0";
 
-    // Ejemplo con atributo de medida en vez de measure dimension
-   //App.queryParams = { "agency" : "ISTAC", "identifier": "C00031A_000004", "version" : "001.000", "type" : "dataset" }
+        App.queryParams = { "agency": "ISTAC", "identifier": "C00031A_000002", "version": "~latest", "type": "dataset" };
 
- /*   App.queryParams = {
-        "agency" : "ISTAC",
-        //"identifier" : "INDICE_OCUPACION_TFE_2016",
-        "identifier" : "INDICADORES_OCUPACION",
-        "type" : "query"
-    }*/
+        //    App.config.widget = true;
 
-    App.start();
-</script>
+        // Ejemplo con atributo de medida en vez de measure dimension
+        //App.queryParams = { "agency" : "ISTAC", "identifier": "C00031A_000004", "version" : "001.000", "type" : "dataset" }
+
+        /*   App.queryParams = {
+               "agency" : "ISTAC",
+               //"identifier" : "INDICE_OCUPACION_TFE_2016",
+               "identifier" : "INDICADORES_OCUPACION",
+               "type" : "query"
+           }*/
+
+        App.start();
+    </script>
 
 </body>
+
 </html>
