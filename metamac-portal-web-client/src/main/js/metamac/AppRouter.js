@@ -96,13 +96,10 @@
             switch (App.queryParams.type) {
                 case 'dataset':
                 case 'query':
+                case 'indicator':
                     break;
                 default:
                     return this.error();
-            }
-
-            if (_.isUndefined(App.queryParams.agency)) {
-                return this.error();
             }
 
             if (_.isUndefined(App.queryParams.identifier)) {
@@ -110,6 +107,10 @@
             }
 
             if (_.isUndefined(App.queryParams.type)) {
+                return this.error();
+            }
+
+            if (App.queryParams.type !== 'indicator' && _.isUndefined(App.queryParams.agency)) {
                 return this.error();
             }
 
