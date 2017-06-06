@@ -225,5 +225,14 @@ I18n.translations.es = {
         meridian : ["am", "pm"]
         
         
+    },
+    indicator: {
+        dimension: {
+            name: {
+                TIME: "Período de tiempo",
+                MEASURE: "Unidad de medida",
+                GEOGRAPHICAL: "Localización geográfica"
+            }
+        }
     }
 };

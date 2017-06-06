@@ -7,8 +7,8 @@
 
         defaults : {
             start : 0,
-            stop : 0.5,
             step : 0.1
+            stop: 0.48, // Fix detail window when there is only one data point
         },
 
         validate : function (attrs) {

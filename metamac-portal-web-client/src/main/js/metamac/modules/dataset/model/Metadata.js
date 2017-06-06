@@ -3,6 +3,8 @@
 
     App.namespace("App.dataset.Metadata");
 
+    var API_TYPES = App.Constants.api.type;
+
     var DECIMALS = 2;
 
     App.dataset.Metadata = function (options) {
@@ -13,28 +15,37 @@
 
         initialize : function (options) {
             this.options = options || {};
+            this.apiType = this.identifier().type == "indicator" ? API_TYPES.INDICATOR : API_TYPES.DATASET;
         },
 
         urlIdentifierPart : function () {
            return this.buildUrlIdentifierPart(this.identifier());
         },
 
-        buildUrlIdentifierPart : function(identifier) {
-            if (identifier.type === "dataset") {
-                return '/datasets/' + identifier.agency + '/' + identifier.identifier + '/' + identifier.version;
-            } else if (identifier.type === "query") {
-                return '/queries/' + identifier.agency + '/' + identifier.identifier;
+        buildUrlIdentifierPart: function (identifier) {
+            switch (identifier.type) {
+                case "dataset":
+                    return '/datasets/' + identifier.agency + '/' + identifier.identifier + '/' + identifier.version;
+                case "query":
+                    return '/queries/' + identifier.agency + '/' + identifier.identifier;
+                case "indicator":
+                    return '/indicators/' + identifier.identifier;
+                default:
+                    throw Error("type " + identifier.type + " not supported");
             }
         },
 
         buildQueryString : function(identifier) {
             var version = identifier.type === "dataset" ? [ "version", identifier.version].join('=') : '';
+            var agencyId = identifier.agency ? ['agencyId', identifier.agency].join('=') : "";
             return [
-                ['agencyId', identifier.agency].join('='),
+                agencyId,
                 ['resourceId', identifier.identifier].join('='),
                 version,
                 ['resourceType', identifier.type].join('=')
-            ].join('&');
+            ]
+                .filter((value) => value)
+                .join('&');
         },
 
         idAttributes : ["type", "agency", "identifier", "version"],
@@ -52,18 +63,32 @@
             return _.pick(this.options, this.idAttributes);
         },
 
-        url : function () {
-            return this.getApiUrl().href + '.json?_type=json&fields=-data';
+        getBaseUrl: function () {
+            switch (this.apiType) {
+                case API_TYPES.INDICATOR:
+                    return App.endpoints["indicators"];
+                default:
+                    return App.endpoints["statistical-resources"];
+            }
         },
 
-        getApiUrl : function () {
-            var apiUrl = App.endpoints["statistical-resources"] + this.urlIdentifierPart();
-            return { href : apiUrl, name : apiUrl };
+        url: function () {
+            switch (this.apiType) {
+                case API_TYPES.INDICATOR:
+                    return this.getApiUrl().href;
+                default:
+                    return this.getApiUrl().href + '.json?_type=json&fields=-data';
+            }
         },
 
-        getApiDocumentationUrl : function() {
-            var apiDocumentationUrl = App.endpoints["statistical-resources"];
-            return { href : apiDocumentationUrl, name : apiDocumentationUrl };
+        getApiUrl: function () {
+            var apiUrl = this.getBaseUrl() + this.urlIdentifierPart();
+            return { href: apiUrl, name: apiUrl };
+        },
+
+        getApiDocumentationUrl: function () {
+            var apiDocumentationUrl = this.getBaseUrl();
+            return { href: apiDocumentationUrl, name: apiDocumentationUrl };
         },
 
         fetch : function () {
@@ -81,8 +106,18 @@
             return result.promise();
         },
 
-        parse : function (response) {
-            _.extend(this.options, response);
+        typedMetadataResponseToMetadataResponse: function (response) {
+            switch (this.apiType) {
+                case API_TYPES.INDICATOR:
+                    return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorMetadataResponseToMetadataResponse(response);
+                default:
+                    return response;
+            }
+        },
+
+        parse: function (response) {
+            var metadataResponse = this.typedMetadataResponseToMetadataResponse(response);
+            _.extend(this.options, metadataResponse);
             this.selectedLanguages = this.options.selectedLanguages.language;
             this.metadata = this.options.metadata;
             this.initializeLocalesIndex();

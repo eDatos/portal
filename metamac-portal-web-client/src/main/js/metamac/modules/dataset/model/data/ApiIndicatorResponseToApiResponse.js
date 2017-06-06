@@ -46,6 +46,106 @@
 
         indicatorResponseToObservations: function (response) {
             return response.data.observations;
+        },
+
+        // ********* Metadata requests ************
+
+        indicatorMetadataRepresentationsToMetadataRepresentations: function (dimension) {
+            var self = this;
+            return _.map(dimension.representation, function (representation) {
+                var parsedRepresentation = representation;
+                parsedRepresentation.id = representation.code;
+                parsedRepresentation.name = {
+                    text: self.indicatorInternationalTextToInternationalText(representation.title)
+                };
+                self.setGranularityType(parsedRepresentation, representation, dimension.code)
+                return parsedRepresentation;
+            });
+        },
+
+        setGranularityType: function (parsedRepresentation, representation, dimensionType) {
+            switch (dimensionType) {
+                case "TIME":
+                    parsedRepresentation.temporalGranularity = representation.granularityCode;
+                    break;
+                case "GEOGRAPHICAL":
+                    parsedRepresentation.geographicGranularity = {
+                        id: representation.granularityCode
+                    };
+                    break;
+                case "MEASURE":
+                    break;
+                default:
+                    throw Error("Unsupported granularity type" + dimensionType)
+            }
+        },
+
+        indicatorInternationalTextToInternationalText: function (text) {
+            return _.map(text, function (value, key) {
+                return {
+                    value: value,
+                    lang: key
+                }
+            });
+        },
+
+        indicatorMetadataDimensionsToMetadataDimensions: function (dimensions) {
+            var self = this;
+            var parsedDimensions = _.map(dimensions, function (dimension, index) {
+                return {
+                    id: index,
+                    name: {
+                        text: [
+                            {
+                                value: I18n.t("indicator.dimension.name." + index),
+                                lang: "es"
+                            }
+                        ]
+                    },
+                    type: self.indicatorDimensionTypeToDimensionType(dimension.code),
+                    dimensionValues: {
+                        value: self.indicatorMetadataRepresentationsToMetadataRepresentations(dimension),
+                        total: dimension.representation.length
+                    }
+                }
+            });
+            return parsedDimensions;
+        },
+
+        indicatorDimensionTypeToDimensionType: function (dimensionType) {
+            switch (dimensionType) {
+                case "GEOGRAPHICAL":
+                    return "GEOGRAPHIC_DIMENSION";
+                case "MEASURE":
+                    return "MEASURE_DIMENSION";
+                case "TIME":
+                    return "TIME_DIMENSION";
+                default:
+                    console.warn("Unsupported type for indicator dimension");
+                    return dimensionType;
+            }
+        },
+
+        indicatorMetadataResponseToMetadataResponse: function (response) {
+            response.selectedLanguages = { // FIXME revisar si esta property es necesaria
+                language: [],
+                total: 0
+            };
+            response.metadata = {
+                relatedDsd: {
+                    heading: {
+                        dimensionId: ["TIME", "MEASURE"]
+                    },
+                    stub: {
+                        dimensionId: ["GEOGRAPHICAL"]
+                    }
+                },
+                dimensions: {
+                    dimension: this.indicatorMetadataDimensionsToMetadataDimensions(response.dimension),
+                    total: 3 // Always 3 for indicators
+                }
+            }
+            return response;
         }
 
     };
