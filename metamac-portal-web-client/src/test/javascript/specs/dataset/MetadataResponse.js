@@ -34,6 +34,7 @@ App.test.response.metadata = {
         "total": 1
     },
     "metadata": {
+        "nextVersion": "NON_SCHEDULED_UPDATE",
         "mantainer": "ISTAC",
         "relatedDsd": {
             "showDecimals": 4,

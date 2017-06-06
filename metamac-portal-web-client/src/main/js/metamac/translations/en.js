@@ -226,9 +226,9 @@ I18n.translations.en = {
     indicator: {
         dimension: {
             name: {
-                TIME: "Período de tiempo",
-                MEASURE: "Unidad de medida",
-                GEOGRAPHICAL: "Localización geográfica"
+                TIME: "Time",
+                MEASURE: "Measure",
+                GEOGRAPHICAL: "Geographical location"
             }
         }
     }

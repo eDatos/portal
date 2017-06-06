@@ -3,10 +3,16 @@ describe("Dataset Metadata", function () {
     var metadata;
     var MEASURE_DIMENSION;
     var MEASURE_DIMENSION_REPRESENTATIONS;
+    var METADATA_OPTIONS = {
+        "type": "dataset",
+        "agency": "ISTAC",
+        "identifier": "C00025A_000001",
+        "version": "001.000"
+    };
 
 
     beforeEach(function () {
-        metadata = new App.dataset.Metadata();
+        metadata = new App.dataset.Metadata(METADATA_OPTIONS);
         metadata.parse(App.test.response.metadata);
 
 
@@ -130,9 +136,9 @@ describe("Dataset Metadata", function () {
             expect(metadata.decimalsForSelection(selection)).to.equal(6);
         });
 
-        it('should return default number of decimals if not measure dimension value defined', function () {
+        it('should use relatedDsd decimal value if not measure dimension value defined', function () {
             var selection = {};
-            expect(metadata.decimalsForSelection(selection)).to.equal(2);
+            expect(metadata.decimalsForSelection(selection)).to.equal(4);
         });
 
     });
@@ -164,9 +170,9 @@ describe("Dataset Metadata", function () {
     });
 
     describe('toJSON', function () {
-        
-        it("shouldn't break if some metadata is empty", function() {
-            metadata = new App.dataset.Metadata();
+
+        it("shouldn't break if some metadata is empty", function () {
+            metadata = new App.dataset.Metadata(METADATA_OPTIONS);
             metadata.parse({
                 selectedLanguages: App.test.response.metadata.selectedLanguages,
                 metadata: {
@@ -194,7 +200,7 @@ describe("Dataset Metadata", function () {
                 "publishers": [
                     "Instituto Canario de Estadística"
                 ],
-                "nextVersion": "",
+                "nextVersion": "Non scheduled update",
                 "lastUpdate": "2013-07-26T10:48:29.072+01:00",
                 "dateNextUpdate": "2013-07-30T12:00:00+01:00",
                 "updateFrequency": {
@@ -259,8 +265,8 @@ describe("Dataset Metadata", function () {
                     }
                 ],
                 "apiUrl": {
-                    "href": "undefined",
-                    "name": "undefined"
+                    "href": "/datasets/ISTAC/C00025A_000001/001.000",
+                    "name": "/datasets/ISTAC/C00025A_000001/001.000"
                 },
                 "apiDocumentationUrl": {
                     "href": "",
