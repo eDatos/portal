@@ -9,7 +9,7 @@
 
     App.widget.FilterOptionsTable.prototype = {
 
-        _initializeTableInfo : function () {
+        _initializeTableInfo: function () {
             var self = this;
             var fixedPermutations = {};
             var fixedDimensions = this.getFixedDimensions();
@@ -20,20 +20,20 @@
             });
 
             this.tableInfo = {
-                top : this._initializeTableInfoForDimensions(this.getTopDimensions()),
-                left : this._initializeTableInfoForDimensions(this.getLeftDimensions()),
-                fixed : fixedPermutations
+                top: this._initializeTableInfoForDimensions(this.getTopDimensions()),
+                left: this._initializeTableInfoForDimensions(this.getLeftDimensions()),
+                fixed: fixedPermutations
             };
         },
 
-        _initializeTableInfoForDimensions : function (dimensions) {
+        _initializeTableInfoForDimensions: function (dimensions) {
             var self = this;
             if (dimensions.length > 0) {
                 var result = {
-                    ids : [],
-                    representationsValues : [],
-                    representationsIds : [],
-                    representationsLengths : []
+                    ids: [],
+                    representationsValues: [],
+                    representationsIds: [],
+                    representationsLengths: []
                 };
 
                 _.each(dimensions, function (dimension) {
@@ -56,15 +56,15 @@
             } else {
                 // Empty header should have at least an empty element
                 return {
-                    ids : [undefined],
-                    representationsValues : [
+                    ids: [undefined],
+                    representationsValues: [
                         [""]
                     ],
-                    representationsIds : [
+                    representationsIds: [
                         [undefined]
                     ],
-                    representationsLengths : [1],
-                    representationsMult : [1]
+                    representationsLengths: [1],
+                    representationsMult: [1]
                 };
             }
         },
@@ -76,7 +76,7 @@
          *
          *  @return { dim1 : ['cat1', 'cat2'], dim2 : ['cat1'] }
          */
-        getCategoryIdsForCell : function (cell) {
+        getCategoryIdsForCell: function (cell) {
             var permutation = {},
                 i, index, representation, dimensionId;
 
@@ -103,9 +103,9 @@
             return permutation;
         },
 
-        getCellForCategoryIds : function (ids) {
+        getCellForCategoryIds: function (ids) {
             var self = this;
-            var result = {x : 0, y : 0};
+            var result = { x: 0, y: 0 };
             _.each(ids, function (category, dimensionId) {
 
 
@@ -137,11 +137,11 @@
          *
          *  @return { dim1 : ['cat1', 'cat2'], dim2 : ['cat1'] }
          */
-        getCategoryIdsForRegion : function (region) {
+        getCategoryIdsForRegion: function (region) {
             var permutations = [];
             for (var x = region.left.begin; x < region.left.end; x++) {
                 for (var y = region.top.begin; y < region.top.end; y++) {
-                    permutations.push(this.getCategoryIdsForCell({x : x, y : y}));
+                    permutations.push(this.getCategoryIdsForCell({ x: x, y: y }));
                 }
             }
 
@@ -156,13 +156,13 @@
             });
 
             result = _.map(result, function (representation, dimension) {
-                return {id : dimension, representations : _.unique(representation)};
+                return { id: dimension, representations: _.unique(representation) };
             });
 
             return result;
         },
 
-        _dimensionsTotalSize : function (representationsLength) {
+        _dimensionsTotalSize: function (representationsLength) {
             var size = _.reduce(representationsLength, function (mem, value) {
                 return mem * value;
             }, 1);
@@ -173,10 +173,10 @@
          *
          * @return {Object}
          */
-        getTableSize : function () {
+        getTableSize: function () {
             return {
-                columns : this._dimensionsTotalSize(this.tableInfo.top.representationsLengths),
-                rows : this._dimensionsTotalSize(this.tableInfo.left.representationsLengths)
+                columns: this._dimensionsTotalSize(this.tableInfo.top.representationsLengths),
+                rows: this._dimensionsTotalSize(this.tableInfo.left.representationsLengths)
             };
         }
 

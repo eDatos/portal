@@ -5,13 +5,13 @@
 
     App.VisualElement.line.DetailZoomModel = Backbone.Model.extend({
 
-        defaults : {
-            start : 0,
-            step : 0.1
+        defaults: {
+            start: 0,
             stop: 0.48, // Fix detail window when there is only one data point
+            step: 0.1
         },
 
-        validate : function (attrs) {
+        validate: function (attrs) {
             if (attrs.start < 0 || attrs.start > 1) {
                 return "invalid start";
             }
@@ -25,20 +25,20 @@
             }
         },
 
-        moveStepRight : function () {
+        moveStepRight: function () {
             this.moveDistance(this.get('step'));
         },
 
-        moveStepLeft : function () {
+        moveStepLeft: function () {
             this.moveDistance(-this.get('step'));
         },
 
-        moveDistance : function (distance) {
+        moveDistance: function (distance) {
             var start = this.get('start') + distance;
             var stop = this.get('stop') + distance;
             start = start < 0 ? 0 : start;
             stop = stop > 1 ? 1 : stop;
-            this.set({start : start, stop : stop}, {validate : true});
+            this.set({ start: start, stop: stop }, { validate: true });
         }
 
     });

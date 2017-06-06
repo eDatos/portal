@@ -7,101 +7,101 @@ App.namespace("App.VisualElement.LineChart");
 
     App.namespace("App.VisualElement.LineChart");
 
-    App.VisualElement.LineChart = function (options) {        
+    App.VisualElement.LineChart = function (options) {
         this.initialize(options);
         this._type = 'line';
 
         this._masterOptions = {
-            chart : {
-                animation : false,
-                renderTo : '',
-                type : 'line',
-                borderWidth : 0,
-                backgroundColor : null,
-                marginLeft : 5,
-                marginRight : 5
+            chart: {
+                animation: false,
+                renderTo: '',
+                type: 'line',
+                borderWidth: 0,
+                backgroundColor: null,
+                marginLeft: 5,
+                marginRight: 5
             },
-            credits : {
-                enabled : false
+            credits: {
+                enabled: false
             },
-            tooltip : {
-                formatter : function () {
+            tooltip: {
+                formatter: function () {
                     return false;
                 }
             },
-            xAxis : {
-                labels : {
-                    formatter : function () {
+            xAxis: {
+                labels: {
+                    formatter: function () {
                         return this.value.substring(0, 8);
                     }
                 },
-                tickInterval : 1
+                tickInterval: 1
             },
-            yAxis : {
-                gridLineWidth : 0,
-                labels : {
-                    enabled : false
+            yAxis: {
+                gridLineWidth: 0,
+                labels: {
+                    enabled: false
                 },
-                title : {
-                    text : null
+                title: {
+                    text: null
                 },
-                min : 0.6,
-                showFirstLabel : false
+                min: 0.6,
+                showFirstLabel: false
             },
-            title : {
-                text : null
+            title: {
+                text: null
             },
-            legend : {
-                enabled : false
+            legend: {
+                enabled: false
             },
-            plotOptions : {
-                series : {
-                    animation : false
+            plotOptions: {
+                series: {
+                    animation: false
                 },
-                line : {
-                    lineWidth : 1,
-                    marker : {
-                        enabled : false
+                line: {
+                    lineWidth: 1,
+                    marker: {
+                        enabled: false
                     }
                 }
             },
-            exporting : {
-                enabled : false
+            exporting: {
+                enabled: false
             }
         };
         _.extend(this._chartOptions, {
-            chart : {
-                animation : false,
-                renderTo : '',
-                type : 'line',
-                borderWidth : 0,
-                backgroundColor : Constants.colors.istacWhite,
-                marginRight : 0
+            chart: {
+                animation: false,
+                renderTo: '',
+                type: 'line',
+                borderWidth: 0,
+                backgroundColor: Constants.colors.istacWhite,
+                marginRight: 0
             },
-            tooltip : {
-                formatter : this.tooltipFormatter
+            tooltip: {
+                formatter: this.tooltipFormatter
             },
-            xAxis : {
-                labels : {}
+            xAxis: {
+                labels: {}
             },
-            yAxis : {
-                title : {
-                    text : ""
+            yAxis: {
+                title: {
+                    text: ""
                 },
-                plotLines : [
+                plotLines: [
                     {
-                        value : 0,
-                        width : 1,
-                        color : Constants.colors.istacGreyDark
+                        value: 0,
+                        width: 1,
+                        color: Constants.colors.istacGreyDark
                     }
                 ]
             },
-            plotOptions : {
-                line : {
-                    lineWidth : 2
+            plotOptions: {
+                line: {
+                    lineWidth: 2
                 },
-                series : {
-                    animation : false
+                series: {
+                    animation: false
                 }
             }
         });
@@ -109,26 +109,26 @@ App.namespace("App.VisualElement.LineChart");
         this._element = null;
 
         this.config = {
-            masterHeight : 80,
-            xAxisTicks : 6
+            masterHeight: 80,
+            xAxisTicks: 6
         };
 
         var hasTimeDimensions = this.dataset.metadata.getTimeDimensions().length > 0;
         var detailZoomModelStart = hasTimeDimensions ? 0.48 : 0;
         var detailZoomModelStop = hasTimeDimensions ? 1 : 0.48;
 
-        this.detailZoomModel = new App.VisualElement.line.DetailZoomModel({start : detailZoomModelStart, stop : detailZoomModelStop});
+        this.detailZoomModel = new App.VisualElement.line.DetailZoomModel({ start: detailZoomModelStart, stop: detailZoomModelStop });
         this.detailZoomModel.on("change", _.debounce(this._updateDetail, 300), this);
     };
 
     App.VisualElement.LineChart.prototype = {
 
-        load : function () {
+        load: function () {
             this._bindEvents();
             this.render();
         },
 
-        destroy : function () {
+        destroy: function () {
             this._unbindEvents();
 
             if (this.chart) {
@@ -136,7 +136,7 @@ App.namespace("App.VisualElement.LineChart");
             }
         },
 
-        _bindEvents : function () {
+        _bindEvents: function () {
             this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", _.debounce(this.update, 20));
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
@@ -146,40 +146,40 @@ App.namespace("App.VisualElement.LineChart");
             });
         },
 
-        _unbindEvents : function () {
+        _unbindEvents: function () {
             this.stopListening();
             this.$el.off("resize");
         },
 
-        updatingDimensionPositions : function () {
+        updatingDimensionPositions: function () {
             this._applyVisualizationRestrictions();
             this.resetDimensionsLimits();
 
             this.filterDimensions.zones.get('top').set('maxSize', 1); // lines      
             this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
-            this.filterDimensions.zones.get('axisy').set('maxSize', 1);                      
+            this.filterDimensions.zones.get('axisy').set('maxSize', 1);
         },
 
-        _applyVisualizationRestrictions : function() {
+        _applyVisualizationRestrictions: function () {
             this._moveAllDimensionsToZone('top');
 
             this._forceMeasureDimensionInZone('axisy');
             this._forceTimeDimensionInZone('left');
             this._forceGeographicDimensionInZone('fixed');
 
-            this._applyVisualizationPreselections();            
-        }, 
+            this._applyVisualizationPreselections();
+        },
 
-        _applyVisualizationPreselections : function() {
+        _applyVisualizationPreselections: function () {
             this._preselectBiggestHierarchyGeographicValue();
             this._preselectMostPopulatedTemporalGranularityRepresentations();
         },
 
-        tooltipFormatter : function () {
+        tooltipFormatter: function () {
             return '<strong>' + this.series.name + ', ' + this.x + '</strong>:<br/>' + this.point.name;
         },
 
-        render : function () {
+        render: function () {
             var self = this;
             this.dataset.data.loadAllSelectedData()
                 .then(function () {
@@ -195,18 +195,18 @@ App.namespace("App.VisualElement.LineChart");
                 });
         },
 
-        _renderContainers : function () {            
+        _renderContainers: function () {
             var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height() - this.getRightsHolderHeight();
             this.$detailContainer = $('<div id="detail-container">')
-                .css({height : detailHeight})
+                .css({ height: detailHeight })
                 .appendTo(this.$el);
 
             this.$masterContainer = $('<div id="master-container">')
-                .css({ position : 'absolute', bottom : 0, height : this.config.masterHeight, width : '100%' })
+                .css({ position: 'absolute', bottom: 0, height: this.config.masterHeight, width: '100%' })
                 .appendTo(this.$el);
         },
 
-        _renderMaster : function () {
+        _renderMaster: function () {
             this.getData();
 
             this.detailZoomModel.set('step', 1 / this.data.xAxis.length);
@@ -217,11 +217,11 @@ App.namespace("App.VisualElement.LineChart");
             this._masterOptions.xAxis.tickInterval = Math.ceil(this.data.xAxis.length / this.config.xAxisTicks);
             this.masterChart = new Highcharts.Chart(this._masterOptions);
 
-            this.detailZoomView = new App.VisualElement.line.DetailZoomView({model : this.detailZoomModel, "$targetEl" : this.$masterContainer});
+            this.detailZoomView = new App.VisualElement.line.DetailZoomView({ model: this.detailZoomModel, "$targetEl": this.$masterContainer });
             this.detailZoomView.render();
         },
 
-        _renderDetail : function () {
+        _renderDetail: function () {
             var detailData = this.getDetailData();
 
             this._chartOptions.chart.renderTo = this.$detailContainer[0];
@@ -236,9 +236,9 @@ App.namespace("App.VisualElement.LineChart");
             this.detailChart = new Highcharts.Chart(this._chartOptions);
         },
 
-        _updateSize : function () {
+        _updateSize: function () {
             var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height();
-            this.$detailContainer.css({height : detailHeight});
+            this.$detailContainer.css({ height: detailHeight });
             //this.$masterContainer.css({ top : detailHeight + this.$title.height()});
 
             this.detailChart.setSize(this.$detailContainer.width(), this.$detailContainer.height(), false);
@@ -246,7 +246,7 @@ App.namespace("App.VisualElement.LineChart");
             this.detailZoomView.updateSize();
         },
 
-        update : function () {
+        update: function () {
             var self = this;
 
             self.detailChart.showLoading();
@@ -261,7 +261,7 @@ App.namespace("App.VisualElement.LineChart");
             });
         },
 
-        _updateMaster : function () {
+        _updateMaster: function () {
             var data = this.getData();
             this.replaceSeries(this.masterChart, data.series);
             this.masterChart.xAxis[0].setCategories(data.xAxis, false);
@@ -269,17 +269,17 @@ App.namespace("App.VisualElement.LineChart");
             this.masterChart.redraw();
         },
 
-        _updateDetail : function () {
+        _updateDetail: function () {
             if (this.detailChart) {
                 var detailData = this.getDetailData();
                 this.replaceSeries(this.detailChart, detailData.series);
 
                 this.detailChart.xAxis[0].update(
                     {
-                        categories : detailData.xAxis,
-                        min : detailData.min,
-                        max : detailData.max,
-                        tickInterval : detailData.tickInterval
+                        categories: detailData.xAxis,
+                        min: detailData.min,
+                        max: detailData.max,
+                        tickInterval: detailData.tickInterval
                     },
                     false
                 );
@@ -290,7 +290,7 @@ App.namespace("App.VisualElement.LineChart");
             }
         },
 
-        getData : function () {
+        getData: function () {
             var self = this;
 
             var result = {};
@@ -321,9 +321,9 @@ App.namespace("App.VisualElement.LineChart");
                     currentPermutation[columnsDimension.id] = columnCategory.id;
                     _.extend(currentPermutation, fixedPermutation);
 
-                    var y = self.dataset.data.getNumberData({ids : currentPermutation});
-                    var name = self.dataset.data.getStringData({ids : currentPermutation});
-                    serie.data.push({y : y, name : name});
+                    var y = self.dataset.data.getNumberData({ ids: currentPermutation });
+                    var name = self.dataset.data.getStringData({ ids: currentPermutation });
+                    serie.data.push({ y: y, name: name });
                 });
 
                 serie.name = columnCategory.get('visibleLabel');
@@ -341,7 +341,7 @@ App.namespace("App.VisualElement.LineChart");
             return result;
         },
 
-        getDetailData : function () {
+        getDetailData: function () {
             var total = this.data.xAxis.length;
             var indexStart = Math.round(total * this.detailZoomModel.get('start'));
             var indexStop = Math.round(total * this.detailZoomModel.get('stop'));
@@ -356,11 +356,11 @@ App.namespace("App.VisualElement.LineChart");
             }
 
             var result = {
-                series : this.data.series,
-                xAxis : this.data.xAxis,
-                min : indexStart,
-                max : indexStop - 1,
-                tickInterval : tickInterval
+                series: this.data.series,
+                xAxis: this.data.xAxis,
+                min: indexStart,
+                max: indexStop - 1,
+                tickInterval: tickInterval
             };
             return result;
         }
