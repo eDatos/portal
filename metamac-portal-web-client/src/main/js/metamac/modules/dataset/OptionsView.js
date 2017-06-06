@@ -111,9 +111,14 @@
             return this;
         },
 
-        _isButtonEnabled : function(type) {
-            return !this.optionsModel.get('widget')
-                || type == "info" || type == this.optionsModel.get('widgetInitialType');
+        _isButtonEnabled: function (type) {
+            if (this.filterDimensions.metadata.apiType == App.Constants.api.type.INDICATOR) {
+                if (type == "map" || type == "mapbubble") return false;
+            }
+            if (this.optionsModel.get('widget')) {
+                return type == "info" || type == this.optionsModel.get('widgetInitialType');
+            }
+            return true;
         },
 
         clickFilter : function(e) {

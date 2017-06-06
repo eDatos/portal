@@ -38,14 +38,12 @@
         buildQueryString: function (identifier) {
             var version = identifier.type === "dataset" ? ["version", identifier.version].join('=') : '';
             var agencyId = identifier.agency ? ['agencyId', identifier.agency].join('=') : "";
-            return [
+            return _.compact([
                 agencyId,
                 ['resourceId', identifier.identifier].join('='),
                 version,
                 ['resourceType', identifier.type].join('=')
-            ]
-                .filter((value) => value)
-                .join('&');
+            ]).join('&');
         },
 
         idAttributes: ["type", "agency", "identifier", "version"],
