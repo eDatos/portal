@@ -10,10 +10,10 @@ describe("Dataset Metadata", function () {
         metadata.parse(App.test.response.metadata);
 
 
-        MEASURE_DIMENSION = {"id" : "INDICADORES", "label" : "Indicadores", "type" : "MEASURE_DIMENSION", "hierarchy" : false};
+        MEASURE_DIMENSION = { "id": "INDICADORES", "label": "Indicadores", "type": "MEASURE_DIMENSION", "hierarchy": false };
         MEASURE_DIMENSION_REPRESENTATIONS = [
-            {id : 'INDICE_OCUPACION_HABITACIONES', label : 'Índice de ocupación de habitaciones', decimals : 6, open : true},
-            {id : 'INDICE_OCUPACION_PLAZAS', label : 'Índice de ocupación de plazas', decimals : 4, open : false}
+            { id: 'INDICE_OCUPACION_HABITACIONES', label: 'Índice de ocupación de habitaciones', decimals: 6, open: true },
+            { id: 'INDICE_OCUPACION_PLAZAS', label: 'Índice de ocupación de plazas', decimals: 4, open: false }
         ];
     });
 
@@ -23,10 +23,10 @@ describe("Dataset Metadata", function () {
 
     it('should getLanguages', function () {
         expect(metadata.getLanguages()).to.eql({
-            id : ['es', 'en'],
-            label : {
-                es : 'Español',
-                en : 'Ingles'
+            id: ['es', 'en'],
+            label: {
+                es: 'Español',
+                en: 'Ingles'
             }
         });
     });
@@ -61,10 +61,10 @@ describe("Dataset Metadata", function () {
 
     it('should getDimensions', function () {
         expect(metadata.getDimensions()).to.eql([
-            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : true},
+            { "id": "TIME_PERIOD", "label": "Periodo de tiempo", "type": "TIME_DIMENSION", "hierarchy": true },
             MEASURE_DIMENSION,
-            {"id" : "CATEGORIA_ALOJAMIENTO", "label" : "Categoría del alojamiento", "type" : "DIMENSION", "hierarchy" : false},
-            {"id" : "DESTINO_ALOJAMIENTO", "label" : "Destino del alojamiento", "type" : "GEOGRAPHIC_DIMENSION", "hierarchy" : false}
+            { "id": "CATEGORIA_ALOJAMIENTO", "label": "Categoría del alojamiento", "type": "DIMENSION", "hierarchy": false },
+            { "id": "DESTINO_ALOJAMIENTO", "label": "Destino del alojamiento", "type": "GEOGRAPHIC_DIMENSION", "hierarchy": false }
         ]);
     });
 
@@ -72,12 +72,12 @@ describe("Dataset Metadata", function () {
 
         it('hierarchy dimension', function () {
             expect(metadata.getRepresentations('TIME_PERIOD')).to.eql([
-                {id : 'time_1', label : 'Time 1'},
-                {id : 'time_2', label : 'Time 2'},
-                {id : 'time_2_1', label : 'Time 2 1', parent : 'time_2'},
-                {id : 'time_2_2', label : 'Time 2 2', parent : 'time_2', open : false},
-                {id : 'time_2_2_1', label : 'Time 2 2 1', parent : 'time_2_2'},
-                {id : 'time_3', label : 'Time 3'}
+                { id: 'time_1', label: 'Time 1' },
+                { id: 'time_2', label: 'Time 2' },
+                { id: 'time_2_1', label: 'Time 2 1', parent: 'time_2' },
+                { id: 'time_2_2', label: 'Time 2 2', parent: 'time_2', open: false },
+                { id: 'time_2_2_1', label: 'Time 2 2 1', parent: 'time_2_2' },
+                { id: 'time_3', label: 'Time 3' }
             ]);
         });
 
@@ -85,13 +85,13 @@ describe("Dataset Metadata", function () {
 
             it('should return normcodes', function () {
                 expect(metadata.getRepresentations('DESTINO_ALOJAMIENTO')).to.eql([
-                    {id : 'EL_HIERRO', label : 'El Hierro', normCode : "TERRITORIO.ELHIERRO"},
-                    {id : 'LA_PALMA', label : 'La Palma', normCode : "TERRITORIO.LAPALMA"},
-                    {id : 'LA_GOMERA', label : 'La Gomera', normCode : "TERRITORIO.LAGOMERA"},
-                    {id : 'TENERIFE', label : 'Tenerife', normCode : "TERRITORIO.TENERIFE"},
-                    {id : 'GRAN_CANARIA', label : 'Gran Canaria', normCode : "TERRITORIO.GRANCANARIA"},
-                    {id : 'FUERTEVENTURA', label : 'Fuerteventura', normCode : "TERRITORIO.FUERTEVENTURA"},
-                    {id : 'LANZAROTE', label : 'Lanzarote', normCode : "TERRITORIO.LANZAROTE"}
+                    { id: 'EL_HIERRO', label: 'El Hierro', normCode: "TERRITORIO.ELHIERRO" },
+                    { id: 'LA_PALMA', label: 'La Palma', normCode: "TERRITORIO.LAPALMA" },
+                    { id: 'LA_GOMERA', label: 'La Gomera', normCode: "TERRITORIO.LAGOMERA" },
+                    { id: 'TENERIFE', label: 'Tenerife', normCode: "TERRITORIO.TENERIFE" },
+                    { id: 'GRAN_CANARIA', label: 'Gran Canaria', normCode: "TERRITORIO.GRANCANARIA" },
+                    { id: 'FUERTEVENTURA', label: 'Fuerteventura', normCode: "TERRITORIO.FUERTEVENTURA" },
+                    { id: 'LANZAROTE', label: 'Lanzarote', normCode: "TERRITORIO.LANZAROTE" }
                 ]);
             });
 
@@ -109,9 +109,9 @@ describe("Dataset Metadata", function () {
         expect(dimensionsAndRepresentations[1].representations).to.eql(MEASURE_DIMENSION_REPRESENTATIONS);
     });
 
-    it.skip('should getCategories', function () {});
+    it.skip('should getCategories', function () { });
 
-    it.skip('should getDates', function () {});
+    it.skip('should getDates', function () { });
 
     it('should getMeasureDimension', function () {
         MEASURE_DIMENSION.representations = MEASURE_DIMENSION_REPRESENTATIONS;
@@ -121,12 +121,12 @@ describe("Dataset Metadata", function () {
     describe('decimalsForSelection', function () {
 
         it('should use dimensionValue decimal if defined', function () {
-            var selection = {INDICADORES : 'INDICE_OCUPACION_PLAZAS'};
+            var selection = { INDICADORES: 'INDICE_OCUPACION_PLAZAS' };
             expect(metadata.decimalsForSelection(selection)).to.equal(4);
         });
 
         it('should use relatedDsd decimal value if dimensionValue is not defined', function () {
-            var selection = {INDICADORES : 'INDICE_OCUPACION_HABITACIONES'};
+            var selection = { INDICADORES: 'INDICE_OCUPACION_HABITACIONES' };
             expect(metadata.decimalsForSelection(selection)).to.equal(6);
         });
 
@@ -147,15 +147,15 @@ describe("Dataset Metadata", function () {
 
     it('should getTimeDimensions', function () {
         expect(metadata.getTimeDimensions()).to.eql([
-            {"id" : "TIME_PERIOD", "label" : "Periodo de tiempo", "type" : "TIME_DIMENSION", "hierarchy" : true}
+            { "id": "TIME_PERIOD", "label": "Periodo de tiempo", "type": "TIME_DIMENSION", "hierarchy": true }
         ]);
     });
 
     it('should getPositions', function () {
         var positions = metadata.getDimensionsPosition();
         expect(positions).to.eql({
-            top : ["INDICADORES", "TIME_PERIOD"],
-            left : ["CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO"]
+            top: ["INDICADORES", "TIME_PERIOD"],
+            left: ["CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO"]
         });
     });
 
@@ -168,16 +168,16 @@ describe("Dataset Metadata", function () {
         it("shouldn't break if some metadata is empty", function() {
             metadata = new App.dataset.Metadata();
             metadata.parse({
-                selectedLanguages : App.test.response.metadata.selectedLanguages,
-                metadata : {
-                    dimensions : App.test.response.metadata.metadata.dimensions,
-                    relatedDsd : App.test.response.metadata.metadata.relatedDsd
+                selectedLanguages: App.test.response.metadata.selectedLanguages,
+                metadata: {
+                    dimensions: App.test.response.metadata.metadata.dimensions,
+                    relatedDsd: App.test.response.metadata.metadata.relatedDsd
                 }
             });
             var json = metadata.toJSON();
         });
 
-        it('should work', function() {
+        it('should work', function () {
             var json = metadata.toJSON();
             var expectedJSON = {
                 "statisticalOperation": {
@@ -187,7 +187,7 @@ describe("Dataset Metadata", function () {
                 "title": "Título en español",
                 "description": "Descripción en español",
                 "dates": {
-                    
+
                 },
                 "version": "001.000",
                 "versionRationale": "Major: New resource",
@@ -204,12 +204,12 @@ describe("Dataset Metadata", function () {
                 "statisticOfficiality": "Oficialidad",
                 "languages": {
                     "id": [
-                    "es",
-                    "en"
+                        "es",
+                        "en"
                     ],
                     "label": {
-                    "es": "Español",
-                    "en": "Ingles"
+                        "es": "Español",
+                        "en": "Ingles"
                     }
                 },
                 "measureDimension": {
@@ -218,44 +218,44 @@ describe("Dataset Metadata", function () {
                     "type": "MEASURE_DIMENSION",
                     "hierarchy": false,
                     "representations": [
-                    {
-                        "id": "INDICE_OCUPACION_HABITACIONES",
-                        "open": true,
-                        "label": "Índice de ocupación de habitaciones",
-                        "decimals": 6
-                    },
-                    {
-                        "id": "INDICE_OCUPACION_PLAZAS",
-                        "open": false,
-                        "label": "Índice de ocupación de plazas",
-                        "decimals": 4
-                    }
+                        {
+                            "id": "INDICE_OCUPACION_HABITACIONES",
+                            "open": true,
+                            "label": "Índice de ocupación de habitaciones",
+                            "decimals": 6
+                        },
+                        {
+                            "id": "INDICE_OCUPACION_PLAZAS",
+                            "open": false,
+                            "label": "Índice de ocupación de plazas",
+                            "decimals": 4
+                        }
                     ]
                 },
                 "dimensions": [
                     {
-                    "id": "TIME_PERIOD",
-                    "label": "Periodo de tiempo",
-                    "type": "TIME_DIMENSION",
-                    "hierarchy": true
+                        "id": "TIME_PERIOD",
+                        "label": "Periodo de tiempo",
+                        "type": "TIME_DIMENSION",
+                        "hierarchy": true
                     },
                     {
-                    "id": "INDICADORES",
-                    "label": "Indicadores",
-                    "type": "MEASURE_DIMENSION",
-                    "hierarchy": false
+                        "id": "INDICADORES",
+                        "label": "Indicadores",
+                        "type": "MEASURE_DIMENSION",
+                        "hierarchy": false
                     },
                     {
-                    "id": "CATEGORIA_ALOJAMIENTO",
-                    "label": "Categoría del alojamiento",
-                    "type": "DIMENSION",
-                    "hierarchy": false
+                        "id": "CATEGORIA_ALOJAMIENTO",
+                        "label": "Categoría del alojamiento",
+                        "type": "DIMENSION",
+                        "hierarchy": false
                     },
                     {
-                    "id": "DESTINO_ALOJAMIENTO",
-                    "label": "Destino del alojamiento",
-                    "type": "GEOGRAPHIC_DIMENSION",
-                    "hierarchy": false
+                        "id": "DESTINO_ALOJAMIENTO",
+                        "label": "Destino del alojamiento",
+                        "type": "GEOGRAPHIC_DIMENSION",
+                        "hierarchy": false
                     }
                 ],
                 "apiUrl": {

@@ -134,10 +134,10 @@
             response.metadata = {
                 relatedDsd: {
                     heading: {
-                        dimensionId: ["TIME", "MEASURE"]
+                        dimensionId: ["TIME", "MEASURE"] // ALways this ones
                     },
                     stub: {
-                        dimensionId: ["GEOGRAPHICAL"]
+                        dimensionId: ["GEOGRAPHICAL"] // ALways this ones
                     }
                 },
                 dimensions: {
