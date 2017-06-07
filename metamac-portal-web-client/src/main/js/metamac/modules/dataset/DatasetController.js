@@ -57,13 +57,13 @@
                 });
         },
 
-        changeDatasetVisualization : function (options) {
+        changeDatasetVisualization: function (options) {
             var link = this._linkToDatasetVisualization(options);
-            this.router.navigate(link, {replace : true});
+            this.router.navigate(link, { replace: true });
             this.visualizationView.showChart(options);
         },
 
-        _linkToDatasetVisualization : function (options) {
+        _linkToDatasetVisualization: function (options) {
             var routeName = "visualization";
             if (options.visualizationType) {
                 routeName = routeName + "Type";

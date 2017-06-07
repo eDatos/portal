@@ -34,11 +34,11 @@
             this.checkQueryParamsValidity();
         },
 
-        home : function () {
+        home: function () {
             this.datasetController.showDataset(App.queryParams);
-        },        
+        },
 
-        selection : function() {            
+        selection: function () {
             this.datasetController.showDatasetSelection(App.queryParams);
         },
 
@@ -48,7 +48,7 @@
             this.datasetController.showDatasetSelection(args);
         },
 
-        visualization : function() {
+        visualization: function () {
             this.datasetController.showDatasetVisualization(App.queryParams);
         },
 
@@ -68,7 +68,7 @@
             console.error("error");
         },
 
-        linkTo : function (routeName, params) {
+        linkTo: function (routeName, params) {
             var route = this.routesByName[routeName];
 
             if (_.isUndefined(route)) {
@@ -84,7 +84,7 @@
             return link;
         },
 
-        _nameArguments : function (names, args) {
+        _nameArguments: function (names, args) {
             var results = {};
             _.each(names, function (name, i) {
                 results[name] = args[i];
