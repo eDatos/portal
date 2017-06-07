@@ -104,7 +104,8 @@
                     },
                     visualize: this.optionsModel.get('visualize'),
                     widget: this.optionsModel.get('widget'),
-                    widgetButton: this.optionsModel.get('widgetButton')
+                    widgetButton: this.optionsModel.get('widgetButton'),
+                    downloadButton: this.optionsModel.get('downloadButton')
                 };
                 this.$el.html(this.template(context));
             }

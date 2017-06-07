@@ -20,7 +20,11 @@
             this.filterDimensions = this.controller.filterDimensions;
 
             this.dataset = new App.dataset.Dataset({ metadata: this.metadata, filterDimensions: this.filterDimensions });
-            this.optionsModel = new App.modules.dataset.OptionsModel({ widget: App.config.widget, visualize: true });
+            this.optionsModel = new App.modules.dataset.OptionsModel({
+                widget: App.config.widget,
+                visualize: true,
+                downloadButton: this.metadata.apiType !== App.Constants.api.type.INDICATOR
+            });
 
             this._initializeSidebarView();
             this._initializeOptionsView();

@@ -11,7 +11,8 @@
             widget : false,
             widgetButton : true,
             widgetInitialType : '',
-            menu: true
+            menu: true,
+            downloadButton: true
         }
     });
     
