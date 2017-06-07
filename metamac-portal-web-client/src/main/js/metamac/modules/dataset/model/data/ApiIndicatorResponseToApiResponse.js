@@ -138,7 +138,8 @@
                     },
                     stub: {
                         dimensionId: ["GEOGRAPHICAL"] // ALways this ones
-                    }
+                    },
+                    selfLink: {}
                 },
                 dimensions: {
                     dimension: this.indicatorMetadataDimensionsToMetadataDimensions(response.dimension),

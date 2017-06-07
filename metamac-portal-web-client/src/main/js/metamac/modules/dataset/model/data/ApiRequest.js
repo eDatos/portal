@@ -27,8 +27,8 @@
         },
 
         isFetching: function () {
-            if (this.xhrId) {
-                return this.ajaxManager.isFetching(this.xhrId);
+            if (this.request.xhrId) {
+                return this.request.ajaxManager.isFetching(this.request.xhrId);
             }
             return true;
         },
