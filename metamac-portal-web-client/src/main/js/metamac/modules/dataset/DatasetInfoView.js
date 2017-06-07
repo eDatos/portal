@@ -16,7 +16,6 @@
             this.optionsModel = options.optionsModel;
 
             this.title = I18n.t("filter.sidebar.info.title");
-            this.datasetAttributes = this.dataset.data.getDatasetAttributes();
             this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes ); 
         },
         
@@ -28,6 +27,9 @@
         },
 
         render : function () {
+            if (!this.datasetAttributes) {
+                this.updateDatasetAttributes();
+            }
             var context = {
                 metadata : this.dataset.metadata.toJSON(),
                 datasetAttributes : this.datasetAttributes

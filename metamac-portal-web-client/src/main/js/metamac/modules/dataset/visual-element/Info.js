@@ -8,12 +8,9 @@
         this.initialize(options);
         this._type = 'info';        
         this.dataset = options.dataset; 
-        this.datasetAttributes = this.dataset.data.getDatasetAttributes();
         this.optionsModel = options.optionsModel;
 
         this.api = new App.dataset.StructuralResourcesApi({metadata : this.dataset.metadata});
-        
-        this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes ); 
     };
 
     App.VisualElement.Info.prototype = new App.VisualElement.Base();
@@ -26,6 +23,8 @@
             if (this.optionsModel.get('type') == this._type) {
                 this.getDimensions();        
                 this.getMeasureConcepts();
+                this.getDatasetAttributes();
+                // this.dimensionAttributes = this.dataset.data.getDimensionsAttributes();
                 this._bindEvents();
                 this.render();
             }            
@@ -44,11 +43,15 @@
 
         updateDatasetAttributes : function() {
             this.datasetAttributes = this.dataset.data.getDatasetAttributes();
-            this.dimensionAttributes = this.dataset.data.getDimensionsAttributes();
-            this.load();
+            this.render();
         },
 
-        getDimensions : function() {
+        getDatasetAttributes: function () {
+            this.datasetAttributes = this.dataset.data.getDatasetAttributes();
+            // Instead of a callback we use hasNewData
+        },
+
+        getDimensions: function () {
             var self = this;
             this.api.getDimensions(function(error, dimensions) {                
                 self.updateDimensions(dimensions);
