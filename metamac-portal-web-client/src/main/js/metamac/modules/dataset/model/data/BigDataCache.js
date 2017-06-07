@@ -74,7 +74,6 @@
                 this.cacheBlockSize.rows = this.rows;
                 this.cacheBlockSize.columns = this.columns;
             }
-            console.warn("cacheblocksize", this.cacheBlockSize);
         },
 
         _cacheIndexForCell: function (cell) {

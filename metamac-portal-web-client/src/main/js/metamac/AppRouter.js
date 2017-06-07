@@ -97,6 +97,7 @@
                 case 'dataset':
                 case 'query':
                 case 'indicator':
+                case 'indicatorInstance':
                     break;
                 default:
                     return this.error();
@@ -110,7 +111,11 @@
                 return this.error();
             }
 
-            if (App.queryParams.type !== 'indicator' && _.isUndefined(App.queryParams.agency)) {
+            if (_.isUndefined(App.queryParams.agency) && !(App.queryParams.type === 'indicator' || App.queryParams.type === 'indicatorInstance')) {
+                return this.error();
+            }
+
+            if (App.queryParams.type === 'indicatorInstance' && _.isUndefined(App.queryParams.indicatorSystem)) {
                 return this.error();
             }
 

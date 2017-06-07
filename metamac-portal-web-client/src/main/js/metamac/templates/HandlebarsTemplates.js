@@ -978,224 +978,264 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 function program1(depth0,data) {
   
+  var buffer = "", stack1, options;
+  buffer += "\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.descriptors", options) : helperMissing.call(depth0, "message", "entity.dataset.section.descriptors", options)))
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            <ul>\r\n                <li>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.subtitle", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subtitle), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.subtitle", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subtitle), "text", options)))
+    + "</li>\r\n                <li>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.abstract", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1['abstract']), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.abstract", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1['abstract']), "text", options)))
+    + "</li>\r\n                <li>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.statisticalOperation", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticalOperation)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.statisticalOperation", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticalOperation)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options)))
+    + "</li>\r\n                <li>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.subjectAreas", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subjectAreas), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.subjectAreas", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subjectAreas), "text", options)))
+    + "</li>\r\n                <li>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.formatExtentObservations", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.formatExtentObservations), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.formatExtentObservations", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.formatExtentObservations), "text", options)))
+    + "</li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    ";
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
   var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  buffer += "\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.datasetAttributes", options) : helperMissing.call(depth0, "message", "entity.dataset.section.datasetAttributes", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
-  options = {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data};
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            ";
+  options = {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data};
   stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.datasetAttributes, options) : helperMissing.call(depth0, "ulList", depth0.datasetAttributes, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n    </div>\r\n</div>\r\n";
+  buffer += "\r\n        </div>\r\n    </div>\r\n    ";
   return buffer;
   }
-function program2(depth0,data) {
-  
-  var buffer = "", stack1, options;
-  buffer += "\r\n            ";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.value, "resource", false, options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.value, "resource", false, options)))
-    + "\r\n        ";
-  return buffer;
-  }
-
 function program4(depth0,data) {
   
-  var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"field\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  var buffer = "", stack1, options;
+  buffer += " ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureDimension", options) : helperMissing.call(depth0, "message", "entity.dataset.measureDimension", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
-  options = {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data};
-  stack2 = ((stack1 = helpers.join || depth0.join),stack1 ? stack1.call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), options) : helperMissing.call(depth0, "join", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), options));
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n    </div>\r\n</div>\r\n";
-  return buffer;
-  }
-function program5(depth0,data) {
-  
-  var buffer = "", stack1;
-  buffer += "\r\n        ";
-  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\r\n        ";
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.value, "resource", false, options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.value, "resource", false, options)))
+    + " ";
   return buffer;
   }
 
-function program7(depth0,data) {
+function program6(depth0,data) {
   
-  var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  var buffer = "", stack1, options;
+  buffer += "\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureConcepts.title", options) : helperMissing.call(depth0, "message", "entity.dataset.measureConcepts.title", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
-  options = {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data};
-  stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.measureConcepts, options) : helperMissing.call(depth0, "ulList", depth0.measureConcepts, options));
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n    </div>\r\n</div>\r\n";
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.periods", options) : helperMissing.call(depth0, "message", "entity.dataset.section.periods", options)))
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            <ul>\r\n                <li>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.dateStart", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateStart), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.dateStart", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateStart), "date", options)))
+    + "</li>\r\n                <li>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.dateEnd", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateEnd), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.dateEnd", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateEnd), "date", options)))
+    + "</li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    ";
   return buffer;
   }
+
 function program8(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\r\n            <div class=\"field\" >\r\n                ";
+  buffer += "\r\n    <div class=\"field\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.description, "text", false, true, "", options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.description, "text", false, true, "", options)))
-    + "\r\n                ";
-  stack2 = helpers.each.call(depth0, depth0.annotations, {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureDimension", options) : helperMissing.call(depth0, "message", "entity.dataset.measureDimension", options)))
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            ";
+  options = {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data};
+  stack2 = ((stack1 = helpers.join || depth0.join),stack1 ? stack1.call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), options) : helperMissing.call(depth0, "join", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "                        \r\n            </div>\r\n        ";
+  buffer += "\r\n        </div>\r\n    </div>\r\n    ";
   return buffer;
   }
 function program9(depth0,data) {
   
-  var buffer = "", stack1, options;
-  buffer += "\r\n                        <span class=\"metadata-value\">";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.resourceOutput || depth0.resourceOutput),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "resourceOutput", depth0, options)))
-    + "</span>\r\n                ";
+  var buffer = "", stack1;
+  buffer += " ";
+  if (stack1 = helpers.label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + " ";
   return buffer;
   }
 
 function program11(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  buffer += "\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.dimensions", options) : helperMissing.call(depth0, "message", "entity.dataset.section.dimensions", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        ";
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.measureConcepts.title", options) : helperMissing.call(depth0, "message", "entity.dataset.measureConcepts.title", options)))
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            ";
   options = {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data};
-  stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.nonMeasureDimensions, options) : helperMissing.call(depth0, "ulList", depth0.nonMeasureDimensions, options));
+  stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.measureConcepts, options) : helperMissing.call(depth0, "ulList", depth0.measureConcepts, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n    </div>\r\n</div>\r\n";
+  buffer += "\r\n        </div>\r\n    </div>\r\n    ";
   return buffer;
   }
 function program12(depth0,data) {
   
-  var buffer = "", stack1, options;
-  buffer += "\r\n            ";
+  var buffer = "", stack1, stack2, options;
+  buffer += "\r\n            <div class=\"field\">\r\n                ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.conceptName, depth0.conceptDescription, "text", false, true, options) : helperMissing.call(depth0, "fieldOutput", depth0.conceptName, depth0.conceptDescription, "text", false, true, options)))
-    + "\r\n        ";
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.description, "text", false, true, "", options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.description, "text", false, true, "", options)))
+    + " ";
+  stack2 = helpers.each.call(depth0, depth0.annotations, {hash:{},inverse:self.noop,fn:self.program(13, program13, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n            </div>\r\n            ";
+  return buffer;
+  }
+function program13(depth0,data) {
+  
+  var buffer = "", stack1, options;
+  buffer += "\r\n                <span class=\"metadata-value\">";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.resourceOutput || depth0.resourceOutput),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "resourceOutput", depth0, options)))
+    + "</span> ";
   return buffer;
   }
 
-  buffer += "<div class=\"metadata-group\">\r\n\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n            <div>";
+function program15(depth0,data) {
+  
+  var buffer = "", stack1, stack2, options;
+  buffer += "\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.descriptors", options) : helperMissing.call(depth0, "message", "entity.dataset.section.descriptors", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        <ul>\r\n            <li>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.subtitle", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subtitle), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.subtitle", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subtitle), "text", options)))
-    + "</li>\r\n            <li>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.abstract", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1['abstract']), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.abstract", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1['abstract']), "text", options)))
-    + "</li>\r\n            <li>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.statisticalOperation", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticalOperation)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.statisticalOperation", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticalOperation)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options)))
-    + "</li>\r\n            <li>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.subjectAreas", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subjectAreas), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.subjectAreas", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.subjectAreas), "text", options)))
-    + "</li>\r\n            <li>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.formatExtentObservations", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.formatExtentObservations), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.formatExtentObservations", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.formatExtentObservations), "text", options)))
-    + "</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.datasetAttributes, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.dimensions", options) : helperMissing.call(depth0, "message", "entity.dataset.section.dimensions", options)))
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            ";
+  options = {hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data};
+  stack2 = ((stack1 = helpers.ulList || depth0.ulList),stack1 ? stack1.call(depth0, depth0.nonMeasureDimensions, options) : helperMissing.call(depth0, "ulList", depth0.nonMeasureDimensions, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  buffer += "\r\n        </div>\r\n    </div>\r\n    ";
+  return buffer;
+  }
+function program16(depth0,data) {
+  
+  var buffer = "", stack1, options;
+  buffer += " ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.periods", options) : helperMissing.call(depth0, "message", "entity.dataset.section.periods", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        <ul>  \r\n            <li>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.dateStart", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateStart), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.dateStart", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateStart), "date", options)))
-    + "</li>\r\n            <li>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.dateEnd", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateEnd), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.dateEnd", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.dateEnd), "date", options)))
-    + "</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.measureConcepts, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n";
-  stack2 = helpers['if'].call(depth0, depth0.nonMeasureDimensions, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.conceptName, depth0.conceptDescription, "text", false, true, options) : helperMissing.call(depth0, "fieldOutput", depth0.conceptName, depth0.conceptDescription, "text", false, true, options)))
+    + " ";
+  return buffer;
+  }
+
+function program18(depth0,data) {
+  
+  var buffer = "", stack1, options;
+  buffer += "\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.validity", options) : helperMissing.call(depth0, "message", "entity.dataset.section.validity", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        <ul>\r\n            <li>";
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            <ul>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.statisticOfficiality", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticOfficiality), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.statisticOfficiality", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.statisticOfficiality), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.validFrom", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.validFrom), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.validFrom", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.validFrom), "date", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.validTo", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.validTo), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.validTo", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dates)),stack1 == null || stack1 === false ? stack1 : stack1.validTo), "date", options)))
-    + "</li>\r\n        </ul>\r\n    </div>            \r\n</div>\r\n\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+    + "</li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    ";
+  return buffer;
+  }
+
+function program20(depth0,data) {
+  
+  var buffer = "", stack1, options;
+  buffer += "\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.version", options) : helperMissing.call(depth0, "message", "entity.dataset.section.version", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        <ul>\r\n            <li>";
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            <ul>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.version", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.version), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.version", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.version), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.versionRationale.title", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.versionRationale), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.versionRationale.title", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.versionRationale), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.replacesVersion", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.replacesVersion), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.replacesVersion", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.replacesVersion), "resource", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.isReplacedByVersion", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.isReplacedByVersion), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.isReplacedByVersion", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.isReplacedByVersion), "resource", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.replaces", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.replaces), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.replaces", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.replaces), "resource", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.isReplacedBy", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.isReplacedBy), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.isReplacedBy", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.isReplacedBy), "resource", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.nextVersion.title", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.nextVersion), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.nextVersion.title", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.nextVersion), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.dateNextUpdate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dateNextUpdate), "date", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.dateNextUpdate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.dateNextUpdate), "date", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.updateFrequency", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.updateFrequency)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.updateFrequency", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.updateFrequency)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options)))
-    + "</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"field metadata-accordion\">\r\n    <div class=\"metadata-title\">\r\n        <div>";
+    + "</li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    ";
+  return buffer;
+  }
+
+  buffer += "<div class=\"metadata-group\">\r\n\r\n    ";
+  stack1 = helpers['if'].call(depth0, depth0.hasDescriptors, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " ";
+  stack1 = helpers['if'].call(depth0, depth0.datasetAttributes, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " ";
+  stack1 = helpers['if'].call(depth0, depth0.hasPeriods, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.measureDimension)),stack1 == null || stack1 === false ? stack1 : stack1.representation), {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += " ";
+  stack2 = helpers['if'].call(depth0, depth0.measureConcepts, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += " ";
+  stack2 = helpers['if'].call(depth0, depth0.nonMeasureDimensions, {hash:{},inverse:self.noop,fn:self.program(15, program15, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += " ";
+  stack2 = helpers['if'].call(depth0, depth0.hasValidity, {hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += " ";
+  stack2 = helpers['if'].call(depth0, depth0.hasVersionInfo, {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n\r\n\r\n    <div class=\"field metadata-accordion\">\r\n        <div class=\"metadata-title\">\r\n            <div>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "entity.dataset.section.reuse", options) : helperMissing.call(depth0, "message", "entity.dataset.section.reuse", options)))
-    + "</div>\r\n    </div>\r\n    <div class=\"metadata-value\">\r\n        <ul>\r\n            <li>";
+    + "</div>\r\n        </div>\r\n        <div class=\"metadata-value\">\r\n            <ul>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.bibliographicCitation", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.bibliographicCitation), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.bibliographicCitation", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.bibliographicCitation), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.rightsHolder", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.rightsHolder)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.rightsHolder", ((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.rightsHolder)),stack1 == null || stack1 === false ? stack1 : stack1.name), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.copyrightDate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.copyrightDate), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.copyrightDate", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.copyrightDate), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.license", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.license), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.license", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.license), "text", options)))
-    + "</li>            \r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.accessRights", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.accessRights), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.accessRights", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.accessRights), "text", options)))
-    + "</li>            \r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.publishers", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.publishers), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.publishers", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.publishers), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.contributors", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.contributors), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.contributors", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.contributors), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.mediators", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.mediators), "text", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.mediators", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.mediators), "text", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.apiDocumentationUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiDocumentationUrl), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.apiDocumentationUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiDocumentationUrl), "resource", options)))
-    + "</li>\r\n            <li>";
+    + "</li>\r\n                <li>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options) : helperMissing.call(depth0, "fieldOutput", "entity.dataset.apiUrl", ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.apiUrl), "resource", options)))
-    + "</li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"spacer\"></div>\r\n\r\n</div>\r\n</div>\r\n<div class=\"rights-holder\">";
+    + "</li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"spacer\"></div>\r\n\r\n</div>\r\n</div>\r\n<div class=\"rights-holder\">";
   if (stack2 = helpers.rightsHolder) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.rightsHolder; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)

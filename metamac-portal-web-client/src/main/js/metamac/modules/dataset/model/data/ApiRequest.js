@@ -12,6 +12,7 @@
     App.dataset.data.ApiRequest = function (options) {
         switch (options.metadata.options.type) {
             case "indicator":
+            case "indicatorInstance":
                 this.request = new App.dataset.data.ApiIndicatorRequest(options);
                 break;
             default:

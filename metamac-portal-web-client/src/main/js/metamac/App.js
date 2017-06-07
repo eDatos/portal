@@ -37,7 +37,9 @@
         "agency": undefined,
         "identifier": undefined,
         "version": undefined,
-        "type": undefined
+        "type": undefined,
+
+        "indicatorSystem": undefined, // Only for indicatorsInstances
     }
 
     App.config = {

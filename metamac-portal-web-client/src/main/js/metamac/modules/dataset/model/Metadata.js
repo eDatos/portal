@@ -11,11 +11,18 @@
         this.initialize(options);
     };
 
+    var API_TYPES_MAP = {
+        "indicator": API_TYPES.INDICATOR,
+        "indicatorInstance": API_TYPES.INDICATOR,
+        "dataset": API_TYPES.DATASET,
+        "query": API_TYPES.DATASET
+    }
+
     App.dataset.Metadata.prototype = {
 
         initialize: function (options) {
             this.options = options || {};
-            this.apiType = this.identifier().type == "indicator" ? API_TYPES.INDICATOR : API_TYPES.DATASET;
+            this.apiType = API_TYPES_MAP[this.identifier().type];
         },
 
         urlIdentifierPart: function () {
@@ -30,6 +37,8 @@
                     return '/queries/' + identifier.agency + '/' + identifier.identifier;
                 case "indicator":
                     return '/indicators/' + identifier.identifier;
+                case "indicatorInstance":
+                    return '/indicatorsSystems/' + identifier.indicatorSystem + '/indicatorsInstances/' + identifier.identifier;
                 default:
                     throw Error("type " + identifier.type + " not supported");
             }
@@ -38,15 +47,17 @@
         buildQueryString: function (identifier) {
             var version = identifier.type === "dataset" ? ["version", identifier.version].join('=') : '';
             var agencyId = identifier.agency ? ['agencyId', identifier.agency].join('=') : "";
+            var indicatorSystem = identifier.indicatorSystem ? ['indicatorSystem', identifier.indicatorSystem].join('=') : "";
             return _.compact([
                 agencyId,
                 ['resourceId', identifier.identifier].join('='),
                 version,
-                ['resourceType', identifier.type].join('=')
+                ['resourceType', identifier.type].join('='),
+                indicatorSystem
             ]).join('&');
         },
 
-        idAttributes: ["type", "agency", "identifier", "version"],
+        idAttributes: ["type", "agency", "identifier", "version", "indicatorSystem"],
 
         equals: function (metadata) {
             if (_.isUndefined(metadata)) return false;
@@ -310,34 +321,43 @@
 
         toJSON: function () {
             return {
-                statisticalOperation: this.getStatisticalOperation(),
-
                 title: this.getTitle(),
+                description: this.getDescription(),
+
+                hasDescriptors: this.getSubtitle() || this.getAbstract() || this.getStatisticalOperation() || this.getSubjectAreas() || this.getFormatExtentObservations(),
                 subtitle: this.getSubtitle(),
                 abstract: this.getAbstract(),
-                description: this.getDescription(),
+                statisticalOperation: this.getStatisticalOperation(),
+                subjectAreas: this.getSubjectAreas(),
+                formatExtentObservations: this.getFormatExtentObservations(),
+
+                hasPeriods: this.getDates().dateStart || this.getDates().dateEnd,
                 dates: this.getDates(),
+
+                hasVersionInfo: this.hasVersionInfo(),
                 version: this.getVersion(),
                 versionRationale: this.getVersionRationale(),
                 replacesVersion: this.getReplacesVersion(),
                 isReplacedByVersion: this.getIsReplacedByVersion(),
+                replaces: this.getReplaces(),
+                isReplacedBy: this.getIsReplacedBy(),
+                nextVersion: this.getNextVersion(),
+                dateNextUpdate: this.getDateNextUpdate(),
+                updateFrequency: this.getUpdateFrequency(),
+
+
                 publishers: this.getPublishers(),
                 contributors: this.getContributors(),
                 mediators: this.getMediators(),
-                replaces: this.getReplaces(),
-                isReplacedBy: this.getIsReplacedBy(),
                 rightsHolder: this.getRightsHolder(),
                 copyrightDate: this.getCopyrightDate(),
                 license: this.getLicense(),
                 accessRights: this.getAccessRights(),
-                subjectAreas: this.getSubjectAreas(),
-                formatExtentObservations: this.getFormatExtentObservations(),
 
-                nextVersion: this.getNextVersion(),
-                lastUpdate: this.getLastUpdate(),
-                dateNextUpdate: this.getDateNextUpdate(),
-                updateFrequency: this.getUpdateFrequency(),
+                hasValidity: this.hasValidity(),
                 statisticOfficiality: this.getStatisticOfficiality(),
+
+                lastUpdate: this.getLastUpdate(),
                 bibliographicCitation: this.getBibliographicCitation(),
 
                 languages: this.getLanguages(),
@@ -347,6 +367,22 @@
                 apiUrl: this.getApiUrl(),
                 apiDocumentationUrl: this.getApiDocumentationUrl()
             };
+        },
+
+        hasValidity: function () {
+            return this.getDates().validFrom || this.getDates().validTo || this.getStatisticOfficiality();
+        },
+
+        hasVersionInfo: function () {
+            return this.getVersion() ||
+                this.getVersionRationale() ||
+                this.getReplacesVersion() ||
+                this.getIsReplacedByVersion() ||
+                this.getReplaces() ||
+                this.getIsReplacedBy() ||
+                this.getNextVersion() ||
+                this.getDateNextUpdate() ||
+                this.getUpdateFrequency();
         },
 
         getAttributes: function () {
@@ -405,7 +441,7 @@
         },
 
         getTitle: function () {
-            return this.getLocalizedLabel(this.options.name);
+            return this.getLocalizedLabel(this.metadata.name);
         },
 
         getSubtitle: function () {
@@ -417,7 +453,7 @@
         },
 
         getDescription: function () {
-            return this.getLocalizedLabel(this.options.description);
+            return this.getLocalizedLabel(this.metadata.description);
         },
 
         getDates: function () {
@@ -501,7 +537,7 @@
         },
 
         getNextVersion: function () {
-            return I18n.t("entity.dataset.nextVersion.enum." + this.metadata.nextVersion, { defaults: [{ message: "" }] });
+            return I18n.t("entity.dataset.nextVersion.enum." + this.metadata.nextVersion, { defaultValue: "" });
         },
 
         getPublishers: function () {

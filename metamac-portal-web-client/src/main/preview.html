@@ -65,20 +65,25 @@
 
         App.endpoints["indicators"] = "http://estadisticas.arte-consultores.com/indicators/v1.0";
 
-        App.queryParams = { "agency": "ISTAC", "identifier": "C00031A_000002", "version": "~latest", "type": "dataset" };
+        // App.queryParams = { "agency": "ISTAC", "identifier": "C00031A_000002", "version": "~latest", "type": "dataset" };
 
-        App.queryParams = { "identifier": "IND_0001", "type": "indicator" };
-        //    App.config.widget = true;
+        // Ejemplo de indicador
+        // App.queryParams = { "identifier": "IND_0001", "type": "indicator" };
+
+        // Ejemplo de instancia de indicador
+        App.queryParams = { "identifier": "0a36fed2-5c42-4c42-8162-a247f55fe4ed", "type": "indicatorInstance", "indicatorSystem": "E30308A" };
 
         // Ejemplo con atributo de medida en vez de measure dimension
-        //App.queryParams = { "agency" : "ISTAC", "identifier": "C00031A_000004", "version" : "001.000", "type" : "dataset" }
+        // App.queryParams = { "agency" : "ISTAC", "identifier": "C00031A_000004", "version" : "001.000", "type" : "dataset" }
 
-        /*   App.queryParams = {
-               "agency" : "ISTAC",
-               //"identifier" : "INDICE_OCUPACION_TFE_2016",
-               "identifier" : "INDICADORES_OCUPACION",
-               "type" : "query"
-           }*/
+        // Ejemplo de query INDICE_OCUPACION_TFE_2016
+        // App.queryParams = { "agency" : "ISTAC", "identifier" : "INDICE_OCUPACION_TFE_2016", "type" : "query"}
+
+        // Ejemplo de query INDICADORES_OCUPACION
+        // App.queryParams = { "agency": "ISTAC", "identifier": "INDICADORES_OCUPACION", "type": "query" }
+
+        // Vista widget
+        // App.config.widget = true;
 
         App.start();
     </script>

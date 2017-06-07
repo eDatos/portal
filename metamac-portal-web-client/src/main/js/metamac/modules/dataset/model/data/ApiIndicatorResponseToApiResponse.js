@@ -94,14 +94,7 @@
             var parsedDimensions = _.map(dimensions, function (dimension, index) {
                 return {
                     id: index,
-                    name: {
-                        text: [
-                            {
-                                value: I18n.t("indicator.dimension.name." + index),
-                                lang: "es"
-                            }
-                        ]
-                    },
+                    name: self._buildLocalizedSpanishText(I18n.t("indicator.dimension.name." + index)),
                     type: self.indicatorDimensionTypeToDimensionType(dimension.code),
                     dimensionValues: {
                         value: self.indicatorMetadataRepresentationsToMetadataRepresentations(dimension),
@@ -132,12 +125,15 @@
                 total: 0
             };
             response.metadata = {
+                name: this._buildLocalizedSpanishText(response.title.es),
+                description: this._buildLocalizedSpanishText(response.conceptDescription.es),
+                version: response.version,
                 relatedDsd: {
                     heading: {
-                        dimensionId: ["TIME", "MEASURE"] // ALways this ones
+                        dimensionId: ["TIME", "MEASURE"] // Always this ones
                     },
                     stub: {
-                        dimensionId: ["GEOGRAPHICAL"] // ALways this ones
+                        dimensionId: ["GEOGRAPHICAL"] // Always this ones
                     },
                     selfLink: {}
                 },
@@ -145,8 +141,23 @@
                     dimension: this.indicatorMetadataDimensionsToMetadataDimensions(response.dimension),
                     total: 3 // Always 3 for indicators
                 }
+                // We can´t simply translate them, we need a well formed resource
+                // ,subjectAreas: {
+                //     resource: [{
+                //         name: self._buildLocalizedSpanishText(I18n.t("indicator.subjectAreas.name." + response.subjectCode, { defaultValue: response.subjectCode }))
+                //     }]
+                // }
             }
             return response;
+        },
+
+        _buildLocalizedSpanishText: function (value) {
+            return {
+                text: [{
+                    value: value,
+                    lang: "es"
+                }]
+            };
         }
 
     };
