@@ -45,7 +45,7 @@
                 jsonp: '_callback',
                 data: this.queryParams(),
                 success: function (response) {
-                    var apiResponse = new ApiResponse(response, metadata, App.Constants.api.type.dataset);
+                    var apiResponse = new ApiResponse(response, metadata, App.Constants.api.type.DATASET);
                     if (_.isFunction(callback)) {
                         callback(apiResponse);
                     }

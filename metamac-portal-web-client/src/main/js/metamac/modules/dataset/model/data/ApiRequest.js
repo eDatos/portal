@@ -1,8 +1,6 @@
 (function () {
     "use strict";
 
-    var ApiResponse = App.dataset.data.ApiResponse;
-
     App.namespace("App.dataset.data.ApiRequest");
 
     /**

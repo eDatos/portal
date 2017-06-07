@@ -30,9 +30,9 @@
         }
 
         this.selection = {
-            rows : [],
-            rowsCells : [],
-            columns : []
+            rows: [],
+            rowsCells: [],
+            columns: []
         };
 
         this.initializeZones();
@@ -45,18 +45,18 @@
         this.scrollSize = this.delegate.scrollSize;
         this.spinnerSize = this.delegate.spinnerSize;
 
-        this.bodyZone = new BodyZone({context : this.ctx, dataSource : this.dataSource, delegate : this.delegate, view : this});
+        this.bodyZone = new BodyZone({ context: this.ctx, dataSource: this.dataSource, delegate: this.delegate, view: this });
 
-        this.leftHeaderZone = new LeftHeaderZone({context : this.ctx, bodyZone : this.bodyZone, dataSource : this.dataSource, delegate : this.delegate, view : this});
-        this.topHeaderZone = new TopHeaderZone({context : this.ctx, bodyZone : this.bodyZone, dataSource : this.dataSource, delegate : this.delegate, view : this});
-        this.rightScrollZone = new RightScrollZone({context : this.ctx, bodyZone : this.bodyZone, delegate : this.delegate, view : this});
-        this.bottomScrollZone = new BottonScrollZone({context : this.ctx, bodyZone : this.bodyZone, delegate : this.delegate, view : this});
+        this.leftHeaderZone = new LeftHeaderZone({ context: this.ctx, bodyZone: this.bodyZone, dataSource: this.dataSource, delegate: this.delegate, view: this });
+        this.topHeaderZone = new TopHeaderZone({ context: this.ctx, bodyZone: this.bodyZone, dataSource: this.dataSource, delegate: this.delegate, view: this });
+        this.rightScrollZone = new RightScrollZone({ context: this.ctx, bodyZone: this.bodyZone, delegate: this.delegate, view: this });
+        this.bottomScrollZone = new BottonScrollZone({ context: this.ctx, bodyZone: this.bodyZone, delegate: this.delegate, view: this });
 
         if (this.spinnerZone) {
             this.spinnerZone.destroy();
         }
 
-        this.spinnerZone = new SpinnerZone({context : this.ctx});
+        this.spinnerZone = new SpinnerZone({ context: this.ctx });
         this.spinnerZone.setSize(this.spinnerSize);
 
         this.setZonesViewPorts();
@@ -137,23 +137,23 @@
     App.Table.View.prototype.initializeMouseOverTooltip = function () {
         var self = this;
         this.mouseOverTooltipDelegate = {
-            getTitleAtMousePosition : function (position) {
+            getTitleAtMousePosition: function (position) {
                 return self.getTitleAtMousePosition(position);
             }
         };
-        this.mouseOverTooltip = new Tooltip({el : this.$canvas, delegate : this.mouseOverTooltipDelegate, trigger : "mouseOver"});
+        this.mouseOverTooltip = new Tooltip({ el: this.$canvas, delegate: this.mouseOverTooltipDelegate, trigger: "mouseOver" });
     };
-    
+
     App.Table.View.prototype.initializeClickTooltip = function () {
         var self = this;
         this.clickTooltipDelegate = {
-        	getCellInfoAtMousePosition : function (position) {
-        		return self.getCellInfoAtMousePosition(position);
-        	} 
+            getCellInfoAtMousePosition: function (position) {
+                return self.getCellInfoAtMousePosition(position);
+            }
         };
-        this.clickTooltip = new Tooltip({el : this.$canvas, delegate : this.clickTooltipDelegate, trigger : "click"});
+        this.clickTooltip = new Tooltip({ el: this.$canvas, delegate: this.clickTooltipDelegate, trigger: "click" });
     };
-    
+
     // Limpia el canvas completo
     App.Table.View.prototype.clear = function () {
         var canvasSize = this.getSize();
@@ -166,10 +166,6 @@
                 zone.repaint();
             }
         });
-    };
-
-    App.Table.View.prototype.forceRepaintBody = function () {
-        this.bodyZone.repaint();
     };
 
     App.Table.View.prototype.forceRepaint = function () {
@@ -290,7 +286,7 @@
 
     App.Table.View.prototype.isSelectionActive = function (selection) {
         return (!_.difference(selection.rows, this.selection.rows).length) &&
-        	(!_.difference(selection.rowsCells, this.selection.rowsCells).length) &&
+            (!_.difference(selection.rowsCells, this.selection.rowsCells).length) &&
             (!_.difference(selection.columns, this.selection.columns).length);
     };
 
@@ -310,7 +306,7 @@
     App.Table.View.prototype.toggleSelection = function (newSelection) {
         this.selection.rows = this.toggleArrays(this.selection.rows, newSelection.rows);
         this.selection.rows.sort();
-        
+
         this.selection.rowsCells = this.toggleArrays(this.selection.rowsCells, newSelection.rowsCells);
         this.selection.rowsCells.sort();
 
@@ -333,25 +329,25 @@
                     var firstCellSelectedEqSelectedCell = this.selection.rowsCells[0] === cell.y && this.selection.columns[0] === cell.x;
 
                     if (isOnlyACellSelected && firstCellSelectedEqSelectedCell) {
-                        this.selection = {rowsCells : [], rows : [], columns : []};
+                        this.selection = { rowsCells: [], rows: [], columns: [] };
                     } else {
                         var paintInfoRow = this.bodyZone.getPaintInfoRowCell(cell.y);
-                        var selectedRows = paintInfoRow ? [ paintInfoRow.index ] : [];
+                        var selectedRows = paintInfoRow ? [paintInfoRow.index] : [];
                         this.selection = {
-                            rowsCells : [cell.y], 
-                            columns : [cell.x], 
-                            rows : selectedRows
-                        };                        
+                            rowsCells: [cell.y],
+                            columns: [cell.x],
+                            rows: selectedRows
+                        };
                     }
 
                 } else if (zone === "leftHeaderZone") {
                     var rows = this.leftHeaderZone.rowsAtPoint(arg);
                     var rowsCells = this.leftHeaderZone.rowsCellsAtPoint(arg);
-                    this.toggleSelection({rows : rows, rowsCells : rowsCells});
+                    this.toggleSelection({ rows: rows, rowsCells: rowsCells });
                 } else {
                     //topHeaderZone
                     var columns = this.topHeaderZone.columnsAtPoint(arg);
-                    this.toggleSelection({columns : columns});
+                    this.toggleSelection({ columns: columns });
                 }
 
                 this.leftHeaderZone.needRepaint = true;
@@ -362,19 +358,19 @@
 
         }
     };
-        
-//    App.Table.View.prototype.showCellAttributes = function (arg) {
-//        var cell;
-//
-//        if (arg instanceof Point) {
-//            var zone = this.zoneFromPoint(arg);
-//            if (zone === "bodyZone" || zone === "leftHeaderZone" || zone === "topHeaderZone") {
-//            	
-//            	console.log("uy!");
-//            	
-//            }
-//        }
-//    };    
+
+    //    App.Table.View.prototype.showCellAttributes = function (arg) {
+    //        var cell;
+    //
+    //        if (arg instanceof Point) {
+    //            var zone = this.zoneFromPoint(arg);
+    //            if (zone === "bodyZone" || zone === "leftHeaderZone" || zone === "topHeaderZone") {
+    //            	
+    //            	console.log("uy!");
+    //            	
+    //            }
+    //        }
+    //    };    
 
     App.Table.View.prototype.setMousePosition = function (point, e) {
         this.mouseInCanvas = e.target === this.canvas;
@@ -402,11 +398,11 @@
         }
         return title;
     };
-    
+
     App.Table.View.prototype.getCellInfoAtMousePosition = function (point) {
         var attribute;
         if (this.mouseZone === "bodyZone") {
-        	attribute = this.bodyZone.cellInfoAtPoint(point);
+            attribute = this.bodyZone.cellInfoAtPoint(point);
         }
         return attribute;
     };

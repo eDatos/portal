@@ -15,7 +15,7 @@
     };
 
     App.Table.BodyZone.prototype = {
-        initialize : function (options) {
+        initialize: function (options) {
             if (!options) {
                 options = {};
             }
@@ -27,7 +27,7 @@
 
         // Calcula en que posición empieza cada una de las filas y columnas
         // y el tamaño total
-        calculateIncrementalSize : function () {
+        calculateIncrementalSize: function () {
             if (this.dataSource && this.delegate) {
                 var self = this;
                 var rowsLen = this.dataSource.rows(),
@@ -41,8 +41,8 @@
                 });
 
                 this.incrementalCellSize = {
-                    rows : rows,
-                    columns : columns
+                    rows: rows,
+                    columns: columns
                 };
 
                 var widthTotal = columns[columns.length - 1];
@@ -53,21 +53,21 @@
         },
 
         // Calcula la primera celda visible (en la esquina superior izquierda)
-        firstCell : function () {
+        firstCell: function () {
             var x = Utils.floorIndex(this.incrementalCellSize.columns, this.origin.x),
                 y = Utils.floorIndex(this.incrementalCellSize.rows, this.origin.y);
 
             return new Cell(x, y);
         },
 
-        cell2AbsolutePoint : function (cell) {
+        cell2AbsolutePoint: function (cell) {
             var x = this.incrementalCellSize.columns[cell.x],
                 y = this.incrementalCellSize.rows[cell.y];
             return new Point(x, y);
         },
 
         // IDEA: Improve implementation. It is not so transparent METAMAC-2282
-        relativePoint2Cell : function (point) {
+        relativePoint2Cell: function (point) {
             var absolutePoint = this.relativePoint2AbsolutePoint(point);
             var x = Utils.floorIndex(this.incrementalCellSize.columns, absolutePoint.x),
                 y = Utils.floorIndex(this.incrementalCellSize.rows, absolutePoint.y);
@@ -76,21 +76,21 @@
         },
 
         // IDEA: Improve implementation. It is not so transparent METAMAC-2282
-        absolutePoint2Cell : function (absolutePoint) { 
-        	var point = this.relativePoint2AbsolutePoint(new Point(absolutePoint.x, absolutePoint.y))
-        	var x = Utils.floorIndex(this.incrementalCellSize.columns, point.x),
-        			y = Utils.floorIndex(this.incrementalCellSize.rows, point.y);
-        	y -= this.dataSource.blankRowsOffset(y);
-        	return new Cell(x, y);
+        absolutePoint2Cell: function (absolutePoint) {
+            var point = this.relativePoint2AbsolutePoint(new Point(absolutePoint.x, absolutePoint.y))
+            var x = Utils.floorIndex(this.incrementalCellSize.columns, point.x),
+                y = Utils.floorIndex(this.incrementalCellSize.rows, point.y);
+            y -= this.dataSource.blankRowsOffset(y);
+            return new Cell(x, y);
         },
 
-        cellSize : function (cell) {
+        cellSize: function (cell) {
             var width = this.delegate.columnWidth(cell.x);
             var height = this.delegate.rowHeight(cell.y);
             return new Size(width, height);
         },
 
-        isCellVisible : function (cell) {
+        isCellVisible: function (cell) {
             if (!this.dataSource.cellExists(cell)) {
                 return false;
             }
@@ -101,7 +101,7 @@
             return this.isRelativeRectangleVisible(cellRectangle);
         },
 
-        visibleRowsAndColumns : function () {
+        visibleRowsAndColumns: function () {
             var xVisible = true,
                 yVisible = true;
             var firstCell = this.firstCell();
@@ -118,18 +118,18 @@
                 yVisible = this.isCellVisible(yCell);
             }
             return {
-                rows : {
-                    begin : firstCell.y,
-                    end : yCell.y
+                rows: {
+                    begin: firstCell.y,
+                    end: yCell.y
                 },
-                columns : {
-                    begin : firstCell.x,
-                    end : xCell.x
+                columns: {
+                    begin: firstCell.x,
+                    end: xCell.x
                 }
             };
         },
 
-        paintInfo : function () {
+        paintInfo: function () {
             var xVisible = true,
                 yVisible = true;
 
@@ -150,9 +150,9 @@
                 size = this.delegate.columnWidth(j);
 
                 columns.push({
-                    x : x,
-                    index : j,
-                    width : size
+                    x: x,
+                    index: j,
+                    width: size
                 });
 
                 j = j + 1;
@@ -163,24 +163,24 @@
 
             var i = firstCell.y;
             var y = firstCellPoint.y;
-            
+
             // IndexCell to account for the difference that blank rows add
             var indexCell = i - this.dataSource.blankRowsOffset(firstCell.y);
             while (yVisible && i < totalRows) {
                 size = this.delegate.rowHeight(i);
 
-               	rows.push({
-                    y : y,
-                    index : i,
-                    indexCell : indexCell,
-                    height : size,
-                    blank : this.dataSource.isBlankRow(i)
+                rows.push({
+                    y: y,
+                    index: i,
+                    indexCell: indexCell,
+                    height: size,
+                    blank: this.dataSource.isBlankRow(i)
                 });
-               	
-               	if (!this.dataSource.isBlankRow(i)) {
-               		indexCell++;
-               	}
-               	
+
+                if (!this.dataSource.isBlankRow(i)) {
+                    indexCell++;
+                }
+
                 i = i + 1;
                 y = y + size;
 
@@ -188,12 +188,12 @@
             }
 
             return {
-                rows : rows,
-                columns : columns
+                rows: rows,
+                columns: columns
             };
         },
 
-        repaint : function () {
+        repaint: function () {
             this.clear();
             this.ctx.save();
 
@@ -210,15 +210,15 @@
             this.needRepaint = false;
         },
 
-        getPaintInfoRowCell : function(y) {
+        getPaintInfoRowCell: function (y) {
             var nonBlankRows = _(this.paintInfo().rows)
-                                    .filter(function (row) { 
-                                        return !row.blank; 
-                                    });
+                .filter(function (row) {
+                    return !row.blank;
+                });
             return nonBlankRows[y];
         },
 
-        paintCells : function (paintInfo) {
+        paintCells: function (paintInfo) {
             var x, y, bgColor, i, j;
 
             this.ctx.textAlign = "right";
@@ -253,19 +253,19 @@
 
                         if (_.isFunction(this.delegate.format)) {
                             value = this.delegate.format(value);
-                        }                       
+                        }
 
                         if (this.dataSource.cellHasPrimaryAttributes(cell)) {
-                            this.ctx.beginPath();                  
+                            this.ctx.beginPath();
                             var marginMark = this.delegate.style.attributeCellMark.margin;
-                            var sizeMark = this.delegate.style.attributeCellMark.size;              
+                            var sizeMark = this.delegate.style.attributeCellMark.size;
                             this.ctx.moveTo(point.x + size.width - marginMark, point.y + size.height - marginMark);
                             this.ctx.lineTo(point.x + size.width - marginMark - sizeMark, point.y + size.height - marginMark);
                             this.ctx.lineTo(point.x + size.width - marginMark, point.y + size.height - marginMark - sizeMark);
                             this.ctx.fillStyle = this.delegate.style.attributeCellMark.background;
                             this.ctx.fill();
                             this.ctx.closePath();
-                        }   
+                        }
                     }
 
                     if (value !== undefined) {
@@ -275,8 +275,8 @@
                 }
             }
         },
-        
-        cellInfoAtPoint : function (absolutePoint) {
+
+        cellInfoAtPoint: function (absolutePoint) {
             var bodyCellAtPoint = this.absolutePoint2Cell(absolutePoint);
             if (bodyCellAtPoint) {
                 return this.delegate.formatCellInfo(this.dataSource.cellInfoAtIndex(bodyCellAtPoint));
