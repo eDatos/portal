@@ -40,6 +40,7 @@
 		String SRM_API_URL_BASE = "";
         String PERMALINKS_API_URL_BASE = "";
         String EXPORT_API_URL_BASE = "";
+        String INDICATORS_API_URL_BASE = "";
 		PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
 		try {
 	   		PORTAL_URL_BASE = configurationService.retrievePortalExternalUrlBase();
