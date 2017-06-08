@@ -95,6 +95,7 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
     App.queryParams["identifier"] = getQueryParams("resourceId");
     App.queryParams["version"] = getQueryParams("version");
 	App.queryParams["type"] = getQueryParams("resourceType");
+	App.queryParams["indicatorSystem"] = getQueryParams("indicatorSystem");
     App.config["chromeFrameObject"] = getQueryParams("chromeFrameObject");
 	App.config["widget"] = true;
 
@@ -104,6 +105,8 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
     App.endpoints["export"] = "${ApiUrlExport}/v1.0";
     App.endpoints["statistical-visualizer"] = "${ApiUrlStatisticalVisualizer}";
     App.endpoints["shared-statistical-visualizer"] = getQueryParams("sharedVisualizerUrl");
+    App.endpoints["indicators"] = "${ApiUrlIndicators}/v1.0";
+    
 
     App.start();
 
