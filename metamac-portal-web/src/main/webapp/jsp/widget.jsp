@@ -46,19 +46,22 @@
 			STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesExternalApiUrlBase();
 		    SRM_API_URL_BASE = configurationService.retrieveSrmExternalApiUrlBase();
 		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
-		    EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();       
+		    EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();
+		    INDICATORS_API_URL_BASE = configurationService.retrieveIndicatorsExternalApiUrlBase();
 			
 			request.setAttribute("ApiUrlStatisticalVisualizer", PORTAL_URL_BASE);		
 			request.setAttribute("ApiUrlStatisticalResources", STATISTICAL_RESOURCES_API_URL_BASE);	
 			request.setAttribute("ApiUrlStructuralResources", SRM_API_URL_BASE);
 			request.setAttribute("ApiUrlPermalinks", PERMALINKS_API_URL_BASE);
 			request.setAttribute("ApiUrlExport", EXPORT_API_URL_BASE);
+			request.setAttribute("ApiUrlIndicators", INDICATORS_API_URL_BASE);
 		} catch (MetamacException e) {
 		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
 		 	request.setAttribute("ApiUrlStatisticalResources", "error");
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
 		 	request.setAttribute("ApiUrlPermalinks", "error");
             request.setAttribute("ApiUrlExport", "error");
+            request.setAttribute("ApiUrlIndicators", "error");
 		}
 	%>
     <%
