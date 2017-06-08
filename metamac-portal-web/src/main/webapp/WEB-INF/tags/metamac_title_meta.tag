@@ -5,6 +5,8 @@
 <%@ tag import="org.siemac.metamac.portal.dto.Collection" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Dataset" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Query" %>
+<%@ tag import="org.siemac.metamac.portal.dto.Indicator" %>
+<%@ tag import="org.siemac.metamac.portal.dto.IndicatorInstance" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Permalink" %>
 <%@ tag import="org.siemac.metamac.core.common.exception.MetamacException"%>
 <%@ tag import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
@@ -40,6 +42,7 @@
         String EXPORT_API_URL_BASE = "";
 		String STATISTICAL_RESOURCES_API_URL_BASE = "";
 		String SRM_API_URL_BASE = "";
+        String INDICATORS_API_URL_BASE = "";
 		Boolean internalPortal = null;
 		String ORGANISATION = "";
 				
@@ -62,14 +65,16 @@
 		    
 		    PORTAL_URL_BASE = configurationService.retrievePortalExternalUrlBase();
 		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
-            EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();       
+            EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();            
             
 		    if (INSTALLATION_TYPE.equals("INTERNAL")) {
 		        STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesInternalApiUrlBase();
 		        SRM_API_URL_BASE = configurationService.retrieveSrmInternalApiUrlBase();
+		        INDICATORS_API_URL_BASE = configurationService.retrieveIndicatorsInternalApiUrlBase();
 		    } else if (INSTALLATION_TYPE.equals("EXTERNAL")) {	        
 		        STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesExternalApiUrlBase();
 		        SRM_API_URL_BASE = configurationService.retrieveSrmExternalApiUrlBase();
+		        INDICATORS_API_URL_BASE = configurationService.retrieveIndicatorsExternalApiUrlBase();
 			}
 			
 			request.setAttribute("ApiUrlStatisticalVisualizer", PORTAL_URL_BASE);
@@ -77,6 +82,7 @@
             request.setAttribute("ApiUrlExport", EXPORT_API_URL_BASE);		
 			request.setAttribute("ApiUrlStatisticalResources", STATISTICAL_RESOURCES_API_URL_BASE);	
 			request.setAttribute("ApiUrlStructuralResources", SRM_API_URL_BASE);
+			request.setAttribute("ApiUrlIndicators", INDICATORS_API_URL_BASE);
 		
 		} catch (MetamacException e) {
 		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
@@ -84,6 +90,7 @@
             request.setAttribute("ApiUrlExport", "error");      
 		 	request.setAttribute("ApiUrlStatisticalResources", "error");
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
+		 	request.setAttribute("ApiUrlIndicators", "error");
 		}
 	%>
     <%
@@ -98,7 +105,8 @@
         String resourceType = request.getParameter("resourceType");
         String agencyId = request.getParameter("agencyId");
         String resourceId = request.getParameter("resourceId");
-        String version = request.getParameter("version");  
+        String version = request.getParameter("version");
+        String indicatorSystem = request.getParameter("indicatorSystem");
 
 	    request.setAttribute("resourceEmpty", true);
 	    String resourceName = "";
@@ -134,7 +142,23 @@
 		        request.setAttribute("resourceName", helper.localizeText(query.getName()));
 		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(query.getDescription())));
     	        request.setAttribute("resourceDescription", helper.localizeText(query.getDescription()));  
-	        }  
+	        } 
+	    } else if ("indicator".equals(resourceType)) {
+            Indicator indicator = Helpers.getIndicator(INDICATORS_API_URL_BASE, internalPortal, resourceId);            
+            if (indicator != null) {
+                request.setAttribute("resourceEmpty", false);
+                request.setAttribute("resourceName", helper.localizeText(indicator.getTitle()));
+                request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(indicator.getConceptDescription())));
+                request.setAttribute("resourceDescription", helper.localizeText(indicator.getConceptDescription()));  
+            }           
+        } else if ("indicatorInstance".equals(resourceType)) {
+                IndicatorInstance indicatorInstance = Helpers.getIndicatorInstance(INDICATORS_API_URL_BASE, internalPortal, resourceId, indicatorSystem);            
+                if (indicatorInstance != null) {
+                    request.setAttribute("resourceEmpty", false);
+                    request.setAttribute("resourceName", helper.localizeText(indicatorInstance.getTitle()));
+                    request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(indicatorInstance.getConceptDescription())));
+                    request.setAttribute("resourceDescription", helper.localizeText(indicatorInstance.getConceptDescription()));  
+                }              
 	    } else {	
 	        request.setAttribute("resourceName", "Visualizador estadístico");
 	        request.setAttribute("resourceDescription", "Visualizador estadístico");

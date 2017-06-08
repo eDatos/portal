@@ -76,6 +76,9 @@
 			                    
 			                    // http://estadisticas.arte-consultores.com/export
 			                    App.endpoints["export"] = "${ApiUrlExport}/v1.0";
+
+                                // http://estadisticas.arte-consultores.com/indicators
+                                App.endpoints["indicators"] = "${ApiUrlIndicators}/v1.0";
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};
@@ -84,6 +87,7 @@
 			                    App.queryParams["identifier"] = '${param.resourceId}';		                    
 			                    App.queryParams["version"] = '${param.version}';
 								App.queryParams["type"] = '${param.resourceType}';
+                                App.queryParams["indicatorSystem"] = '${param.indicatorSystem}';
 			
 			                    console.log("starting app");
 			

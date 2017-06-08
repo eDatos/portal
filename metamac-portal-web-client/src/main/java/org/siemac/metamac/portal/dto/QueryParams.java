@@ -7,6 +7,8 @@ public class QueryParams {
     protected String identifier;
     protected String version;
 
+    protected String indicatorSystem;
+
     public String getType() {
         return type;
     }
@@ -38,5 +40,14 @@ public class QueryParams {
     public void setVersion(String version) {
         this.version = version;
     }
+
+    public String getIndicatorSystem() {
+        return indicatorSystem;
+    }
+
+    public void setIndicatorSystem(String indicatorSystem) {
+        this.indicatorSystem = indicatorSystem;
+    }
+
 
 }

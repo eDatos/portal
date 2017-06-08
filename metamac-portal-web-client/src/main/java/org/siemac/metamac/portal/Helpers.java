@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
@@ -17,6 +18,8 @@ import org.siemac.metamac.portal.dto.Chapter;
 import org.siemac.metamac.portal.dto.Collection;
 import org.siemac.metamac.portal.dto.CollectionNode;
 import org.siemac.metamac.portal.dto.Dataset;
+import org.siemac.metamac.portal.dto.Indicator;
+import org.siemac.metamac.portal.dto.IndicatorInstance;
 import org.siemac.metamac.portal.dto.Permalink;
 import org.siemac.metamac.portal.dto.PermalinkContent;
 import org.siemac.metamac.portal.dto.Query;
@@ -27,10 +30,12 @@ import org.siemac.metamac.portal.mapper.Dataset2DtoMapper;
 import org.siemac.metamac.portal.mapper.Query2DtoMapper;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
+import org.springframework.web.client.RestTemplate;
 
 public class Helpers {
 
     private String language;
+    private String DEFAULT_KEY = "__default__";
 
     public Helpers(String language) {
         if (language.isEmpty()) {
@@ -114,6 +119,18 @@ public class Helpers {
         return query;
     }
 
+    public static Indicator getIndicator(String apiUrlIndicators, Boolean internalPortal, String resourceId) {
+        String indicatorsEndpoint = apiUrlIndicators;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicators/" + resourceId, Indicator.class);
+    }
+
+    public static IndicatorInstance getIndicatorInstance(String apiUrlIndicators, Boolean internalPortal, String resourceId, String indicatorsSystems) {
+        String indicatorsEndpoint = apiUrlIndicators;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicatorsSystems/" + indicatorsSystems + "/indicatorsInstances/" + resourceId, IndicatorInstance.class);
+    }
+
     public static Permalink getPermalink(String apiUrlPermalinks, String identifier) {
         Permalink permalink = new Permalink();
         try {
@@ -150,12 +167,13 @@ public class Helpers {
 
     public static String buildUrl(Permalink permalink) {
         StringBuilder stringBuilder = new StringBuilder();
-        
+
         QueryParams queryParams = permalink.getContent().getQueryParams();
-        stringBuilder.append("?").append("resourceType").append("=").append(queryParams.getType());        
+        stringBuilder.append("?").append("resourceType").append("=").append(queryParams.getType());
         stringBuilder.append("&").append("agencyId").append("=").append(queryParams.getAgency());
         stringBuilder.append("&").append("resourceId").append("=").append(queryParams.getIdentifier());
         stringBuilder.append("&").append("version").append("=").append(queryParams.getVersion());
+        stringBuilder.append("&").append("indicatorSystem").append("=").append(queryParams.getIndicatorSystem());
 
         // Includes #
         stringBuilder.append(permalink.getContent().getHash());
@@ -217,6 +235,24 @@ public class Helpers {
         } else {
             return "";
         }
+    }
+
+    public String localizeText(Map<String, String> stringMap) {
+        if (stringMap == null) {
+            return "";
+        }
+
+        String translation = stringMap.get(language);
+        if (translation != null) {
+            return translation;
+        }
+
+        translation = stringMap.get(DEFAULT_KEY);
+        if (translation != null) {
+            return translation;
+        }
+
+        return "";
     }
 
     public static String reverseIndex(String[] arr, int i) {
