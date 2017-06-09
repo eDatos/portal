@@ -122,13 +122,25 @@ public class Helpers {
     public static Indicator getIndicator(String apiUrlIndicators, Boolean internalPortal, String resourceId) {
         String indicatorsEndpoint = apiUrlIndicators;
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicators/" + resourceId, Indicator.class);
+        try {
+            return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicators/" + resourceId, Indicator.class);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static IndicatorInstance getIndicatorInstance(String apiUrlIndicators, Boolean internalPortal, String resourceId, String indicatorsSystems) {
         String indicatorsEndpoint = apiUrlIndicators;
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicatorsSystems/" + indicatorsSystems + "/indicatorsInstances/" + resourceId, IndicatorInstance.class);
+        try {
+            return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicatorsSystems/" + indicatorsSystems + "/indicatorsInstances/" + resourceId, IndicatorInstance.class);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static Permalink getPermalink(String apiUrlPermalinks, String identifier) {
