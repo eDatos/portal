@@ -7,6 +7,14 @@
 @h2LeftPadding: 4px;
 .order-dimensions {
     .order-sidebar-zone {
+        &.drag-over {
+            .order-sidebar-dimensions,
+            h2 {
+                background: @istacBlueMedium;
+                color: @istacWhite;
+            }
+        }
+
         h2 {
             margin: 0;
             margin-bottom: -1px;
@@ -65,7 +73,9 @@
 
             border: 1px solid @istacGreyMedium;
             border-bottom: 0;
-                    
+            &.drag-over {                
+                .drag-over-dimension;         
+            }                    
 
             background-color: @istacGreyMedium;
             color: @istacWhite;
@@ -96,6 +106,9 @@
             &.dimension-pill {
                 .border-radius(10px);
                 border-bottom: 1px solid @istacGreyMedium;
+                &.drag-over {
+                    .drag-over-dimension;
+                }
                 margin: 3px 2px 2px 2px;
 
                 .dimension-select-level,
@@ -279,12 +292,7 @@
     }
 }
 
-.order-sidebar-zone.drag-over, .order-sidebar-dimension.drag-over {
+.drag-over-dimension {
     opacity: 0.8;
-    border: 1px dashed @istacWhite;
-}
-
-.order-sidebar-dimension.drag-over {
-    opacity: 0.8;
-    border: 1px dashed @istacBlueMedium;
+    border: 1px dashed @istacBlueDark;
 }
