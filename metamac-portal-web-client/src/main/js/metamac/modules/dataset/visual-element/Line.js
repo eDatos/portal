@@ -98,7 +98,10 @@ App.namespace("App.VisualElement.LineChart");
             },
             plotOptions: {
                 line: {
-                    lineWidth: 2
+                    lineWidth: 1,
+                    marker: {
+                        radius: 2
+                    }
                 },
                 series: {
                     animation: false
