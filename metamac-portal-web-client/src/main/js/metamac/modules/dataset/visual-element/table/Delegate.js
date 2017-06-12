@@ -5,21 +5,21 @@
 
     App.namespace("App.Table.Delegate");
 
-    App.Table.Delegate = function () {        
+    App.Table.Delegate = function () {
         this.size = new App.Table.Size(150, 25);
         this.minSize = new App.Table.Size(50, 25);
-        
+
         this.scrollSize = 10;
         this.spinnerSize = new App.Table.Size(70, 30);
 
         this.style = {
-            bodyCell : {
-                font : Constants.font.size + " " + Constants.font.family.sansSerif,
-                color : Constants.colors.istacBlack,
-                background : function (cell, view) {
+            bodyCell: {
+                font: Constants.font.size + " " + Constants.font.family.sansSerif,
+                color: Constants.colors.istacBlack,
+                background: function (cell, view) {
 
-                    var isRowSelected = view.isSelectionActive({rowsCells : [cell.y]});
-                    var isColumnSelected = view.isSelectionActive({columns : [cell.x]});
+                    var isRowSelected = view.isSelectionActive({ rowsCells: [cell.y] });
+                    var isColumnSelected = view.isSelectionActive({ columns: [cell.x] });
 
                     if (isRowSelected && isColumnSelected) {
                         return Constants.colors.istacGreyLight;
@@ -34,52 +34,52 @@
                     horizontal: true,
                     vertical: false
                 },
-                margin : {
-                    right : 5
+                margin: {
+                    right: 5
                 }
             },
-            headerCell : {
-                font : {
-                    mainLevel : "Bold " + Constants.font.size + " " + Constants.font.family.sansSerif,
-                    secondLevel : "Bold " + Constants.font.size + " " + Constants.font.family.sansSerif,
-                    default : Constants.font.size + " " + Constants.font.family.sansSerif,
+            headerCell: {
+                font: {
+                    mainLevel: "Bold " + Constants.font.size + " " + Constants.font.family.sansSerif,
+                    secondLevel: "Bold " + Constants.font.size + " " + Constants.font.family.sansSerif,
+                    default: Constants.font.size + " " + Constants.font.family.sansSerif,
                 },
-                color : Constants.colors.istacBlack,
-                background : function (current, view) {
+                color: Constants.colors.istacBlack,
+                background: function (current, view) {
                     if (view.isSelectionActive(current)) {
                         return Constants.colors.istacGreyLight;
                     } else {
                         return Constants.colors.istacWhite;
                     }
                 },
-                border : {
-                    color : {
-                        default : Constants.colors.istacGreyMedium,
-                        mainLevel : Constants.colors.istacBlueMedium
+                border: {
+                    color: {
+                        default: Constants.colors.istacGreyMedium,
+                        mainLevel: Constants.colors.istacBlueMedium
                     },
-                    width : {
-                        default : 1,
-                        mainLevel : 3
+                    width: {
+                        default: 1,
+                        mainLevel: 3
                     }
                 },
-                shadow : {
-                    show : false,
-                    color : "rgba(0, 0, 0, 0.2)",
-                    blur : "10",
-                    offset : 1
+                shadow: {
+                    show: false,
+                    color: "rgba(0, 0, 0, 0.2)",
+                    blur: "10",
+                    offset: 1
                 },
-                margin : {
-                    right : 5,
-                    left : 5
+                margin: {
+                    right: 5,
+                    left: 5
                 }
             },
-            attributeCellMark : {
-                background : Constants.colors.istacGreyMedium,
-                margin : 2,
-                size : 5
+            attributeCellMark: {
+                background: Constants.colors.istacGreyMedium,
+                margin: 2,
+                size: 5
             },
-            scroll : {
-                color : function (scroll, view) {
+            scroll: {
+                color: function (scroll, view) {
                     if (view.mouseZone && view.mouseZone.indexOf(scroll) !== -1) {
                         return Constants.colors.istacBlueMedium;
                     } else if (view.lastClickZone && view.lastClickZone.indexOf(scroll) !== -1) {
@@ -88,8 +88,8 @@
                         return Constants.colors.istacGreyMedium;
                     }
                 },
-                minSize : 30,
-                lineWidth : 7
+                minSize: 30,
+                lineWidth: 7
             }
         };
 
@@ -99,19 +99,19 @@
 
     App.Table.Delegate.prototype = {
 
-        rowHeight : function (row) {
+        rowHeight: function (row) {
             //return row % 2 === 0 ? 60 : 100;
             return this.size.height;
         },
 
-        columnWidth : function (column) {
+        columnWidth: function (column) {
             var offset = this.columnWidthOffsets[column];
             var columnWidth = _.isUndefined(offset) ? this.size.width : this.size.width + offset;
             var validColumnWidth = columnWidth < this.minSize.width ? this.minSize.width : columnWidth;
             return validColumnWidth;
         },
 
-        leftHeaderColumnWidth : function (leftHeaderColumn, view) {
+        leftHeaderColumnWidth: function (leftHeaderColumn, view) {
             //var size = view.getSize();
             //var defaultWidth = size.width > 800 ? 200 : 100; //responsive
             var defaultWidth = 100;
@@ -120,69 +120,69 @@
             return leftHeaderColumnWidth < this.minSize.width ? this.minSize.width : leftHeaderColumnWidth;
         },
 
-        topHeaderRowHeight : function (topHeaderRow, view) {
+        topHeaderRowHeight: function (topHeaderRow, view) {
             return 25;
         },
 
-        _isNumber : function (string) {
+        _isNumber: function (string) {
             var floatValue = parseFloat(string);
             return !_.isNaN(floatValue);
         },
 
-        format : function (value) {
+        format: function (value) {
             return value;
         },
 
-        formatCellInfo : function (cellInfo) {            
+        formatCellInfo: function (cellInfo) {
             var formattedCellAttributes = this.formatCellAttributes(cellInfo.attributes);
 
             var template = App.templateManager.get("dataset/dataset-cell-info");
             var context = {
-                primaryMeasureAttributes : formattedCellAttributes ? formattedCellAttributes.primaryMeasureAttributes : undefined,
-                combinatedDimensionsAttributes : formattedCellAttributes ? formattedCellAttributes.combinatedDimensionsAttributes : undefined,
-                categories : cellInfo.categories,
-                hasAttributes : formattedCellAttributes && (formattedCellAttributes.primaryMeasureAttributes.length || formattedCellAttributes.combinatedDimensionsAttributes.length)
-            }            
-            return template(context);
-        },
-
-        formatCellAttributes : function (attributes) {
-            if (attributes) {
-                return {
-                    primaryMeasureAttributes : _(_.compact(attributes.primaryMeasureAttributes)).map(this.formatAttribute),
-                    combinatedDimensionsAttributes : _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
-                }                    
-            }            
-        },
-
-        formatHeaderInfo : function (headerInfo) {
-            var template = App.templateManager.get("dataset/dataset-header-info");
-            var context = {
-                title : headerInfo.title,
-                attributes : this.formatHeaderAttributes(headerInfo.attributes)
+                primaryMeasureAttributes: formattedCellAttributes ? formattedCellAttributes.primaryMeasureAttributes : undefined,
+                combinatedDimensionsAttributes: formattedCellAttributes ? formattedCellAttributes.combinatedDimensionsAttributes : undefined,
+                categories: cellInfo.categories,
+                hasAttributes: formattedCellAttributes && (formattedCellAttributes.primaryMeasureAttributes.length || formattedCellAttributes.combinatedDimensionsAttributes.length)
             }
             return template(context);
         },
 
-        formatHeaderAttributes : function (attributes) {
+        formatCellAttributes: function (attributes) {
+            if (attributes) {
+                return {
+                    primaryMeasureAttributes: _(_.compact(attributes.primaryMeasureAttributes)).map(this.formatAttribute),
+                    combinatedDimensionsAttributes: _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
+                }
+            }
+        },
+
+        formatHeaderInfo: function (headerInfo) {
+            var template = App.templateManager.get("dataset/dataset-header-info");
+            var context = {
+                title: headerInfo.title,
+                attributes: this.formatHeaderAttributes(headerInfo.attributes)
+            }
+            return template(context);
+        },
+
+        formatHeaderAttributes: function (attributes) {
             return _(_.compact(attributes))
                 .map(this.formatAttribute);
         },
 
 
-        formatAttribute : function (attribute) {            
+        formatAttribute: function (attribute) {
             if (!attribute.href) {
                 // It´s more efficient to replace it here on demand than replacing all the attributes on lower levels
-                return attribute.replace(" \\| "," | ");
+                return attribute.replace(" \\| ", " | ");
             }
             return attribute;
         },
 
-        resizableColumns : function () {
+        resizableColumns: function () {
             return true;
         },
 
-        resizeColumnWidth : function (separatorIndex, offset) {
+        resizeColumnWidth: function (separatorIndex, offset) {
             var columnIndex = separatorIndex - 1;
             if (_.isUndefined(this.columnWidthOffsets[columnIndex])) {
                 this.columnWidthOffsets[columnIndex] = offset;
@@ -191,7 +191,7 @@
             }
         },
 
-        resizeLeftHeaderColumnWidth : function (leftHeaderColumn, offset) {
+        resizeLeftHeaderColumnWidth: function (leftHeaderColumn, offset) {
             var columnIndex = leftHeaderColumn - 1;
             if (_.isUndefined(this.leftHeaderColumnWidthOffsets[columnIndex])) {
                 this.leftHeaderColumnWidthOffsets[columnIndex] = offset;

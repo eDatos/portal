@@ -36,8 +36,8 @@
             });
 
             this.incrementalCellSize = {
-                rows : this.bodyZone.incrementalCellSize.rows,
-                columns : columns
+                rows: this.bodyZone.incrementalCellSize.rows,
+                columns: columns
             };
 
             var widthTotal = columns[columns.length - 1];
@@ -84,21 +84,21 @@
                     var content = columnsValues[i][row] ? columnsValues[i][row].label : "";
                     var level = columnsValues[i][row] ? columnsValues[i][row].level : 0;
 
-                    var cellAttributes =  tooltipValues[i][row] ? !_.isEmpty(tooltipValues[i][row].attributes) ? _.compact(tooltipValues[i][row].attributes) : [] : [];
+                    var cellAttributes = tooltipValues[i][row] ? !_.isEmpty(tooltipValues[i][row].attributes) ? _.compact(tooltipValues[i][row].attributes) : [] : [];
                     var cellTitle = tooltipValues[i][row] ? tooltipValues[i][row].title : "";
 
 
                     result[i].push({
-                        index : index,
-                        indexEnd : indexEnd,
-                        height : cellHeight,
-                        y : cellY,
-                        x : cellX,
-                        width : cellWidth,
-                        content : content,
-                        level : level,
-                        tooltip : cellTitle,
-                        attributes : cellAttributes
+                        index: index,
+                        indexEnd: indexEnd,
+                        height: cellHeight,
+                        y: cellY,
+                        x: cellX,
+                        width: cellWidth,
+                        content: content,
+                        level: level,
+                        tooltip: cellTitle,
+                        attributes: cellAttributes
                     });
                 }
             }
@@ -109,7 +109,7 @@
     };
 
     App.Table.LeftHeaderZone.prototype.cellAtPoint = function (absolutePoint) {
-    	// IDEA: For optimizing this we can search for columns instead of all cells 
+        // IDEA: For optimizing this we can search for columns instead of all cells 
         return _.find(_.flatten(this.lastPaintInfo, true), function (headerCell) {
             var rect = new Rectangle(headerCell.x, headerCell.y, headerCell.width, headerCell.height);
             return rect.containsPoint(absolutePoint);
@@ -119,9 +119,9 @@
     App.Table.LeftHeaderZone.prototype.titleAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
-            return this.delegate.formatHeaderInfo({ 
-                title : headerCellAtPoint.tooltip, 
-                attributes : headerCellAtPoint.attributes
+            return this.delegate.formatHeaderInfo({
+                title: headerCellAtPoint.tooltip,
+                attributes: headerCellAtPoint.attributes
             });
         }
     };
@@ -132,38 +132,38 @@
             return _.range(headerCellAtPoint.index, headerCellAtPoint.indexEnd);
         }
     };
-    
+
     App.Table.LeftHeaderZone.prototype.rowsCellsAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
-            return _.range(headerCellAtPoint.index - this.dataSource.blankRowsOffset(headerCellAtPoint.index), 
-            			   headerCellAtPoint.indexEnd - this.dataSource.blankRowsOffset(headerCellAtPoint.index));
+            return _.range(headerCellAtPoint.index - this.dataSource.blankRowsOffset(headerCellAtPoint.index),
+                headerCellAtPoint.indexEnd - this.dataSource.blankRowsOffset(headerCellAtPoint.index));
         }
     };
 
-    App.Table.LeftHeaderZone.prototype.getCanvasWidth = function() {
+    App.Table.LeftHeaderZone.prototype.getCanvasWidth = function () {
         return this.view.canvas.width - this.delegate.scrollSize;
     },
 
-    App.Table.LeftHeaderZone.prototype.repaint = function () {
-        this.clear();
+        App.Table.LeftHeaderZone.prototype.repaint = function () {
+            this.clear();
 
-        this.ctx.save();
+            this.ctx.save();
 
-        this.ctx.beginPath();
-        this.ctx.rect(this.viewPort.x, this.viewPort.y, this.getCanvasWidth() + 0.5, this.viewPort.height);
-        this.ctx.clip();
+            this.ctx.beginPath();
+            this.ctx.rect(this.viewPort.x, this.viewPort.y, this.getCanvasWidth() + 0.5, this.viewPort.height);
+            this.ctx.clip();
 
-        var paintInfo = this.paintInfo();
-        this.paintCells(paintInfo);
-        
-        this.ctx.restore();
-        this.needRepaint = false;
-    };
+            var paintInfo = this.paintInfo();
+            this.paintCells(paintInfo);
+
+            this.ctx.restore();
+            this.needRepaint = false;
+        };
 
     App.Table.LeftHeaderZone.prototype.paintCells = function (paintInfo) {
         this.ctx.save();
-                   
+
         this.ctx.textBaseline = "top";
         this.ctx.textAlign = "left";
 
@@ -173,30 +173,30 @@
             var row = paintInfo[i];
 
             for (var j = 0; j < row.length; j++) {
-                this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.default; 
-                this.ctx.lineWidth = this.delegate.style.headerCell.border.width.default;    
+                this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.default;
+                this.ctx.lineWidth = this.delegate.style.headerCell.border.width.default;
                 this.ctx.font = this.delegate.style.headerCell.font.default;
 
                 var cell = row[j];
                 var isBlankRow = this.dataSource.isBlankRow(cell.index);
-                var previousIsBlankRow = row[j-1] ? this.dataSource.isBlankRow(row[j-1].index) : true;
+                var previousIsBlankRow = row[j - 1] ? this.dataSource.isBlankRow(row[j - 1].index) : true;
 
                 this.ctx.save();
 
                 var cellWidth = cell.width;
-                
-                if (isBlankRow) {                    
-                     cellWidth = this.getCanvasWidth();                                                       
+
+                if (isBlankRow) {
+                    cellWidth = this.getCanvasWidth();
                 }
 
                 this.ctx.beginPath();
                 this.ctx.rect(cell.x, cell.y, cellWidth, cell.height);
-                this.ctx.clip(); 
+                this.ctx.clip();
 
                 // Inner cell
-                this.ctx.beginPath();        
+                this.ctx.beginPath();
                 if (isBlankRow) {
-                    this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;   
+                    this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;
                     this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.mainLevel;
                     if (previousIsBlankRow) {
                         drawCellWithBottomBorder(this.ctx);
@@ -215,7 +215,7 @@
 
                 // Text
                 switch (cell.level) {
-                    case 0:                        
+                    case 0:
                         this.ctx.font = this.delegate.style.headerCell.font.mainLevel;
                         break;
                     case 1:
@@ -230,16 +230,16 @@
 
                 // Attributes triangle
                 if (_.compact(cell.attributes).length) {
-                    this.ctx.beginPath();                  
+                    this.ctx.beginPath();
                     var marginMark = this.delegate.style.attributeCellMark.margin;
-                    var sizeMark = this.delegate.style.attributeCellMark.size;              
+                    var sizeMark = this.delegate.style.attributeCellMark.size;
                     this.ctx.moveTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark);
                     this.ctx.lineTo(cell.x + cell.width - marginMark - sizeMark, cell.y + cell.height - marginMark);
                     this.ctx.lineTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark - sizeMark);
                     this.ctx.fillStyle = this.delegate.style.attributeCellMark.background;
                     this.ctx.fill();
                     this.ctx.closePath();
-                }   
+                }
 
                 this.ctx.restore();
             }
@@ -259,7 +259,7 @@
 
     App.Table.LeftHeaderZone.prototype.separatorIndexInRectangle = function (rectangle) {
         for (var i = 0; i < this.incrementalCellSize.columns.length; i++) {
-            var incrementalColumnSize =  this.incrementalCellSize.columns[i];
+            var incrementalColumnSize = this.incrementalCellSize.columns[i];
             if (rectangle.containsPoint(new Point(incrementalColumnSize + this.viewPort.x, rectangle.y))) {
                 return i;
             }
