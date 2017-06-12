@@ -146,9 +146,15 @@
             this._initModel();
             this._calculateRanges();
             this._initContainerView();
+            this._initTitleView();
 
             this._setUpListeners();
             this.render();
+        },
+
+        _initTitleView: function () {
+            this.$title = $('<h3></h3>').prependTo(this.$el);
+            this.updateTitle();
         },
 
         _initModel: function () {
