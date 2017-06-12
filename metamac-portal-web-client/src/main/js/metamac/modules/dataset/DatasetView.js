@@ -146,8 +146,6 @@
                 this.optionsModel.set('fullScreen', options.fullScreen);
             }
 
-            this.optionsModel.set('filter', true);
-
             if (!this.optionsModel.get('widgetInitialType')) {
                 this.optionsModel.set('widgetInitialType', options.visualizationType);
             }
