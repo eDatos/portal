@@ -9,52 +9,52 @@
 
     App.VisualElement.Map.prototype = {
 
-        initialize : function (options) {
+        initialize: function (options) {
             this.filterDimensions = options.filterDimensions;
             this.dataset = options.dataset;
             this.shapes = new App.Map.Shapes();
             this.mapType = options.mapType;
-            
+
             this.visible = false; //unnecesary?
         },
 
-        _bindEvents : function () {
+        _bindEvents: function () {
             var debounceReload = _.debounce(_.bind(this.reload, this), 20);
             this.listenTo(this.filterDimensions, "change:drawable change:zone", debounceReload);
         },
 
-        _unbindEvents : function () {
+        _unbindEvents: function () {
             this.stopListening();
         },
 
-        reload : function () {
+        reload: function () {
             this.destroy();
             this.load();
         },
 
-        updatingDimensionPositions : function () {   
+        updatingDimensionPositions: function () {
             this._applyVisualizationRestrictions();
-            this.resetDimensionsLimits();                   
+            this.resetDimensionsLimits();
 
             this.filterDimensions.zones.get('left').set('fixedSize', 1);
             this.filterDimensions.zones.get('top').set('fixedSize', 0);
         },
 
-        
-        _applyVisualizationRestrictions : function() {
+
+        _applyVisualizationRestrictions: function () {
             this._moveAllDimensionsToZone('fixed');
             this._forceGeographicDimensionInZone('left');
 
             this._applyVisualizationPreselections();
         },
 
-        _applyVisualizationPreselections : function() {
+        _applyVisualizationPreselections: function () {
             this._preselectMostRecentTimeRepresentation();
             this._preselectMostPopulatedGeographicLevelRepresentations();
         },
 
 
-        load : function () {
+        load: function () {
             var self = this;
             this._bindEvents();
             this.visible = true;
@@ -62,9 +62,9 @@
             var normCodes = this._getGeographicDimensionNormCodes();
 
             var actions = {
-                data : _.bind(this._loadData, this),
-                shapes : _.bind(this.shapes.fetchShapes, this.shapes, normCodes),
-                container : _.bind(this.shapes.fetchContainer, this.shapes, normCodes)
+                data: _.bind(this._loadData, this),
+                shapes: _.bind(this.shapes.fetchShapes, this.shapes, normCodes),
+                container: _.bind(this.shapes.fetchContainer, this.shapes, normCodes)
             };
 
             async.parallel(actions, function (err, result) {
@@ -77,7 +77,7 @@
             });
         },
 
-        _loadData : function (cb) {
+        _loadData: function (cb) {
             var self = this;
             this.dataset.data.loadAllSelectedData()
                 .done(function () {
@@ -93,9 +93,9 @@
                             currentPermutation[geographicDimension.id] = geographicRepresentation.id;
                             _.extend(currentPermutation, fixedPermutation);
 
-                            var value = self.dataset.data.getNumberData({ids :currentPermutation});
+                            var value = self.dataset.data.getNumberData({ ids: currentPermutation });
                             if (_.isNumber(value)) {
-                                result[normCode] = {value : value};
+                                result[normCode] = { value: value };
                             }
                         }
                     });
@@ -106,13 +106,13 @@
                 });
         },
 
-        render : function () {
+        render: function () {
             if (this.visible) {
                 this._mapContainerView.render();
             }
         },
 
-        destroy : function () {
+        destroy: function () {
             this.visible = false;
 
             if (this._mapContainerView && this._mapContainerView.renderTo) {
@@ -129,20 +129,20 @@
             this._unbindEvents();
         },
 
-        _getGeographicDimension : function () {
+        _getGeographicDimension: function () {
             return this.filterDimensions.dimensionsAtZone('left').at(0);
         },
 
-        _getGeographicSelectedRepresentations : function () {
-            return this._getGeographicDimension().get('representations').where({drawable : true});
+        _getGeographicSelectedRepresentations: function () {
+            return this._getGeographicDimension().get('representations').where({ drawable: true });
         },
 
-        _getGeographicDimensionNormCodes : function () {
+        _getGeographicDimensionNormCodes: function () {
             var selectedRepresentations = this._getGeographicSelectedRepresentations();
             return _.invoke(selectedRepresentations, "get", "normCode");
         },
 
-        _loadCallback : function () {
+        _loadCallback: function () {
             this._initModel();
             this._calculateRanges();
             this._initContainerView();
@@ -151,28 +151,28 @@
             this.render();
         },
 
-        _initModel : function () {
+        _initModel: function () {
             this._mapModel = new App.Map.MapModel();
         },
 
-        _initContainerView : function () {
+        _initContainerView: function () {
             this._mapContainerView = new App.Map.MapContainerView({
-                el : this.el,
-                dataset : this.dataset,
-                filterDimensions : this.filterDimensions,
-                mapModel : this._mapModel,
-                geoJson : this._geoJson,
-                container : this._container,
-                dataJson : this._dataJson,
-                width : $(this.el).width(),
-                height : $(this.el).height(),
-                mapType : this.mapType,
-                title : this.getTitle(),
-                rightsHolder : this.getRightsHolderText()
+                el: this.el,
+                dataset: this.dataset,
+                filterDimensions: this.filterDimensions,
+                mapModel: this._mapModel,
+                geoJson: this._geoJson,
+                container: this._container,
+                dataJson: this._dataJson,
+                width: $(this.el).width(),
+                height: $(this.el).height(),
+                mapType: this.mapType,
+                title: this.getTitle(),
+                rightsHolder: this.getRightsHolderText()
             });
         },
 
-        _setUpListeners : function () {
+        _setUpListeners: function () {
             if (!this._listenersSetted) {
                 this._listenersSetted = true;
                 this._mapModel.on('change:currentScale', this._handleTransform, this);
@@ -181,7 +181,7 @@
             }
         },
 
-        _calculateRanges : function () {
+        _calculateRanges: function () {
             var values = _.map(this._dataJson, function (value) {
                 return value.value;
             });
@@ -194,15 +194,15 @@
             this._mapModel.set("values", values);
         },
 
-        _handleTransform : function () {
+        _handleTransform: function () {
             this._mapContainerView.transform();
         },
 
-        _handleRangesNum : function () {
+        _handleRangesNum: function () {
             this._mapContainerView.updateRanges();
         },
 
-        _handleZoomExit : function () {
+        _handleZoomExit: function () {
             this._mapContainerView.zoomExit();
         }
 
