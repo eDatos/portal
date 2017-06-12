@@ -23,15 +23,15 @@
     width: @modal-width;
     margin-left: -(@modal-width / 2);
     margin-top: -190px;
-    .border-radius(6px);
+    .border-radius(10px);
+    border: 2px solid @istacGreyDark;
     
     .modal-close {
 	    float: right;
-	    font-size: 20px;
+	    font-size: 30px;
 	    font-weight: bold;
 	    line-height: 20px;
-	    color: @istacBlack;
-	    opacity: .8;
+	    color: @istacGreyDark;
 	    border: 0;
 		background: none;	    
 	    
@@ -47,16 +47,17 @@
 	h2 {
     	margin: 0;
     	text-align: left;
-        font-size: 24px;
-        color: @istacBlueDark;
+        font-size: 20px;
+        color: @istacGreyDark;
 	}
 	border-bottom: 1px solid @istacGreyLight;    	
-    padding: 20px;
+    padding: 10px;
+    background: @istacGreyLight;
 }
 
 .modal-content {
     text-align: left;
-    padding: 20px;
+    padding: 10px 10px 20px 10px;
 
     h3 {
         margin: 0 0 10px 4px;

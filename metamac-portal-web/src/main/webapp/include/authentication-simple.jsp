@@ -19,14 +19,16 @@
     
     SimpleCaptcha.create = function(captchaGeneratedId) {
     	var captchaContainer = "<table> <tr>"+
-        "       <td class=\"formevenrow\" nowrap=\"nowrap\" colspan=\"2\">"+
+        "       <td class=\"formevenrow\" nowrap=\"nowrap\" >"+
         "               <img src=\"" + this.captchaPictureUrl + "\">"+
         "         </td>"+
         "</tr>" +
         "<tr>" +
         "               <td class=\"formevenrow\" align=\"right\" width=\"120\">" +
-        "                       <label for=\"codigo\">Resultado de la operaci&oacute;n</label>"+
+        "                       <label for=\"codigo\">Escriba el texto que aparece en la imagen superior</label>"+
         "               </td>" +
+        "</tr>" +
+        "<tr>" +
         "               <td class=\"formevenrow\" nowrap=\"nowrap\" align=\"center\">"+
         "                       <input type=\"text\" name=\"codigo\" tabindex=\"1002\" id=\"codigo\"  />"+
         "               </td>"+
@@ -46,15 +48,16 @@
 
     var showCaptcha = function (options, done) {
         var $captchaContainer = $(options.captchaEl);
+        $captchaContainer.append('<div class="captcha captcha-simple"></div>');
         var captchaGeneratedId = "captcha_generated_" + Math.random().toString(36).slice(2);
                 
-        $("<div id='" + captchaGeneratedId + "'>").appendTo($captchaContainer);
+        $("<div id='" + captchaGeneratedId + "'>").appendTo($captchaContainer.find('.captcha'));
         
         SimpleCaptcha.create(captchaGeneratedId);
         
         var buttonText = options.buttonText || "Enviar";
         var $button = $("<button>").text(buttonText);
-        $button.appendTo($captchaContainer);
+        $button.appendTo($captchaContainer.find('.captcha'));
         $button.click(function (e) {
             e.preventDefault();
             done();
