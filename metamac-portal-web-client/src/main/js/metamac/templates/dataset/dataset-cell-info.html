@@ -8,40 +8,16 @@
 {{#if hasAttributes}}
 <b>{{message 'entity.observation.attributes.title'}}</b>
 <ul>
-    {{#if primaryMeasureAttributes}}
+    {{#each primaryMeasureAttributes}}
     <li>
-        {{message 'entity.observation.attributes.primaryMeasure'}}
-        <ul>
-        {{#each primaryMeasureAttributes}}        
-            <li>
-                {{#if href}}
-                    <a href="{{href}}" target="_blank">{{name}}</a>
-                {{/if}}
-                {{#unless href}}
-                    {{this}}
-                {{/unless}}
-            </li>
-        {{/each}}
-        </ul>
+        {{#if href}}
+        <a href="{{href}}" target="_blank">{{name}}</a> {{/if}} {{#unless href}} {{this}} {{/unless}}
     </li>
-    {{/if}}
-
-    {{#if combinatedDimensionsAttributes}}
+    {{/each}} {{#each combinatedDimensionsAttributes}}
     <li>
-        <b>{{message 'entity.observation.attributes.combinatedDimensions'}}</b>
-        <ul>
-        {{#each combinatedDimensionsAttributes}}
-            <li>
-                {{#if href}}
-                    <a href="{{href}}" target="_blank">{{name}}</a>
-                {{/if}}
-                {{#unless href}}
-                    {{this}}
-                {{/unless}}
-            </li>
-        {{/each}}
-        </ul>
+        {{#if href}}
+        <a href="{{href}}" target="_blank">{{name}}</a> {{/if}} {{#unless href}} {{this}} {{/unless}}
     </li>
-    {{/if}}
+    {{/each}}
 </ul>
 {{/if}}
