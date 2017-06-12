@@ -36,6 +36,10 @@
             var self = this;
             var fixedLabels = this.filterDimensions
                 .getAllFixedDimensionsCopy()
+                .sort(function (dimension) {
+                    // Put geographic dimensions at the beginning of the array
+                    return dimension.get('type') == "GEOGRAPHIC_DIMENSION" ? -1 : 1;
+                })
                 .map(function (dimension) {
                     var selectedRepresentations = self.getDrawableRepresentations(dimension);
                     return selectedRepresentations[0].get('visibleLabel') + ".";
