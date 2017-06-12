@@ -139,7 +139,8 @@
                     stub: {
                         dimensionId: ["GEOGRAPHICAL"] // Always this ones
                     },
-                    selfLink: {}
+                    selfLink: {},
+                    autoOpen: true
                 },
                 dimensions: {
                     dimension: this.indicatorMetadataDimensionsToMetadataDimensions(response.dimension),
