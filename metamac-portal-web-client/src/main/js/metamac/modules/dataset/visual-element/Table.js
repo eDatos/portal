@@ -9,16 +9,16 @@
         this.filterDimensions = options.filterDimensions;
 
         this._chartOptions = {
-            title : {
+            title: {
 
             },
-            columnTop : {
-                dimensions : []
+            columnTop: {
+                dimensions: []
             },
-            columnLeft : {
-                dimensions : []
+            columnLeft: {
+                dimensions: []
             },
-            fixedDimensions : {}
+            fixedDimensions: {}
         };
 
         this._type = 'table';
@@ -26,12 +26,12 @@
 
     App.VisualElement.Table.prototype = {
 
-        load : function () {
+        load: function () {
             this.render();
             this._bindEvents();
         },
 
-        destroy : function () {
+        destroy: function () {
             this.tableScrollManager.destroy();
             this.keyboardManager.destroy();
 
@@ -47,7 +47,7 @@
             this._unbindEvents();
         },
 
-        _bindEvents : function () {
+        _bindEvents: function () {
             this.listenTo(this.dataset.data, "hasNewData", this.hasNewData);
 
             var debouncedUpdate = _.debounce(_.bind(this.update, this), 20);
@@ -60,26 +60,26 @@
             });
         },
 
-        _unbindEvents : function () {
+        _unbindEvents: function () {
             this.stopListening();
             this.$el.off("resize");
         },
 
-        updatingDimensionPositions : function () {
+        updatingDimensionPositions: function () {
             this._applyVisualizationRestrictions();
             this.resetDimensionsLimits();
 
             this.filterDimensions.zones.get('fixed').set('fixedSize', 0);
         },
-        
-        _applyVisualizationRestrictions : function() {
+
+        _applyVisualizationRestrictions: function () {
             this._moveAllDimensionsToZone('left');
 
             this._forceMeasureDimensionInZone('top');
         },
 
-        updateTitle : function () {
-            if(this.$title) {
+        updateTitle: function () {
+            if (this.$title) {
                 this.$title.remove();
             }
             var title = this.getTitle();
@@ -88,8 +88,8 @@
             this.$el.prepend(this.$title);
         },
 
-        render : function () {
-            this.dataSource = new App.DataSourceDataset({dataset : this.dataset, filterDimensions : this.filterDimensions});
+        render: function () {
+            this.dataSource = new App.DataSourceDataset({ dataset: this.dataset, filterDimensions: this.filterDimensions });
             this.delegate = new App.Table.Delegate();
 
             this.$el.empty();
@@ -102,13 +102,13 @@
             this.$el.append(this.$canvas);
 
             this.view = new App.Table.View({
-                canvas : this.$canvas[0],
-                dataSource : this.dataSource,
-                delegate : this.delegate
+                canvas: this.$canvas[0],
+                dataSource: this.dataSource,
+                delegate: this.delegate
             });
 
             this.tableScrollManager = new App.Table.ScrollManager(this.view);
-            this.keyboardManager = new App.Table.KeyboardManager({view : this.view });
+            this.keyboardManager = new App.Table.KeyboardManager({ view: this.view });
 
             var rightsHolder = this.getRightsHolderText();
             this.$rightsHolder = $('<div class="rights-holder">' + rightsHolder + '</div>');
@@ -117,31 +117,31 @@
             this.view.repaint();
         },
 
-        hasNewData : function () {
+        hasNewData: function () {
             if (this.view) {
                 this.view.forceRepaint();
             }
         },
 
-        update : function () {
+        update: function () {
             this.updateTitle();
             this.view.update();
             this._updateSize();
         },
 
-        containerDimensions : function () {
+        containerDimensions: function () {
             var titleHeight = this.$title.height();
             return {
-                width : this.$el.width(),
-                height : this.$el.height() - titleHeight
+                width: this.$el.width(),
+                height: this.$el.height() - titleHeight
             };
         },
 
-        resizeFullScreen : function () {
+        resizeFullScreen: function () {
             this._updateSize();
         },
 
-        _updateSize : function () {
+        _updateSize: function () {
             var containerDimensions = this.containerDimensions();
             this.view.resize(containerDimensions);
         }
