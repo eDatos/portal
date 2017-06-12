@@ -199,15 +199,15 @@
                     this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;   
                     this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.mainLevel;
                     if (previousIsBlankRow) {
-                        this.ctx.rect(cell.x, cell.y, cellWidth, cell.height - 1);                         
+                        drawCellWithBottomBorder(this.ctx);
                     } else {
-                        this.ctx.rect(cell.x, cell.y + 1, cellWidth, cell.height - 2);                         
-                    }                
+                        drawCellWithBothBorders(this.ctx);
+                    }
                 } else {
-                    this.ctx.rect(cell.x, cell.y, cellWidth - this.ctx.lineWidth, cell.height);
-                }                
-                this.ctx.fillStyle = this.delegate.style.headerCell.background({ 
-                    rows : _.range(cell.index, cell.indexEnd) 
+                    drawCellWithoutBorders(this.ctx);
+                }
+                this.ctx.fillStyle = this.delegate.style.headerCell.background({
+                    rows: _.range(cell.index, cell.indexEnd)
                 }, this.view);
                 this.ctx.stroke();
                 this.ctx.fill();
@@ -245,6 +245,16 @@
             }
         }
         this.ctx.restore();
+
+        function drawCellWithBothBorders(ctx) {
+            ctx.rect(cell.x, cell.y + 1, cellWidth, cell.height - 2);
+        }
+        function drawCellWithoutBorders(ctx) {
+            ctx.rect(cell.x, cell.y, cellWidth - ctx.lineWidth, cell.height);
+        }
+        function drawCellWithBottomBorder(ctx) {
+            ctx.rect(cell.x, cell.y, cellWidth, cell.height - 1);
+        }
     };
 
     App.Table.LeftHeaderZone.prototype.separatorIndexInRectangle = function (rectangle) {

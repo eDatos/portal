@@ -224,6 +224,7 @@
             this.ctx.textAlign = "right";
             this.ctx.font = this.delegate.style.bodyCell.font;
             this.ctx.textBaseline = "middle";
+            this.ctx.strokeStyle = this.delegate.style.bodyCell.border.color;
 
             var marginRight = this.delegate.style.bodyCell.margin.right;
 
@@ -246,6 +247,14 @@
                     this.ctx.fill();
                     this.ctx.closePath();
 
+                    var isLastRow = i == (paintInfo.rows.length - 1);
+                    if (isLastRow) {
+                        this.ctx.beginPath();
+                        this.ctx.lineWidth = this.delegate.style.bodyCell.border.width;
+                        this.ctx.moveTo(point.x - 1, point.y + size.height);
+                        this.ctx.lineTo(point.x + size.width, point.y + size.height);
+                        this.ctx.stroke();
+                    }
 
                     var value = "";
                     if (!row.blank) {

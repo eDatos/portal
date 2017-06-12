@@ -28,11 +28,11 @@
                     }
                     return Constants.colors.istacWhite;
                 },
-                border : {
-                    color : Constants.colors.istacGreyLight,
-                    width : "1px",
-                    horizontal : true,
-                    vertical : false
+                border: {
+                    color: Constants.colors.istacGreyMedium,
+                    width: 0.5,
+                    horizontal: true,
+                    vertical: false
                 },
                 margin : {
                     right : 5
