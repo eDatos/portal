@@ -124,9 +124,13 @@
                 language: [],
                 total: 0
             };
+
+            var title = response.title ? (response.title.es || response.title.__default__) : null;
+            var description = response.conceptDescription ? (response.conceptDescription.es || response.conceptDescription.__default__) : null;
+
             response.metadata = {
-                name: this._buildLocalizedSpanishText(response.title.es),
-                description: this._buildLocalizedSpanishText(response.conceptDescription.es),
+                name: this._buildLocalizedSpanishText(title),
+                description: this._buildLocalizedSpanishText(description),
                 version: response.version,
                 relatedDsd: {
                     heading: {
@@ -152,6 +156,7 @@
         },
 
         _buildLocalizedSpanishText: function (value) {
+            if (value == null) { return value };
             return {
                 text: [{
                     value: value,
