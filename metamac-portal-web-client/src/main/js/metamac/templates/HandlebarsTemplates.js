@@ -815,10 +815,10 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, stack2, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function";
 
 
-  buffer += "<div class=\"dataset-embed\">\r\n    <strong>";
+  buffer += "<div class=\"dataset-embed\">\r\n	<div class=\"dataset-embed-title\">";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.embed.instructions", options) : helperMissing.call(depth0, "message", "filter.embed.instructions", options)))
-    + "</strong>\r\n    <textarea class=\"campo_texto\" readonly=\"readonly\">\r\n<div id=\"";
+    + "</div>\r\n	<textarea class=\"campo_texto\" readonly=\"readonly\">\r\n<div id=\"";
   if (stack2 = helpers.defaultId) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.defaultId; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
@@ -826,23 +826,23 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack2 = helpers.widgetUrl) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.widgetUrl; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\"></script>\r\n<script>datasetWidget({ \r\n	id : \"";
+    + "\"></script>\r\n<script>datasetWidget({\r\n		id: \"";
   if (stack2 = helpers.defaultId) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.defaultId; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\", \r\n	width: ";
+    + "\",\r\n		width: ";
   if (stack2 = helpers.defaultWidth) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.defaultWidth; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + ", \r\n	height: ";
+    + ",\r\n		height: ";
   if (stack2 = helpers.defaultHeight) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.defaultHeight; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + ", \r\n	params : \"";
+    + ",\r\n		params : \"";
   if (stack2 = helpers.params) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.params; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\",\r\n	sharedVisualizerUrl : \"";
+    + "\",\r\n		sharedVisualizerUrl : \"";
   if (stack2 = helpers.sharedVisualizerUrl) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.sharedVisualizerUrl; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)

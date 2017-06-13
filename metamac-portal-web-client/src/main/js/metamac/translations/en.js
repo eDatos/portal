@@ -32,7 +32,10 @@ I18n.translations.en = {
         },
         download: {
             selection: "Download selection",
-            all: "Download All"
+            all: "Download All",
+            modal: {
+                title: "Download info"
+            }
         },
         share: {
             permanent: "Permanent link:"

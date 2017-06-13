@@ -32,7 +32,10 @@ I18n.translations.es = {
         },
         download: {
             selection: "Descargar selección",
-            all: "Descargar todo"
+            all: "Descargar todo",
+            modal: {
+                title: "Información de descarga"
+            }
         },
         share: {
             permanent: "Enlace permanente:"

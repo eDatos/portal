@@ -1,6 +1,7 @@
 
 @zindex-modal-background : 100;
 @modal-width: 452px;
+@modal-min-width: 260px;
 
 .modal-backdrop {
     position: fixed;
@@ -15,14 +16,17 @@
 .modal {
     background-color : @istacWhite;
     overflow: auto;
+
     position: fixed;
     top: 50%;
     left: 50%;
     z-index: @zindex-modal-background;
     max-height: 500px;
-    width: @modal-width;
-    margin-left: -(@modal-width / 2);
+    max-width: @modal-width;
+    min-width: @modal-min-width;
+    margin-left: -(@modal-min-width/2);
     margin-top: -190px;
+
     .border-radius(10px);
     border: 2px solid @istacGreyDark;
     
@@ -47,7 +51,7 @@
 	h2 {
     	margin: 0;
     	text-align: left;
-        font-size: 20px;
+        font-size: 16px;
         color: @istacGreyDark;
 	}
 	border-bottom: 1px solid @istacGreyLight;    	
@@ -62,6 +66,6 @@
     h3 {
         margin: 0 0 10px 4px;
         text-align: left;
-        font-size: 16px;
+        font-size: 15px;
     }
 }
