@@ -208,7 +208,11 @@
         },
 
         getRightsHolderText: function () {
-            return App.config.showRightsHolder && this.dataset && this.dataset.metadata.getRightsHolder() ? this.dataset.metadata.getRightsHolder().name : '';
+            return App.config.showRightsHolder && !this._isEmbededOnVisualizerDomain() && this.dataset && this.dataset.metadata.getRightsHolder() ? this.dataset.metadata.getRightsHolder().name : '';
+        },
+
+        _isEmbededOnVisualizerDomain: function () {
+            return window.location.hostname == App.Helpers.getHostname(App.endpoints["statistical-visualizer"]);
         },
 
         getDrawableRepresentations: function (dimension) {

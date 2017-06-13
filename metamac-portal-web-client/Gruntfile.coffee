@@ -64,6 +64,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/libs/jQueryUtils.js"
 
                 paths.js + "/metamac/libs/Constants.js"
+                paths.js + "/metamac/libs/Helpers.js"
                 
                 paths.js + "/metamac/mixins/ToggleModel.js"
 
