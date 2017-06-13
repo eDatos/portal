@@ -7,44 +7,44 @@
 
     App.modules.dataset.DatasetDownloadView = Backbone.View.extend({
 
-        template : App.templateManager.get("dataset/dataset-download"),
+        template: App.templateManager.get("dataset/dataset-download"),
 
-        className : "dataset-download",
+        className: "dataset-download",
 
-        events : {
-            "click a" : "clickDownloadButton"
+        events: {
+            "click a": "clickDownloadButton"
         },
 
-        initialize : function () {
+        initialize: function () {
             this.filterDimensions = this.options.filterDimensions;
             this.visualizationType = this.options.visualizationType;
         },
 
-        render : function () {
-            var identifier  = this.filterDimensions.metadata.identifier();
+        render: function () {
+            var identifier = this.filterDimensions.metadata.identifier();
             var datasetSelection = this.getDatasetSelection();
             var identifierUrlPart = identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
-            
+
             var context = {
-                selection : JSON.stringify(datasetSelection),
-                emptySelection : JSON.stringify(this.getEmptyDatasetSelection()),
-                url : {
-                    tsv : App.endpoints["export"] + "/tsv/" + identifierUrlPart,
-                    excel : App.endpoints["export"] + "/excel/" + identifierUrlPart,
-                    px : App.endpoints["export"] + "/px/" + identifierUrlPart
+                selection: JSON.stringify(datasetSelection),
+                emptySelection: JSON.stringify(this.getEmptyDatasetSelection()),
+                url: {
+                    tsv: App.endpoints["export"] + "/tsv/" + identifierUrlPart,
+                    excel: App.endpoints["export"] + "/excel/" + identifierUrlPart,
+                    px: App.endpoints["export"] + "/px/" + identifierUrlPart
                 },
-                buttonConfig : this._getButtonConfiguration()
+                buttonConfig: this._getButtonConfiguration()
             };
 
             if (this._exportableImage()) {
                 var self = this;
                 svgExporter.addStyleAsync(svgExporter.sanitizeSvgElement($('svg'))).done(function (svg) {
                     var svgContext = {
-                        svg : svg,
-                        url : {                            
-                            png : App.endpoints["export"] + "/image" + self._getImageExportApiParams('png'),
-                            pdf : App.endpoints["export"] + "/image" + self._getImageExportApiParams('pdf'),
-                            svg : App.endpoints["export"] + "/image" + self._getImageExportApiParams('svg')
+                        svg: svg,
+                        url: {
+                            png: App.endpoints["export"] + "/image" + self._getImageExportApiParams('png'),
+                            pdf: App.endpoints["export"] + "/image" + self._getImageExportApiParams('pdf'),
+                            svg: App.endpoints["export"] + "/image" + self._getImageExportApiParams('svg')
                         }
                     };
                     _.extend(context, svgContext);
@@ -55,11 +55,11 @@
             }
         },
 
-        _exportableImage : function() {
+        _exportableImage: function () {
             return $('svg').exists();
         },
 
-        _getButtonConfiguration : function() {
+        _getButtonConfiguration: function () {
             var visualizationSupertype = '';
             switch (this.visualizationType) {
                 case '': // On selection mode
@@ -71,25 +71,25 @@
                 case 'mapbubble':
                     visualizationSupertype = 'map';
                     break;
-                default: 
+                default:
                     visualizationSupertype = 'graph';
                     break;
             }
 
             var haveDataFormats = visualizationSupertype == 'data';
-            var haveMapFormats =  visualizationSupertype == 'map' && false; // TODO: METAMAC-2033
+            var haveMapFormats = visualizationSupertype == 'map' && false; // TODO: METAMAC-2033
             var haveImageFormats = _.contains(['graph', 'map'], visualizationSupertype) && this._exportableImage();
 
             return {
-                dataFormats : haveDataFormats,
+                dataFormats: haveDataFormats,
                 mapFormats: haveMapFormats,
                 imageFormats: haveImageFormats,
-                iconPreffix : visualizationSupertype
+                iconPreffix: visualizationSupertype
             };
         },
- 
-        _getImageExportApiParams : function(type) {
-            var identifier  = this.filterDimensions.metadata.identifier();            
+
+        _getImageExportApiParams: function (type) {
+            var identifier = this.filterDimensions.metadata.identifier();
             var filename = "chart" + "-" + identifier.agency + "-" + identifier.identifier + "-" + identifier.version; // IDEA Add visualization type to the name
 
             var mime = svgExporter.mimeTypeFromType(type);
@@ -102,45 +102,45 @@
             return params;
         },
 
-        getDatasetSelection : function () {
+        getDatasetSelection: function () {
             var result = {
-                dimensions : {
-                    dimension : []
+                dimensions: {
+                    dimension: []
                 }
             };
             var selection = this.filterDimensions.exportJSON();
 
             _.each(selection, function (dimension, dimensionId) {
                 result.dimensions.dimension.push({
-                    dimensionId : dimensionId,
+                    dimensionId: dimensionId,
                     labelVisualisationMode: "LABEL", //TODO obtain value from filterDimensions
-                    position : dimension.position,
-                    dimensionValues : {
-                        dimensionValue : dimension.selectedCategories
+                    position: dimension.position,
+                    dimensionValues: {
+                        dimensionValue: dimension.selectedCategories
                     }
                 })
             });
 
-            return {datasetSelection : result};
+            return { datasetSelection: result };
         },
 
         // Empty selection returns all
-        getEmptyDatasetSelection : function () {
-            return {datasetSelection : null};
+        getEmptyDatasetSelection: function () {
+            return { datasetSelection: null };
         },
 
-        clickDownloadButton : function (e) {
+        clickDownloadButton: function (e) {
             e.preventDefault();
             var $currentTarget = $(e.currentTarget);
 
             if (this._isChromeFrameWidget()) {
                 this._openPopupDownloadForm($currentTarget.parent("form"));
             } else {
-                $currentTarget.parent("form").submit();  
+                $currentTarget.parent("form").submit();
             }
-        },        
+        },
 
-        _openPopupDownloadForm : function (form) {
+        _openPopupDownloadForm: function (form) {
             var form = form.clone();
             form.append('<input type="submit" value="' + 'Descargar' + '">');
             var formHTML = form[0].outerHTML;
@@ -156,44 +156,44 @@
             popup.focus();
         },
 
-        _isChromeFrameWidget : function () {
+        _isChromeFrameWidget: function () {
             return App.config["chromeFrameObject"];
             // I haven´t found a way to properly detect the difference between a embedded chromeFrame object and chromeFrame triggered from parent, so passed as variable when embedded object
             //return App.config["widget"] && !!window.externalHost;
         },
 
-        onClickDownloadXlsx : function (e) {
+        onClickDownloadXlsx: function (e) {
             e.preventDefault();
             this.exportApiCall("excel");
         },
 
-        onClickDownloadTsv : function () {
+        onClickDownloadTsv: function () {
             this.exportApiCall("tsv");
         },
 
-        onClickDownloadPng : function () {
+        onClickDownloadPng: function () {
 
         },
 
-        onClickDownloadPdf : function () {
+        onClickDownloadPdf: function () {
 
         },
 
-        onClickDownloadSvg : function () {
+        onClickDownloadSvg: function () {
 
         },
 
-        exportApiCall : function (exportType) {
+        exportApiCall: function (exportType) {
             //TODO querys?
-            var identifier  = this.filterDimensions.metadata.identifier();
+            var identifier = this.filterDimensions.metadata.identifier();
             var url = App.endpoints["export"] + "/" + exportType + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
             var selection = this.getDatasetSelection();
 
             var downloadRequest = $.ajax({
-                url : url,
-                method : "POST",
-                data : JSON.stringify(selection),
-                contentType : "application/json; charset=utf-8"
+                url: url,
+                method: "POST",
+                data: JSON.stringify(selection),
+                contentType: "application/json; charset=utf-8"
             });
 
             downloadRequest.done(function (response) {
