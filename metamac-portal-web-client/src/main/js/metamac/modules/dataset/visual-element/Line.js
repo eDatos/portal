@@ -78,6 +78,12 @@ App.namespace("App.VisualElement.LineChart");
                 backgroundColor: Constants.colors.istacWhite,
                 marginRight: 0
             },
+            credits: {
+                position: {
+                    y: 0,
+                    x: 0
+                }
+            },
             tooltip: {
                 formatter: this.tooltipFormatter
             },

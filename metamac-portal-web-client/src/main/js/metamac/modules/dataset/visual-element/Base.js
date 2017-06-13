@@ -69,7 +69,7 @@
                 credits: {
                     position: {
                         y: 0,
-                        x: -20
+                        x: -10
                     }
                 },
                 legend: {
