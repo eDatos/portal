@@ -441,7 +441,7 @@
         },
 
         getTitle: function () {
-            return this.getLocalizedLabel(this.metadata.name);
+            return this.getLocalizedLabel(this.options.name);
         },
 
         getSubtitle: function () {
@@ -453,7 +453,7 @@
         },
 
         getDescription: function () {
-            return this.getLocalizedLabel(this.metadata.description);
+            return this.getLocalizedLabel(this.options.description);
         },
 
         getDates: function () {

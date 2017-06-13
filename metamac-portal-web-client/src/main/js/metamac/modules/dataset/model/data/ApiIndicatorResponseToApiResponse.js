@@ -128,9 +128,10 @@
             var title = response.title ? (response.title.es || response.title.__default__) : null;
             var description = response.conceptDescription ? (response.conceptDescription.es || response.conceptDescription.__default__) : null;
 
+            response.name = this._buildLocalizedSpanishText(title);
+            response.description = this._buildLocalizedSpanishText(description);
+
             response.metadata = {
-                name: this._buildLocalizedSpanishText(title),
-                description: this._buildLocalizedSpanishText(description),
                 version: response.version,
                 relatedDsd: {
                     heading: {
