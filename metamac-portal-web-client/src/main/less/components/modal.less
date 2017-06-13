@@ -1,5 +1,5 @@
 
-@zindex-modal-background : 100;
+
 @modal-width: 452px;
 @modal-min-width: 260px;
 
@@ -9,7 +9,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: (@zindex-modal-background - 10);
+    z-index: (@zIndex40 - 5);
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -20,7 +20,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    z-index: @zindex-modal-background;
+    z-index: @zIndex40;
     max-height: 500px;
     max-width: @modal-width;
     min-width: @modal-min-width;
