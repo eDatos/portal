@@ -23,7 +23,7 @@
         this.dataSource = options.dataSource;
         this.delegate = options.delegate;
         this.view = options.view;
-        this.offset = new Point(0,0);
+        this.offset = new Point(0, 0);
         this.calculateIncrementalSize();
     };
 
@@ -41,8 +41,8 @@
             });
 
             this.incrementalCellSize = {
-                rows : rows,
-                columns : this.bodyZone.incrementalCellSize.columns
+                rows: rows,
+                columns: this.bodyZone.incrementalCellSize.columns
             };
 
             var heightTotal = rows[rows.length - 1];
@@ -86,20 +86,20 @@
                     var column = indexInValue % rowsValuesLength[i];
                     var content = rowsValues[i][column];
 
-                    var cellAttributes =  tooltipValues[i][column] ? !_.isEmpty(tooltipValues[i][column].attributes) ? tooltipValues[i][column].attributes : [] : [];
+                    var cellAttributes = tooltipValues[i][column] ? !_.isEmpty(tooltipValues[i][column].attributes) ? tooltipValues[i][column].attributes : [] : [];
                     var cellTitle = tooltipValues[i][column] ? tooltipValues[i][column].title : "";
 
 
                     result[i].push({
-                        index : index,
-                        indexEnd : indexEnd,
-                        height : cellHeight,
-                        y : cellY,
-                        x : cellX,
-                        width : cellWidth,
-                        content : content,
-                        tooltip : cellTitle,
-                        attributes : cellAttributes
+                        index: index,
+                        indexEnd: indexEnd,
+                        height: cellHeight,
+                        y: cellY,
+                        x: cellX,
+                        width: cellWidth,
+                        content: content,
+                        tooltip: cellTitle,
+                        attributes: cellAttributes
                     });
                 }
             }
@@ -119,9 +119,9 @@
     App.Table.TopHeaderZone.prototype.titleAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
-            return this.delegate.formatHeaderInfo({ 
-                title : headerCellAtPoint.tooltip, 
-                attributes : headerCellAtPoint.attributes
+            return this.delegate.formatHeaderInfo({
+                title: headerCellAtPoint.tooltip,
+                attributes: headerCellAtPoint.attributes
             });
         }
     };
@@ -175,14 +175,14 @@
         this.ctx.beginPath();
 
         this.ctx.strokeStyle = this.delegate.style.headerCell.border.color.mainLevel;
-        this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;   
+        this.ctx.lineWidth = this.delegate.style.headerCell.border.width.mainLevel;
 
         this.ctx.rect(
-            this.viewPort.x - this.ctx.lineWidth, 
-            this.viewPort.y, 
-            this.viewPort.width + this.ctx.lineWidth*2 + this.offset.x, 
+            this.viewPort.x - this.ctx.lineWidth,
+            this.viewPort.y,
+            this.viewPort.width + this.ctx.lineWidth * 2 + this.offset.x,
             this.viewPort.height
-        );        
+        );
 
         this.ctx.closePath();
         this.ctx.stroke();
@@ -225,16 +225,16 @@
                 this.ctx.fillStyle = this.delegate.style.headerCell.color;
                 this.ctx.fillText(cell.content || "", cell.x + margin, Math.ceil(cell.y + cell.height / 2));
                 if (_.compact(cell.attributes).length) {
-                    this.ctx.beginPath();                  
+                    this.ctx.beginPath();
                     var marginMark = this.delegate.style.attributeCellMark.margin;
-                    var sizeMark = this.delegate.style.attributeCellMark.size;              
+                    var sizeMark = this.delegate.style.attributeCellMark.size;
                     this.ctx.moveTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark);
                     this.ctx.lineTo(cell.x + cell.width - marginMark - sizeMark, cell.y + cell.height - marginMark);
                     this.ctx.lineTo(cell.x + cell.width - marginMark, cell.y + cell.height - marginMark - sizeMark);
                     this.ctx.fillStyle = this.delegate.style.attributeCellMark.background;
                     this.ctx.fill();
                     this.ctx.closePath();
-                } 
+                }
 
                 this.ctx.restore();
             }
@@ -249,7 +249,7 @@
         var lastRowPaintInfo = _.last(this.lastPaintInfo);
 
         for (var i = 0; i < lastRowPaintInfo.length; i++) {
-            var cellPaintInfo =  lastRowPaintInfo[i];
+            var cellPaintInfo = lastRowPaintInfo[i];
             if (rectangle.containsPoint(new Point(cellPaintInfo.x, rectangle.y))) {
                 return cellPaintInfo.index;
             } else if (rectangle.containsPoint(new Point(cellPaintInfo.x + cellPaintInfo.width, rectangle.y))) {
@@ -257,11 +257,11 @@
             }
         }
     }
-    
-    App.Table.TopHeaderZone.prototype.containsPoint = function(point) {
+
+    App.Table.TopHeaderZone.prototype.containsPoint = function (point) {
         var offsettedViewport = new Rectangle(
-            this.viewPort.x, 
-            this.viewPort.y, 
+            this.viewPort.x,
+            this.viewPort.y,
             this.viewPort.width + this.offset.x,
             this.viewPort.height
         );
