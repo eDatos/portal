@@ -2,7 +2,14 @@
 
 svg {
     fill: @istacWhite;
-    path {
-    	stroke-width: 0.01px;
+
+    .highcharts-legend-item tspan { 
+        font-size: 10px;
+    }
+
+    .highcharts-series.highcharts-tracker { // Map 
+        path {
+            stroke-width: 0.01px;
+        }
     }
 }
