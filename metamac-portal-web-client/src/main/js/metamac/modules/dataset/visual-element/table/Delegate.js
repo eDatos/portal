@@ -59,7 +59,7 @@
                     },
                     width: {
                         default: 1,
-                        mainLevel: 3
+                        mainLevel: 4
                     }
                 },
                 shadow: {
