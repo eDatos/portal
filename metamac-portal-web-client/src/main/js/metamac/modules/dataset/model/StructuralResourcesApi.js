@@ -25,7 +25,7 @@
         },
 
         // Output: "http://estadisticas.arte-consultores.com/structural-resources/latest/agencyschemes/SDMX/AGENCIES/1.0/agencies/ISTAC"
-        buildOrganisationUrl() {
+        buildOrganisationUrl: function () {
             var organisationIdentifier = this.getIdentifierFromUrn(App.config["organisationUrn"]);
             return [
                 App.endpoints["structural-resources"],
