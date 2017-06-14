@@ -232,7 +232,7 @@ I18n.translations.es = {
     indicator: {
         dimension: {
             name: {
-                TIME: "Período de tiempo",
+                TIME: "Períodos",
                 MEASURE: "Medidas",
                 GEOGRAPHICAL: "Localización geográfica"
             }
