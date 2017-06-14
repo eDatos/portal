@@ -44,7 +44,7 @@
 
         selectionPermalink: function () {
             var args = this._nameArguments(["permalinkId"], arguments);
-            args = _.defaults(App.queryParams, args);
+            args = _.defaults(args, App.queryParams);
             this.datasetController.showDatasetSelection(args);
         },
 
@@ -54,14 +54,14 @@
 
         visualizationType: function () {
             var args = this._nameArguments(["visualizationType"], arguments);
-            args = _.defaults(App.queryParams, args);
+            args = _.defaults(args, App.queryParams);
             this.datasetController.showDatasetVisualization(args);
         },
 
         visualizationTypePermalink: function () {
             var args = this._nameArguments(["visualizationType", "permalinkId"], arguments);
-            args = _.defaults(App.queryParams, args);
-            this.datasetController.showDatasetVisualization(App.queryParams);
+            args = _.defaults(args, App.queryParams);
+            this.datasetController.showDatasetVisualization(args);
         },
 
         error: function () {

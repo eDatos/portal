@@ -29,14 +29,6 @@
         getWidgetUrl: function () {
             return App.endpoints["statistical-visualizer"] + '/js/widget.js';
         },
-        
-        getSharedVisualizerUrl : function() {
-            if (!_.isEmpty(App.endpoints["shared-statistical-visualizer"])) {
-                return App.endpoints["shared-statistical-visualizer"];
-            } else {
-                return [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
-            }
-        },
 
         getSharedVisualizerParams: function (permalinkId) {
             return [
@@ -48,9 +40,9 @@
 
         renderEmbed: function (permalinkId) {
             var context = {
-                widgetUrl : this.getWidgetUrl(),
-                params : this.getSharedVisualizerParams(permalinkId),
-                sharedVisualizerUrl : this.getSharedVisualizerUrl(),
+                widgetUrl: this.getWidgetUrl(),
+                params: this.getSharedVisualizerParams(permalinkId),
+                sharedVisualizerUrl: this.filterDimensions.metadata.getSharedVisualizerUrl(),
                 defaultId: 'dataset-widget',
                 defaultWidth: 500,
                 defaultHeight: 400,

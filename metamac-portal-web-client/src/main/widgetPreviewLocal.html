@@ -98,6 +98,19 @@
     <div id="widget-test-3" style="width: 600px; height: 200px;"></div>
     <script src="widget/widget.js"></script>
     <script>datasetWidget({ id : "widget-test-3", width: 500, height: 400, params : "agencyId=ISTAC&resourceId=C00031A_000002&version=~latest&resourceType=dataset#visualization/table"})</script>
+	<div id="dataset-widget-4"></div>
+	<script src="widget/widget.js"></script>
+	<script>
+		datasetWidget({
+			id: "dataset-widget-4",
+			width: 500,
+			height: 400,
+			// This params is not what the visualizare generates, but because the conversion from permalink to full url is done in the jsp, we emulate it here
+			params: "resourceType=dataset&agencyId=ISTAC&resourceId=C00031A_000002&version=001.011&indicatorSystem=null#visualization/table/permalink/u0ww1yle5eaxpcth61odiv5r",
+			sharedVisualizerUrl: "http://estadisticas.arte-consultores.com/statistical-visualizer/visualizer/data.html"
+		})
+	</script>
+
 
     </div>
     <div id="fechaactual"></div>

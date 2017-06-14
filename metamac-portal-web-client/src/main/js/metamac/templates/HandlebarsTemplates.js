@@ -1379,11 +1379,13 @@ function program4(depth0,data) {
 function program6(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n    <h2 class=\"dataset-visualization-title\" title=\""
+  buffer += "\r\n    <h2 class=\"dataset-visualization-title\"><a target=\"_blank\" href=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.visualizerUrlForWidget)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" title=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.metadata),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</h2>\r\n    ";
+    + "</a></h2>\r\n    ";
   return buffer;
   }
 

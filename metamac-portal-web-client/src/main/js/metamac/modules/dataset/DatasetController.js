@@ -86,7 +86,7 @@
             var self = this;
             var deferred = $.Deferred();
 
-            var metadata = new App.dataset.Metadata(_.pick(datasetIdentifier, "type", "agency", "identifier", "version", "indicatorSystem"));
+            var metadata = new App.dataset.Metadata(_.pick(datasetIdentifier, "type", "agency", "identifier", "version", "indicatorSystem", "permalinkId"));
             if (metadata.equals(this.metadata)) {
                 deferred.resolve();
             } else {

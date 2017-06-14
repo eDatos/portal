@@ -48,16 +48,18 @@
             var version = identifier.type === "dataset" ? ["version", identifier.version].join('=') : '';
             var agencyId = identifier.agency ? ['agencyId', identifier.agency].join('=') : "";
             var indicatorSystem = identifier.indicatorSystem ? ['indicatorSystem', identifier.indicatorSystem].join('=') : "";
+            var permalinkId = identifier.permalinkId ? ['permalinkId', identifier.permalinkId].join('=') : "";
             return _.compact([
                 agencyId,
                 ['resourceId', identifier.identifier].join('='),
                 version,
                 ['resourceType', identifier.type].join('='),
-                indicatorSystem
+                indicatorSystem,
+                permalinkId
             ]).join('&');
         },
 
-        idAttributes: ["type", "agency", "identifier", "version", "indicatorSystem"],
+        idAttributes: ["type", "agency", "identifier", "version", "indicatorSystem", "permalinkId"],
 
         equals: function (metadata) {
             if (_.isUndefined(metadata)) return false;
@@ -70,6 +72,22 @@
 
         identifier: function () {
             return _.pick(this.options, this.idAttributes);
+        },
+
+        getVisualizerUrlForWidget: function () {
+            return [
+                this.getSharedVisualizerUrl(),
+                '?', this.buildQueryString(this.identifier()),
+                window.location.hash
+            ].join('');
+        },
+
+        getSharedVisualizerUrl: function () {
+            if (!_.isEmpty(App.endpoints["shared-statistical-visualizer"])) {
+                return App.endpoints["shared-statistical-visualizer"];
+            } else {
+                return [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
+            }
         },
 
         getBaseUrl: function () {
@@ -365,7 +383,8 @@
                 dimensions: this.getDimensions(),
 
                 apiUrl: this.getApiUrl(),
-                apiDocumentationUrl: this.getApiDocumentationUrl()
+                apiDocumentationUrl: this.getApiDocumentationUrl(),
+                visualizerUrlForWidget: this.getVisualizerUrlForWidget()
             };
         },
 
