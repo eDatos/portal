@@ -273,6 +273,7 @@
 
     App.Table.View.prototype.update = function () {
         this.setZonesViewPorts();
+        this.clearSelection();
         this.forceRepaint();
     };
 
@@ -314,6 +315,10 @@
         this.selection.columns.sort();
     };
 
+    App.Table.View.prototype.clearSelection = function () {
+        this.selection = { rowsCells: [], rows: [], columns: [] };
+    };
+
     App.Table.View.prototype.setActiveCell = function (arg) {
         var cell;
 
@@ -329,7 +334,7 @@
                     var firstCellSelectedEqSelectedCell = this.selection.rowsCells[0] === cell.y && this.selection.columns[0] === cell.x;
 
                     if (isOnlyACellSelected && firstCellSelectedEqSelectedCell) {
-                        this.selection = { rowsCells: [], rows: [], columns: [] };
+                        this.clearSelection();
                     } else {
                         var paintInfoRow = this.bodyZone.getPaintInfoRowCell(cell.y);
                         var selectedRows = paintInfoRow ? [paintInfoRow.index] : [];
