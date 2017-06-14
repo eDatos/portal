@@ -7,26 +7,26 @@
 
     App.modules.dataset.DatasetShareView = Backbone.View.extend({
 
-        template : App.templateManager.get("dataset/dataset-share"),
+        template: App.templateManager.get("dataset/dataset-share"),
 
-        initialize : function () {
+        initialize: function () {
             this.filterDimensions = this.options.filterDimensions;
         },
 
-        render : function () {
+        render: function () {
             var self = this;
             var savePermalinkRequest = this.savePermalink();
-            savePermalinkRequest.done(function (response){
+            savePermalinkRequest.done(function (response) {
                 self.renderShare(response.id);
             });
         },
 
-        savePermalink : function () {
+        savePermalink: function () {
             var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
             return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
         },
 
-        getSharedVisualizerParams : function(permalinkId) {
+        getSharedVisualizerParams: function (permalinkId) {
             return [
                 'permalink',
                 '=',
@@ -34,7 +34,7 @@
             ].join('')
         },
 
-        getSharedUrl : function (permalinkId) {
+        getSharedUrl: function (permalinkId) {
             return [
                 this.filterDimensions.metadata.getShareVisualizerUrl(),
                 '?',
@@ -42,26 +42,26 @@
             ].join('');
         },
 
-        renderShare : function (permalinkId) {
+        renderShare: function (permalinkId) {
             var context = {
-                url : this.getSharedUrl(permalinkId),
-                title : this.filterDimensions.metadata.getTitle(),
-                description : this.filterDimensions.metadata.getDescription()
+                url: this.getSharedUrl(permalinkId),
+                title: this.filterDimensions.metadata.getTitle(),
+                description: this.filterDimensions.metadata.getDescription()
             };
             this.$el.html(this.template(context));
 
             var config = {
-                data_track_addressbar : true
+                data_track_addressbar: true
             };
 
             var share = {
-                url : context.url,
-                title : context.title,
-                description : context.description,
-                passthrough : {
-                    twitter : {
-                    	via : 'istac_es',
-                    	text: context.title
+                url: context.url,
+                title: context.title,
+                description: context.description,
+                passthrough: {
+                    twitter: {
+                        via: 'istac_es',
+                        text: context.title
                     }
                 }
             };
