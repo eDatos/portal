@@ -128,6 +128,11 @@
             }
         },
 
+        _forceDimensionIdInZone: function (dimensionId, zone) {
+            var dimension = this.filterDimensions.get(dimensionId);
+            this.filterDimensions.zones.setDimensionZone(zone, dimension, { force: true });
+        },
+
         _moveAllDimensionsToZone: function (zone) {
             var self = this;
             this.filterDimensions.each(function (dimension) {
@@ -145,6 +150,16 @@
 
         _forceGeographicDimensionInZone: function (zone) {
             this._forceDimensionTypeInZone("GEOGRAPHIC_DIMENSION", zone);
+        },
+
+        _forceDimensionsByMetadataInfo: function () {
+            var self = this;
+            _.each(this.dataset.metadata.getDimensionsPosition(), function (dimensions, zone) {
+                _.each(dimensions, function (dimension) {
+                    console.log(dimension, zone);
+                    self._forceDimensionIdInZone(dimension, zone);
+                });
+            });
         },
 
         _preselectBiggestHierarchyGeographicValue: function () {

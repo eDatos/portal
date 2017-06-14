@@ -135,10 +135,10 @@
                 version: response.version,
                 relatedDsd: {
                     heading: {
-                        dimensionId: ["TIME", "MEASURE"] // Always this ones
+                        dimensionId: ["GEOGRAPHICAL", "MEASURE"] // Always this ones
                     },
                     stub: {
-                        dimensionId: ["GEOGRAPHICAL"] // Always this ones
+                        dimensionId: ["TIME"] // Always this ones
                     },
                     selfLink: {},
                     autoOpen: true

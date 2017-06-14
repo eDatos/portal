@@ -73,9 +73,7 @@
         },
 
         _applyVisualizationRestrictions: function () {
-            this._moveAllDimensionsToZone('left');
-
-            this._forceMeasureDimensionInZone('top');
+            this._forceDimensionsByMetadataInfo();
         },
 
         updateTitle: function () {

@@ -123,7 +123,7 @@ App.namespace("App.VisualElement.LineChart");
         };
 
         var hasTimeDimensions = this.dataset.metadata.getTimeDimensions().length > 0;
-        var detailZoomModelStart = hasTimeDimensions ? 0.48 : 0;
+        var detailZoomModelStart = hasTimeDimensions ? 0 : 0;
         var detailZoomModelStop = hasTimeDimensions ? 1 : 0.48;
 
         this.detailZoomModel = new App.VisualElement.line.DetailZoomModel({ start: detailZoomModelStart, stop: detailZoomModelStop });

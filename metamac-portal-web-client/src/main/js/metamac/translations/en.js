@@ -230,7 +230,7 @@ I18n.translations.en = {
         dimension: {
             name: {
                 TIME: "Time",
-                MEASURE: "Measure",
+                MEASURE: "Measures",
                 GEOGRAPHICAL: "Geographical location"
             }
         }

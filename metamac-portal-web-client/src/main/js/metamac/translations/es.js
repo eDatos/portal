@@ -233,7 +233,7 @@ I18n.translations.es = {
         dimension: {
             name: {
                 TIME: "Período de tiempo",
-                MEASURE: "Unidad de medida",
+                MEASURE: "Medidas",
                 GEOGRAPHICAL: "Localización geográfica"
             }
         }
