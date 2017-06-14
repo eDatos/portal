@@ -156,7 +156,6 @@
             var self = this;
             _.each(this.dataset.metadata.getDimensionsPosition(), function (dimensions, zone) {
                 _.each(dimensions, function (dimension) {
-                    console.log(dimension, zone);
                     self._forceDimensionIdInZone(dimension, zone);
                 });
             });
