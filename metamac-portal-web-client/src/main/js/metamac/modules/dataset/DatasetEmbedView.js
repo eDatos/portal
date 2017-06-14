@@ -7,26 +7,26 @@
 
     App.modules.dataset.DatasetEmbedView = Backbone.View.extend({
 
-        template : App.templateManager.get("dataset/dataset-embed"),
+        template: App.templateManager.get("dataset/dataset-embed"),
 
-        initialize : function () {
+        initialize: function () {
             this.filterDimensions = this.options.filterDimensions;
         },
 
-        render : function () {
+        render: function () {
             var self = this;
             var savePermalinkRequest = this.savePermalink();
-            savePermalinkRequest.done(function (response){
+            savePermalinkRequest.done(function (response) {
                 self.renderEmbed(response.id);
             });
         },
 
-        savePermalink : function () {
+        savePermalink: function () {
             var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
-            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);            
+            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
         },
 
-        getWidgetUrl : function () {
+        getWidgetUrl: function () {
             return App.endpoints["statistical-visualizer"] + '/js/widget.js';
         },
         
@@ -38,7 +38,7 @@
             }
         },
 
-        getSharedVisualizerParams : function(permalinkId) {
+        getSharedVisualizerParams: function (permalinkId) {
             return [
                 'permalink',
                 '=',
@@ -46,16 +46,16 @@
             ].join('')
         },
 
-        renderEmbed : function (permalinkId) {
+        renderEmbed: function (permalinkId) {
             var context = {
                 widgetUrl : this.getWidgetUrl(),
                 params : this.getSharedVisualizerParams(permalinkId),
                 sharedVisualizerUrl : this.getSharedVisualizerUrl(),
-                defaultId : 'dataset-widget',
-                defaultWidth : 500,
-                defaultHeight : 400,
-                title : this.filterDimensions.metadata.getTitle(),
-                description : this.filterDimensions.metadata.getDescription()
+                defaultId: 'dataset-widget',
+                defaultWidth: 500,
+                defaultHeight: 400,
+                title: this.filterDimensions.metadata.getTitle(),
+                description: this.filterDimensions.metadata.getDescription()
             };
             this.$el.html(this.template(context));
         }

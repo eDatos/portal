@@ -10,14 +10,14 @@
 
         getDimensions : function(callback) {
             var requestParams = {
-                url : this.metadata.metadata.relatedDsd.selfLink.href + "?_type=json",
-                method : "GET",
-            	dataType : 'jsonp',
-                jsonp : '_callback'
+                url: this.metadata.metadata.relatedDsd.selfLink.href + "?_type=json",
+                method: "GET",
+                dataType: 'jsonp',
+                jsonp: '_callback'
             };
-            
+
             $.ajax(requestParams).
-                done(function (response) {                    
+                done(function (response) {
                     var result = _.map(response.dataStructureComponents.dimensions.dimension, function (dimension) {
                         return dimension;
                     });
@@ -28,19 +28,19 @@
                 });
         },
 
-        getDimensionsConcepts : function (dimensions, callback) {
-            var conceptItems = _.map(dimensions, function(dimension) {
+        getDimensionsConcepts: function (dimensions, callback) {
+            var conceptItems = _.map(dimensions, function (dimension) {
                 return dimension.conceptIdentity;
             });
             this.getConcepts(conceptItems, callback);
         },
 
-        getMeasureConcepts : function(callback) {
+        getMeasureConcepts: function (callback) {
             var measureConcept;
             if (this.metadata.metadata.measureCoverages) {
                 measureConcept = this.metadata.metadata.measureCoverages.resource;
             } else if (this.metadata.metadata.attributes) {
-                var measureAttribute = _.findWhere(this.metadata.metadata.attributes.attribute, {type : "MEASURE", attachmentLevel : "DATASET"});
+                var measureAttribute = _.findWhere(this.metadata.metadata.attributes.attribute, { type: "MEASURE", attachmentLevel: "DATASET" });
                 measureConcept = measureAttribute.attributeValues.value;
             }
 
@@ -49,21 +49,21 @@
             }
         },
 
-        getConcepts : function(conceptItems, callback) {
+        getConcepts: function (conceptItems, callback) {
             var results = [];
             var promises = [];
-            _.each(conceptItems, function(conceptItem) {
+            _.each(conceptItems, function (conceptItem) {
 
                 var requestParams = {
-                    url : conceptItem.selfLink.href + "?_type=json",
-                    method : "GET",
-                    dataType : 'jsonp',
-                    jsonp : '_callback'
+                    url: conceptItem.selfLink.href + "?_type=json",
+                    method: "GET",
+                    dataType: 'jsonp',
+                    jsonp: '_callback'
                 };
-                
+
                 promises.push(
                     $.ajax(requestParams)
-                        .done(function (response) {                    
+                        .done(function (response) {
                             results.push(response);
                         })
                         .fail(function () {
@@ -73,7 +73,7 @@
             });
             $.when
                 .apply($, promises)
-                .done(function() {
+                .done(function () {
                     callback(null, results);
                 });
         }
