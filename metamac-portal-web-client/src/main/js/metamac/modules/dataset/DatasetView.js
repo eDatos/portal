@@ -102,6 +102,14 @@
             this.listenTo(this.fullScreen, "didEnterFullScreen", this._onDidEnterFullScreen);
             this.listenTo(this.fullScreen, "didExitFullScreen", this._onDidExitFullScreen);
             this.listenTo(this.optionsModel, "change:type", this._onSelectChartType);
+
+            if (this.optionsModel.get('widget')) {
+                this.listenTo(this.optionsModel, "change:filter", this._updateDimensionsHeight);
+            }
+        },
+
+        _updateDimensionsHeight: function () {
+            this.content.$el.toggleClass('no-dimensions', !this.optionsModel.get('filter'));
         },
 
         _unbindEvents: function () {
@@ -109,7 +117,6 @@
         },
 
         serializeData: function () {
-            var isInfo = this.optionsModel.get('type') && this.optionsModel.get('type') == "info";
             var context = {
                 showHeader: this._showHeader(), // Depends if the server is already painting the title and description
                 isWidget: this.optionsModel.get('widget'),
@@ -132,6 +139,10 @@
             }
             this._unbindEvents();
             this._bindEvents();
+
+            if (this.optionsModel.get('widget')) {
+                this._updateDimensionsHeight();
+            }
 
             App.BrowsersCompatibility.forceFontsRepaint();
         },

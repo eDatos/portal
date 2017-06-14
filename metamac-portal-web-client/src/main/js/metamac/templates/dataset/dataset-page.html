@@ -22,7 +22,7 @@
     {{#if isWidget}}
     <h2 class="dataset-visualization-title"><a target="_blank" href="{{ metadata.visualizerUrlForWidget }}" title="{{ metadata.title }}">{{ metadata.title }}</a></h2>
     {{/if}}
-    <div class="dataset-sidebar-visualization-container">
+    <div class="dataset-sidebar-visualization-container {{#if noDimensions}}no-dimensions{{/if}}">">
 
     </div>
     <div class="dataset-visualization-options-bar">

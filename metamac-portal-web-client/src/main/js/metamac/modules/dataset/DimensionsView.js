@@ -168,6 +168,14 @@
             }
         },
 
+        toggleVisibility: function () {
+            if (this.optionsModel.get('filter')) {
+                this.$el.show();
+            } else {
+                this.$el.hide();
+            }
+        },
+
         getMeasureAttribute: function () {
             return this.measureAttribute;
         },
@@ -251,6 +259,9 @@
             });
             this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(self.render, 500));
             this.listenTo(this.dataset.data, "hasNewData", self.hasNewdata);
+            if (this.optionsModel.get('widget')) {
+                this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);
+            }
         },
 
         _unbindEvents: function () {
@@ -362,6 +373,9 @@
         render: function () {
             this._unbindEvents();
             this._bindEvents();
+            if (this.optionsModel.get('widget')) {
+                this.toggleVisibility();
+            }
             var context = this._renderContext();
             this.$el.html(this.template(context));
             this.scrollbuttons = [];
