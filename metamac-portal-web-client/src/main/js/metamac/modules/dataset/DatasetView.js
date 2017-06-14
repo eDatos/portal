@@ -20,8 +20,7 @@
 
             this.optionsModel = new App.modules.dataset.OptionsModel({
                 widget: App.config.widget,
-                menu: false,
-                downloadButton: this.metadata.apiType !== App.Constants.api.type.INDICATOR
+                menu: false
             });
             this.dataset = new App.dataset.Dataset({ metadata: this.metadata, filterDimensions: this.filterDimensions });
 

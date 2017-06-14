@@ -86,7 +86,7 @@
                         title: I18n.t("filter.button." + type),
                         type: type,
                         btnClass: type === activeType ? 'active' : '',
-                        enabled: self._isButtonEnabled(type)
+                        enabled: self._isVisualizationButtonEnabled(type)
                     };
                 });
 
@@ -105,14 +105,14 @@
                     visualize: this.optionsModel.get('visualize'),
                     widget: this.optionsModel.get('widget'),
                     widgetButton: this.optionsModel.get('widgetButton'),
-                    downloadButton: this.optionsModel.get('downloadButton')
+                    downloadButton: this._isDownloadButtonEnabled()
                 };
                 this.$el.html(this.template(context));
             }
             return this;
         },
 
-        _isButtonEnabled: function (type) {
+        _isVisualizationButtonEnabled: function (type) {
             if (this.filterDimensions.metadata.apiType == App.Constants.api.type.INDICATOR) {
                 if (type == "map" || type == "mapbubble") return false;
             }
@@ -120,6 +120,12 @@
                 return type == "info" || type == this.optionsModel.get('widgetInitialType');
             }
             return true;
+        },
+
+        _isDownloadButtonEnabled: function () {
+            var isIndicator = this.filterDimensions.metadata.apiType === App.Constants.api.type.INDICATOR;
+            var isExportableImage = _.contains(['line', 'column', 'map', 'mapbuble'], this.optionsModel.get('type'));
+            return !isIndicator || isExportableImage;
         },
 
         clickFilter: function (e) {
