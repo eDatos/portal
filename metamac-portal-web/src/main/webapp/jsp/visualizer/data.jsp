@@ -82,6 +82,7 @@
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};
+			                    App.config["organisationUrn"] = "${organisationUrn}";                               
 			                    
 			                    App.queryParams["agency"] = '${param.agencyId}';
 			                    App.queryParams["identifier"] = '${param.resourceId}';		                    

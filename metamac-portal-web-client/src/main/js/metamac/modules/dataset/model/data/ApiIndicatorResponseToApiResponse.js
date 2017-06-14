@@ -120,7 +120,7 @@
         },
 
         indicatorMetadataResponseToMetadataResponse: function (response) {
-            response.selectedLanguages = { // FIXME revisar si esta property es necesaria
+            response.selectedLanguages = { // TODO revisar si esta property es necesaria
                 language: [],
                 total: 0
             };
@@ -153,8 +153,19 @@
                 //         name: self._buildLocalizedSpanishText(I18n.t("indicator.subjectAreas.name." + response.subjectCode, { defaultValue: response.subjectCode }))
                 //     }]
                 // }
-            }
+            };
+            this.getRightsHolder(response.metadata);
             return response;
+        },
+
+
+
+        getRightsHolder: function (metadata) {
+            if (!App.config["organisationUrn"]) return null;
+            var api = new App.dataset.StructuralResourcesApi();
+            api.getOrganisation(function (error, response) {
+                metadata.rightsHolder = response;
+            });
         },
 
         _buildLocalizedSpanishText: function (value) {

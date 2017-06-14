@@ -56,6 +56,8 @@
 			request.setAttribute("ApiUrlPermalinks", PERMALINKS_API_URL_BASE);
 			request.setAttribute("ApiUrlExport", EXPORT_API_URL_BASE);
 			request.setAttribute("ApiUrlIndicators", INDICATORS_API_URL_BASE);
+			request.setAttribute("organisationUrn", configurationService.retrieveOrganisationUrn());
+            
 		} catch (MetamacException e) {
 		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
 		 	request.setAttribute("ApiUrlStatisticalResources", "error");
@@ -63,6 +65,7 @@
 		 	request.setAttribute("ApiUrlPermalinks", "error");
             request.setAttribute("ApiUrlExport", "error");
             request.setAttribute("ApiUrlIndicators", "error");
+            request.setAttribute("organisationUrn", "error");
 		}
 	%>
     <%
@@ -103,6 +106,8 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
 	App.queryParams["indicatorSystem"] = getQueryParams("indicatorSystem");
     App.config["chromeFrameObject"] = getQueryParams("chromeFrameObject");
 	App.config["widget"] = true;
+
+	App.config["organisationUrn"] = "${organisationUrn}";
 
 	App.endpoints["statistical-resources"] = "${ApiUrlStatisticalResources}/v1.0";
     App.endpoints["structural-resources"] = "${ApiUrlStructuralResources}/v1.0";

@@ -3,12 +3,65 @@
     App.namespace('App.dataset.StructuralResourcesApi');
 
     App.dataset.StructuralResourcesApi = function (options) {
-        this.metadata = options.metadata;
+        this.metadata = options ? options.metadata : null;
     };
 
     App.dataset.StructuralResourcesApi.prototype = {
 
-        getDimensions : function(callback) {
+        getOrganisation: function (callback) {
+            var requestParams = {
+                url: this.buildOrganisationUrl() + "?_type=json",
+                method: "GET",
+                dataType: 'jsonp',
+                jsonp: '_callback'
+            };
+            $.ajax(requestParams).
+                done(function (response) {
+                    callback(null, response);
+                })
+                .fail(function () {
+                    callback("Error fetching organisation");
+                });
+        },
+
+        // Output: "http://estadisticas.arte-consultores.com/structural-resources/latest/agencyschemes/SDMX/AGENCIES/1.0/agencies/ISTAC"
+        buildOrganisationUrl() {
+            var organisationIdentifier = this.getIdentifierFromUrn(App.config["organisationUrn"]);
+            return [
+                App.endpoints["structural-resources"],
+                "agencyschemes",
+                organisationIdentifier.agency,
+                organisationIdentifier.identifier,
+                organisationIdentifier.version,
+                "agencies",
+                organisationIdentifier.organisation
+            ].join('/');
+        },
+
+        // Input: urn:sdmx:org.sdmx.infomodel.base.Agency=SDMX:AGENCIES(1.0).ISTAC
+        // Output: {
+        //      agency: SDMX
+        //      identifier: AGENCIES
+        //      version: 1.0
+        //      organisation: ISTAC
+        // }
+        getIdentifierFromUrn: function (urn) {
+            var splittedUrn = urn.split("=");
+            var resourcePrefix = splittedUrn[0];
+            var structuralResource = splittedUrn[1];
+
+            var structuralResourceRegex = /(\w+):([a-z_0-9]+)\(([0-9\.]+)\)\.([a-z_0-9]+)/i;
+            var structuralResourceMatchs = structuralResourceRegex.exec(structuralResource);
+
+            return {
+                agency: structuralResourceMatchs[1],
+                identifier: structuralResourceMatchs[2],
+                version: structuralResourceMatchs[3],
+                organisation: structuralResourceMatchs[4],
+            }
+        },
+
+        getDimensions: function (callback) {
             var requestParams = {
                 url: this.metadata.metadata.relatedDsd.selfLink.href + "?_type=json",
                 method: "GET",
