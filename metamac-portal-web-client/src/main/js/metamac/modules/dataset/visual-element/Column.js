@@ -82,21 +82,22 @@
         updatingDimensionPositions : function () {
             this._applyVisualizationRestrictions();
             this.resetDimensionsLimits();
-            
-            this.filterDimensions.zones.get('top').set('maxSize', 0); // columns      
+
             this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
             this.filterDimensions.zones.get('axisy').set('maxSize', 1);    
             this.filterDimensions.zones.get('top').set('maxSize', 1); // columns                                                  
         },
 
-        _applyVisualizationRestrictions : function() {
-            this._moveAllDimensionsToZone('left');
+        _applyVisualizationRestrictions: function () {
+            if (this._mustApplyVisualizationRestrictions()) {
+                this._moveAllDimensionsToZone('left');
 
-            this._forceMeasureDimensionInZone('axisy');
-            this._forceTimeDimensionInZone('fixed');
-            this._forceGeographicDimensionInZone('fixed');
+                this._forceMeasureDimensionInZone('axisy');
+                this._forceTimeDimensionInZone('fixed');
+                this._forceGeographicDimensionInZone('fixed');
 
-            this._applyVisualizationPreselections();
+                this._applyVisualizationPreselections();
+            }
         },
 
         _applyVisualizationPreselections : function() {

@@ -42,10 +42,12 @@
 
 
         _applyVisualizationRestrictions: function () {
-            this._moveAllDimensionsToZone('fixed');
-            this._forceGeographicDimensionInZone('left');
+            if (this._mustApplyVisualizationRestrictions()) {
+                this._moveAllDimensionsToZone('fixed');
+                this._forceGeographicDimensionInZone('left');
 
-            this._applyVisualizationPreselections();
+                this._applyVisualizationPreselections();
+            }
         },
 
         _applyVisualizationPreselections: function () {

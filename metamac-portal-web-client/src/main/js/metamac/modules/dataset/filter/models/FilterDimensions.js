@@ -114,6 +114,7 @@
                     }
                 });
                 representations._bindEvents();
+                representations._updateDrawables();
 
             }, this);
             this.zones.applyFixedSizeRestriction();

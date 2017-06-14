@@ -170,13 +170,15 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _applyVisualizationRestrictions: function () {
-            this._moveAllDimensionsToZone('top');
+            if (this._mustApplyVisualizationRestrictions()) {
+                this._moveAllDimensionsToZone('top');
 
-            this._forceMeasureDimensionInZone('axisy');
-            this._forceTimeDimensionInZone('left');
-            this._forceGeographicDimensionInZone('fixed');
+                this._forceMeasureDimensionInZone('axisy');
+                this._forceTimeDimensionInZone('left');
+                this._forceGeographicDimensionInZone('fixed');
 
-            this._applyVisualizationPreselections();
+                this._applyVisualizationPreselections();
+            }
         },
 
         _applyVisualizationPreselections: function () {

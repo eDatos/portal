@@ -120,6 +120,10 @@
             this.el = this.$el[0];
         },
 
+        _mustApplyVisualizationRestrictions: function () {
+            return !this.dataset.metadata.identifier().permalinkId;
+        },
+
         _forceDimensionTypeInZone: function (dimensionType, zone) {
             var dimensions = this.filterDimensions.where({ type: dimensionType });
             if (dimensions.length != 0) {

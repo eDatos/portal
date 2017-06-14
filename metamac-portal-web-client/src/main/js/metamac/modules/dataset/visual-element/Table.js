@@ -73,7 +73,9 @@
         },
 
         _applyVisualizationRestrictions: function () {
-            this._forceDimensionsByMetadataInfo();
+            if (this._mustApplyVisualizationRestrictions()) {
+                this._forceDimensionsByMetadataInfo();
+            }
         },
 
         updateTitle: function () {
