@@ -12,7 +12,10 @@
 
             "selection": "selection",
             "selection/permalink/:permalinkId": "selectionPermalink",
+
             "visualization": "visualization",
+            "visualization/permalink/:permalinkId": "visualizationPermalink",
+
             "visualization/:visualizationType": "visualizationType",
             "visualization/:visualizationType/permalink/:permalinkId": "visualizationTypePermalink",
 
@@ -50,6 +53,12 @@
 
         visualization: function () {
             this.datasetController.showDatasetVisualization(App.queryParams);
+        },
+
+        visualizationPermalink: function () {
+            var args = this._nameArguments(["permalinkId"], arguments);
+            args = _.defaults(args, App.queryParams);
+            this.datasetController.showDatasetVisualization(args);
         },
 
         visualizationType: function () {

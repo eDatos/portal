@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var PERMALINK_SUBPATH = "/permalink";
+
     App.namespace('App.modules.dataset.Permalink');
 
     App.modules.dataset.DatasetPermalink = {
@@ -11,13 +13,17 @@
 
         buildPermalinkContent : function (filterDimensions) {
             return JSON.stringify({
-                queryParams : App.queryParams,
-                hash : window.location.hash,
-                selection : filterDimensions.exportJSON()
+                queryParams: App.queryParams,
+                hash: this.removePermalink(window.location.hash),
+                selection: filterDimensions.exportJSON()
             });
         },
 
-        retrievePermalink : function (permalinkId) {
+        removePermalink: function (hash) {
+            return hash.indexOf(PERMALINK_SUBPATH) !== -1 ? hash.substring(0, hash.indexOf(PERMALINK_SUBPATH)) : hash;
+        },
+
+        retrievePermalink: function (permalinkId) {
             var url = this.baseUrl() + "/" + permalinkId;
             return $.getJSON(url);
         },
