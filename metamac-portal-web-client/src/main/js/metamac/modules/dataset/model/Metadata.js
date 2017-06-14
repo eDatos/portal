@@ -77,8 +77,8 @@
         getVisualizerUrlForWidget: function () {
             return [
                 this.getSharedVisualizerUrl(),
-                '?', this.buildQueryString(this.identifier()),
-                window.location.hash
+                '?', this.buildQueryString(this.identifier())
+                // Dont include window.location.hash here, the permalink include it
             ].join('');
         },
 
