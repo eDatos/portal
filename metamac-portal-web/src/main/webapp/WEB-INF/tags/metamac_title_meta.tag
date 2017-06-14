@@ -95,9 +95,10 @@
 	%>
     <%
         String permalinkId = request.getParameter("permalink");
+		String sharedVisualizerUrl = request.getParameter("sharedVisualizerUrl");
         if (permalinkId != null && !permalinkId.isEmpty()) {
             Permalink permalink = Helpers.getPermalink(PERMALINKS_API_URL_BASE, permalinkId);
-            response.sendRedirect(Helpers.buildUrl(permalink));   
+            response.sendRedirect(Helpers.buildUrl(permalink, sharedVisualizerUrl));   
         }        
     %>
 	<%               

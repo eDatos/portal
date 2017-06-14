@@ -83,8 +83,8 @@
         },
 
         getSharedVisualizerUrl: function () {
-            if (!_.isEmpty(App.endpoints["shared-statistical-visualizer"])) {
-                return App.endpoints["shared-statistical-visualizer"];
+            if (!_.isEmpty(App.endpoints["sharedVisualizerUrl"])) {
+                return App.endpoints["sharedVisualizerUrl"];
             } else {
                 return [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
             }

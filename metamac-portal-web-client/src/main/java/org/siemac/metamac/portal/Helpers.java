@@ -177,7 +177,7 @@ public class Helpers {
         return null;
     }
 
-    public static String buildUrl(Permalink permalink) {
+    public static String buildUrl(Permalink permalink, String sharedVisualizerUrl) {
         StringBuilder stringBuilder = new StringBuilder();
 
         QueryParams queryParams = permalink.getContent().getQueryParams();
@@ -186,6 +186,10 @@ public class Helpers {
         stringBuilder.append("&").append("resourceId").append("=").append(queryParams.getIdentifier());
         stringBuilder.append("&").append("version").append("=").append(queryParams.getVersion());
         stringBuilder.append("&").append("indicatorSystem").append("=").append(queryParams.getIndicatorSystem());
+
+        if (sharedVisualizerUrl != null) {
+            stringBuilder.append("&").append("sharedVisualizerUrl").append("=").append(sharedVisualizerUrl);
+        }
 
         // Includes #
         stringBuilder.append(permalink.getContent().getHash());

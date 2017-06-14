@@ -26,14 +26,6 @@
             return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
         },
 
-        getSharedVisualizerUrl : function() {
-            if (!_.isEmpty(App.endpoints["shared-statistical-visualizer"])) {
-                return App.endpoints["shared-statistical-visualizer"];
-            } else {
-                return [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
-            }
-        },
-
         getSharedVisualizerParams : function(permalinkId) {
             return [
                 'permalink',
@@ -44,7 +36,7 @@
 
         getSharedUrl : function (permalinkId) {
             return [
-                this.getSharedVisualizerUrl(),
+                this.filterDimensions.metadata.getShareVisualizerUrl(),
                 '?',
                 this.getSharedVisualizerParams(permalinkId)
             ].join('');
