@@ -7,11 +7,11 @@
 
     App.modules.dataset.DatasetPermalink = {
 
-        baseUrl : function () {
+        baseUrl: function () {
             return App.endpoints["permalinks"] + "/permalinks";
         },
 
-        buildPermalinkContent : function (filterDimensions) {
+        buildPermalinkContent: function (filterDimensions) {
             return JSON.stringify({
                 queryParams: App.queryParams,
                 hash: this.removePermalink(window.location.hash),
@@ -28,16 +28,16 @@
             return $.getJSON(url);
         },
 
-        savePermalinkShowingCaptchaInElement : function (content, el) {
+        savePermalinkShowingCaptchaInElement: function (content, el) {
             return metamac.authentication.ajax({
-                url : this.baseUrl(),
-                method : "POST",
-                dataType : "json",
-                contentType : "application/json; charset=utf-8",
-                data : JSON.stringify({content : content})
+                url: this.baseUrl(),
+                method: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ content: content })
             }, {
-                captchaEl : el
-            });
+                    captchaEl: el
+                });
         }
 
     }

@@ -10,38 +10,38 @@
         this._type = 'column';
 
         _.extend(this._chartOptions, {
-            chart : {
-                animation : false,
-                renderTo : '',
-                defaultSeriesType : 'column',
-                backgroundColor : Constants.colors.istacWhite
+            chart: {
+                animation: false,
+                renderTo: '',
+                defaultSeriesType: 'column',
+                backgroundColor: Constants.colors.istacWhite
             },
-            xAxis : {
-                categories : []
+            xAxis: {
+                categories: []
             },
-            yAxis : {
-                title : {
-                    text : ""
+            yAxis: {
+                title: {
+                    text: ""
                 }
             },
-            tooltip : {
-                formatter : this.tooltipFormatter
+            tooltip: {
+                formatter: this.tooltipFormatter
             },
-            plotOptions : {
-                series : {
-                    animation : false
+            plotOptions: {
+                series: {
+                    animation: false
                 },
-                column : {
-                    pointPadding : 0.2,
-                    borderWidth : 0,
-                    events : {
-                        legendItemClick : function () {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0,
+                    events: {
+                        legendItemClick: function () {
                             return false;
                         }
                     }
                 }
             },
-            series : []
+            series: []
         });
     };
 
@@ -49,12 +49,12 @@
 
     _.extend(App.VisualElement.ColumnChart.prototype, {
 
-        load : function () {
+        load: function () {
             this._bindEvents();
             this.render();
         },
 
-        destroy : function () {
+        destroy: function () {
             this._unbindEvents();
 
             if (this.chart && this.chart.renderTo) {
@@ -62,7 +62,7 @@
             }
         },
 
-        _bindEvents : function () {
+        _bindEvents: function () {
             var debounceUpdate = _.debounce(this.update, 20);
             this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", debounceUpdate);
 
@@ -74,17 +74,17 @@
             });
         },
 
-        _unbindEvents : function () {
+        _unbindEvents: function () {
             this.stopListening();
             this.$el.off("resize");
         },
 
-        updatingDimensionPositions : function () {
+        updatingDimensionPositions: function () {
             this._applyVisualizationRestrictions();
             this.resetDimensionsLimits();
 
             this.filterDimensions.zones.get('left').set('fixedSize', 1); // AxisX
-            this.filterDimensions.zones.get('axisy').set('maxSize', 1);    
+            this.filterDimensions.zones.get('axisy').set('maxSize', 1);
             this.filterDimensions.zones.get('top').set('maxSize', 1); // columns                                                  
         },
 
@@ -100,12 +100,12 @@
             }
         },
 
-        _applyVisualizationPreselections : function() {
+        _applyVisualizationPreselections: function () {
             this._preselectBiggestHierarchyGeographicValue();
             this._preselectMostRecentTimeRepresentation();
         },
 
-        render : function () {
+        render: function () {
             var self = this;
 
             this.dataset.data.loadAllSelectedData()
@@ -125,21 +125,21 @@
                     self._chartOptions.series = data.series;
                     self._chartOptions.xAxis.categories = data.xAxis;
                     self._chartOptions.chart.renderTo = self.$chartContainer[0];
-                    
+
                     self._chartOptions.credits.text = self.getRightsHolderText();
 
                     self.chart = new Highcharts.Chart(self._chartOptions);
-                    self.$el.on("resize", function () {});
+                    self.$el.on("resize", function () { });
                 });
         },
 
-        resizeFullScreen : function () {},
+        resizeFullScreen: function () { },
 
-        tooltipFormatter : function () {
+        tooltipFormatter: function () {
             return '<strong>' + this.series.name + ', ' + this.x + '</strong>:<br/>' + this.point.name;
         },
 
-        getData : function () {
+        getData: function () {
             var self = this;
 
             var result = {};
@@ -165,9 +165,9 @@
                     currentPermutation[columnsDimension.id] = columnCategory.id;
                     _.extend(currentPermutation, fixedPermutation);
 
-                    var y = self.dataset.data.getNumberData({ids : currentPermutation});
-                    var name = self.dataset.data.getStringData({ids : currentPermutation});
-                    serie.data.push({y : y, name : name});
+                    var y = self.dataset.data.getNumberData({ ids: currentPermutation });
+                    var name = self.dataset.data.getStringData({ ids: currentPermutation });
+                    serie.data.push({ y: y, name: name });
                 });
 
                 serie.name = columnCategory.get('visibleLabel');
@@ -182,7 +182,7 @@
             return result;
         },
 
-        update : function () {
+        update: function () {
             this.chart.showLoading();
 
             var self = this;
@@ -199,7 +199,7 @@
             });
         },
 
-        _updateSize : function () {
+        _updateSize: function () {
             var newHeight = this.$el.height() - this.$title.height() - this.getRightsHolderHeight();
             this.$chartContainer.height(newHeight);
             this.chart.setSize(this.$chartContainer.width(), this.$chartContainer.height(), false);
