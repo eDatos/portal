@@ -32,7 +32,10 @@ I18n.translations.pt = {
         },
         download: {
             selection: "Download da seleção",
-            all: "Download de tudo"
+            all: "Download de tudo",
+            modal: {
+                title: "Baixar informações"
+            }
         },
         share: {
             permanent: "Ligação permanente:"
@@ -124,6 +127,7 @@ I18n.translations.pt = {
             validTo: "Válido até",
             dateStart: "Período inicial",
             dateEnd: "Período final",
+            version: "Versão",
             versionRationale: {
                 title: "Fundamento para a mudança",
                 enum: {
@@ -222,7 +226,14 @@ I18n.translations.pt = {
         month_names: ["null", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
         abbr_month_names: ["null", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
         meridian: ["am", "pm"]
-
-
+    },
+    indicator: {
+        dimension: {
+            name: {
+                TIME: "Períodos",
+                MEASURE: "Medidas",
+                GEOGRAPHICAL: "Localização geografica"
+            }
+        }
     }
 };
