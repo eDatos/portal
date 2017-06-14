@@ -66,11 +66,12 @@
 		}
 	%>
     <%
-        String permalinkId = request.getParameter("permalink");
+		String permalinkId = request.getParameter("permalink");
+		String sharedVisualizerUrl = request.getParameter("sharedVisualizerUrl");
         if (permalinkId != null && !permalinkId.isEmpty()) {
             Permalink permalink = Helpers.getPermalink(PERMALINKS_API_URL_BASE, permalinkId);
-            response.sendRedirect(Helpers.buildUrl(permalink));   
-        }        
+            response.sendRedirect(Helpers.buildUrl(permalink, sharedVisualizerUrl));   
+        }         
     %>
 </head>
 <body>
@@ -108,7 +109,7 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
     App.endpoints["permalinks"] = "${ApiUrlPermalinks}/v1.0";
     App.endpoints["export"] = "${ApiUrlExport}/v1.0";
     App.endpoints["statistical-visualizer"] = "${ApiUrlStatisticalVisualizer}";
-    App.endpoints["shared-statistical-visualizer"] = getQueryParams("sharedVisualizerUrl");
+    App.endpoints["sharedVisualizerUrl"] = getQueryParams("sharedVisualizerUrl");
     App.endpoints["indicators"] = "${ApiUrlIndicators}/v1.0";
     
 

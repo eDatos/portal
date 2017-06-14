@@ -36,7 +36,7 @@
 
         getSharedUrl: function (permalinkId) {
             return [
-                this.filterDimensions.metadata.getShareVisualizerUrl(),
+                this.filterDimensions.metadata.getSharedVisualizerUrl(),
                 '?',
                 this.getSharedVisualizerParams(permalinkId)
             ].join('');
