@@ -193,7 +193,7 @@ I18n.translations.es = {
         },
         observation: {
             measure: {
-                title: 'Datos de la observación'
+                title: 'Identificación del dato'
             },
             attributes: {
                 title: 'Notas de la observación',

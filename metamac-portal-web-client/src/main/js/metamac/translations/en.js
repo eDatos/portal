@@ -192,7 +192,7 @@ I18n.translations.en = {
         },
         observation: {
             measure: {
-                title: 'Observation data'
+                title: 'Data identification'
             },
             attributes: {
                 title: 'Observation attributes',
