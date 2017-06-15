@@ -37,8 +37,8 @@
             var fixedLabels = this.filterDimensions
                 .getAllFixedDimensionsCopy()
                 .sort(function (dimension) {
-                    // Put geographic dimensions at the beginning of the array
-                    return dimension.get('type') == "GEOGRAPHIC_DIMENSION" ? -1 : 1;
+                    // Put measure dimensions at the beginning of the array
+                    return dimension.get('type') == "MEASURE_DIMENSION" ? -1 : 1;
                 })
                 .map(function (dimension) {
                     var selectedRepresentations = self.getDrawableRepresentations(dimension);
