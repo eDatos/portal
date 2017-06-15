@@ -151,6 +151,11 @@
                 columnsDimension = this.filterDimensions.dimensionsAtZone('fixed').at(0);
             }
             var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
+            if (horizontalDimension.get('type') == "TIME_DIMENSION") {
+                horizontalDimensionSelectedCategories = _.sortBy(horizontalDimensionSelectedCategories, function (representation) {
+                    return representation.normCode;
+                }).reverse();
+            }
             var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 
             var listSeries = [];
