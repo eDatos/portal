@@ -58,7 +58,7 @@
 			request.setAttribute("ApiUrlIndicators", INDICATORS_API_URL_BASE);
 			request.setAttribute("organisationUrn", configurationService.retrieveOrganisationUrn());
             
-		} catch (MetamacException e) {
+		} catch (MetamacException e) { 
 		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
 		 	request.setAttribute("ApiUrlStatisticalResources", "error");
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
@@ -120,7 +120,7 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
 
     App.start();
 
-    LazyLoad.js("js/authentication.js?d=${jsDate}", function() {
+    LazyLoad.js("${ApiUrlStatisticalVisualizer}/js/authentication.js?d=${jsDate}", function() {
     	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js");
     });
     

@@ -1,0 +1,1 @@
+UPDATE "TB_DATA_CONFIGURATIONS" SET CONF_VALUE = 'FILL_ME' WHERE CONF_KEY EQ 'metamac.portal.rest.external.base';

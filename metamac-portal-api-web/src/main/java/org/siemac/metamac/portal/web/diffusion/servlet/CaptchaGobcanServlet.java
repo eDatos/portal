@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.web.servlet;
+package org.siemac.metamac.portal.web.diffusion.servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
