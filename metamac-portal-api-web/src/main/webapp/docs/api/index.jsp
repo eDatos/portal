@@ -10,7 +10,7 @@
   <link href="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/css/screen.css" media='screen' rel='stylesheet' type='text/css'/>
   <link href="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/css/reset.css" media='print' rel='stylesheet' type='text/css'/>
   <link href="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/css/print.css" media='print' rel='stylesheet' type='text/css'/>
-  <link href="<%=org.siemac.metamac.portal.web.WebUtils.getFavicon()%>" rel="shortcut icon"/>
+  <link href="<%=org.siemac.metamac.portal.web.diffusion.WebUtils.getFavicon()%>" rel="shortcut icon"/>
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lib/jquery-1.8.0.min.js" type='text/javascript'></script>
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lib/jquery.slideto.min.js" type='text/javascript'></script>
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lib/jquery.wiggle.min.js" type='text/javascript'></script>
@@ -28,7 +28,7 @@
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lang/translator.js" type='text/javascript'></script>
   <script src="<%=org.siemac.metamac.core.common.util.swagger.SwaggerUtils.getResourceBaseURL(request)%>/swagger-ui/lang/es.js" type='text/javascript'></script>
   
-  <c:set var="apiStyleCssUrl" value="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleCssUrl()%>" />
+  <c:set var="apiStyleCssUrl" value="<%=org.siemac.metamac.portal.web.diffusion.WebUtils.getApiStyleCssUrl()%>" />
 
   <c:if test="${!empty apiStyleCssUrl}">
     <link href="<c:out value='${apiStyleCssUrl}'/>" media='screen' rel='stylesheet' type='text/css' />
@@ -101,8 +101,8 @@
   </script>
 </head>
 <body>
-	<c:set var="apiStyleHeaderUrl" value="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleHeaderUrl()%>" />
-	<c:set var="apiStyleFooterUrl" value="<%=org.siemac.metamac.portal.web.WebUtils.getApiStyleFooterUrl()%>" />
+	<c:set var="apiStyleHeaderUrl" value="<%=org.siemac.metamac.portal.web.diffusion.WebUtils.getApiStyleHeaderUrl()%>" />
+	<c:set var="apiStyleFooterUrl" value="<%=org.siemac.metamac.portal.web.diffusion.WebUtils.getApiStyleFooterUrl()%>" />
 	
 	<c:if test="${!empty apiStyleHeaderUrl}">
 	   <c:import charEncoding="UTF-8" url="${apiStyleHeaderUrl}" />

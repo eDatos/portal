@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.web;
+package org.siemac.metamac.portal.web.diffusion;
 
 import java.net.MalformedURLException;
 

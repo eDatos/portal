@@ -19,6 +19,7 @@
         <module>metamac-portal-rest-external-impl</module>
         <module>metamac-portal-web-client</module>
         <module>metamac-portal-web</module>
+        <module>metamac-portal-api-web</module>
     </modules>
 
 	<scm>

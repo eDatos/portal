@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="metamac-portal-web" version="2.5"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- ********************* SPRING INTEGRATION ******************** -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/config/spring/applicationContext.xml </param-value>
+	</context-param>
+    
+    <!-- LISTENER -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.siemac.metamac.portal.web.diffusion.ApplicationStartup</listener-class>
+	</listener>
+
+	<!-- Rest -->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/apis/*</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>SwaggerFilter</filter-name>
+		<filter-class>org.siemac.metamac.portal.web.diffusion.SwaggerFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SwaggerFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- URL rewriting -->
+	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/apis/*</url-pattern>
+	</filter-mapping>
+    
+    <!-- CORS -->
+    <filter>
+        <filter-name>CORSFilter</filter-name>
+        <filter-class>org.siemac.metamac.core.common.filter.CORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CORSFilter</filter-name>
+        <url-pattern>/apis/*</url-pattern>
+    </filter-mapping>
+
+	<error-page>
+		<exception-type>404</exception-type>
+		<location>/error.html</location>
+	</error-page>
+    
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.html</location>
+	</error-page>
+    
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>

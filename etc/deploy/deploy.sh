@@ -8,6 +8,7 @@ LOGBACK_RELATIVE_PATH_FILE=WEB-INF/classes/logback.xml
 
 scp -r etc/deploy deploy@estadisticas.arte-consultores.com:$TRANSFER_PATH
 scp metamac-portal-web/target/statistical-visualizer-*.war deploy@estadisticas.arte-consultores.com:$TRANSFER_PATH/statistical-visualizer.war
+scp metamac-portal-api-web/target/statistical-visualizer-api-*.war deploy@estadisticas.arte-consultores.com:$TRANSFER_PATH/statistical-visualizer-api.war
 ssh deploy@estadisticas.arte-consultores.com <<EOF
 
     chmod a+x $TRANSFER_PATH/deploy/*.sh;
@@ -31,6 +32,22 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     sudo cp $HOME_PATH/environment.xml $DEPLOY_TARGET_PATH/statistical-visualizer/$ENVIRONMENT_RELATIVE_PATH_FILE
     sudo cp $HOME_PATH/logback.xml $DEPLOY_TARGET_PATH/statistical-visualizer/$LOGBACK_RELATIVE_PATH_FILE
 
+
+    ###
+    # METAMAC-PORTAL-API
+    ###
+    
+    # Update Process
+    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-api
+    sudo mv $TRANSFER_PATH/statistical-visualizer-api.war $DEPLOY_TARGET_PATH/statistical-visualizer-api.war
+    sudo unzip $DEPLOY_TARGET_PATH/statistical-visualizer-api.war -d $DEPLOY_TARGET_PATH/statistical-visualizer-api
+    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-api.war
+    
+    # Restore Configuration
+    sudo cp $HOME_PATH/environment-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api/$ENVIRONMENT_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH/logback-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api/$LOGBACK_RELATIVE_PATH_FILE
+    
+    
     sudo chown -R metamac.metamac /servers/metamac
     sudo service metamac01 start
     

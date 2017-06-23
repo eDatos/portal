@@ -1,4 +1,4 @@
-<%@page import="org.siemac.metamac.portal.web.SwaggerUtils"%>
+<%@page import="org.siemac.metamac.portal.web.diffusion.SwaggerUtils"%>
 <%@page pageEncoding="UTF-8"%>
 {
    "swagger":"2.0",

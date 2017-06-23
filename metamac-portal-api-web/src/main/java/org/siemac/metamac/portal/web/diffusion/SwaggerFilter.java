@@ -1,4 +1,4 @@
-package org.siemac.metamac.portal.web;
+package org.siemac.metamac.portal.web.diffusion;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
