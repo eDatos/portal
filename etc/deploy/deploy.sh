@@ -2,6 +2,10 @@
 
 HOME_PATH=metamac-portal
 TRANSFER_PATH=$HOME_PATH/tmp
+
+HOME_PATH_INTERNAL=metamac-portal-internal
+TRANSFER_PATH_INTERNAL=$HOME_PATH_INTERNAL/tmp
+
 DEPLOY_TARGET_PATH=/servers/metamac/tomcats/metamac01/webapps
 ENVIRONMENT_RELATIVE_PATH_FILE=WEB-INF/classes/metamac/environment.xml
 LOGBACK_RELATIVE_PATH_FILE=WEB-INF/classes/logback.xml
@@ -25,9 +29,12 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
         checkPROC "metamac"
     fi
 
+    ## Un poco ineficiente, pero por simplificar el código
+    cp $TRANSFER_PATH/statistical-visualizer.war $TRANSFER_PATH_INTERNAL/statistical-visualizer-internal.war
+    cp $TRANSFER_PATH/statistical-visualizer-api.war $TRANSFER_PATH_INTERNAL/statistical-visualizer-api-internal.war
 
     ###
-    # METAMAC-PORTAL
+    # METAMAC-PORTAL - External
     ###
 
     # Update Process
@@ -35,14 +42,14 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     sudo mv $TRANSFER_PATH/statistical-visualizer.war $DEPLOY_TARGET_PATH/statistical-visualizer.war
     sudo unzip $DEPLOY_TARGET_PATH/statistical-visualizer.war -d $DEPLOY_TARGET_PATH/statistical-visualizer
     sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer.war
-
+    
     # Restore Configuration
     sudo cp $HOME_PATH/environment.xml $DEPLOY_TARGET_PATH/statistical-visualizer/$ENVIRONMENT_RELATIVE_PATH_FILE
     sudo cp $HOME_PATH/logback.xml $DEPLOY_TARGET_PATH/statistical-visualizer/$LOGBACK_RELATIVE_PATH_FILE
 
 
     ###
-    # METAMAC-PORTAL-API
+    # METAMAC-PORTAL-API - External
     ###
 
     # Update Process
@@ -54,7 +61,38 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     # Restore Configuration
     sudo cp $HOME_PATH/environment-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api/$ENVIRONMENT_RELATIVE_PATH_FILE
     sudo cp $HOME_PATH/logback-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api/$LOGBACK_RELATIVE_PATH_FILE
+    
+    
+    ###
+    # METAMAC-PORTAL - Internal
+    ###
 
+    # Update Process
+    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-internal
+    sudo mv $TRANSFER_PATH_INTERNAL/statistical-visualizer-internal.war $DEPLOY_TARGET_PATH/statistical-visualizer-internal.war
+    sudo unzip $DEPLOY_TARGET_PATH/statistical-visualizer-internal.war -d $DEPLOY_TARGET_PATH/statistical-visualizer-internal
+    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-internal.war
+    
+    # Restore Configuration
+    sudo cp $HOME_PATH_INTERNAL/environment.xml $DEPLOY_TARGET_PATH/statistical-visualizer-internal/$ENVIRONMENT_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH_INTERNAL/logback.xml $DEPLOY_TARGET_PATH/statistical-visualizer-internal/$LOGBACK_RELATIVE_PATH_FILE
+
+
+    ###
+    # METAMAC-PORTAL-API - Internal
+    ###
+
+    # Update Process
+    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal
+    sudo mv $TRANSFER_PATH_INTERNAL/statistical-visualizer-api-internal.war $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal.war
+    sudo unzip $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal.war -d $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal
+    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal.war
+
+    # Restore Configuration
+    sudo cp $HOME_PATH_INTERNAL/environment-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal/$ENVIRONMENT_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH_INTERNAL/logback-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal/$LOGBACK_RELATIVE_PATH_FILE
+    
+    
 
     if [ $RESTART -eq 1 ]; then
         sudo chown -R metamac.metamac /servers/metamac
