@@ -36,6 +36,7 @@
     </style>
     <%
 	    String PORTAL_URL_BASE = "";
+        String STATISTICAL_VISUALIZER_URL_BASE = "";
 		String STATISTICAL_RESOURCES_API_URL_BASE = "";
 		String SRM_API_URL_BASE = "";
         String PERMALINKS_API_URL_BASE = "";
@@ -43,14 +44,16 @@
         String INDICATORS_API_URL_BASE = "";
 		PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
 		try {
-	   		PORTAL_URL_BASE = configurationService.retrievePortalExternalUrlBase();
+		    PORTAL_URL_BASE = configurationService.retrievePortalExternalWebApplicationUrlBase();
+            STATISTICAL_VISUALIZER_URL_BASE = configurationService.retrievePortalExternalUrlBase();
 			STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesExternalApiUrlBase();
 		    SRM_API_URL_BASE = configurationService.retrieveSrmExternalApiUrlBase();
 		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
 		    EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();
 		    INDICATORS_API_URL_BASE = configurationService.retrieveIndicatorsExternalApiUrlBase();
 			
-			request.setAttribute("ApiUrlStatisticalVisualizer", PORTAL_URL_BASE);		
+		    request.setAttribute("ApiUrlStatisticalVisualizer", STATISTICAL_VISUALIZER_URL_BASE);
+            request.setAttribute("StatisticalVisualizerBase", PORTAL_URL_BASE);
 			request.setAttribute("ApiUrlStatisticalResources", STATISTICAL_RESOURCES_API_URL_BASE);	
 			request.setAttribute("ApiUrlStructuralResources", SRM_API_URL_BASE);
 			request.setAttribute("ApiUrlPermalinks", PERMALINKS_API_URL_BASE);
@@ -59,7 +62,8 @@
 			request.setAttribute("organisationUrn", configurationService.retrieveOrganisationUrn());
             
 		} catch (MetamacException e) { 
-		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
+		    request.setAttribute("ApiUrlStatisticalVisualizer","error");
+            request.setAttribute("StatisticalVisualizerBase", "error");
 		 	request.setAttribute("ApiUrlStatisticalResources", "error");
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
 		 	request.setAttribute("ApiUrlPermalinks", "error");
@@ -113,7 +117,7 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
     App.endpoints["structural-resources"] = "${ApiUrlStructuralResources}/v1.0";
     App.endpoints["permalinks"] = "${ApiUrlPermalinks}/v1.0";
     App.endpoints["export"] = "${ApiUrlExport}/v1.0";
-    App.endpoints["statistical-visualizer"] = "${ApiUrlStatisticalVisualizer}";
+    App.endpoints["statistical-visualizer"] = "${StatisticalVisualizerBase}";
     App.endpoints["sharedVisualizerUrl"] = getQueryParams("sharedVisualizerUrl");
     App.endpoints["indicators"] = "${ApiUrlIndicators}/v1.0";
     

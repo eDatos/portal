@@ -17,6 +17,7 @@
 		    	|| ApiUrlStructuralResources == ''
                 || ApiUrlPermalinks == ''
                 || ApiUrlExport == ''
+                || StatisticalVisualizerBase == ''
 		    	|| ApiUrlStatisticalVisualizer == ''}">
 		    	<h3>Error - Propiedad no configurada</h3>
 	            <p class="justificado">Lo sentimos, alguna de las propiedades no ha sido configurada correctamente.</p>
@@ -55,7 +56,7 @@
 						        CFInstall.check({
 						            mode : "inline",
 						            node : "metamac-container",
-						            url : "${ApiUrlStatisticalVisualizer}/chromeFramePrompt.html"
+						            url : "${StatisticalVisualizerBase}/chromeFramePrompt.html"
 						        }); 
 
 						    } else {
@@ -69,7 +70,7 @@
 			                    App.endpoints["structural-resources"] = "${ApiUrlStructuralResources}/v1.0";
 			                    
 			                    // http://estadisticas.arte-consultores.com/statistical-visualizer
-			                    App.endpoints["statistical-visualizer"] = "${ApiUrlStatisticalVisualizer}";
+			                    App.endpoints["statistical-visualizer"] = "${StatisticalVisualizerBase}";
 			                    
 			                    // http://estadisticas.arte-consultores.com/permalinks
 			                    App.endpoints["permalinks"] = "${ApiUrlPermalinks}/v1.0";

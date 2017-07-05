@@ -52,6 +52,15 @@
 		<url-pattern>/widget.html</url-pattern>
 	</servlet-mapping>
     
+    <servlet>
+        <servlet-name>widget-js</servlet-name>
+        <jsp-file>/js/widget.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>widget-js</servlet-name>
+        <url-pattern>/js/widget.js</url-pattern>
+    </servlet-mapping>
+    
     <!-- CORS -->
     <filter>
         <filter-name>CORSFilter</filter-name>

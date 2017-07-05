@@ -38,6 +38,7 @@
 	%>	
 	<%
 		String PORTAL_URL_BASE = "";
+        String STATISTICAL_VISUALIZER_URL_BASE = "";
         String PERMALINKS_API_URL_BASE = "";
         String EXPORT_API_URL_BASE = "";
 		String STATISTICAL_RESOURCES_API_URL_BASE = "";
@@ -63,7 +64,8 @@
 			    request.setAttribute("titlePrefix","DREM | ");
 			}
 		    
-		    PORTAL_URL_BASE = configurationService.retrievePortalExternalUrlBase();
+		    PORTAL_URL_BASE = configurationService.retrievePortalExternalWebApplicationUrlBase();
+		    STATISTICAL_VISUALIZER_URL_BASE = configurationService.retrievePortalExternalUrlBase();
 		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
             EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();            
             
@@ -77,7 +79,8 @@
 		        INDICATORS_API_URL_BASE = configurationService.retrieveIndicatorsExternalApiUrlBase();
 			}
 			
-			request.setAttribute("ApiUrlStatisticalVisualizer", PORTAL_URL_BASE);
+			request.setAttribute("ApiUrlStatisticalVisualizer", STATISTICAL_VISUALIZER_URL_BASE);
+            request.setAttribute("StatisticalVisualizerBase", PORTAL_URL_BASE);
             request.setAttribute("ApiUrlPermalinks", PERMALINKS_API_URL_BASE);
             request.setAttribute("ApiUrlExport", EXPORT_API_URL_BASE);		
 			request.setAttribute("ApiUrlStatisticalResources", STATISTICAL_RESOURCES_API_URL_BASE);	
@@ -86,7 +89,8 @@
             request.setAttribute("organisationUrn", configurationService.retrieveOrganisationUrn());
 		
 		} catch (MetamacException e) {
-		 	request.setAttribute("ApiUrlStatisticalVisualizer","error"); 
+		 	request.setAttribute("ApiUrlStatisticalVisualizer","error");
+		 	request.setAttribute("StatisticalVisualizerBase", "error");
 		 	request.setAttribute("ApiUrlPermalinks", "error");
             request.setAttribute("ApiUrlExport", "error");      
 		 	request.setAttribute("ApiUrlStatisticalResources", "error");
