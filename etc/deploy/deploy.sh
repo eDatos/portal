@@ -31,7 +31,6 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
 
     ## Un poco ineficiente, pero por simplificar el código
     cp $TRANSFER_PATH/statistical-visualizer.war $TRANSFER_PATH_INTERNAL/statistical-visualizer-internal.war
-    cp $TRANSFER_PATH/statistical-visualizer-api.war $TRANSFER_PATH_INTERNAL/statistical-visualizer-api-internal.war
 
     ###
     # METAMAC-PORTAL - External
@@ -81,18 +80,7 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     ###
     # METAMAC-PORTAL-API - Internal
     ###
-
-    # Update Process
-    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal
-    sudo mv $TRANSFER_PATH_INTERNAL/statistical-visualizer-api-internal.war $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal.war
-    sudo unzip $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal.war -d $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal
-    sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal.war
-
-    # Restore Configuration
-    sudo cp $HOME_PATH_INTERNAL/environment-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal/$ENVIRONMENT_RELATIVE_PATH_FILE
-    sudo cp $HOME_PATH_INTERNAL/logback-api.xml $DEPLOY_TARGET_PATH/statistical-visualizer-api-internal/$LOGBACK_RELATIVE_PATH_FILE
-    
-    
+    # Internal visualizer won´t have enabled the internal api
 
     if [ $RESTART -eq 1 ]; then
         sudo chown -R metamac.metamac /servers/metamac
