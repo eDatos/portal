@@ -49,7 +49,7 @@ public class ApplicationStartup extends ApplicationStartupListener {
         setPortalAgricultureStyles();
         setPortalEnvironmentStyles();
         setPortalTourismStyles();
-
+        setPortalPublicServiceStyles();
     }
 
     private void setPortalAgricultureStyles() {
@@ -79,6 +79,16 @@ public class ApplicationStartup extends ApplicationStartupListener {
             WebUtils.setPortalTourismStyleFooterUrl(portalConfigurationService.retrievePortalTourismStyleFooterUrl());
         } catch (MetamacException e) {
             log.error("Error retrieving application Tourism configuration", e);
+        }
+    }
+
+    private void setPortalPublicServiceStyles() {
+        try {
+            WebUtils.setPortalPublicServiceStyleHeaderUrl(portalConfigurationService.retrievePortalPublicServiceStyleHeaderUrl());
+            WebUtils.setPortalPublicServiceStyleCssUrl(portalConfigurationService.retrievePortalPublicServiceStyleCssUrl());
+            WebUtils.setPortalPublicServiceStyleFooterUrl(portalConfigurationService.retrievePortalPublicServiceStyleFooterUrl());
+        } catch (MetamacException e) {
+            log.error("Error retrieving application Public Service configuration", e);
         }
     }
 

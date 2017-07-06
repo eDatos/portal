@@ -92,6 +92,21 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
     public String retrievePortalTourismStyleFooterUrl() throws MetamacException {
         return retrieveProperty(PortalConfigurationConstants.PORTAL_TOURISM_STYLE_FOOTER_URL);
     }
+    
+    @Override
+    public String retrievePortalPublicServiceStyleHeaderUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_PUBLIC_SERVICE_STYLE_HEADER_URL);
+    }
+
+    @Override
+    public String retrievePortalPublicServiceStyleCssUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_PUBLIC_SERVICE_STYLE_CSS_URL);
+    }
+
+    @Override
+    public String retrievePortalPublicServiceStyleFooterUrl() throws MetamacException {
+        return retrieveProperty(PortalConfigurationConstants.PORTAL_PUBLIC_SERVICE_STYLE_FOOTER_URL);
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
