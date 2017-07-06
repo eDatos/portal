@@ -1,6 +1,6 @@
 <div class="metadata-group">
 
-    {{#if hasDescriptors}}
+    {{#if metadata.hasDescriptors}}
     <div class="field metadata-accordion">
         <div class="metadata-title">
             <div>{{message "entity.dataset.section.descriptors"}}</div>
@@ -24,7 +24,7 @@
             {{#ulList datasetAttributes }} {{ fieldOutput name value "resource" false}} {{/ulList}}
         </div>
     </div>
-    {{/if}} {{#if hasPeriods}}
+    {{/if}} {{#if metadata.hasPeriods}}
     <div class="field metadata-accordion">
         <div class="metadata-title">
             <div>{{message "entity.dataset.section.periods"}}</div>
@@ -68,7 +68,7 @@
             {{#ulList nonMeasureDimensions }} {{ fieldOutput conceptName conceptDescription "text" false true}} {{/ulList}}
         </div>
     </div>
-    {{/if}} {{#if hasValidity}}
+    {{/if}} {{#if metadata.hasValidity}}
     <div class="field metadata-accordion">
         <div class="metadata-title">
             <div>{{message "entity.dataset.section.validity"}}</div>
@@ -81,7 +81,7 @@
             </ul>
         </div>
     </div>
-    {{/if}} {{#if hasVersionInfo}}
+    {{/if}} {{#if metadata.hasVersionInfo}}
     <div class="field metadata-accordion">
         <div class="metadata-title">
             <div>{{message "entity.dataset.section.version"}}</div>
