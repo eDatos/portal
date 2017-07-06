@@ -115,9 +115,13 @@
             this.$el.find('.metadata-group').perfectScrollbar();
             this.$el.find('.metadata-accordion').accordion({
                 collapsible: true,
-                active: false,
+                active: this._isIndicator() ? 0 : false,
                 heightStyle: "content"
             });
+        },
+
+        _isIndicator: function () {
+            return this.dataset.metadata.getApiType() == App.Constants.api.type.INDICATOR;
         }
     });
 

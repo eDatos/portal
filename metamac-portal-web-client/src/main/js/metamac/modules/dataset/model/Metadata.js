@@ -25,6 +25,10 @@
             this.apiType = API_TYPES_MAP[this.identifier().type];
         },
 
+        getApiType: function () {
+            return this.apiType;
+        },
+
         urlIdentifierPart: function () {
             return this.buildUrlIdentifierPart(this.identifier());
         },
