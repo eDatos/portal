@@ -52,7 +52,7 @@
 			   
 		    String INSTALLATION_TYPE = configurationService.retrieveInstallationType();
 		    internalPortal = INSTALLATION_TYPE.equals("INTERNAL");
-			request.setAttribute("InstallationType", INSTALLATION_TYPE);
+			request.setAttribute("installationType", INSTALLATION_TYPE);
 			
 			ORGANISATION = configurationService.retrieveOrganisation();			
 			request.setAttribute("Organisation", ORGANISATION);

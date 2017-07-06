@@ -46,7 +46,8 @@
         "widget": false,
         "showHeader": true,
         "showRightsHolder": true,
-        "chromeFrameObject": false
+        "chromeFrameObject": false,
+        "installationType": "EXTERNAL"
     }
 
     App.namespace = function (namespaceString) {

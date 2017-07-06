@@ -83,7 +83,8 @@
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};
-			                    App.config["organisationUrn"] = "${organisationUrn}";                               
+			                    App.config["organisationUrn"] = "${organisationUrn}";
+			                    App.config["installationType"] = "${installationType}";                                   
 			                    
 			                    App.queryParams["agency"] = '${param.agencyId}';
 			                    App.queryParams["identifier"] = '${param.resourceId}';		                    

@@ -28,7 +28,10 @@ I18n.translations.pt = {
             reverseOrder: "Ordem inversa",
             close: "Fechar",
             visualize: "Visualizar",
-            embed: "Widget"
+            embed: "Widget",
+            disabledFeature: {
+                internalPortal: "Este recurso está desativado no visualizador interno"
+            }
         },
         download: {
             selection: "Download da seleção",

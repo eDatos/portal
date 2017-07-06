@@ -2,6 +2,12 @@
 
     App.namespace("App.modules.dataset");
 
+    var DisabledFeatureInternalPortalView = Backbone.View.extend({
+        render: function () {
+            this.$el.html('<b>' + I18n.t("filter.button.disabledFeature.internalPortal") + '</b>');
+        }
+    });
+
     App.modules.dataset.OptionsView = Backbone.View.extend({
 
         template: App.templateManager.get('dataset/dataset-options'),
@@ -124,8 +130,11 @@
 
         _isDownloadButtonEnabled: function () {
             var isIndicator = this.filterDimensions.metadata.apiType === App.Constants.api.type.INDICATOR;
-            var isExportableImage = _.contains(['line', 'column', 'map', 'mapbuble'], this.optionsModel.get('type'));
-            return !isIndicator || isExportableImage;
+            return !isIndicator || this._isExportableImage();
+        },
+
+        _isExportableImage: function () {
+            return _.contains(['line', 'column', 'map', 'mapbuble'], this.optionsModel.get('type'));
         },
 
         clickFilter: function (e) {
@@ -162,29 +171,45 @@
 
         clickShare: function (e) {
             e.preventDefault();
-
+            var modalContentView = null;
+            if (this.isInternalPortal()) {
+                modalContentView = new DisabledFeatureInternalPortalView();
+            } else {
+                modalContentView = new App.modules.dataset.DatasetShareView({ filterDimensions: this.filterDimensions });
+            }
             var title = I18n.t("filter.button.share");
-            var modalContentView = new App.modules.dataset.DatasetShareView({ filterDimensions: this.filterDimensions });
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             modal.show();
         },
 
         clickEmbed: function (e) {
             e.preventDefault();
-
+            var modalContentView = null;
+            if (this.isInternalPortal()) {
+                modalContentView = new DisabledFeatureInternalPortalView();
+            } else {
+                modalContentView = new App.modules.dataset.DatasetEmbedView({ filterDimensions: this.filterDimensions });
+            }
             var title = I18n.t("filter.button.embed");
-            var modalContentView = new App.modules.dataset.DatasetEmbedView({ filterDimensions: this.filterDimensions });
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             modal.show();
         },
 
         clickDownload: function (e) {
             e.preventDefault();
-
+            var modalContentView = null;
+            if (this.isInternalPortal() && !this._isExportableImage()) {
+                modalContentView = new DisabledFeatureInternalPortalView();
+            } else {
+                modalContentView = new App.modules.dataset.DatasetDownloadView({ filterDimensions: this.filterDimensions, visualizationType: this.optionsModel.get('type') });
+            }
             var title = I18n.t("filter.download.modal.title");
-            var modalContentView = new App.modules.dataset.DatasetDownloadView({ filterDimensions: this.filterDimensions, visualizationType: this.optionsModel.get('type') });
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             modal.show();
+        },
+
+        isInternalPortal: function () {
+            return App.config["installationType"] === "INTERNAL";
         }
 
 

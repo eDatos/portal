@@ -28,7 +28,10 @@ I18n.translations.en = {
             reverseOrder: "Reverse order",
             close: "Close",
             visualize: "Visualize",
-            embed: "Widget"
+            embed: "Widget",
+            disabledFeature: {
+                internalPortal: "This feature is disabled on the internal visualizer"
+            }
         },
         download: {
             selection: "Download selection",

@@ -35,6 +35,8 @@
         html, body { margin : 0; height: 99%;}
     </style>
     <%
+        String INSTALLATION_TYPE = configurationService.retrieveInstallationType();   
+        request.setAttribute("installationType", INSTALLATION_TYPE);
 	    String PORTAL_URL_BASE = "";
         String STATISTICAL_VISUALIZER_URL_BASE = "";
 		String STATISTICAL_RESOURCES_API_URL_BASE = "";
@@ -112,6 +114,7 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
 	App.config["widget"] = true;
 
 	App.config["organisationUrn"] = "${organisationUrn}";
+	App.config["installationType"] = "${installationType}";
 
 	App.endpoints["statistical-resources"] = "${ApiUrlStatisticalResources}/v1.0";
     App.endpoints["structural-resources"] = "${ApiUrlStructuralResources}/v1.0";
