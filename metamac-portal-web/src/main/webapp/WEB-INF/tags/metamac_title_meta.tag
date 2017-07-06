@@ -37,6 +37,7 @@
 		request.setAttribute("jsDate", dateFormat.format(lastModifiedJs));
 	%>	
 	<%
+	    String INSTALLATION_TYPE = "";
 		String PORTAL_URL_BASE = "";
         String STATISTICAL_VISUALIZER_URL_BASE = "";
         String PERMALINKS_API_URL_BASE = "";
@@ -50,7 +51,7 @@
 		PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
 		try {
 			   
-		    String INSTALLATION_TYPE = configurationService.retrieveInstallationType();
+		    INSTALLATION_TYPE = configurationService.retrieveInstallationType();
 		    internalPortal = INSTALLATION_TYPE.equals("INTERNAL");
 			request.setAttribute("installationType", INSTALLATION_TYPE);
 			

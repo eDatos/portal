@@ -35,8 +35,8 @@
         html, body { margin : 0; height: 99%;}
     </style>
     <%
-        String INSTALLATION_TYPE = configurationService.retrieveInstallationType();   
-        request.setAttribute("installationType", INSTALLATION_TYPE);
+        PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
+        String INSTALLATION_TYPE = "";           
 	    String PORTAL_URL_BASE = "";
         String STATISTICAL_VISUALIZER_URL_BASE = "";
 		String STATISTICAL_RESOURCES_API_URL_BASE = "";
@@ -44,8 +44,8 @@
         String PERMALINKS_API_URL_BASE = "";
         String EXPORT_API_URL_BASE = "";
         String INDICATORS_API_URL_BASE = "";
-		PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
 		try {
+            INSTALLATION_TYPE = configurationService.retrieveInstallationType();
 		    PORTAL_URL_BASE = configurationService.retrievePortalExternalWebApplicationUrlBase();
             STATISTICAL_VISUALIZER_URL_BASE = configurationService.retrievePortalExternalUrlBase();
 			STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesExternalApiUrlBase();
@@ -54,6 +54,7 @@
 		    EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();
 		    INDICATORS_API_URL_BASE = configurationService.retrieveIndicatorsExternalApiUrlBase();
 			
+		    request.setAttribute("installationType", INSTALLATION_TYPE);
 		    request.setAttribute("ApiUrlStatisticalVisualizer", STATISTICAL_VISUALIZER_URL_BASE);
             request.setAttribute("StatisticalVisualizerBase", PORTAL_URL_BASE);
 			request.setAttribute("ApiUrlStatisticalResources", STATISTICAL_RESOURCES_API_URL_BASE);	
