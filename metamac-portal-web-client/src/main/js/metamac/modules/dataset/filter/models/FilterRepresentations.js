@@ -5,9 +5,9 @@
 
     App.modules.dataset.filter.models.FilterRepresentations = Backbone.Collection.extend({
 
-        model : App.modules.dataset.filter.models.FilterRepresentation,
+        model: App.modules.dataset.filter.models.FilterRepresentation,
 
-        initialize : function () {
+        initialize: function () {
             this.selectedLimit = Infinity;
             this.drawableLimit = Infinity;
 
@@ -15,19 +15,19 @@
             this._bindEvents();
         },
 
-        _bindEvents : function () {
+        _bindEvents: function () {
             this.listenTo(this, 'change:selected', this._onChangeSelected);
             this.listenTo(this, 'change:drawable', this._onChangeDrawable);
         },
 
-        _unbindEvents : function () {
+        _unbindEvents: function () {
             this.stopListening();
         },
 
-        initializeHierarchy : function () {
+        initializeHierarchy: function () {
             var hasHierarchy = false;
             this.each(function (representation) {
-                var children = this.where({parent : representation.id});
+                var children = this.where({ parent: representation.id });
                 if (children.length) {
                     hasHierarchy = true;
                     representation.children.reset(children);
@@ -37,15 +37,15 @@
             this.hasHierarchy = hasHierarchy;
         },
 
-        _updateDrawables : function() {
-            var modelsToUndraw = this.where({drawable : true});
+        _updateDrawables: function () {
+            var modelsToUndraw = this.where({ drawable: true });
             var modelsToDraw = this._getModelsToDraw();
-            
-            _.invoke(modelsToUndraw, 'set', {drawable : false}, { silent : true});            
-            _.invoke(modelsToDraw, 'set', {drawable : true});  
+
+            _.invoke(modelsToUndraw, 'set', { drawable: false }, { silent: true });
+            _.invoke(modelsToDraw, 'set', { drawable: true });
         },
 
-        _getModelsToDraw : function() {
+        _getModelsToDraw: function () {
             var nModelsSelected = this.getSelectedRepresentations().length;
             var nModelsToDraw = this.drawableLimit - nModelsSelected;
             if (this.drawableLimit == nModelsSelected) {
@@ -54,56 +54,56 @@
             return this.getSelectedRepresentations().slice(0, nModelsToDraw);
         },
 
-        selectAll : function () {
+        selectAll: function () {
             var nModelsToSelected = this.selectedLimit - this.length;
             var modelsToSelect = this.models.slice(0, nModelsToSelected);
-            _.invoke(modelsToSelect, 'set', {selected : true});
+            _.invoke(modelsToSelect, 'set', { selected: true });
         },
 
-        selectVisible : function () {
-            var visibleModels = this.where({visible : true, selected : false});
+        selectVisible: function () {
+            var visibleModels = this.where({ visible: true, selected: false });
             var selectedModels = this.getSelectedRepresentations();
             var visibleModelsToSelect = this.selectedLimit - selectedModels.length;
             var modelsToSelect = visibleModels.slice(0, visibleModelsToSelect);
-            _.invoke(modelsToSelect, 'set', {selected : true});
+            _.invoke(modelsToSelect, 'set', { selected: true });
         },
 
-        deselectVisible : function () {
-            var visibleModels = this.where({visible : true, selected : true});
+        deselectVisible: function () {
+            var visibleModels = this.where({ visible: true, selected: true });
             var selectedModels = this.getSelectedRepresentations();
             if (visibleModels.length === selectedModels.length) {
                 visibleModels.shift(); //leave at least one model selected
             }
-            _.invoke(visibleModels, 'set', {selected : false});
+            _.invoke(visibleModels, 'set', { selected: false });
         },
 
-        setSelectedLimit : function (selectedLimit) {
+        setSelectedLimit: function (selectedLimit) {
             this.selectedLimit = selectedLimit;
             var selectedModels = this.getSelectedRepresentations();
-            _.invoke(selectedModels.slice(selectedLimit), 'set', {selected : false});
+            _.invoke(selectedModels.slice(selectedLimit), 'set', { selected: false });
             this.updateDrawableUpperLimit();
         },
 
-        setDrawableLimit : function(drawableLimit) {
+        setDrawableLimit: function (drawableLimit) {
             this.drawableLimit = this._getUpperDrawableLimit(drawableLimit);
             this._updateDrawables();
         },
 
-        updateDrawableUpperLimit : function() {
+        updateDrawableUpperLimit: function () {
             this.setDrawableLimit(this.drawableLimit);
         },
 
-        _getUpperDrawableLimit : function(drawableLimit) {
+        _getUpperDrawableLimit: function (drawableLimit) {
             return this.selectedLimit < drawableLimit ? this.selectedLimit : drawableLimit;
         },
 
-        toggleRepresentationsVisibleRange : function (start, end, state) {
-            var visibleModels = this.where({visible : true});
+        toggleRepresentationsVisibleRange: function (start, end, state) {
+            var visibleModels = this.where({ visible: true });
             var modelsToChange = visibleModels.slice(start, end + 1);
-            _.invoke(modelsToChange, 'set', {selected : state});
+            _.invoke(modelsToChange, 'set', { selected: state });
         },
 
-        _onChangeSelected : function (model) {
+        _onChangeSelected: function (model) {
             var selectedModels = this.getSelectedRepresentations();
             if (!model.get('selected') && selectedModels.length === 0) {
                 model.set('selected', true);
@@ -115,11 +115,11 @@
                 });
                 otherModel.set('selected', false);
             }
-            this._updateDrawables();            
+            this._updateDrawables();
             this.updateSelectedGeographicLevel();
         },
 
-        _onChangeDrawable : function (model) {
+        _onChangeDrawable: function (model) {
             if (!model) { return; }
 
             var drawableModels = this.getDrawableRepresentations();
@@ -135,7 +135,7 @@
             }
         },
 
-        parse : function (representations) {
+        parse: function (representations) {
             //group by parents
             var representationsByParent = _.groupBy(representations, function (representation) {
                 return representation.parent;
@@ -147,7 +147,7 @@
             }
 
             // recursive depth tree traversal for hierarchy order
-            var rootRepresentations = representationsByParent["undefined"]; 
+            var rootRepresentations = representationsByParent["undefined"];
             var sortedRepresentations = [];
             var depthTreeTraversal = function (level, node) {
                 node.level = level;
@@ -159,30 +159,31 @@
             return sortedRepresentations;
         },
 
-        reverse : function () {
+        reverse: function () {
             this.reset(this.last(this.length).reverse());
             this.trigger("reverse");
         },
 
-        getSelectedRepresentations : function () {
-            return this.where({selected : true});
+        getSelectedRepresentations: function () {
+            return this.where({ selected: true });
         },
 
-        getDrawableRepresentations : function() {
-            return this.where({ drawable : true });             
+        getDrawableRepresentations: function () {
+            return this.where({ drawable: true });
         },
 
-        updateDrawablesBySelectedLevel : function(selectedLevel) {
-            _.invoke(this.models, 'set', { drawable : false }, { silent : true });
-            _.invoke(this.where({ level : parseInt(selectedLevel), selected : true}), 'set', { drawable : true });  
+        updateDrawablesBySelectedLevel: function (selectedLevel) {
+            _.invoke(this.models, 'set', { drawable: false }, { silent: true });
+            _.invoke(this.where({ level: parseInt(selectedLevel), selected: true }), 'set', { drawable: true });
             this.selectedGeographicalLevel = selectedLevel;
 
-            this.trigger("change:drawable");  
+            this.trigger("change:drawable");
         },
 
-        updateDrawablesBySelectedGranularity : function(selectedGranularity) {
-            _.invoke(this.models, 'set', { drawable : false }, { silent : true });
-            _.invoke(this.where({ temporalGranularity : selectedGranularity, selected : true}), 'set', { drawable : true });  
+        updateDrawablesBySelectedGranularity: function (selectedGranularity) {
+            _.invoke(this.models, 'set', { drawable: false }, { silent: true });
+            _.invoke(this.where({ temporalGranularity: selectedGranularity, selected: true }), 'set', { drawable: true });
+
             this.trigger("change:drawable");
         },
 
@@ -199,31 +200,31 @@
 
         getSelectedGeographicLevels: function () {
             return _(this.getSelectedRepresentations()).invoke("get", "level");
-        },    
+        },
 
-        getMostPopulatedTemporalGranularity : function() {
+        getMostPopulatedTemporalGranularity: function () {
             return this._getMostRepeatedValue(this.getSelectedTemporalGranularities());
         },
 
-        getSelectedTemporalGranularities : function() {
+        getSelectedTemporalGranularities: function () {
             return _(this.getSelectedRepresentations()).invoke("get", "temporalGranularity");
-        },   
+        },
 
-        _getMostRepeatedValue : function(collection) {
+        _getMostRepeatedValue: function (collection) {
             var countedBy = _(collection).countBy();
             var maxPopulation = _(countedBy).max();
             return _.invert(countedBy)[maxPopulation];
-        },        
-            
+        },
+
 
 
     }, {
-        initializeWithRepresentations : function (representations) {
-            var filterRepresentations = new App.modules.dataset.filter.models.FilterRepresentations(representations, {parse : true});
-            filterRepresentations.initializeHierarchy();
+            initializeWithRepresentations: function (representations) {
+                var filterRepresentations = new App.modules.dataset.filter.models.FilterRepresentations(representations, { parse: true });
+                filterRepresentations.initializeHierarchy();
 
-            return filterRepresentations;
-        }
-    });
+                return filterRepresentations;
+            }
+        });
 
 }());
