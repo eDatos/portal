@@ -5,9 +5,9 @@
 
     App.modules.dataset.DatasetVisualizationView = Backbone.View.extend({
 
-        template : App.templateManager.get("dataset/dataset-visualization"),
+        template: App.templateManager.get("dataset/dataset-visualization"),
 
-        initialize : function (options) {
+        initialize: function (options) {
             this.container = options.container;
             this.dataset = options.dataset;
 
@@ -21,29 +21,29 @@
             this._initializeVisualElements();
         },
 
-        _initializeVisualElements : function () {
+        _initializeVisualElements: function () {
             var options = {
-                dataset : this.dataset,
-                filterDimensions : this.filterDimensions,
-                animation : this.options.animation,
-                optionsModel : this.optionsModel
+                dataset: this.dataset,
+                filterDimensions: this.filterDimensions,
+                animation: this.options.animation,
+                optionsModel: this.optionsModel
             };
             this.ve = {
-                info : new App.VisualElement.Info(options),
-                column : new App.VisualElement.ColumnChart(options),
-                line : new App.VisualElement.LineChart(options),
-                table : new App.VisualElement.Table(options),
-                map : new App.VisualElement.Map(_.extend(options, { mapType : 'map'})),
-                mapbubble : new App.VisualElement.Map(_.extend(options, { mapType : 'mapbubble'}))
+                info: new App.VisualElement.Info(options),
+                column: new App.VisualElement.ColumnChart(options),
+                line: new App.VisualElement.LineChart(options),
+                table: new App.VisualElement.Table(options),
+                map: new App.VisualElement.Map(_.extend(options, { mapType: 'map' })),
+                mapbubble: new App.VisualElement.Map(_.extend(options, { mapType: 'mapbubble' }))
             };
             this.ve.map.on('didLoadVe', this._hideSpinner, this);
             this.ve.mapbubble.on('didLoadVe', this._hideSpinner, this);
         },
 
-        _initializeFullScreen : function () {
+        _initializeFullScreen: function () {
         },
 
-        _showSpinner : function () {
+        _showSpinner: function () {
             var img = App.resourceContext + "images/loadingSpinner.gif";
             this.$dataSpinner = $("<div class='spinner'><img src='" + img + "'/></div>");
 
@@ -51,28 +51,28 @@
             var top = $container.height() / 2 - this.$dataSpinner.height() / 2;
             var left = $container.width() / 2 - this.$dataSpinner.width() / 2;
 
-            this.$dataSpinner.css({top : top, left : left});
+            this.$dataSpinner.css({ top: top, left: left });
             $container.prepend(this.$dataSpinner);
         },
 
-        _hideSpinner : function () {
+        _hideSpinner: function () {
             if (this.$dataSpinner) {
                 this.$dataSpinner.remove();
                 this.$dataSpinner = null;
             }
         },
 
-        activeVisualElement : function (element) {
+        activeVisualElement: function (element) {
             this._removeCurrentElement();
             this.currentElement = element;
             this.ve[this.currentElement].updatingDimensionPositions();
         },
 
-        load : function () {
+        load: function () {
             this.ve[this.currentElement].load();
         },
 
-        _removeCurrentElement : function () {
+        _removeCurrentElement: function () {
             var currentVe = this._getCurrentVe();
             if (currentVe) {
                 currentVe.destroy();
@@ -80,28 +80,28 @@
             }
         },
 
-        _getCurrentVe : function () {
+        _getCurrentVe: function () {
             if (this.currentElement) {
                 return this.ve[this.currentElement];
             }
         },
 
-        enterFullScreen : function () {
+        enterFullScreen: function () {
             this.trigger("enterFullScreen");
             //this.fullScreen.enterFullScreen();
         },
 
-        exitFullScreen : function () {
+        exitFullScreen: function () {
             this.trigger("exitFullScreen");
             //this.fullScreen.exitFullScreen();
         },
 
-        _willEnterFullScreen : function () {
+        _willEnterFullScreen: function () {
             //$(this._options.container.vecontainer).hide();
             this.trigger('willEnterFullScreen');
         },
 
-        _didEnterFullScreen : function () {
+        _didEnterFullScreen: function () {
             //$(this._options.container.vecontainer).show();
 
             var currentVe = this._getCurrentVe();
@@ -109,19 +109,19 @@
             this.trigger('didEnterFullScreen');
         },
 
-        _willExitFullScreen : function () {
+        _willExitFullScreen: function () {
             //$(this._options.container.vecontainer).hide();
             this.trigger('willExitFullScreen');
         },
 
-        _didExitFullScreen : function () {
+        _didExitFullScreen: function () {
             //$(this._options.container.vecontainer).show();
             var currentVe = this._getCurrentVe();
             currentVe.resizeFullScreen();
             this.trigger('didExitFullScreen');
         },
 
-        render : function () {
+        render: function () {
             var context = {};
             this.$el.html(this.template(context));
 
