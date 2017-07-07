@@ -10,6 +10,8 @@
         initialize : function () {
             this.selectedLimit = Infinity;
             this.drawableLimit = Infinity;
+
+            this.selectedGeographicalLevel = null;
             this._bindEvents();
         },
 
@@ -114,6 +116,7 @@
                 otherModel.set('selected', false);
             }
             this._updateDrawables();            
+            this.updateSelectedGeographicLevel();
         },
 
         _onChangeDrawable : function (model) {
@@ -172,6 +175,7 @@
         updateDrawablesBySelectedLevel : function(selectedLevel) {
             _.invoke(this.models, 'set', { drawable : false }, { silent : true });
             _.invoke(this.where({ level : parseInt(selectedLevel), selected : true}), 'set', { drawable : true });  
+            this.selectedGeographicalLevel = selectedLevel;
 
             this.trigger("change:drawable");  
         },
@@ -179,15 +183,21 @@
         updateDrawablesBySelectedGranularity : function(selectedGranularity) {
             _.invoke(this.models, 'set', { drawable : false }, { silent : true });
             _.invoke(this.where({ temporalGranularity : selectedGranularity, selected : true}), 'set', { drawable : true });  
-
-            this.trigger("change:drawable");  
+            this.trigger("change:drawable");
         },
 
-        getMostPopulatedGeographicLevel : function() {
-            return this._getMostRepeatedValue(this.getSelectedGeographicLevels());
+        getSelectedGeographicLevel: function () {
+            if (this.selectedGeographicalLevel == null) {
+                this.updateSelectedGeographicLevel();
+            }
+            return this.selectedGeographicalLevel;
         },
-        
-        getSelectedGeographicLevels : function() {
+
+        updateSelectedGeographicLevel: function () {
+            this.selectedGeographicalLevel = this._getMostRepeatedValue(this.getSelectedGeographicLevels());
+        },
+
+        getSelectedGeographicLevels: function () {
             return _(this.getSelectedRepresentations()).invoke("get", "level");
         },    
 

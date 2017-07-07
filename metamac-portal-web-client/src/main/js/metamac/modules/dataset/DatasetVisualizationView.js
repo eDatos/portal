@@ -63,9 +63,10 @@
         },
 
         activeVisualElement: function (element) {
+            var oldElement = this._getCurrentVe();
             this._removeCurrentElement();
             this.currentElement = element;
-            this.ve[this.currentElement].updatingDimensionPositions();
+            this.ve[this.currentElement].updatingDimensionPositions(oldElement);
         },
 
         load: function () {

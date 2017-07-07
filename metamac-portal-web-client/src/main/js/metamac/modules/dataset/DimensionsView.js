@@ -406,7 +406,7 @@
                 dimension.draggable = isMap ? isGeographicDimension : true;
 
                 if (self._needsGeographicLevelSelector(dimensionModel)) {
-                    dimension.selectedLevel = dimensionModel.get('representations').getMostPopulatedGeographicLevel();
+                    dimension.selectedLevel = dimensionModel.get('representations').getSelectedGeographicLevel();
                     dimension.levelList = self._getGeographicLevelCollection(dimensionModel);
                 } else if (self._needsTemporalGranularitySelector(dimensionModel)) {
                     dimension.selectedGranularity = dimensionModel.get('representations').getMostPopulatedTemporalGranularity();
@@ -429,7 +429,7 @@
             var uniqueLevels = _(selectedLevels).uniq().sort();
             return _(uniqueLevels).map(function (level) {
                 return {
-                    level: level,
+                    level: level.toString(),
                     label: I18n.t('filter.selector.level', { level: (level + 1) })
                 };
             });

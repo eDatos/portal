@@ -14,6 +14,7 @@
             this.dataset = options.dataset;
             this.shapes = new App.Map.Shapes();
             this.mapType = options.mapType;
+            this._type = "map";
 
             this.visible = false; //unnecesary?
         },
@@ -32,12 +33,14 @@
             this.load();
         },
 
-        updatingDimensionPositions: function () {
-            this._applyVisualizationRestrictions();
-            this.resetDimensionsLimits();
+        updatingDimensionPositions: function (oldElement) {
+            if (!oldElement || oldElement._type !== "map") {
+                this._applyVisualizationRestrictions();
+                this.resetDimensionsLimits();
 
-            this.filterDimensions.zones.get('left').set('fixedSize', 1);
-            this.filterDimensions.zones.get('top').set('fixedSize', 0);
+                this.filterDimensions.zones.get('left').set('fixedSize', 1);
+                this.filterDimensions.zones.get('top').set('fixedSize', 0);
+            }
         },
 
 

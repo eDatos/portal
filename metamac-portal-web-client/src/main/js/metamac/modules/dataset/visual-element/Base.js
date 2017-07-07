@@ -213,7 +213,7 @@
         _preselectMostPopulatedGeographicLevelRepresentations: function () {
             var nonFixedGeographicDimensions = this.filterDimensions.getAllNonFixedDimensionsCopyByType("GEOGRAPHIC_DIMENSION");
             _(nonFixedGeographicDimensions).each(function (geographicDimension) {
-                var mostPopulatedLevel = geographicDimension.get('representations').getMostPopulatedGeographicLevel();
+                var mostPopulatedLevel = geographicDimension.get('representations').getSelectedGeographicLevel();
                 geographicDimension.get('representations').updateDrawablesBySelectedLevel(mostPopulatedLevel);
             });
         },
