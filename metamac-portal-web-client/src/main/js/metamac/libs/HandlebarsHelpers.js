@@ -5,18 +5,18 @@
 (function () {
     "use strict";
 
-    function htmlDecode(value){    	
-    	  return $('<div/>').html(value).text();
-    } 
-    
-    function safeString(value) {
-    	return new Handlebars.SafeString(htmlDecode(Handlebars.Utils.escapeExpression(value)));
+    function htmlDecode(value) {
+        return $('<div/>').html(value).text();
     }
-    
+
+    function safeString(value) {
+        return new Handlebars.SafeString(htmlDecode(Handlebars.Utils.escapeExpression(value)));
+    }
+
     Handlebars.registerHelper("safeString", function (value) {
-    	return safeString(value);
+        return safeString(value);
     });
-    
+
     /**
      * InternationalString
      *
@@ -115,10 +115,10 @@
     function resourceOutput(values) {
         var result = "";
         if (!(values instanceof Array)) {
-            values = [ values ];
+            values = [values];
         }
 
-        return _.reduce(values, function(memo, value){
+        return _.reduce(values, function (memo, value) {
             var href = Handlebars.Utils.escapeExpression(value.href);
             var name = Handlebars.Utils.escapeExpression(value.name);
             result = href ? '<a href=' + href + '>' : '';
@@ -135,22 +135,22 @@
      * usage:
      *      {{ fieldOutput "entity.dataset.title" }}
      */
-    Handlebars.registerHelper("fieldOutput", function (label, value, type, localizeLabel, allowEmptyValue, fieldClass) {        
-        label = Handlebars.Utils.escapeExpression(label);        
+    Handlebars.registerHelper("fieldOutput", function (label, value, type, localizeLabel, allowEmptyValue, fieldClass) {
+        label = Handlebars.Utils.escapeExpression(label);
         localizeLabel = _.isUndefined(localizeLabel) ? true : localizeLabel;
         fieldClass = _.isUndefined(fieldClass) ? "field" : fieldClass;
         var result = '';
         if (value || allowEmptyValue) {
             result +=
                 '<div class="' + fieldClass + '" >' +
-                    '<span class="metadata-title">';
-                result += localizeLabel ? I18n.t(label) : label; 
+                '<span class="metadata-title">';
+            result += localizeLabel ? I18n.t(label) : label;
             result += '</span>';
             result +=
-            		'<div class="metadata-value">';
-            
+                '<div class="metadata-value">';
+
             if (type === "date") {
-            	value = Handlebars.Utils.escapeExpression(value);
+                value = Handlebars.Utils.escapeExpression(value);
                 result += I18n.l("date.formats.default", value);
             } else if (type === "resourceNoLink") {
                 value.href = null;
@@ -159,11 +159,11 @@
                 result += resourceOutput(value);
             } else {
                 value = _.isArray(value) ? value.join(", ") : value;
-            	value = Handlebars.Utils.escapeExpression(value);
+                value = Handlebars.Utils.escapeExpression(value);
                 //result += Handlebars.helpers.iString(value) +
-                result +=  htmlDecode(value);
+                result += htmlDecode(value);
             }
-            
+
             result += '</div>';
             result +=
                 '</div>';
@@ -245,7 +245,7 @@
         var ret = "";
 
         for (var i = 0, j = context.length; i < j; i++) {
-            ret = ret + options.fn(_.extend({}, { value : context[i]}, { i : i }));
+            ret = ret + options.fn(_.extend({}, { value: context[i] }, { i: i }));
         }
 
         return ret;
@@ -276,7 +276,7 @@
 
     // http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/#comment-44
     Handlebars.registerHelper('compare', function (lvalue, operator, rvalue, options) {
-        var operators, result;        
+        var operators, result;
         if (arguments.length < 3) {
             throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
         }
@@ -286,7 +286,7 @@
             rvalue = operator;
             operator = "===";
         }
-        
+
         operators = {
             '==': function (l, r) { return l == r; },
             '===': function (l, r) { return l === r; },
@@ -298,12 +298,12 @@
             '>=': function (l, r) { return l >= r; },
             'typeof': function (l, r) { return typeof l == r; }
         };
-        
+
         if (!operators[operator]) {
             throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
         }
-        
-        result = operators[operator](lvalue, rvalue);            
+
+        result = operators[operator](lvalue, rvalue);
         return operators[operator](lvalue, rvalue) ? options.fn(this) : options.inverse(this);
     });
 
