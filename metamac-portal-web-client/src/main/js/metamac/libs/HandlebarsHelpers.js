@@ -152,8 +152,10 @@
             if (type === "date") {
             	value = Handlebars.Utils.escapeExpression(value);
                 result += I18n.l("date.formats.default", value);
-            }
-            else if (type === "resource") { 
+            } else if (type === "resourceNoLink") {
+                value.href = null;
+                result += resourceOutput(value);
+            } else if (type === "resource") {
                 result += resourceOutput(value);
             } else {
                 value = _.isArray(value) ? value.join(", ") : value;

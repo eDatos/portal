@@ -982,7 +982,7 @@ function program4(depth0,data) {
   var buffer = "", stack1, options;
   buffer += " ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.value, "text", false, options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.value, "text", false, options)))
+  buffer += escapeExpression(((stack1 = helpers.fieldOutput || depth0.fieldOutput),stack1 ? stack1.call(depth0, depth0.name, depth0.value, "resourceNoLink", false, options) : helperMissing.call(depth0, "fieldOutput", depth0.name, depth0.value, "resourceNoLink", false, options)))
     + " ";
   return buffer;
   }

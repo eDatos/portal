@@ -21,7 +21,7 @@
             <div>{{message "entity.dataset.section.datasetAttributes"}}</div>
         </div>
         <div class="metadata-value">
-            {{#ulList datasetAttributes }} {{ fieldOutput name value "text" false}} {{/ulList}}
+            {{#ulList datasetAttributes }} {{ fieldOutput name value "resourceNoLink" false}} {{/ulList}}
         </div>
     </div>
     {{/if}} {{#if metadata.hasPeriods}}
