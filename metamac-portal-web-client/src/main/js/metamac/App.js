@@ -40,8 +40,6 @@
         "type": undefined,
 
         "indicatorSystem": undefined, // Only for indicatorsInstances
-
-        "geo": undefined
     }
 
     App.config = {

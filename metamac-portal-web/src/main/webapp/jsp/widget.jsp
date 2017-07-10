@@ -111,7 +111,6 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
     App.queryParams["version"] = getQueryParams("version");
 	App.queryParams["type"] = getQueryParams("resourceType");
 	App.queryParams["indicatorSystem"] = getQueryParams("indicatorSystem");
-	App.queryParams["geo"] = getQueryParams("geo");
     App.config["chromeFrameObject"] = getQueryParams("chromeFrameObject");
 	App.config["widget"] = true;
 
