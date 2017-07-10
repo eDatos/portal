@@ -6,38 +6,38 @@
 
     App.namespace('App.Map.MapView');
 
-    App.Map.MapView = Backbone.View.extend({        
-        _defaultSeriesOptions : {
+    App.Map.MapView = Backbone.View.extend({
+        _defaultSeriesOptions: {
             mapData: null,
             joinBy: ['code', 'code'],
             data: null
         },
 
         // Esta fontFamily debe ser siempre equivalente a @istacFontFamilySansSerifFamily
-        _defaultMapOptions : {
-            chart : {
-                className : 'map',
+        _defaultMapOptions: {
+            chart: {
+                className: 'map',
                 animation: false,
             },
 
             title: {
                 text: ''
             },
-                         
+
             legend: {
-                enabled : true,
-                layout : 'vertical',
-                floating : true,
-                align : 'right',
-                y : -50,
-                x : 7,
+                enabled: true,
+                layout: 'vertical',
+                floating: true,
+                align: 'right',
+                y: -50,
+                x: 7,
                 backgroundColor: Constants.colors.istacWhite,
                 borderColor: Constants.colors.istacGreyMedium,
                 borderWidth: 1,
                 borderRadius: 5,
                 shadow: true,
-                itemStyle : { 
-                    "fontWeight": "normal" 
+                itemStyle: {
+                    "fontWeight": "normal"
                 },
                 padding: 10,
                 itemMarginTop: 5,
@@ -45,37 +45,37 @@
             },
 
             colorAxis: {
-                minColor : Constants.colors.istacBlueWhite,
-                maxColor : Constants.colors.istacBlueDark
+                minColor: Constants.colors.istacBlueWhite,
+                maxColor: Constants.colors.istacBlueDark
             },
 
-            plotOptions : {
-                map : {
-                    color : Constants.colors.istacYellow,
-                    states : {
-                        hover : {
+            plotOptions: {
+                map: {
+                    color: Constants.colors.istacYellow,
+                    states: {
+                        hover: {
                             color: Constants.colors.istacYellow
                         }
                     }
                 },
-                mapbubble : {
-                    color : Constants.colors.istacYellow
+                mapbubble: {
+                    color: Constants.colors.istacYellow
                 }
             },
 
-            series : [],             
+            series: [],
 
-            credits : {
-                position : {
-                    y : -15
+            credits: {
+                position: {
+                    y: -15
                 }
             },
 
-            tooltip: {}          
+            tooltip: {}
         },
 
 
-        initialize : function (options) {
+        initialize: function (options) {
             this._dataset = options.dataset;
             this._filterDimensions = options.filterDimensions;
             this._width = options.width;
@@ -94,23 +94,23 @@
             this._onResize = _.debounce(_.bind(this._onResize, this), 200);
             this._updateDataClasses = _.debounce(_.bind(this._updateDataClasses, this), 100);
 
-            this._defaultMapOptions.tooltip.formatter =  _.partial(function(formatter, mapView) {
-                    return  mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
-                }, _, this);
+            this._defaultMapOptions.tooltip.formatter = _.partial(function (formatter, mapView) {
+                return mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
+            }, _, this);
         },
 
-        events : {
-            "mousewheel" : "_handleMousewheel",
-            "dblclick" : "_handleDblclick",
-            "resize" : "_onResize"
+        events: {
+            "mousewheel": "_handleMousewheel",
+            "dblclick": "_handleDblclick",
+            "resize": "_onResize"
         },
 
-        render : function () {
+        render: function () {
             this._createMapContent();
             this.delegateEvents();
         },
 
-        destroy : function () {
+        destroy: function () {
             if (this.map) {
                 this.map.destroy();
             }
@@ -118,7 +118,7 @@
             this.undelegateEvents();
         },
 
-        transform : function () {
+        transform: function () {
             var currentScale = this.model.get("currentScale");
             var oldScale = this.model.get("oldScale");
             var x = this.model.get("x");
@@ -127,28 +127,28 @@
             this.map.mapZoom(oldScale / currentScale);
         },
 
-        _tooltipFormatter : function() {
+        _tooltipFormatter: function () {
             return point.properties.label + ':::' + point.value;
         },
 
-        zoomExit : function () {
+        zoomExit: function () {
             this._centerAndZoom();
         },
 
-        updateRanges : function () {
+        updateRanges: function () {
             this._updateDataClasses();
         },
 
-        canRender : function () {
+        canRender: function () {
             return this._shapeListOrderByHierarchy().length > 0;
         },
 
-        _calculateOriginAndScale : function () {
+        _calculateOriginAndScale: function () {
             this._origin = this._calculateNewOriginAndBounds();
-            this._scale = this._calculateNewScale({x : this._minX, y : this._minY}, {x : 0, y : 0}, this._origin);
+            this._scale = this._calculateNewScale({ x: this._minX, y: this._minY }, { x: 0, y: 0 }, this._origin);
         },
 
-        _calculateNewOriginAndBounds : function () {
+        _calculateNewOriginAndBounds: function () {
             var coordinates = _.chain(this._shapeList).compact().pluck("shape").flatten().value();
 
             var xCoordinates = _.filter(coordinates, function (num, i) {
@@ -166,9 +166,9 @@
             var originX = this._minX + (this._maxX - this._minX) / 2;
             var originY = this._minY + (this._maxY - this._minY) / 2;
             return [originX, originY];
-        },      
+        },
 
-        _shapeListOrderByHierarchy : function () {
+        _shapeListOrderByHierarchy: function () {
             return _.chain(this._shapeList).compact().sortBy(function (shape) {
                 return -shape.hierarchy; //reverse order
             }).value();
@@ -193,12 +193,13 @@
 
             var data = this._getData();
 
-            var worldContainerSerie = _.defaults({
-                    id : "worldContainerSerie", 
-                    name : "Container",
-                    mapData : containerMapData
-                }, 
+            var worldContainerSerie = _.defaults(
+                {
+                    id: "worldContainerSerie",
+                    name: "WorldContainer",
+                    mapData: containerMapData,
                     nullColor: Constants.colors.istacGreyLight
+                },
                 this._defaultSeriesOptions);
 
             var featuresContainerSerie = _.defaults(
@@ -218,30 +219,31 @@
 
             switch (this.mapType) {
                 case 'map':
-                    var choroplethDataSerie = _.defaults({ 
-                            id : "choroplethDataSerie", 
-                            name : this.title,
-                            mapData : mapData, 
-                            data : data
-                        }, 
+                    var choroplethDataSerie = _.defaults(
+                        {
+                            id: "choroplethDataSerie",
+                            name: this.title,
+                            mapData: mapData,
+                            data: data
+                        },
                         this._defaultSeriesOptions);
-                    
+
                     this._defaultMapOptions.legend.enabled = true;
 
                     this._defaultMapOptions.series.push(choroplethDataSerie);
-
                     break;
 
                 case 'mapbubble':
-                    var bubbleDataSerie = _.defaults({ 
-                            id : "bubbleDataSerie", 
-                            name : this.title,
-                            mapData : mapData,
-                            data : data,
-                            type : 'mapbubble',
-                            showInLegend : false
-                        }, 
-                        this._defaultSeriesOptions);    
+                    var bubbleDataSerie = _.defaults(
+                        {
+                            id: "bubbleDataSerie",
+                            name: this.title,
+                            mapData: mapData,
+                            data: data,
+                            type: 'mapbubble',
+                            showInLegend: false
+                        },
+                        this._defaultSeriesOptions);
 
                     this._defaultMapOptions.legend.enabled = false;
 
@@ -259,15 +261,15 @@
             this._centerAndZoom();
         },
 
-        _getData : function() {
-            return _.map(_.pairs(this._dataJson), function(item) { 
-                return { "code": item[0] , "value" : item[1].value, "z" :  item[1].value }; 
+        _getData: function () {
+            return _.map(_.pairs(this._dataJson), function (item) {
+                return { "code": item[0], "value": item[1].value, "z": item[1].value };
             });
         },
 
-        _getMapDataFromGeoJson: function(geoJson) {
+        _getMapDataFromGeoJson: function (geoJson) {
             var self = this;
-            var features =  _.map(geoJson.features, function(item) { 
+            var features = _.map(geoJson.features, function (item) {
                 item.properties.code = item.id;
                 return item;
             });
@@ -275,33 +277,33 @@
             return Highmaps.geojson(geoJson);
         },
 
-        _updateDataClasses : function() {
+        _updateDataClasses: function () {
             if (this.map) {
                 var axis = this.map.colorAxis[0];
-                 if (this.model.get('mapType') == 'map') {
+                if (this.model.get('mapType') == 'map') {
                     axis.update({
                         dataClasses: this._generateDataClasses()
                     }, false);
-                } 
-                
+                }
+
                 this.map.redraw();
 
                 // TODO: METAMAC-2032 this a workaround to solve the problem when updating dataclasses
                 this.map.mapZoom(1.000000001);
                 this._redrawLegend();
-            }  
+            }
         },
 
-        _centerAndZoom : function() {
+        _centerAndZoom: function () {
             if (this.map && this.map.get('featuresContainerSerie')) {
                 var featuresContainerSerie = this.map.get('featuresContainerSerie');
                 if (featuresContainerSerie.maxX
-                && featuresContainerSerie.maxY
-                && featuresContainerSerie.minX
-                && featuresContainerSerie.minY) {
+                    && featuresContainerSerie.maxY
+                    && featuresContainerSerie.minX
+                    && featuresContainerSerie.minY) {
                     // featuresContainerSerie.points[0].zoomTo();
                     // this.map.redraw();
-                    
+
                     this._zoomToSerie(this.map.get('featuresContainerSerie'));
                 }
             }
@@ -315,46 +317,46 @@
                 false
             );
             serie.yAxis.setExtremes(
-               serie.minY - 0.5,
-               serie.maxY + 0.5,
+                serie.minY - 0.5,
+                serie.maxY + 0.5,
                 false
             );
             this.map.redraw();
         },
 
-        _generateDataClasses : function() {
+        _generateDataClasses: function () {
             var dataClasses = [];
             var rangeLimits = this.model.createRangeLimits();
             for (var i = 0; i < rangeLimits.length - 1; i++) {
-                dataClasses[i] = { from : rangeLimits[i], to : rangeLimits[i + 1]};
+                dataClasses[i] = { from: rangeLimits[i], to: rangeLimits[i + 1] };
             }
             return dataClasses;
         },
 
-        _redrawLegend : function() {
+        _redrawLegend: function () {
             this.map.legend.destroy();
             this.map.legend.render();
         },
 
-        _offsetFromMouseEvent : function (e) {
+        _offsetFromMouseEvent: function (e) {
             var offset = this.$el.offset();
             var xOffset = e.pageX - (offset.left + this._width / 2);
             var yOffset = e.pageY - (offset.top + this._height / 2);
-            return {left : xOffset, top : yOffset};
+            return { left: xOffset, top: yOffset };
         },
 
-        _handleMousewheel : function (e, delta, deltaX, deltaY) {
+        _handleMousewheel: function (e, delta, deltaX, deltaY) {
             var offset = this._offsetFromMouseEvent(e);
-            this.model.zoomMouseWheel({delta : deltaY, xOffset : offset.left, yOffset : offset.top});
+            this.model.zoomMouseWheel({ delta: deltaY, xOffset: offset.left, yOffset: offset.top });
             return false;
         },
 
-        _handleDblclick : function (e) {
+        _handleDblclick: function (e) {
             var offset = this._offsetFromMouseEvent(e);
-            this.model.zoomMouseWheel({delta : 1, xOffset : offset.left, yOffset : offset.top});
+            this.model.zoomMouseWheel({ delta: 1, xOffset: offset.left, yOffset: offset.top });
         },
 
-        _onResize : function () {
+        _onResize: function () {
             this.map.reflow();
         }
 
