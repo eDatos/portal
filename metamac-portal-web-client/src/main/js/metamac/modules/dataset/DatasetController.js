@@ -43,7 +43,7 @@
             this.router.navigate(link);
 
             var self = this;
-            var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version", "permalinkId", "indicatorSystem");
+            var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version", "permalinkId", "indicatorSystem", "geo");
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
                     options = _.defaults(options, {
@@ -105,6 +105,9 @@
                             .fail(function () {
                                 deferred.resolve();
                             });
+                    } if (datasetIdentifier.geo) {
+                        self.filterDimensions.importGeographicSelection(datasetIdentifier.geo);
+                        deferred.resolve();
                     } else {
                         deferred.resolve();
                     }

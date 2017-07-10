@@ -5,6 +5,8 @@
 
     var FilterZone = App.modules.dataset.filter.models.FilterZone;
 
+    var zoneOffsets = { left: 0, top: 20, fixed: 40, axisy: 60 };
+
     App.modules.dataset.filter.models.FilterDimensions = Backbone.Collection.extend({
 
         model: App.modules.dataset.filter.models.FilterDimension,
@@ -88,6 +90,23 @@
             return 'fixed';
         },
 
+        importGeographicSelection: function (selection) {
+            var geographicDimension = this.where({ type: "GEOGRAPHIC_DIMENSION" });
+            if (!geographicDimension || geographicDimension.length > 1) {
+                console.warn("Something went wrong, no appropiate geographicDimensions ", geographicDimension);
+            } else {
+                var json = {};
+                geographicDimension = geographicDimension[0];
+                var zone = geographicDimension.get('zone');
+                var position = zoneOffsets[zone.id] + zone.get('dimensions').indexOf(geographicDimension);
+                json[geographicDimension.id] = {
+                    position: position,
+                    selectedCategories: selection.split("|")
+                }
+                this.importJSON(json);
+            }
+        },
+
         importJSON: function (json) {
 
             var dimensionsToImport = _.chain(json).map(function (value, key) {
@@ -122,7 +141,6 @@
 
         exportJSON: function () {
             var exportResult = {};
-            var zoneOffsets = { left: 0, top: 20, fixed: 40, axisy: 60 };
             this.each(function (dimension) {
                 var selectedCategories = dimension.get('representations').where({ selected: true });
                 var selectedCategoriesIds = _.pluck(selectedCategories, 'id');
