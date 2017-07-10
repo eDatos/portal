@@ -91,6 +91,7 @@
 			                    App.queryParams["version"] = '${param.version}';
 								App.queryParams["type"] = '${param.resourceType}';
                                 App.queryParams["indicatorSystem"] = '${param.indicatorSystem}';
+                                App.queryParams["geo"] = '${param.geo}';
 			
 			                    console.log("starting app");
 			
