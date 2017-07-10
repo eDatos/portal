@@ -81,6 +81,7 @@
             this._width = options.width;
             this._height = options.height;
             this._shapeList = options.shapeList;
+            this._allShapeList = options.allShapeList;
             this._container = options.container;
             this._dataJson = options.dataJson;
             this.mapType = options.mapType;
@@ -173,14 +174,21 @@
             }).value();
         },
 
-        _createMapContent : function () {
-          
-            var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());          
+        _allShapeListOrderByHierarchy: function () {
+            return _.chain(this._allShapeList).compact().sortBy(function (shape) {
+                return -shape.hierarchy; //reverse order
+            }).value();
+        },
 
-            var containerGeoJson = GeoJsonConverter.shapeListToGeoJson([this._container], {contour : true});
-            var features = _.union(containerGeoJson.features, geoJson.features);            
+
+        _createMapContent: function () {
+
+            var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
+            var allGeoJson = GeoJsonConverter.shapeListToGeoJson(this._allShapeListOrderByHierarchy(), { contour: true });
+            var containerGeoJson = GeoJsonConverter.shapeListToGeoJson([this._container], { contour: true });
 
             var mapData = this._getMapDataFromGeoJson(geoJson);
+            var allMapData = this._getMapDataFromGeoJson(allGeoJson);
             var containerMapData = this._getMapDataFromGeoJson(containerGeoJson);
 
             var data = this._getData();
@@ -190,15 +198,17 @@
                     name : "Container",
                     mapData : containerMapData
                 }, 
+                    nullColor: Constants.colors.istacGreyLight
                 this._defaultSeriesOptions);
 
-            var featuresContainerSerie = _.defaults({ 
-                            id : "featuresContainerSerie", 
-                            name : "BubbleContainer",
-                            mapData : mapData,
-                            nullColor : Constants.colors.istacGreyMedium
-                        }, 
-                        this._defaultSeriesOptions);   
+            var featuresContainerSerie = _.defaults(
+                {
+                    id: "featuresContainerSerie",
+                    name: "FeaturesContainer",
+                    mapData: allMapData,
+                    nullColor: Constants.colors.istacGreyMedium
+                },
+                this._defaultSeriesOptions);
 
             this._defaultMapOptions.series = [];
             this._defaultMapOptions.series.push(
@@ -235,10 +245,7 @@
 
                     this._defaultMapOptions.legend.enabled = false;
 
-                    this._defaultMapOptions.series.push(
-                        featuresContainerSerie,
-                        bubbleDataSerie
-                    );
+                    this._defaultMapOptions.series.push(bubbleDataSerie);
                     break;
             }
 

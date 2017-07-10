@@ -65,10 +65,12 @@
             this.visible = true;
 
             var normCodes = this._getGeographicDimensionNormCodes();
+            var allNormCodes = this._getAllGeographicDimensionNormCodes();
 
             var actions = {
                 data: _.bind(this._loadData, this),
                 shapes: _.bind(this.shapes.fetchShapes, this.shapes, normCodes),
+                allShapes: _.bind(this.shapes.fetchShapes, this.shapes, allNormCodes),
                 container: _.bind(this.shapes.fetchContainer, this.shapes, normCodes)
             };
 
@@ -76,6 +78,7 @@
                 if (!err) {
                     self._geoJson = result.shapes;
                     self._container = result.container;
+                    self._allGeoJson = result.allShapes;
                     self._dataJson = result.data;
                     self._loadCallback();
                 }
@@ -147,6 +150,10 @@
             return _.invoke(selectedRepresentations, "get", "normCode");
         },
 
+        _getAllGeographicDimensionNormCodes: function () {
+            return _.invoke(this._getGeographicDimension().get('representations').models, "get", "normCode");
+        },
+
         _loadCallback: function () {
             this._initModel();
             this._calculateRanges();
@@ -173,6 +180,7 @@
                 filterDimensions: this.filterDimensions,
                 mapModel: this._mapModel,
                 geoJson: this._geoJson,
+                allGeoJson: this._allGeoJson,
                 container: this._container,
                 dataJson: this._dataJson,
                 width: $(this.el).width(),

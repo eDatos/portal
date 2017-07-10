@@ -14,6 +14,7 @@
             this._width = options.width;
             this._height = options.height;
             this.geoJson = options.geoJson;
+            this.allGeoJson = options.allGeoJson;
             this.container = options.container;
             this.dataJson = options.dataJson;
             this.mapType = options.mapType;
@@ -70,6 +71,7 @@
                 filterDimensions: this._filterDimensions,
                 model: this._mapModel,
                 shapeList: this.geoJson,
+                allShapeList: this.allGeoJson,
                 container: this.container,
                 dataJson: this.dataJson,
                 width: this._width,
