@@ -20,6 +20,7 @@
             this.mapType = options.mapType;
             this.title = options.title;
             this.rightsHolder = options.rightsHolder;
+            this.showRightsHolder = options.showRightsHolder;
             this.$el.empty();
             this._initInternalViews();
         },
@@ -78,7 +79,8 @@
                 height: this._height,
                 mapType: this.mapType,
                 title: this.title,
-                rightsHolder: this.rightsHolder
+                rightsHolder: this.rightsHolder,
+                showRightsHolder: this.showRightsHolder
             });
         },
 

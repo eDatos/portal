@@ -22,7 +22,8 @@
                 .replace(/<\/svg>.*?$/, '</svg>') // any HTML added to the container after the SVG (#894)
                 .replace(/&nbsp;/g, '\u00A0') // no-break space
                 .replace(/&shy;/g, '\u00AD') // soft hyphen
-                .replace(/fill="#FFFFFF"/g, 'fill="#FFFFFF"'); //set background to white, this is a very bad hack
+                .replace(/fill="#FFFFFF"/g, 'fill="#FFFFFF"') //set background to white, this is a very bad hack
+                .replace(new RegExp(App.Constants.colors.hideCredits, "g"), '#909090'); // Ugly hack to style correctly the credits
             return svg;
         },
 

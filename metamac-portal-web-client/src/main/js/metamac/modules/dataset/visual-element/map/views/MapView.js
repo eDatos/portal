@@ -21,7 +21,8 @@
             },
 
             title: {
-                text: ''
+                text: null,
+                y: 30
             },
 
             legend: {
@@ -87,6 +88,7 @@
             this.mapType = options.mapType;
             this.title = options.title;
             this.rightsHolder = options.rightsHolder;
+            this.showRightsHolder = options.showRightsHolder;
 
             this.tooltipDelegate = new App.Map.TooltipDelegate(options);
             // _.bindAll(this, "_calculateColor");
@@ -94,6 +96,7 @@
             this._onResize = _.debounce(_.bind(this._onResize, this), 200);
             this._updateDataClasses = _.debounce(_.bind(this._updateDataClasses, this), 100);
 
+            this._defaultMapOptions.title.text = this._dataset.metadata.getTitle();
             this._defaultMapOptions.tooltip.formatter = _.partial(function (formatter, mapView) {
                 return mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
             }, _, this);
@@ -255,6 +258,11 @@
             this._defaultMapOptions.colorAxis.dataClasses = this._generateDataClasses();
 
             this._defaultMapOptions.credits.text = this.rightsHolder;
+            if (!this.showRightsHolder) {
+                this._defaultMapOptions.credits.style = {
+                    color: App.Constants.colors.hideCredits
+                }
+            }
 
             this.map = new Highmaps.Map(this._defaultMapOptions);
 

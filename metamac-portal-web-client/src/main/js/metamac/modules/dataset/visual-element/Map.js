@@ -187,7 +187,8 @@
                 height: $(this.el).height(),
                 mapType: this.mapType,
                 title: this.getTitle(),
-                rightsHolder: this.getRightsHolderText()
+                rightsHolder: this.getRightsHolderText(),
+                showRightsHolder: this.showRightsHolderText()
             });
         },
 

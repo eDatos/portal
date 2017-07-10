@@ -68,7 +68,7 @@
                 },
                 credits: {
                     position: {
-                        y: 0,
+                        y: -10,
                         x: -10
                     }
                 },
@@ -226,7 +226,11 @@
         },
 
         getRightsHolderText: function () {
-            return App.config.showRightsHolder && !this._isEmbededOnVisualizerDomain() && this.dataset && this.dataset.metadata.getRightsHolder() ? this.dataset.metadata.getRightsHolder().name : '';
+            return this.dataset && this.dataset.metadata.getRightsHolder() ? this.dataset.metadata.getRightsHolder().name : '';
+        },
+
+        showRightsHolderText: function () {
+            return App.config.showRightsHolder && !this._isEmbededOnVisualizerDomain();
         },
 
         _isEmbededOnVisualizerDomain: function () {

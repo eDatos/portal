@@ -127,6 +127,12 @@
                     self._chartOptions.chart.renderTo = self.$chartContainer[0];
 
                     self._chartOptions.credits.text = self.getRightsHolderText();
+                    if (!self.showRightsHolderText()) {
+                        self._chartOptions.credits.style = {
+                            color: App.Constants.colors.hideCredits
+                        }
+                    }
+                    self._chartOptions.title.text = self.dataset.metadata.getTitle();
 
                     self.chart = new Highcharts.Chart(self._chartOptions);
                     self.$el.on("resize", function () { });

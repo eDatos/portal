@@ -108,7 +108,7 @@
                 measureConcepts: this.measureConcepts,
                 nonMeasureDimensions: this.nonMeasureDimensions,
 
-                rightsHolder: this.getRightsHolderText()
+                rightsHolder: this.showRightsHolderText() ? this.getRightsHolderText() : ''
             };
 
             this.$el.html(this.template(context));

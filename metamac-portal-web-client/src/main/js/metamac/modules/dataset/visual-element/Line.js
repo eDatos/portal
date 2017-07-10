@@ -80,8 +80,8 @@ App.namespace("App.VisualElement.LineChart");
             },
             credits: {
                 position: {
-                    y: 0,
-                    x: 0
+                    y: -5,
+                    x: -10
                 }
             },
             tooltip: {
@@ -242,7 +242,13 @@ App.namespace("App.VisualElement.LineChart");
             this._chartOptions.xAxis.max = detailData.max;
             this._chartOptions.xAxis.tickInterval = detailData.tickInterval;
 
+            this._chartOptions.title.text = this.dataset.metadata.getTitle();
             this._chartOptions.credits.text = this.getRightsHolderText();
+            if (!this.showRightsHolderText()) {
+                this._chartOptions.credits.style = {
+                    color: App.Constants.colors.hideCredits
+                }
+            }
 
             this.detailChart = new Highcharts.Chart(this._chartOptions);
         },
