@@ -48,6 +48,10 @@ import org.springframework.stereotype.Service;
 @Service("dataExportRestExternalFacadeV10")
 public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
+    private String                                 MEDIA_TYPE_TEXT_TAB_SEPARATED_VALUES = "text/tab-separated-values";
+    private String                                 MEDIA_TYPE_TEXT_CSV                  = "text/csv";
+    private String                                 MEDIA_TYPE_APPLICATION_XLSX          = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
     @Autowired
     private ExportService                          exportService;
 
@@ -143,7 +147,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".xlsx";
             }
-            return buildResponseOkWithFile(tmpFile, filename);
+            return buildResponseOkWithFile(tmpFile, filename, MEDIA_TYPE_APPLICATION_XLSX);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -189,7 +193,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".px";
             }
-            return buildResponseOkWithFile(tmpFile, filename);
+            return buildResponseOkWithFile(tmpFile, filename, MediaType.TEXT_PLAIN);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -222,7 +226,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
             filename += SvgExportSupportedMimeType.getFileExtension(mimeType);
 
-            return buildResponseOkWithFile(tmpFile, filename);
+            return buildResponseOkWithFile(tmpFile, filename, mimeType);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -233,8 +237,8 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return exportSvgToImage(svg, filename, width, mimeType);
     }
 
-    private Response buildResponseOkWithFile(File file, String filename) throws FileNotFoundException {
-        return Response.ok(new DeleteOnCloseFileInputStream(file)).header("Content-Disposition", "attachment; filename=" + filename).build();
+    private Response buildResponseOkWithFile(File file, String filename, String mimeType) throws FileNotFoundException {
+        return Response.ok(new DeleteOnCloseFileInputStream(file), mimeType).header("Content-Disposition", "attachment; filename=" + filename).build();
     }
 
     private Dataset retrieveDataset(String agencyID, String resourceID, String version, String lang, String dimensionSelection) throws MetamacException {
@@ -307,15 +311,20 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             FileOutputStream outputStreamObservations = new FileOutputStream(tmpFileObservations);
             FileOutputStream outputStreamAttributes = new FileOutputStream(tmpFileAttributes);
 
+            String mimeType = MediaType.TEXT_PLAIN;
+
             switch (plainTextTypeEnum) {
                 case TSV:
                     exportService.exportDatasetToTsv(SERVICE_CONTEXT, dataset, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    mimeType = MEDIA_TYPE_TEXT_TAB_SEPARATED_VALUES;
                     break;
                 case CSV_COMMA:
                     exportService.exportDatasetToCsvCommaSeparated(SERVICE_CONTEXT, dataset, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    mimeType = MEDIA_TYPE_TEXT_CSV;
                     break;
                 case CSV_SEMICOLON:
                     exportService.exportDatasetToCsvSemicolonSeparated(SERVICE_CONTEXT, dataset, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    mimeType = MEDIA_TYPE_TEXT_CSV;
                     break;
                 default:
                     break;
@@ -332,7 +341,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = filenamePrefix;
             }
             File plainTextZip = generatePlainTextZip(plainTextTypeEnum, tmpFileObservations, tmpFileAttributes, filenamePrefix);
-            return buildResponseOkWithFile(plainTextZip, filename + ".zip");
+            return buildResponseOkWithFile(plainTextZip, filename + ".zip", mimeType);
         } catch (Exception e) {
             throw manageException(e);
         }
