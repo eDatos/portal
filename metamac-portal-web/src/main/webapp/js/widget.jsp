@@ -107,11 +107,13 @@ function datasetWidget(options) {
 	} else {
 		appendIframe(options);
 	}
-    sendToAnalytics();
+    sendToAnalytics(options);
 }
 
-function sendToAnalytics() {
+function sendToAnalytics(options) {
     ga('create', '${analyticsGoogleTrackingId}', 'auto');
+    ga('set', 'referrer', window.location.href);
+    ga('set', 'page', getWidgetUrl(options));
     ga('send', 'pageview');    
 }
     
