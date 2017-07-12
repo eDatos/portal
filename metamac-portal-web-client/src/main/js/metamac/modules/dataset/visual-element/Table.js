@@ -27,13 +27,16 @@
     App.VisualElement.Table.prototype = {
 
         load: function () {
-            this.render();
             this._bindEvents();
+            if (!this.assertAllDimensionsHaveSelections()) {
+                return;
+            }
+            this.render();
         },
 
         destroy: function () {
-            this.tableScrollManager.destroy();
-            this.keyboardManager.destroy();
+            if (this.tableScrollManager) { this.tableScrollManager.destroy(); }
+            if (this.keyboardManager) { this.keyboardManager.destroy(); }
 
             this.tableScrollManager = null;
             this.keyboardManager = null;
@@ -41,7 +44,7 @@
             this.dataSource = null;
             this.delegate = null;
 
-            this.view.destroy();
+            if (this.view) { this.view.destroy(); }
             this.view = null;
 
             this._unbindEvents();
@@ -124,9 +127,16 @@
         },
 
         update: function () {
-            this.updateTitle();
-            this.view.update();
-            this._updateSize();
+            if (!this.assertAllDimensionsHaveSelections()) {
+                return;
+            }
+            if (!this.view) {
+                this.load();
+            } else {
+                this.updateTitle();
+                this.view.update();
+                this._updateSize();
+            }
         },
 
         containerDimensions: function () {

@@ -6,9 +6,9 @@
     var BigDataCacheBlock = App.dataset.data.BigDataCacheBlock;
 
     App.dataset.data.BigDataCache = function (options) {
-        this.rows = options.rows;
-        this.columns = options.columns;
-
+        // This rows = 1, columns = 1 is a workaround to allow petitions to the Api even when the dimensions are misconstructed, to be able to get other data from the request
+        this.rows = options.rows ? options.rows : 1;
+        this.columns = options.columns ? options.columns : 1;
         this.size = options.size || 30;
         this.capacity = options.capacity || 50;
 

@@ -62,6 +62,11 @@
         load: function () {
             var self = this;
             this._bindEvents();
+            if (!this.assertAllDimensionsHaveSelections()) {
+                if (this.$title) { this.$title.hide(); }
+                return;
+            }
+            if (this.$title) { this.$title.show(); }
             this.visible = true;
 
             var normCodes = this._getGeographicDimensionNormCodes();

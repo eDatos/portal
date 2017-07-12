@@ -134,6 +134,9 @@ App.namespace("App.VisualElement.LineChart");
 
         load: function () {
             this._bindEvents();
+            if (!this.assertAllDimensionsHaveSelections()) {
+                return;
+            }
             this.render();
         },
 
@@ -265,17 +268,24 @@ App.namespace("App.VisualElement.LineChart");
 
         update: function () {
             var self = this;
+            if (!this.assertAllDimensionsHaveSelections()) {
+                return;
+            }
 
-            self.detailChart.showLoading();
-            self.masterChart.showLoading();
+            if (!this.chart) {
+                this.load();
+            } else {
+                self.detailChart.showLoading();
+                self.masterChart.showLoading();
 
-            this.dataset.data.loadAllSelectedData().then(function () {
-                self.detailChart.hideLoading();
-                self.masterChart.hideLoading();
-                self.updateTitle();
-                self._updateMaster();
-                self._updateDetail();
-            });
+                this.dataset.data.loadAllSelectedData().then(function () {
+                    self.detailChart.hideLoading();
+                    self.masterChart.hideLoading();
+                    self.updateTitle();
+                    self._updateMaster();
+                    self._updateDetail();
+                });
+            }
         },
 
         _updateMaster: function () {

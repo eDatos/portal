@@ -70,10 +70,6 @@
 
         deselectVisible: function () {
             var visibleModels = this.where({ visible: true, selected: true });
-            var selectedModels = this.getSelectedRepresentations();
-            if (visibleModels.length === selectedModels.length) {
-                visibleModels.shift(); //leave at least one model selected
-            }
             _.invoke(visibleModels, 'set', { selected: false });
         },
 
@@ -105,10 +101,6 @@
 
         _onChangeSelected: function (model) {
             var selectedModels = this.getSelectedRepresentations();
-            if (!model.get('selected') && selectedModels.length === 0) {
-                model.set('selected', true);
-            }
-
             if (model.get('selected') && selectedModels.length > this.selectedLimit) {
                 var otherModel = _.find(selectedModels, function (selectedModel) {
                     return selectedModel.id !== model.id;

@@ -51,6 +51,9 @@
 
         load: function () {
             this._bindEvents();
+            if (!this.assertAllDimensionsHaveSelections()) {
+                return;
+            }
             this.render();
         },
 
@@ -59,6 +62,7 @@
 
             if (this.chart && this.chart.renderTo) {
                 this.chart.destroy();
+                this.chart = null;
             }
         },
 
@@ -194,20 +198,27 @@
         },
 
         update: function () {
-            this.chart.showLoading();
+            if (!this.assertAllDimensionsHaveSelections()) {
+                return;
+            }
+            if (!this.chart) {
+                this.load();
+            } else {
+                this.chart.showLoading();
 
-            var self = this;
-            this.dataset.data.loadAllSelectedData().then(function () {
-                self.chart.hideLoading();
+                var self = this;
+                this.dataset.data.loadAllSelectedData().then(function () {
+                    self.chart.hideLoading();
 
-                self.updateTitle();
-                var data = self.getData();
+                    self.updateTitle();
+                    var data = self.getData();
 
-                self.replaceSeries(self.chart, data.series);
-                self.chart.xAxis[0].setCategories(data.xAxis, false);
-                self.chart.counters.color = 0;
-                self.chart.redraw(false);
-            });
+                    self.replaceSeries(self.chart, data.series);
+                    self.chart.xAxis[0].setCategories(data.xAxis, false);
+                    self.chart.counters.color = 0;
+                    self.chart.redraw(false);
+                });
+            }
         },
 
         _updateSize: function () {

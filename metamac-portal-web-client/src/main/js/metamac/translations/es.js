@@ -116,7 +116,8 @@ I18n.translations.es = {
         },
         mapbubble: {
             nomap: "Mapa no disponible"
-        }
+        },
+        noSelection: "Debe seleccionar al menos una categoría en cada dimensión"
     },
 
     entity: {

@@ -40,7 +40,9 @@
 
             fixedDimensions.forEach(function (dimension) {
                 var drawableModels = dimension.get('representations').where({ drawable: true });
-                fixedPermutations[dimension.id] = drawableModels[0].id; // Fixed dimensions has limit 1
+                if (drawableModels.length) {
+                    fixedPermutations[dimension.id] = drawableModels[0].id; // Fixed dimensions has limit 1
+                }
             });
 
             this.top = this._initializeTableInfoForDimensions(this.filterDimensions.dimensionsAtZone('top'));

@@ -363,6 +363,46 @@
     }
 }
 
+.dataset-no-selection {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: white; 
+    top: 0;
+
+    .no-selection-container {
+        height: 100%;
+        margin: auto;
+        width: 95%;
+
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+
+        display: -moz-box;
+        -moz-box-orient: horizontal;
+        -moz-box-pack: center;
+        -moz-box-align: center;
+
+        display: box;
+        box-orient: horizontal;
+        box-pack: center;
+        box-align: center;
+        
+
+        .no-selection-message {
+            font-size: 20px;
+            color: @istacWhite;
+            background-color: @istacGreyDark;
+            padding: 18px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    }
+}
+
+
 .metamac-container.full-screen {        
     height: 100%;
     width: 100%;

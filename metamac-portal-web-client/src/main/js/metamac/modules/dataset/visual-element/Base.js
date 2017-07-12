@@ -10,6 +10,8 @@
 
     App.VisualElement.Base.prototype = {
 
+        _noSelectionTemplate: App.templateManager.get('dataset/dataset-no-selection'),
+
         initialize: function (options) {
             options = options || {};
             this.dataset = options.dataset;
@@ -243,6 +245,41 @@
 
         getRightsHolderHeight: function () {
             return 20;
+        },
+
+        allDimensionsHaveSelections: function () {
+            return this.getDimensionsWithoutSelections().length == 0;
+        },
+
+        getDimensionsWithoutSelections: function () {
+            return this.filterDimensions.filter(function (dimension) {
+                return dimension.get('representations').where({ selected: true }).length == 0;
+            })
+        },
+
+        renderNoSelectionView: function () {
+            this.setupNoSelectionViewIfNeeded();
+            this.$noSelection.html(this._noSelectionTemplate());
+            this.$noSelection.show();
+        },
+
+        setupNoSelectionViewIfNeeded: function () {
+            if (this.$el.find('.dataset-no-selection').length) { return; }
+            this.$noSelection = $('<div class="dataset-no-selection"></div>');
+            this.$noSelection.hide();
+            this.$el.append(this.$noSelection);
+        },
+
+        assertAllDimensionsHaveSelections: function () {
+            if (this.allDimensionsHaveSelections()) {
+                if (this.$noSelection) {
+                    this.$noSelection.hide();
+                }
+                return true;
+            } else {
+                this.renderNoSelectionView();
+                return false;
+            }
         }
 
     };
