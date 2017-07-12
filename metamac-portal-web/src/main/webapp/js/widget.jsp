@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
+<%@ page import="org.siemac.metamac.core.common.exception.MetamacException"%>
+<%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
 <c:set var="requestURL">${pageContext.request.requestURL}</c:set>
 <c:set var="baseURL" value="${fn:replace(requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}" />
  <%
