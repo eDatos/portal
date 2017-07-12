@@ -28,18 +28,18 @@
 
     App.modules.dataset.filter.models.FilterTableInfo = Backbone.Model.extend({
 
-        initialize : function (attributes) {
+        initialize: function (attributes) {
             this.filterDimensions = attributes.filterDimensions;
             this._initializeTableInfo();
             this._initializeLeftHeaderValues();
         },
 
-        _initializeTableInfo : function () {
-            var fixedPermutations = {};            
+        _initializeTableInfo: function () {
+            var fixedPermutations = {};
             var fixedDimensions = this.filterDimensions.getAllFixedDimensionsCopy();
 
             fixedDimensions.forEach(function (dimension) {
-                var drawableModels = dimension.get('representations').where({drawable : true});
+                var drawableModels = dimension.get('representations').where({ drawable: true });
                 fixedPermutations[dimension.id] = drawableModels[0].id; // Fixed dimensions has limit 1
             });
 
@@ -48,24 +48,24 @@
             this.fixed = fixedPermutations;
         },
 
-        _initializeTableInfoForDimensions : function (dimensions) {
+        _initializeTableInfoForDimensions: function (dimensions) {
             if (dimensions.length > 0) {
                 var result = {
-                    ids : [],
-                    representationsValues : [],
-                    representationsIds : [],
-                    representationsLengths : []
+                    ids: [],
+                    representationsValues: [],
+                    representationsIds: [],
+                    representationsLengths: []
                 };
 
                 dimensions.each(function (dimension) {
                     result.ids.push(dimension.id);
-                    var representations = dimension.get('representations').where({drawable : true});
+                    var representations = dimension.get('representations').where({ drawable: true });
 
                     if (dimension.get('type') === "TIME_DIMENSION") {
                         var group = _.groupBy(representations, function (representation) {
                             return representation.has('normCode') ? 'hasNormCode' : 'dontHasNormCode';
                         });
-                        representations = _.sortBy(group.hasNormCode,function (representation) {
+                        representations = _.sortBy(group.hasNormCode, function (representation) {
                             return representation.get('normCode');
                         }).reverse();
                         representations.push.apply(representations, group.dontHasNormCode);
@@ -81,22 +81,22 @@
             } else {
                 // Empty header should have at least an empty element
                 return {
-                    ids : [undefined],
-                    representationsValues : [
+                    ids: [undefined],
+                    representationsValues: [
                         [""]
                     ],
-                    representationsIds : [
+                    representationsIds: [
                         [undefined]
                     ],
-                    representationsLengths : [1],
-                    representationsMult : [1]
+                    representationsLengths: [1],
+                    representationsMult: [1]
                 };
             }
         },
 
-        _initializeLeftHeaderValues : function () {
+        _initializeLeftHeaderValues: function () {
             var headerValuesGroupByDimension = this.filterDimensions.zones.get('left').get('dimensions').map(function (dimension) {
-                var selectedRepresentations = dimension.get('representations').where({drawable : true});
+                var selectedRepresentations = dimension.get('representations').where({ drawable: true });
                 return _.invoke(selectedRepresentations, 'pick', 'visibleLabel', 'level');
             });
 
@@ -104,8 +104,8 @@
             var headerValues = _.reduceRight(headerValuesGroupByDimension, function (memo, headerValuesInDimension) {
                 var levels = _.pluck(headerValuesInDimension, 'level');
                 var orderedLevels = _.uniq(levels).sort();
-                incrementArray(memo, 'level', orderedLevels.length);                
-                var normalizedHeaderValuesInDimension = _.map(headerValuesInDimension, function(headerValue) { 
+                incrementArray(memo, 'level', orderedLevels.length);
+                var normalizedHeaderValuesInDimension = _.map(headerValuesInDimension, function (headerValue) {
                     headerValue.level = _.indexOf(orderedLevels, headerValue.level);
                     return headerValue;
                 });
@@ -114,14 +114,14 @@
             // indent using level
             var labels = _.map(headerValues, function (headerValue) {
                 return {
-                    level : headerValue.level,
-                    label : repeatStr(DIMVAL_INDENT, headerValue.level) + headerValue.visibleLabel
+                    level: headerValue.level,
+                    label: repeatStr(DIMVAL_INDENT, headerValue.level) + headerValue.visibleLabel
                 };
             });
             this.leftHeaderValues = [labels];
         },
 
-        getCategoryForCell : function (cell, representationType) {
+        getCategoryForCell: function (cell, representationType) {
             var permutation = {},
                 i, index, representation, dimensionId;
 
@@ -154,17 +154,17 @@
          *
          *  @return { dim1 : ['cat1', 'cat2'], dim2 : ['cat1'] }
          */
-        getCategoryIdsForCell : function (cell) {
+        getCategoryIdsForCell: function (cell) {
             return this.getCategoryForCell(cell, "representationsIds");
         },
 
-        getCategoryValuesForCell : function (cell) {
+        getCategoryValuesForCell: function (cell) {
             return this.getCategoryForCell(cell, "representationsValues");
         },
 
-        getCellForCategoryIds : function (ids) {
+        getCellForCategoryIds: function (ids) {
             var self = this;
-            var result = {x : 0, y : 0};
+            var result = { x: 0, y: 0 };
             _.each(ids, function (categoryId, dimensionId) {
                 var dimension = self.filterDimensions.get(dimensionId);
                 if (dimension) {
@@ -194,11 +194,11 @@
          *
          *  @return { dim1 : ['cat1', 'cat2'], dim2 : ['cat1'] }
          */
-        getCategoryIdsForRegion : function (region) {
+        getCategoryIdsForRegion: function (region) {
             var permutations = [];
             for (var x = region.left.begin; x < region.left.end; x++) {
                 for (var y = region.top.begin; y < region.top.end; y++) {
-                    permutations.push(this.getCategoryIdsForCell({x : x, y : y}));
+                    permutations.push(this.getCategoryIdsForCell({ x: x, y: y }));
                 }
             }
 
@@ -213,37 +213,37 @@
             });
 
             result = _.map(result, function (representation, dimension) {
-                return {id : dimension, representations : _.unique(representation)};
+                return { id: dimension, representations: _.unique(representation) };
             });
 
             return result;
         },
 
-        _dimensionsTotalSize : function (representationsLength) {
+        _dimensionsTotalSize: function (representationsLength) {
             var size = _.reduce(representationsLength, function (mem, value) {
                 return mem * value;
             }, 1);
             return size;
         },
-        
-        _dimensionsLeftTotalSize : function (representationsLength) {
+
+        _dimensionsLeftTotalSize: function (representationsLength) {
             var size = _.reduceRight(representationsLength, function (mem, value) {
                 return value + value * mem;
             }, 0);
             return size;
         },
-        
+
         // How many rows are in dimension, included the empty one with its name. Used to calculate the blank rows on the table
-        elementsByLeftDimension : function (representationsLengths, dimension) {
-        	representationsLengths = representationsLengths.slice(dimension);
+        elementsByLeftDimension: function (representationsLengths, dimension) {
+            representationsLengths = representationsLengths.slice(dimension);
             var size = _.reduceRight(representationsLengths, function (mem, value) {
                 return value + value * mem;
             }, 0);
             return size + 1;
         },
-        
-        blanksByLeftDimension : function (representationsLengths, dimension) {
-        	representationsLengths = representationsLengths.slice(dimension);
+
+        blanksByLeftDimension: function (representationsLengths, dimension) {
+            representationsLengths = representationsLengths.slice(dimension);
             var size = _.reduceRight(representationsLengths, function (mem, value) {
                 return 1 + value * mem;
             }, 0);
@@ -253,10 +253,10 @@
         /**
          * @return {columns : {Number}, rows : {Number}} Table size
          */
-        getTableSize : function () {
+        getTableSize: function () {
             return {
-                columns : this._dimensionsTotalSize(this.top.representationsLengths),
-                rows : this._dimensionsLeftTotalSize(this.left.representationsLengths)
+                columns: this._dimensionsTotalSize(this.top.representationsLengths),
+                rows: this._dimensionsLeftTotalSize(this.left.representationsLengths)
             };
         }
 
