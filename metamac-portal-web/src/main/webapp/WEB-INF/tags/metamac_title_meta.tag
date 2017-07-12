@@ -57,6 +57,8 @@
 			
 			ORGANISATION = configurationService.retrieveOrganisation();			
 			request.setAttribute("Organisation", ORGANISATION);
+            
+			request.setAttribute("analyticsGoogleTrackingId", configurationService.retrieveAnalyticsGoogleTrackingId());
 			
 			if (ORGANISATION.equals("ISTAC")) {
 			    request.setAttribute("AddthisCode","#pubid=ra-501fc6f600bacbe9");

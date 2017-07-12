@@ -131,5 +131,8 @@ public class ApplicationStartup extends ApplicationStartupListener {
                 checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
             }
         }
+
+        // Google analytics
+        checkRequiredProperty(PortalConfigurationConstants.ANALYTICS_GOOGLE_TRACKING_ID);
     }
 }
