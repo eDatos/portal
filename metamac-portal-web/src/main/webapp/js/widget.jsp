@@ -1,8 +1,17 @@
 <%@ page contentType="text/javascript"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
 <c:set var="requestURL">${pageContext.request.requestURL}</c:set>
 <c:set var="baseURL" value="${fn:replace(requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}" />
+ <%
+    PortalConfiguration configurationService = ApplicationContextProvider.getApplicationContext().getBean(PortalConfiguration.class);
+    try { 
+        request.setAttribute("analyticsGoogleTrackingId", configurationService.retrieveAnalyticsGoogleTrackingId());            
+    } catch (MetamacException e) {             
+        request.setAttribute("analyticsGoogleTrackingId", "error");
+    }
+%>
 
 // Copyright (c) 2009 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -14,6 +23,12 @@ f(a.node);b.id=a.id||(c?c.id||getUid(c):"");b.style.cssText=" "+(a.cssText||"");
 for(var c=document.body;b.firstChild;)c.insertBefore(b.lastChild,c.firstChild);a=m(a);f("chromeFrameIframeHolder").appendChild(a);f("chromeFrameCloseButton").onclick=l}},d={};d.check=function(a){a=a||{};var b=navigator.userAgent,c=/MSIE (\S+); Windows NT/,g=false;if(c.test(b)){if(parseFloat(c.exec(b)[1])<6&&b.indexOf("SV1")<0)g=true}else g=true;if(!g){if(!j){i('.chromeFrameInstallDefaultStyle {width: 800px;height: 600px;position: absolute;left: 50%;top: 50%;margin-left: -400px;margin-top: -300px;}.chromeFrameOverlayContent {position: absolute;margin-left: -400px;margin-top: -300px;left: 50%;top: 50%;border: 1px solid #93B4D9;background-color: white;z-index: 2001;}.chromeFrameOverlayContent iframe {width: 800px;height: 600px;border: none;}.chromeFrameOverlayCloseBar {height: 1em;text-align: right;background-color: #CADEF4;}.chromeFrameOverlayUnderlay {position: absolute;width: 100%;height: 100%;background-color: white;opacity: 0.5;-moz-opacity: 0.5;-webkit-opacity: 0.5;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";filter: alpha(opacity=50);z-index: 2000;}');
 j=true}document.cookie.indexOf("disableGCFCheck=1")>=0&&l();b=(document.location.protocol=="https:"?"https:":"http:")+"//www.google.com/chromeframe";if(!h()){a.onmissing&&a.onmissing();a.src=a.url||b;b=a.mode||"inline";if(!(a.preventPrompt||0))if(b=="inline")n(a);else b=="overlay"?o(a):window.open(a.src);if(!a.preventInstallDetection)var p=setInterval(function(){if(h()){a.oninstall&&a.oninstall();clearInterval(p);window.location=a.destination||window.location}},2E3)}}};d._force=false;d._forceValue=
 false;d.isAvailable=h;e.CFInstall=d}})(this.ChromeFrameInstallScope||this);
+
+// Google Analytics
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 function appendChromeFrameObject(options) {
 	var width = options.width || '100%';	
@@ -90,4 +105,11 @@ function datasetWidget(options) {
 	} else {
 		appendIframe(options);
 	}
+    sendToAnalytics();
 }
+
+function sendToAnalytics() {
+    ga('create', '${analyticsGoogleTrackingId}', 'auto');
+    ga('send', 'pageview');    
+}
+    

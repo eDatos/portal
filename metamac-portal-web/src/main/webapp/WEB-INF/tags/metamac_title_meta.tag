@@ -100,6 +100,8 @@
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
 		 	request.setAttribute("ApiUrlIndicators", "error");
 		 	request.setAttribute("organisationUrn", "error");
+            
+		 	request.setAttribute("analyticsGoogleTrackingId", "error");
 		}
 	%>
     <%
