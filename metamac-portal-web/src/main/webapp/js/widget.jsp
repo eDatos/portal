@@ -111,9 +111,9 @@ function datasetWidget(options) {
 }
 
 function sendToAnalytics(options) {
-    ga('create', '${analyticsGoogleTrackingId}', 'auto');
+    ga('create', '${analyticsGoogleTrackingId}', {'alwaysSendReferrer': true});
     ga('set', 'referrer', window.location.href);
-    ga('set', 'page', getWidgetUrl(options));
-    ga('send', 'pageview');    
+    ga('set', 'location', getWidgetUrl(options));
+    ga('send', 'pageview');
 }
     
