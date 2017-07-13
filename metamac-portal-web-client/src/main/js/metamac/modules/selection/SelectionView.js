@@ -25,7 +25,6 @@
                 visualize: true
             });
 
-            this._initializeSidebarView();
             this._initializeOptionsView();
             this._initializeFullScreen();
         },
@@ -49,22 +48,6 @@
                 filterDimensions: this.filterDimensions,
                 el: this.$(".selection-options-bar")
                 //,buttons : this.veElements
-            });
-        },
-
-        _initializeSidebarView: function () {
-            this.infoView = new App.modules.dataset.DatasetInfoView({
-                dataset: this.dataset,
-                optionsModel: this.optionsModel
-            });
-
-            this.helpView = new App.modules.dataset.DatasetHelpView({});
-
-            var sideViews = [this.infoView, this.helpView];
-            this.sidebarView = new App.components.sidebar.SidebarView({
-                sideViews: sideViews,
-                optionsModel: this.optionsModel,
-                defaultCurrentSideView: "info"
             });
         },
 
@@ -95,8 +78,7 @@
         },
 
         onRender: function () {
-            // We render here the sidebar because marionette provides a built in method
-            this.sidebarView.setElement(this.$('.sidebar-container')).render();
+            // We render here the options bar because marionette provides a built in method
             this.optionsView.setElement(this.$('.selection-options-bar')).render();
 
             this.fullScreen.setContainer($('.metamac-container'));
@@ -127,17 +109,11 @@
         },
 
         _onDidEnterFullScreen: function () {
-            this.sidebarView.updateSidebarHeight();
             this.optionsModel.set('fullScreen', true);
         },
 
         _onDidExitFullScreen: function () {
-            this.sidebarView.updateSidebarHeight();
             this.optionsModel.set('fullScreen', false);
-        },
-
-        onShow: function () {
-            this.sidebarView.updateSidebarHeight();
         },
 
         onBeforeClose: function () {
