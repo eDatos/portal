@@ -244,7 +244,7 @@
                   "headers":{
 
                   },
-                  "description":"Éxito. Indica que la petición ha sido resuelta correctamente."
+                  "description":"Éxito. Indica que la petición ha sido resuelta correctamente."
                },
                "404":{
                   "description":"No encontrado. El recurso solicitado no existe."
@@ -282,7 +282,7 @@
                   "headers":{
 
                   },
-                  "description":"Éxito. Indica que la petición ha sido resuelta correctamente."
+                  "description":"Éxito. Indica que la petición ha sido resuelta correctamente."
                },
                "404":{
                   "description":"No encontrado. El recurso solicitado no existe."
