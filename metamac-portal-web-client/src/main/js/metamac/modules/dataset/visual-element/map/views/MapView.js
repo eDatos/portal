@@ -22,11 +22,18 @@
 
             title: {
                 text: null,
-                floating: false
+                floating: false,
+                style: {
+                    color: App.Constants.colors.hiddenText,
+                    fontSize: "13px"
+                }
             },
 
             subtitle: {
-                text: null
+                text: null,
+                style: {
+                    color: App.Constants.colors.hiddenText
+                }
             },
 
             legend: {
@@ -268,7 +275,7 @@
             this._defaultMapOptions.credits.text = this.rightsHolder;
             if (!this.showRightsHolder) {
                 this._defaultMapOptions.credits.style = {
-                    color: App.Constants.colors.hideCredits
+                    color: App.Constants.colors.hiddenText
                 }
             }
 

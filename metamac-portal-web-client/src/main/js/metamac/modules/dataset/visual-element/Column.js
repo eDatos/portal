@@ -133,7 +133,7 @@
                     self._chartOptions.credits.text = self.getRightsHolderText();
                     if (!self.showRightsHolderText()) {
                         self._chartOptions.credits.style = {
-                            color: App.Constants.colors.hideCredits
+                            color: App.Constants.colors.hiddenText
                         }
                     }
                     self._chartOptions.title.text = self.dataset.metadata.getTitle();

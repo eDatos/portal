@@ -18,7 +18,7 @@
             istacGreyDark: "#808080",
             istacBlack: "#222222",
 
-            hideCredits: "#FFFFFD"
+            hiddenText: "#FFFFFD"
         },
 
         font: {

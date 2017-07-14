@@ -249,7 +249,7 @@ App.namespace("App.VisualElement.LineChart");
             this._chartOptions.credits.text = this.getRightsHolderText();
             if (!this.showRightsHolderText()) {
                 this._chartOptions.credits.style = {
-                    color: App.Constants.colors.hideCredits
+                    color: App.Constants.colors.hiddenText
                 }
             }
 
