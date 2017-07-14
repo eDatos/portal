@@ -15,10 +15,22 @@
 
         render: function () {
             var self = this;
-            var savePermalinkRequest = this.savePermalink();
-            savePermalinkRequest.done(function (response) {
-                self.renderEmbed(response.id);
-            });
+            if (this.needsPermalink()) {
+                var savePermalinkRequest = this.savePermalink();
+                savePermalinkRequest.done(function (response) {
+                    self.renderEmbed(response.id);
+                });
+            } else {
+                self.renderEmbed(this.getExistingPermalinkId());
+            }
+        },
+
+        needsPermalink: function () {
+            return !(App.config.widget && this.getExistingPermalinkId());
+        },
+
+        getExistingPermalinkId: function () {
+            return this.filterDimensions.metadata.identifier().permalinkId;
         },
 
         savePermalink: function () {
