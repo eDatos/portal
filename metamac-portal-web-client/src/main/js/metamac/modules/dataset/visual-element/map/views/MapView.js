@@ -27,22 +27,24 @@
 
             legend: {
                 enabled: true,
-                layout: 'vertical',
+                layout: 'horizontal',
                 floating: true,
-                align: 'right',
-                y: -50,
-                x: 7,
+                align: 'center',
+                y: -15,
+                x: 0,
                 backgroundColor: Constants.colors.istacWhite,
                 borderColor: Constants.colors.istacGreyMedium,
                 borderWidth: 1,
                 borderRadius: 5,
                 shadow: true,
                 itemStyle: {
-                    "fontWeight": "normal"
+                    "fontWeight": "normal",
+                    "fontSize": "11px"
                 },
-                padding: 10,
-                itemMarginTop: 5,
-                itemMarginBottom: 5
+                padding: 6,
+                itemMarginTop: 3,
+                itemMarginBottom: 3,
+                itemDistance: 6
             },
 
             colorAxis: {
