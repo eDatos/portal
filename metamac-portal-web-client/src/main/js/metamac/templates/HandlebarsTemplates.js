@@ -1931,7 +1931,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<span class=\"ranges-selector-title\">Rangos</span>\r\n<div id=\"line-container\">\r\n    <div id=\"line\"></div>\r\n    <div id=\"draggable\"></div>\r\n    <span class=\"ranges-boundaries\">1</span>\r\n    <span class=\"ranges-boundaries right-boundary\">10</span>\r\n</div>\r\n";
+  return "<span class=\"ranges-selector-title\">Rangos</span>\r\n<div id=\"line-container\">\r\n    <span class=\"ranges-boundaries\">1</span>\r\n    <div class=\"selector\">\r\n        <div id=\"line\"></div>\r\n        <div id=\"draggable\"></div>\r\n    </div>\r\n    <span class=\"ranges-boundaries\">10</span>\r\n</div>";
   });
 
 this["Handlebars"]["templates"]["dataset/map/map-zoom"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

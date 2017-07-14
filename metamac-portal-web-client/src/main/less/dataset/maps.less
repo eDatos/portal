@@ -136,16 +136,12 @@ svg { overflow: hidden; } // IE FIX
 
 #ranges-container {
     position: absolute;
-    top: 60px;
-    right: 20px;
+    left: 10px;
+    bottom: 10px;
     min-width: 100px;
-    height: 45px;
-    padding-top: 10px;
+    height: 20px;
 
     .ranges-selector-title {
-        position: absolute;
-        top: 10px;
-        right: 100px;
         display: inline-block;
         margin-right: 10px;
         vertical-align: middle;
@@ -153,45 +149,46 @@ svg { overflow: hidden; } // IE FIX
         color: @istacBlueDark;
     }
 
+
     #line-container {
-        height: 40px;
         position: relative;
         display: inline-block;
-        width: 100px;
-    }
+        width: 135px;
 
-    #line {
-        height: 2px;
-        width: 100%;
-        background: @istacGreyMedium;
-    /*margin-top: 19px;*/
-        position: absolute;
-        top: 9px;
-    /*cursor: pointer;*/
-    }
+        .selector {
+            display: inline-block;
+            width: 100px;
+            margin-right: 5px;
+            position: relative;
+            vertical-align: middle;
+            height: 20px;
 
-    #draggable {
-    /*float: left;*/
-        width: 5px;
-        height: 20px;
-    /*         background: @istacGreyLight; */
-        background: @istacWhite;
-        box-shadow: 0 0 2px @istacGreyDark;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-    /*cursor: pointer;*/
-    }
+            #line {
+                height: 2px;
+                width: 100%;
+                background: @istacGreyMedium;
+                position: absolute;
+                top: 9px;
+            }
 
-    .ranges-boundaries {
-        position: absolute;
-        top: 20px;
-        font-size: 10px;
-        color: @istacBlueDark;
-    }
+            #draggable {
+                width: 5px;
+                height: 100%;
+                background: @istacWhite;
+                box-shadow: 0 0 2px @istacGreyDark;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
+        }
 
-    .right-boundary {
-        right: -5px;
+        .ranges-boundaries {
+            display: inline-block;
+            width: 10px;            
+            font-size: 10px;
+            color: @istacBlueDark;
+        }
+
     }
 }
 
