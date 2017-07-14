@@ -28,9 +28,9 @@
             legend: {
                 enabled: true,
                 layout: 'horizontal',
-                floating: true,
-                align: 'left',
-                y: -20,
+                floating: false,
+                // align: 'left', // don't use, bugged
+                y: -5,
                 x: 0,
                 backgroundColor: Constants.colors.istacWhite,
                 borderColor: Constants.colors.istacGreyMedium,
@@ -39,7 +39,8 @@
                 shadow: true,
                 itemStyle: {
                     "fontWeight": "normal",
-                    "fontSize": "11px"
+                    "fontSize": "11px",
+
                 },
                 padding: 6,
                 itemMarginTop: 3,
@@ -70,7 +71,7 @@
 
             credits: {
                 position: {
-                    y: -15
+                    y: 0
                 }
             },
 
