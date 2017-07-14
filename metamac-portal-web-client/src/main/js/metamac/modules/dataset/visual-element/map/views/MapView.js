@@ -53,7 +53,8 @@
                     "fontSize": "11px",
 
                 },
-                padding: 6,
+                padding: 5,
+                margin: 5,
                 itemMarginTop: 3,
                 itemMarginBottom: 3,
                 itemDistance: 6
@@ -82,7 +83,7 @@
 
             credits: {
                 position: {
-                    y: 0
+                    y: -5
                 }
             },
 
