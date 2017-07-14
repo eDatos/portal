@@ -22,7 +22,11 @@
 
             title: {
                 text: null,
-                y: 30
+                floating: false
+            },
+
+            subtitle: {
+                text: null
             },
 
             legend: {
@@ -100,6 +104,7 @@
             this._updateDataClasses = _.debounce(_.bind(this._updateDataClasses, this), 100);
 
             this._defaultMapOptions.title.text = this._dataset.metadata.getTitle();
+            this._defaultMapOptions.subtitle.text = this.title;
             this._defaultMapOptions.tooltip.formatter = _.partial(function (formatter, mapView) {
                 return mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
             }, _, this);
