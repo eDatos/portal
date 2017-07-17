@@ -49,7 +49,7 @@ App.namespace("App.VisualElement.LineChart");
                 showFirstLabel: false
             },
             title: {
-                text: null
+                text: ''
             },
             legend: {
                 enabled: false
@@ -79,13 +79,14 @@ App.namespace("App.VisualElement.LineChart");
                 marginRight: 0
             },
             title: {
+                text: '',
                 style: {
                     color: App.Constants.colors.hiddenText,
                     fontSize: App.Constants.font.title.size
                 }
             },
             subtitle: {
-                text: null,
+                text: '',
                 style: {
                     color: App.Constants.colors.hiddenText
                 }

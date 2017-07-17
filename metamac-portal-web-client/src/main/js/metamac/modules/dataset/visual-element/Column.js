@@ -17,13 +17,14 @@
                 backgroundColor: Constants.colors.istacWhite
             },
             title: {
+                text: '',
                 style: {
                     color: App.Constants.colors.hiddenText,
                     fontSize: App.Constants.font.title.size
                 }
             },
             subtitle: {
-                text: null,
+                text: '',
                 style: {
                     color: App.Constants.colors.hiddenText
                 }

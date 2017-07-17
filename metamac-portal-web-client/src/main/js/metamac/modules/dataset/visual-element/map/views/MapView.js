@@ -21,7 +21,7 @@
             },
 
             title: {
-                text: null,
+                text: '',
                 floating: false,
                 style: {
                     color: App.Constants.colors.hiddenText,
@@ -30,7 +30,7 @@
             },
 
             subtitle: {
-                text: null,
+                text: '',
                 style: {
                     color: App.Constants.colors.hiddenText
                 }
