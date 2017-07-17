@@ -25,7 +25,7 @@
                 floating: false,
                 style: {
                     color: App.Constants.colors.hiddenText,
-                    fontSize: "13px"
+                    fontSize: App.Constants.font.title.size
                 }
             },
 

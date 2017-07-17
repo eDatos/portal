@@ -26,7 +26,12 @@
                 sansSerif: "Helvetica,Arial,sans-serif",
                 serif: "serif"
             },
-            size: "11px"
+            body: {
+                size: "11px"
+            },
+            title: {
+                size: "13px"
+            }
         },
 
         api: {

@@ -16,6 +16,18 @@
                 defaultSeriesType: 'column',
                 backgroundColor: Constants.colors.istacWhite
             },
+            title: {
+                style: {
+                    color: App.Constants.colors.hiddenText,
+                    fontSize: App.Constants.font.title.size
+                }
+            },
+            subtitle: {
+                text: null,
+                style: {
+                    color: App.Constants.colors.hiddenText
+                }
+            },
             xAxis: {
                 categories: []
             },
@@ -137,6 +149,7 @@
                         }
                     }
                     self._chartOptions.title.text = self.dataset.metadata.getTitle();
+                    self._chartOptions.subtitle.text = self.getTitle();
 
                     self.chart = new Highcharts.Chart(self._chartOptions);
                     self.$el.on("resize", function () { });
