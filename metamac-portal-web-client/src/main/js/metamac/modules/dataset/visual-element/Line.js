@@ -104,9 +104,9 @@ App.namespace("App.VisualElement.LineChart");
             },
             plotOptions: {
                 line: {
-                    lineWidth: 1,
+                    lineWidth: 1.5,
                     marker: {
-                        radius: 2
+                        radius: 3
                     }
                 },
                 series: {
