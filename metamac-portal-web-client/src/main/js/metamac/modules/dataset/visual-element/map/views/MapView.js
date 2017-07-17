@@ -111,8 +111,10 @@
             this._onResize = _.debounce(_.bind(this._onResize, this), 200);
             this._updateDataClasses = _.debounce(_.bind(this._updateDataClasses, this), 100);
 
-            this._defaultMapOptions.title.text = this._dataset.metadata.getTitle();
-            this._defaultMapOptions.subtitle.text = this.title;
+            // METAMAC-2615
+            // this._defaultMapOptions.title.text = this._dataset.metadata.getTitle();
+            // this._defaultMapOptions.subtitle.text = this.title;
+
             this._defaultMapOptions.tooltip.formatter = _.partial(function (formatter, mapView) {
                 return mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
             }, _, this);

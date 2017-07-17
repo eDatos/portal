@@ -152,8 +152,9 @@
                             color: App.Constants.colors.hiddenText
                         }
                     }
-                    self._chartOptions.title.text = self.dataset.metadata.getTitle();
-                    self._chartOptions.subtitle.text = self.getTitle();
+                    // TODO METAMAC-2615
+                    // self._chartOptions.title.text = self.dataset.metadata.getTitle();
+                    // self._chartOptions.subtitle.text = self.getTitle();
 
                     self.chart = new Highcharts.Chart(self._chartOptions);
                     self.$el.on("resize", function () { });

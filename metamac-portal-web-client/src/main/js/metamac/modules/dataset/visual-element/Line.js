@@ -258,8 +258,10 @@ App.namespace("App.VisualElement.LineChart");
             this._chartOptions.xAxis.max = detailData.max;
             this._chartOptions.xAxis.tickInterval = detailData.tickInterval;
 
-            this._chartOptions.title.text = this.dataset.metadata.getTitle();
-            this._chartOptions.subtitle.text = this.getTitle();
+            // METAMAC-2615
+            // this._chartOptions.title.text = this.dataset.metadata.getTitle();
+            // this._chartOptions.subtitle.text = this.getTitle();
+
             this._chartOptions.credits.text = this.getRightsHolderText();
             if (!this.showRightsHolderText()) {
                 this._chartOptions.credits.style = {
