@@ -29,7 +29,10 @@
                 }
             },
             xAxis: {
-                categories: []
+                categories: [],
+                labels: {
+                    maxStaggerLines: 1
+                }
             },
             yAxis: {
                 title: {
