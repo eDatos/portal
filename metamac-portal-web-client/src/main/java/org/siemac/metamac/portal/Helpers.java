@@ -66,7 +66,7 @@ public class Helpers {
             }
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return collection;
     }
@@ -90,7 +90,6 @@ public class Helpers {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return dataset;
@@ -113,7 +112,6 @@ public class Helpers {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return query;
@@ -125,7 +123,6 @@ public class Helpers {
         try {
             return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicators/" + resourceId, Indicator.class);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -137,7 +134,6 @@ public class Helpers {
         try {
             return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicatorsSystems/" + indicatorsSystems + "/indicatorsInstances/" + resourceId, IndicatorInstance.class);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return null;
@@ -153,7 +149,6 @@ public class Helpers {
             permalink.setContent(permalinkContent);
             return permalink;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -165,13 +160,10 @@ public class Helpers {
             objectMapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return objectMapper.readValue(content, PermalinkContent.class);
         } catch (JsonParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (JsonMappingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
