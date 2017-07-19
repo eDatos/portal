@@ -30,7 +30,7 @@
         isBigData : function () {
             return true;
             // IDEA: METAMAC-2283, refactorizar para eliminar modelo no usado Data
-            // FIXME: Revisar por qué se carga BigData si el namespace de BigData no es el correcto
+            // TODO: Revisar por qué se carga BigData si el namespace de BigData no es el correcto
             // return this.metadata.getTotalObservations() > 1000;
         }
 
