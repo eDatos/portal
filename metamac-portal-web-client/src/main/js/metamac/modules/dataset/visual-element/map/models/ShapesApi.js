@@ -74,10 +74,10 @@
         getGranularityOrder : function (cb) {
         	
             var requestParams = {
-                url : App.endpoints["structural-resources"] + "/codelists/~all/~all/~all/codes.json?_type=json&query=DEFAULT_GEOGRAPHICAL_GRANULARITIES_CODELIST EQ 'TRUE'",
-                method : "GET",
-            	dataType : 'jsonp',
-                jsonp : '_callback'
+                url: App.endpoints["structural-resources"] + "/codelists/~all/~all/~all/codes.json?_type=json&fields=+order&query=DEFAULT_GEOGRAPHICAL_GRANULARITIES_CODELIST EQ 'TRUE'",
+                method: "GET",
+                dataType: 'jsonp',
+                jsonp: '_callback'
             };
             $.ajax(requestParams).
                 done(function (response) {
