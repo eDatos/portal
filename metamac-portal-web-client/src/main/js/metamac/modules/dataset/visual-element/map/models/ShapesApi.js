@@ -7,17 +7,17 @@
 
     App.Map.ShapesApi.prototype = {
 
-        getShapes : function (normCodes, cb) {
+        getShapes: function (normCodes, cb) {
             var variableId = this._extractVariableId(normCodes);
             var codes = this._extractCodes(normCodes);
             var ajaxParams = {
-                type : "GET",
-                dataType : 'jsonp',
-                jsonp : '_callback',
-                url : App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/~all/geoinfo.json",
-                data : {
-                    query : this._createNormCodesQuery(codes),
-                    _type : "json"
+                type: "GET",
+                dataType: 'jsonp',
+                jsonp: '_callback',
+                url: App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/~all/geoinfo.json",
+                data: {
+                    query: this._createNormCodesQuery(codes),
+                    _type: "json"
                 }
             };
             $.ajax(ajaxParams)
@@ -33,33 +33,33 @@
                 });
         },
 
-        getContainer : function (normCodes, cb) {
+        getContainer: function (normCodes, cb) {
             var self = this;
             var url = App.endpoints["structural-resources"] + "/variables/~all/variableelements.json?query=VARIABLE_TYPE%20EQ%20'GEOGRAPHICAL'%20AND%20GEOGRAPHICAL_GRANULARITY_URN%20IS_NULL&limit=1&_type=json";
             var ajaxParams = {
-            		type : "GET",
-            		url: url,
-                	dataType : 'jsonp',
-                    jsonp : '_callback'            		
+                type: "GET",
+                url: url,
+                dataType: 'jsonp',
+                jsonp: '_callback'
             }
             $.ajax(ajaxParams).done(function (response) {
-                    var urn = response.variableElement[0].urn;
-                    cb(null, self._extractNormCodeFromUrn(urn));
-                })
+                var urn = response.variableElement[0].urn;
+                cb(null, self._extractNormCodeFromUrn(urn));
+            })
                 .fail(function () {
                     cb("Error fetching container");
                 });
         },
 
-        getLastUpdatedDate : function (normCodes, cb) {
+        getLastUpdatedDate: function (normCodes, cb) {
             var variableId = this._extractVariableId(normCodes);
             var codes = this._extractCodes(normCodes);
             if (codes.length) {
                 var requestParams = {
-                    url : App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/" + codes[0] + "/geoinfo.json?fields=-geographicalGranularity,-geometry,-point",
-                    method : "GET",
-                    dataType : 'jsonp',
-                    jsonp : '_callback'
+                    url: App.endpoints["structural-resources"] + "/variables/" + variableId + "/variableelements/" + codes[0] + "/geoinfo.json?fields=-geographicalGranularity,-geometry,-point",
+                    method: "GET",
+                    dataType: 'jsonp',
+                    jsonp: '_callback'
                 };
                 $.ajax(requestParams)
                     .done(function (response) {
@@ -71,8 +71,8 @@
             }
         },
 
-        getGranularityOrder : function (cb) {
-        	
+        getGranularityOrder: function (cb) {
+
             var requestParams = {
                 url: App.endpoints["structural-resources"] + "/codelists/~all/~all/~all/codes.json?_type=json&fields=+order&query=DEFAULT_GEOGRAPHICAL_GRANULARITIES_CODELIST EQ 'TRUE'",
                 method: "GET",
@@ -91,20 +91,20 @@
                 });
         },
 
-        _createNormCodesQuery : function (codes) {
+        _createNormCodesQuery: function (codes) {
             var inContent = _.map(codes, function (code) {
                 return "'" + code + "'";
             }).join(", ");
             return "ID IN (" + inContent + ")";
         },
 
-        _extractNormCodeFromUrn : function (urn) {
+        _extractNormCodeFromUrn: function (urn) {
             if (urn) {
                 return _.last(urn.split("="));
             }
         },
 
-        _extractVariableId : function (normCodes) {
+        _extractVariableId: function (normCodes) {
             if (normCodes.length) {
                 var normCode = _.first(normCodes);
                 var dotIndex = normCode.indexOf(".");
@@ -112,7 +112,7 @@
             }
         },
 
-        _extractCodes : function (normCodes) {
+        _extractCodes: function (normCodes) {
             var variableId = this._extractVariableId(normCodes);
             return _.map(normCodes, function (normCode) {
                 return normCode.substring(variableId.length + 1);
