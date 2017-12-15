@@ -30,12 +30,17 @@ import org.siemac.metamac.portal.mapper.Dataset2DtoMapper;
 import org.siemac.metamac.portal.mapper.Query2DtoMapper;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 public class Helpers {
 
-    private String language;
-    private String DEFAULT_KEY = "__default__";
+    private static final Logger LOGGGER                          = LoggerFactory.getLogger(Helpers.class);
+
+    private String              language;
+    private String              DEFAULT_KEY                      = "__default__";
+    private static final String FIELDS_EXCLUDE_DATA_AND_METADATA = "-data,-metadata";
 
     public Helpers(String language) {
         if (language.isEmpty()) {
@@ -54,8 +59,7 @@ public class Helpers {
         Collection collection = null;
         Collection2DtoMapper collection2DtoMapper = new Collection2DtoMapper();
         try {
-
-            // "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
+            // Ex: "http://HOST/statistical-resources/apis/statistical-resources";
             List<String> lang = new ArrayList<String>();
             String fields = "";
 
@@ -66,7 +70,7 @@ public class Helpers {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGGER.error("Error obteniendo la Colección", e);
         }
         return collection;
     }
@@ -75,14 +79,13 @@ public class Helpers {
         Dataset dataset = null;
         Dataset2DtoMapper dataset2DtoMapper = new Dataset2DtoMapper();
         try {
-            // "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
-
+            // Ex: "http://HOST/statistical-resources/apis/statistical-resources";
             List<String> lang = new ArrayList<String>();
-            String fields = "";
             if (version == null) {
                 version = "~latest";
             }
 
+            String fields = FIELDS_EXCLUDE_DATA_AND_METADATA;
             if (internalPortal) {
                 dataset = dataset2DtoMapper.datasetInternalToDto(Helpers.getInternalJAXRSClient(apiUrlStatisticalResources).retrieveDataset(agencyId, resourceId, version, lang, fields, null));
             } else {
@@ -90,7 +93,7 @@ public class Helpers {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGGER.error("Error obteniendo el Dataset", e);
         }
         return dataset;
     }
@@ -99,12 +102,11 @@ public class Helpers {
         Query query = null;
         Query2DtoMapper query2DtoMapper = new Query2DtoMapper();
         try {
-            // String statisticalResourcesEndpoint = "http://estadisticas.arte-consultores.com/statistical-resources/apis/statistical-resources";
+            // Ex: "http://HOST/statistical-resources/apis/statistical-resources";
             String statisticalResourcesEndpoint = apiUrlStatisticalResources;
 
             List<String> lang = new ArrayList<String>();
-            String fields = "";
-
+            String fields = FIELDS_EXCLUDE_DATA_AND_METADATA;
             if (internalPortal) {
                 query = query2DtoMapper.queryInternalToDto(Helpers.getInternalJAXRSClient(statisticalResourcesEndpoint).retrieveQuery(agencyId, resourceId, lang, fields));
             } else {
@@ -112,7 +114,7 @@ public class Helpers {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGGER.error("Error obteniendo el Query", e);
         }
         return query;
     }
@@ -123,7 +125,7 @@ public class Helpers {
         try {
             return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicators/" + resourceId, Indicator.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGGER.error("Error obteniendo el Indicador", e);
         }
         return null;
     }
@@ -134,7 +136,7 @@ public class Helpers {
         try {
             return restTemplate.getForObject(indicatorsEndpoint + "/v1.0/indicatorsSystems/" + indicatorsSystems + "/indicatorsInstances/" + resourceId, IndicatorInstance.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGGER.error("Error obteniendo el la Instancia del Indicador", e);
         }
         return null;
     }
@@ -148,25 +150,16 @@ public class Helpers {
             PermalinkContent permalinkContent = permalinkContentToDto(permalinkContentString);
             permalink.setContent(permalinkContent);
             return permalink;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            LOGGGER.error("Error obteniendo el Permalink", e);
         }
         return null;
     }
 
-    private static PermalinkContent permalinkContentToDto(String content) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            return objectMapper.readValue(content, PermalinkContent.class);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private static PermalinkContent permalinkContentToDto(String content) throws JsonParseException, JsonMappingException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper.readValue(content, PermalinkContent.class);
     }
 
     public static String buildUrl(Permalink permalink, String sharedVisualizerUrl) {

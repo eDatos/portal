@@ -58,7 +58,8 @@ public class SrmRestExternalFacadeImpl implements SrmRestExternalFacade {
             String agencyID = urnSplited[0];
             String resourceID = urnSplited[1];
             String version = urnSplited[2];
-            return restApiLocator.getSrmRestExternalFacadeV10().findCodes(agencyID, resourceID, version, null, null, null, null, order, openness);
+            String fields = null;
+            return restApiLocator.getSrmRestExternalFacadeV10().findCodes(agencyID, resourceID, version, null, null, null, null, order, openness, fields);
         } catch (Exception e) {
             throw toRestException(e);
         }

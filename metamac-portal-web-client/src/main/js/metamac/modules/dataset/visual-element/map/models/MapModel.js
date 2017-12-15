@@ -16,7 +16,7 @@
             values : [1],
             minRangesNum : 1,
             maxRangesNum : 10,
-            currentRangesNum : 5,
+            currentRangesNum : 4,
             mapType : 'map'
         },
 
