@@ -273,6 +273,15 @@
             return _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : DECIMALS
         },
 
+        getGeographicDimensionNormCode: function (dimensionValue) {
+            var variableElement = dimensionValue.variableElement;
+            if (variableElement) {
+                var normCode = variableElement.urn.split("=")[1];
+                return normCode;
+            }
+            return null;
+        },
+
         getRepresentations: function (dimensionId) {
             var self = this;
             var dimensions = this.metadata.dimensions.dimension;
@@ -283,11 +292,6 @@
                 var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
                 var isGeographic = dimension.type === "GEOGRAPHIC_DIMENSION";
 
-                var variableId;
-                if (isGeographic && dimension.variable) {
-                    variableId = dimension.variable.id;
-                }
-
                 representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
                     var representation = _.pick(dimensionValue, 'id', 'open', 'temporalGranularity');
                     representation.label = self.localizeLabel(dimensionValue.name.text);
@@ -297,8 +301,8 @@
                         if (parent) representation.parent = parent.id;
                     }
 
-                    if (variableId && dimensionValue.variableElement) {
-                        representation.normCode = variableId + "." + dimensionValue.variableElement.id;
+                    if (isGeographic) {
+                        representation.normCode = self.getGeographicDimensionNormCode(dimensionValue);
                     }
 
                     if (isMeasureDimension) {

@@ -271,21 +271,6 @@ App.test.response.metadata = {
                             }
                         ]
                     },
-                    variable: {
-                        managementAppLink: "http://estadisticas.arte-consultores.com/metamac-srm-web/#structuralResources/variables/variable;id=TERRITORIO",
-                        id: "TERRITORIO",
-                        urn: "urn:siemac:org.siemac.metamac.infomodel.structuralresources.Variable=TERRITORIO",
-                        selfLink: {},
-                        name: {
-                            text: [
-                                {
-                                    value: "Territorio",
-                                    lang: "es"
-                                }
-                            ]
-                        },
-                        kind: "structuralResources#variable"
-                    },
                     "type": "GEOGRAPHIC_DIMENSION",
                     "dimensionValues": {
                         "value": [
