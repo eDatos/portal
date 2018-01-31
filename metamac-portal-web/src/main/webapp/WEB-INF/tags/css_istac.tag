@@ -12,5 +12,5 @@
 </c:if>
 
 <!--[if IE]>
-<link rel="stylesheet" type="text/css" href="http://www.gobiernodecanarias.org/gcc/css/ie.css" />
+<link rel="stylesheet" type="text/css" href="//www.gobiernodecanarias.org/gcc/css/ie.css" />
 <![endif]-->
