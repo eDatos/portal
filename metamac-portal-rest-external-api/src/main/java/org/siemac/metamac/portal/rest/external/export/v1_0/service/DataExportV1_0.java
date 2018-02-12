@@ -21,32 +21,32 @@ public interface DataExportV1_0 {
      * Exports a dataset to excel
      */
     @POST
-    @Path("excel/{agencyID}/{resourceID}/{version}")
+    @Path("excel/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToExcel(ExcelExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToExcel(ExcelExportation excelExportationBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("excel/{agencyID}/{resourceID}/{version}")
+    @Path("excel/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
      * Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
      * and dimension attachment level
      */
     @POST
-    @Path("tsv/{agencyID}/{resourceID}/{version}")
+    @Path("tsv/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToTsv(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToTsv(PlainTextExportation plainTextExportation, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("tsv/{agencyID}/{resourceID}/{version}")
+    @Path("tsv/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
      * Exports a dataset to csv comma separated. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes
@@ -54,47 +54,47 @@ public interface DataExportV1_0 {
      * and dimension attachment level
      */
     @POST
-    @Path("csv_comma/{agencyID}/{resourceID}/{version}")
+    @Path("csv_comma/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToCsvComma(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
-            @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToCsvComma(PlainTextExportation plainTextExportation, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("csv_comma/{agencyID}/{resourceID}/{version}")
+    @Path("csv_comma/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToCsvComma(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToCsvComma(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
      * Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
      * and dimension attachment level
      */
     @POST
-    @Path("csv_semicolon/{agencyID}/{resourceID}/{version}")
+    @Path("csv_semicolon/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToCsvSemicolon(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
-            @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToCsvSemicolon(PlainTextExportation plainTextExportation, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("csv_semicolon/{agencyID}/{resourceID}/{version}")
+    @Path("csv_semicolon/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToCsvSemicolon(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
-            @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToCsvSemicolon(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
      * Exports a dataset to px
      */
     @POST
-    @Path("px/{agencyID}/{resourceID}/{version}")
+    @Path("px/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToPx(PxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToPx(PxExportation pxExportationBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
+            @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("px/{agencyID}/{resourceID}/{version}")
+    @Path("px/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
      * Exports svg to image

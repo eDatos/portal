@@ -65,12 +65,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private JacksonJsonProvider                    jacksonJsonProvider;
 
     @Override
-    public Response exportDatasetToTsv(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToTsv(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportDatasetToTsv(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToTsv(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
@@ -82,12 +82,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToCsvComma(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvComma(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.CSV_COMMA, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportDatasetToCsvComma(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvComma(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
@@ -99,12 +99,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToCsvSemicolon(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvSemicolon(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportDatasetToCsvSemicolon(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvSemicolon(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
@@ -116,12 +116,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToExcel(ExcelExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Check and transform selection
             if (exportationBody == null || isEmpty(exportationBody.getDatasetSelection())) {
-                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils
-                        .getException(RestServiceExceptionType.PARAMETER_REQUIRED, RestExternalConstants.PARAMETER_SELECTION);
+                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_REQUIRED,
+                        RestExternalConstants.PARAMETER_SELECTION);
                 throw new RestException(exception, Status.BAD_REQUEST);
             }
             DatasetSelectionForExcel datasetSelectionForExcel = null;
@@ -154,11 +154,11 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToExcelForm(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             ExcelExportation excelExportation = objectMapper.readValue(jsonBody, ExcelExportation.class);
-            return exportDatasetToExcel(excelExportation, agencyID, resourceID, version, lang, filename);
+            return exportDatasetToExcel(excelExportation, resourceType, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -166,7 +166,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToPx(PxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToPx(PxExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Transform possible selection (not required)
             String dimensionSelection = null;
@@ -200,11 +200,11 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToPxForm(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PxExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PxExportation pxExportation = objectMapper.readValue(jsonBody, PxExportation.class);
-            return exportDatasetToPx(pxExportation, agencyID, resourceID, version, lang, filename);
+            return exportDatasetToPx(pxExportation, resourceType, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);

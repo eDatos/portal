@@ -23,7 +23,7 @@
         render: function () {
             var identifier = this.filterDimensions.metadata.identifier();
             var datasetSelection = this.getDatasetSelection();
-            var identifierUrlPart = identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
+            var identifierUrlPart = identifier.type + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
 
             var context = {
                 selection: JSON.stringify(datasetSelection),
