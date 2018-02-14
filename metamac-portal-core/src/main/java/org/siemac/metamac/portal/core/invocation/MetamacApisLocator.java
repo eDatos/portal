@@ -18,6 +18,7 @@ public class MetamacApisLocator {
 
     private StatisticalResourcesV1_0 statisticalResourcesV1_0 = null;
     private SrmRestExternalFacadeV10 srmRestExternalFacadeV10 = null;
+    private String                   indicatorsRestExternalFacadeEndpoint = null;
 
     @PostConstruct
     public void init() throws Exception {
@@ -26,6 +27,8 @@ public class MetamacApisLocator {
 
         String srmExternalApiUrlBase = configurationService.retrieveSrmExternalApiUrlBase();
         srmRestExternalFacadeV10 = JAXRSClientFactory.create(srmExternalApiUrlBase, SrmRestExternalFacadeV10.class, null, true);
+
+        indicatorsRestExternalFacadeEndpoint = configurationService.retrieveIndicatorsExternalApiUrlBase();
     }
 
     public StatisticalResourcesV1_0 getStatisticalResourcesV1_0() {
@@ -42,6 +45,10 @@ public class MetamacApisLocator {
         WebClient.client(srmRestExternalFacadeV10).accept("application/xml");
 
         return srmRestExternalFacadeV10;
+    }
+
+    public String getIndicatorsRestExternalFacadeEndpoint() {
+        return indicatorsRestExternalFacadeEndpoint;
     }
 
 }

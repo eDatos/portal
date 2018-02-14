@@ -39,6 +39,10 @@
             <artifactId>metamac-srm-rest-external-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>es.gobcan.istac.indicators</groupId>            
+            <artifactId>indicators-rest-api</artifactId>        
+        </dependency>
+        <dependency>
             <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-rest-common</artifactId>
             <version>${metamac-rest-common.version}</version>
