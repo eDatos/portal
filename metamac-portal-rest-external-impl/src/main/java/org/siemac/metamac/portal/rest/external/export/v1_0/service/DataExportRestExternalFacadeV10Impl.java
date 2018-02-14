@@ -20,11 +20,13 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
+import org.siemac.metamac.portal.core.constants.PortalConstants;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
@@ -116,7 +118,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcel(ExcelExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportResourceToExcel(ExcelExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Check and transform selection
             if (exportationBody == null || isEmpty(exportationBody.getDatasetSelection())) {
@@ -136,7 +138,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             }
 
             // Retrieve dataset
-            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+            Dataset dataset = retrieveResource(resourceType, agencyID, resourceID, version, lang, dimensionSelection);
 
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
@@ -158,7 +160,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             ExcelExportation excelExportation = objectMapper.readValue(jsonBody, ExcelExportation.class);
-            return exportDatasetToExcel(excelExportation, resourceType, agencyID, resourceID, version, lang, filename);
+            return exportResourceToExcel(excelExportation, resourceType, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -183,7 +185,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
             // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
             Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, null, dimensionSelection); // all langs
-            
+
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
@@ -253,6 +255,14 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, langs, null, dimensionSelection);
     }
 
+    private Dataset retrieveResource(String resourceType, String agencyID, String resourceID, String version, String lang, String dimensionSelection) throws MetamacException {
+        switch (resourceType) {
+            case PortalConstants.RESOURCE_TYPE_DATASET:
+                return retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+            default:
+                throw new NotImplementedException(); // TODO Revisar otra cosa porque esto no va bien
+        }
+    }
     private boolean isEmpty(DatasetSelection datasetSelection) {
         return datasetSelection == null || datasetSelection.getDimensions() == null || CollectionUtils.isEmpty(datasetSelection.getDimensions().getDimensions());
     }

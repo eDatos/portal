@@ -12,4 +12,5 @@ public class PortalConstants {
     public final static String NEW_LINE          = "\n";
     public final static String LEFT_BRACE        = "[";
     public final static String RIGHT_BRACE       = "]";
+    public final static String RESOURCE_TYPE_DATASET   = "dataset";
 }
