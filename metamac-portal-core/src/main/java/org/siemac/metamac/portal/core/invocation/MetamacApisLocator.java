@@ -16,8 +16,8 @@ public class MetamacApisLocator {
     @Autowired
     private ConfigurationService     configurationService;
 
-    private StatisticalResourcesV1_0 statisticalResourcesV1_0 = null;
-    private SrmRestExternalFacadeV10 srmRestExternalFacadeV10 = null;
+    private StatisticalResourcesV1_0 statisticalResourcesV1_0             = null;
+    private SrmRestExternalFacadeV10 srmRestExternalFacadeV10             = null;
     private String                   indicatorsRestExternalFacadeEndpoint = null;
 
     @PostConstruct
