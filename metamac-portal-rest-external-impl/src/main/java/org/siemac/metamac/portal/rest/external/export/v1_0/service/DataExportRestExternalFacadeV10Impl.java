@@ -289,7 +289,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             case PortalConstants.RESOURCE_TYPE_DATASET:
                 return retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
             default:
-                throw new MetamacException(CommonServiceExceptionType.PARAMETER_INCORRECT, resourceType);
+                throw new MetamacException(ServiceExceptionType.RESOURCE_TYPE_EXPORT_NOT_SUPPORTED, resourceType);
         }
     }
     private boolean isEmpty(DatasetSelection datasetSelection) {
