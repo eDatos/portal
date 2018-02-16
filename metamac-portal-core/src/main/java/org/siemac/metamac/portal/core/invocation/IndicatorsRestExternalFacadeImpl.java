@@ -1,8 +1,5 @@
 package org.siemac.metamac.portal.core.invocation;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import es.gobcan.istac.indicators.rest.types.DataType;
-import es.gobcan.istac.indicators.rest.types.IndicatorBaseType;
 import es.gobcan.istac.indicators.rest.types.IndicatorType;
-import es.gobcan.istac.indicators.rest.types.PagedResultType;
-import es.gobcan.istac.indicators.rest.types.RestCriteriaPaginator;
 
 @Component("indicatorsRestExternalFacade")
 public class IndicatorsRestExternalFacadeImpl implements IndicatorsRestExternalFacade {
