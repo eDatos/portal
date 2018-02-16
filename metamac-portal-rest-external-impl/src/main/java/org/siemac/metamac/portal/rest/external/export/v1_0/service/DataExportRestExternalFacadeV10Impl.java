@@ -22,7 +22,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.siemac.metamac.core.common.exception.CommonServiceExceptionType;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
@@ -31,8 +30,11 @@ import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
+import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
+import org.siemac.metamac.portal.core.invocation.IndicatorsRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.StatisticalResourcesRestExternalFacade;
+import org.siemac.metamac.portal.core.invocation.mapper.IndicatorsRestExternalMapper;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
 import org.siemac.metamac.portal.rest.external.RestExternalConstants;
 import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionType;
@@ -46,6 +48,9 @@ import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import es.gobcan.istac.indicators.rest.types.DataType;
+import es.gobcan.istac.indicators.rest.types.IndicatorType;
 
 @Service("dataExportRestExternalFacadeV10")
 public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
@@ -62,6 +67,9 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Autowired
     private StatisticalResourcesRestExternalFacade statisticalResourcesRestExternal;
+
+    @Autowired
+    private IndicatorsRestExternalFacade           indicatorsRestExternal;
 
     @Autowired
     private JacksonJsonProvider                    jacksonJsonProvider;
@@ -288,10 +296,20 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         switch (resourceType) {
             case PortalConstants.RESOURCE_TYPE_DATASET:
                 return retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+            case PortalConstants.RESOURCE_TYPE_INDICATOR:
+                return retrieveIndicator(resourceID, dimensionSelection);
             default:
                 throw new MetamacException(ServiceExceptionType.RESOURCE_TYPE_EXPORT_NOT_SUPPORTED, resourceType);
         }
     }
+
+    private Dataset retrieveIndicator(String resourceID, String dimensionSelection) {
+        String selectedRepresentations = IndicatorsRestExternalMapper.dimensionSelectionToSelectedRepresentations(dimensionSelection);
+        DataType indicatorData = indicatorsRestExternal.retrieveIndicatorData(resourceID, selectedRepresentations);
+        IndicatorType indicator = indicatorsRestExternal.retrieveIndicator(resourceID);
+        return IndicatorsRestExternalMapper.indicatorToDatasetMapper(indicator, indicatorData);
+    }
+
     private boolean isEmpty(DatasetSelection datasetSelection) {
         return datasetSelection == null || datasetSelection.getDimensions() == null || CollectionUtils.isEmpty(datasetSelection.getDimensions().getDimensions());
     }
