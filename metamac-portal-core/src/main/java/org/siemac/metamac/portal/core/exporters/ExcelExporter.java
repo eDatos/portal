@@ -72,7 +72,7 @@ public class ExcelExporter {
     private static Logger                  log                                 = LoggerFactory.getLogger(ExcelExporter.class);
 
     public ExcelExporter(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
-        this.datasetAccess = new DatasetAccessForExcel(dataset, datasetSelection, lang, langAlternative);
+        datasetAccess = new DatasetAccessForExcel(dataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 
@@ -131,6 +131,7 @@ public class ExcelExporter {
             addStringCell(row, 1, rightsHolder, null);
         }
 
+        // Copyright date
         Integer copyrightDate = datasetAccess.getDataset().getMetadata().getCopyrightDate();
         if (copyrightDate != null) {
             Row row = sheet.createRow(headerRow++);
