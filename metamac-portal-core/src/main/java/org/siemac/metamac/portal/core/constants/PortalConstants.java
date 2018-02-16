@@ -14,4 +14,5 @@ public class PortalConstants {
     public final static String RIGHT_BRACE             = "]";
 
     public final static String RESOURCE_TYPE_DATASET   = "dataset";
+    public final static String RESOURCE_TYPE_INDICATOR = "indicator";
 }

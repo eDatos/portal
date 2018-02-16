@@ -147,12 +147,41 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             outputStream.close();
 
             if (filename == null) {
-                filename = "dataset-" + agencyID + "-" + resourceID + "-" + version + ".xlsx";
+                filename = buildFilename(resourceType, agencyID, resourceID, version, ".xlsx");
             }
             return buildResponseOkWithFile(tmpFile, filename, MEDIA_TYPE_APPLICATION_XLSX);
         } catch (Exception e) {
             throw manageException(e);
         }
+    }
+
+    private String buildFilename(String resourceType, String agencyID, String resourceID, String version, String extension) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(resourceType);
+
+        switch (resourceType) {
+            case PortalConstants.RESOURCE_TYPE_DATASET:
+                builder.append("-").append(agencyID);
+                break;
+            case PortalConstants.RESOURCE_TYPE_INDICATOR:
+            default:
+                break;
+        }
+
+        builder.append("-").append(resourceID);
+
+        switch (resourceType) {
+            case PortalConstants.RESOURCE_TYPE_DATASET:
+                builder.append("-").append(version);
+                break;
+            case PortalConstants.RESOURCE_TYPE_INDICATOR:
+            default:
+                break;
+        }
+
+        builder.append(extension);
+
+        return builder.toString();
     }
 
     @Override
