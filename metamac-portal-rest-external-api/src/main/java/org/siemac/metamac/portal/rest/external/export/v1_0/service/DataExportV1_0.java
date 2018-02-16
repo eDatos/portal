@@ -29,7 +29,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/{resourceType}/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+    Response exportResourceToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
             @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**

@@ -185,7 +185,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcelForm(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportResourceToExcelForm(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             ExcelExportation excelExportation = objectMapper.readValue(jsonBody, ExcelExportation.class);
