@@ -20,9 +20,9 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.siemac.metamac.core.common.exception.CommonServiceExceptionType;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
@@ -289,7 +289,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             case PortalConstants.RESOURCE_TYPE_DATASET:
                 return retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
             default:
-                throw new NotImplementedException(); // TODO Revisar otra cosa porque esto no va bien
+                throw new MetamacException(CommonServiceExceptionType.PARAMETER_INCORRECT, resourceType);
         }
     }
     private boolean isEmpty(DatasetSelection datasetSelection) {
