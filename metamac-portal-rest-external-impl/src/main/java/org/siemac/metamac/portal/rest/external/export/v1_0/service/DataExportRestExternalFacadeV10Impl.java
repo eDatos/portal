@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -30,7 +31,6 @@ import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
-import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
 import org.siemac.metamac.portal.core.invocation.IndicatorsRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.StatisticalResourcesRestExternalFacade;
@@ -127,97 +127,91 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        return exportResourceToExcel(ResourceType.DATASET, exportationBody, agencyID, resourceID, version, lang, filename);
+
+        try {
+            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelection(exportationBody);
+            String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+
+            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+
+            if (filename == null) {
+                filename = buildFilename(".xlsx", ResourceType.DATASET.getName(), agencyID, resourceID, version);
+            }
+
+            return exportResourceToExcel(dataset, datasetSelectionForExcel, lang, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
     }
 
     @Override
     public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String lang, String filename) {
-        return exportResourceToExcel(ResourceType.INDICATOR, exportationBody, null, resourceID, null, lang, filename);
+
+        try {
+            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelection(exportationBody);
+            String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+
+            Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
+
+            if (filename == null) {
+                filename = buildFilename(".xlsx", ResourceType.INDICATOR.getName(), resourceID);
+            }
+            return exportResourceToExcel(dataset, datasetSelectionForExcel, lang, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
     }
 
-    private Response exportResourceToExcel(ResourceType resourceType, ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+
+    private Response exportResourceToExcel(Dataset dataset, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
         try {
-            // Check and transform selection
-            if (exportationBody == null || isEmpty(exportationBody.getDatasetSelection())) {
-                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_REQUIRED,
-                        RestExternalConstants.PARAMETER_SELECTION);
-                throw new RestException(exception, Status.BAD_REQUEST);
-            }
-            DatasetSelectionForExcel datasetSelectionForExcel = null;
-            String dimensionSelection = null;
-            try {
-                datasetSelectionForExcel = DatasetSelectionMapper.toDatasetSelectionForExcel(exportationBody.getDatasetSelection());
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
-            } catch (Exception e) {
-                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                        RestExternalConstants.PARAMETER_SELECTION);
-                throw new RestException(exception, Status.BAD_REQUEST);
-            }
-
-            // Retrieve dataset
-            Dataset dataset = retrieveResource(resourceType, agencyID, resourceID, version, lang, dimensionSelection);
-
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
             exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelectionForExcel, lang, outputStream);
             outputStream.close();
 
-            if (filename == null) {
-                filename = buildFilename(resourceType, agencyID, resourceID, version, ".xlsx");
-            }
             return buildResponseOkWithFile(tmpFile, filename, MEDIA_TYPE_APPLICATION_XLSX);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private String buildFilename(ResourceType resourceType, String agencyID, String resourceID, String version, String extension) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(resourceType);
-
-        switch (resourceType) {
-            case DATASET:
-                builder.append("-").append(agencyID);
-                break;
-            case INDICATOR:
-            case INDICATOR_INSTANCE:
-            default:
-                break;
+    private DatasetSelectionForExcel checkAndTransformSelection(ExcelExportation exportationBody) throws Exception {
+        if (exportationBody == null || isEmpty(exportationBody.getDatasetSelection())) {
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_REQUIRED, RestExternalConstants.PARAMETER_SELECTION);
+            throw new RestException(exception, Status.BAD_REQUEST);
         }
+        return DatasetSelectionMapper.toDatasetSelectionForExcel(exportationBody.getDatasetSelection());
+    }
 
-        builder.append("-").append(resourceID);
-
-        switch (resourceType) {
-            case DATASET:
-                builder.append("-").append(version);
-                break;
-            case INDICATOR:
-            case INDICATOR_INSTANCE:
-            default:
-                break;
-        }
-
-        builder.append(extension);
-
-        return builder.toString();
+    private String buildFilename(String extension, String... parts) {
+        StringBuilder filename = new StringBuilder();
+        return filename.append(StringUtils.join(parts, "-")).append(extension).toString();
     }
 
     @Override
     public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        return exportResourceToExcelForm(jsonBody, ResourceType.DATASET, agencyID, resourceID, version, lang, filename);
+        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        return exportDatasetToExcel(excelExportation, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportIndicatorToExcelForm(String jsonBody, String resourceID, String lang, String filename) {
-        return exportResourceToExcelForm(jsonBody, ResourceType.INDICATOR, null, resourceID, null, lang, filename);
+        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        return exportIndicatorToExcel(excelExportation, resourceID, lang, filename);
     }
 
-    private Response exportResourceToExcelForm(String jsonBody, ResourceType resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
+    @Override
+    public Response exportIndicatorInstaceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String lang, String filename) {
+        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        return exportIndicatorInstanceToExcel(excelExportation, indicatorSystemCode, resourceID, lang, filename);
+    }
+
+    private ExcelExportation getExcelExportation(String jsonBody) {
         try {
-            ExcelExportation excelExportation = objectMapper.readValue(jsonBody, ExcelExportation.class);
-            return exportResourceToExcel(resourceType, excelExportation, agencyID, resourceID, version, lang, filename);
+            ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
+            return objectMapper.readValue(jsonBody, ExcelExportation.class);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -312,18 +306,8 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, langs, null, dimensionSelection);
     }
 
-    private Dataset retrieveResource(ResourceType resourceType, String agencyID, String resourceID, String version, String lang, String dimensionSelection) throws MetamacException {
-        switch (resourceType) {
-            case DATASET:
-                return retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
-            case INDICATOR:
-                return retrieveIndicator(resourceID, dimensionSelection);
-            default:
-                throw new MetamacException(ServiceExceptionType.RESOURCE_TYPE_EXPORT_NOT_SUPPORTED, resourceType);
-        }
-    }
 
-    private Dataset retrieveIndicator(String resourceID, String dimensionSelection) {
+    private Dataset retrieveDatasetFromIndicator(String resourceID, String dimensionSelection) {
         String selectedRepresentations = IndicatorsRestExternalMapper.dimensionSelectionToSelectedRepresentations(dimensionSelection);
         DataType indicatorData = indicatorsRestExternal.retrieveIndicatorData(resourceID, selectedRepresentations);
         IndicatorType indicator = indicatorsRestExternal.retrieveIndicator(resourceID);
