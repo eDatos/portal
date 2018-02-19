@@ -33,6 +33,7 @@ import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
 import org.siemac.metamac.portal.core.invocation.IndicatorsRestExternalFacade;
+import org.siemac.metamac.portal.core.invocation.IndicatorsSystemsRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.StatisticalResourcesRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.mapper.IndicatorsRestExternalMapper;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
@@ -50,6 +51,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.indicators.rest.types.DataType;
+import es.gobcan.istac.indicators.rest.types.IndicatorInstanceType;
 import es.gobcan.istac.indicators.rest.types.IndicatorType;
 
 @Service("dataExportRestExternalFacadeV10")
@@ -70,6 +72,9 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Autowired
     private IndicatorsRestExternalFacade           indicatorsRestExternal;
+
+    @Autowired
+    private IndicatorsSystemsRestExternalFacade    indicatorsSystemsRestExternal;
 
     @Autowired
     private JacksonJsonProvider                    jacksonJsonProvider;
@@ -162,6 +167,22 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
+    @Override
+    public Response exportIndicatorInstanceToExcel(ExcelExportation exportationBody, String indicatorSystemCode, String resourceID, String lang, String filename) {
+        try {
+            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelection(exportationBody);
+            String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+
+            Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
+
+            if (filename == null) {
+                filename = buildFilename(".xlsx", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
+            }
+            return exportResourceToExcel(dataset, datasetSelectionForExcel, lang, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
 
     private Response exportResourceToExcel(Dataset dataset, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
         try {
@@ -306,6 +327,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, langs, null, dimensionSelection);
     }
 
+    private Dataset retrieveDatasetFromIndicatorInstance(String indicatorSystemCode, String resourceID, String dimensionSelection) {
+        String selectedRepresentations = IndicatorsRestExternalMapper.dimensionSelectionToSelectedRepresentations(dimensionSelection);
+        DataType indicatorInstanceData = indicatorsSystemsRestExternal.retrieveIndicatorInstanceDataByCode(indicatorSystemCode, resourceID, selectedRepresentations);
+        IndicatorInstanceType indicatorInstance = indicatorsSystemsRestExternal.retrieveIndicatorInstanceByCode(indicatorSystemCode, resourceID);
+        return IndicatorsRestExternalMapper.indicatorInstanceToDatasetMapper(indicatorInstance, indicatorInstanceData);
+    }
 
     private Dataset retrieveDatasetFromIndicator(String resourceID, String dimensionSelection) {
         String selectedRepresentations = IndicatorsRestExternalMapper.dimensionSelectionToSelectedRepresentations(dimensionSelection);

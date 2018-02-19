@@ -42,6 +42,17 @@ public interface DataExportV1_0 {
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     Response exportIndicatorToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
+    @POST
+    @Path("excel/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportIndicatorInstanceToExcel(ExcelExportation excelExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("excel/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
+    Response exportIndicatorInstaceToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
     /**
      * Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
      * and dimension attachment level

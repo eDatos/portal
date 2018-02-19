@@ -25,6 +25,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimen
 import es.gobcan.istac.indicators.rest.types.DataDimensionType;
 import es.gobcan.istac.indicators.rest.types.DataType;
 import es.gobcan.istac.indicators.rest.types.IndicatorDataDimensionTypeEnum;
+import es.gobcan.istac.indicators.rest.types.IndicatorInstanceType;
 import es.gobcan.istac.indicators.rest.types.IndicatorType;
 import es.gobcan.istac.indicators.rest.types.MetadataDimensionType;
 import es.gobcan.istac.indicators.rest.types.MetadataRepresentationType;
@@ -44,6 +45,21 @@ public class IndicatorsRestExternalMapper {
         dataset.setData(indicatorDataToDatasetData(data));
 
         return dataset;
+    }
+
+    public static Dataset indicatorInstanceToDatasetMapper(IndicatorInstanceType indicatorInstance, DataType data) {
+        Dataset dataset = new Dataset();
+        dataset.setName(indicatorInternationalTextToInternationalString(indicatorInstance.getTitle()));
+        dataset.setMetadata(indicatorInstaceDataToDatasetMetadata(indicatorInstance, data));
+        dataset.setData(indicatorDataToDatasetData(data));
+        return dataset;
+    }
+
+    private static DatasetMetadata indicatorInstaceDataToDatasetMetadata(IndicatorInstanceType indicatorInstance, DataType data) {
+        DatasetMetadata datasetMetadata = new DatasetMetadata();
+        datasetMetadata.setDimensions(indicatorMetadataDimensionsToDatasetMetadataDimensions(indicatorInstance.getDimension()));
+        datasetMetadata.setRightsHolder(mockRightsHolder());
+        return datasetMetadata;
     }
 
     private static DatasetMetadata indicatorDataToDatasetMetadata(IndicatorType indicator, DataType data) {
