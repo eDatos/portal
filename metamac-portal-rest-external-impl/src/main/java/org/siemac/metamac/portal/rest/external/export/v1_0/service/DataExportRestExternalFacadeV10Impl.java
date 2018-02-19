@@ -86,10 +86,25 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToTsv(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        return exportDatasetToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, version, lang, filename);
+    }
+
+    @Override
+    public Response exportIndicatorToTsv(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+        return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, lang, filename);
+    }
+
+    @Override
+    public Response exportIndicatorToTsv(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, lang, filename);
+    }
+
+    private PlainTextExportation getPlainTextExportation(String jsonBody) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
-            PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
-            return exportDatasetToPlainText(PlainTextTypeEnum.TSV, tsvExportation, agencyID, resourceID, version, lang, filename);
+            return objectMapper.readValue(jsonBody, PlainTextExportation.class);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -134,7 +149,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
 
         try {
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelection(exportationBody);
+            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
 
             Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
@@ -153,7 +168,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String lang, String filename) {
 
         try {
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelection(exportationBody);
+            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
 
             Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
@@ -170,7 +185,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     @Override
     public Response exportIndicatorInstanceToExcel(ExcelExportation exportationBody, String indicatorSystemCode, String resourceID, String lang, String filename) {
         try {
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelection(exportationBody);
+            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
 
             Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
@@ -198,7 +213,20 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private DatasetSelectionForExcel checkAndTransformSelection(ExcelExportation exportationBody) throws Exception {
+    private DatasetSelectionForPlainText checkAndTransformSelectionForPlainText(PlainTextExportation exportationBody) {
+        DatasetSelectionForPlainText datasetSelectionForPlainText = null;
+        if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
+            try {
+                datasetSelectionForPlainText = DatasetSelectionMapper.toDatasetSelectionForPlainText(exportationBody.getDatasetSelection());
+            } catch (Exception e) {
+                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                        RestExternalConstants.PARAMETER_SELECTION);
+                throw new RestException(exception, Status.BAD_REQUEST);
+            }
+        }
+        return datasetSelectionForPlainText;
+    }
+    private DatasetSelectionForExcel checkAndTransformSelectionForExcel(ExcelExportation exportationBody) throws Exception {
         if (exportationBody == null || isEmpty(exportationBody.getDatasetSelection())) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_REQUIRED, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -377,22 +405,49 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForPlainText datasetSelectionForPlainText = null;
+            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
             String dimensionSelection = null;
-            if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
-                try {
-                    datasetSelectionForPlainText = DatasetSelectionMapper.toDatasetSelectionForPlainText(exportationBody.getDatasetSelection());
-                    dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
-                } catch (Exception e) {
-                    org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                            RestExternalConstants.PARAMETER_SELECTION);
-                    throw new RestException(exception, Status.BAD_REQUEST);
-                }
+            if (datasetSelectionForPlainText != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
             }
 
             // Retrieve dataset
             Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
 
+            if (filename == null) {
+                filename = buildFilename(".zip", ResourceType.DATASET.getName(), agencyID, resourceID, version);
+            }
+
+            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    private Response exportIndicatorToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String resourceID, String lang, String filename) {
+        try {
+            // Transform possible selection (not required)
+            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelectionForPlainText != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            }
+
+            // Retrieve dataset
+            Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
+
+            if (filename == null) {
+                filename = buildFilename(".zip", ResourceType.INDICATOR.getName(), resourceID);
+            }
+
+            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    private Response exportResourceToPlainText(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelectionForPlainText, String lang, String filename) {
+        try {
             // Export
             final File tmpFileObservations = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
             final File tmpFileAttributes = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
@@ -420,16 +475,10 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
             outputStreamObservations.close();
             outputStreamAttributes.close();
-
-            String filenamePrefix = null;
-            if (filename != null) {
-                filenamePrefix = FilenameUtils.getBaseName(filename);
-            } else {
-                filenamePrefix = "dataset-" + agencyID + "-" + resourceID + "-" + version;
-                filename = filenamePrefix;
-            }
+            String filenamePrefix = FilenameUtils.getBaseName(filename);
             File plainTextZip = generatePlainTextZip(plainTextTypeEnum, tmpFileObservations, tmpFileAttributes, filenamePrefix);
-            return buildResponseOkWithFile(plainTextZip, filename + ".zip", mimeType);
+            return buildResponseOkWithFile(plainTextZip, filename, mimeType);
+
         } catch (Exception e) {
             throw manageException(e);
         }

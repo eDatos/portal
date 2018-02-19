@@ -58,15 +58,27 @@ public interface DataExportV1_0 {
      * and dimension attachment level
      */
     @POST
-    @Path("tsv/{resourceType}/{agencyID}/{resourceID}/{version}")
+    @Path("tsv/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     Response exportDatasetToTsv(PlainTextExportation plainTextExportation, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
             @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("tsv/{resourceType}/{agencyID}/{resourceID}/{version}")
+    @Path("tsv/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     Response exportDatasetToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("tsv/indicators/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportIndicatorToTsv(PlainTextExportation plainTextExportation, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
+            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("tsv/indicators/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportIndicatorToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
             @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
