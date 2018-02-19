@@ -20,28 +20,17 @@
             this.visualizationType = this.options.visualizationType;
         },
 
-        getIdentifierUrlPart: function () {
-            var identifier = this.filterDimensions.metadata.identifier();
-            switch (identifier.type) {
-                case "indicator":
-                    return [identifier.type, identifier.identifier].join('/');
-                case "dataset":
-                default:
-                    return [identifier.type, identifier.agency, identifier.identifier, identifier.version].join('/');
-            }
-        },
-
         render: function () {
             var datasetSelection = this.getDatasetSelection();
-            var identifierUrlPart = this.getIdentifierUrlPart();
+            var identifierUrlPart = this.filterDimensions.metadata.urlIdentifierPart();
 
             var context = {
                 selection: JSON.stringify(datasetSelection),
                 emptySelection: JSON.stringify(this.getEmptyDatasetSelection()),
                 url: {
-                    tsv: App.endpoints["export"] + "/tsv/" + identifierUrlPart,
-                    excel: App.endpoints["export"] + "/excel/" + identifierUrlPart,
-                    px: App.endpoints["export"] + "/px/" + identifierUrlPart
+                    tsv: App.endpoints["export"] + "/tsv" + identifierUrlPart,
+                    excel: App.endpoints["export"] + "/excel" + identifierUrlPart,
+                    px: App.endpoints["export"] + "/px" + identifierUrlPart
                 },
                 buttonConfig: this._getButtonConfiguration()
             };

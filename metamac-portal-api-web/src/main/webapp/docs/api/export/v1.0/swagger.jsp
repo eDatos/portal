@@ -686,13 +686,13 @@
         }
       }
     },   
-    "/v1.0/excel/dataset/{agencyID}/{resourceID}/{version}": {
+    "/v1.0/excel/datasets/{agencyID}/{resourceID}/{version}": {
       "post": {
         "tags": [
           "Exportaciones a ficheros Excel"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero Excel.",
-        "operationId": "resource__v1.0_excel__dataset__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
+        "operationId": "resource__v1.0_excel__datasets__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -749,13 +749,13 @@
         }
       }
     },
-     "/v1.0/excel/indicator/{resourceID}": {
+     "/v1.0/excel/indicators/{resourceID}": {
       "post": {
         "tags": [
           "Exportaciones a ficheros Excel"
         ],
         "description": "Permite realizar la exportación de un indicador en fichero Excel.",
-        "operationId": "resource__v1.0_excel__indicator__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
+        "operationId": "resource__v1.0_excel__indicators__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
