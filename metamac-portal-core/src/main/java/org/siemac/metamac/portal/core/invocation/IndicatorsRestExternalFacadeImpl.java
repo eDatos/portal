@@ -32,15 +32,6 @@ public class IndicatorsRestExternalFacadeImpl implements IndicatorsRestExternalF
         return null;
     }
 
-    private StringBuilder getIndicatorRequest(String indicatorCode) {
-        return getIndicatorBaseRequest().append("/").append(indicatorCode);
-    }
-
-    private StringBuilder getIndicatorBaseRequest() {
-        StringBuilder indicatorBaseRequest = new StringBuilder();
-        return indicatorBaseRequest.append(restApiLocator.getIndicatorsRestExternalFacadeEndpoint()).append("/v1.0").append("/indicators");
-    }
-
     @Override
     public DataType retrieveIndicatorData(String indicatorCode, String selectedRepresentations) {
         try {
@@ -55,5 +46,14 @@ public class IndicatorsRestExternalFacadeImpl implements IndicatorsRestExternalF
             logger.error("Error obteniendo el Indicador", e);
         }
         return null;
+    }
+
+    private StringBuilder getIndicatorRequest(String indicatorCode) {
+        return getIndicatorBaseRequest().append("/").append(indicatorCode);
+    }
+
+    private StringBuilder getIndicatorBaseRequest() {
+        StringBuilder indicatorBaseRequest = new StringBuilder();
+        return indicatorBaseRequest.append(restApiLocator.getIndicatorsRestExternalFacadeEndpoint()).append("/v1.0").append("/indicators");
     }
 }
