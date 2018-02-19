@@ -81,6 +81,20 @@ public interface DataExportV1_0 {
     Response exportIndicatorToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
             @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
+    @POST
+    @Path("tsv/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportIndicatorInstanceToTsv(PlainTextExportation plainTextExportation, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceType") String resourceType,
+            @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
+
+    @POST
+    @Path("tsv/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportIndicatorInstanceToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceType") String resourceType,
+            @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
+
     /**
      * Exports a dataset to csv comma separated. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes
      * with dataset

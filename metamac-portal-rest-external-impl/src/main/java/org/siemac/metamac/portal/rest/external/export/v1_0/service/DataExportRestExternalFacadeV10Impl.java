@@ -101,6 +101,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, lang, filename);
     }
 
+    @Override
+    public Response exportIndicatorInstanceToTsv(PlainTextExportation exportationBody, String indicatorSystemCode, String resourceType, String agencyID, String resourceID, String version, String lang,
+            String filename) {
+        return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, lang, filename);
+    }
+
+    @Override
+    public Response exportIndicatorInstanceToTsv(String jsonBody, String indicatorSystemCode, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, lang, filename);
+    }
+
     private PlainTextExportation getPlainTextExportation(String jsonBody) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
@@ -438,6 +450,29 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.INDICATOR.getName(), resourceID);
+            }
+
+            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    private Response exportIndicatorInstanceToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String indicatorSystemCode, String resourceID, String lang,
+            String filename) {
+        try {
+            // Transform possible selection (not required)
+            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelectionForPlainText != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            }
+
+            // Retrieve dataset
+            Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
+
+            if (filename == null) {
+                filename = buildFilename(".zip", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
 
             return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
