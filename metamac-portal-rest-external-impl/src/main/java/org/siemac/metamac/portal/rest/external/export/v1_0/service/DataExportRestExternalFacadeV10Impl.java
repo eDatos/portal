@@ -25,7 +25,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
-import org.siemac.metamac.portal.core.constants.PortalConstants;
+import org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
@@ -126,7 +126,16 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportResourceToExcel(ExcelExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        return exportResourceToExcel(ResourceType.DATASET, exportationBody, agencyID, resourceID, version, lang, filename);
+    }
+
+    @Override
+    public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String lang, String filename) {
+        return exportResourceToExcel(ResourceType.INDICATOR, exportationBody, null, resourceID, null, lang, filename);
+    }
+
+    private Response exportResourceToExcel(ResourceType resourceType, ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Check and transform selection
             if (exportationBody == null || isEmpty(exportationBody.getDatasetSelection())) {
@@ -163,15 +172,16 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private String buildFilename(String resourceType, String agencyID, String resourceID, String version, String extension) {
+    private String buildFilename(ResourceType resourceType, String agencyID, String resourceID, String version, String extension) {
         StringBuilder builder = new StringBuilder();
         builder.append(resourceType);
 
         switch (resourceType) {
-            case PortalConstants.RESOURCE_TYPE_DATASET:
+            case DATASET:
                 builder.append("-").append(agencyID);
                 break;
-            case PortalConstants.RESOURCE_TYPE_INDICATOR:
+            case INDICATOR:
+            case INDICATOR_INSTANCE:
             default:
                 break;
         }
@@ -179,10 +189,11 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         builder.append("-").append(resourceID);
 
         switch (resourceType) {
-            case PortalConstants.RESOURCE_TYPE_DATASET:
+            case DATASET:
                 builder.append("-").append(version);
                 break;
-            case PortalConstants.RESOURCE_TYPE_INDICATOR:
+            case INDICATOR:
+            case INDICATOR_INSTANCE:
             default:
                 break;
         }
@@ -193,11 +204,20 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportResourceToExcelForm(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
+        return exportResourceToExcelForm(jsonBody, ResourceType.DATASET, agencyID, resourceID, version, lang, filename);
+    }
+
+    @Override
+    public Response exportIndicatorToExcelForm(String jsonBody, String resourceID, String lang, String filename) {
+        return exportResourceToExcelForm(jsonBody, ResourceType.INDICATOR, null, resourceID, null, lang, filename);
+    }
+
+    private Response exportResourceToExcelForm(String jsonBody, ResourceType resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             ExcelExportation excelExportation = objectMapper.readValue(jsonBody, ExcelExportation.class);
-            return exportResourceToExcel(excelExportation, resourceType, agencyID, resourceID, version, lang, filename);
+            return exportResourceToExcel(resourceType, excelExportation, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -292,11 +312,11 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, langs, null, dimensionSelection);
     }
 
-    private Dataset retrieveResource(String resourceType, String agencyID, String resourceID, String version, String lang, String dimensionSelection) throws MetamacException {
+    private Dataset retrieveResource(ResourceType resourceType, String agencyID, String resourceID, String version, String lang, String dimensionSelection) throws MetamacException {
         switch (resourceType) {
-            case PortalConstants.RESOURCE_TYPE_DATASET:
+            case DATASET:
                 return retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
-            case PortalConstants.RESOURCE_TYPE_INDICATOR:
+            case INDICATOR:
                 return retrieveIndicator(resourceID, dimensionSelection);
             default:
                 throw new MetamacException(ServiceExceptionType.RESOURCE_TYPE_EXPORT_NOT_SUPPORTED, resourceType);

@@ -13,6 +13,17 @@ public class PortalConstants {
     public final static String LEFT_BRACE              = "[";
     public final static String RIGHT_BRACE             = "]";
 
-    public final static String RESOURCE_TYPE_DATASET   = "dataset";
-    public final static String RESOURCE_TYPE_INDICATOR = "indicator";
+    public static enum ResourceType {
+        DATASET("dataset"), INDICATOR("indicator"), INDICATOR_INSTANCE("indicatorInstance");
+
+        private String name;
+
+        ResourceType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
 }

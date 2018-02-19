@@ -20,10 +20,20 @@
             this.visualizationType = this.options.visualizationType;
         },
 
-        render: function () {
+        getIdentifierUrlPart: function () {
             var identifier = this.filterDimensions.metadata.identifier();
+            switch (identifier.type) {
+                case "indicator":
+                    return [identifier.type, identifier.identifier].join('/');
+                case "dataset":
+                default:
+                    return [identifier.type, identifier.agency, identifier.identifier, identifier.version].join('/');
+            }
+        },
+
+        render: function () {
             var datasetSelection = this.getDatasetSelection();
-            var identifierUrlPart = identifier.type + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
+            var identifierUrlPart = this.getIdentifierUrlPart();
 
             var context = {
                 selection: JSON.stringify(datasetSelection),

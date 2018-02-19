@@ -21,16 +21,26 @@ public interface DataExportV1_0 {
      * Exports a dataset to excel
      */
     @POST
-    @Path("excel/{resourceType}/{agencyID}/{resourceID}/{version}")
+    @Path("excel/dataset/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportResourceToExcel(ExcelExportation excelExportationBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
-            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToExcel(ExcelExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("excel/{resourceType}/{agencyID}/{resourceID}/{version}")
+    @Path("excel/dataset/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportResourceToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
-            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("excel/indicator/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportIndicatorToExcel(ExcelExportation excelExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("excel/indicator/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportIndicatorToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
      * Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
