@@ -2,8 +2,12 @@ package org.siemac.metamac.portal.core.invocation.mapper;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
@@ -29,7 +33,6 @@ import es.gobcan.istac.indicators.rest.types.IndicatorInstanceType;
 import es.gobcan.istac.indicators.rest.types.IndicatorType;
 import es.gobcan.istac.indicators.rest.types.MetadataDimensionType;
 import es.gobcan.istac.indicators.rest.types.MetadataRepresentationType;
-import es.gobcan.istac.indicators.rest.util.RequestUtil;
 
 /* Don't map all the fields, only the ones needed to export */
 public class IndicatorsRestExternalMapper {
@@ -184,7 +187,7 @@ public class IndicatorsRestExternalMapper {
     }
 
     public static String dimensionSelectionToSelectedRepresentations(String dimensionsSelections) {
-        Map<String, List<String>> dimensionsSelectionsMap = RequestUtil.parseParamExpression(dimensionsSelections);
+        Map<String, List<String>> dimensionsSelectionsMap = parseDimensionExpression(dimensionsSelections);
 
         List<String> selectedRepresentations = new ArrayList<String>();
         for (Map.Entry<String, List<String>> dimensionSelection : dimensionsSelectionsMap.entrySet()) {
@@ -192,6 +195,39 @@ public class IndicatorsRestExternalMapper {
             selectedRepresentations.add(selectedRepresentation.append(dimensionSelection.getKey()).append("[").append(StringUtils.join(dimensionSelection.getValue(), "|")).append("]").toString());
         }
         return StringUtils.join(selectedRepresentations, ',');
+    }
+
+
+    private static final Pattern patternDimension = Pattern.compile("(\\w+):(([\\w\\|-])+)");
+    private static final Pattern patternCode      = Pattern.compile("([\\w-]+)\\|?");
+
+    /**
+     * Parse dimension expression from request
+     * Sample: MOTIVOS_ESTANCIA:000|001|002:ISLAS_DESTINO_PRINCIPAL:005|006
+     * Cloned from org.siemac.metamac.statistical_resources.rest.external.service.utils.StatisticalResourcesRestExternalUtils.parseDimensionExpression(String)
+     */
+    public static Map<String, List<String>> parseDimensionExpression(String dimExpression) {
+        if (StringUtils.isBlank(dimExpression)) {
+            return Collections.emptyMap();
+        }
+
+        Matcher matcherDimension = patternDimension.matcher(dimExpression);
+        Map<String, List<String>> selectedDimension = new HashMap<String, List<String>>();
+        while (matcherDimension.find()) {
+            String dimensionIdentifier = matcherDimension.group(1);
+            String codes = matcherDimension.group(2);
+            Matcher matcherCode = patternCode.matcher(codes);
+            while (matcherCode.find()) {
+                List<String> codeDimensions = selectedDimension.get(dimensionIdentifier);
+                if (codeDimensions == null) {
+                    codeDimensions = new ArrayList<String>();
+                    selectedDimension.put(dimensionIdentifier, codeDimensions);
+                }
+                String codeIdentifier = matcherCode.group(1);
+                codeDimensions.add(codeIdentifier);
+            }
+        }
+        return selectedDimension;
     }
 
 }

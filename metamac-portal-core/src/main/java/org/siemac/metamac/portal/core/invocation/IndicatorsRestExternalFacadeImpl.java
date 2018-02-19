@@ -38,7 +38,7 @@ public class IndicatorsRestExternalFacadeImpl implements IndicatorsRestExternalF
             StringBuilder indicatorDataRequest = getIndicatorRequest(indicatorCode).append("/data");
 
             if (!StringUtils.EMPTY.equals(selectedRepresentations)) {
-                indicatorDataRequest.append("?").append("dim=").append(selectedRepresentations);
+                indicatorDataRequest.append("?").append("representation=").append(selectedRepresentations);
             }
 
             return restTemplate.getForObject(indicatorDataRequest.toString(), DataType.class);
