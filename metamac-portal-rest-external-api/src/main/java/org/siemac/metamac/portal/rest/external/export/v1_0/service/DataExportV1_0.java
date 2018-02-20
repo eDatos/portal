@@ -35,23 +35,23 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorToExcel(ExcelExportation excelExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportIndicatorToExcel(ExcelExportation excelExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("excel/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportIndicatorToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportIndicatorToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("excel/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     Response exportIndicatorInstanceToExcel(ExcelExportation excelExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+            @QueryParam("filename") String filename);
 
     @POST
     @Path("excel/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     Response exportIndicatorInstaceToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
-            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+            @QueryParam("filename") String filename);
 
     /**
      * Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
@@ -60,39 +60,35 @@ public interface DataExportV1_0 {
     @POST
     @Path("tsv/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToTsv(PlainTextExportation plainTextExportation, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
-            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToTsv(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
     @Path("tsv/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
-            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
     @Path("tsv/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorToTsv(PlainTextExportation plainTextExportation, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
-            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportIndicatorToTsv(PlainTextExportation plainTextExportation, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("tsv/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportIndicatorToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
-            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportIndicatorToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("tsv/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorInstanceToTsv(PlainTextExportation plainTextExportation, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceType") String resourceType,
-            @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang,
+    Response exportIndicatorInstanceToTsv(PlainTextExportation plainTextExportation, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     @POST
     @Path("tsv/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportIndicatorInstanceToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceType") String resourceType,
-            @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang,
+    Response exportIndicatorInstanceToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     /**
@@ -132,16 +128,16 @@ public interface DataExportV1_0 {
      * Exports a dataset to px
      */
     @POST
-    @Path("px/{resourceType}/{agencyID}/{resourceID}/{version}")
+    @Path("px/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToPx(PxExportation pxExportationBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
-            @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToPx(PxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
-    @Path("px/{resourceType}/{agencyID}/{resourceID}/{version}")
+    @Path("px/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    Response exportDatasetToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceType") String resourceType, @PathParam("agencyID") String agencyID,
-            @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+    Response exportDatasetToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+            @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
      * Exports svg to image

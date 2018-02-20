@@ -80,37 +80,37 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private JacksonJsonProvider                    jacksonJsonProvider;
 
     @Override
-    public Response exportDatasetToTsv(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToTsv(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportDatasetToTsv(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToTsv(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
         PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
         return exportDatasetToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportIndicatorToTsv(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
-        return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, lang, filename);
+    public Response exportIndicatorToTsv(PlainTextExportation exportationBody, String resourceID, String filename) {
+        return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, filename);
     }
 
     @Override
-    public Response exportIndicatorToTsv(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportIndicatorToTsv(String jsonBody, String resourceID, String filename) {
         PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
-        return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, lang, filename);
+        return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, filename);
     }
 
     @Override
-    public Response exportIndicatorInstanceToTsv(PlainTextExportation exportationBody, String indicatorSystemCode, String resourceType, String agencyID, String resourceID, String version, String lang,
-            String filename) {
-        return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, lang, filename);
+    public Response exportIndicatorInstanceToTsv(PlainTextExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
+        return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, filename);
     }
 
     @Override
-    public Response exportIndicatorInstanceToTsv(String jsonBody, String indicatorSystemCode, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportIndicatorInstanceToTsv(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
         PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
-        return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, lang, filename);
+        return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, filename);
+    }
     }
 
     private PlainTextExportation getPlainTextExportation(String jsonBody) {
@@ -177,7 +177,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String lang, String filename) {
+    public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String filename) {
 
         try {
             DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
@@ -188,14 +188,14 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".xlsx", ResourceType.INDICATOR.getName(), resourceID);
             }
-            return exportResourceToExcel(dataset, datasetSelectionForExcel, lang, filename);
+            return exportResourceToExcel(dataset, datasetSelectionForExcel, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportIndicatorInstanceToExcel(ExcelExportation exportationBody, String indicatorSystemCode, String resourceID, String lang, String filename) {
+    public Response exportIndicatorInstanceToExcel(ExcelExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
@@ -205,7 +205,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".xlsx", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
-            return exportResourceToExcel(dataset, datasetSelectionForExcel, lang, filename);
+            return exportResourceToExcel(dataset, datasetSelectionForExcel, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -258,15 +258,15 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportIndicatorToExcelForm(String jsonBody, String resourceID, String lang, String filename) {
+    public Response exportIndicatorToExcelForm(String jsonBody, String resourceID, String filename) {
         ExcelExportation excelExportation = getExcelExportation(jsonBody);
-        return exportIndicatorToExcel(excelExportation, resourceID, lang, filename);
+        return exportIndicatorToExcel(excelExportation, resourceID, filename);
     }
 
     @Override
-    public Response exportIndicatorInstaceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String lang, String filename) {
+    public Response exportIndicatorInstaceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
         ExcelExportation excelExportation = getExcelExportation(jsonBody);
-        return exportIndicatorInstanceToExcel(excelExportation, indicatorSystemCode, resourceID, lang, filename);
+        return exportIndicatorInstanceToExcel(excelExportation, indicatorSystemCode, resourceID, filename);
     }
 
     private ExcelExportation getExcelExportation(String jsonBody) {
@@ -280,7 +280,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToPx(PxExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToPx(PxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
             // Transform possible selection (not required)
             String dimensionSelection = null;
@@ -314,7 +314,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToPxForm(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PxExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PxExportation pxExportation = objectMapper.readValue(jsonBody, PxExportation.class);
@@ -436,7 +436,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private Response exportIndicatorToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String resourceID, String lang, String filename) {
+    private Response exportIndicatorToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
             DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
@@ -452,14 +452,13 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".zip", ResourceType.INDICATOR.getName(), resourceID);
             }
 
-            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportIndicatorInstanceToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String indicatorSystemCode, String resourceID, String lang,
-            String filename) {
+    private Response exportIndicatorInstanceToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
             DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
@@ -475,7 +474,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".zip", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
 
-            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
