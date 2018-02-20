@@ -139,6 +139,28 @@ public interface DataExportV1_0 {
     Response exportDatasetToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
+    @POST
+    @Path("px/indicators/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportIndicatorToPx(PxExportation pxExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("px/indicators/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportIndicatorToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("px/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportIndicatorInstanceToPx(PxExportation pxExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+            @QueryParam("filename") String filename);
+
+    @POST
+    @Path("px/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportIndicatorInstanceToPx(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+            @QueryParam("filename") String filename);
+
     /**
      * Exports svg to image
      */
