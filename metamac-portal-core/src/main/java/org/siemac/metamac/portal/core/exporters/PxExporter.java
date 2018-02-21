@@ -69,7 +69,7 @@ public class PxExporter {
     private Integer                  showDecimals             = null;
 
     public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
-        this.datasetAccess = new DatasetAccessForPx(dataset, lang, langAlternative);
+        datasetAccess = new DatasetAccessForPx(dataset, lang, langAlternative);
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
@@ -257,7 +257,7 @@ public class PxExporter {
 
         List<String> resourcesToResourcesId = resourcesToResourcesId(languages.getResources());
         this.languages = new HashSet<String>(resourcesToResourcesId);
-        this.languageOrder = new HashMap<String, Integer>();
+        languageOrder = new HashMap<String, Integer>();
         int i = 1;
         String defaultLang = datasetAccess.getLangEffective();
         for (String lang : resourcesToResourcesId) {
@@ -367,12 +367,10 @@ public class PxExporter {
                 }
             }
 
-            PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SHOWDECIMALS).withValue(showDecimals)
-                    .build();
+            PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SHOWDECIMALS).withValue(showDecimals).build();
             writeLine(printWriter, line);
         }
     }
-
 
     /**
      * @param printWriter
@@ -542,7 +540,7 @@ public class PxExporter {
                 }
             }
         }
-        
+
         // Default case
         return dimensionValue.getName();
     }
@@ -617,7 +615,7 @@ public class PxExporter {
             for (String dimensionValueId : dimensionValuesId) {
                 dimensionValuesLabels.add(datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId));
             }
-            
+
             writeLocalisedLine(printWriter, PxKeysEnum.VALUES, datasetAccess.getDimensionsMetadataMap().get(dimensionId).getName(), dimensionValuesLabels);
         }
     }
@@ -626,9 +624,9 @@ public class PxExporter {
         if (indexValues == null || indexValues.isEmpty()) {
             return Collections.emptyList();
         }
-        
+
         List<String> result = new LinkedList<>();
-        
+
         for (InternationalString indexValue : indexValues) {
             String label = PortalUtils.getLabel(indexValue, lang);
             if (StringUtils.isEmpty(label)) {
@@ -677,8 +675,7 @@ public class PxExporter {
                     writeLocalisedLine(printWriter, PxKeysEnum.LAST_UPDATED, dimensionValue.getName(), value);
                 }
             }
-        }
-        else {
+        } else {
             PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.LAST_UPDATED).withValue(datasetAccess.getDataset().getMetadata().getLastUpdate()).build();
             writeLine(printWriter, pxLineContainer);
         }
@@ -692,10 +689,10 @@ public class PxExporter {
         // Calculate International String Contact
         Resources publishers = datasetAccess.getDataset().getMetadata().getPublishers();
         InternationalString value = null;
-        for (Resource publisher: publishers.getResources()) {
+        for (Resource publisher : publishers.getResources()) {
             value = PortalUtils.concatenateInternationalString(value, publisher.getName());
         }
-        
+
         if (existsContVariable()) {
             // Indexed to ContVariable Values
             DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
@@ -704,8 +701,7 @@ public class PxExporter {
                     writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, dimensionValue.getName(), value);
                 }
             }
-        }
-        else {
+        } else {
             writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, Collections.emptyList(), value);
         }
     }
@@ -761,7 +757,7 @@ public class PxExporter {
     /**
      * If exist more than one attribute for a same key (example: pair dimensionId-dimensionValueId for VALUENOTE) concat values with <br/>
      * (# in PX)
-     * 
+     *
      * @throws MetamacException
      */
     private void writeAttributes(PrintWriter printWriter) throws MetamacException {
@@ -782,7 +778,7 @@ public class PxExporter {
                 for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
                     String variableLabel = PortalUtils.getLabel(datasetAccess.getMeasureDimension().getName(), datasetAccess.getLangEffective());
                     String valueLabel = PortalUtils.getLabel(dimensionValue.getName(), datasetAccess.getLangEffective());
-                    // @formatter:off        
+                    // @formatter:off
                     PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer()
                             .withPxKey(PxKeysEnum.PRECISION)
                             .withIndexedValue(Arrays.asList(variableLabel, valueLabel))
@@ -799,7 +795,7 @@ public class PxExporter {
 
     /**
      * Builds NOTE and NOTEX attributes: attributes with dataset attachment level
-     * 
+     *
      * @throws MetamacException
      */
     private void writeAttributesNote(PrintWriter printWriter, List<Attribute> attributes) throws MetamacException {
@@ -829,7 +825,7 @@ public class PxExporter {
 
     /**
      * Builds VALUENOTE and VALUENOTEX attributes: attributes with dimension attachment level but only one dimension
-     * 
+     *
      * @throws MetamacException
      */
     private void writeAttributesValueNote(PrintWriter printWriter, List<Attribute> attributes) throws MetamacException {
@@ -896,7 +892,7 @@ public class PxExporter {
 
     /**
      * Builds CELLNOTE and CELLNOTEX attributes: attributes with observation attachment level or dimension attachment level but more than one dimension
-     * 
+     *
      * @throws MetamacException
      */
     private void writeAttributesCellNote(PrintWriter printWriter, List<Attribute> attributes) throws MetamacException {
@@ -1030,7 +1026,7 @@ public class PxExporter {
 
     /**
      * Write one line, language dependent or not
-     * 
+     *
      * @param printWriter
      * @param pxLineContainer
      * @throws MetamacException
@@ -1163,7 +1159,7 @@ public class PxExporter {
 
     private boolean filterLanguagesToApply(String lang) {
         // Checks if the default locale or is language in the alternatives languages of PX
-        return (datasetAccess.getLangEffective().equals(lang) || this.languages.contains(lang));
+        return (datasetAccess.getLangEffective().equals(lang) || languages.contains(lang));
     }
 
     private void writeFieldResourceName(PrintWriter printWriter, PxKeysEnum pxKey, Resource value) throws MetamacException {
@@ -1179,7 +1175,7 @@ public class PxExporter {
 
     /**
      * Lines of MAX 256 characters
-     * 
+     *
      * @param sources
      * @return
      */
