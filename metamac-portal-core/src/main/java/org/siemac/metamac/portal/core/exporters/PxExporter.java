@@ -312,12 +312,15 @@ public class PxExporter {
     private void writeUpdateFrequency(PrintWriter printWriter) throws MetamacException {
         StringBuilder value = new StringBuilder();
         NextVersionType nextVersion = datasetAccess.getDataset().getMetadata().getNextVersion();
-        if (NextVersionType.SCHEDULED_UPDATE.equals(nextVersion)) {
-            Resource updateFrequency = datasetAccess.getDataset().getMetadata().getUpdateFrequency();
-            String label = PortalUtils.getLabel(updateFrequency.getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative());
-            value.append(label).append(SPACE).append(LEFT_PARENTHESES).append(updateFrequency.getId()).append(RIGHT_PARENTHESES);
-        } else {
-            value.append(nextVersion.name());
+
+        if (nextVersion != null) {
+            if (NextVersionType.SCHEDULED_UPDATE.equals(nextVersion)) {
+                Resource updateFrequency = datasetAccess.getDataset().getMetadata().getUpdateFrequency();
+                String label = PortalUtils.getLabel(updateFrequency.getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative());
+                value.append(label).append(SPACE).append(LEFT_PARENTHESES).append(updateFrequency.getId()).append(RIGHT_PARENTHESES);
+            } else {
+                value.append(nextVersion.name());
+            }
         }
 
         PxLineContainer line = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.UPDATE_FREQUENCY).withValue(value.toString()).build();
