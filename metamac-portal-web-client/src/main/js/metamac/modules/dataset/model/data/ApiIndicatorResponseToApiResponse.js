@@ -154,6 +154,9 @@
                 //     }]
                 // }
             };
+            if (_.has(response, 'decimalPlaces')) {
+                response.metadata.relatedDsd.showDecimals = response.decimalPlaces;
+            }
             this.getRightsHolder(response.metadata);
             return response;
         },
