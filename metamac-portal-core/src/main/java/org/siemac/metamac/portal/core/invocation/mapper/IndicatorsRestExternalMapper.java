@@ -30,6 +30,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionsId;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NextVersionType;
+import org.siemac.metamac.statistical_resources.rest.external.service.utils.StatisticalResourcesRestApiExternalUtils;
 
 import es.gobcan.istac.indicators.rest.types.DataDimensionType;
 import es.gobcan.istac.indicators.rest.types.DataType;
@@ -276,7 +277,7 @@ public class IndicatorsRestExternalMapper {
     }
 
     public static String dimensionSelectionToSelectedRepresentations(String dimensionsSelections) {
-        Map<String, List<String>> dimensionsSelectionsMap = parseDimensionExpression(dimensionsSelections);
+        Map<String, List<String>> dimensionsSelectionsMap = StatisticalResourcesRestApiExternalUtils.parseDimensionExpression(dimensionsSelections);
 
         List<String> selectedRepresentations = new ArrayList<String>();
         for (Map.Entry<String, List<String>> dimensionSelection : dimensionsSelectionsMap.entrySet()) {
@@ -284,39 +285,6 @@ public class IndicatorsRestExternalMapper {
             selectedRepresentations.add(selectedRepresentation.append(dimensionSelection.getKey()).append("[").append(StringUtils.join(dimensionSelection.getValue(), "|")).append("]").toString());
         }
         return StringUtils.join(selectedRepresentations, ',');
-    }
-
-
-    private static final Pattern patternDimension = Pattern.compile("(\\w+):(([\\w\\|-])+)");
-    private static final Pattern patternCode      = Pattern.compile("([\\w-]+)\\|?");
-
-    /**
-     * Parse dimension expression from request
-     * Sample: MOTIVOS_ESTANCIA:000|001|002:ISLAS_DESTINO_PRINCIPAL:005|006
-     * Cloned from org.siemac.metamac.statistical_resources.rest.external.service.utils.StatisticalResourcesRestExternalUtils.parseDimensionExpression(String)
-     */
-    public static Map<String, List<String>> parseDimensionExpression(String dimExpression) {
-        if (StringUtils.isBlank(dimExpression)) {
-            return Collections.emptyMap();
-        }
-
-        Matcher matcherDimension = patternDimension.matcher(dimExpression);
-        Map<String, List<String>> selectedDimension = new HashMap<String, List<String>>();
-        while (matcherDimension.find()) {
-            String dimensionIdentifier = matcherDimension.group(1);
-            String codes = matcherDimension.group(2);
-            Matcher matcherCode = patternCode.matcher(codes);
-            while (matcherCode.find()) {
-                List<String> codeDimensions = selectedDimension.get(dimensionIdentifier);
-                if (codeDimensions == null) {
-                    codeDimensions = new ArrayList<String>();
-                    selectedDimension.put(dimensionIdentifier, codeDimensions);
-                }
-                String codeIdentifier = matcherCode.group(1);
-                codeDimensions.add(codeIdentifier);
-            }
-        }
-        return selectedDimension;
     }
 
 }
