@@ -6,21 +6,28 @@ import static es.gobcan.istac.indicators.rest.constants.IndicatorsRestApiConstan
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Base64;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
 import org.siemac.metamac.rest.common.v1_0.domain.Resource;
+import org.siemac.metamac.rest.common.v1_0.domain.ResourceLink;
 import org.siemac.metamac.rest.common.v1_0.domain.Resources;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attributes;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentations;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.ComponentType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Data;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttributes;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DatasetMetadata;
@@ -33,14 +40,20 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimensions;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionsId;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValues;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NextVersionType;
+import org.siemac.metamac.rest.structural_resources.v1_0.domain.Agency;
+import org.siemac.metamac.rest.structural_resources.v1_0.domain.Organisation;
 import org.siemac.metamac.statistical_resources.rest.external.service.utils.StatisticalResourcesRestApiExternalUtils;
 
+import es.gobcan.istac.indicators.rest.types.AttributeAttachmentLevelEnumType;
+import es.gobcan.istac.indicators.rest.types.AttributeType;
 import es.gobcan.istac.indicators.rest.types.DataDimensionType;
 import es.gobcan.istac.indicators.rest.types.DataType;
 import es.gobcan.istac.indicators.rest.types.IndicatorDataDimensionTypeEnum;
 import es.gobcan.istac.indicators.rest.types.IndicatorInstanceType;
 import es.gobcan.istac.indicators.rest.types.IndicatorType;
+import es.gobcan.istac.indicators.rest.types.IndicatorsSystemType;
+import es.gobcan.istac.indicators.rest.types.LinkType;
+import es.gobcan.istac.indicators.rest.types.MetadataAttributeType;
 import es.gobcan.istac.indicators.rest.types.MetadataDimensionType;
 import es.gobcan.istac.indicators.rest.types.MetadataRepresentationType;
 
@@ -49,18 +62,30 @@ import es.gobcan.istac.indicators.rest.types.MetadataRepresentationType;
  */
 public class IndicatorsRestExternalMapper {
 
-    private static final String DATASET_OBSERVATIONS_SEPARATOR = " | ";
+    private static final String                                                                  DATASET_OBSERVATIONS_SEPARATOR     = " | ";
+    private static final int                                                                     MAX_PX_MATRIX_LENGTH               = 8;
 
-    public static Dataset indicatorToDatasetMapper(IndicatorType indicator, DataType data) {
+    private static final EnumMap<AttributeAttachmentLevelEnumType, AttributeAttachmentLevelType> ATTRIBUTE_ATTACHMENT_LEVEL_MAPPING = new EnumMap<>(AttributeAttachmentLevelEnumType.class);
+    static {
+        ATTRIBUTE_ATTACHMENT_LEVEL_MAPPING.put(AttributeAttachmentLevelEnumType.DATASET, AttributeAttachmentLevelType.DATASET);
+        ATTRIBUTE_ATTACHMENT_LEVEL_MAPPING.put(AttributeAttachmentLevelEnumType.DIMENSION, AttributeAttachmentLevelType.DIMENSION);
+        ATTRIBUTE_ATTACHMENT_LEVEL_MAPPING.put(AttributeAttachmentLevelEnumType.OBSERVATION, AttributeAttachmentLevelType.PRIMARY_MEASURE);
+    }
+
+    public static Dataset indicatorToDatasetMapper(IndicatorType indicator, DataType data, Agency organisation) {
         Dataset dataset = indicatorToDatasetBaseMapper(indicator.getId(), indicator.getTitle(), data);
-        dataset.setMetadata(indicatorMetadataToDatasetMetadata(indicator));
+        dataset.setMetadata(indicatorMetadataToDatasetMetadata(indicator, organisation));
         return dataset;
     }
 
-    public static Dataset indicatorInstanceToDatasetMapper(IndicatorInstanceType indicatorInstance, DataType data) {
-        Dataset dataset = indicatorToDatasetBaseMapper(indicatorInstance.getSystemCode(), indicatorInstance.getTitle(), data);
-        dataset.setMetadata(indicatorInstanceMetadataToDatasetMetadata(indicatorInstance));
+    public static Dataset indicatorInstanceToDatasetMapper(IndicatorInstanceType indicatorInstance, DataType data, Agency organisation, IndicatorsSystemType indicatorSystem) {
+        Dataset dataset = indicatorToDatasetBaseMapper(indicatorInstanceIdToDatasetId(indicatorInstance), indicatorInstance.getTitle(), data);
+        dataset.setMetadata(indicatorInstanceMetadataToDatasetMetadata(indicatorInstance, organisation, indicatorSystem));
         return dataset;
+    }
+
+    private static String indicatorInstanceIdToDatasetId(IndicatorInstanceType indicatorInstance) {
+        return Base64.getEncoder().encodeToString(indicatorInstance.getId().getBytes()).substring(0, MAX_PX_MATRIX_LENGTH);
     }
 
     private static Dataset indicatorToDatasetBaseMapper(String id, Map<String, String> title, DataType data) {
@@ -71,41 +96,86 @@ public class IndicatorsRestExternalMapper {
         return dataset;
     }
 
-    private static DatasetMetadata indicatorInstanceMetadataToDatasetMetadata(IndicatorInstanceType indicatorInstance) {
-        return indicatorBaseMetadataToDatasetMetadata(null, indicatorInstance.getDimension(), indicatorInstance.getTitle());
+    private static DatasetMetadata indicatorInstanceMetadataToDatasetMetadata(IndicatorInstanceType indicatorInstance, Agency organisation, IndicatorsSystemType indicatorSystem) {
+        return indicatorBaseMetadataToDatasetMetadata(null, indicatorInstance.getDimension(), indicatorInstance.getDecimalPlaces(), indicatorInstance.getTitle(), organisation, indicatorSystem, null);
     }
 
-    private static DatasetMetadata indicatorMetadataToDatasetMetadata(IndicatorType indicator) {
-        return indicatorBaseMetadataToDatasetMetadata(indicator.getVersion(), indicator.getDimension(), indicator.getTitle());
+    private static DatasetMetadata indicatorMetadataToDatasetMetadata(IndicatorType indicator, Agency organisation) {
+        return indicatorBaseMetadataToDatasetMetadata(indicator.getVersion(), indicator.getDimension(), indicator.getDecimalPlaces(), indicator.getTitle(), organisation, null,
+                indicator.getAttribute());
     }
 
-    private static DatasetMetadata indicatorBaseMetadataToDatasetMetadata(String version, Map<String, MetadataDimensionType> dimension, Map<String, String> title) {
+    private static DatasetMetadata indicatorBaseMetadataToDatasetMetadata(String version, Map<String, MetadataDimensionType> dimension, Integer decimalPlaces, Map<String, String> title,
+            Agency organisation, IndicatorsSystemType indicatorSystem, Map<String, MetadataAttributeType> attributes) {
         DatasetMetadata datasetMetadata = new DatasetMetadata();
         datasetMetadata.setVersion(version);
         datasetMetadata.setDimensions(indicatorMetadataDimensionsToDatasetMetadataDimensions(dimension));
-        datasetMetadata.setRightsHolder(mockRightsHolder());
-        datasetMetadata.setNextVersion(mockNextVersion());
-        datasetMetadata.setRelatedDsd(buildRelatedDsd());
-        datasetMetadata.setPublishers(mockPublishers());
-        datasetMetadata.setStatisticalOperation(mockStatisticalOperation());
+        datasetMetadata.setRightsHolder(organisationToResource(organisation));
         datasetMetadata.setLanguages(buildPartialDatasetLanguageResourceFromIndicatorLanguages(calculateLanguagesFromIndicatorLocalisedString(title)));
+        datasetMetadata.setRelatedDsd(buildRelatedDsd(decimalPlaces));
+        datasetMetadata.setPublishers(organisationToResources(organisation));
+        datasetMetadata.setStatisticalOperation(indicatorSystemToStatisticalOperation(indicatorSystem));
+        datasetMetadata.setAttributes(indicatorMetadataAttributesToDatasetMetadataAttributes(attributes));
         return datasetMetadata;
     }
 
-    private static Resource mockStatisticalOperation() {
+    private static Attributes indicatorMetadataAttributesToDatasetMetadataAttributes(Map<String, MetadataAttributeType> attributes) {
+        Attributes datasetAttributes = new Attributes();
+        for (Entry<String, MetadataAttributeType> attribute : attributes.entrySet()) {
+            datasetAttributes.getAttributes().add(indicatorMetadataAttributeToDatasetMetadataAttribute(attribute));
+        }
+        datasetAttributes.setTotal(BigInteger.valueOf(attributes.size()));
+        return datasetAttributes;
+    }
+
+    private static Attribute indicatorMetadataAttributeToDatasetMetadataAttribute(Entry<String, MetadataAttributeType> attribute) {
+        Attribute datasetAttribute = new Attribute();
+        datasetAttribute.setId(attribute.getKey());
+        datasetAttribute.setAttachmentLevel(ATTRIBUTE_ATTACHMENT_LEVEL_MAPPING.get(attribute.getValue().getAttachmentLevel()));
+        datasetAttribute.setAttributeValues(null); // No values on indicators
+        datasetAttribute.setDimensions(null); // No dimensions for atributtes in indicators
+        datasetAttribute.setName(localisedStringsToInternationalString(attribute.getValue().getTitle()));
+        datasetAttribute.setType(ComponentType.OTHER);
+        return datasetAttribute;
+    }
+
+    private static Resource indicatorSystemToStatisticalOperation(IndicatorsSystemType indicatorSystem) {
+        if (indicatorSystem == null) {
+            return null;
+        }
         Resource statisticalOperation = new Resource();
-        statisticalOperation.setName(new InternationalString());
+        statisticalOperation.setName(localisedStringsToInternationalString(indicatorSystem.getTitle()));
+        statisticalOperation.setSelfLink(linkTypeToResourceLink(indicatorSystem.getStatisticalOperationLink()));
         return statisticalOperation;
     }
 
-    private static Resources mockPublishers() {
+    private static ResourceLink linkTypeToResourceLink(LinkType linkType) {
+        ResourceLink resourceLink = new ResourceLink();
+        resourceLink.setHref(linkType.getHref());
+        resourceLink.setKind(linkType.getKind());
+        return resourceLink;
+    }
+
+    private static Resources organisationToResources(Organisation organisation) {
         Resources publishers = new Resources();
+        publishers.getResources().add(organisationToResource(organisation));
         return publishers;
     }
 
-    private static DataStructureDefinition buildRelatedDsd() {
+    private static Resource organisationToResource(Organisation organisation) {
+        Resource resource = new Resource();
+        resource.setName(organisation.getName()); // The only one currently used on the export
+        resource.setId(organisation.getId());
+        resource.setKind(organisation.getKind());
+        resource.setNestedId(organisation.getNestedId());
+        resource.setSelfLink(organisation.getSelfLink());
+        resource.setUrn(organisation.getUrn());
+        return resource;
+    }
+
+    private static DataStructureDefinition buildRelatedDsd(Integer decimalPlaces) {
         DataStructureDefinition relatedDsd = new DataStructureDefinition();
-        relatedDsd.setShowDecimals(mockShowDecimals());
+        relatedDsd.setShowDecimals(decimalPlaces);
         relatedDsd.setHeading(buildIndicatorHeading());
         relatedDsd.setStub(buildIndicatorStub());
         return relatedDsd;
@@ -128,15 +198,6 @@ public class IndicatorsRestExternalMapper {
         DimensionsId stub = new DimensionsId();
         stub.getDimensionIds().add(IndicatorDataDimensionTypeEnum.TIME.getName());
         return stub;
-    }
-
-    private static int mockShowDecimals() {
-        return 2;
-    }
-
-    private static NextVersionType mockNextVersion() {
-        // FIXME
-        return NextVersionType.NO_UPDATES;
     }
 
     /**
@@ -166,13 +227,6 @@ public class IndicatorsRestExternalMapper {
             }
         }
         return languages;
-    }
-
-    // FIXME
-    private static Resource mockRightsHolder() {
-        Resource rightsHolder = new Resource();
-        rightsHolder.setName(buildLocalizedSpanishText("ISTAC"));
-        return rightsHolder;
     }
 
     private static Dimensions indicatorMetadataDimensionsToDatasetMetadataDimensions(Map<String, MetadataDimensionType> metadataDimensions) {
@@ -255,6 +309,7 @@ public class IndicatorsRestExternalMapper {
         Data datasetData = new Data();
 
         datasetData.setObservations(indicatorObservationsToDatasetObservations(data.getObservation()));
+        datasetData.setAttributes(indicatorAttributesToDatasetAttributes(data.getAttribute()));
         datasetData.setDimensions(indicatorDimensionsToDatasetDimensions(data.getDimension()));
 
         return datasetData;
@@ -262,6 +317,32 @@ public class IndicatorsRestExternalMapper {
 
     private static String indicatorObservationsToDatasetObservations(List<String> observation) {
         return String.join(DATASET_OBSERVATIONS_SEPARATOR, observation);
+    }
+
+    private static DataAttributes indicatorAttributesToDatasetAttributes(List<Map<String, AttributeType>> attributes) {
+        DataAttributes dataAttributes = new DataAttributes();
+        dataAttributes.getAttributes().add(indicatorAttributeToDatasetAttribute(attributes));
+        dataAttributes.setTotal(BigInteger.valueOf(attributes.size()));
+        return dataAttributes;
+    }
+
+    private static DataAttribute indicatorAttributeToDatasetAttribute(List<Map<String, AttributeType>> attributes) {
+        List<String> values = new ArrayList<String>();
+        for (Map<String, AttributeType> attribute : attributes) {
+            values.add(indicatorAttributeValueToDatasetAttributeValue(attribute));
+        }
+
+        DataAttribute dataAttribute = new DataAttribute();
+        dataAttribute.setId(PROP_ATTRIBUTE_OBS_CONF);
+        dataAttribute.setValue(String.join(DATASET_OBSERVATIONS_SEPARATOR, values));
+        return dataAttribute;
+    }
+
+    private static String indicatorAttributeValueToDatasetAttributeValue(Map<String, AttributeType> attribute) {
+        if (attribute == null) {
+            return StringUtils.EMPTY;
+        }
+        return localisedStringsToDefaultString(attribute.get(PROP_ATTRIBUTE_OBS_CONF).getValue());
     }
 
     private static DimensionRepresentations indicatorDimensionsToDatasetDimensions(Map<String, DataDimensionType> dataDimensions) {

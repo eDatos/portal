@@ -34,6 +34,7 @@ import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
 import org.siemac.metamac.portal.core.invocation.IndicatorsRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.IndicatorsSystemsRestExternalFacade;
+import org.siemac.metamac.portal.core.invocation.SrmRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.StatisticalResourcesRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.mapper.IndicatorsRestExternalMapper;
 import org.siemac.metamac.portal.core.serviceapi.ExportService;
@@ -47,12 +48,14 @@ import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
 import org.siemac.metamac.rest.export.v1_0.domain.PlainTextExportation;
 import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.structural_resources.v1_0.domain.Agency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.indicators.rest.types.DataType;
 import es.gobcan.istac.indicators.rest.types.IndicatorInstanceType;
 import es.gobcan.istac.indicators.rest.types.IndicatorType;
+import es.gobcan.istac.indicators.rest.types.IndicatorsSystemType;
 
 @Service("dataExportRestExternalFacadeV10")
 public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
@@ -69,6 +72,9 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Autowired
     private StatisticalResourcesRestExternalFacade statisticalResourcesRestExternal;
+
+    @Autowired
+    private SrmRestExternalFacade                  srmRestExternal;
 
     @Autowired
     private IndicatorsRestExternalFacade           indicatorsRestExternal;
@@ -437,14 +443,17 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         String selectedRepresentations = IndicatorsRestExternalMapper.dimensionSelectionToSelectedRepresentations(dimensionSelection);
         DataType indicatorInstanceData = indicatorsSystemsRestExternal.retrieveIndicatorInstanceDataByCode(indicatorSystemCode, resourceID, selectedRepresentations);
         IndicatorInstanceType indicatorInstance = indicatorsSystemsRestExternal.retrieveIndicatorInstanceByCode(indicatorSystemCode, resourceID);
-        return IndicatorsRestExternalMapper.indicatorInstanceToDatasetMapper(indicatorInstance, indicatorInstanceData);
+        IndicatorsSystemType indicatorSystem = indicatorsSystemsRestExternal.retrieveIndicatorsSystem(indicatorSystemCode);
+        Agency organisation = srmRestExternal.retrieveOrganization();
+        return IndicatorsRestExternalMapper.indicatorInstanceToDatasetMapper(indicatorInstance, indicatorInstanceData, organisation, indicatorSystem);
     }
 
     private Dataset retrieveDatasetFromIndicator(String resourceID, String dimensionSelection) {
         String selectedRepresentations = IndicatorsRestExternalMapper.dimensionSelectionToSelectedRepresentations(dimensionSelection);
         DataType indicatorData = indicatorsRestExternal.retrieveIndicatorData(resourceID, selectedRepresentations);
         IndicatorType indicator = indicatorsRestExternal.retrieveIndicator(resourceID);
-        return IndicatorsRestExternalMapper.indicatorToDatasetMapper(indicator, indicatorData);
+        Agency organisation = srmRestExternal.retrieveOrganization();
+        return IndicatorsRestExternalMapper.indicatorToDatasetMapper(indicator, indicatorData, organisation);
     }
 
     private boolean isEmpty(DatasetSelection datasetSelection) {
