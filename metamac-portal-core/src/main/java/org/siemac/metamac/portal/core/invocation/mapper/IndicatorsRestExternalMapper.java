@@ -40,7 +40,9 @@ import es.gobcan.istac.indicators.rest.types.IndicatorType;
 import es.gobcan.istac.indicators.rest.types.MetadataDimensionType;
 import es.gobcan.istac.indicators.rest.types.MetadataRepresentationType;
 
-/* Don't map all the fields, only the ones needed to export */
+/**
+ * Don't map all the fields, only the ones needed to export
+ */
 public class IndicatorsRestExternalMapper {
 
     private static final String LOCALE_SPANISH                 = "es";
@@ -106,7 +108,9 @@ public class IndicatorsRestExternalMapper {
         return relatedDsd;
     }
 
-    // Always this values for indicators
+    /**
+     * Always these values for indicators heading
+     */
     private static DimensionsId buildIndicatorHeading() {
         DimensionsId heading = new DimensionsId();
         heading.getDimensionIds().add(IndicatorDataDimensionTypeEnum.GEOGRAPHICAL.getName());
@@ -114,7 +118,9 @@ public class IndicatorsRestExternalMapper {
         return heading;
     }
 
-    // Always this values for indicators
+    /**
+     * Always these values for indicators stub
+     */
     private static DimensionsId buildIndicatorStub() {
         DimensionsId stub = new DimensionsId();
         stub.getDimensionIds().add(IndicatorDataDimensionTypeEnum.TIME.getName());
@@ -143,7 +149,9 @@ public class IndicatorsRestExternalMapper {
         return languages;
     }
 
-    // Take a look at es.gobcan.istac.indicators.rest.mapper.MapperUtil
+    /**
+     * @see es.gobcan.istac.indicators.rest.mapper.MapperUtil
+     */
     private static List<String> calculateLanguagesFromIndicatorLocalisedString(Map<String, String> localisedString) {
         String DEFAULT = "__default__";
         List<String> languages = new ArrayList<String>();
