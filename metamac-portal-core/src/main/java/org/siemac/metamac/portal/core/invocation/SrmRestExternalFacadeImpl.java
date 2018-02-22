@@ -4,6 +4,7 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.siemac.metamac.core.common.util.shared.UrnUtils;
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
+import org.siemac.metamac.rest.structural_resources.v1_0.domain.Agency;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.Codelist;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.Codes;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.Concept;
@@ -100,8 +101,23 @@ public class SrmRestExternalFacadeImpl implements SrmRestExternalFacade {
         return restApiLocator.getSrmRestExternalFacadeV10().findVariableElementsGeoInfoXml(variableID, resourceID, null, null, null, null, null);
     }
 
+    @Override
+    public Agency retrieveOrganization() {
+        // urn:sdmx:org.sdmx.infomodel.base.Agency=SDMX:AGENCIES(1.0).ISTAC
+        String[] urnSplited = UrnUtils.splitUrnByDots(UrnUtils.removePrefix(restApiLocator.getOrganisationUrn()));
+        String tripletIdentifier = urnSplited[0];
+        String organisationID = urnSplited[1];
+
+        String[] identifier = UrnUtils.splitUrnWithoutPrefixItemScheme(tripletIdentifier);
+        String agencyID = identifier[0];
+        String resourceID = identifier[1];
+        String version = identifier[2];
+        return restApiLocator.getSrmRestExternalFacadeV10().retrieveAgency(agencyID, resourceID, version, organisationID);
+    }
+
     private RestException toRestException(Exception e) {
         logger.error("Error", e);
         return RestExceptionUtils.toRestException(e, WebClient.client(restApiLocator.getSrmRestExternalFacadeV10()));
     }
+
 }
