@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import es.gobcan.istac.indicators.rest.types.DataType;
 import es.gobcan.istac.indicators.rest.types.IndicatorInstanceType;
+import es.gobcan.istac.indicators.rest.types.IndicatorsSystemType;
 
 @Component("indicatorsRestExternalFacadeImpl")
 public class IndicatorsSystemsRestExternalFacadeImpl implements IndicatorsSystemsRestExternalFacade {
@@ -48,12 +49,27 @@ public class IndicatorsSystemsRestExternalFacadeImpl implements IndicatorsSystem
         return null;
     }
 
+    @Override
+    public IndicatorsSystemType retrieveIndicatorsSystem(String idIndicatorSystem) {
+        try {
+            return restTemplate.getForObject(getIndicatorSystemRequest(idIndicatorSystem).toString(), IndicatorsSystemType.class);
+        } catch (Exception e) {
+            logger.error("Error obteniendo el Indicador", e);
+        }
+        return null;
+    }
+
     private StringBuilder getIndicatorInstanceRequest(String idIndicatorSystem, String idIndicatorInstance) {
-        return getIndicatorInstanceBaseRequest().append("/").append(idIndicatorSystem).append("/indicatorsInstances").append("/").append(idIndicatorInstance);
+        return getIndicatorSystemRequest(idIndicatorSystem).append("/indicatorsInstances").append("/").append(idIndicatorInstance);
+    }
+
+    private StringBuilder getIndicatorSystemRequest(String idIndicatorSystem) {
+        return getIndicatorInstanceBaseRequest().append("/").append(idIndicatorSystem);
     }
 
     private StringBuilder getIndicatorInstanceBaseRequest() {
         StringBuilder indicatorInstanceBaseRequest = new StringBuilder();
         return indicatorInstanceBaseRequest.append(restApiLocator.getIndicatorsRestExternalFacadeEndpoint()).append("/v1.0").append("/indicatorsSystems");
     }
+
 }
