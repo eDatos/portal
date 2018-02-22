@@ -92,8 +92,8 @@ public class ExportServiceImpl extends ExportServiceImplBase {
         if (lang == null) {
             lang = langDefault;
         }
-        
-        PxExporter exporter = new PxExporter(dataset, srmRestExternalFacade,  lang, langDefault);
+
+        PxExporter exporter = new PxExporter(dataset, srmRestExternalFacade, lang, langDefault);
         exporter.write(resultOutputStream);
 
     }
