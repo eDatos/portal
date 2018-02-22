@@ -1,5 +1,9 @@
 package org.siemac.metamac.portal.core.invocation.mapper;
 
+import static es.gobcan.istac.indicators.rest.constants.IndicatorsRestApiConstants.DEFAULT;
+import static es.gobcan.istac.indicators.rest.constants.IndicatorsRestApiConstants.DEFAULT_LANGUAGE;
+import static es.gobcan.istac.indicators.rest.constants.IndicatorsRestApiConstants.PROP_ATTRIBUTE_OBS_CONF;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,7 +49,6 @@ import es.gobcan.istac.indicators.rest.types.MetadataRepresentationType;
  */
 public class IndicatorsRestExternalMapper {
 
-    private static final String LOCALE_SPANISH                 = "es";
     private static final String DATASET_OBSERVATIONS_SEPARATOR = " | ";
 
     public static Dataset indicatorToDatasetMapper(IndicatorType indicator, DataType data) {
@@ -63,7 +66,7 @@ public class IndicatorsRestExternalMapper {
     private static Dataset indicatorToDatasetBaseMapper(String id, Map<String, String> title, DataType data) {
         Dataset dataset = new Dataset();
         dataset.setId(id);
-        dataset.setName(indicatorInternationalTextToInternationalString(title));
+        dataset.setName(localisedStringsToInternationalString(title));
         dataset.setData(indicatorDataToDatasetData(data));
         return dataset;
     }
@@ -81,11 +84,11 @@ public class IndicatorsRestExternalMapper {
         datasetMetadata.setVersion(version);
         datasetMetadata.setDimensions(indicatorMetadataDimensionsToDatasetMetadataDimensions(dimension));
         datasetMetadata.setRightsHolder(mockRightsHolder());
-        datasetMetadata.setLanguages(indicatorLanguagesFromLocalisedStringToDatasetLanguages(title));
         datasetMetadata.setNextVersion(mockNextVersion());
         datasetMetadata.setRelatedDsd(buildRelatedDsd());
         datasetMetadata.setPublishers(mockPublishers());
         datasetMetadata.setStatisticalOperation(mockStatisticalOperation());
+        datasetMetadata.setLanguages(buildPartialDatasetLanguageResourceFromIndicatorLanguages(calculateLanguagesFromIndicatorLocalisedString(title)));
         return datasetMetadata;
     }
 
@@ -136,9 +139,12 @@ public class IndicatorsRestExternalMapper {
         return NextVersionType.NO_UPDATES;
     }
 
-    // This will be later used on org.siemac.metamac.portal.core.exporters.PxExporter.writeLanguages. We don´t need the full resource, only the id, so we´ll build a mocked one for it
-    private static Resources indicatorLanguagesFromLocalisedStringToDatasetLanguages(Map<String, String> localisedString) {
-        List<String> languagesIds = calculateLanguagesFromIndicatorLocalisedString(localisedString);
+    /**
+     * This will be later used on writeLanguages. We don´t need the full resource, only the id, so we´ll build a partial one for it
+     *
+     * @see org.siemac.metamac.portal.core.exporters.PxExporter.writeLanguages
+     */
+    private static Resources buildPartialDatasetLanguageResourceFromIndicatorLanguages(List<String> languagesIds) {
         Resources languages = new Resources();
         for (String languageId : languagesIds) {
             Resource language = new Resource();
@@ -153,7 +159,6 @@ public class IndicatorsRestExternalMapper {
      * @see es.gobcan.istac.indicators.rest.mapper.MapperUtil
      */
     private static List<String> calculateLanguagesFromIndicatorLocalisedString(Map<String, String> localisedString) {
-        String DEFAULT = "__default__";
         List<String> languages = new ArrayList<String>();
         for (String language : localisedString.keySet()) {
             if (!DEFAULT.equals(language)) {
@@ -200,19 +205,25 @@ public class IndicatorsRestExternalMapper {
     private static EnumeratedDimensionValue indicatorMetadataDimensionRepresentationToDatasetMetadataDimensionValue(MetadataRepresentationType metadataRepresentation) {
         EnumeratedDimensionValue datasetDimensionValue = new EnumeratedDimensionValue();
         datasetDimensionValue.setId(metadataRepresentation.getCode());
-        datasetDimensionValue.setName(indicatorInternationalTextToInternationalString(metadataRepresentation.getTitle()));
+        datasetDimensionValue.setName(localisedStringsToInternationalString(metadataRepresentation.getTitle()));
         return datasetDimensionValue;
     }
 
-    private static InternationalString indicatorInternationalTextToInternationalString(Map<String, String> indicatorInternationalText) {
+    private static InternationalString localisedStringsToInternationalString(Map<String, String> localisedStrings) {
         InternationalString internationalString = new InternationalString();
-        for (Map.Entry<String, String> entry : indicatorInternationalText.entrySet()) {
-            LocalisedString localisedString = new LocalisedString();
-            localisedString.setLang(entry.getKey());
-            localisedString.setValue(entry.getValue());
-            internationalString.getTexts().add(localisedString);
+        for (Map.Entry<String, String> entry : localisedStrings.entrySet()) {
+            if (!DEFAULT.equals(entry.getKey())) {
+                LocalisedString localisedString = new LocalisedString();
+                localisedString.setLang(entry.getKey());
+                localisedString.setValue(entry.getValue());
+                internationalString.getTexts().add(localisedString);
+            }
         }
         return internationalString;
+    }
+
+    private static String localisedStringsToDefaultString(Map<String, String> localisedStrings) {
+        return localisedStrings.get(DEFAULT);
     }
 
     private static DimensionType buildDimensionFromIndicatorDimensionCode(String code) {
@@ -232,12 +243,9 @@ public class IndicatorsRestExternalMapper {
         if (code == null) {
             return null;
         }
-        LocalisedString spanishLocalisedString = new LocalisedString();
-        spanishLocalisedString.setLang(LOCALE_SPANISH);
-        spanishLocalisedString.setValue(code);
-        InternationalString internationalString = new InternationalString();
-        internationalString.getTexts().add(spanishLocalisedString);
-        return internationalString;
+        Map<String, String> spanishLocalisedStrings = new HashMap<String, String>();
+        spanishLocalisedStrings.put(DEFAULT_LANGUAGE, code);
+        return localisedStringsToInternationalString(spanishLocalisedStrings);
     }
 
     private static Data indicatorDataToDatasetData(DataType data) {
