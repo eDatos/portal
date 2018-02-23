@@ -5,13 +5,17 @@
 
     App.namespace("App.dataset.data.ApiIndicatorResponseToApiResponse");
 
+    var ATTRIBUTE_OBS_CONF = "OBS_CONF";
+    var DEFAULT = "__default__";
+    var SPANISH_LOCALE = "es";
+
     App.dataset.data.ApiIndicatorResponseToApiResponse = {
 
         indicatorResponseToResponse: function (response) {
             var parsedResponse = {
                 data: {
                     observations: response.observation,
-                    attributes: response.attribute,
+                    attributes: this.indicatorDataAttributesToDataAttributes(response.attribute),
                     dimensions: {
                         dimension: this.indicatorDimensionsToDimensions(response.dimension)
                     }
@@ -105,6 +109,27 @@
             return parsedDimensions;
         },
 
+        indicatorDataAttributesToDataAttributes: function (attributes) {
+            if (!attributes) { return; }
+            var self = this;
+            var values = _.map(attributes, function (attribute) {
+                if (!attribute) {
+                    return "";
+                } else {
+                    return self.getTranslatedString(attribute[ATTRIBUTE_OBS_CONF].value);
+                }
+            }).join(" | ");
+            return {
+                attribute: [
+                    {
+                        value: values,
+                        id: ATTRIBUTE_OBS_CONF
+                    }
+                ],
+                total: 1
+            };
+        },
+
         indicatorDimensionTypeToDimensionType: function (dimensionType) {
             switch (dimensionType) {
                 case "GEOGRAPHICAL":
@@ -119,14 +144,18 @@
             }
         },
 
+        getTranslatedString: function (localisedString) {
+            return localisedString[SPANISH_LOCALE] || localisedString[DEFAULT];
+        },
+
         indicatorMetadataResponseToMetadataResponse: function (response) {
             response.selectedLanguages = { // TODO revisar si esta property es necesaria
                 language: [],
                 total: 0
             };
 
-            var title = response.title ? (response.title.es || response.title.__default__) : null;
-            var description = response.conceptDescription ? (response.conceptDescription.es || response.conceptDescription.__default__) : null;
+            var title = response.title ? this.getTranslatedString(response.title) : null;
+            var description = response.conceptDescription ? this.getTranslatedString(response.conceptDescription) : null;
 
             response.name = this._buildLocalizedSpanishText(title);
             response.description = this._buildLocalizedSpanishText(description);
@@ -146,7 +175,8 @@
                 dimensions: {
                     dimension: this.indicatorMetadataDimensionsToMetadataDimensions(response.dimension),
                     total: 3 // Always 3 for indicators
-                }
+                },
+                attributes: this.indicatorMetadataAttributesToMetadataAttributes(response.attribute)
                 // We can´t simply translate them, we need a well formed resource
                 // ,subjectAreas: {
                 //     resource: [{
@@ -161,7 +191,45 @@
             return response;
         },
 
+        indicatorMetadataAttributesToMetadataAttributes: function (attribute) {
+            if (!attribute) { return null; }
+            return {
+                attribute: [
+                    {
+                        id: attribute[ATTRIBUTE_OBS_CONF].code,
+                        name: {
+                            text: this.localisedStringToInternationalString(attribute[ATTRIBUTE_OBS_CONF].title)
+                        },
+                        attachmentLevel: this.indicatorAttachmentLevelToDatasetAttachmentLevel(attribute[ATTRIBUTE_OBS_CONF].attachmentLevel)
+                    }
+                ],
+                total: 1
+            }
+        },
 
+        indicatorAttachmentLevelToDatasetAttachmentLevel: function (indicatorAttachmentLevel) {
+            switch (indicatorAttachmentLevel) {
+                case "OBSERVATION":
+                    return Attributes.ATTACHMENT_LEVELS.PRIMARY_MEASURE;
+                case "DATASET":
+                    return Attributes.ATTACHMENT_LEVELS.DATASET;
+                case "DIMENSION":
+                    return Attributes.ATTACHMENT_LEVELS.DIMENSION;
+                default:
+                    break;
+            }
+        },
+
+        localisedStringToInternationalString: function (localisedString) {
+            return _.filter(localisedString, function (value, key) {
+                return key != DEFAULT;
+            }).map(function (value, key) {
+                return {
+                    lang: key,
+                    value: value
+                }
+            });
+        },
 
         getRightsHolder: function (metadata) {
             if (!App.config["organisationUrn"]) return null;
@@ -176,7 +244,7 @@
             return {
                 text: [{
                     value: value,
-                    lang: "es"
+                    lang: SPANISH_LOCALE
                 }]
             };
         }
