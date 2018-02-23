@@ -6,7 +6,8 @@
     <entry key="metamac.edition.languages">es,pt,en,ca</entry>
     
     <entry key="metamac.statistical_resources.rest.external">http://data.istac.es/apis/statistical-resources</entry>
-    
     <entry key="metamac.srm.rest.external">http://data.istac.es/apis/structural-resources</entry>
+    <entry key="indicators.rest.external">http://data.istac.es/apis/indicators</entry>
+    <entry key="metamac.organisation.urn">urn:sdmx:org.sdmx.infomodel.base.Agency=SDMX:AGENCIES(1.0).ISTAC</entry>    
  
 </properties>
