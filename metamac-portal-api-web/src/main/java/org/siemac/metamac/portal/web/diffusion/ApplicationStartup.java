@@ -55,16 +55,19 @@ public class ApplicationStartup extends ApplicationStartupListener {
         checkRequiredProperty(PortalConfigurationConstants.DB_DIALECT);
 
         // Api
-        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
         checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_PORTAL_EXTERNAL_BASE);
+
+        // Export require external endpoints
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_INDICATORS_EXTERNAL_API);
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_EXTERNAL_API);
+        checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
 
         // Visualizer (also the api ones)
         checkRequiredProperty(PortalConfigurationConstants.METAMAC_ORGANISATION);
         String INSTALLATION_TYPE = portalConfigurationService.retrieveInstallationType();
 
-        if (INSTALLATION_TYPE.equals("EXTERNAL")) {
-            checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_EXTERNAL_API);
-        } else if (INSTALLATION_TYPE.equals("INTERNAL")) {
+        if (INSTALLATION_TYPE.equals("INTERNAL")) {
+            checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_INDICATORS_INTERNAL_API);
             checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_SRM_INTERNAL_API);
             checkRequiredProperty(PortalConfigurationConstants.ENDPOINT_STATISTICAL_RESOURCES_INTERNAL_API);
         }
