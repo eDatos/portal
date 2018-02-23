@@ -129,8 +129,8 @@
         },
 
         _isDownloadButtonEnabled: function () {
-            var isIndicator = this.filterDimensions.metadata.apiType === App.Constants.api.type.INDICATOR;
-            return !isIndicator || this._isExportableImage();
+            var isQuery = this.filterDimensions.metadata.identifier().type === 'query';
+            return !isQuery || this._isExportableImage();
         },
 
         _isExportableImage: function () {
