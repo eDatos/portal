@@ -15,5 +15,18 @@
     <bean id="statisticalResourcesRestExternal" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="org.siemac.metamac.portal.core.invocation.StatisticalResourcesRestExternalFacade" />
     </bean>
+    
+    <bean id="srmRestExternalFacade" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.siemac.metamac.portal.core.invocation.SrmRestExternalFacade" />
+    </bean>
+            
+    <bean id="indicatorsRestExternalFacade" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.siemac.metamac.portal.core.invocation.IndicatorsRestExternalFacade" />
+    </bean>
+        
+    <bean id="indicatorsSystemsRestExternalFacade" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.siemac.metamac.portal.core.invocation.IndicatorsSystemsRestExternalFacade" />
+    </bean>
+    
         
 </beans>
