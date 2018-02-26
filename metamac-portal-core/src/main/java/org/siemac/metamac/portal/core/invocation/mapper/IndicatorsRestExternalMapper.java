@@ -79,18 +79,18 @@ public class IndicatorsRestExternalMapper {
     }
 
     public static Dataset indicatorInstanceToDatasetMapper(IndicatorInstanceType indicatorInstance, DataType data, Agency organisation, IndicatorsSystemType indicatorSystem) {
-        Dataset dataset = indicatorToDatasetBaseMapper(indicatorInstanceIdToDatasetId(indicatorInstance), indicatorInstance.getTitle(), data);
+        Dataset dataset = indicatorToDatasetBaseMapper(indicatorInstance.getId(), indicatorInstance.getTitle(), data);
         dataset.setMetadata(indicatorInstanceMetadataToDatasetMetadata(indicatorInstance, organisation, indicatorSystem));
         return dataset;
     }
 
-    private static String indicatorInstanceIdToDatasetId(IndicatorInstanceType indicatorInstance) {
-        return Base64.getEncoder().encodeToString(indicatorInstance.getId().getBytes()).substring(0, MAX_PX_MATRIX_LENGTH);
+    private static String indicatorIdToDatasetId(String id) {
+        return Base64.getEncoder().encodeToString(id.getBytes()).substring(0, MAX_PX_MATRIX_LENGTH);
     }
 
     private static Dataset indicatorToDatasetBaseMapper(String id, Map<String, String> title, DataType data) {
         Dataset dataset = new Dataset();
-        dataset.setId(id);
+        dataset.setId(indicatorIdToDatasetId(id));
         dataset.setName(localisedStringsToInternationalString(title));
         dataset.setData(indicatorDataToDatasetData(data));
         return dataset;
