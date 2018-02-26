@@ -121,6 +121,9 @@ public class IndicatorsRestExternalMapper {
 
     private static Attributes indicatorMetadataAttributesToDatasetMetadataAttributes(Map<String, MetadataAttributeType> attributes) {
         Attributes datasetAttributes = new Attributes();
+        if (attributes == null) {
+            return datasetAttributes;
+        }
         for (Entry<String, MetadataAttributeType> attribute : attributes.entrySet()) {
             datasetAttributes.getAttributes().add(indicatorMetadataAttributeToDatasetMetadataAttribute(attribute));
         }
