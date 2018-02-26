@@ -719,6 +719,10 @@ public class PxExporter {
      * @throws MetamacException
      */
     private void writeSurvey(PrintWriter printWriter) throws MetamacException {
+        if (datasetAccess.getDataset().getMetadata().getStatisticalOperation() == null) {
+            return;
+        }
+
         // Value = TITLE statistical operation (CODE statistical operation)
         InternationalString statisticalOperationName = datasetAccess.getDataset().getMetadata().getStatisticalOperation().getName();
         String statisticalOperationCode = extractStatisticalOperationCodeFromLink(datasetAccess.getDataset().getMetadata().getStatisticalOperation().getSelfLink());
