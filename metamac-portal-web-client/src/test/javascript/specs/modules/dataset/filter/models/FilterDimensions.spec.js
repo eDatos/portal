@@ -129,23 +129,31 @@ describe('FilterDimensions', function () {
             expect(currentDimensions).to.eql(expectedDimensions);
         };
 
+        var visibleLabelTypeForDimension = function (dimensionId) {
+            var dimension = filterDimensions.get(dimensionId);
+            return dimension.get('visibleLabelType');
+        };
+
         beforeEach(function () {
             var exportedJSON = {
-                "TIME_PERIOD" : {
-                    "position" : 21,
-                    "selectedCategories" : ["time_1", "time_2"]
+                "TIME_PERIOD": {
+                    "position": 21,
+                    "selectedCategories": ["time_1", "time_2"],
+                    "visibleLabelType": "LABEL",
                 },
-                "INDICADORES" : {
-                    "position" : 0,
-                    "selectedCategories" : ["INDICE_OCUPACION_PLAZAS"]
+                "INDICADORES": {
+                    "position": 0,
+                    "selectedCategories": ["INDICE_OCUPACION_PLAZAS"],
+                    "visibleLabelType": "LABEL_AND_CODE",
                 },
-                "CATEGORIA_ALOJAMIENTO" : {
-                    "position" : 20,
-                    "selectedCategories" : [ "1_2_3_ESTRELLAS"]
+                "CATEGORIA_ALOJAMIENTO": {
+                    "position": 20,
+                    "selectedCategories": ["1_2_3_ESTRELLAS"],
+                    "visibleLabelType": "CODE",
                 },
-                "DESTINO_ALOJAMIENTO" : {
-                    "position" : 40,
-                    "selectedCategories" : ["EL_HIERRO"]
+                "DESTINO_ALOJAMIENTO": {
+                    "position": 40,
+                    "selectedCategories": ["EL_HIERRO"]
                 }
             };
             filterDimensions.importJSON(exportedJSON);
@@ -162,6 +170,13 @@ describe('FilterDimensions', function () {
             expectDimensionsInZone('left', ['INDICADORES']);
             expectDimensionsInZone('top', ['CATEGORIA_ALOJAMIENTO', 'TIME_PERIOD']);
             expectDimensionsInZone('fixed', ['DESTINO_ALOJAMIENTO']);
+        });
+
+        it('should import correctly the visibleLabelType', function () {
+            expect(visibleLabelTypeForDimension('TIME_PERIOD')).to.eql('LABEL');
+            expect(visibleLabelTypeForDimension('INDICADORES')).to.eql('LABEL_AND_CODE');
+            expect(visibleLabelTypeForDimension('CATEGORIA_ALOJAMIENTO')).to.eql('CODE');
+            expect(visibleLabelTypeForDimension('DESTINO_ALOJAMIENTO')).to.be.undefined;
         });
 
     });

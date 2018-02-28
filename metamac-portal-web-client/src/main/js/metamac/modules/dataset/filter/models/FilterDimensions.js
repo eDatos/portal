@@ -124,6 +124,9 @@
                 var dimension = this.get(dimensionToImport.id);
                 if (!dimension) throw new Error("invalid dimension");
 
+                // visibleLabelType
+                dimension.set('visibleLabelType', dimensionToImport.visibleLabelType);
+
                 //zone
                 var zoneId = this._zoneIdFromPosition(dimensionToImport.position);
                 this.zones.setDimensionZone(zoneId, dimension, { force: true });
