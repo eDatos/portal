@@ -773,7 +773,7 @@ function program4(depth0,data) {
   buffer += escapeExpression(stack2)
     + "\">\r\n        <a href=\"#\" class=\"download-svg\"><i class=\"icon-"
     + escapeExpression(((stack1 = ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.iconPreffix)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "-svg\"></i></a>\r\n    </form>\r\n";
+    + "-svg\"></i></a>\r\n    </form>\r\n    ";
   return buffer;
   }
 
@@ -824,7 +824,7 @@ function program8(depth0,data) {
   buffer += " \r\n\r\n";
   stack2 = helpers.unless.call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.allDimensionsWithSelections), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\r\n\r\n</div>\r\n\r\n";
+  buffer += "   \r\n\r\n</div>\r\n\r\n";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.dataFormats), {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n";

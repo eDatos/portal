@@ -14,34 +14,34 @@ describe('FilterDimension', function () {
     describe('when filterQuery change', function () {
 
         it('should set visible only models that match with the query and its parents', function () {
-            representations.invoke('set', {visible : true});
-            filterDimension.set({filterQuery : 'time 2'});
+            representations.invoke('set', { visible: true });
+            filterDimension.set({ filterQuery: 'time 2' });
 
-            var visibleModels = representations.where({visible : true});
+            var visibleModels = representations.where({ visible: true });
             expect(visibleModels.length).to.equal(4);
             expect(visibleModels[0].id).to.equal('time_2');
         });
 
         it('should show all models if query is empty', function () {
-            representations.invoke('set', {visible : false});
-            filterDimension.set({filterQuery : 'a'});
-            filterDimension.set({filterQuery : ''});
+            representations.invoke('set', { visible: false });
+            filterDimension.set({ filterQuery: 'a' });
+            filterDimension.set({ filterQuery: '' });
 
-            var visibleModels = representations.where({visible : true});
+            var visibleModels = representations.where({ visible: true });
             expect(visibleModels.length).to.equal(representations.models.length);
         });
 
         it('should compare labels case insensitive', function () {
-            representations.invoke('set', {visible : true});
-            filterDimension.set({filterQuery : 'TIME 2'});
+            representations.invoke('set', { visible: true });
+            filterDimension.set({ filterQuery: 'TIME 2' });
 
-            var visibleModels = representations.where({visible : true});
+            var visibleModels = representations.where({ visible: true });
             expect(visibleModels.length).to.equal(4);
             expect(visibleModels[0].id).to.equal('time_2');
         });
 
         it('should set match index in model', function () {
-            filterDimension.set({filterQuery : '2'});
+            filterDimension.set({ filterQuery: '2' });
             var time1 = representations.get('time_1');
             var time2 = representations.get('time_2');
 
@@ -58,9 +58,9 @@ describe('FilterDimension', function () {
         });
 
         it('should set visible all parents when a model match', function () {
-            filterDimension.set({filterQuery : 'Time 2 2 1'});
+            filterDimension.set({ filterQuery: 'Time 2 2 1' });
 
-            var visibleModels = representations.where({visible : true});
+            var visibleModels = representations.where({ visible: true });
             expect(visibleModels.length).to.equal(3);
             expect(representations.get('time_2').get('visible')).to.be.true;
             expect(representations.get('time_2_2').get('visible')).to.be.true;
@@ -68,8 +68,8 @@ describe('FilterDimension', function () {
         });
 
         it('should reset the filterLevel', function () {
-            filterDimension.set({filterLevel : 1});
-            filterDimension.set({filterQuery : 'randomQuery'});
+            filterDimension.set({ filterLevel: 1 });
+            filterDimension.set({ filterQuery: 'randomQuery' });
             expect(filterDimension.get('filterLevel')).to.be.undefined;
         });
 
@@ -82,7 +82,7 @@ describe('FilterDimension', function () {
         };
 
         it('should hide representations with level lower than the selected level', function () {
-            filterDimension.set({filterLevel : 1});
+            filterDimension.set({ filterLevel: 1 });
 
             expectVisible('time_1').to.be.false;
             expectVisible('time_2_2').to.be.true;
@@ -90,22 +90,22 @@ describe('FilterDimension', function () {
         });
 
         it('should collapse all visible representations', function () {
-            filterDimension.set({filterLevel : 1});
+            filterDimension.set({ filterLevel: 1 });
             expect(representations.get('time_2_2').get('open')).to.be.false;
         });
 
         it('should show and open all elements if the new value is undefined', function () {
-            filterDimension.set({filterLevel : 1});
-            filterDimension.set({filterLevel : undefined});
+            filterDimension.set({ filterLevel: 1 });
+            filterDimension.set({ filterLevel: undefined });
             var representations = filterDimension.get('representations');
 
-            var openVisibleRepresentations = representations.where({visible : true, open : true});
+            var openVisibleRepresentations = representations.where({ visible: true, open: true });
             expect(openVisibleRepresentations.length).to.equal(representations.length);
         });
 
         it('should reset the filter query', function () {
-            filterDimension.set({filterQuery : 'randomQuery'});
-            filterDimension.set({filterLevel : 1});
+            filterDimension.set({ filterQuery: 'randomQuery' });
+            filterDimension.set({ filterLevel: 1 });
             expect(filterDimension.get('filterQuery')).to.equal('');
         });
 
