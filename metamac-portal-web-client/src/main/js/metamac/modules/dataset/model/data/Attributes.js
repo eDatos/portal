@@ -169,6 +169,8 @@
                 var splittedList = list.replace("\\ | \\", " \\| ");
                 // The scaped backslash will be processed on levels above for efficiency
                 return splittedList = splittedList.split(" | ");
+            } else {
+                return [];
             }
         },
 
