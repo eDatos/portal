@@ -276,4 +276,30 @@ public abstract class DatasetAccess {
             }
         }
     }
+    public String applyLabelVisualizationModeForAttributeValue(String attributeId, String attributeValue) {
+        // Visualisation mode
+        LabelVisualisationModeEnum labelVisualisation = getAttributeLabelVisualisationMode(attributeId);
+        switch (labelVisualisation) {
+            case CODE:
+                // no extra action
+                break;
+            case LABEL: {
+                String attributeValueLabel = getAttributeValueLabelCurrentLocale(attributeId, attributeValue);
+                if (attributeValueLabel != null) {
+                    attributeValue = attributeValueLabel;
+                }
+            }
+                break;
+            case CODE_AND_LABEL: {
+                String attributeValueLabel = getAttributeValueLabelCurrentLocale(attributeId, attributeValue);
+                if (attributeValueLabel != null) {
+                    attributeValue = attributeValueLabel + " (" + attributeValue + ")";
+                }
+            }
+                break;
+            default:
+                break;
+        }
+        return attributeValue;
+    }
 }

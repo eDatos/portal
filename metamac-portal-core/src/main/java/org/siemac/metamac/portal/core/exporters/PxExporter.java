@@ -866,6 +866,7 @@ public class PxExporter {
                     attributeValuesByDimensionValueId.put(dimensionValueId, new StringBuilder());
                 }
                 StringBuilder value = attributeValuesByDimensionValueId.get(dimensionValueId);
+                attributeValue = datasetAccess.applyLabelVisualizationModeForAttributeValue(attributeId, attributeValue);
                 addAttributeValue(value, attributeValue);
             }
         }
@@ -974,6 +975,7 @@ public class PxExporter {
                         value = new StringBuilder();
                         cellNote.put(keyString, value);
                     }
+                    attributeValue = datasetAccess.applyLabelVisualizationModeForAttributeValue(attributeId, attributeValue);
                     addAttributeValue(value, attributeValue);
                 }
             } else {
