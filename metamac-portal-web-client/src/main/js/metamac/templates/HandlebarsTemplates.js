@@ -707,103 +707,125 @@ function program36(depth0,data,depth1) {
 this["Handlebars"]["templates"]["dataset/dataset-download"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
   var buffer = "", stack1, stack2;
-  buffer += "	\r\n	<form method=\"POST\" action=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.excel)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n		<input type=\"hidden\" name=\"jsonBody\" value=\"";
-  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-  buffer += escapeExpression(stack2)
-    + "\">\r\n		<a href=\"#\" class=\"download-xls\"><i class=\"icon-data-xls\"></i></a>\r\n	</form>\r\n\r\n	<form method=\"POST\" action=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.tsv)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">		\r\n		<input type=\"hidden\" name=\"jsonBody\" value=\"";
-  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-  buffer += escapeExpression(stack2)
-    + "\">\r\n		<a href=\"#\" class=\"download-tsv\"><i class=\"icon-data-tsv\"></i></a>\r\n	</form>\r\n\r\n	<form method=\"POST\" action=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.px)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n		<input type=\"hidden\" name=\"jsonBody\" value=\"";
-  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-  buffer += escapeExpression(stack2)
-    + "\">\r\n	<a href=\"#\" class=\"download-csv\"><i class=\"icon-px\"></i></a>\r\n	</form>\r\n";
+  buffer += "\r\n\r\n    ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.dataFormats), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "   \r\n\r\n    ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.imageFormats), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n    \r\n";
   return buffer;
   }
-
-function program3(depth0,data) {
+function program2(depth0,data) {
   
   var buffer = "", stack1, stack2;
-  buffer += "\r\n	<form method=\"POST\" action=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.png)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n		<input type=\"hidden\" name=\"svg\" value=\"";
-  if (stack2 = helpers.svg) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.svg; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += "       \r\n    <form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.excel)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"jsonBody\" value=\"";
+  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\">\r\n		<a href=\"#\" class=\"download-png\"><i class=\"icon-"
-    + escapeExpression(((stack1 = ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.iconPreffix)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "-png\"></i></a>\r\n	</form>\r\n\r\n	<form method=\"POST\" action=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.pdf)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n		<input type=\"hidden\" name=\"svg\" value=\"";
-  if (stack2 = helpers.svg) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.svg; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    + "\">\r\n        <a href=\"#\" class=\"download-xls\"><i class=\"icon-data-xls\"></i></a>\r\n    </form>\r\n\r\n    <form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.tsv)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_parent\">      \r\n        <input type=\"hidden\" name=\"jsonBody\" value=\"";
+  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\">\r\n		<a href=\"#\" class=\"download-pdf\"><i class=\"icon-"
-    + escapeExpression(((stack1 = ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.iconPreffix)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "-pdf\"></i></a>\r\n	</form>\r\n	\r\n	<form method=\"POST\" action=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.svg)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n		<input type=\"hidden\" name=\"svg\" value=\"";
-  if (stack2 = helpers.svg) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.svg; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    + "\">\r\n        <a href=\"#\" class=\"download-tsv\"><i class=\"icon-data-tsv\"></i></a>\r\n    </form>\r\n\r\n    <form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.px)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"jsonBody\" value=\"";
+  if (stack2 = helpers.selection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.selection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\">\r\n		<a href=\"#\" class=\"download-svg\"><i class=\"icon-"
-    + escapeExpression(((stack1 = ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.iconPreffix)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "-svg\"></i></a>\r\n	</form>\r\n";
+    + "\">\r\n        <a href=\"#\" class=\"download-csv\"><i class=\"icon-px\"></i></a>\r\n    </form>\r\n    ";
   return buffer;
   }
 
-function program5(depth0,data) {
+function program4(depth0,data) {
+  
+  var buffer = "", stack1, stack2;
+  buffer += "\r\n    <form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.png)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"svg\" value=\"";
+  if (stack2 = helpers.svg) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.svg; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\r\n        <a href=\"#\" class=\"download-png\"><i class=\"icon-"
+    + escapeExpression(((stack1 = ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.iconPreffix)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-png\"></i></a>\r\n    </form>\r\n\r\n    <form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.pdf)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"svg\" value=\"";
+  if (stack2 = helpers.svg) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.svg; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\r\n        <a href=\"#\" class=\"download-pdf\"><i class=\"icon-"
+    + escapeExpression(((stack1 = ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.iconPreffix)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-pdf\"></i></a>\r\n    </form>\r\n    \r\n    <form method=\"POST\" action=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.svg)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"svg\" value=\"";
+  if (stack2 = helpers.svg) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.svg; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\r\n        <a href=\"#\" class=\"download-svg\"><i class=\"icon-"
+    + escapeExpression(((stack1 = ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.iconPreffix)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "-svg\"></i></a>\r\n    </form>\r\n";
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = "", stack1, options;
+  buffer += "\r\n    <p>\r\n        ";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "ve.noSelection", options) : helperMissing.call(depth0, "message", "ve.noSelection", options)))
+    + "\r\n    </p>\r\n";
+  return buffer;
+  }
+
+function program8(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\r\n<div class=\"dataset-download-group\">\r\n	<h3>";
+  buffer += "\r\n<div class=\"dataset-download-group\">\r\n    <h3>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.download.all", options) : helperMissing.call(depth0, "message", "filter.download.all", options)))
-    + "</h3>\r\n<!-- 	<form method=\"POST\" action=\""
+    + "</h3>\r\n<!--    <form method=\"POST\" action=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.excel)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n    	<input type=\"hidden\" name=\"jsonBody\" value=\"";
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"jsonBody\" value=\"";
   if (stack2 = helpers.emptySelection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.emptySelection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\">\r\n    	<a href=\"#\" class=\"download-xls\"><i class=\"icon-data-xls\"></i></a>\r\n	</form> -->\r\n\r\n	<form method=\"POST\" action=\""
+    + "\">\r\n        <a href=\"#\" class=\"download-xls\"><i class=\"icon-data-xls\"></i></a>\r\n    </form> -->\r\n\r\n    <form method=\"POST\" action=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.tsv)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n	    <input type=\"hidden\" name=\"jsonBody\" value=\"";
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"jsonBody\" value=\"";
   if (stack2 = helpers.emptySelection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.emptySelection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\">\r\n	     <a href=\"#\" class=\"download-tsv\"><i class=\"icon-data-tsv\"></i></a>\r\n	</form>\r\n\r\n	<form method=\"POST\" action=\""
+    + "\">\r\n         <a href=\"#\" class=\"download-tsv\"><i class=\"icon-data-tsv\"></i></a>\r\n    </form>\r\n\r\n    <form method=\"POST\" action=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.url),stack1 == null || stack1 === false ? stack1 : stack1.px)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" target=\"_parent\">\r\n	    <input type=\"hidden\" name=\"jsonBody\" value=\"";
+    + "\" target=\"_parent\">\r\n        <input type=\"hidden\" name=\"jsonBody\" value=\"";
   if (stack2 = helpers.emptySelection) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.emptySelection; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "\">\r\n	     <a href=\"#\" class=\"download-csv\"><i class=\"icon-px\"></i></a>\r\n	</form>\r\n</div>\r\n";
+    + "\">\r\n         <a href=\"#\" class=\"download-csv\"><i class=\"icon-px\"></i></a>\r\n    </form>\r\n</div>\r\n";
   return buffer;
   }
 
-  buffer += "<div class=\"dataset-download-group\">\r\n	<h3>";
+  buffer += "<div class=\"dataset-download-group\">\r\n    <h3>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "filter.download.selection", options) : helperMissing.call(depth0, "message", "filter.download.selection", options)))
     + "</h3>\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.dataFormats), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.allDimensionsWithSelections), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "	\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.imageFormats), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  buffer += " \r\n\r\n";
+  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.allDimensionsWithSelections), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n\r\n</div>\r\n\r\n";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.dataFormats), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.buttonConfig),stack1 == null || stack1 === false ? stack1 : stack1.dataFormats), {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n";
   return buffer;

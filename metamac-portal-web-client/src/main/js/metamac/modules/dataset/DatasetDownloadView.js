@@ -78,9 +78,11 @@
             var haveDataFormats = visualizationSupertype == 'data';
             var haveMapFormats = visualizationSupertype == 'map' && false; // TODO: METAMAC-2033
             var haveImageFormats = _.contains(['graph', 'map'], visualizationSupertype) && this._exportableImage();
+            var allDimensionsWithSelections = this.filterDimensions.getDimensionsWithoutSelections().length == 0;
 
             return {
                 dataFormats: haveDataFormats,
+                allDimensionsWithSelections: allDimensionsWithSelections,
                 mapFormats: haveMapFormats,
                 imageFormats: haveImageFormats,
                 iconPreffix: visualizationSupertype

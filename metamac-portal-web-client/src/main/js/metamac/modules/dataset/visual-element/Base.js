@@ -248,13 +248,7 @@
         },
 
         allDimensionsHaveSelections: function () {
-            return this.getDimensionsWithoutSelections().length == 0;
-        },
-
-        getDimensionsWithoutSelections: function () {
-            return this.filterDimensions.filter(function (dimension) {
-                return dimension.get('representations').where({ selected: true }).length == 0;
-            })
+            return this.filterDimensions.getDimensionsWithoutSelections().length == 0;
         },
 
         renderNoSelectionView: function () {
