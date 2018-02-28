@@ -3,21 +3,27 @@
 
     App.namespace('App.modules.dataset.filter.models.FilterRepresentation');
 
+    var VISIBLE_LABEL_TYPES = {
+        LABEL: "LABEL",
+        CODE: "CODE",
+        CODE_AND_LABEL: "CODE_AND_LABEL"
+    };
+
     App.modules.dataset.filter.models.FilterRepresentation = Backbone.Model.extend({
 
-        defaults : {
-            visible : true,
-            open : true,
-            selected : true,
-            drawable : true,
-            childrenSelected : false,
-            level : 0,
-            matchIndexBegin : undefined,
-            matchIndexEnd : undefined,
-            visibleLabelType : "label"
+        defaults: {
+            visible: true,
+            open: true,
+            selected: true,
+            drawable: true,
+            childrenSelected: false,
+            level: 0,
+            matchIndexBegin: undefined,
+            matchIndexEnd: undefined,
+            visibleLabelType: VISIBLE_LABEL_TYPES.LABEL
         },
 
-        initialize : function () {
+        initialize: function () {
             this.children = new Backbone.Collection();
             this.listenTo(this.children, 'change:selected change:childrenSelected reset', this._updateChildrenSelected);
             this.listenTo(this, 'change:open', this._onChangeOpen);
@@ -26,32 +32,32 @@
             this._updateVisibleLabel();
         },
 
-        _updateVisibleLabel : function () {
+        _updateVisibleLabel: function () {
             var visibleLabelType = this.get("visibleLabelType");
-            if (visibleLabelType === "idLabel"){
+            if (visibleLabelType === VISIBLE_LABEL_TYPES.CODE_AND_LABEL) {
                 this.set("visibleLabel", this.id + " - " + this.get("label"));
-            } else if (visibleLabelType === "id") {
+            } else if (visibleLabelType === VISIBLE_LABEL_TYPES.CODE) {
                 this.set("visibleLabel", this.id);
             } else {
                 this.set("visibleLabel", this.get("label"));
             }
         },
 
-        _updateChildrenSelected : function () {
+        _updateChildrenSelected: function () {
             var childrenSelected = this.children.any(function (child) {
                 return child.get('selected') || child.get('childrenSelected');
             });
             this.set('childrenSelected', childrenSelected);
         },
 
-        _close : function () {
+        _close: function () {
             this.children.each(function (child) {
                 child.set('visible', false);
                 child._close();
             });
         },
 
-        _open : function () {
+        _open: function () {
             if (this.get('open')) {
                 this.children.each(function (child) {
                     child.set('visible', true);
@@ -60,20 +66,20 @@
             }
         },
 
-        _onChangeOpen : function () {
+        _onChangeOpen: function () {
             if (this.get('open')) {
-               this._open();
+                this._open();
             } else {
                 this._close();
             }
         },
 
-        toggleMeAndMyChildren : function (property) {
+        toggleMeAndMyChildren: function (property) {
             var newSelectedValue = !this.get(property);
             this.setMeAndMyChildren(property, newSelectedValue);
         },
 
-        setMeAndMyChildren : function (property, value) {
+        setMeAndMyChildren: function (property, value) {
             this.set(property, value);
             this.children.each(function (child) {
                 child.setMeAndMyChildren(property, value);
@@ -83,5 +89,7 @@
     });
 
     _.extend(App.modules.dataset.filter.models.FilterRepresentation.prototype, App.mixins.ToggleModel);
+
+    App.modules.dataset.filter.models.FilterRepresentation.VISIBLE_LABEL_TYPES = VISIBLE_LABEL_TYPES;
 
 }());

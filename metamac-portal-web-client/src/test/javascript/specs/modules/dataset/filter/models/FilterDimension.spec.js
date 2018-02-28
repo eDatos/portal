@@ -1,5 +1,6 @@
 describe('FilterDimension', function () {
 
+    var FilterRepresentation = App.modules.dataset.filter.models.FilterRepresentation;
     var filterDimension, representations;
 
     beforeEach(function () {
@@ -112,9 +113,9 @@ describe('FilterDimension', function () {
 
     describe("when visibleLabelType change", function () {
         it('should set visibleLabelType on each filterRepresentation', function () {
-            filterDimension.set("visibleLabelType", "id");
+            filterDimension.set("visibleLabelType", FilterRepresentation.VISIBLE_LABEL_TYPES.CODE);
             representations.each(function (representation) {
-                expect(representation.get("visibleLabelType")).to.equal("id");
+                expect(representation.get("visibleLabelType")).to.equal(FilterRepresentation.VISIBLE_LABEL_TYPES.CODE);
             });
         });
     });

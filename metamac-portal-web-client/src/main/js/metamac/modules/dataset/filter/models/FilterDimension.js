@@ -3,22 +3,24 @@
 
     App.namespace('App.modules.dataset.filter.models.FilterDimension');
 
+    var FilterRepresentation = App.modules.dataset.filter.models.FilterRepresentation;
+
     App.modules.dataset.filter.models.FilterDimension = Backbone.Model.extend({
 
-        defaults : {
-            zone : undefined,
-            filterQuery : '',
-            filterLevel : undefined,
-            open : false,
-            visibleLabelType : "label",
-            reversed : false
+        defaults: {
+            zone: undefined,
+            filterQuery: '',
+            filterLevel: undefined,
+            open: false,
+            visibleLabelType: FilterRepresentation.VISIBLE_LABEL_TYPES.LABEL,
+            reversed: false
         },
 
-        initialize : function () {
+        initialize: function () {
             this._bindEvents();
         },
 
-        isFixedDimension : function() {
+        isFixedDimension: function () {
             if (this.get('zone')) {
                 return this.get('zone').isFixed();
             } else {
@@ -26,48 +28,48 @@
             }
         },
 
-        isTimeDimension : function () {
+        isTimeDimension: function () {
             return this.get("type") === "TIME_DIMENSION";
         },
 
-        _bindEvents : function () {
+        _bindEvents: function () {
             this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
             this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
             this.listenTo(this, "change:visibleLabelType", this._onChangeVisibleLabelType);
             this.listenTo(this.get("representations"), "reverse", this._onReverse);
         },
 
-        _unbindEvents : function () {
+        _unbindEvents: function () {
             this.stopListening();
         },
 
-        _onReverse : function() {   
+        _onReverse: function () {
             this.toggle('reversed');
             this.trigger("reverse");
         },
 
-        removeFromZone : function () {
+        removeFromZone: function () {
             var zone = this.get('zone');
             if (zone) {
                 zone.remove(this);
             }
         },
 
-        parse : function (attributes) {
+        parse: function (attributes) {
             attributes.representations = App.modules.dataset.filter.models.FilterRepresentations.initializeWithRepresentations(attributes.representations);
             attributes.representations.on('all', this._onRepresentationEvent, this);
             return attributes;
         },
 
-        _onRepresentationEvent : function (event, model, collection, options) {
+        _onRepresentationEvent: function (event, model, collection, options) {
             this.trigger.apply(this, arguments);
         },
 
-        _cleanFilterQuery : function(query) {
+        _cleanFilterQuery: function (query) {
             return s.trim(s.cleanDiacritics(query).toLowerCase());
         },
 
-        _onChangeFilterQuery : function () {
+        _onChangeFilterQuery: function () {
             this.stopListening(this, 'change:filterLevel', this._onChangeFilterLevel); //unbind to not trigger _onChangeFilterLevel
             this.set('filterLevel', this.defaults.filterLevel);
             this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
@@ -77,7 +79,7 @@
 
             var representations = this.get('representations');
             representations.each(function (model) {
-                model.set({open : false}, {trigger : false});
+                model.set({ open: false }, { trigger: false });
             });
 
             var setObject = {};
@@ -87,10 +89,10 @@
                 var match = matchIndex !== -1;
 
                 if (match) {
-                    setObject[model.id] = {id : model.id, visible : true, matchIndexBegin : matchIndex, matchIndexEnd : matchIndex + filterQueryLength};
+                    setObject[model.id] = { id: model.id, visible: true, matchIndexBegin: matchIndex, matchIndexEnd: matchIndex + filterQueryLength };
                     visibleModels.push(model);
                 } else {
-                    setObject[model.id] = {id : model.id, visible : false, matchIndexBegin : undefined, matchIndexEnd : undefined};
+                    setObject[model.id] = { id: model.id, visible: false, matchIndexBegin: undefined, matchIndexEnd: undefined };
                 }
             }, this);
 
@@ -109,7 +111,7 @@
             });
         },
 
-        _onChangeFilterLevel : function () {
+        _onChangeFilterLevel: function () {
             this.stopListening(this, 'change:filterQuery', this._onChangeFilterQuery); //unbind to not trigger _onChangeFilterQuery
             this.set('filterQuery', this.defaults.filterQuery);
             this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
@@ -117,28 +119,28 @@
             var filterLevel = this.get('filterLevel');
             var representations = this.get('representations');
             if (_.isUndefined(filterLevel)) {
-                representations.invoke('set', {visible : true, open : true})
+                representations.invoke('set', { visible: true, open: true })
             } else {
                 representations.each(function (model) {
                     var level = model.get('level');
                     var visible = level === filterLevel;
                     if (visible) {
-                        model.set({visible : true, open : false, matchIndexBegin : undefined, matchIndexEnd : undefined});
+                        model.set({ visible: true, open: false, matchIndexBegin: undefined, matchIndexEnd: undefined });
                     } else {
-                        model.set({visible : false, matchIndexBegin : undefined, matchIndexEnd : undefined});
+                        model.set({ visible: false, matchIndexBegin: undefined, matchIndexEnd: undefined });
                     }
                 });
             }
         },
 
-        getMaxHierarchyLevel : function () {
+        getMaxHierarchyLevel: function () {
             var maxLevelModel = this.get('representations').max(function (model) {
                 return model.get('level');
             });
             return maxLevelModel.get('level');
         },
 
-        _onChangeVisibleLabelType : function () {
+        _onChangeVisibleLabelType: function () {
             var visibleLabelType = this.get("visibleLabelType");
             var representations = this.get("representations");
             representations.each(function (representation) {
@@ -146,14 +148,14 @@
             });
         },
 
-        getSelectedRepresentations : function() {
+        getSelectedRepresentations: function () {
             return this.get('representations').getSelectedRepresentations();
         },
-        
-        getDrawableRepresentations : function() {
+
+        getDrawableRepresentations: function () {
             return this.get('representations').getDrawableRepresentations();
         }
-        
+
 
     });
 

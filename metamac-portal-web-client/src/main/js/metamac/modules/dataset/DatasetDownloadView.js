@@ -114,7 +114,7 @@
             _.each(selection, function (dimension, dimensionId) {
                 result.dimensions.dimension.push({
                     dimensionId: dimensionId,
-                    labelVisualisationMode: "LABEL", //TODO obtain value from filterDimensions
+                    labelVisualisationMode: dimension.visibleLabelType,
                     position: dimension.position,
                     dimensionValues: {
                         dimensionValue: dimension.selectedCategories

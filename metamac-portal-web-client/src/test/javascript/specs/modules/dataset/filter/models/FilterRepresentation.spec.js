@@ -42,17 +42,17 @@ describe('FilterRepresentation', function () {
 
         describe('should change visibleLabel when change visibleLabelType', function () {
             it('to id', function () {
-                filterRepresentation.set("visibleLabelType", "id");
+                filterRepresentation.set("visibleLabelType", FilterRepresentation.VISIBLE_LABEL_TYPES.CODE);
                 expect(filterRepresentation.get("visibleLabel")).to.equal("id1");
             });
 
             it('to label', function () {
-                filterRepresentation.set("visibleLabelType", "label");
+                filterRepresentation.set("visibleLabelType", FilterRepresentation.VISIBLE_LABEL_TYPES.LABEL);
                 expect(filterRepresentation.get("visibleLabel")).to.equal("label1");
             });
 
             it('to idLabel', function () {
-                filterRepresentation.set("visibleLabelType", "idLabel");
+                filterRepresentation.set("visibleLabelType", FilterRepresentation.VISIBLE_LABEL_TYPES.CODE_AND_LABEL);
                 expect(filterRepresentation.get("visibleLabel")).to.equal("id1 - label1");
             });
 

@@ -154,6 +154,7 @@
                 var position = zoneOffsets[zone.id] + zone.get('dimensions').indexOf(dimension);
                 exportResult[dimension.id] = {
                     position: position,
+                    visibleLabelType: dimension.get('visibleLabelType'),
                     selectedCategories: selectedCategoriesIds
                 }
             });
