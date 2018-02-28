@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -67,6 +68,7 @@ public class PxExporter {
     private Map<String, Integer>     languageOrder            = new HashMap<String, Integer>();
     private SrmRestExternalFacade    srmRestExternalFacade;
     private Integer                  showDecimals             = null;
+    private final static int         MAX_PX_MATRIX_LENGTH     = 8;
 
     public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new DatasetAccessForPx(dataset, lang, langAlternative);
@@ -1271,6 +1273,10 @@ public class PxExporter {
         }
 
         return result;
+    }
+
+    public static String generateMatrixFromString(String string) {
+        return Base64.getEncoder().encodeToString(string.getBytes()).substring(0, MAX_PX_MATRIX_LENGTH);
     }
 
 }

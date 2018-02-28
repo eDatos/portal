@@ -31,6 +31,7 @@ import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
+import org.siemac.metamac.portal.core.exporters.PxExporter;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
 import org.siemac.metamac.portal.core.invocation.IndicatorsRestExternalFacade;
 import org.siemac.metamac.portal.core.invocation.IndicatorsSystemsRestExternalFacade;
@@ -304,6 +305,11 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
             // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
             Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, null, dimensionSelection); // all langs
+
+            // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
+            if (dimensionSelection != null) {
+                dataset.setId(PxExporter.generateMatrixFromString(dimensionSelection));
+            }
 
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.DATASET.getName(), agencyID, resourceID, version);

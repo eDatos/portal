@@ -6,7 +6,6 @@ import static es.gobcan.istac.indicators.rest.constants.IndicatorsRestApiConstan
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.portal.core.exporters.PxExporter;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
 import org.siemac.metamac.rest.common.v1_0.domain.Resource;
@@ -63,7 +63,6 @@ import es.gobcan.istac.indicators.rest.types.MetadataRepresentationType;
 public class IndicatorsRestExternalMapper {
 
     private static final String                                                                  DATASET_OBSERVATIONS_SEPARATOR     = " | ";
-    private static final int                                                                     MAX_PX_MATRIX_LENGTH               = 8;
 
     private static final EnumMap<AttributeAttachmentLevelEnumType, AttributeAttachmentLevelType> ATTRIBUTE_ATTACHMENT_LEVEL_MAPPING = new EnumMap<>(AttributeAttachmentLevelEnumType.class);
     static {
@@ -84,13 +83,9 @@ public class IndicatorsRestExternalMapper {
         return dataset;
     }
 
-    private static String indicatorIdToDatasetId(String id) {
-        return Base64.getEncoder().encodeToString(id.getBytes()).substring(0, MAX_PX_MATRIX_LENGTH);
-    }
-
     private static Dataset indicatorToDatasetBaseMapper(String id, Map<String, String> title, DataType data) {
         Dataset dataset = new Dataset();
-        dataset.setId(indicatorIdToDatasetId(id));
+        dataset.setId(PxExporter.generateMatrixFromString(id));
         dataset.setName(localisedStringsToInternationalString(title));
         dataset.setData(indicatorDataToDatasetData(data));
         return dataset;
