@@ -26,9 +26,9 @@ describe('FilterDimensions', function () {
 
         it('should initialize zones using metadata information', function () {
             expectZonesIdsEql({
-                left : ['CATEGORIA_ALOJAMIENTO', 'DESTINO_ALOJAMIENTO'],
-                top : ['INDICADORES', 'TIME_PERIOD'],
-                fixed : []
+                left: ['CATEGORIA_ALOJAMIENTO', 'DESTINO_ALOJAMIENTO'],
+                top: ['INDICADORES', 'TIME_PERIOD'],
+                fixed: []
             });
         });
 
@@ -68,7 +68,7 @@ describe('FilterDimensions', function () {
 
         it('should trigger change event when a representation change the drawable state', function () {
             var spy = sinon.spy();
-            filterDimensions.each(function(filterDimension) {
+            filterDimensions.each(function (filterDimension) {
                 filterDimension.get('representations').on("change:drawable", spy);
             });
             filterDimensions.at(0).get('representations').at(0).toggle('drawable');
@@ -77,7 +77,7 @@ describe('FilterDimensions', function () {
 
         it("should trigger change event when a representations update drawables", function () {
             var spy = sinon.spy();
-            filterDimensions.each(function(filterDimension) {
+            filterDimensions.each(function (filterDimension) {
                 filterDimension.get('representations').on("change:drawable", spy);
             });
             filterDimensions.get('TIME_PERIOD').get('representations')._updateDrawables();
@@ -102,7 +102,7 @@ describe('FilterDimensions', function () {
         });
 
         it('should export selected categories', function () {
-            var selectedRepresentationId = dim.get('representations').findWhere({selected : true}).id;
+            var selectedRepresentationId = dim.get('representations').findWhere({ selected: true }).id;
             // After the change on the fixed dimensions limit regarding the drawable attribute, the selected number are no longer affected
             expect(exportedJSON[dimId].selectedCategories.length).to.equal(2);
             expect(exportedJSON[dimId].selectedCategories[0]).to.equal(selectedRepresentationId);
@@ -113,7 +113,7 @@ describe('FilterDimensions', function () {
             expect(exportedJSON['DESTINO_ALOJAMIENTO'].position).to.equal(1);
             expect(exportedJSON['TIME_PERIOD'].position).to.equal(20);
             expect(exportedJSON['INDICADORES'].position).to.equal(40);
-        });        
+        });
 
     });
 
@@ -121,7 +121,7 @@ describe('FilterDimensions', function () {
 
         var selectedRepresentationsIdsInDimension = function (dimensionId) {
             var dimension = filterDimensions.get(dimensionId);
-            return _.pluck(dimension.get('representations').where({selected : true}), 'id');
+            return _.pluck(dimension.get('representations').where({ selected: true }), 'id');
         };
 
         var expectDimensionsInZone = function (zone, expectedDimensions) {
