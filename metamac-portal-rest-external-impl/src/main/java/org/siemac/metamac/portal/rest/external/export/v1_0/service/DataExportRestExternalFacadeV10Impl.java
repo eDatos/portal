@@ -179,10 +179,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
 
         try {
+            // Transform possible selection (not required)
             DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
-            String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            String dimensionSelection = null;
+            if (datasetSelectionForExcel != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            }
 
             Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
+
+            if (datasetSelectionForExcel == null) {
+                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset);
+            }
 
             if (filename == null) {
                 filename = buildFilename(".xlsx", ResourceType.DATASET.getName(), agencyID, resourceID, version);
@@ -198,10 +206,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String filename) {
 
         try {
+            // Transform possible selection (not required)
             DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
-            String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            String dimensionSelection = null;
+            if (datasetSelectionForExcel != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            }
 
             Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
+
+            if (datasetSelectionForExcel == null) {
+                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset);
+            }
 
             if (filename == null) {
                 filename = buildFilename(".xlsx", ResourceType.INDICATOR.getName(), resourceID);
@@ -215,10 +231,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     @Override
     public Response exportIndicatorInstanceToExcel(ExcelExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
+            // Transform possible selection (not required)
             DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
-            String dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            String dimensionSelection = null;
+            if (datasetSelectionForExcel != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            }
 
             Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
+
+            if (datasetSelectionForExcel == null) {
+                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset);
+            }
 
             if (filename == null) {
                 filename = buildFilename(".xlsx", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
@@ -257,11 +281,17 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return datasetSelectionForPlainText;
     }
     private DatasetSelectionForExcel checkAndTransformSelectionForExcel(ExcelExportation exportationBody) throws Exception {
-        if (exportationBody == null || isEmpty(exportationBody.getDatasetSelection())) {
-            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_REQUIRED, RestExternalConstants.PARAMETER_SELECTION);
-            throw new RestException(exception, Status.BAD_REQUEST);
+        DatasetSelectionForExcel datasetSelectionForExcel = null;
+        if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
+            try {
+                datasetSelectionForExcel = DatasetSelectionMapper.toDatasetSelectionForExcel(exportationBody.getDatasetSelection());
+            } catch (Exception e) {
+                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
+                        RestExternalConstants.PARAMETER_SELECTION);
+                throw new RestException(exception, Status.BAD_REQUEST);
+            }
         }
-        return DatasetSelectionMapper.toDatasetSelectionForExcel(exportationBody.getDatasetSelection());
+        return datasetSelectionForExcel;
     }
 
     private String buildFilename(String extension, String... parts) {

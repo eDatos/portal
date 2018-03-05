@@ -1,5 +1,10 @@
 package org.siemac.metamac.portal.rest.external.export.v1_0.mapper;
 
+import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel.FIXED_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel.LEFT_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel.TOP_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum.CODE_AND_LABEL;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +22,17 @@ import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionTyp
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
 import org.siemac.metamac.rest.export.v1_0.domain.LabelVisualisationMode;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attributes;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionValues;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimensions;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValues;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValue;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValues;
 
 public class DatasetSelectionMapper {
 
@@ -102,5 +118,79 @@ public class DatasetSelectionMapper {
                 org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.UNKNOWN);
                 throw new RestException(exception, Status.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public static DatasetSelectionForExcel datasetToDatasetSelectionForExcel(Dataset dataset) {
+        List<DatasetSelectionDimension> dimensions = dimensionsToDatasetSelectionDimensions(dataset.getMetadata().getDimensions(), dataset.getMetadata().getRelatedDsd());
+        List<DatasetSelectionAttribute> attributes = attributesToDatasetSelectionAttributes(dataset.getMetadata().getAttributes());
+        DatasetSelectionForExcel datasetSelectionForExcel = new DatasetSelectionForExcel(dimensions, attributes);
+        return datasetSelectionForExcel;
+    }
+
+    private static List<DatasetSelectionAttribute> attributesToDatasetSelectionAttributes(Attributes attributes) {
+        List<DatasetSelectionAttribute> datasetSelectionAttributes = new ArrayList<DatasetSelectionAttribute>();
+        for (Attribute attribute : attributes.getAttributes()) {
+            datasetSelectionAttributes.add(attributeToDatasetSelectionAttribute(attribute));
+        }
+        return datasetSelectionAttributes;
+    }
+
+    private static DatasetSelectionAttribute attributeToDatasetSelectionAttribute(Attribute attribute) {
+        DatasetSelectionAttribute datasetSelectionAttribute = new DatasetSelectionAttribute(attribute.getId());
+        datasetSelectionAttribute.setLabelVisualisationMode(CODE_AND_LABEL); // By default
+        return datasetSelectionAttribute;
+    }
+
+    private static List<DatasetSelectionDimension> dimensionsToDatasetSelectionDimensions(Dimensions dimensions, DataStructureDefinition dataStructureDefinition) {
+        List<DatasetSelectionDimension> datasetSelectionDimensions = new ArrayList<DatasetSelectionDimension>();
+        for (Dimension dimension : dimensions.getDimensions()) {
+            datasetSelectionDimensions.add(dimensionToDatasetSelectionDimension(dimension, dataStructureDefinition));
+        }
+        return datasetSelectionDimensions;
+    }
+
+    private static DatasetSelectionDimension dimensionToDatasetSelectionDimension(Dimension dimension, DataStructureDefinition dataStructureDefinition) {
+        DatasetSelectionDimension datasetSelectionDimension = new DatasetSelectionDimension(dimension.getId());
+        datasetSelectionDimension.setLabelVisualisationMode(CODE_AND_LABEL); // By default
+        datasetSelectionDimension.setPosition(dataStructureDefinitionToPosition(dimension.getId(), dataStructureDefinition)); // FIXME
+        datasetSelectionDimension.setSelectedDimensionValues(dimensionValuesToSelectedDimensionValues(dimension.getDimensionValues()));
+        return datasetSelectionDimension;
+    }
+
+    private static Integer dataStructureDefinitionToPosition(String id, DataStructureDefinition dataStructureDefinition) {
+        if (dataStructureDefinition.getHeading().getDimensionIds().contains(id)) {
+            return TOP_DIMENSIONS_START_POSITION + dataStructureDefinition.getHeading().getDimensionIds().indexOf(id);
+        } else if (dataStructureDefinition.getStub().getDimensionIds().contains(id)) {
+            return LEFT_DIMENSIONS_START_POSITION + dataStructureDefinition.getStub().getDimensionIds().indexOf(id);
+        } else {
+            return FIXED_DIMENSIONS_START_POSITION;
+        }
+    }
+
+    private static List<String> dimensionValuesToSelectedDimensionValues(DimensionValues dimensionValues) {
+        if (dimensionValues instanceof EnumeratedDimensionValues) {
+            return enumeratedDimensionValuesToSelectedDimensionValues((EnumeratedDimensionValues) dimensionValues);
+        } else if (dimensionValues instanceof NonEnumeratedDimensionValues) {
+            return nonEnumeratedDimensionValuesToSelectedDimensionValues((NonEnumeratedDimensionValues) dimensionValues);
+        } else {
+            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.UNKNOWN);
+            throw new RestException(exception, Status.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private static List<String> nonEnumeratedDimensionValuesToSelectedDimensionValues(NonEnumeratedDimensionValues dimensionValues) {
+        List<String> nonEnumeratedDimensionValues = new ArrayList<String>();
+        for (NonEnumeratedDimensionValue dimensionValue : dimensionValues.getValues()) {
+            nonEnumeratedDimensionValues.add(dimensionValue.getId());
+        }
+        return nonEnumeratedDimensionValues;
+    }
+
+    private static List<String> enumeratedDimensionValuesToSelectedDimensionValues(EnumeratedDimensionValues dimensionValues) {
+        List<String> enumeratedDimensionValues = new ArrayList<String>();
+        for (EnumeratedDimensionValue dimensionValue : dimensionValues.getValues()) {
+            enumeratedDimensionValues.add(dimensionValue.getId());
+        }
+        return enumeratedDimensionValues;
     }
 }
