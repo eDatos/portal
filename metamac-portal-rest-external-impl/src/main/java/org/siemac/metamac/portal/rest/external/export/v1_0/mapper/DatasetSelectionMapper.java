@@ -25,7 +25,6 @@ import org.siemac.metamac.rest.export.v1_0.domain.LabelVisualisationMode;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attributes;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimensions;
@@ -120,9 +119,9 @@ public class DatasetSelectionMapper {
         }
     }
 
-    public static DatasetSelectionForExcel datasetToDatasetSelectionForExcel(Dataset dataset) {
-        List<DatasetSelectionDimension> dimensions = dimensionsToDatasetSelectionDimensions(dataset.getMetadata().getDimensions(), dataset.getMetadata().getRelatedDsd());
-        List<DatasetSelectionAttribute> attributes = attributesToDatasetSelectionAttributes(dataset.getMetadata().getAttributes());
+    public static DatasetSelectionForExcel datasetToDatasetSelectionForExcel(Dimensions datasetDimensions, Attributes datasetAttributes, DataStructureDefinition relatedDsd) {
+        List<DatasetSelectionDimension> dimensions = dimensionsToDatasetSelectionDimensions(datasetDimensions, relatedDsd);
+        List<DatasetSelectionAttribute> attributes = attributesToDatasetSelectionAttributes(datasetAttributes);
         DatasetSelectionForExcel datasetSelectionForExcel = new DatasetSelectionForExcel(dimensions, attributes);
         return datasetSelectionForExcel;
     }

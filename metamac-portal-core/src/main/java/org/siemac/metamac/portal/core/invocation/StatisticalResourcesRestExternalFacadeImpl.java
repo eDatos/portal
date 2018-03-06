@@ -6,6 +6,7 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ public class StatisticalResourcesRestExternalFacadeImpl implements StatisticalRe
     public Dataset retrieveDataset(String agencyID, String resourceID, String version, List<String> lang, String fields, String dimensionSelection) {
         try {
             return restApiLocator.getStatisticalResourcesV1_0().retrieveDataset(agencyID, resourceID, version, lang, fields, dimensionSelection);
+        } catch (Exception e) {
+            throw toRestException(e);
+        }
+    }
+
+    @Override
+    public Query retrieveQuery(String agencyID, String resourceID, List<String> lang, String fields, String dimensionSelection) {
+        try {
+            return restApiLocator.getStatisticalResourcesV1_0().retrieveQuery(agencyID, resourceID, lang, fields);
         } catch (Exception e) {
             throw toRestException(e);
         }

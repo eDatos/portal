@@ -18,7 +18,7 @@ import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
 public interface DataExportV1_0 {
 
     /**
-     * Exports a dataset to excel
+     * Exports to excel
      */
     @POST
     @Path("excel/datasets/{agencyID}/{resourceID}/{version}")
@@ -31,6 +31,18 @@ public interface DataExportV1_0 {
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     Response exportDatasetToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("excel/queries/{agencyID}/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportQueryToExcel(ExcelExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
+
+    @POST
+    @Path("excel/queries/{agencyID}/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportQueryToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
 
     @POST
     @Path("excel/indicators/{resourceID}")

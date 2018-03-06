@@ -14,7 +14,7 @@ public class PortalConstants {
     public final static String RIGHT_BRACE       = "]";
 
     public static enum ResourceType {
-        DATASET("dataset"), INDICATOR("indicator"), INDICATOR_INSTANCE("indicatorInstance");
+        DATASET("dataset"), INDICATOR("indicator"), INDICATOR_INSTANCE("indicatorInstance"), QUERY("query");
 
         private String name;
 
