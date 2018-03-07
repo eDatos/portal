@@ -105,9 +105,7 @@ public class ExcelExporter {
         // Subject area
         Resources subjectAreas = resourceAccess.getMetadata().getSubjectAreas();
         StringBuilder valueName = new StringBuilder();
-        if (subjectAreas == null) {
-            valueName.append(PortalUtils.getLabel(resourceAccess.getName(), resourceAccess.getLang(), resourceAccess.getLangAlternative()));
-        } else {
+        if (subjectAreas != null) {
             for (Iterator<Resource> iterator = subjectAreas.getResources().iterator(); iterator.hasNext();) {
                 Resource subjectArea = iterator.next();
                 valueName.append(PortalUtils.getLabel(subjectArea.getName(), resourceAccess.getLang(), resourceAccess.getLangAlternative()));
