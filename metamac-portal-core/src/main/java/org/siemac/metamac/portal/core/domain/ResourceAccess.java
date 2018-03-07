@@ -279,15 +279,15 @@ public abstract class ResourceAccess {
             dimensionsLabels.put(dimensionId, buildMapDimensionLabel(dimension, lang, langAlternative));
 
             if (DimensionType.MEASURE_DIMENSION.equals(dimension.getType())) {
-                this.measureDimension = dimension;
+                measureDimension = dimension;
             }
         }
 
         this.dimensionsMetadataMap = dimensionsMetadataMap;
-        this.dimensionsLabelVisualisationMode = labelVisualisationsMode;
+        dimensionsLabelVisualisationMode = labelVisualisationsMode;
         this.dimensionsValuesCurrentLocaleLabels = dimensionsValuesCurrentLocaleLabels;
         this.dimensionsValuesLabels = dimensionsValuesLabels;
-        this.dimensionLabels = dimensionsLabels;
+        dimensionLabels = dimensionsLabels;
     }
 
     /**
@@ -317,7 +317,7 @@ public abstract class ResourceAccess {
 
             // Measure Attribute
             if (ComponentType.MEASURE.equals(attribute.getType())) {
-                this.measureAttribute = attribute;
+                measureAttribute = attribute;
             }
 
             // Attributes Metadata Map
@@ -325,10 +325,10 @@ public abstract class ResourceAccess {
         }
 
         this.attributesMetadataMap = attributesMetadataMap;
-        this.attributesLabelVisualisationMode = buildMapAttributesLabelVisualisationMode(datasetSelection, this.attributesMetadata);
-        this.attributesValuesCurrentLocaleLabels = buildMapAttributesValuesLabels(this.attributesMetadata, lang, langAlternative);
-        this.attributesValuesLabels = buildMapAttributesValuesLocalisedLabels(this.attributesMetadata);
-        this.attributesLabels = buildMapAttributesLabels(this.attributesMetadata, lang, langAlternative);
+        attributesLabelVisualisationMode = buildMapAttributesLabelVisualisationMode(datasetSelection, attributesMetadata);
+        attributesValuesCurrentLocaleLabels = buildMapAttributesValuesLabels(attributesMetadata, lang, langAlternative);
+        attributesValuesLabels = buildMapAttributesValuesLocalisedLabels(attributesMetadata);
+        attributesLabels = buildMapAttributesLabels(attributesMetadata, lang, langAlternative);
     }
 
     /**
@@ -347,15 +347,16 @@ public abstract class ResourceAccess {
         dimensionValuesOrderedForDataByDimensionId = new HashMap<String, List<String>>(dimensionRepresentations.size());
         for (DimensionRepresentation dimensionRepresentation : dimensionRepresentations) {
             String dimensionId = dimensionRepresentation.getDimensionId();
-            this.dimensionsOrderedForData.add(dimensionId);
+            dimensionsOrderedForData.add(dimensionId);
 
             List<CodeRepresentation> codesRepresentations = dimensionRepresentation.getRepresentations().getRepresentations();
-            this.dimensionValuesOrderedForDataByDimensionId.put(dimensionId, new ArrayList<String>(codesRepresentations.size()));
+            dimensionValuesOrderedForDataByDimensionId.put(dimensionId, new ArrayList<String>(codesRepresentations.size()));
             for (CodeRepresentation codeRepresentation : codesRepresentations) {
-                this.dimensionValuesOrderedForDataByDimensionId.get(dimensionId).add(codeRepresentation.getCode());
+                dimensionValuesOrderedForDataByDimensionId.get(dimensionId).add(codeRepresentation.getCode());
             }
         }
     }
+
     public String applyLabelVisualizationModeForAttributeValue(String attributeId, String attributeValue) {
         // Visualisation mode
         LabelVisualisationModeEnum labelVisualisation = getAttributeLabelVisualisationMode(attributeId);

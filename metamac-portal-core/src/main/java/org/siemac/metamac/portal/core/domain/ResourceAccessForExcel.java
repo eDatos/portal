@@ -33,7 +33,7 @@ public class ResourceAccessForExcel extends ResourceAccess {
 
     /**
      * Retrieve the observation for a specific key <param>permutation</param>
-     * 
+     *
      * @param observation at permutation key
      * @return
      */
