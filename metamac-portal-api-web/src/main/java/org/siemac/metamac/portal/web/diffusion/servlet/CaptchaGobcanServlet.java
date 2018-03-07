@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaService;
+import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaServiceSoap;
 import nl.captcha.servlet.CaptchaServletUtil;
 
 public class CaptchaGobcanServlet extends HttpServlet {
@@ -88,8 +90,8 @@ public class CaptchaGobcanServlet extends HttpServlet {
             // *****************************************************
 
             URL wsdlLocation = getClass().getResource("/wsdl/captcha-gobcan.wsdl");
-            https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaService service = new https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaService(wsdlLocation);
-            https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaServiceSoap CaptchaServ = service.getCaptchaServiceSoap();
+            CaptchaService service = new CaptchaService(wsdlLocation);
+            CaptchaServiceSoap CaptchaServ = service.getCaptchaServiceSoap();
 
             byte[] imgCaptcha = CaptchaServ.captchaImage1(width, height, keyword.toString(), fontname.toString(), 45f);
 
