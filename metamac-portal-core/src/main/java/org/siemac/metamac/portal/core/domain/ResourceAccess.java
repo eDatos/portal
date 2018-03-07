@@ -21,20 +21,35 @@ import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeDimension;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attributes;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.ComponentType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Data;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataAttribute;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DatasetMetadata;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimensions;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
-public abstract class DatasetAccess {
+public abstract class ResourceAccess {
 
-    private final String                                  lang;
-    private final String                                  langAlternative;
+    private String                                        lang;
+    private String                                        langAlternative;
 
-    private final Dataset                                 dataset;
+    private Data                                          data;
+    private Dimensions                                    dimensions;
+    private Attributes                                    attributes;
+
+    private InternationalString                           name;
+    private DatasetMetadata                               metadata;
+    private DataStructureDefinition                       relatedDsd;
+    private String                                        urn;
+    private String                                        id;
+    private InternationalString                           description;
 
     // Metadata
     private List<Dimension>                               dimensionsMetadata;
@@ -59,19 +74,82 @@ public abstract class DatasetAccess {
     private List<String>                                  dimensionsOrderedForData;
     private Map<String, List<String>>                     dimensionValuesOrderedForDataByDimensionId;
 
-    public DatasetAccess(Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
-        this.dataset = dataset;
+    public ResourceAccess(Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
+        data = dataset.getData();
+        dimensions = dataset.getMetadata().getDimensions();
+        attributes = dataset.getMetadata().getAttributes();
+
+        name = dataset.getName();
+        id = dataset.getId();
+        urn = dataset.getUrn();
+        description = dataset.getDescription();
+        relatedDsd = dataset.getMetadata().getRelatedDsd();
+
+        metadata = dataset.getMetadata();
+
+        initialize(data, dimensions, attributes, datasetSelection, lang, langAlternative);
+    }
+
+    public ResourceAccess(Query query, Dataset relatedDataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
+        data = query.getData();
+        dimensions = query.getMetadata().getDimensions();
+        attributes = query.getMetadata().getAttributes();
+
+        name = query.getName();
+        id = query.getId();
+        urn = query.getUrn();
+        description = query.getDescription();
+        relatedDsd = query.getMetadata().getRelatedDsd();
+
+        metadata = relatedDataset.getMetadata();
+
+        initialize(data, dimensions, attributes, datasetSelection, lang, langAlternative);
+    }
+
+    private void initialize(Data data, Dimensions dimensions, Attributes attributes, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         this.lang = lang;
         this.langAlternative = langAlternative;
 
-        initializeDimensions(dataset, datasetSelection);
-        initializeAttributes(dataset, datasetSelection);
-        initializeObservations(dataset);
-        initializeDimensionsForData(dataset);
+        initializeDimensions(dimensions, datasetSelection);
+        initializeAttributes(data, attributes, datasetSelection);
+        initializeObservations(data);
+        initializeDimensionsForData(data);
     }
 
-    public Dataset getDataset() {
-        return dataset;
+    public Data getData() {
+        return data;
+    }
+
+    public Dimensions getDimensions() {
+        return dimensions;
+    }
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
+
+    public InternationalString getName() {
+        return name;
+    }
+
+    public DatasetMetadata getMetadata() {
+        return metadata;
+    }
+
+    public DataStructureDefinition getRelatedDsd() {
+        return relatedDsd;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getUrn() {
+        return urn;
+    }
+
+    public InternationalString getDescription() {
+        return description;
     }
 
     public String getLang() {
@@ -182,8 +260,8 @@ public abstract class DatasetAccess {
     /**
      * Init dimensions and dimensions values
      */
-    private void initializeDimensions(Dataset dataset, DatasetSelection datasetSelection) throws MetamacException {
-        this.dimensionsMetadata = dataset.getMetadata().getDimensions().getDimensions();
+    private void initializeDimensions(Dimensions dimensions, DatasetSelection datasetSelection) throws MetamacException {
+        dimensionsMetadata = dimensions.getDimensions();
 
         Map<String, Dimension> dimensionsMetadataMap = new HashMap<String, Dimension>(dimensionsMetadata.size());
         Map<String, LabelVisualisationModeEnum> labelVisualisationsMode = new HashMap<String, LabelVisualisationModeEnum>(dimensionsMetadata.size());
@@ -214,21 +292,23 @@ public abstract class DatasetAccess {
 
     /**
      * Init definitions and values of attributes
+     *
+     * @param attributes
      */
-    private void initializeAttributes(Dataset dataset, DatasetSelection datasetSelection) throws MetamacException {
-        if (dataset.getMetadata().getAttributes() == null) {
-            this.attributesMetadata = new ArrayList<Attribute>();
+    private void initializeAttributes(Data data, Attributes attributes, DatasetSelection datasetSelection) throws MetamacException {
+        if (attributes == null) {
+            attributesMetadata = new ArrayList<Attribute>();
         } else {
-            this.attributesMetadata = dataset.getMetadata().getAttributes().getAttributes();
+            attributesMetadata = attributes.getAttributes();
         }
 
         Map<String, Attribute> attributesMetadataMap = new HashMap<String, Attribute>(attributesMetadata.size());
 
         // Attribute Instances
-        this.attributesValuesByAttributeId = new HashMap<String, String[]>(this.attributesMetadata.size());
-        for (Attribute attribute : this.attributesMetadata) {
-            if (dataset.getData().getAttributes() != null) {
-                for (DataAttribute dataAttribute : dataset.getData().getAttributes().getAttributes()) {
+        attributesValuesByAttributeId = new HashMap<String, String[]>(attributesMetadata.size());
+        for (Attribute attribute : attributesMetadata) {
+            if (data.getAttributes() != null) {
+                for (DataAttribute dataAttribute : data.getAttributes().getAttributes()) {
                     if (dataAttribute.getId().equals(attribute.getId())) {
                         attributesValuesByAttributeId.put(attribute.getId(), dataToDataArray(dataAttribute.getValue()));
                     }
@@ -254,17 +334,17 @@ public abstract class DatasetAccess {
     /**
      * Init observations values
      */
-    private void initializeObservations(Dataset dataset) {
-        this.observations = dataToDataArray(dataset.getData().getObservations());
+    private void initializeObservations(Data data) {
+        observations = dataToDataArray(data.getObservations());
     }
 
     /**
      * Init dimensions and dimensions values. Builds a map with dimensions values to get order provided in DATA, because observations are retrieved in API with this order
      */
-    private void initializeDimensionsForData(Dataset dataset) throws MetamacException {
-        List<DimensionRepresentation> dimensionRepresentations = dataset.getData().getDimensions().getDimensions();
-        this.dimensionsOrderedForData = new ArrayList<String>(dimensionRepresentations.size());
-        this.dimensionValuesOrderedForDataByDimensionId = new HashMap<String, List<String>>(dimensionRepresentations.size());
+    private void initializeDimensionsForData(Data data) throws MetamacException {
+        List<DimensionRepresentation> dimensionRepresentations = data.getDimensions().getDimensions();
+        dimensionsOrderedForData = new ArrayList<String>(dimensionRepresentations.size());
+        dimensionValuesOrderedForDataByDimensionId = new HashMap<String, List<String>>(dimensionRepresentations.size());
         for (DimensionRepresentation dimensionRepresentation : dimensionRepresentations) {
             String dimensionId = dimensionRepresentation.getDimensionId();
             this.dimensionsOrderedForData.add(dimensionId);

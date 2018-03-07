@@ -15,6 +15,7 @@ import org.siemac.metamac.portal.core.exporters.PxExporter;
 import org.siemac.metamac.portal.core.invocation.SrmRestExternalFacade;
 import org.siemac.metamac.portal.core.serviceapi.validators.ExportServiceInvocationValidator;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,19 @@ public class ExportServiceImpl extends ExportServiceImplBase {
             lang = langDefault;
         }
         ExcelExporter exporter = new ExcelExporter(dataset, datasetSelection, lang, langDefault);
+        exporter.write(resultOutputStream);
+    }
+
+    @Override
+    public void exportQueryToExcel(ServiceContext ctx, Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream)
+            throws MetamacException {
+        exportServiceInvocationValidator.checkExportQueryToExcel(ctx, query, relatedDataset, datasetSelection, lang, resultOutputStream);
+
+        String langDefault = portalConfiguration.retrieveLanguageDefault();
+        if (lang == null) {
+            lang = langDefault;
+        }
+        ExcelExporter exporter = new ExcelExporter(query, relatedDataset, datasetSelection, lang, langDefault);
         exporter.write(resultOutputStream);
     }
 

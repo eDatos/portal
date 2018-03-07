@@ -12,14 +12,21 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttach
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.CodeRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
-public class DatasetAccessForExcel extends DatasetAccess {
+public class ResourceAccessForExcel extends ResourceAccess {
 
     private final Map<String, Integer>           multipliers         = new HashMap<String, Integer>();
     private final Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>(); // Map<Dimension, Map<Code, Index>
 
-    public DatasetAccessForExcel(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public ResourceAccessForExcel(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
         super(dataset, datasetSelection, lang, langAlternative);
+        initializeMultipliers();
+        initializeIndex();
+    }
+
+    public ResourceAccessForExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
+        super(query, relatedDataset, datasetSelection, lang, langAlternative);
         initializeMultipliers();
         initializeIndex();
     }
@@ -149,7 +156,7 @@ public class DatasetAccessForExcel extends DatasetAccess {
     }
 
     private void initializeMultipliers() {
-        List<DimensionRepresentation> dimensions = getDataset().getData().getDimensions().getDimensions();
+        List<DimensionRepresentation> dimensions = getData().getDimensions().getDimensions();
         ListIterator<DimensionRepresentation> dimensionsListIterator = dimensions.listIterator(dimensions.size());
         int incrementCounter = 1;
 
@@ -165,7 +172,7 @@ public class DatasetAccessForExcel extends DatasetAccess {
      * Calculate a map indexed by dimension with map as value. The value map is indexed by code and its value is a index.
      */
     private void initializeIndex() {
-        List<DimensionRepresentation> dimensions = getDataset().getData().getDimensions().getDimensions();
+        List<DimensionRepresentation> dimensions = getData().getDimensions().getDimensions();
         for (DimensionRepresentation dimension : dimensions) {
             Map<String, Long> representationIndexMap = new HashMap<String, Long>();
             List<CodeRepresentation> representations = dimension.getRepresentations().getRepresentations();
@@ -188,4 +195,5 @@ public class DatasetAccessForExcel extends DatasetAccess {
         }
         return offset;
     }
+
 }

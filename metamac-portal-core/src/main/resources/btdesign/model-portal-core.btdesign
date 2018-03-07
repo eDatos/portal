@@ -26,6 +26,8 @@ Application Portal {
 			exportDatasetToCsvSemicolonSeparated(Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
 			exportDatasetToPx(Dataset dataset, String lang, OutputStream resultOutputStream) throws MetamacException;
 			
+			exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
+			
 			exportSvgToImage(String svg, Float width, String mimeType, OutputStream resultOutputStream) throws MetamacException;
 		}
 		

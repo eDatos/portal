@@ -19,12 +19,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
+import org.siemac.metamac.core.common.util.shared.UrnUtils;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
@@ -214,6 +214,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             }
 
             Query query = retrieveDatasetFromQuery(agencyID, resourceID, lang, dimensionSelection);
+            Dataset relatedDataset = retrieveDataset(query.getMetadata().getRelatedDataset().getUrn(), lang, dimensionSelection);
 
             if (datasetSelectionForExcel == null) {
                 datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
@@ -224,7 +225,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".xlsx", ResourceType.QUERY.getName(), agencyID, resourceID);
             }
 
-            return exportQueryToExcel(query, datasetSelectionForExcel, lang, filename);
+            return exportQueryToExcel(query, relatedDataset, datasetSelectionForExcel, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -297,9 +298,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private Response exportQueryToExcel(Query query, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
-        // TODO METAMAC-2702
-        throw new NotImplementedException();
+    private Response exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
+        try {
+            // Export
+            final File tmpFile = File.createTempFile("metamac", "xlsx");
+            FileOutputStream outputStream = new FileOutputStream(tmpFile);
+            exportService.exportQueryToExcel(SERVICE_CONTEXT, query, relatedDataset, datasetSelectionForExcel, lang, outputStream);
+            outputStream.close();
+
+            return buildResponseOkWithFile(tmpFile, filename, MEDIA_TYPE_APPLICATION_XLSX);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
     }
 
     private DatasetSelectionForPlainText checkAndTransformSelectionForPlainText(PlainTextExportation exportationBody) {
@@ -514,6 +524,14 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             langs.add(langAlternative);
         }
         return statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, langs, null, dimensionSelection);
+    }
+
+    private Dataset retrieveDataset(String urn, String lang, String dimensionSelection) throws MetamacException {
+        String[] urnSplited = UrnUtils.splitUrnStructure(urn);
+        String agencyID = urnSplited[0];
+        String resourceID = urnSplited[1];
+        String version = urnSplited[2];
+        return retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
     }
 
     private Dataset retrieveDatasetFromIndicatorInstance(String indicatorSystemCode, String resourceID, String dimensionSelection) {

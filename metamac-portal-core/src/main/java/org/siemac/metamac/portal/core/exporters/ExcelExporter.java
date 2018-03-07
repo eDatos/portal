@@ -29,9 +29,9 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.lang.LocaleUtil;
 import org.siemac.metamac.portal.core.domain.CellCommentDetails;
-import org.siemac.metamac.portal.core.domain.DatasetAccessForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.domain.ResourceAccessForExcel;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.messages.MessageKeyType;
@@ -41,6 +41,7 @@ import org.siemac.metamac.rest.common.v1_0.domain.Resources;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +57,7 @@ public class ExcelExporter {
     private static final XSSFColor         COLOR_WHITE                         = getXSSFColor("FFFFFF");
     private static final XSSFColor         COLOR_BLACK                         = getXSSFColor("000000");
 
-    private final DatasetAccessForExcel    datasetAccess;
+    private final ResourceAccessForExcel   resourceAccess;
     private final DatasetSelectionForExcel datasetSelection;
     private Sheet                          sheet;
 
@@ -72,7 +73,12 @@ public class ExcelExporter {
     private static Logger                  log                                 = LoggerFactory.getLogger(ExcelExporter.class);
 
     public ExcelExporter(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new DatasetAccessForExcel(dataset, datasetSelection, lang, langAlternative);
+        resourceAccess = new ResourceAccessForExcel(dataset, datasetSelection, lang, langAlternative);
+        this.datasetSelection = datasetSelection;
+    }
+
+    public ExcelExporter(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
+        resourceAccess = new ResourceAccessForExcel(query, relatedDataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 
@@ -89,22 +95,22 @@ public class ExcelExporter {
         int headerRow = 0;
 
         // Title
-        String title = PortalUtils.getLabel(datasetAccess.getDataset().getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative());
-        if (StringUtils.isEmpty(title)) {
+        String title = PortalUtils.getLabel(resourceAccess.getName(), resourceAccess.getLang(), resourceAccess.getLangAlternative());
+        if (!StringUtils.isEmpty(title)) {
             Row rowTitle = sheet.createRow(headerRow++);
             addStringCell(rowTitle, 0, title, createStyleSolid(COLOR_BLACK, COLOR_WHITE, true));
             sheet.addMergedRegion(new CellRangeAddress(headerRow - 1, headerRow - 1, 0, 4));
         }
 
         // Subject area
-        Resources subjectAreas = datasetAccess.getDataset().getMetadata().getSubjectAreas();
+        Resources subjectAreas = resourceAccess.getMetadata().getSubjectAreas();
         StringBuilder valueName = new StringBuilder();
         if (subjectAreas == null) {
-            valueName.append(PortalUtils.getLabel(datasetAccess.getDataset().getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative()));
+            valueName.append(PortalUtils.getLabel(resourceAccess.getName(), resourceAccess.getLang(), resourceAccess.getLangAlternative()));
         } else {
             for (Iterator<Resource> iterator = subjectAreas.getResources().iterator(); iterator.hasNext();) {
                 Resource subjectArea = iterator.next();
-                valueName.append(PortalUtils.getLabel(subjectArea.getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative()));
+                valueName.append(PortalUtils.getLabel(subjectArea.getName(), resourceAccess.getLang(), resourceAccess.getLangAlternative()));
                 if (iterator.hasNext()) {
                     valueName.append("; ");
                 }
@@ -121,21 +127,21 @@ public class ExcelExporter {
 
         // Other
         // Rights Holder
-        Resource resource = datasetAccess.getDataset().getMetadata().getRightsHolder();
+        Resource resource = resourceAccess.getMetadata().getRightsHolder();
         if (resource != null) {
-            String rightsHolder = PortalUtils.getLabel(resource.getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative());
+            String rightsHolder = PortalUtils.getLabel(resource.getName(), resourceAccess.getLang(), resourceAccess.getLangAlternative());
 
             Row row = sheet.createRow(headerRow++);
-            String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_RIGHTS_HOLDER, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+            String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_RIGHTS_HOLDER, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
             addStringCell(row, 0, messageForCode, null);
             addStringCell(row, 1, rightsHolder, null);
         }
 
         // Copyright date
-        Integer copyrightDate = datasetAccess.getDataset().getMetadata().getCopyrightDate();
+        Integer copyrightDate = resourceAccess.getMetadata().getCopyrightDate();
         if (copyrightDate != null) {
             Row row = sheet.createRow(headerRow++);
-            String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_COPYRIGHT, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+            String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_COPYRIGHT, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
             addStringCell(row, 0, messageForCode, null);
             addStringCell(row, 1, copyrightDate.toString(), null);
         }
@@ -145,15 +151,15 @@ public class ExcelExporter {
         // Fixed Dimensions
         StringBuilder fixedDimensionsText = new StringBuilder();
         for (DatasetSelectionDimension datasetSelectionDimension : datasetSelection.getFixedDimensions()) {
-            String dimensionText = datasetAccess.applyLabelVisualizationModeForDimension(datasetSelectionDimension.getId());
-            String dimensionValueText = datasetAccess.applyLabelVisualizationModeForDimensionValue(datasetSelectionDimension.getId(), datasetSelectionDimension.getSelectedDimensionValues().get(0));
+            String dimensionText = resourceAccess.applyLabelVisualizationModeForDimension(datasetSelectionDimension.getId());
+            String dimensionValueText = resourceAccess.applyLabelVisualizationModeForDimensionValue(datasetSelectionDimension.getId(), datasetSelectionDimension.getSelectedDimensionValues().get(0));
             fixedDimensionsText.append(dimensionText).append(" = ").append(dimensionValueText).append(", ");
 
         }
 
         if (fixedDimensionsText.length() > 0) {
             fixedDimensionsText.delete(fixedDimensionsText.length() - 3, fixedDimensionsText.length()); // delete last comma and space
-            String by = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_LABEL_PARA, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+            String by = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_LABEL_PARA, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
             Row rowTitle = sheet.createRow(headerRow++);
             addStringCell(rowTitle, 0, by + " " + fixedDimensionsText.toString(), null);
             sheet.addMergedRegion(new CellRangeAddress(headerRow - 1, headerRow - 1, 0, 4));
@@ -216,7 +222,7 @@ public class ExcelExporter {
                     addFootNotesTittle(footerTitleRow);
                     tableTitleSet = true;
                 }
-                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_NOTES_TABLE, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_NOTES_TABLE, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
                 addFootNotesSecundaryTittle(footerTableTitleRow, messageForCode);
             }
 
@@ -231,7 +237,7 @@ public class ExcelExporter {
                     addFootNotesTittle(footerTitleRow);
                     tableTitleSet = true;
                 }
-                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_NOTES_CATEGORY, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_NOTES_CATEGORY, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
                 addFootNotesSecundaryTittle(footerDimensionTitleRow, messageForCode);
             }
 
@@ -239,20 +245,20 @@ public class ExcelExporter {
 
             // Other
             // Rights Holder
-            Resource resource = datasetAccess.getDataset().getMetadata().getRightsHolder();
+            Resource resource = resourceAccess.getMetadata().getRightsHolder();
             if (resource != null) {
-                String rightsHolder = PortalUtils.getLabel(resource.getName(), datasetAccess.getLang(), datasetAccess.getLangAlternative());
+                String rightsHolder = PortalUtils.getLabel(resource.getName(), resourceAccess.getLang(), resourceAccess.getLangAlternative());
 
                 Row row = sheet.createRow(footerRow++);
-                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_RIGHTS_HOLDER, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_RIGHTS_HOLDER, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
                 addStringCell(row, 0, messageForCode, null);
                 addStringCell(row, 1, rightsHolder, null);
             }
 
-            Integer copyrightDate = datasetAccess.getDataset().getMetadata().getCopyrightDate();
+            Integer copyrightDate = resourceAccess.getMetadata().getCopyrightDate();
             if (copyrightDate != null) {
                 Row row = sheet.createRow(footerRow++);
-                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_COPYRIGHT, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+                String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_COPYRIGHT, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
                 addStringCell(row, 0, messageForCode, null);
                 addStringCell(row, 1, copyrightDate.toString(), null);
             }
@@ -263,18 +269,18 @@ public class ExcelExporter {
     }
     private int addBodyOfDatasetAttributes(int footerRow) {
         int numberOfDatasetNotes = 1;
-        for (Attribute attribute : datasetAccess.getAttributesMetadata()) {
+        for (Attribute attribute : resourceAccess.getAttributesMetadata()) {
             if (!AttributeAttachmentLevelType.DATASET.equals(attribute.getAttachmentLevel())) {
                 continue;
             }
             String attributeId = attribute.getId();
-            String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
+            String[] attributeValues = resourceAccess.getAttributeValues(attributeId);
 
             if (attributeValues == null) {
                 continue;
             }
 
-            String attributeValue = datasetAccess.obtainAttributeValue(attributeId, 0);
+            String attributeValue = resourceAccess.obtainAttributeValue(attributeId, 0);
             if (StringUtils.isNotBlank(attributeValue)) {
                 attributeValue = attributeValue.trim();
 
@@ -291,19 +297,19 @@ public class ExcelExporter {
 
     private int addBodyAttributesDimensions(int footerRow) {
         int numberOfDimensionNotes = 1;
-        for (Attribute attribute : datasetAccess.getAttributesMetadata()) {
+        for (Attribute attribute : resourceAccess.getAttributesMetadata()) {
             if (!AttributeAttachmentLevelType.DIMENSION.equals(attribute.getAttachmentLevel())) {
                 continue;
             }
 
             String attributeId = attribute.getId();
-            String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
+            String[] attributeValues = resourceAccess.getAttributeValues(attributeId);
 
             if (attributeValues == null) {
                 continue;
             }
 
-            List<String> dimensionsAttributeOrderedForData = datasetAccess.getDimensionsAttributeOrderedForData(attribute);
+            List<String> dimensionsAttributeOrderedForData = resourceAccess.getDimensionsAttributeOrderedForData(attribute);
 
             int footerRowPrevious = footerRow;
             footerRow = addBodyAttributeForOneDimension(footerRow, numberOfDimensionNotes, attributeId, attributeValues, dimensionsAttributeOrderedForData);
@@ -315,8 +321,8 @@ public class ExcelExporter {
     private int addHeaderOfAttributesDimension(int footerRow) {
         int columIterator = 3;
         Row row = sheet.createRow(footerRow++);
-        for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
-            String dimensionText = datasetAccess.applyLabelVisualizationModeForDimension(dimensionId);
+        for (String dimensionId : resourceAccess.getDimensionsOrderedForData()) {
+            String dimensionText = resourceAccess.applyLabelVisualizationModeForDimension(dimensionId);
             addStringCell(row, columIterator++, dimensionText, createStyleSolid(COLOR_BLACK, COLOR_WHITE, true));
         }
         return footerRow;
@@ -350,23 +356,23 @@ public class ExcelExporter {
                     addStringCell(row, columnCount++, numberOfDimensionNotes++ + ".- ", createStyleSolid(COLOR_BLACK, COLOR_BLACK, true));
 
                     // Add keys
-                    for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
+                    for (String dimensionId : resourceAccess.getDimensionsOrderedForData()) {
                         String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
-                        dimensionValueId = datasetAccess.applyLabelVisualizationModeForDimensionValue(dimensionId, dimensionValueId);
+                        dimensionValueId = resourceAccess.applyLabelVisualizationModeForDimensionValue(dimensionId, dimensionValueId);
                         CellStyle styleSolid = createStyleSolid(COLOR_BLACK, null, null);
                         addBorderToCellStyle(styleSolid);
                         addStringCell(row, columnCount++, dimensionValueId, styleSolid);
                     }
 
                     // Attribute value
-                    attributeValue = datasetAccess.applyLabelVisualizationModeForAttributeValue(attributeId, attributeValue);
+                    attributeValue = resourceAccess.applyLabelVisualizationModeForAttributeValue(attributeId, attributeValue);
                     CellStyle styleSolid = createStyleSolid(COLOR_BLACK, null, null);
                     addBorderToCellStyle(styleSolid);
                     addStringCell(row, columnCount, attributeValue, styleSolid);
                 }
             } else {
                 String dimensionId = dimensionsAttributeOrderedForData.get(dimensionPosition + 1);
-                List<String> dimensionValues = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+                List<String> dimensionValues = resourceAccess.getDimensionValuesOrderedForData(dimensionId);
                 for (int i = dimensionValues.size() - 1; i >= 0; i--) {
                     DataOrderingStackElement temp = new DataOrderingStackElement(dimensionId, dimensionPosition + 1, dimensionValues.get(i));
                     stack.push(temp);
@@ -386,7 +392,7 @@ public class ExcelExporter {
     private void addFootNotesTittle(int footerRow) {
         Row row = sheet.createRow(footerRow);
         Cell cell = initializeCell(row, 0);
-        String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_NOTES, LocaleUtil.getLocaleFromLocaleString(datasetAccess.getLang()));
+        String messageForCode = LocaleUtil.getMessageForCode(MessageKeyType.MESSAGE_NOTES, LocaleUtil.getLocaleFromLocaleString(resourceAccess.getLang()));
         cell.setCellValue(messageForCode);
         cell.setCellType(Cell.CELL_TYPE_STRING);
     }
@@ -424,10 +430,10 @@ public class ExcelExporter {
     private void observationsAtRow(int observationRowIndex, Row row) {
         for (int j = 0; j < columnsOfData; j++) {
             Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(observationRowIndex, j);
-            String observation = datasetAccess.observationAtPermutation(permutationAtCell);
+            String observation = resourceAccess.observationAtPermutation(permutationAtCell);
             Cell cell = initializeCell(row, leftHeaderSizeOfData + j);
 
-            addCellComment(datasetAccess.observationAttributesAtPermutation(permutationAtCell), cell);
+            addCellComment(resourceAccess.observationAttributesAtPermutation(permutationAtCell), cell);
 
             if (observation != null) {
                 if (NumberUtils.isNumber(observation)) {
@@ -469,12 +475,12 @@ public class ExcelExporter {
     }
 
     private String toDimensionValueLabel(String dimensionId, String dimensionValueId) {
-        LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
+        LabelVisualisationModeEnum labelVisualisation = resourceAccess.getDimensionLabelVisualisationMode(dimensionId);
         String dimensionValueLabel = null;
         if (labelVisualisation.isLabel() && labelVisualisation.isCode()) {
-            dimensionValueLabel = datasetAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId) + " (" + dimensionValueId + ")";
+            dimensionValueLabel = resourceAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId) + " (" + dimensionValueId + ")";
         } else if (labelVisualisation.isLabel()) {
-            dimensionValueLabel = datasetAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
+            dimensionValueLabel = resourceAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
         } else if (labelVisualisation.isCode()) {
             dimensionValueLabel = dimensionValueId;
         }

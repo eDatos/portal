@@ -127,6 +127,9 @@ public class DatasetSelectionMapper {
     }
 
     private static List<DatasetSelectionAttribute> attributesToDatasetSelectionAttributes(Attributes attributes) {
+        if (attributes == null) {
+            return null;
+        }
         List<DatasetSelectionAttribute> datasetSelectionAttributes = new ArrayList<DatasetSelectionAttribute>();
         for (Attribute attribute : attributes.getAttributes()) {
             datasetSelectionAttributes.add(attributeToDatasetSelectionAttribute(attribute));

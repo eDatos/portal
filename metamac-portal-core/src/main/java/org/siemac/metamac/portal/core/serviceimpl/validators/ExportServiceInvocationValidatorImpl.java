@@ -7,14 +7,24 @@ import java.util.List;
 
 import org.siemac.metamac.core.common.exception.MetamacExceptionItem;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.error.ServiceExceptionParameters;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
 public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidator {
 
     public static void checkExportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
         checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
+        checkMetadataRequired(datasetSelection, ServiceExceptionParameters.DATASET_SELECTION, exceptions);
+        checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+    }
+
+    public static void checkExportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream,
+            List<MetamacExceptionItem> exceptions) {
+        checkMetadataRequired(query, ServiceExceptionParameters.QUERY, exceptions);
+        checkMetadataRequired(relatedDataset, ServiceExceptionParameters.DATASET, exceptions);
         checkMetadataRequired(datasetSelection, ServiceExceptionParameters.DATASET_SELECTION, exceptions);
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
