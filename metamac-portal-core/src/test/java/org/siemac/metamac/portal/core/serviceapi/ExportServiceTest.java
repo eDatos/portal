@@ -26,10 +26,12 @@ import org.siemac.metamac.portal.core.serviceapi.utils.Asserts;
 import org.siemac.metamac.portal.core.serviceapi.utils.AssertsUtils;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetMockBuilder;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuilder;
+import org.siemac.metamac.portal.core.serviceapi.utils.QueryMockBuilder;
 import org.siemac.metamac.portal.core.serviceapi.utils.XMLUtils;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.ComponentType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -56,12 +58,6 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Override
     public void testExportDatasetToExcel() throws Exception {
         // Tested in testExportDatasetToExcel* methods
-    }
-
-    @Override
-    public void testExportQueryToExcel() throws Exception {
-        // TODO Auto-generated method stub
-
     }
 
     @Test
@@ -150,6 +146,109 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
         Dataset dataset = buildDatasetToExport();
         exportService.exportDatasetToExcel(ctx, dataset, datasetSelection, "es", out);
+
+        out.close();
+
+        // Check excel checksum
+        // byte[] expected = new byte[]{-66, -1, -51, 126, 26, -33, -48, -44, 11, -107, -128, 26, -3, 121, -59, -89};
+        InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/DatasetWithLabelsAndCodes.xlsx");
+        Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
+    }
+
+    @Override
+    public void testExportQueryToExcel() throws Exception {
+        // Tested in testExportQueryToExcel* methods
+    }
+
+    @Test
+    public void testExportQueryToExcelWithCodes() throws Exception {
+        //@formatter:off
+        DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE).dimensionValues("2012", "2013")
+                .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", 40, LabelVisualisationModeEnum.CODE).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE)
+                .attribute("NOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
+                .buildForExcel();
+
+         //@formatter:on
+
+        File tmpFile = tempFolder.newFile();
+        tmpFile = new File("D:/temp/Excel_TEST/text.xlsx");
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        Query query = buildQueryToExport();
+        Dataset relatedDataset = buildDatasetToExport();
+        exportService.exportQueryToExcel(ctx, query, relatedDataset, datasetSelection, "es", out);
+
+        out.close();
+
+        // Check excel checksum
+        InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/DatasetWithCodes.xlsx");
+        Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
+    }
+
+    @Test
+    public void testExportQueryToExcelWithLabels() throws Exception {
+        //@formatter:off
+        DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.LABEL).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.LABEL).dimensionValues("2012", "2013")
+                .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", 40, LabelVisualisationModeEnum.LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .buildForExcel();
+
+         //@formatter:on
+
+        File tmpFile = tempFolder.newFile();
+        // tmpFile = new File("K:/temp/Excel_TEST/text.xlsx");
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        Query query = buildQueryToExport();
+        Dataset relatedDataset = buildDatasetToExport();
+        exportService.exportQueryToExcel(ctx, query, relatedDataset, datasetSelection, "es", out);
+
+        out.close();
+
+        // Check excel checksum
+        InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/DatasetWithLabels.xlsx");
+        Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
+    }
+
+    @Test
+    public void testExportQueryToExcelWithLabelsAndCodes() throws Exception {
+        //@formatter:off
+        DatasetSelectionForExcel datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2012", "2013")
+                .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", 40, null).dimensionValues("INDICE_OCUPACION_PLAZAS")// do not specify visualisation mode (apply default)
+                .buildForExcel();
+
+         //@formatter:on
+
+        File tmpFile = tempFolder.newFile();
+        // tmpFile = new File("K:/temp/Excel_TEST/text.xlsx");
+        FileOutputStream out = new FileOutputStream(tmpFile);
+
+        Query query = buildQueryToExport();
+        Dataset relatedDataset = buildDatasetToExport();
+        exportService.exportQueryToExcel(ctx, query, relatedDataset, datasetSelection, "es", out);
 
         out.close();
 
@@ -1167,6 +1266,80 @@ public class ExportServiceTest implements ExportServiceTestBase {
     private Dataset buildDatasetToExport() {
         //@formatter:off
         return DatasetMockBuilder.create()
+                // DIMENSIONS DEFINITIONS
+                .dimension("DESTINO_ALOJAMIENTO", "Destino de alojamiento").heading().dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
+                .dimension("TIME_PERIOD", "Periodo de tiempo").heading().dimensionValue("2012", "Año 2012").dimensionValue("2013", "Año 2013")
+                .dimension("CATEGORIA_ALOJAMIENTO", "Categoría del alojamiento").stub().dimensionValue("1_2_3_ESTRELLAS", "1, 2 y 3 estrellas").dimensionValue("4_5_ESTRELLAS", "4 y 5 estrellas")
+                .dimension("INDICADORES", "Indicadores").stub().dimensionValue("INDICE_OCUPACION_PLAZAS", "Índice de ocupación de plazas")
+
+                // DATASET ATTRIBUTES DEFINITIONS
+                .attribute("ATTRIBUTE_A", "Attribute A", AttributeAttachmentLevelType.DATASET, ComponentType.OTHER)
+                .attribute("ATTRIBUTE_A2", "Attribute A2", AttributeAttachmentLevelType.DATASET, ComponentType.MEASURE)
+                        .attributeValue("a2", "a2 Label")
+                .attribute("NOTEX", "Attribute Notex", AttributeAttachmentLevelType.DATASET, ComponentType.OTHER)
+                        .attributeValue("a3", "a3 Label")
+
+                // DIMENSION ATTRIBUTES DEFINITIONS
+                .attribute("VALUENOTEX", "ValueNotex", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "AttrDestinoAlojamiento01", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO")
+                        .attributeValue("da1", "da1 Label")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "AttrCategoriaAlojamiento01", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "AttrCategoriaAlojamiento02", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", "AttrCategoriaAlojamiento03", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("CATEGORIA_ALOJAMIENTO")
+                        .attributeValue("ca5", "ca 5 Label")
+                .attribute("INDICADORES_A", "Attribute Indicadores A", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("INDICADORES")
+                .attribute("CELLNOTE_A", "Attribute CellNote A", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD")
+                .attribute("CELLNOTE_B", "Attribute CellNote B", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("DESTINO_ALOJAMIENTO", "TIME_PERIOD", "CATEGORIA_ALOJAMIENTO")
+                .attribute("CELLNOTE_C", "Attribute CellNote C", AttributeAttachmentLevelType.DIMENSION, ComponentType.OTHER)
+                        .dimensionsAttached("TIME_PERIOD", "CATEGORIA_ALOJAMIENTO", "DESTINO_ALOJAMIENTO") // unordered in attribute definition
+                           .attributeValue("cnC_1", "cnC_1 Label").attributeValue("cnC_2", "cnC_2 Label").attributeValue("cnC_6", "cnC_6 Label")
+
+                // PRIMARY MEASURE DEFINITIONS
+                .attribute("ATTRIBUTE_B", "Attribute B", AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+                           .attributeValue("b1", "b1 Label").attributeValue("b2", "b2 Label").attributeValue("b3", "b3 Label")
+                           .attributeValue("b4", "b4 Label").attributeValue("b5", "b5 Label").attributeValue("b6", "b6 Label")
+                           .attributeValue("b7", "b7 Label").attributeValue("b8", "b8 Label").attributeValue("b9", "b9 Label")
+                .attribute("ATTRIBUTE_C", "Attribute C",AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+                .attribute("ATTRIBUTE_D", "Attribute D",AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+                           .attributeValue("d1", "d1 Label").attributeValue("d2", "d2 Label").attributeValue("d3", "d3 Label")
+                           .attributeValue("d4", "d4 Label").attributeValue("d5", "d5 Label").attributeValue("d6", "d6 Label")
+                           .attributeValue("d7", "d7 Label").attributeValue("d8", "d8 Label").attributeValue("d9", "d9 Label")
+                .attribute("ATTRIBUTE_E", "Attribute E",AttributeAttachmentLevelType.PRIMARY_MEASURE, ComponentType.OTHER)
+
+                // OBSERVATIONS
+                .observations("1.1 | 2 | 3 | 4 | 5 | 6 |  | 8")
+
+                // ATTRIBUTE INSTANCES
+                .attributeData("ATTRIBUTE_A", "a1")
+                .attributeData("ATTRIBUTE_A2", "a2")
+                .attributeData("NOTEX", "a3")
+                .attributeData("VALUENOTEX", "vn1 | vn2")
+                .attributeData("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", "da1 | ")
+                .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", "ca1 | ca2")
+                .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", "ca3 | ca4")
+                .attributeData("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", " | ca5")
+                .attributeData("INDICADORES_A", "ioA_1")
+                .attributeData("CELLNOTE_A", "cnA_1 | cnA_2 | cnA_3 | cnA_4")
+                .attributeData("CELLNOTE_B", "cnB_1 | cnB_2 | cnB_3 |  | cnB_5 | cnB_6 | cnB_7 | cnB_8")
+                .attributeData("CELLNOTE_C", "cnC_1 | cnC_2 |  |  |  | cnC_6 |  | ")
+                .attributeData("ATTRIBUTE_B", "b1 | b2 | b3 |  | b5 | b6 | b7 | b8")
+                .attributeData("ATTRIBUTE_D", "d1 | d2 | d3 | d4 | d5 | d6 | d7 | d8")
+                .attributeData("ATTRIBUTE_E", "e1 | e2 | e3 | e4 | e5 | e6 | e7 | e8")
+                .build();
+        //@formatter:on
+    }
+
+    private Query buildQueryToExport() {
+        //@formatter:off
+        return QueryMockBuilder.create()
                 // DIMENSIONS DEFINITIONS
                 .dimension("DESTINO_ALOJAMIENTO", "Destino de alojamiento").heading().dimensionValue("ANDALUCIA", "Andalucía").dimensionValue("ARAGON", "Aragón")
                 .dimension("TIME_PERIOD", "Periodo de tiempo").heading().dimensionValue("2012", "Año 2012").dimensionValue("2013", "Año 2013")
