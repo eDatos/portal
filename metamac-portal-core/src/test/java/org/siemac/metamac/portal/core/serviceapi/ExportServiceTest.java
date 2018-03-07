@@ -58,6 +58,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
         // Tested in testExportDatasetToExcel* methods
     }
 
+    @Override
+    public void testExportQueryToExcel() throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
     @Test
     public void testExportDatasetToExcelWithCodes() throws Exception {
         //@formatter:off
