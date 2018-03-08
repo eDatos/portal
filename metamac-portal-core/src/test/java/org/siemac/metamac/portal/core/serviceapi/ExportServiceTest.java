@@ -444,7 +444,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
     }
 
     @Test
-    public void testExportDatasetToTsvWithLabels() throws Exception {
+    public void testExportDatasetToPlainTextWithLabels() throws Exception {
 
         Dataset dataset = buildDatasetToExport();
 
@@ -670,7 +670,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
     }
 
     @Test
-    public void testExportDatasetToTsvWithCodesAndLabels() throws Exception {
+    public void testExportDatasetToPlainTextWithCodesAndLabels() throws Exception {
 
         Dataset dataset = buildDatasetToExport();
 
@@ -944,7 +944,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
     }
 
     @Test
-    public void testExportDatasetToTsvWithCodesAndSomeLabels() throws Exception {
+    public void testExportDatasetToPlainTextWithCodesAndSomeLabels() throws Exception {
 
         Dataset dataset = buildDatasetToExport();
 
