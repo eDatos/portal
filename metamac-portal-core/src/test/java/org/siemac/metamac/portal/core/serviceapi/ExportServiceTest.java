@@ -189,7 +189,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
          //@formatter:on
 
         File tmpFile = tempFolder.newFile();
-        tmpFile = new File("D:/temp/Excel_TEST/text.xlsx");
+        // tmpFile = new File("K:/temp/Excel_TEST/text.xlsx");
         FileOutputStream out = new FileOutputStream(tmpFile);
 
         Query query = buildQueryToExport();
