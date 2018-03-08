@@ -1029,6 +1029,283 @@ public class ExportServiceTest implements ExportServiceTestBase {
         }
     }
 
+    @Override
+    public void testExportQueryToTsv() throws Exception {
+        // Tested in testExportQueryToPlainText* methods
+    }
+
+    @Override
+    public void testExportQueryToCsvCommaSeparated() throws Exception {
+        // Tested in testExportQueryToPlainText* methods
+    }
+
+    @Override
+    public void testExportQueryToCsvSemicolonSeparated() throws Exception {
+        // Tested in testExportQueryToPlainText* methods
+    }
+
+    @Test
+    public void testExportQueryToPlainTextWithCodes() throws Exception {
+
+        Query query = buildQueryToExport();
+
+        //@formatter:off
+        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", LabelVisualisationModeEnum.CODE).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE)
+                .attribute("NOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE)
+                .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
+                .buildForTsv();
+        //@formatter:on
+
+        {
+            // TSV
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToTsv(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.TSV.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.TSV.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV comma separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToCsvCommaSeparated(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV semicolon separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToCsvSemicolonSeparated(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate observations with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodes(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileAttributes);
+        }
+    }
+
+    @Test
+    public void testExportQueryToPlainTextWithCodesAndLabels() throws Exception {
+
+        Query query = buildQueryToExport();
+
+        //@formatter:off
+        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("NOTEX", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .buildForTsv();
+        //@formatter:on
+
+        {
+            // TSV
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToTsv(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.TSV.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.TSV.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV comma separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToCsvCommaSeparated(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_COMMA.getSeparator(), tmpFileAttributes);
+        }
+
+        {
+            // CSV semicolon separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToCsvSemicolonSeparated(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileObservations);
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndLabels(PlainTextTypeEnum.CSV_SEMICOLON.getSeparator(), tmpFileAttributes);
+        }
+    }
+
+    @Test
+    public void testExportQueryToPlainTextWithCodesAndSomeLabels() throws Exception {
+
+        Query query = buildQueryToExport();
+
+        //@formatter:off
+        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+                .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
+                .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
+                .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
+                .dimension("INDICADORES").dimensionValues("INDICE_OCUPACION_PLAZAS")         // do not specify visualisation mode (apply default)
+                .attribute("ATTRIBUTE_A", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_A2", LabelVisualisationModeEnum.CODE)
+                .attribute("NOTEX", LabelVisualisationModeEnum.LABEL)
+                .attribute("VALUENOTEX", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_DESTINO_ALOJAMIENTO_01", LabelVisualisationModeEnum.LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_01", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_02", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_CATEGORIA_ALOJAMIENTO_03", LabelVisualisationModeEnum.CODE)
+                .attribute("INDICADORES_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("CELLNOTE_C", null)                  // do not specify visualisation mode (apply default)
+                .attribute("ATTRIBUTE_B", LabelVisualisationModeEnum.CODE)
+                .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
+                .attribute("ATTRIBUTE_D", null)
+                .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
+
+                .buildForTsv();
+        //@formatter:on
+
+        {
+            // TSV
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToTsv(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileObservations, PlainTextTypeEnum.TSV.getSeparator());
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileAttributes, PlainTextTypeEnum.TSV.getSeparator());
+        }
+
+        {
+            // CSV comma separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToCsvCommaSeparated(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileObservations, PlainTextTypeEnum.CSV_COMMA.getSeparator());
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileAttributes, PlainTextTypeEnum.CSV_COMMA.getSeparator());
+        }
+
+        {
+            // CSV semicolon separated
+            File tmpFileObservations = tempFolder.newFile();
+            File tmpFileAttributes = tempFolder.newFile();
+            FileOutputStream outObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outAttributes = new FileOutputStream(tmpFileAttributes);
+
+            exportService.exportQueryToCsvSemicolonSeparated(ctx, query, datasetSelection, "es", outObservations, outAttributes);
+            outObservations.close();
+            outAttributes.close();
+
+            // Validate attributes with dataset and dimension attachment
+            validateObservationsWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileObservations, PlainTextTypeEnum.CSV_SEMICOLON.getSeparator());
+
+            // Validate attributes with dataset and dimension attachment
+            validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(tmpFileAttributes, PlainTextTypeEnum.CSV_SEMICOLON.getSeparator());
+        }
+    }
+
+    @Override
+    public void testExportQueryToPx() throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
     private void validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(File tmpFileAttributes, String separator) throws Exception, IOException {
         BufferedReader bufferedReaderAttributes = createBufferedReader(tmpFileAttributes);
         assertEquals("DESTINO_ALOJAMIENTO" + separator + "DESTINO_ALOJAMIENTO_CODE" + separator + "TIME_PERIOD" + separator + "CATEGORIA_ALOJAMIENTO" + separator + "INDICADORES" + separator
@@ -1417,30 +1694,6 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
     private BufferedReader createBufferedReader(File file, String encoding) throws Exception {
         return new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
-    }
-
-    @Override
-    public void testExportQueryToTsv() throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void testExportQueryToCsvCommaSeparated() throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void testExportQueryToCsvSemicolonSeparated() throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void testExportQueryToPx() throws Exception {
-        // TODO Auto-generated method stub
-
     }
 
 }
