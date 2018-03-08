@@ -20,6 +20,7 @@ import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
 public class PlainTextExporter {
 
@@ -36,7 +37,15 @@ public class PlainTextExporter {
     private PlainTextTypeEnum               plainTextTypeEnum                   = null;
 
     public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, String langAlternative) throws MetamacException {
-        this.datasetAccess = new ResourceAccessForPlainText(dataset, datasetSelection, lang, langAlternative);
+        datasetAccess = new ResourceAccessForPlainText(dataset, datasetSelection, lang, langAlternative);
+        this.plainTextTypeEnum = plainTextTypeEnum;
+        if (this.plainTextTypeEnum == null) {
+            throw new MetamacException(ServiceExceptionType.UNKNOWN, "Plain Text format is required ");
+        }
+    }
+
+    public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelectionForPlainText datasetSelection, String lang, String langAlternative) throws MetamacException {
+        datasetAccess = new ResourceAccessForPlainText(query, null, datasetSelection, lang, langAlternative);
         this.plainTextTypeEnum = plainTextTypeEnum;
         if (this.plainTextTypeEnum == null) {
             throw new MetamacException(ServiceExceptionType.UNKNOWN, "Plain Text format is required ");

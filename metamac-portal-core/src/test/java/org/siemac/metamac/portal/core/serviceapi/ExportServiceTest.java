@@ -1419,4 +1419,28 @@ public class ExportServiceTest implements ExportServiceTestBase {
         return new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
     }
 
+    @Override
+    public void testExportQueryToTsv() throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void testExportQueryToCsvCommaSeparated() throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void testExportQueryToCsvSemicolonSeparated() throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void testExportQueryToPx() throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
 }

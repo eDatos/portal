@@ -31,6 +31,8 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     @Autowired
     private SrmRestExternalFacade            srmRestExternalFacade;
 
+    /* Datasets */
+
     @Override
     public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
         exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, lang, resultOutputStream);
@@ -44,56 +46,33 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     }
 
     @Override
-    public void exportQueryToExcel(ServiceContext ctx, Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream)
-            throws MetamacException {
-        exportServiceInvocationValidator.checkExportQueryToExcel(ctx, query, relatedDataset, datasetSelection, lang, resultOutputStream);
-
-        String langDefault = portalConfiguration.retrieveLanguageDefault();
-        if (lang == null) {
-            lang = langDefault;
-        }
-        ExcelExporter exporter = new ExcelExporter(query, relatedDataset, datasetSelection, lang, langDefault);
-        exporter.write(resultOutputStream);
-    }
-
-    @Override
     public void exportDatasetToTsv(ServiceContext ctx, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
             OutputStream resultAttributesOutputStream) throws MetamacException {
         exportServiceInvocationValidator.checkExportDatasetToTsv(ctx, dataset, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
-
-        String langDefault = portalConfiguration.retrieveLanguageDefault();
-        if (lang == null) {
-            lang = langDefault;
-        }
-        PlainTextExporter exporter = new PlainTextExporter(PlainTextTypeEnum.TSV, dataset, datasetSelection, lang, langDefault);
-        exporter.writeObservationsAndAttributesWithObservationAttachmentLevel(resultObservationsOutputStream);
-        exporter.writeAttributesWithDatasetAndDimensionAttachmentLevel(resultAttributesOutputStream);
+        exportDatasetToPlainText(PlainTextTypeEnum.TSV, dataset, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
     }
 
     @Override
     public void exportDatasetToCsvCommaSeparated(ServiceContext ctx, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
             OutputStream resultAttributesOutputStream) throws MetamacException {
         exportServiceInvocationValidator.checkExportDatasetToCsvCommaSeparated(ctx, dataset, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
-
-        String langDefault = portalConfiguration.retrieveLanguageDefault();
-        if (lang == null) {
-            lang = langDefault;
-        }
-        PlainTextExporter exporter = new PlainTextExporter(PlainTextTypeEnum.CSV_COMMA, dataset, datasetSelection, lang, langDefault);
-        exporter.writeObservationsAndAttributesWithObservationAttachmentLevel(resultObservationsOutputStream);
-        exporter.writeAttributesWithDatasetAndDimensionAttachmentLevel(resultAttributesOutputStream);
+        exportDatasetToPlainText(PlainTextTypeEnum.CSV_COMMA, dataset, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
     }
 
     @Override
     public void exportDatasetToCsvSemicolonSeparated(ServiceContext ctx, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
             OutputStream resultAttributesOutputStream) throws MetamacException {
         exportServiceInvocationValidator.checkExportDatasetToCsvSemicolonSeparated(ctx, dataset, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+        exportDatasetToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, dataset, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+    }
 
+    private void exportDatasetToPlainText(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream) throws MetamacException {
         String langDefault = portalConfiguration.retrieveLanguageDefault();
         if (lang == null) {
             lang = langDefault;
         }
-        PlainTextExporter exporter = new PlainTextExporter(PlainTextTypeEnum.CSV_SEMICOLON, dataset, datasetSelection, lang, langDefault);
+        PlainTextExporter exporter = new PlainTextExporter(plainTextTypeEnum, dataset, datasetSelection, lang, langDefault);
         exporter.writeObservationsAndAttributesWithObservationAttachmentLevel(resultObservationsOutputStream);
         exporter.writeAttributesWithDatasetAndDimensionAttachmentLevel(resultAttributesOutputStream);
     }
@@ -109,8 +88,62 @@ public class ExportServiceImpl extends ExportServiceImplBase {
 
         PxExporter exporter = new PxExporter(dataset, srmRestExternalFacade, lang, langDefault);
         exporter.write(resultOutputStream);
+    }
+
+    /* Queries */
+
+    @Override
+    public void exportQueryToExcel(ServiceContext ctx, Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream)
+            throws MetamacException {
+        exportServiceInvocationValidator.checkExportQueryToExcel(ctx, query, relatedDataset, datasetSelection, lang, resultOutputStream);
+
+        String langDefault = portalConfiguration.retrieveLanguageDefault();
+        if (lang == null) {
+            lang = langDefault;
+        }
+        ExcelExporter exporter = new ExcelExporter(query, relatedDataset, datasetSelection, lang, langDefault);
+        exporter.write(resultOutputStream);
+    }
+
+    @Override
+    public void exportQueryToTsv(ServiceContext ctx, Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportQueryToTsv(ctx, query, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+        exportQueryToPlainText(PlainTextTypeEnum.TSV, query, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+    }
+
+    @Override
+    public void exportQueryToCsvCommaSeparated(ServiceContext ctx, Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportQueryToCsvCommaSeparated(ctx, query, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+        exportQueryToPlainText(PlainTextTypeEnum.CSV_COMMA, query, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+    }
+
+    @Override
+    public void exportQueryToCsvSemicolonSeparated(ServiceContext ctx, Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportQueryToCsvSemicolonSeparated(ctx, query, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+        exportQueryToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, query, datasetSelection, lang, resultObservationsOutputStream, resultAttributesOutputStream);
+    }
+
+    private void exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream) throws MetamacException {
+        String langDefault = portalConfiguration.retrieveLanguageDefault();
+        if (lang == null) {
+            lang = langDefault;
+        }
+        PlainTextExporter exporter = new PlainTextExporter(plainTextTypeEnum, query, datasetSelection, lang, langDefault);
+        exporter.writeObservationsAndAttributesWithObservationAttachmentLevel(resultObservationsOutputStream);
+        exporter.writeAttributesWithDatasetAndDimensionAttachmentLevel(resultAttributesOutputStream);
+    }
+
+    @Override
+    public void exportQueryToPx(ServiceContext ctx, Query query, String lang, OutputStream resultOutputStream) throws MetamacException {
+        // TODO Auto-generated method stub
 
     }
+
+    /* SVG */
 
     @Override
     public void exportSvgToImage(ServiceContext ctx, String svg, Float width, String mimeType, OutputStream resultOutputStream) throws MetamacException {

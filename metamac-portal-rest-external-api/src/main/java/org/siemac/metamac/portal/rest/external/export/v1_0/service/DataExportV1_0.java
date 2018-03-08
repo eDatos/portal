@@ -66,7 +66,7 @@ public interface DataExportV1_0 {
             @QueryParam("filename") String filename);
 
     /**
-     * Exports a dataset to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
+     * Exports to tsv. Returns a zip containing two tsv files: one file with observations and attributes with observation attachment level and another one with attributes with dataset
      * and dimension attachment level
      */
     @POST
@@ -80,6 +80,18 @@ public interface DataExportV1_0 {
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     Response exportDatasetToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("tsv/queries/{agencyID}/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportQueryToTsv(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
+
+    @POST
+    @Path("tsv/queries/{agencyID}/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportQueryToTsv(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
 
     @POST
     @Path("tsv/indicators/{resourceID}")

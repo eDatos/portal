@@ -98,6 +98,17 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
+    public Response exportQueryToTsv(PlainTextExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
+        return exportQueryToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, lang, filename);
+    }
+
+    @Override
+    public Response exportQueryToTsv(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
+        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        return exportQueryToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, lang, filename);
+    }
+
+    @Override
     public Response exportIndicatorToTsv(PlainTextExportation exportationBody, String resourceID, String filename) {
         return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, filename);
     }
@@ -213,7 +224,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
             }
 
-            Query query = retrieveDatasetFromQuery(agencyID, resourceID, lang, dimensionSelection);
+            Query query = retrieveQuery(agencyID, resourceID, lang, dimensionSelection);
             Dataset relatedDataset = retrieveDataset(query.getMetadata().getRelatedDataset().getUrn(), lang, dimensionSelection);
 
             if (datasetSelectionForExcel == null) {
@@ -551,7 +562,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         return IndicatorsRestExternalMapper.indicatorToDatasetMapper(indicator, indicatorData, organisation);
     }
 
-    private Query retrieveDatasetFromQuery(String agencyID, String resourceID, String lang, String dimensionSelection) throws MetamacException {
+    private Query retrieveQuery(String agencyID, String resourceID, String lang, String dimensionSelection) throws MetamacException {
         List<String> langs = new ArrayList<String>();
         String langAlternative = portalConfiguration.retrieveLanguageDefault();
         if (lang != null) {
@@ -608,7 +619,29 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".zip", ResourceType.DATASET.getName(), agencyID, resourceID, version);
             }
 
-            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    private Response exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
+        try {
+            // Transform possible selection (not required)
+            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelectionForPlainText != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            }
+
+            // Retrieve dataset
+            Query query = retrieveQuery(agencyID, resourceID, lang, dimensionSelection);
+
+            if (filename == null) {
+                filename = buildFilename(".zip", ResourceType.QUERY.getName(), agencyID, resourceID);
+            }
+
+            return exportQueryToPlainText(plainTextTypeEnum, query, datasetSelectionForPlainText, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -630,7 +663,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".zip", ResourceType.INDICATOR.getName(), resourceID);
             }
 
-            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -652,13 +685,13 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".zip", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
 
-            return exportResourceToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportResourceToPlainText(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelectionForPlainText, String lang, String filename) {
+    private Response exportDatasetToPlainText(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelectionForPlainText, String lang, String filename) {
         try {
             // Export
             final File tmpFileObservations = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
@@ -679,6 +712,44 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                     break;
                 case CSV_SEMICOLON:
                     exportService.exportDatasetToCsvSemicolonSeparated(SERVICE_CONTEXT, dataset, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    mimeType = MEDIA_TYPE_TEXT_CSV;
+                    break;
+                default:
+                    break;
+            }
+
+            outputStreamObservations.close();
+            outputStreamAttributes.close();
+            String filenamePrefix = FilenameUtils.getBaseName(filename);
+            File plainTextZip = generatePlainTextZip(plainTextTypeEnum, tmpFileObservations, tmpFileAttributes, filenamePrefix);
+            return buildResponseOkWithFile(plainTextZip, filename, mimeType);
+
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    private Response exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelectionForPlainText datasetSelectionForPlainText, String lang, String filename) {
+        try {
+            // Export
+            final File tmpFileObservations = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
+            final File tmpFileAttributes = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
+            FileOutputStream outputStreamObservations = new FileOutputStream(tmpFileObservations);
+            FileOutputStream outputStreamAttributes = new FileOutputStream(tmpFileAttributes);
+
+            String mimeType = MediaType.TEXT_PLAIN;
+
+            switch (plainTextTypeEnum) {
+                case TSV:
+                    exportService.exportQueryToTsv(SERVICE_CONTEXT, query, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    mimeType = MEDIA_TYPE_TEXT_TAB_SEPARATED_VALUES;
+                    break;
+                case CSV_COMMA:
+                    exportService.exportQueryToCsvCommaSeparated(SERVICE_CONTEXT, query, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
+                    mimeType = MEDIA_TYPE_TEXT_CSV;
+                    break;
+                case CSV_SEMICOLON:
+                    exportService.exportQueryToCsvSemicolonSeparated(SERVICE_CONTEXT, query, datasetSelectionForPlainText, lang, outputStreamObservations, outputStreamAttributes);
                     mimeType = MEDIA_TYPE_TEXT_CSV;
                     break;
                 default:

@@ -101,7 +101,9 @@ public abstract class ResourceAccess {
         description = query.getDescription();
         relatedDsd = query.getMetadata().getRelatedDsd();
 
-        metadata = relatedDataset.getMetadata();
+        if (relatedDataset != null) {
+            metadata = relatedDataset.getMetadata();
+        }
 
         initialize(data, dimensions, attributes, datasetSelection, lang, langAlternative);
     }

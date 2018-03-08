@@ -15,16 +15,10 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
 public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidator {
 
+    /* Dataset */
+
     public static void checkExportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
         checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
-        checkMetadataRequired(datasetSelection, ServiceExceptionParameters.DATASET_SELECTION, exceptions);
-        checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
-    }
-
-    public static void checkExportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream,
-            List<MetamacExceptionItem> exceptions) {
-        checkMetadataRequired(query, ServiceExceptionParameters.QUERY, exceptions);
-        checkMetadataRequired(relatedDataset, ServiceExceptionParameters.DATASET, exceptions);
         checkMetadataRequired(datasetSelection, ServiceExceptionParameters.DATASET_SELECTION, exceptions);
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
@@ -44,21 +38,59 @@ public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidato
         checkExportDatasetToPlainText(dataset, resultObservationsOutputStream, resultAttributesOutputStream, exceptions);
     }
 
+    private static void checkExportDatasetToPlainText(Dataset dataset, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
+        checkMetadataRequired(resultObservationsOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkMetadataRequired(resultAttributesOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+    }
+
     public static void checkExportDatasetToPx(Dataset dataset, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
         checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
 
+    /* Query */
+
+    public static void checkExportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream,
+            List<MetamacExceptionItem> exceptions) {
+        checkMetadataRequired(query, ServiceExceptionParameters.QUERY, exceptions);
+        checkMetadataRequired(relatedDataset, ServiceExceptionParameters.DATASET, exceptions);
+        checkMetadataRequired(datasetSelection, ServiceExceptionParameters.DATASET_SELECTION, exceptions);
+        checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+    }
+
+    public static void checkExportQueryToTsv(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkExportQueryToPlainText(query, resultObservationsOutputStream, resultAttributesOutputStream, exceptions);
+    }
+
+    public static void checkExportQueryToCsvCommaSeparated(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkExportQueryToPlainText(query, resultObservationsOutputStream, resultAttributesOutputStream, exceptions);
+    }
+
+    public static void checkExportQueryToCsvSemicolonSeparated(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream,
+            OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkExportQueryToPlainText(query, resultObservationsOutputStream, resultAttributesOutputStream, exceptions);
+    }
+
+    private static void checkExportQueryToPlainText(Query query, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkMetadataRequired(query, ServiceExceptionParameters.QUERY, exceptions);
+        checkMetadataRequired(resultObservationsOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+        checkMetadataRequired(resultAttributesOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+    }
+
+    public static void checkExportQueryToPx(Query query, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
+        checkMetadataRequired(query, ServiceExceptionParameters.QUERY, exceptions);
+        checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
+    }
+
+    /* SVG */
+
     public static void checkExportSvgToImage(String svg, Float width, String mimeType, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);
         checkMetadataRequired(svg, ServiceExceptionParameters.SVG, exceptions);
         // width, mimeType optional
-    }
-
-    private static void checkExportDatasetToPlainText(Dataset dataset, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream, List<MetamacExceptionItem> exceptions) {
-        checkMetadataRequired(dataset, ServiceExceptionParameters.DATASET, exceptions);
-        checkMetadataRequired(resultObservationsOutputStream, ServiceExceptionParameters.STREAM, exceptions);
-        checkMetadataRequired(resultAttributesOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
 
 }
