@@ -12,8 +12,8 @@ import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.portal.core.domain.ResourceAccessForPlainText;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
+import org.siemac.metamac.portal.core.domain.ResourceAccessForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
@@ -26,15 +26,15 @@ public class PlainTextExporter {
 
     private final ResourceAccessForPlainText datasetAccess;
 
-    private final String                    ESCAPE_DOUBLE_QUOTES                = "\"";
-    private final String                    HEADER_OBSERVATION                  = "OBS_VALUE";
-    private final String                    HEADER_ATTRIBUTE_ID                 = "ATTRIBUTE";
-    private final String                    HEADER_ATTRIBUTE_VALUE              = "ATTRIBUTE_VALUE";
-    private final String                    HEADER_ATTRIBUTE_VALUE_CODE         = "ATTRIBUTE_VALUE_CODE";
-    private final String                    HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE = "_CODE";
-    private static final boolean            ESCAPE_IF_NECESSARY                 = true;
+    private final String                     ESCAPE_DOUBLE_QUOTES                = "\"";
+    private final String                     HEADER_OBSERVATION                  = "OBS_VALUE";
+    private final String                     HEADER_ATTRIBUTE_ID                 = "ATTRIBUTE";
+    private final String                     HEADER_ATTRIBUTE_VALUE              = "ATTRIBUTE_VALUE";
+    private final String                     HEADER_ATTRIBUTE_VALUE_CODE         = "ATTRIBUTE_VALUE_CODE";
+    private final String                     HEADER_SUFIX_CODE_WHEN_EXPORT_TITLE = "_CODE";
+    private static final boolean             ESCAPE_IF_NECESSARY                 = true;
 
-    private PlainTextTypeEnum               plainTextTypeEnum                   = null;
+    private PlainTextTypeEnum                plainTextTypeEnum                   = null;
 
     public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccessForPlainText(dataset, datasetSelection, lang, langAlternative);
@@ -175,8 +175,9 @@ public class PlainTextExporter {
                         LabelVisualisationModeEnum labelVisualisation = datasetAccess.getAttributeLabelVisualisationMode(attributeId);
                         if (labelVisualisation.isLabel()) {
                             String attributeValueLabel = datasetAccess.getAttributeValueLabelCurrentLocale(attributeId, attributeValue);
-                            line.append(attributeValueLabel != null ? plainTextTypeEnum.getSeparator() + escapeString(attributeValueLabel, ESCAPE_IF_NECESSARY) : plainTextTypeEnum.getSeparator()
-                                    + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
+                            line.append(attributeValueLabel != null
+                                    ? plainTextTypeEnum.getSeparator() + escapeString(attributeValueLabel, ESCAPE_IF_NECESSARY)
+                                    : plainTextTypeEnum.getSeparator() + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
                         }
                         if (labelVisualisation.isCode()) {
                             line.append(plainTextTypeEnum.getSeparator() + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
