@@ -13,25 +13,37 @@ import java.io.InputStreamReader;
 
 import org.apache.commons.lang.StringUtils;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
+import org.siemac.metamac.portal.core.invocation.SrmRestExternalFacadeImpl;
 import org.siemac.metamac.portal.core.serviceapi.utils.Asserts;
 import org.siemac.metamac.portal.core.serviceapi.utils.AssertsUtils;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetMockBuilder;
 import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuilder;
 import org.siemac.metamac.portal.core.serviceapi.utils.QueryMockBuilder;
 import org.siemac.metamac.portal.core.serviceapi.utils.XMLUtils;
+import org.siemac.metamac.portal.core.serviceapi.validators.ExportServiceInvocationValidator;
+import org.siemac.metamac.portal.core.serviceimpl.ExportServiceImpl;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.ComponentType;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
+import org.siemac.metamac.rest.structural_resources.v1_0.domain.Concept;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -48,12 +60,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExportServiceTest implements ExportServiceTestBase {
 
     @Autowired
-    private ExportService        exportService;
+    @Spy
+    private ExportServiceInvocationValidator exportServiceInvocationValidator;
+
+    @Autowired
+    @Spy
+    private PortalConfiguration              portalConfiguration;
+
+    @Mock
+    private SrmRestExternalFacadeImpl        srmRestExternalFacade;
+
+    @InjectMocks
+    private ExportServiceImpl                exportService;
 
     @Rule
-    public TemporaryFolder       tempFolder = new TemporaryFolder();
+    public TemporaryFolder                   tempFolder = new TemporaryFolder();
 
-    private final ServiceContext ctx        = getServiceContext();
+    private final ServiceContext             ctx        = getServiceContext();
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        resetMocks();
+    }
 
     @Override
     public void testExportDatasetToExcel() throws Exception {
@@ -1479,9 +1508,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
     @Override
     @Test
-    @Ignore
     public void testExportDatasetToPx() throws Exception {
-        // TODO FIX this test when the PX export is complete
 
         {
             Dataset dataset = XMLUtils.getDataset(XMLUtils.class.getResourceAsStream("/resources/C00031A_000002.xml"));
@@ -1493,7 +1520,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
             // Check checksum
             InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/archivo.px");
-            Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
+            Asserts.assertBytesArray(AssertsUtils.createPxContentHash(resourceAsStream), AssertsUtils.createPxContentHash(tmpFile));
         }
 
         {
@@ -1506,7 +1533,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
             // Check checksum
             InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/ContVariable.px");
-            Asserts.assertBytesArray(AssertsUtils.createExcelContentHash(resourceAsStream), AssertsUtils.createExcelContentHash(tmpFile));
+            Asserts.assertBytesArray(AssertsUtils.createPxContentHash(resourceAsStream), AssertsUtils.createPxContentHash(tmpFile));
         }
     }
 
@@ -1694,6 +1721,22 @@ public class ExportServiceTest implements ExportServiceTestBase {
 
     private BufferedReader createBufferedReader(File file, String encoding) throws Exception {
         return new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
+    }
+
+    private void resetMocks() {
+        mockSrmRestExternalFacade();
+    }
+
+    private void mockSrmRestExternalFacade() {
+        Mockito.when(srmRestExternalFacade.retrieveConceptByUrn(Mockito.any(String.class))).thenAnswer(new Answer<Concept>() {
+
+            @Override
+            public Concept answer(InvocationOnMock invocation) throws Throwable {
+                Concept concept = new Concept();
+                concept.setUrn((String) invocation.getArguments()[0]);
+                return concept;
+            };
+        });
     }
 
 }

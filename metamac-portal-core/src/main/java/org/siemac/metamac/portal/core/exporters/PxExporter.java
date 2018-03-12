@@ -279,10 +279,10 @@ public class PxExporter {
     }
 
     private List<String> resourcesToResourcesId(List<Resource> sources) {
-        if (CollectionUtils.isEmpty(sources)) {
-            return null;
-        }
         List<String> targets = new ArrayList<String>();
+        if (CollectionUtils.isEmpty(sources)) {
+            return targets;
+        }
         for (Resource source : sources) {
             targets.add(source.getId().toLowerCase());
         }

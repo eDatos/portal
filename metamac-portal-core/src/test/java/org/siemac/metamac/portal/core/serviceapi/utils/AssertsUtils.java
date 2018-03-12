@@ -94,4 +94,18 @@ public class AssertsUtils {
         return createPlainTextContentHash(file);
     }
 
+    public static byte[] createPxContentHash(InputStream file) throws Exception {
+
+        byte[] buffer = new byte[256];
+        IOUtils.readFully(file, buffer);
+
+        MessageDigest complete = MessageDigest.getInstance("MD5");
+        return complete.digest(buffer);
+    }
+
+    public static byte[] createPxContentHash(File tmpFile) throws Exception {
+        FileInputStream file = new FileInputStream(tmpFile);
+        return createPxContentHash(file);
+    }
+
 }
