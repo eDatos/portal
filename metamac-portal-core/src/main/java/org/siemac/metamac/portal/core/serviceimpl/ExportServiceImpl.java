@@ -138,9 +138,16 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     }
 
     @Override
-    public void exportQueryToPx(ServiceContext ctx, Query query, String lang, OutputStream resultOutputStream) throws MetamacException {
-        // TODO Auto-generated method stub
+    public void exportQueryToPx(ServiceContext ctx, Query query, Dataset relatedDataset, String lang, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportQueryToPx(ctx, query, relatedDataset, lang, resultOutputStream);
 
+        String langDefault = portalConfiguration.retrieveLanguageDefault();
+        if (lang == null) {
+            lang = langDefault;
+        }
+
+        PxExporter exporter = new PxExporter(query, relatedDataset, srmRestExternalFacade, lang, langDefault);
+        exporter.write(resultOutputStream);
     }
 
     /* SVG */

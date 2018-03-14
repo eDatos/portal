@@ -79,13 +79,15 @@
             var haveMapFormats = visualizationSupertype == 'map' && false; // TODO: METAMAC-2033
             var haveImageFormats = _.contains(['graph', 'map'], visualizationSupertype) && this._exportableImage();
             var allDimensionsWithSelections = this.filterDimensions.getDimensionsWithoutSelections().length == 0;
+            var isQuery = this.filterDimensions.metadata.identifier().type == "query";
 
             return {
                 dataFormats: haveDataFormats,
                 allDimensionsWithSelections: allDimensionsWithSelections,
                 mapFormats: haveMapFormats,
                 imageFormats: haveImageFormats,
-                iconPreffix: visualizationSupertype
+                iconPreffix: visualizationSupertype,
+                drawSelectionButtons: !isQuery || haveImageFormats // FIXME METAMAC-2709
             };
         },
 
@@ -185,7 +187,6 @@
         },
 
         exportApiCall: function (exportType) {
-            //TODO querys?
             var identifier = this.filterDimensions.metadata.identifier();
             var url = App.endpoints["export"] + "/" + exportType + "/" + identifier.agency + "/" + identifier.identifier + "/" + identifier.version;
             var selection = this.getDatasetSelection();

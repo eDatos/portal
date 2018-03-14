@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
 public class XMLUtils {
 
@@ -29,6 +30,10 @@ public class XMLUtils {
 
     public static Dataset getDataset(InputStream is) throws JAXBException {
         return (Dataset) unmarshaller.unmarshal(is);
+    }
+
+    public static Query getQuery(InputStream is) throws JAXBException {
+        return (Query) unmarshaller.unmarshal(is);
     }
 
 }

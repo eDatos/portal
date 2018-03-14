@@ -406,7 +406,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.DATASET.getName(), agencyID, resourceID, version);
             }
-            return exportResourceToPx(dataset, filename);
+            return exportDatasetToPx(dataset, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -424,7 +424,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.INDICATOR.getName(), resourceID);
             }
-            return exportResourceToPx(dataset, filename);
+            return exportDatasetToPx(dataset, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -442,18 +442,56 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
-            return exportResourceToPx(dataset, filename);
+            return exportDatasetToPx(dataset, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportResourceToPx(Dataset dataset, String filename) {
+    private Response exportDatasetToPx(Dataset dataset, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
             exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, null, outputStream); // In PX file, all provided langs are sending
+            outputStream.close();
+
+            return buildResponseOkWithFile(tmpFile, filename, MediaType.TEXT_PLAIN);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    @Override
+    public Response exportQueryToPx(PxExportation pxExportationBody, String agencyID, String resourceID, String lang, String filename) {
+        try {
+            // Transform possible selection (not required)
+            String dimensionSelection = getDimensionSelectionForPx(pxExportationBody);
+
+            // Retrieve query: In PX-FILE all languages is fetched, the "lang" parameter is ignored
+            Query query = statisticalResourcesRestExternal.retrieveQuery(agencyID, resourceID, null, null, dimensionSelection); // all langs
+            Dataset relatedDataset = retrieveDataset(query.getMetadata().getRelatedDataset().getUrn(), lang, dimensionSelection);
+
+            // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
+            if (dimensionSelection != null) {
+                query.setId(PxExporter.generateMatrixFromString(dimensionSelection));
+            }
+
+            if (filename == null) {
+                filename = buildFilename(".px", ResourceType.QUERY.getName(), agencyID, resourceID);
+            }
+            return exportQueryToPx(query, relatedDataset, filename);
+        } catch (Exception e) {
+            throw manageException(e);
+        }
+    }
+
+    private Response exportQueryToPx(Query query, Dataset relatedDataset, String filename) {
+        try {
+            // Export
+            final File tmpFile = File.createTempFile("metamac", "px");
+            FileOutputStream outputStream = new FileOutputStream(tmpFile);
+            exportService.exportQueryToPx(SERVICE_CONTEXT, query, relatedDataset, null, outputStream); // In PX file, all provided langs are sending
             outputStream.close();
 
             return buildResponseOkWithFile(tmpFile, filename, MediaType.TEXT_PLAIN);
@@ -481,6 +519,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
         PxExportation pxExportation = getPxExportation(jsonBody);
         return exportDatasetToPx(pxExportation, agencyID, resourceID, version, lang, filename);
+    }
+
+    @Override
+    public Response exportQueryToPxForm(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
+        PxExportation pxExportationBody = getPxExportation(jsonBody);
+        return exportQueryToPx(pxExportationBody, agencyID, resourceID, lang, filename);
     }
 
     private PxExportation getPxExportation(String jsonBody) {

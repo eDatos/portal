@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
+import org.siemac.metamac.portal.core.exporters.PxExporter;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Attribute;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeAttachmentLevelType;
@@ -96,7 +97,8 @@ public abstract class ResourceAccess {
         attributes = query.getMetadata().getAttributes();
 
         name = query.getName();
-        id = query.getId();
+        // Query id can be too long for PX Matrix
+        id = PxExporter.generateMatrixFromString(query.getId());
         urn = query.getUrn();
         description = query.getDescription();
         relatedDsd = query.getMetadata().getRelatedDsd();

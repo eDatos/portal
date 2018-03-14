@@ -1329,10 +1329,22 @@ public class ExportServiceTest implements ExportServiceTestBase {
         }
     }
 
+    @Test
     @Override
     public void testExportQueryToPx() throws Exception {
-        // TODO Auto-generated method stub
+        {
+            Query query = XMLUtils.getQuery(XMLUtils.class.getResourceAsStream("/resources/INDICADORES_OCUPACION.xml"));
+            Dataset relatedDataset = XMLUtils.getDataset(XMLUtils.class.getResourceAsStream("/resources/C00031A_000001.xml"));
 
+            File tmpFile = tempFolder.newFile();
+            FileOutputStream out = new FileOutputStream(tmpFile);
+            exportService.exportQueryToPx(ctx, query, relatedDataset, null, out);
+            out.close();
+
+            // Check checksum
+            InputStream resourceAsStream = ExportServiceTest.class.getResourceAsStream("/resources/export/queries/query-ISTAC-INDICADORES_OCUPACION.px");
+            Asserts.assertBytesArray(AssertsUtils.createPxContentHash(resourceAsStream), AssertsUtils.createPxContentHash(tmpFile));
+        }
     }
 
     private void validateAttributesWithDatasetAndDimensionAttachmentCodesAndSomeLabels(File tmpFileAttributes, String separator) throws Exception, IOException {

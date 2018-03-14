@@ -149,7 +149,7 @@ public interface DataExportV1_0 {
             @PathParam("resourceID") String resourceID, @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     /**
-     * Exports a dataset to px
+     * Export to px
      */
     @POST
     @Path("px/datasets/{agencyID}/{resourceID}/{version}")
@@ -162,6 +162,18 @@ public interface DataExportV1_0 {
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     Response exportDatasetToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
+
+    @POST
+    @Path("px/queries/{agencyID}/{resourceID}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    Response exportQueryToPx(PxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
+
+    @POST
+    @Path("px/queries/{agencyID}/{resourceID}")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    Response exportQueryToPxForm(@FormParam("jsonBody") String jsonBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+            @QueryParam("filename") String filename);
 
     @POST
     @Path("px/indicators/{resourceID}")

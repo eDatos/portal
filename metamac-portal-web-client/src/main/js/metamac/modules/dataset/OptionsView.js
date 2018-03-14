@@ -110,8 +110,7 @@
                     },
                     visualize: this.optionsModel.get('visualize'),
                     widget: this.optionsModel.get('widget'),
-                    widgetButton: this.optionsModel.get('widgetButton'),
-                    downloadButton: this._isDownloadButtonEnabled()
+                    widgetButton: this.optionsModel.get('widgetButton')
                 };
                 this.$el.html(this.template(context));
             }
@@ -126,11 +125,6 @@
                 return type == "info" || type == this.optionsModel.get('widgetInitialType');
             }
             return true;
-        },
-
-        _isDownloadButtonEnabled: function () {
-            var isQuery = this.filterDimensions.metadata.identifier().type === 'query';
-            return !isQuery || this._isExportableImage();
         },
 
         _isExportableImage: function () {

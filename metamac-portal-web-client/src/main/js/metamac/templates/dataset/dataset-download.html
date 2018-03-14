@@ -1,8 +1,9 @@
+{{#if buttonConfig.drawSelectionButtons}}
 <div class="dataset-download-group">
     <h3>{{ message "filter.download.selection" }}</h3>
 
 {{#if buttonConfig.allDimensionsWithSelections}}
-
+       
     {{#if buttonConfig.dataFormats}}       
     <form method="POST" action="{{url.excel}}" target="_parent">
         <input type="hidden" name="jsonBody" value="{{selection}}">
@@ -18,7 +19,7 @@
         <input type="hidden" name="jsonBody" value="{{selection}}">
         <a href="#" class="download-csv"><i class="icon-px"></i></a>
     </form>
-    {{/if}}   
+    {{/if}}     
 
     {{#if buttonConfig.imageFormats}}
     <form method="POST" action="{{url.png}}" target="_parent">
@@ -37,13 +38,14 @@
     </form>
     {{/if}}
     
+{{/if}}
 {{/if}} 
 
 {{#unless buttonConfig.allDimensionsWithSelections}}
     <p>
         {{message "ve.noSelection" }}
     </p>
-    {{/unless}}
+{{/unless}}
 
 </div>
 

@@ -58,6 +58,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedAttri
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NextVersionType;
+import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.Concept;
 
 public class PxExporter {
@@ -72,6 +73,11 @@ public class PxExporter {
 
     public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccessForPx(dataset, lang, langAlternative);
+        this.srmRestExternalFacade = srmRestExternalFacade;
+    }
+
+    public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
+        datasetAccess = new ResourceAccessForPx(query, relatedDataset, lang, langAlternative);
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
