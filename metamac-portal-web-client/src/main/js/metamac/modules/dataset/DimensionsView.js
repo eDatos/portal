@@ -254,8 +254,8 @@
         _bindEvents: function () {
             var self = this;
             this.filterDimensions.each(function (filterDimension) {
-                self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));
-                self.listenTo(self.filterDimensions, 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
+                self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 100));
+                self.listenTo(self.filterDimensions, 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 100));
             });
             this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(self.render, 500));
             this.listenTo(this.dataset.data, "hasNewData", self.hasNewdata);

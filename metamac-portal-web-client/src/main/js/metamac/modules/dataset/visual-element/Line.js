@@ -165,7 +165,7 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _bindEvents: function () {
-            this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", _.debounce(this.update, 20));
+            this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", _.debounce(this.update, 100));
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {
