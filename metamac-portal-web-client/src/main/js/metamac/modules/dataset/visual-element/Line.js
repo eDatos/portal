@@ -156,8 +156,11 @@ App.namespace("App.VisualElement.LineChart");
         destroy: function () {
             this._unbindEvents();
 
-            if (this.chart) {
-                this.chart.destroy();
+            if (this.masterChart) {
+                this.masterChart.destroy();
+            }
+            if (this.detailChart) {
+                this.detailChart.destroy();
             }
         },
 
@@ -288,7 +291,7 @@ App.namespace("App.VisualElement.LineChart");
                 return;
             }
 
-            if (!this.chart) {
+            if (!this.masterChart || !this.detailChart) {
                 this.load();
             } else {
                 self.detailChart.showLoading();
