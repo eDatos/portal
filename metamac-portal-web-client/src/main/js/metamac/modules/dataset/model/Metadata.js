@@ -63,7 +63,7 @@
             ]).join('&');
         },
 
-        idAttributes: ["type", "agency", "identifier", "version", "indicatorSystem", "permalinkId"],
+        idAttributes: ["type", "agency", "identifier", "version", "indicatorSystem", "permalinkId", "multidatasetId"],
 
         equals: function (metadata) {
             if (_.isUndefined(metadata)) return false;
@@ -76,6 +76,10 @@
 
         identifier: function () {
             return _.pick(this.options, this.idAttributes);
+        },
+
+        hasMultidataset: function () {
+            return !!this.identifier().multidatasetId;
         },
 
         getVisualizerUrlForWidget: function () {

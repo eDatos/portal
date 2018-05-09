@@ -78,12 +78,18 @@
         },
 
         _onChangeOpen: function (model, value) {
-            if (this.accordion && value) { //Accordion behaviour in dimensions
+            if (value) {
+                this.closeOpenDimensions(model);
+            }
+        },
+
+        closeOpenDimensions: function (model) {
+            if (this.accordion) { //Accordion behaviour in dimensions
                 var openDimensions = this.where({ open: true });
-                if (openDimensions.length > 1) {
-                    var otherOpenDimension = _.find(openDimensions, function (openDimension) {
-                        return openDimension.id !== model.id;
-                    });
+                var otherOpenDimension = _.find(openDimensions, function (openDimension) {
+                    return !model || openDimension.id !== model.id;
+                });
+                if (otherOpenDimension) {
                     otherOpenDimension.set({ open: false });
                 }
             }
@@ -162,6 +168,15 @@
                 }
             });
             return exportResult;
+        },
+
+
+        hasMultidataset: function () {
+            return this.metadata.hasMultidataset();
+        },
+
+        getMultidatasetId: function () {
+            return this.metadata.identifier().multidatasetId;
         }
 
     }, {

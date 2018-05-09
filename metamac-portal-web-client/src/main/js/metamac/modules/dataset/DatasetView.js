@@ -20,7 +20,8 @@
 
             this.optionsModel = new App.modules.dataset.OptionsModel({
                 widget: App.config.widget,
-                menu: false
+                menu: false,
+                filter: this.filterDimensions.hasMultidataset()
             });
             this.dataset = new App.dataset.Dataset({ metadata: this.metadata, filterDimensions: this.filterDimensions });
 

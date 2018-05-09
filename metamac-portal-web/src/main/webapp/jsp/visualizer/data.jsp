@@ -92,6 +92,7 @@
 								App.queryParams["type"] = '${param.resourceType}';
                                 App.queryParams["indicatorSystem"] = '${param.indicatorSystem}';
                                 App.queryParams["geo"] = '${param.geo}';
+								App.queryParams["multidatasetId"] = '${param.multidatasetId}';
 			
 			                    console.log("starting app");
 			

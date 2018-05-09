@@ -83,7 +83,7 @@
         // App.queryParams = { "agency": "ISTAC", "identifier": "C00031A_000002", "version": "001.006", "type": "dataset" };
 
         // Ejemplo de indicador
-        App.queryParams = { "identifier": "IND_0001", "type": "indicator" };
+        // App.queryParams = { "identifier": "IND_0001", "type": "indicator" };
 
         // Ejemplo de indicador con atributos
         // App.queryParams = { "identifier": "PUESTOS_TOTALES_ISTAC", "type": "indicator" };
@@ -105,6 +105,11 @@
 
         // http://estadisticas.arte-consultores.com/statistical-visualizer/visualizer/data.html?resourceType=indicatorInstance&resourceId=0a36fed2-5c42-4c42-8162-a247f55fe4ed&indicatorSystem=E30308A&measure=ABSOLUTE,ANNUAL_PERCENTAGE_RATE,INTERPERIOD_PERCENTAGE_RATE&geo=ES611#visualization/table
         //        App.queryParams = { "identifier": "0a36fed2-5c42-4c42-8162-a247f55fe4ed", "indicatorSystem": "E30308A", "type": "indicatorInstance", "geo": "ES611" };
+
+        // Ejemplo de multidataset
+        // http://estadisticas.arte-consultores.com/statistical-resources/v1.0/multidatasets/ISTAC/C00031A_000001.json
+        // App.queryParams = { "agency": "ISTAC", "identifier": "C00031A_000004", "version": "001.000", "type": "dataset" };
+        App.queryParams = { "agency": "ISTAC", "identifier": "C00031A_000004", "version": "001.000", "type": "dataset", "multidatasetId": "ISTAC:C00031A_000001" };
 
         // Vista widget
         // App.config.widget = true;

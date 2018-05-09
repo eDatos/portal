@@ -22,6 +22,8 @@
             };
             this.state = new App.components.sidebar.SidebarStateModel(stateOptions);
 
+            this._onToggleFilter();
+
             _.bindAll(this, "_onClickSplitter", "_onMousemoveSplitter", "_onMouseupSplitter");
         },
 

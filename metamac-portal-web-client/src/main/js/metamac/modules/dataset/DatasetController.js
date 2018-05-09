@@ -43,7 +43,7 @@
             this.router.navigate(link);
 
             var self = this;
-            var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version", "permalinkId", "indicatorSystem", "geo");
+            var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version", "permalinkId", "indicatorSystem", "geo", "multidatasetId");
             this._loadMetadata(datasetIdentifier)
                 .then(function () {
                     options = _.defaults(options, {
@@ -86,7 +86,7 @@
             var self = this;
             var deferred = $.Deferred();
 
-            var metadata = new App.dataset.Metadata(_.pick(datasetIdentifier, "type", "agency", "identifier", "version", "indicatorSystem", "permalinkId"));
+            var metadata = new App.dataset.Metadata(_.pick(datasetIdentifier, "type", "agency", "identifier", "version", "indicatorSystem", "permalinkId", "multidatasetId"));
             if (metadata.equals(this.metadata)) {
                 deferred.resolve();
             } else {

@@ -143,9 +143,9 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarCategoryView.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionActionsView.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarDimensionView.js"
+                paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarMultidatasetView.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/FilterSidebarView.js"
                 paths.js + "/metamac/modules/dataset/filter/sidebar/OrderSidebarView.js"
-
 
                 # visual elements
                 paths.js + "/metamac/modules/dataset/visual-element/Base.js"
@@ -210,6 +210,9 @@ module.exports = (grunt) ->
                 paths.modules + "/collection/CollectionView.js"
                 paths.modules + "/collection/CollectionController.js"
 
+                # Multidatasets
+                paths.modules + "/multidataset/MultidatasetNode.js"
+                paths.modules + "/multidataset/Multidataset.js"
 
                 # Error module
                 paths.modules + "/error/ErrorController.js"

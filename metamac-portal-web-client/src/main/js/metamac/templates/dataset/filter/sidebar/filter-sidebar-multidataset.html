@@ -1,0 +1,25 @@
+<div class="filter-sidebar-multidataset">
+    <div class="filter-sidebar-multidataset-title {{#if multidataset.open }} active {{/if}}">
+        <div class="filter-sidebar-multidataset-label">
+            {{ multidataset.name }}
+        </div>
+    </div>
+
+    <div class="filter-sidebar-multidataset-content collapse {{#if multidataset.open }} in {{/if}}">
+        <div class="filter-sidebar-categories">
+            {{#each nodes}}
+            <div class="filter-sidebar-category">
+                <a href="{{url}}" title="{{description}}">
+                    <div class="filter-sidebar-category-left-actions">
+                        <i class="category-state {{#if isCurrentResource}} filter-sidebar-category-icon-check {{/if}}  {{#unless isCurrentResource}} filter-sidebar-category-icon-unchecked {{/unless}} level0"></i>
+                    </div>
+                    <span class="filter-sidebar-category-label">
+                        {{name}}
+                    </span>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+</div>

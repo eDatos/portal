@@ -137,6 +137,46 @@
 	}
 }
 
+
+.filter-sidebar-multidatasets {
+
+    .filter-sidebar-multidataset {
+        .filter-sidebar-multidataset-title {
+            color: @istacWhite;
+            background-color: @istacGreyDark;
+                                
+            &.active {
+                background-color: @istacBlueDark;
+            }
+        }
+    }        
+}
+
+.filter-sidebar-multidataset {
+
+    background-color: @istacWhite;
+
+    .filter-sidebar-multidataset-title {
+        .sidebar-title;
+        cursor: pointer;        
+        .border-radius(6px 6px 0 0);
+    }
+
+    .filter-sidebar-multidataset-label {
+        font-size: @filterSidebarFontSize;
+    }
+    .filter-sidebar-category {
+        a {
+            text-decoration: none;
+            color: @istacBlack;
+        }
+        .filter-sidebar-category-label {
+            padding-left: 20px;
+            padding-right: 0;
+        }
+    }
+}
+
 .filter-sidebar-categories {
     outline: none;
     height: @filterSidebarDimensionContentHeight - 55px;

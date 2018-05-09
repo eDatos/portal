@@ -1922,13 +1922,81 @@ function program5(depth0,data) {
   return buffer;
   });
 
+this["Handlebars"]["templates"]["dataset/filter/sidebar/filter-sidebar-multidataset"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  
+  return " active ";
+  }
+
+function program3(depth0,data) {
+  
+  
+  return " in ";
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\r\n            <div class=\"filter-sidebar-category\">\r\n                <a href=\"";
+  if (stack1 = helpers.url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" title=\"";
+  if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.description; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\r\n                    <div class=\"filter-sidebar-category-left-actions\">\r\n                        <i class=\"category-state ";
+  stack1 = helpers['if'].call(depth0, depth0.isCurrentResource, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "  ";
+  stack1 = helpers.unless.call(depth0, depth0.isCurrentResource, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " level0\"></i>\r\n                    </div>\r\n                    <span class=\"filter-sidebar-category-label\">\r\n                        ";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\r\n                    </span>\r\n                </a>\r\n            </div>\r\n            ";
+  return buffer;
+  }
+function program6(depth0,data) {
+  
+  
+  return " filter-sidebar-category-icon-check ";
+  }
+
+function program8(depth0,data) {
+  
+  
+  return " filter-sidebar-category-icon-unchecked ";
+  }
+
+  buffer += "<div class=\"filter-sidebar-multidataset\">\r\n    <div class=\"filter-sidebar-multidataset-title ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.multidataset),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\">\r\n        <div class=\"filter-sidebar-multidataset-label\">\r\n            "
+    + escapeExpression(((stack1 = ((stack1 = depth0.multidataset),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"filter-sidebar-multidataset-content collapse ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.multidataset),stack1 == null || stack1 === false ? stack1 : stack1.open), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\">\r\n        <div class=\"filter-sidebar-categories\">\r\n            ";
+  stack2 = helpers.each.call(depth0, depth0.nodes, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n        </div>\r\n    </div>\r\n\r\n</div>";
+  return buffer;
+  });
+
 this["Handlebars"]["templates"]["dataset/filter/sidebar/filter-sidebar-view"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"filter-sidebar\" id=\"filter-sidebar\">\r\n    <div class=\"filter-sidebar-search\"></div>\r\n    <div class=\"filter-sidebar-dimensions\"></div>\r\n</div>";
+  return "<div class=\"filter-sidebar\" id=\"filter-sidebar\">\r\n    <div class=\"filter-sidebar-search\"></div>\r\n    <div class=\"filter-sidebar-multidatasets\"></div>\r\n    <div class=\"filter-sidebar-dimensions\"></div>\r\n</div>";
   });
 
 this["Handlebars"]["templates"]["dataset/map/map-error"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
