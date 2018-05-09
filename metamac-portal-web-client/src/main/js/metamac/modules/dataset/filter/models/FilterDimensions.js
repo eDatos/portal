@@ -78,20 +78,27 @@
         },
 
         _onChangeOpen: function (model, value) {
-            if (value) {
-                this.closeOpenDimensions(model);
+            if (value && this.accordion) {
+                var openDimensions = this.where({ open: true });
+                if (openDimensions.length > 1) {
+                    this._closeDimensions(model, openDimensions);
+                }
             }
         },
 
         closeOpenDimensions: function (model) {
             if (this.accordion) { //Accordion behaviour in dimensions
                 var openDimensions = this.where({ open: true });
-                var otherOpenDimension = _.find(openDimensions, function (openDimension) {
+                this._closeDimensions(model, openDimensions);
+            }
+        },
+
+        _closeDimensions: function (model, dimensions) {
+            var otherOpenDimensions = _.find(dimensions, function (openDimension) {
                     return !model || openDimension.id !== model.id;
                 });
-                if (otherOpenDimension) {
-                    otherOpenDimension.set({ open: false });
-                }
+            if (otherOpenDimensions) {
+                otherOpenDimensions.set({ open: false });
             }
         },
 
