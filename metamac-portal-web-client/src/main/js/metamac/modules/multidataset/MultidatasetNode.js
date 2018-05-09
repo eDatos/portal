@@ -20,7 +20,7 @@
                 var urlPartMatches = queryIdentifier.match(/(.*):(.*)/);
                 attributes.agency = urlPartMatches[1];
                 attributes.identifier = urlPartMatches[2];
-                attributes.urn = "?agencyId=" + attributes.agency + "&resourceId=" + attributes.identifier + "&resourceType=" + attributes.type;
+                attributes.url = "?agencyId=" + attributes.agency + "&resourceId=" + attributes.identifier + "&resourceType=" + attributes.type;
             }
 
             if (response.dataset) {
