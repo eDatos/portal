@@ -1966,13 +1966,13 @@ function program5(depth0,data) {
 function program6(depth0,data) {
   
   
-  return " filter-sidebar-category-icon-check ";
+  return " filter-sidebar-category-icon-radio-check ";
   }
 
 function program8(depth0,data) {
   
   
-  return " filter-sidebar-category-icon-unchecked ";
+  return " filter-sidebar-category-icon-radio-unchecked ";
   }
 
   buffer += "<div class=\"filter-sidebar-multidataset\">\r\n    <div class=\"filter-sidebar-multidataset-title ";
