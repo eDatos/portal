@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.core.common.util.shared.UrnUtils;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
@@ -233,7 +234,7 @@ public class PortalUtils {
     /**
      * Calculate the effective label visualisation mode for a dimension.
      * If configuration does not exist for component, returns default configuration
-     * 
+     *
      * @param labelVisualisationsMode map
      * @param datasetSelection
      * @param dimension
@@ -296,7 +297,7 @@ public class PortalUtils {
 
     /**
      * Concatenates two international Strings, each label in a determinated lang in source plus each label in the same lang in "toadd".
-     * 
+     *
      * @param current, maybe null, then a copy of "toAdd" is returned
      * @param toAdd
      * @return
@@ -319,7 +320,7 @@ public class PortalUtils {
             localisedStringResult.setValue(label);
             result.getTexts().add(localisedStringResult);
         }
-        
+
         return result;
     }
 
@@ -327,7 +328,7 @@ public class PortalUtils {
         if (current == null) {
             return current;
         }
-        
+
         InternationalString result = new InternationalString();
         for (LocalisedString localisedString : current.getTexts()) {
             LocalisedString localisedStringResult = new LocalisedString();
@@ -338,5 +339,32 @@ public class PortalUtils {
 
         return result;
 
+    }
+
+    /**
+     * @see org.siemac.metamac.core.common.util.shared.UrnUtils#splitUrnStructure
+     */
+    public static String[] splitUrnStructure(String urn) {
+        String tripletIdentifier = UrnUtils.removePrefix(urn);
+        return splitUrnWithoutPrefixItemScheme(tripletIdentifier);
+    }
+
+    /**
+     * @see org.siemac.metamac.core.common.util.shared.UrnUtils#splitUrnWithoutPrefixItemScheme
+     */
+    // TODO move to UrnUtils.splitUrnWithoutPrefixItemScheme ?
+    public static String[] splitUrnWithoutPrefixItemScheme(String tripletIdentifier) {
+        String agencyID = StringUtils.substringBefore(tripletIdentifier, UrnUtils.COLON.toString());
+        String resourceID = null;
+        String version = null;
+
+        if (StringUtils.contains(tripletIdentifier, UrnUtils.LEFT_PARENTHESIS) && StringUtils.contains(tripletIdentifier, UrnUtils.RIGHT_PARENTHESIS)) {
+            resourceID = StringUtils.substringBetween(tripletIdentifier, UrnUtils.COLON, UrnUtils.LEFT_PARENTHESIS);
+            version = StringUtils.substringBetween(tripletIdentifier, UrnUtils.LEFT_PARENTHESIS, UrnUtils.RIGHT_PARENTHESIS);
+        } else {
+            resourceID = StringUtils.substringAfter(tripletIdentifier, UrnUtils.COLON.toString());
+        }
+
+        return new String[]{agencyID, resourceID, version};
     }
 }

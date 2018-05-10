@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.codehaus.jackson.JsonParseException;
@@ -14,12 +15,17 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
+import org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType;
+import org.siemac.metamac.portal.core.utils.PortalUtils;
 import org.siemac.metamac.portal.dto.Chapter;
 import org.siemac.metamac.portal.dto.Collection;
 import org.siemac.metamac.portal.dto.CollectionNode;
 import org.siemac.metamac.portal.dto.Dataset;
 import org.siemac.metamac.portal.dto.Indicator;
 import org.siemac.metamac.portal.dto.IndicatorInstance;
+import org.siemac.metamac.portal.dto.Multidataset;
+import org.siemac.metamac.portal.dto.MultidatasetTable;
 import org.siemac.metamac.portal.dto.Permalink;
 import org.siemac.metamac.portal.dto.PermalinkContent;
 import org.siemac.metamac.portal.dto.Query;
@@ -27,24 +33,39 @@ import org.siemac.metamac.portal.dto.QueryParams;
 import org.siemac.metamac.portal.dto.Table;
 import org.siemac.metamac.portal.mapper.Collection2DtoMapper;
 import org.siemac.metamac.portal.mapper.Dataset2DtoMapper;
+import org.siemac.metamac.portal.mapper.Multidataset2DtoMapper;
 import org.siemac.metamac.portal.mapper.Query2DtoMapper;
 import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.common.v1_0.domain.LocalisedString;
+import org.siemac.metamac.rest.common.v1_0.domain.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 public class Helpers {
 
-    private static final Logger LOGGGER                          = LoggerFactory.getLogger(Helpers.class);
+    private static final String PATH_RELATIVE_DATA_PAGE            = "data.html";
+    public static final String  PARAMETER_RESOURCE_TYPE            = "resourceType";
+    public static final String  PARAMETER_RESOURCE_ID              = "resourceId";
+    public static final String  PARAMETER_AGENCY_ID                = "agencyId";
+    public static final String  PARAMETER_VERSION                  = "version";
+    public static final String  PARAMETER_INDICATOR_SYSTEM         = "indicatorSystem";
+    public static final String  PARAMETER_SHARED_VISUALIZER_URL    = "sharedVisualizerUrl";
+    public static final String  PARAMETER_MULTIDATASET_ID          = "multidatasetId";
+
+    private static final String DEFAULT_LANGUAGE                   = "es";
+    private static final String LATEST_VERSION                     = "~latest";
+    private static final int    MINIMAL_FIXED_DIGITS_IN_NUMERATION = 2;
+
+    private static final Logger LOGGGER                            = LoggerFactory.getLogger(Helpers.class);
 
     private String              language;
-    private String              DEFAULT_KEY                      = "__default__";
-    private static final String FIELDS_EXCLUDE_DATA_AND_METADATA = "-data,-metadata";
+    private String              DEFAULT_KEY                        = "__default__";
+    private static final String FIELDS_EXCLUDE_DATA_AND_METADATA   = "-data,-metadata";
 
     public Helpers(String language) {
         if (language.isEmpty()) {
-            this.language = "es";
+            this.language = DEFAULT_LANGUAGE;
         } else {
             this.language = language;
         }
@@ -61,7 +82,7 @@ public class Helpers {
         try {
             // Ex: "http://HOST/statistical-resources/apis/statistical-resources";
             List<String> lang = new ArrayList<String>();
-            String fields = "";
+            String fields = StringUtils.EMPTY;
 
             if (internalPortal) {
                 collection = collection2DtoMapper.collectionInternalToDto(Helpers.getInternalJAXRSClient(apiUrlStatisticalResources).retrieveCollection(agencyId, resourceId, lang, fields));
@@ -82,7 +103,7 @@ public class Helpers {
             // Ex: "http://HOST/statistical-resources/apis/statistical-resources";
             List<String> lang = new ArrayList<String>();
             if (version == null) {
-                version = "~latest";
+                version = LATEST_VERSION;
             }
 
             String fields = FIELDS_EXCLUDE_DATA_AND_METADATA;
@@ -117,6 +138,29 @@ public class Helpers {
             LOGGGER.error("Error obteniendo el Query", e);
         }
         return query;
+    }
+
+    public static Multidataset getMultidataset(String apiUrlStatisticalResources, Boolean internalPortal, String multidatasetId) {
+        Multidataset multidataset = null;
+        Multidataset2DtoMapper multidataset2DtoMapper = new Multidataset2DtoMapper();
+        try {
+            // Ex: "http://HOST/statistical-resources/apis/statistical-resources";
+            List<String> lang = new ArrayList<String>();
+            String fields = "";
+            String agencyId = PortalUtils.splitUrnWithoutPrefixItemScheme(multidatasetId)[0];
+            String resourceId = PortalUtils.splitUrnWithoutPrefixItemScheme(multidatasetId)[1];
+
+            if (internalPortal) {
+                // FIXME METAMAC-2720 - Exponer los multidatasets a través de la API
+                // multidataset = multidataset2DtoMapper.multidatasetInternalToDto(Helpers.getInternalJAXRSClient(apiUrlStatisticalResources).retrieveMultidataset(agencyId, resourceId, lang, fields));
+            } else {
+                multidataset = multidataset2DtoMapper.multidatasetExternalToDto(Helpers.getExternalJAXRSClient(apiUrlStatisticalResources).retrieveMultidataset(agencyId, resourceId, lang, fields));
+            }
+
+        } catch (Exception e) {
+            LOGGGER.error("Error obteniendo la Colección", e);
+        }
+        return multidataset;
     }
 
     public static Indicator getIndicator(String apiUrlIndicators, Boolean internalPortal, String resourceId) {
@@ -166,21 +210,52 @@ public class Helpers {
         StringBuilder stringBuilder = new StringBuilder();
 
         QueryParams queryParams = permalink.getContent().getQueryParams();
-        stringBuilder.append("?").append("resourceType").append("=").append(queryParams.getType());
-        stringBuilder.append("&").append("agencyId").append("=").append(queryParams.getAgency());
-        stringBuilder.append("&").append("resourceId").append("=").append(queryParams.getIdentifier());
-        stringBuilder.append("&").append("version").append("=").append(queryParams.getVersion());
-        stringBuilder.append("&").append("indicatorSystem").append("=").append(queryParams.getIndicatorSystem());
 
-        if (sharedVisualizerUrl != null) {
-            stringBuilder.append("&").append("sharedVisualizerUrl").append("=").append(sharedVisualizerUrl);
-        }
+        appendParameter(stringBuilder, PARAMETER_RESOURCE_TYPE, queryParams.getType());
+        appendParameter(stringBuilder, PARAMETER_AGENCY_ID, queryParams.getAgency());
+        appendParameter(stringBuilder, PARAMETER_RESOURCE_ID, queryParams.getIdentifier());
+        appendParameter(stringBuilder, PARAMETER_VERSION, queryParams.getVersion());
+        appendParameter(stringBuilder, PARAMETER_INDICATOR_SYSTEM, queryParams.getIndicatorSystem());
+        appendParameter(stringBuilder, PARAMETER_SHARED_VISUALIZER_URL, sharedVisualizerUrl);
 
         // Includes #
         stringBuilder.append(permalink.getContent().getHash());
         stringBuilder.append("/").append("permalink").append("/").append(permalink.getId());
 
         return stringBuilder.toString();
+    }
+
+    public static String buildUrl(Multidataset multidataset, String sharedVisualizerUrl, String multidatasetId) {
+        StringBuilder stringBuilder = new StringBuilder();
+        MultidatasetTable table = (MultidatasetTable) multidataset.getData().getNodes().getNodes().get(0);
+        Resource resource = table.getDataset() != null ? table.getDataset() : table.getQuery();
+        if (resource == null) {
+            return StringUtils.EMPTY;
+        }
+
+        String[] tripleIdentifier = getTripleIdentifier(resource);
+
+        appendParameter(stringBuilder, PARAMETER_RESOURCE_TYPE, resourceKindToResourceType(resource.getKind()));
+        appendParameter(stringBuilder, PARAMETER_AGENCY_ID, tripleIdentifier[0]);
+        appendParameter(stringBuilder, PARAMETER_RESOURCE_ID, tripleIdentifier[1]);
+        appendParameter(stringBuilder, PARAMETER_VERSION, tripleIdentifier[2]);
+        appendParameter(stringBuilder, PARAMETER_SHARED_VISUALIZER_URL, sharedVisualizerUrl);
+        appendParameter(stringBuilder, PARAMETER_MULTIDATASET_ID, multidatasetId);
+
+        return stringBuilder.toString();
+    }
+
+    private static String resourceKindToResourceType(String kind) {
+        TypeExternalArtefactsEnum typeExternalArtefact = TypeExternalArtefactsEnum.fromValue(kind);
+        switch (typeExternalArtefact) {
+            case DATASET:
+                return ResourceType.DATASET.getName();
+            case QUERY:
+                return ResourceType.QUERY.getName();
+            default:
+                break;
+        }
+        return null;
     }
 
     private static org.siemac.metamac.statistical_resources.rest.internal.v1_0.service.StatisticalResourcesV1_0 getInternalJAXRSClient(String statisticalResourcesEndpoint) {
@@ -202,8 +277,8 @@ public class Helpers {
     public static int numberOfFixedDigitsInNumeration(Collection collection) {
         Integer totalIndicatorInstances = countIndicatorInstances(collection.getData().getNodes().getNodes());
         int fixedDigits = totalIndicatorInstances.toString().length();
-        if (fixedDigits < 2) {
-            fixedDigits = 2;
+        if (fixedDigits < MINIMAL_FIXED_DIGITS_IN_NUMERATION) {
+            fixedDigits = MINIMAL_FIXED_DIGITS_IN_NUMERATION;
         }
         return fixedDigits;
     }
@@ -234,13 +309,13 @@ public class Helpers {
             }
             return internationalString.getTexts().get(0).getValue();
         } else {
-            return "";
+            return StringUtils.EMPTY;
         }
     }
 
     public String localizeText(Map<String, String> stringMap) {
         if (stringMap == null) {
-            return "";
+            return StringUtils.EMPTY;
         }
 
         String translation = stringMap.get(language);
@@ -253,7 +328,7 @@ public class Helpers {
             return translation;
         }
 
-        return "";
+        return StringUtils.EMPTY;
     }
 
     public static String reverseIndex(String[] arr, int i) {
@@ -261,19 +336,44 @@ public class Helpers {
     }
 
     public static String tableViewUrl(Table table) {
-        if (table.getQuery() != null) {
-            String[] hrefParts = table.getQuery().getSelfLink().getHref().split("/");
-            String agency = reverseIndex(hrefParts, 1);
-            String identifier = reverseIndex(hrefParts, 0);
-            return "data.html?agencyId=" + agency + "&resourceId=" + identifier + "&resourceType=query#";
-        } else if (table.getDataset() != null) {
-            String[] hrefParts = table.getDataset().getSelfLink().getHref().split("/");
-            String agency = reverseIndex(hrefParts, 2);
-            String identifier = reverseIndex(hrefParts, 1);
-            String version = reverseIndex(hrefParts, 0);
-            return "data.html?agencyId=" + agency + "&resourceId=" + identifier + "&version=" + version + "&resourceType=dataset#";
+        StringBuilder builder = new StringBuilder();
+        Resource resource = table.getDataset() != null ? table.getDataset() : table.getQuery();
+        if (resource != null) {
+            String[] tripleIdentifier = getTripleIdentifier(resource);
+            appendParameter(builder, PARAMETER_RESOURCE_TYPE, resourceKindToResourceType(resource.getKind()));
+            appendParameter(builder, PARAMETER_AGENCY_ID, tripleIdentifier[0]);
+            appendParameter(builder, PARAMETER_RESOURCE_ID, tripleIdentifier[1]);
+            appendParameter(builder, PARAMETER_VERSION, tripleIdentifier[2]);
+
+            builder.insert(0, PATH_RELATIVE_DATA_PAGE);
         }
-        return "#";
+        builder.append("#");
+
+        return builder.toString();
+    }
+
+    private static String[] getTripleIdentifier(Resource resource) {
+        if (resource != null) {
+            return PortalUtils.splitUrnStructure(resource.getUrn());
+        } else {
+            return new String[]{null, null, null};
+        }
+    }
+
+    private static void appendParameter(StringBuilder builder, String key, String value) {
+        if (!StringUtils.isBlank(value)) {
+            appendAmpersandOrQuestionmark(builder);
+            builder.append(key).append("=").append(value);
+        }
+    }
+
+    private static void appendAmpersandOrQuestionmark(StringBuilder builder) {
+        if (builder.length() > 0) {
+            builder.append("&");
+        } else {
+            builder.append("?");
+        }
+
     }
 
 }

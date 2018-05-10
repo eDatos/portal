@@ -5,6 +5,7 @@
 <%@ tag import="org.siemac.metamac.portal.dto.Collection" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Dataset" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Query" %>
+<%@ tag import="org.siemac.metamac.portal.dto.Multidataset" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Indicator" %>
 <%@ tag import="org.siemac.metamac.portal.dto.IndicatorInstance" %>
 <%@ tag import="org.siemac.metamac.portal.dto.Permalink" %>
@@ -12,6 +13,8 @@
 <%@ tag import="org.siemac.metamac.portal.core.conf.PortalConfiguration"%>
 <%@ tag import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
 <%@ tag import="org.siemac.metamac.portal.web.WebUtils" %>
+<%@ tag import="org.siemac.metamac.portal.core.constants.PortalConstants" %>
+<%@ tag import="org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType" %>
 
 <%@tag import="java.util.logging.Logger"%>
 <%@tag import="java.util.logging.Level"%>
@@ -104,78 +107,103 @@
 		 	request.setAttribute("analyticsGoogleTrackingId", "error");
 		}
 	%>
+    <%    
+		String sharedVisualizerUrl = request.getParameter(Helpers.PARAMETER_SHARED_VISUALIZER_URL);
+    %>
     <%
         String permalinkId = request.getParameter("permalink");
-		String sharedVisualizerUrl = request.getParameter("sharedVisualizerUrl");
         if (permalinkId != null && !permalinkId.isEmpty()) {
             Permalink permalink = Helpers.getPermalink(PERMALINKS_API_URL_BASE, permalinkId);
             response.sendRedirect(Helpers.buildUrl(permalink, sharedVisualizerUrl));   
         }        
     %>
+    <%
+        String resourceTypeValue = request.getParameter(Helpers.PARAMETER_RESOURCE_TYPE);
+        ResourceType resourceType =  resourceTypeValue != null ? ResourceType.fromValue(resourceTypeValue) : null;
+        String multidatasetId = request.getParameter(Helpers.PARAMETER_MULTIDATASET_ID);
+        if (multidatasetId != null && !multidatasetId.isEmpty() && resourceType == null) {
+            Multidataset multidataset = Helpers.getMultidataset(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, multidatasetId);
+            response.sendRedirect(Helpers.buildUrl(multidataset, sharedVisualizerUrl, multidatasetId));   
+        }        
+    %>
 	<%               
-      	        
-        String resourceType = request.getParameter("resourceType");
-        String agencyId = request.getParameter("agencyId");
-        String resourceId = request.getParameter("resourceId");
-        String version = request.getParameter("version");
-        String indicatorSystem = request.getParameter("indicatorSystem");
+        String agencyId = request.getParameter(Helpers.PARAMETER_AGENCY_ID);
+        String resourceId = request.getParameter(Helpers.PARAMETER_RESOURCE_ID);
+        String version = request.getParameter(Helpers.PARAMETER_VERSION);
+        String indicatorSystem = request.getParameter(Helpers.PARAMETER_INDICATOR_SYSTEM);
 
 	    request.setAttribute("resourceEmpty", true);
 	    String resourceName = "";
 	    String resourceDescription = "";                     
 	    
-	    // Java 1.6 don't allow switchs on String
-	    if ("collection".equals(resourceType)) {
-            Collection collection = Helpers.getCollection(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);     	  	
-    	    if (collection != null) {	        
-    	        request.setAttribute("resourceEmpty", false);
-    	        request.setAttribute("resourceName", helper.localizeText(collection.getName()));
-    	        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(collection.getDescription())));
-    	        request.setAttribute("resourceDescription", helper.localizeText(collection.getDescription()));
-                
-    	        request.setAttribute("collection", collection);
-                request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
-                request.setAttribute("nodes", collection.getData().getNodes().getNodes());
-    	    }
-	    } else if ("dataset".equals(resourceType)) {
-	        Dataset dataset = Helpers.getDataset(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId, version);
-	        
-	        if (dataset != null) {
-		        request.setAttribute("resourceEmpty", false);
-		        request.setAttribute("resourceName", helper.localizeText(dataset.getName()));
-		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(dataset.getDescription())));
-    	        request.setAttribute("resourceDescription", helper.localizeText(dataset.getDescription()));
-	        }
-	    } else if ("query".equals(resourceType)) {
-	        Query query = Helpers.getQuery(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);
-	        
-	        if (query != null) {
-		        request.setAttribute("resourceEmpty", false);
-		        request.setAttribute("resourceName", helper.localizeText(query.getName()));
-		        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(query.getDescription())));
-    	        request.setAttribute("resourceDescription", helper.localizeText(query.getDescription()));  
-	        } 
-	    } else if ("indicator".equals(resourceType)) {
-            Indicator indicator = Helpers.getIndicator(INDICATORS_API_URL_BASE, internalPortal, resourceId);            
-            if (indicator != null) {
+        if (multidatasetId != null) {
+            Multidataset multidataset = Helpers.getMultidataset(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, multidatasetId);
+            if (multidataset != null && !multidatasetId.isEmpty()) {
                 request.setAttribute("resourceEmpty", false);
-                request.setAttribute("resourceName", helper.localizeText(indicator.getTitle()));
-                request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(indicator.getConceptDescription())));
-                request.setAttribute("resourceDescription", helper.localizeText(indicator.getConceptDescription()));  
-            }           
-        } else if ("indicatorInstance".equals(resourceType)) {
-                IndicatorInstance indicatorInstance = Helpers.getIndicatorInstance(INDICATORS_API_URL_BASE, internalPortal, resourceId, indicatorSystem);            
-                if (indicatorInstance != null) {
-                    request.setAttribute("resourceEmpty", false);
-                    request.setAttribute("resourceName", helper.localizeText(indicatorInstance.getTitle()));
-                    request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(indicatorInstance.getConceptDescription())));
-                    request.setAttribute("resourceDescription", helper.localizeText(indicatorInstance.getConceptDescription()));  
-                }              
-	    } else {	
-	        request.setAttribute("resourceName", "Visualizador estadístico");
-	        request.setAttribute("resourceDescription", "Visualizador estadístico");
-	        request.setAttribute("resourceDescriptionOnlyText", "Visualizador estadístico");
-	    }
+                request.setAttribute("resourceName", helper.localizeText(multidataset.getName()));
+                request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(multidataset.getDescription())));
+                request.setAttribute("resourceDescription", helper.localizeText(multidataset.getDescription()));                
+            }
+        } else {
+            switch (resourceType) {
+                case COLLECTION:
+                    Collection collection = Helpers.getCollection(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);            
+                    if (collection != null) {           
+                        request.setAttribute("resourceEmpty", false);
+                        request.setAttribute("resourceName", helper.localizeText(collection.getName()));
+                        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(collection.getDescription())));
+                        request.setAttribute("resourceDescription", helper.localizeText(collection.getDescription()));
+                        
+                        request.setAttribute("collection", collection);
+                        request.setAttribute("numberOfFixedDigitsInNumeration", Helpers.numberOfFixedDigitsInNumeration(collection));
+                        request.setAttribute("nodes", collection.getData().getNodes().getNodes());
+                    }
+                    break;
+                case DATASET:
+                    Dataset dataset = Helpers.getDataset(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId, version);
+                    
+                    if (dataset != null) {
+                        request.setAttribute("resourceEmpty", false);
+                        request.setAttribute("resourceName", helper.localizeText(dataset.getName()));
+                        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(dataset.getDescription())));
+                        request.setAttribute("resourceDescription", helper.localizeText(dataset.getDescription()));
+                    }
+                    break;
+                case QUERY:
+                    Query query = Helpers.getQuery(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);
+                    
+                    if (query != null) {
+                        request.setAttribute("resourceEmpty", false);
+                        request.setAttribute("resourceName", helper.localizeText(query.getName()));
+                        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(query.getDescription())));
+                        request.setAttribute("resourceDescription", helper.localizeText(query.getDescription()));  
+                    }
+                    break;
+                case INDICATOR:
+                    Indicator indicator = Helpers.getIndicator(INDICATORS_API_URL_BASE, internalPortal, resourceId);            
+                    if (indicator != null) {
+                        request.setAttribute("resourceEmpty", false);
+                        request.setAttribute("resourceName", helper.localizeText(indicator.getTitle()));
+                        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(indicator.getConceptDescription())));
+                        request.setAttribute("resourceDescription", helper.localizeText(indicator.getConceptDescription()));  
+                    }
+                    break;
+                case INDICATOR_INSTANCE:
+                    IndicatorInstance indicatorInstance = Helpers.getIndicatorInstance(INDICATORS_API_URL_BASE, internalPortal, resourceId, indicatorSystem);            
+                    if (indicatorInstance != null) {
+                        request.setAttribute("resourceEmpty", false);
+                        request.setAttribute("resourceName", helper.localizeText(indicatorInstance.getTitle()));
+                        request.setAttribute("resourceDescriptionOnlyText", Helpers.html2text(helper.localizeText(indicatorInstance.getConceptDescription())));
+                        request.setAttribute("resourceDescription", helper.localizeText(indicatorInstance.getConceptDescription()));  
+                    } 
+                    break;
+               default:
+                   request.setAttribute("resourceName", "Visualizador estadístico");
+                   request.setAttribute("resourceDescription", "Visualizador estadístico");
+                   request.setAttribute("resourceDescriptionOnlyText", "Visualizador estadístico");
+                   break;
+            }
+        }
 	%>
 	<%
 	

@@ -1,5 +1,8 @@
 package org.siemac.metamac.portal.core.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PortalConstants {
 
     public final static String QUOTE             = "\"";
@@ -14,7 +17,31 @@ public class PortalConstants {
     public final static String RIGHT_BRACE       = "]";
 
     public static enum ResourceType {
-        DATASET("dataset"), INDICATOR("indicator"), INDICATOR_INSTANCE("indicatorInstance"), QUERY("query");
+
+        //@formatter:off
+        DATASET("dataset"),
+        QUERY("query"),
+        INDICATOR("indicator"),
+        INDICATOR_INSTANCE("indicatorInstance"),
+        COLLECTION("collection"),
+        MULTIDATASET("multidataset");
+        //@formatter:on
+
+        private static Map<String, ResourceType> identifierMap = new HashMap<String, ResourceType>();
+
+        static {
+            for (ResourceType value : ResourceType.values()) {
+                identifierMap.put(value.getName(), value);
+            }
+        }
+
+        public static ResourceType fromValue(String value) {
+            ResourceType result = identifierMap.get(value);
+            if (result == null) {
+                throw new IllegalArgumentException("No ResourceType for value: " + value);
+            }
+            return result;
+        }
 
         private String name;
 
