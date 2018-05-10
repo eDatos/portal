@@ -58,7 +58,7 @@
             },
 
             areSameResource: function (resourceIdentifier, attributes) {
-                return resourceIdentifier.agency === attributes.agency && resourceIdentifier.identifier === attributes.identifier && resourceIdentifier.version === attributes.version;
+                return resourceIdentifier.agency === attributes.agency && resourceIdentifier.identifier === attributes.identifier && ((!resourceIdentifier.version && !attributes.version) || (resourceIdentifier.version == attributes.version));
             }
 
         });
