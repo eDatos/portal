@@ -1947,8 +1947,8 @@ function program5(depth0,data) {
   else { stack1 = depth0.url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\" title=\"";
-  if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.description; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\">\r\n                    <div class=\"filter-sidebar-category-left-actions\">\r\n                        <i class=\"category-state ";
   stack1 = helpers['if'].call(depth0, depth0.isCurrentResource, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
