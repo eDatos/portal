@@ -70,9 +70,7 @@
         },
 
         _onChangeFilterQuery: function () {
-            this.stopListening(this, 'change:filterLevel', this._onChangeFilterLevel); //unbind to not trigger _onChangeFilterLevel
-            this.set('filterLevel', this.defaults.filterLevel);
-            this.listenTo(this, 'change:filterLevel', this._onChangeFilterLevel);
+            this.set('filterLevel', this.defaults.filterLevel, { silent: true });
 
             var filterQuery = this._cleanFilterQuery(this.get('filterQuery'));
             var filterQueryLength = filterQuery.length;
