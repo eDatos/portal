@@ -6,6 +6,7 @@
     App.modules.multidataset.Multidataset = Backbone.Model.extend({
 
         defaults: {
+            filterQuery: '',
             open: true
         },
 
@@ -19,6 +20,37 @@
 
             this.agency = identifiers[0];
             this.identifier = identifiers[1];
+
+            this._bindEvents();
+        },
+
+        _bindEvents: function () {
+            this.listenTo(this, 'change:filterQuery', this._onChangeFilterQuery);
+        },
+
+        _cleanFilterQuery: function (query) {
+            return s.trim(s.cleanDiacritics(query).toLowerCase());
+        },
+
+        _onChangeFilterQuery: function () {
+            var filterQuery = this._cleanFilterQuery(this.get('filterQuery'));
+            var filterQueryLength = filterQuery.length;
+
+            var nodes = this.get('nodes');
+            nodes.each(function (model) {
+                model.set({ open: false }, { trigger: false });
+            });
+
+            var matchedElement = {};
+            nodes.each(function (model) {
+                var matchIndex = this._cleanFilterQuery(model.get('name')).indexOf(filterQuery);
+                var match = matchIndex !== -1;
+                if (match) {
+                    model.set({ visible: true, matchIndexBegin: matchIndex, matchIndexEnd: matchIndex + filterQueryLength });
+                } else {
+                    model.set({ visible: false, matchIndexBegin: undefined, matchIndexEnd: undefined });
+                }
+            }, this);
         },
 
         url: function () {
@@ -29,7 +61,7 @@
             var attributes = {};
             attributes.name = App.i18n.localizeText(response.name);
             attributes.description = App.i18n.localizeText(response.description);
-            this.nodes = App.modules.multidataset.MultidatasetNode.parseNodes(response.data.nodes, this.multidatasetIdentifier, this.filterDimensions.metadata.identifier());
+            this.set('nodes', App.modules.multidataset.MultidatasetNode.parseNodes(response.data.nodes, this.multidatasetIdentifier, this.filterDimensions.metadata.identifier()));
             return attributes;
         },
 

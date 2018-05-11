@@ -6,19 +6,9 @@
     </div>
 
     <div class="filter-sidebar-multidataset-content collapse {{#if multidataset.open }} in {{/if}}">
-        <div class="filter-sidebar-categories">
-            {{#each nodes}}
-            <div class="filter-sidebar-category">
-                <a href="{{url}}" title="{{name}}">
-                    <div class="filter-sidebar-category-left-actions">
-                        <i class="category-state {{#if isCurrentResource}} filter-sidebar-category-icon-radio-check {{/if}}  {{#unless isCurrentResource}} filter-sidebar-category-icon-radio-unchecked {{/unless}} level0"></i>
-                    </div>
-                    <span class="filter-sidebar-category-label">
-                        {{name}}
-                    </span>
-                </a>
-            </div>
-            {{/each}}
+        <div class="filter-sidebar-multidataset-searchbar"></div>
+
+        <div class="filter-sidebar-multidataset-nodes">
         </div>
     </div>
 

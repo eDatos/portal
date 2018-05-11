@@ -165,7 +165,7 @@
     .filter-sidebar-multidataset-label {
         font-size: @filterSidebarFontSize;
     }
-    .filter-sidebar-category {
+    .filter-sidebar-multidataset-node {
         a {
             text-decoration: none;
             color: @istacBlack;
@@ -177,6 +177,8 @@
     }
 }
 
+
+.filter-sidebar-multidataset-nodes,
 .filter-sidebar-categories {
     outline: none;
     height: @filterSidebarDimensionContentHeight - 55px;
@@ -185,7 +187,11 @@
     margin-bottom: 5px;
     padding: 0 5px;
 }
+.filter-sidebar-multidataset-searchbar {
+    margin-bottom: 5px;
+}
 
+.filter-sidebar-multidataset-node,
 .filter-sidebar-category {
     .clearfix;
     color: @istacBlack;
@@ -280,12 +286,12 @@
     }
 }
 
-.filter-sidebar-category-icon-radio-check {
+.filter-sidebar-multidataset-node-icon-check {
     .filter-sidebar-category-icon-min;
     .icon-radio-checked;
 }
 
-.filter-sidebar-category-icon-radio-unchecked {
+.filter-sidebar-multidataset-node-icon-unchecked {
     .filter-sidebar-category-icon-min;
     .icon-radio-unchecked;
 }

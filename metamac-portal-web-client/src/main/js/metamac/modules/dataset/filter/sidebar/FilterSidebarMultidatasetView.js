@@ -3,7 +3,7 @@
 
     App.namespace("App.widget.filter.sidebar");
 
-    var FilterSidebarCategoryView = App.widget.filter.sidebar.FilterSidebarCategoryView;
+    var FilterSidebarMultidatasetNodeView = App.widget.filter.sidebar.FilterSidebarMultidatasetNodeView;
     var FilterRepresentation = App.modules.dataset.filter.models.FilterRepresentation;
 
     App.widget.filter.sidebar.FilterSidebarMultidatasetView = Backbone.View.extend({
@@ -15,9 +15,11 @@
             this.multidatasetId = this.filterDimensions.getMultidatasetId();
             this.resetLastIndex();
             this.collapsable = _(options).has('collapsable') ? options.collapsable : true;
+            this.loadMultidataset(this.multidatasetId).then(_.bind(this.render, this));
         },
 
         destroy: function () {
+            _.invoke(this.subviews, 'destroy');
             this._unbindEvents();
             this.remove();
         },
@@ -64,18 +66,35 @@
             this._bindEvents();
             var self = this;
 
-            this.loadMultidataset(this.multidatasetId)
-                .then(function () {
-                    if (self.multidataset.nodes) {
-                    self.$el.html(self.template({
+            this.$el.html(this.template({
                             multidataset: self.multidataset.toJSON(),
-                        nodes: self.multidataset.nodes.toJSON()
+                // nodes: this.multidataset.nodes.toJSON()
                     }));
-                    }
-                });
 
-            var $categories = this.$(".filter-sidebar-categories");
-            $categories.perfectScrollbar();
+            this.subviews = [];
+
+            var $nodes = this.$(".filter-sidebar-multidataset-nodes");
+            if (this.multidataset.get('nodes')) {
+                this.nodesSubviews = this.multidataset.get('nodes').map(function (multidatasetNode) {
+                    var view = new App.widget.filter.sidebar.FilterSidebarMultidatasetNodeView({
+                        multidatasetNode: multidatasetNode
+                });
+                    view.render();
+                    $nodes.append(view.el);
+                    return view;
+                }, this);
+
+                this.subviews = this.subviews.concat(this.nodesSubviews);
+            }
+            $nodes.perfectScrollbar();
+
+            this.searchbarView = new App.components.searchbar.SearchbarView({
+                model: this.multidataset,
+                modelAttribute: "filterQuery",
+                el: this.$(".filter-sidebar-multidataset-searchbar")
+            });
+            this.searchbarView.render();
+            this.subviews.push(this.searchbarView);
 
             this.setMaxHeight(this.maxHeight);
             this._onChangeOpenFilterDimensions(this.filterDimensions);
@@ -87,7 +106,7 @@
         updateScrollbar: function () {
             // Wait for DOM
             setTimeout(function () {
-                this.$(".filter-sidebar-categories").perfectScrollbar('update');
+                this.$(".filter-sidebar-multidataset-nodes").perfectScrollbar('update');
             }, 10);
         },
 
@@ -126,7 +145,7 @@
             this.$('.collapse').css('max-height', maxHeight);
             var SIDEBAR_MULTIDATASET_HEADER_HEIGHT = 65;
             var height = maxHeight - SIDEBAR_MULTIDATASET_HEADER_HEIGHT;
-            this.$('.filter-sidebar-categories').css('height', height);
+            this.$('.filter-sidebar-multidataset-nodes').css('height', height);
             this.updateScrollbar();
         },
 

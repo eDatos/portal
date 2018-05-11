@@ -5,6 +5,13 @@
 
     App.modules.multidataset.MultidatasetNode = Backbone.Model.extend({
 
+        defaults: {
+            visible: true,
+            matchIndexBegin: undefined,
+            matchIndexEnd: undefined,
+            selected: false
+        },
+
         parse: function (response, options) {
             var attributes = {};
             var multidatasetIdentifier = options.multidatasetIdentifier;
@@ -40,7 +47,7 @@
                 this.nodes = App.modules.multidataset.MultidatasetNode.parseNodes(response.nodes);
             }
 
-            attributes.isCurrentResource = App.modules.multidataset.MultidatasetNode.areSameResource(resourceIdentifier, attributes);
+            attributes.selected = App.modules.multidataset.MultidatasetNode.areSameResource(resourceIdentifier, attributes);
 
             return attributes;
         }
