@@ -13,7 +13,6 @@
         initialize: function (options) {
             this.filterDimensions = options.filterDimensions;
             this.multidatasetId = this.filterDimensions.getMultidatasetId();
-            this.resetLastIndex();
             this.collapsable = _(options).has('collapsable') ? options.collapsable : true;
             this.loadMultidataset(this.multidatasetId).then(_.bind(this.render, this));
         },
@@ -33,7 +32,6 @@
         },
 
         _bindEvents: function () {
-            this.listenTo(this.filterDimensions, "change:visible", this.resetLastIndex);
             this.listenTo(this.filterDimensions, "change:open", this._onChangeOpenFilterDimensions);
             if (this.multidataset) {
 
@@ -148,10 +146,6 @@
             this.$('.filter-sidebar-multidataset-nodes').css('height', height);
             this.updateScrollbar();
         },
-
-        resetLastIndex: function () {
-            this.lastIndex = -1;
-        }
 
     });
 }());
