@@ -126,6 +126,11 @@
             }
         },
 
+        hasTemporalDimensions: function () {
+            var timeDimensions = this.where({ type: "TIME_DIMENSION" });
+            return timeDimensions && timeDimensions.length > 0;
+        },
+
         importJSON: function (json) {
 
             var dimensionsToImport = _.chain(json).map(function (value, key) {

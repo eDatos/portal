@@ -118,6 +118,11 @@
         },
 
         _isVisualizationButtonEnabled: function (type) {
+
+            if (type == "line" && !this.filterDimensions.hasTemporalDimensions()) {
+                return false;
+            }
+
             if (this.filterDimensions.metadata.apiType == App.Constants.api.type.INDICATOR) {
                 if (type == "map" || type == "mapbubble") return false;
             }
