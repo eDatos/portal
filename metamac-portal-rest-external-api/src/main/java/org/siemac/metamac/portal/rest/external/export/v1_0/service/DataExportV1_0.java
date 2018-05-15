@@ -62,7 +62,7 @@ public interface DataExportV1_0 {
 
     @POST
     @Path("excel/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
-    Response exportIndicatorInstaceToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+    Response exportIndicatorInstanceToExcelForm(@FormParam("jsonBody") String jsonBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     /**

@@ -374,7 +374,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportIndicatorInstaceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
+    public Response exportIndicatorInstanceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
         ExcelExportation excelExportation = getExcelExportation(jsonBody);
         return exportIndicatorInstanceToExcel(excelExportation, indicatorSystemCode, resourceID, filename);
     }
