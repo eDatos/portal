@@ -1194,7 +1194,7 @@
         }
       }
     },
-    "/v1.0/tsv/{agencyID}/{resourceID}/{version}": {
+    "/v1.0/tsv/datasets/{agencyID}/{resourceID}/{version}": {
       "post": {
         "tags": [
           "Exportaciones a ficheros de texto plano"
