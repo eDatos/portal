@@ -566,7 +566,7 @@
           "Exportaciones a ficheros de texto plano"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero CSV separado por comas.",
-        "operationId": "resource__v1.0_csv_comma__agencyID___resourceID___version__exportDatasetToCsvComma_POST",
+        "operationId": "resource__v1.0_csv_comma__agencyID__resourceID__version__exportDatasetToCsvComma_POST",
         "produces": [
           "application/xml"
         ],
@@ -629,7 +629,7 @@
           "Exportaciones a ficheros de texto plano"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero CSV separado por puntos y comas.",
-        "operationId": "resource__v1.0_csv_semicolon__agencyID___resourceID___version__exportDatasetToCsvSemicolon_POST",
+        "operationId": "resource__v1.0_csv_semicolon__agencyID__resourceID__version__exportDatasetToCsvSemicolon_POST",
         "produces": [
           "application/xml"
         ],
@@ -692,7 +692,7 @@
           "Exportaciones a ficheros Excel"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero Excel.",
-        "operationId": "resource__v1.0_excel__datasets__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
+        "operationId": "resource__v1.0_excel__datasets__agencyID__resourceID__version__exportDatasetToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -754,8 +754,8 @@
         "tags": [
           "Exportaciones a ficheros Excel"
         ],
-        "description": "Permite realizar la exportación de una query en fichero Excel.",
-        "operationId": "resource__v1.0_excel__queries__agencyID___resourceID___version__exportQueryToExcelForm_POST",
+        "description": "Permite realizar la exportación de una consulta en fichero Excel.",
+        "operationId": "resource__v1.0_excel__queries__agencyID__resourceID__exportQueryToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -812,7 +812,7 @@
           "Exportaciones a ficheros Excel"
         ],
         "description": "Permite realizar la exportación de un indicador en fichero Excel.",
-        "operationId": "resource__v1.0_excel__indicators___resourceID__exportIndicatorToExcelForm_POST",
+        "operationId": "resource__v1.0_excel__indicators__resourceID__exportIndicatorToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -863,7 +863,7 @@
           "Exportaciones a ficheros Excel"
         ],
         "description": "Permite realizar la exportación de una instancia de indicador en fichero Excel.",
-        "operationId": "resource__v1.0_excel__indicatorsSystems__indicatorSystemCode___indicatorsInstances___resourceID__exportIndicatorInstanceToExcelForm_POST",
+        "operationId": "resource__v1.0_excel__indicatorsSystems__indicatorSystemCode__indicatorsInstances__resourceID__exportIndicatorInstanceToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -971,7 +971,7 @@
           "Exportaciones a ficheros PC-Axis"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero PC-Axis (.px).",
-        "operationId": "resource__v1.0_px__agencyID___resourceID___version__exportDatasetToPxForm_POST",
+        "operationId": "resource__v1.0_px__datasets__agencyID__resourceID__version__exportDatasetToPxForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -1034,7 +1034,7 @@
           "Exportaciones a ficheros PC-Axis"
         ],
         "description": "Permite realizar la exportación de una consulta en fichero PC-Axis (.px).",
-        "operationId": "resource__v1.0_px__agencyID___resourceID___exportQueryToPxForm_POST",
+        "operationId": "resource__v1.0_px__queries__agencyID__resourceID__exportQueryToPxForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -1091,7 +1091,7 @@
           "Exportaciones a ficheros PC-Axis"
         ],
         "description": "Permite realizar la exportación de un indicador en fichero PC-Axis (.px).",
-        "operationId": "resource__v1.0_px__indicators___resourceid___exportIndicatorToPxForm_POST",
+        "operationId": "resource__v1.0_px__indicators__resourceid__exportIndicatorToPxForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -1143,7 +1143,7 @@
           "Exportaciones a ficheros PC-Axis"
         ],
         "description": "Permite realizar la exportación de una instancia de indicador en fichero PC-Axis (.px).",
-        "operationId": "resource__v1.0_px__indicatorsSystems___indicatorSystemCode___indicatorsInstances___resourceid___exportIndicatorInstanceToPxForm_POST",
+        "operationId": "resource__v1.0_px__indicatorsSystems__indicatorSystemCode__indicatorsInstances__resourceid__exportIndicatorInstanceToPxForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -1200,7 +1200,7 @@
           "Exportaciones a ficheros de texto plano"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero separado por tabuladores.",
-        "operationId": "resource__v1.0_tsv__agencyID___resourceID___version__exportDatasetToTsv_POST",
+        "operationId": "resource__v1.0_tsv__datasets__agencyID__resourceID__version__exportDatasetToTsv_POST",
         "produces": [
           "application/xml"
         ],
