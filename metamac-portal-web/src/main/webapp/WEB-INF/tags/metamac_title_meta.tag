@@ -16,8 +16,8 @@
 <%@ tag import="org.siemac.metamac.portal.core.constants.PortalConstants" %>
 <%@ tag import="org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType" %>
 
-<%@tag import="java.util.logging.Logger"%>
-<%@tag import="java.util.logging.Level"%>
+<%@ tag import="org.slf4j.Logger" %>
+<%@ tag import="org.slf4j.LoggerFactory" %>
 
 <%@ tag import="java.io.File" %>
 <%@ tag import="java.util.Date" %>
@@ -105,6 +105,8 @@
 		 	request.setAttribute("organisationUrn", "error");
             
 		 	request.setAttribute("analyticsGoogleTrackingId", "error");
+            
+		 	log.error("Error durante la inicialización de propiedades", e);
 		}
 	%>
     <%    
