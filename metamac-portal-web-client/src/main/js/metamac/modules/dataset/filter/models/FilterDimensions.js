@@ -126,9 +126,13 @@
             }
         },
 
-        hasTemporalDimensions: function () {
+        canDrawLineVisualizations: function () {
             var timeDimensions = this.where({ type: "TIME_DIMENSION" });
             return timeDimensions && timeDimensions.length > 0;
+        },
+
+        canDrawMapVisualizations: function () {
+            return this.metadata.apiType != App.Constants.api.type.INDICATOR;
         },
 
         importJSON: function (json) {
