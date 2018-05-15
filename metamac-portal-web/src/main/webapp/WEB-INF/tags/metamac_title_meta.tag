@@ -145,6 +145,7 @@
                 request.setAttribute("resourceDescription", helper.localizeText(multidataset.getDescription()));                
             }
         } else {
+            if (resourceType != null) {
             switch (resourceType) {
                 case COLLECTION:
                     Collection collection = Helpers.getCollection(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, agencyId, resourceId);            
@@ -203,6 +204,7 @@
                    request.setAttribute("resourceDescriptionOnlyText", "Visualizador estadístico");
                    break;
             }
+        }
         }
 	%>
 	<%
