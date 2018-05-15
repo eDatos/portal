@@ -5,6 +5,8 @@
 <%@ page import="org.siemac.metamac.core.common.util.ApplicationContextProvider"%>
 <%@ page import="org.siemac.metamac.portal.Helpers" %>
 <%@ page import="org.siemac.metamac.portal.dto.Permalink" %>
+<%@ page import="org.siemac.metamac.portal.dto.Multidataset" %>
+<%@ page import="org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -86,6 +88,16 @@
             Permalink permalink = Helpers.getPermalink(PERMALINKS_API_URL_BASE, permalinkId);
             response.sendRedirect(Helpers.buildUrl(permalink, sharedVisualizerUrl));   
         }         
+    %>
+    <%
+        String resourceTypeValue = request.getParameter(Helpers.PARAMETER_RESOURCE_TYPE);
+        ResourceType resourceType =  resourceTypeValue != null ? ResourceType.fromValue(resourceTypeValue) : null;
+        String multidatasetId = request.getParameter(Helpers.PARAMETER_MULTIDATASET_ID);
+        if (multidatasetId != null && !multidatasetId.isEmpty() && resourceType == null) {
+            Boolean internalPortal = false; // Widgets sólo externos
+            Multidataset multidataset = Helpers.getMultidataset(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, multidatasetId);
+            response.sendRedirect(Helpers.buildUrl(multidataset, multidatasetId, sharedVisualizerUrl));   
+        }        
     %>
 </head>
 <body>
