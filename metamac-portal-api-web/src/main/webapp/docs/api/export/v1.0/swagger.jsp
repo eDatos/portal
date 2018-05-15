@@ -877,7 +877,6 @@
           {
             "name": "indicatorSystemCode",
             "in": "path",
-            "required": true,
             "type": "string",
             "description": "Código del sistema a obtener."
           },
@@ -1158,7 +1157,6 @@
           {
             "name": "indicatorSystemCode",
             "in": "path",
-            "required": true,
             "type": "string",
             "description": "Código del sistema a obtener."
           },
