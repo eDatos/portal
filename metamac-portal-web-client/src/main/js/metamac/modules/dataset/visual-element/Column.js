@@ -118,6 +118,8 @@
 
                 this._applyVisualizationPreselections();
             }
+
+            this._updateMustApplyVisualizationRestrictions();
         },
 
         _applyVisualizationPreselections: function () {

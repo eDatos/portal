@@ -12,6 +12,8 @@
         initialize: function (options) {
             this.filterDimensions = options.filterDimensions;
             this.dataset = options.dataset;
+            this.optionsModel = options.optionsModel;
+
             this.shapes = new App.Map.Shapes();
             this.mapType = options.mapType;
             this._type = "map";
@@ -51,6 +53,8 @@
 
                 this._applyVisualizationPreselections();
             }
+
+            this._updateMustApplyVisualizationRestrictions();
         },
 
         _applyVisualizationPreselections: function () {

@@ -21,7 +21,8 @@
             this.optionsModel = new App.modules.dataset.OptionsModel({
                 widget: App.config.widget,
                 menu: false,
-                filter: this.filterDimensions.hasMultidataset()
+                filter: this.filterDimensions.hasMultidataset(),
+                mustApplyVisualizationRestrictions: !this.metadata.identifier().permalinkId
             });
             this.dataset = new App.dataset.Dataset({ metadata: this.metadata, filterDimensions: this.filterDimensions });
 

@@ -198,6 +198,8 @@ App.namespace("App.VisualElement.LineChart");
 
                 this._applyVisualizationPreselections();
             }
+
+            this._updateMustApplyVisualizationRestrictions();
         },
 
         _applyVisualizationPreselections: function () {

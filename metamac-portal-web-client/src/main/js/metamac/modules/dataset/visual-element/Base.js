@@ -18,6 +18,7 @@
 
             this.filterOptions = options.filterOptions; //deprecated
             this.filterDimensions = options.filterDimensions;
+            this.optionsModel = options.optionsModel;
 
             this.el = options.el;
 
@@ -123,7 +124,14 @@
         },
 
         _mustApplyVisualizationRestrictions: function () {
-            return !this.dataset.metadata.identifier().permalinkId;
+            return this.optionsModel.get('mustApplyVisualizationRestrictions');
+        },
+
+        _updateMustApplyVisualizationRestrictions: function () {
+            // We only ignore the visualization restrictions the first time we load the permalink
+            if (!this.optionsModel.get('mustApplyVisualizationRestrictions')) {
+                this.optionsModel.set('mustApplyVisualizationRestrictions', true);
+            }
         },
 
         _forceDimensionTypeInZone: function (dimensionType, zone) {

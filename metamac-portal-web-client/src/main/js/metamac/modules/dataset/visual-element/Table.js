@@ -7,6 +7,7 @@
         this.dataset = options.dataset;
 
         this.filterDimensions = options.filterDimensions;
+        this.optionsModel = options.optionsModel;
 
         this._chartOptions = {
             title: {
@@ -79,6 +80,8 @@
             if (this._mustApplyVisualizationRestrictions()) {
                 this._forceDimensionsByMetadataInfo();
             }
+
+            this._updateMustApplyVisualizationRestrictions();
         },
 
         updateTitle: function () {
