@@ -1258,6 +1258,171 @@
           }
         }
       }
+    },
+    "/v1.0/tsv/queries/{agencyID}/{resourceID}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros de texto plano"
+        ],
+        "description": "Permite realizar la exportación de una consulta en fichero separado por tabuladores.",
+        "operationId": "resource__v1.0_tsv__queries__agencyID__resourceID__exportQueryToTsv_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+          },
+          {
+            "name": "agencyID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador de la organización mantenedora del recurso a exportar."
+          },
+          {
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
+          },
+          {
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
+            },
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
+          },
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
+          }
+        }
+      }
+    },
+    "/v1.0/tsv/indicators/{resourceID}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros de texto plano"
+        ],
+        "description": "Permite realizar la exportación de un indicador en fichero separado por tabuladores.",
+        "operationId": "resource__v1.0_tsv__indicators__resourceId__exportIndicatorsToTsv_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+          },
+          {
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
+          },
+          {
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
+            },
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
+          },
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
+          }
+        }
+      }
+    },
+    "/v1.0/tsv/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}": {
+      "post": {
+        "tags": [
+          "Exportaciones a ficheros de texto plano"
+        ],
+        "description": "Permite realizar la exportación de una instancia de indicador en fichero separado por tabuladores.",
+        "operationId": "resource__v1.0_tsv__indicatorsSystems__indicatorSystemCode__indicatorsInstances__resourceId__exportDatasetToTsv_POST",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "jsonBody",
+            "in": "formData",
+            "type": "string",
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+          },
+          {
+            "name": "indicatorSystemCode",
+            "in": "path",
+            "type": "string",
+            "description": "Código del sistema a obtener."
+          },
+          {
+            "name": "resourceID",
+            "in": "path",
+            "type": "string",
+            "description": "Identificador del recurso a exportar."
+          },
+          {
+            "name": "filename",
+            "in": "query",
+            "type": "string",
+            "description": "Nombre del fichero resultante de la exportación."
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "type": "string",
+            "description": "Idioma en el que se desea llevar a cabo la exportación. En caso de no especificarse ningún idioma se realizará en el idioma por defecto del organismo. Además, en el caso de que se solicite un idioma y no coincida con el idioma por defecto del organismo, éste último también se añadirá."
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "object"
+            },
+            "headers": {},
+            "description": "Creado. La petición se ha completado y ha dado lugar a la creación de un nuevo recurso."
+          },
+          "500":{
+            "description":"Error interno del servidor. Se ha producido un error que impide que se obtenga el recurso solicitado."
+          }
+        }
+      }
     }
   }
 }
