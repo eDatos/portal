@@ -65,9 +65,9 @@
             var self = this;
 
             this.$el.html(this.template({
-                            multidataset: self.multidataset.toJSON(),
+                multidataset: self.multidataset.toJSON(),
                 // nodes: this.multidataset.nodes.toJSON()
-                    }));
+            }));
 
             this.subviews = [];
 
@@ -76,7 +76,7 @@
                 this.nodesSubviews = this.multidataset.get('nodes').map(function (multidatasetNode) {
                     var view = new App.widget.filter.sidebar.FilterSidebarMultidatasetNodeView({
                         multidatasetNode: multidatasetNode
-                });
+                    });
                     view.render();
                     $nodes.append(view.el);
                     return view;

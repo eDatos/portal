@@ -95,8 +95,8 @@
 
         _closeDimensions: function (model, dimensions) {
             var otherOpenDimensions = _.find(dimensions, function (openDimension) {
-                    return !model || openDimension.id !== model.id;
-                });
+                return !model || openDimension.id !== model.id;
+            });
             if (otherOpenDimensions) {
                 otherOpenDimensions.set({ open: false });
             }
