@@ -812,7 +812,7 @@
           "Exportaciones a ficheros Excel"
         ],
         "description": "Permite realizar la exportación de un indicador en fichero Excel.",
-        "operationId": "resource__v1.0_excel__indicators__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
+        "operationId": "resource__v1.0_excel__indicators___resourceID__exportIndicatorToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
@@ -862,8 +862,8 @@
         "tags": [
           "Exportaciones a ficheros Excel"
         ],
-        "description": "Permite realizar la exportación de un indicador en fichero Excel.",
-        "operationId": "resource__v1.0_excel__indicators__agencyID___resourceID___version__exportDatasetToExcelForm_POST",
+        "description": "Permite realizar la exportación de una instancia de indicador en fichero Excel.",
+        "operationId": "resource__v1.0_excel__indicatorsSystems__indicatorSystemCode___indicatorsInstances___resourceID__exportIndicatorInstanceToExcelForm_POST",
         "produces": [
           "application/xml"
         ],
