@@ -211,12 +211,8 @@ public class Helpers {
 
         QueryParams queryParams = permalink.getContent().getQueryParams();
 
-        appendParameter(stringBuilder, PARAMETER_RESOURCE_TYPE, queryParams.getType());
-        appendParameter(stringBuilder, PARAMETER_AGENCY_ID, queryParams.getAgency());
-        appendParameter(stringBuilder, PARAMETER_RESOURCE_ID, queryParams.getIdentifier());
-        appendParameter(stringBuilder, PARAMETER_VERSION, queryParams.getVersion());
-        appendParameter(stringBuilder, PARAMETER_INDICATOR_SYSTEM, queryParams.getIndicatorSystem());
-        appendParameter(stringBuilder, PARAMETER_SHARED_VISUALIZER_URL, sharedVisualizerUrl);
+        buildUrl(stringBuilder, queryParams.getType(), queryParams.getAgency(), queryParams.getIdentifier(), queryParams.getVersion(), queryParams.getIndicatorSystem(),
+                queryParams.getMultidatasetId(), sharedVisualizerUrl);
 
         // Includes #
         stringBuilder.append(permalink.getContent().getHash());
@@ -225,7 +221,7 @@ public class Helpers {
         return stringBuilder.toString();
     }
 
-    public static String buildUrl(Multidataset multidataset, String sharedVisualizerUrl, String multidatasetId) {
+    public static String buildUrl(Multidataset multidataset, String multidatasetId, String sharedVisualizerUrl) {
         StringBuilder stringBuilder = new StringBuilder();
         MultidatasetTable table = (MultidatasetTable) multidataset.getData().getNodes().getNodes().get(0);
         Resource resource = table.getDataset() != null ? table.getDataset() : table.getQuery();
@@ -235,14 +231,20 @@ public class Helpers {
 
         String[] tripleIdentifier = getTripleIdentifier(resource);
 
-        appendParameter(stringBuilder, PARAMETER_RESOURCE_TYPE, resourceKindToResourceType(resource.getKind()));
-        appendParameter(stringBuilder, PARAMETER_AGENCY_ID, tripleIdentifier[0]);
-        appendParameter(stringBuilder, PARAMETER_RESOURCE_ID, tripleIdentifier[1]);
-        appendParameter(stringBuilder, PARAMETER_VERSION, tripleIdentifier[2]);
-        appendParameter(stringBuilder, PARAMETER_SHARED_VISUALIZER_URL, sharedVisualizerUrl);
-        appendParameter(stringBuilder, PARAMETER_MULTIDATASET_ID, multidatasetId);
+        buildUrl(stringBuilder, resourceKindToResourceType(resource.getKind()), tripleIdentifier[0], tripleIdentifier[1], tripleIdentifier[2], null, multidatasetId, sharedVisualizerUrl);
 
         return stringBuilder.toString();
+    }
+
+    private static void buildUrl(StringBuilder stringBuilder, String resourceType, String agency, String identifier, String version, String indicatorSystem, String multidatasetId,
+            String sharedVisualizerUrl) {
+        appendParameter(stringBuilder, PARAMETER_RESOURCE_TYPE, resourceType);
+        appendParameter(stringBuilder, PARAMETER_AGENCY_ID, agency);
+        appendParameter(stringBuilder, PARAMETER_RESOURCE_ID, identifier);
+        appendParameter(stringBuilder, PARAMETER_VERSION, version);
+        appendParameter(stringBuilder, PARAMETER_INDICATOR_SYSTEM, indicatorSystem);
+        appendParameter(stringBuilder, PARAMETER_MULTIDATASET_ID, multidatasetId);
+        appendParameter(stringBuilder, PARAMETER_SHARED_VISUALIZER_URL, sharedVisualizerUrl);
     }
 
     private static String resourceKindToResourceType(String kind) {

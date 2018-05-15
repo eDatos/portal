@@ -9,6 +9,8 @@ public class QueryParams {
 
     protected String indicatorSystem;
 
+    protected String multidatasetId;
+
     public String getType() {
         return type;
     }
@@ -49,5 +51,12 @@ public class QueryParams {
         this.indicatorSystem = indicatorSystem;
     }
 
+    public String getMultidatasetId() {
+        return multidatasetId;
+    }
+
+    public void setMultidatasetId(String multidatasetId) {
+        this.multidatasetId = multidatasetId;
+    }
 
 }

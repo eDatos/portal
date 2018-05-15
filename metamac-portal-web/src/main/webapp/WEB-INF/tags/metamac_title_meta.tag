@@ -125,7 +125,7 @@
         String multidatasetId = request.getParameter(Helpers.PARAMETER_MULTIDATASET_ID);
         if (multidatasetId != null && !multidatasetId.isEmpty() && resourceType == null) {
             Multidataset multidataset = Helpers.getMultidataset(STATISTICAL_RESOURCES_API_URL_BASE, internalPortal, multidatasetId);
-            response.sendRedirect(Helpers.buildUrl(multidataset, sharedVisualizerUrl, multidatasetId));   
+            response.sendRedirect(Helpers.buildUrl(multidataset, multidatasetId, sharedVisualizerUrl));   
         }        
     %>
 	<%               
