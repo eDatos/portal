@@ -15,6 +15,9 @@
             this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
             this.measureAttribute = null;
+
+            this.currentSelectedLevel = null;
+            this.currentSelectedGranularity = null;
         },
 
         configuration: {
@@ -205,12 +208,14 @@
         _updateRepresentations: function (filterDimensionId, e) {
             // TODO Refactor this to avoid accesing the DOM
             var selectedLevel = this.$el.find('select.dimension-select-level[data-dimension-id=' + filterDimensionId + ']').val();
-            if (selectedLevel) {
+            if (selectedLevel && this.currentSelectedLevel != selectedLevel) {
+                this.currentSelectedLevel = selectedLevel;
                 this._updateDrawableRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
             }
 
             var selectedGranularity = this.$el.find('select.dimension-select-granularity[data-dimension-id=' + filterDimensionId + ']').val();
-            if (selectedGranularity) {
+            if (selectedGranularity && this.currentSelectedGranularity != selectedGranularity) {
+                this.currentSelectedGranularity = selectedGranularity;
                 this._updateDrawableRepresentationsBySelectedGranularity(filterDimensionId, selectedGranularity);
             }
         },
@@ -254,8 +259,8 @@
         _bindEvents: function () {
             var self = this;
             this.filterDimensions.each(function (filterDimension) {
-                self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 100));
-                self.listenTo(self.filterDimensions, 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 100));
+                self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));
+                self.listenTo(self.filterDimensions, 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
             });
             this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(self.render, 500));
             this.listenTo(this.dataset.data, "hasNewData", self.hasNewdata);
