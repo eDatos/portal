@@ -153,12 +153,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToCsvComma(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvComma(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.CSV_COMMA, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportDatasetToCsvComma(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvComma(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
@@ -170,12 +170,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToCsvSemicolon(PlainTextExportation exportationBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvSemicolon(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportDatasetToCsvSemicolon(String jsonBody, String resourceType, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvSemicolon(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
         ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
             PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);

@@ -560,7 +560,7 @@
     }
   },
   "paths": {
-    "/v1.0/csv_comma/{agencyID}/{resourceID}/{version}": {
+    "/v1.0/csv_comma/datasets/{agencyID}/{resourceID}/{version}": {
       "post": {
         "tags": [
           "Exportaciones a ficheros de texto plano"
@@ -623,7 +623,7 @@
         }
       }
     },
-    "/v1.0/csv_semicolon/{agencyID}/{resourceID}/{version}": {
+    "/v1.0/csv_semicolon/datasets/{agencyID}/{resourceID}/{version}": {
       "post": {
         "tags": [
           "Exportaciones a ficheros de texto plano"
