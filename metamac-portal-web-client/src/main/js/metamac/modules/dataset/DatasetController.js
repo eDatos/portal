@@ -100,6 +100,9 @@
                         App.modules.dataset.DatasetPermalink.retrievePermalink(datasetIdentifier.permalinkId)
                             .done(function (content) {
                                 self.filterDimensions.importJSON(content.selection);
+                                if (!window.location.hash.includes(content.hash)) {
+                                    self.visualizationView.optionsModel.set('mustApplyVisualizationRestrictions', true);
+                                }
                                 deferred.resolve();
                             })
                             .fail(function () {
