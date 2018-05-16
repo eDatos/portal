@@ -566,7 +566,7 @@
           "Exportaciones a ficheros de texto plano"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero CSV separado por comas.",
-        "operationId": "resource__v1.0_csv_comma__agencyID__resourceID__version__exportDatasetToCsvComma_POST",
+        "operationId": "resource__v1.0_csv_comma__datasets__agencyID__resourceID__version__exportDatasetToCsvComma_POST",
         "produces": [
           "application/xml"
         ],
@@ -629,7 +629,7 @@
           "Exportaciones a ficheros de texto plano"
         ],
         "description": "Permite realizar la exportación de un dataset en fichero CSV separado por puntos y comas.",
-        "operationId": "resource__v1.0_csv_semicolon__agencyID__resourceID__version__exportDatasetToCsvSemicolon_POST",
+        "operationId": "resource__v1.0_csv_semicolon__datasets__agencyID__resourceID__version__exportDatasetToCsvSemicolon_POST",
         "produces": [
           "application/xml"
         ],
