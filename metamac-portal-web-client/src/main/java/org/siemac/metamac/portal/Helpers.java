@@ -150,9 +150,8 @@ public class Helpers {
             String agencyId = PortalUtils.splitUrnWithoutPrefixItemScheme(multidatasetId)[0];
             String resourceId = PortalUtils.splitUrnWithoutPrefixItemScheme(multidatasetId)[1];
 
-            if (internalPortal) {
-                // FIXME METAMAC-2720 - Exponer los multidatasets a través de la API
-                // multidataset = multidataset2DtoMapper.multidatasetInternalToDto(Helpers.getInternalJAXRSClient(apiUrlStatisticalResources).retrieveMultidataset(agencyId, resourceId, lang, fields));
+            if (internalPortal) {               
+                multidataset = multidataset2DtoMapper.multidatasetInternalToDto(Helpers.getInternalJAXRSClient(apiUrlStatisticalResources).retrieveMultidataset(agencyId, resourceId, lang, fields));
             } else {
                 multidataset = multidataset2DtoMapper.multidatasetExternalToDto(Helpers.getExternalJAXRSClient(apiUrlStatisticalResources).retrieveMultidataset(agencyId, resourceId, lang, fields));
             }
