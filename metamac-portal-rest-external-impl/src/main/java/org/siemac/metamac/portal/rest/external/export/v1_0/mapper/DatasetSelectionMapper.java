@@ -154,7 +154,7 @@ public class DatasetSelectionMapper {
     private static DatasetSelectionDimension dimensionToDatasetSelectionDimension(Dimension dimension, DataStructureDefinition dataStructureDefinition) {
         DatasetSelectionDimension datasetSelectionDimension = new DatasetSelectionDimension(dimension.getId());
         datasetSelectionDimension.setLabelVisualisationMode(CODE_AND_LABEL); // By default
-        datasetSelectionDimension.setPosition(dataStructureDefinitionToPosition(dimension.getId(), dataStructureDefinition)); // FIXME
+        datasetSelectionDimension.setPosition(dataStructureDefinitionToPosition(dimension.getId(), dataStructureDefinition));
         datasetSelectionDimension.setSelectedDimensionValues(dimensionValuesToSelectedDimensionValues(dimension.getDimensionValues()));
         return datasetSelectionDimension;
     }
