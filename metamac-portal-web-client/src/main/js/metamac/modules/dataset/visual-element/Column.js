@@ -193,6 +193,7 @@
                 var serie = {};
                 serie.data = [];
                 serie.name = "";
+                var index;
 
                 _.each(horizontalDimensionSelectedCategories, function (horizontalCategory) {
                     var currentPermutation = {};
@@ -203,16 +204,21 @@
                     var y = self.dataset.data.getNumberData({ ids: currentPermutation });
                     var name = self.dataset.data.getStringData({ ids: currentPermutation });
                     serie.data.push({ y: y, name: name });
+
+                    index = y;
                 });
 
                 serie.name = columnCategory.get('visibleLabel');
+                serie.index = index;
                 listSeries.push(serie);
             });
 
             var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'visibleLabel');
 
             // Changing the options of the chart
-            result.series = listSeries;
+            result.series = _.sortBy(listSeries, function (serie) {
+                return -serie.index;
+            });
             result.xAxis = xaxis;
             return result;
         },
