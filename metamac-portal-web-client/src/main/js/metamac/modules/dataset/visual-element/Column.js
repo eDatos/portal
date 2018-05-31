@@ -159,6 +159,8 @@
                     // self._chartOptions.subtitle.text = self.getTitle();
 
                     self.chart = new Highcharts.Chart(self._chartOptions);
+                    self.chart.counters.color = 0;
+
                     self.$el.on("resize", function () { });
                 });
         },
@@ -189,12 +191,15 @@
             var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 
             var listSeries = [];
-            _.each(columnsDimensionSelectedCategories, function (columnCategory) {
-                var serie = {};
-                serie.data = [];
-                serie.name = "";
+            var horizontalAxisCategories = [];
+            var columnAxisCategories = [];
+            _.each(horizontalDimensionSelectedCategories, function (horizontalCategory, horizontalCategoryIndex) {
 
-                _.each(horizontalDimensionSelectedCategories, function (horizontalCategory) {
+                var columnSeries = [];
+                var index = null;
+                _.each(columnsDimensionSelectedCategories, function (columnCategory, columnCategoryIndex) {
+                    var serie = {};
+
                     var currentPermutation = {};
                     currentPermutation[horizontalDimension.id] = horizontalCategory.id;
                     currentPermutation[columnsDimension.id] = columnCategory.id;
@@ -202,17 +207,64 @@
 
                     var y = self.dataset.data.getNumberData({ ids: currentPermutation });
                     var name = self.dataset.data.getStringData({ ids: currentPermutation });
-                    serie.data.push({ y: y, name: name });
+                    // Instead of saving the data as an array on the same serie, we create as many series as needed so we can sort them independtly
+                    serie.data = [{ y: y, name: name, x: horizontalCategoryIndex }];
+                    serie.name = columnCategory.get('visibleLabel');
+
+                    // We keep track on the categories assigned to each serie, so later we can assign the proper x (order) and column color
+                    serie.horizontalCategory = horizontalCategoryIndex;
+                    serie.columnCategory = columnCategoryIndex;
+
+                    // Instead of checking if we are working with nested columns or not, we simply store the last order. 
+                    // In the case of not nested columns, the x axis will be sorted properly
+                    horizontalAxisCategories[horizontalCategoryIndex] = { horizontalCategoryIndex: horizontalCategoryIndex, order: y };
+
+                    columnSeries.push(serie);
                 });
 
-                serie.name = columnCategory.get('visibleLabel');
-                listSeries.push(serie);
+
+                // We cheat Highcharts, stacking columns with the same columnCategory with themselves, so we get the proper width. We also sort them
+                columnSeries = _.sortBy(columnSeries, function (serie) {
+                    return -serie.data[0].y;
+                }).map(function (serie, index) {
+                    serie.stack = index;
+                    serie.stacking = true;
+                    return serie;
+                });
+
+                listSeries = [].concat(listSeries, columnSeries);
             });
 
-            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'visibleLabel');
+            // Normalize horizontal axis order so the columns are contiguous
+            horizontalAxisCategories = _.indexBy(_.sortBy(horizontalAxisCategories, function (horizontalAxisCategory) {
+                return -horizontalAxisCategory.order;
+            }).map(function (horizontalAxisCategory, index) {
+                horizontalAxisCategory.order = index;
+                return horizontalAxisCategory;
+            }), 'horizontalCategoryIndex');
 
-            // Changing the options of the chart
-            result.series = listSeries;
+            // Build and order xaxis
+            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'visibleLabel');
+            xaxis = _.sortBy(xaxis, function (label, horizontalDimensionSelectedCategoryIndex) {
+                return horizontalAxisCategories[horizontalDimensionSelectedCategoryIndex].order;
+            });
+
+            // We need to reprocess the series so we assign each column each proper sorted color and x value
+            result.series = _.map(listSeries, function (serie, index) {
+                // We decide the colors the first time we get the value, because that will be the same value they will use on the legend
+                if (!columnAxisCategories[serie.columnCategory]) {
+                    columnAxisCategories[serie.columnCategory] = Highcharts.getOptions().colors[index];
+                } else { // Else, we don´t have to show the label on the legend
+                    serie.showInLegend = false;
+                    serie.dataLabels = {
+                        enabled: false
+                    };
+                }
+                serie.data[0].x = horizontalAxisCategories[serie.horizontalCategory].order;
+                serie.data[0].color = columnAxisCategories[serie.columnCategory];
+                return serie;
+            });
+
             result.xAxis = xaxis;
             return result;
         },
@@ -245,8 +297,10 @@
             var newHeight = this.$el.height() - this.$title.height() - this.getRightsHolderHeight();
             this.$chartContainer.height(newHeight);
             this.chart.setSize(this.$chartContainer.width(), this.$chartContainer.height(), false);
-        }
 
+            // Necesario para evitar error en el dibujado tras cambiar a stacked columns     
+            this.chart.xAxis[0].update();
+        }
     });
 
 
