@@ -20,7 +20,7 @@
         <metamac-rest-common.version>2.0.0</metamac-rest-common.version>
         <metamac-core-common.version>5.3.0</metamac-core-common.version>
         <metamac-web-common.version>3.2.0</metamac-web-common.version>
-        <metamac-statistical-resources.version>3.1.0</metamac-statistical-resources.version>
+        <metamac-statistical-resources.version>3.1.1</metamac-statistical-resources.version>
         <metamac-srm-rest-external-api.version>2.1.0</metamac-srm-rest-external-api.version>
         <indicators.version>7.2.0</indicators.version>
         
