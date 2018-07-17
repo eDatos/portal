@@ -62,7 +62,10 @@
         },
 
         _onRepresentationEvent: function (event, model, collection, options) {
-            this.trigger.apply(this, arguments);
+            // Don´t propagate this one from children to parents again, it´s already propagated from parent to children
+            if (event != "change:visibleLabelType") {
+                this.trigger.apply(this, arguments);
+            }
         },
 
         _cleanFilterQuery: function (query) {
