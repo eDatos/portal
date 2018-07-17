@@ -169,7 +169,6 @@
                     stub: {
                         dimensionId: ["TIME"] // Always this ones
                     },
-                    selfLink: {},
                     autoOpen: true
                 },
                 dimensions: {

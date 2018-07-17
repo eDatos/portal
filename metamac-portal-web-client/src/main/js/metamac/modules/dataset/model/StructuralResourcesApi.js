@@ -63,7 +63,7 @@
 
         getDimensions: function (callback) {
 
-            if (!this.metadata.metadata.relatedDsd.selfLink.href) { return; }
+            if (!this.metadata.metadata.relatedDsd.selfLink) { return; }
 
             var requestParams = {
                 url: this.metadata.metadata.relatedDsd.selfLink.href + "?_type=json",
