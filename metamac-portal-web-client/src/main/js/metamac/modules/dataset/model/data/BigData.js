@@ -120,10 +120,6 @@
             });
         },
 
-        getDimensionsAttributes: function () {
-            return this.getDimensionAttributesById(_.pluck(this.filterDimensions.models, 'id'));
-        },
-
         // Simplified access to root block
         getRootCacheBlock: function (callback) {
             var cell = { x: 0, y: 0 };

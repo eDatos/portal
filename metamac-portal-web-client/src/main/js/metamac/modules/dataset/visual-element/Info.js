@@ -24,7 +24,6 @@
                 this.getDimensions();
                 this.getMeasureConcepts();
                 this.getDatasetAttributes();
-                // this.dimensionAttributes = this.dataset.data.getDimensionsAttributes();
                 this._bindEvents();
                 this.render();
             }
