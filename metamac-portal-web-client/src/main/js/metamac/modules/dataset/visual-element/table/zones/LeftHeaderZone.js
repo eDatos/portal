@@ -1,7 +1,8 @@
 (function () {
     "use strict";
 
-    var Size = App.Table.Size,
+    var Cell = App.Table.Cell,
+        Size = App.Table.Size,
         Rectangle = App.Table.Rectangle,
         Utils = App.Table.Utils,
         Point = App.Table.Point;
@@ -80,12 +81,14 @@
                     var indexEnd = index + columnsValuesLengthAc[i];
                     var cellHeight = this.incrementalCellSize.rows[indexEnd] - this.incrementalCellSize.rows[index];
 
-                    var row = indexInValue % columnsValuesLength[i];
-                    var content = columnsValues[i][row] ? columnsValues[i][row].label : "";
-                    var level = columnsValues[i][row] ? columnsValues[i][row].level : 0;
+                    var rowIndex = indexInValue % columnsValuesLength[i];
+                    var content = columnsValues[i][rowIndex] ? columnsValues[i][rowIndex].label : "";
+                    var level = columnsValues[i][rowIndex] ? columnsValues[i][rowIndex].level : 0;
 
-                    var cellAttributes = tooltipValues[i][row] ? !_.isEmpty(tooltipValues[i][row].attributes) ? _.compact(tooltipValues[i][row].attributes) : [] : [];
-                    var cellTitle = tooltipValues[i][row] ? tooltipValues[i][row].title : "";
+                    var associatedBodyCellWithAttributes = new Cell(1, row.indexCell);
+                    var cellAttributesAtIndex = this.dataSource.cellAttributesAtIndex(associatedBodyCellWithAttributes);
+                    var cellAttributes = cellAttributesAtIndex ? cellAttributesAtIndex.dimensionsAttributes || [] : [];
+                    var cellTitle = tooltipValues[i][rowIndex] ? tooltipValues[i][rowIndex].title : "";
 
 
                     result[i].push({

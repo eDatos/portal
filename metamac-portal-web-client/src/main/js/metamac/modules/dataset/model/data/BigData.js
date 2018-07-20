@@ -91,10 +91,36 @@
         getAttributes: function (selection) {
             var cell = selection.cell || this.filterDimensions.getTableInfo().getCellForCategoryIds(selection.ids);
 
+            var self = this;
+            return this.getCacheBlock(cell, function (cacheBlock) {
+                var ids = self.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
+                return cacheBlock.apiResponse.getDataById(ids).attributes;
+            });
+        },
+
+        getDatasetAttributes: function () {
+            return this.getRootCacheBlock(function (rootCacheBlock) {
+                return rootCacheBlock.apiResponse.getDatasetAttributes();
+            });
+        },
+
+        getDimensionAttributesById: function (dimensionsIds) {
+            var cell = this.filterDimensions.getTableInfo().getCellForCategoryIds(dimensionsIds);
+            return this.getCacheBlock(cell, function (cacheBlock) {
+                return cacheBlock.apiResponse.getDimensionAttributesById(dimensionsIds);
+            });
+        },
+
+        // Simplified access to root block
+        getRootCacheBlock: function (callback) {
+            var cell = { x: 0, y: 0 };
+            this.getCacheBlock(cell, callback);
+        },
+
+        getCacheBlock: function (cell, callback) {
             var cacheBlock = this.getCache().cacheBlockForCell(cell);
             if (this.getCache().isBlockReady(cacheBlock)) {
-                var ids = this.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
-                return cacheBlock.apiResponse.getDataById(ids).attributes;
+                return callback(cacheBlock);
             } else if (cacheBlock) {
                 this._loadCacheBlock(cacheBlock, true);
             }
@@ -107,31 +133,6 @@
                 }, this);
             }
         },
-
-        getDatasetAttributes: function () {
-            return this.getRootCacheBlock(function (rootCacheBlock) {
-                return rootCacheBlock.apiResponse.getDatasetAttributes();
-            });
-        },
-
-        getDimensionAttributesById: function (dimensionsIds) {
-            return this.getRootCacheBlock(function (rootCacheBlock) {
-                return rootCacheBlock.apiResponse.getDimensionAttributesById(dimensionsIds);
-            });
-        },
-
-        // Simplified access to root block
-        getRootCacheBlock: function (callback) {
-            var cell = { x: 0, y: 0 };
-
-            var cacheBlock = this.getCache().cacheBlockForCell(cell);
-            if (this.getCache().isBlockReady(cacheBlock)) {
-                return callback(cacheBlock);
-            } else if (cacheBlock) {
-                this._loadCacheBlock(cacheBlock, true);
-            }
-        },
-
 
         getNumberData: function (selection) {
             var value = this.getData(selection);

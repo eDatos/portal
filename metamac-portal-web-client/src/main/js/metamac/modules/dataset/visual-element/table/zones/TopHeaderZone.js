@@ -1,7 +1,8 @@
 (function () {
     "use strict";
 
-    var Size = App.Table.Size,
+    var Cell = App.Table.Cell,
+        Size = App.Table.Size,
         Rectangle = App.Table.Rectangle,
         Utils = App.Table.Utils,
         Point = App.Table.Point;
@@ -83,11 +84,13 @@
                     var indexEnd = index + rowsValuesLengthAc[i];
                     var cellWidth = this.incrementalCellSize.columns[indexEnd] - this.incrementalCellSize.columns[index];
 
-                    var column = indexInValue % rowsValuesLength[i];
-                    var content = rowsValues[i][column];
+                    var columnIndex = indexInValue % rowsValuesLength[i];
+                    var content = rowsValues[i][columnIndex];
 
-                    var cellAttributes = tooltipValues[i][column] ? !_.isEmpty(tooltipValues[i][column].attributes) ? tooltipValues[i][column].attributes : [] : [];
-                    var cellTitle = tooltipValues[i][column] ? tooltipValues[i][column].title : "";
+                    var associatedBodyCellWithAttributes = new Cell(column.index, 1);
+                    var cellAttributesAtIndex = this.dataSource.cellAttributesAtIndex(associatedBodyCellWithAttributes);
+                    var cellAttributes = cellAttributesAtIndex ? cellAttributesAtIndex.dimensionsAttributes || [] : [];
+                    var cellTitle = tooltipValues[i][columnIndex] ? tooltipValues[i][columnIndex].title : "";
 
 
                     result[i].push({
