@@ -6,10 +6,6 @@
     App.DataSourceDataset = function (options) {
         this.dataset = options.dataset;
         this.filterDimensions = options.filterDimensions;
-
-        if (this.dataset) {
-            this.listenTo(this.dataset.data, "hasNewData", this.updateHeaderAttributes);
-        }
     };
 
     App.DataSourceDataset.prototype = {
@@ -45,11 +41,6 @@
 
         topHeaderValues: function () {
             return this.filterDimensions.getTableInfo().top.representationsValues;
-        },
-
-        updateHeaderAttributes: function () {
-            this.topHeaderAttributes = this.dataset.data.getDimensionAttributesById(this.filterDimensions.getTableInfo().top.ids);
-            this.leftHeaderAttributes = this.dataset.data.getDimensionAttributesById(this.filterDimensions.getTableInfo().left.ids);
         },
 
         cellAtIndex: function (cell) {
@@ -151,8 +142,7 @@
          * @returns {Array}
          */
         topHeaderTooltipValues: function () {
-            this.updateHeaderAttributes();
-            return this._generateTooltipValues(this.topHeaderValues(), this.topHeaderAttributes, this.filterDimensions.getTableInfo().top.ids);
+            return this._generateTooltipValues(this.topHeaderValues(), this.filterDimensions.getTableInfo().top.ids);
         },
 
         /**
@@ -161,8 +151,7 @@
          * @returns {Array}
          */
         leftHeaderTooltipValues: function () {
-            this.updateHeaderAttributes();
-            var leftHeaderTooltipValuesByDimension = this._generateTooltipValues(this.leftHeaderValuesByDimension(), this.leftHeaderAttributes, this.filterDimensions.getTableInfo().left.ids);
+            var leftHeaderTooltipValuesByDimension = this._generateTooltipValues(this.leftHeaderValuesByDimension(), this.filterDimensions.getTableInfo().left.ids);
 
             return this._compressLeftHeaderValuesByDimension(leftHeaderTooltipValuesByDimension);
         },
@@ -176,16 +165,13 @@
             }, memo, this))];
         },
 
-        _generateTooltipValues: function (titlesByDimension, attributesByDimension, dimensionIds) {
+        _generateTooltipValues: function (titlesByDimension, dimensionIds) {
             var result = [];
-            var attributes;
 
             _.each(titlesByDimension, function (titles, dimensionIndex) {
-                attributes = attributesByDimension ? _.zip.apply(_, attributesByDimension[dimensionIndex]) : [];
                 result.push(
-                    _.map(titlesByDimension[dimensionIndex], function (title, index) {
-                        var tooltipAttributes = attributes[index] ? attributes[index] : [];
-                        return { title: title, attributes: tooltipAttributes, dimensionId: dimensionIds[dimensionIndex] }
+                    _.map(titlesByDimension[dimensionIndex], function (title) {
+                        return { title: title, dimensionId: dimensionIds[dimensionIndex] }
                     })
                 );
             });
