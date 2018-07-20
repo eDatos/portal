@@ -87,11 +87,19 @@
                     var columnIndex = indexInValue % rowsValuesLength[i];
                     var content = rowsValues[i][columnIndex];
 
-                    var associatedBodyCellWithAttributes = new Cell(column.index, 1);
+                    var associatedBodyCellWithAttributes = new Cell(column.index, 0);
                     var cellAttributesAtIndex = this.dataSource.cellAttributesAtIndex(associatedBodyCellWithAttributes);
-                    var cellAttributes = cellAttributesAtIndex ? cellAttributesAtIndex.dimensionsAttributes || [] : [];
-                    var cellTitle = tooltipValues[i][columnIndex] ? tooltipValues[i][columnIndex].title : "";
+                    var cellAttributes = [];
+                    var cellTitle = "";
 
+                    var cellInfo = tooltipValues[i][columnIndex];
+                    if (cellInfo) {
+                        cellAttributes = cellAttributesAtIndex ? cellAttributesAtIndex.dimensionsAttributes : [];
+                        cellAttributes = _.filter(cellAttributes, function (cellAttribute) {
+                            return cellAttribute.dimensionId == cellInfo.dimensionId;
+                        });
+                        cellTitle = cellInfo.title;
+                    }
 
                     result[i].push({
                         index: index,

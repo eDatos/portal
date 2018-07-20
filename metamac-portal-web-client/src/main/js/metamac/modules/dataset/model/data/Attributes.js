@@ -76,7 +76,7 @@
                 pos = _.reduceRight(this, function (pos, arrayPosition, index) {
                     return pos += self.dimensionsMultiplicators[index] * arrayPosition;
                 }, pos, self);
-                return combinatedDimensionAttribute.values[pos];
+                return { value: combinatedDimensionAttribute.values[pos], dimensionId: combinatedDimensionAttribute.attributeDimensionsIds[0] };
             }, dimensionsPositions);
         },
 
@@ -85,7 +85,7 @@
                 var dimensionAttributesRawValues = _.where(this.attributes, { attachmentLevel: ATTACHMENT_LEVELS.DIMENSION });
                 var dimensionAttributesRawValuesForCell = this._filterCombinatedDimensionAttributesForCell(dimensionAttributesRawValues);
 
-                return _(dimensionAttributesRawValuesForCell).map(this._parseCombinatedDimension, this);
+                return _(dimensionAttributesRawValuesForCell).map(this._parseDimensionAttribute, this);
             }
         },
 
@@ -94,17 +94,16 @@
                 var dimensionAttributesRawValues = _.where(this.attributes, { attachmentLevel: ATTACHMENT_LEVELS.DIMENSION });
                 var dimensionAttributesRawValuesForCell = this._filterDimensionAttributesForCell(dimensionAttributesRawValues);
 
-                return _(dimensionAttributesRawValuesForCell).map(this._parseCombinatedDimension, this);
+                return _(dimensionAttributesRawValuesForCell).map(this._parseDimensionAttribute, this);
             }
         },
 
-        _parseCombinatedDimension: function (attribute, index) {
-            var attributeDimensionsIds = _.pluck(attribute.dimensions.dimension, "dimensionId");
-            var dimensionsMultiplicators = this._getDimensionsMultiplicators(attributeDimensionsIds);
-
+        _parseDimensionAttribute: function (attribute) {
+            var attributeDimensionIds = _.pluck(attribute.dimensions.dimension, "dimensionId");
+            var dimensionsMultiplicators = this._getDimensionsMultiplicators(attributeDimensionIds);
             var values = this._parseAttributeValuesList(attribute);
 
-            return { values: values, dimensionsMultiplicators: dimensionsMultiplicators };
+            return { values: values, dimensionsMultiplicators: dimensionsMultiplicators, attributeDimensionsIds: attributeDimensionIds };
         },
 
         _getDimensionsMultiplicators: function (attributeDimensionsIds) {

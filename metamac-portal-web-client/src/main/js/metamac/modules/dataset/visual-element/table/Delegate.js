@@ -159,7 +159,7 @@
             var template = App.templateManager.get("dataset/dataset-header-info");
             var context = {
                 title: headerInfo.title,
-                attributes: this.formatHeaderAttributes(headerInfo.attributes)
+                attributes: this.formatHeaderAttributes(_.pluck(headerInfo.attributes, 'value'))
             }
             return template(context);
         },

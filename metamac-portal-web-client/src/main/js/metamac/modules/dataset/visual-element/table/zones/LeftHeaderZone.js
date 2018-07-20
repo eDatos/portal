@@ -85,11 +85,19 @@
                     var content = columnsValues[i][rowIndex] ? columnsValues[i][rowIndex].label : "";
                     var level = columnsValues[i][rowIndex] ? columnsValues[i][rowIndex].level : 0;
 
-                    var associatedBodyCellWithAttributes = new Cell(1, row.indexCell);
+                    var associatedBodyCellWithAttributes = new Cell(0, row.indexCell);
                     var cellAttributesAtIndex = this.dataSource.cellAttributesAtIndex(associatedBodyCellWithAttributes);
-                    var cellAttributes = cellAttributesAtIndex ? cellAttributesAtIndex.dimensionsAttributes || [] : [];
-                    var cellTitle = tooltipValues[i][rowIndex] ? tooltipValues[i][rowIndex].title : "";
+                    var cellAttributes = [];
+                    var cellTitle = "";
 
+                    var cellInfo = tooltipValues[i][rowIndex];
+                    if (cellInfo) {
+                        cellAttributes = cellAttributesAtIndex ? cellAttributesAtIndex.dimensionsAttributes : [];
+                        cellAttributes = _.filter(cellAttributes, function (cellAttribute) {
+                            return cellAttribute.dimensionId == cellInfo.dimensionId;
+                        });
+                        cellTitle = cellInfo.title;
+                    }
 
                     result[i].push({
                         index: index,
