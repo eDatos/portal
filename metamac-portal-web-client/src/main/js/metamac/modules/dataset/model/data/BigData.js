@@ -114,7 +114,7 @@
         // Simplified access to root block
         getRootCacheBlock: function (callback) {
             var cell = { x: 0, y: 0 };
-            this.getCacheBlock(cell, callback);
+            return this.getCacheBlock(cell, callback);
         },
 
         getCacheBlock: function (cell, callback) {
