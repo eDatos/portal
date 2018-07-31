@@ -36,7 +36,6 @@
         };
 
         this.initializeZones();
-        this.initializeMouseOverTooltip();
         this.initializeClickTooltip();
     };
 
@@ -132,16 +131,6 @@
                 this.spinnerZone.size.height
             )
         );
-    };
-
-    App.Table.View.prototype.initializeMouseOverTooltip = function () {
-        var self = this;
-        this.mouseOverTooltipDelegate = {
-            getTitleAtMousePosition: function (position) {
-                return self.getTitleAtMousePosition(position);
-            }
-        };
-        this.mouseOverTooltip = new Tooltip({ el: this.$canvas, delegate: this.mouseOverTooltipDelegate, trigger: "mouseOver" });
     };
 
     App.Table.View.prototype.initializeClickTooltip = function () {
@@ -281,7 +270,6 @@
         this.canvas.width = size.width;
         this.canvas.height = size.height;
         this.update();
-        this.mouseOverTooltip.setEl(this.$canvas);
         this.clickTooltip.setEl(this.$canvas);
     };
 
@@ -396,20 +384,19 @@
 
     App.Table.View.prototype.getTitleAtMousePosition = function (point) {
         var title;
-        if (this.mouseZone === "leftHeaderZone") {
-            title = this.leftHeaderZone.titleAtPoint(point);
-        } else if (this.mouseZone === "topHeaderZone") {
-            title = this.topHeaderZone.titleAtPoint(point);
-        }
         return title;
     };
 
     App.Table.View.prototype.getCellInfoAtMousePosition = function (point) {
-        var attribute;
+        var cellInfo;
         if (this.mouseZone === "bodyZone") {
-            attribute = this.bodyZone.cellInfoAtPoint(point);
+            cellInfo = this.bodyZone.cellInfoAtPoint(point);
+        } else if (this.mouseZone === "leftHeaderZone") {
+            cellInfo = this.leftHeaderZone.cellInfoAtPoint(point);
+        } else if (this.mouseZone === "topHeaderZone") {
+            cellInfo = this.topHeaderZone.cellInfoAtPoint(point);
         }
-        return attribute;
+        return cellInfo;
     };
 
     App.Table.View.prototype.setLastClickZone = function (zone) {
@@ -423,7 +410,6 @@
 
     App.Table.View.prototype.destroy = function () {
         this.clickTooltip.destroy();
-        this.mouseOverTooltip.destroy();
     };
 
     App.Table.View.prototype.columnSeparatorIndex = function (point) {

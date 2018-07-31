@@ -364,10 +364,10 @@ describe("[TableCanvas] TopHeaderZone", function () {
             }
         ]];
 
-        expect(topHeaderZone.titleAtPoint(new Point(0, 0))).to.eql('tooltip : a');
-        expect(topHeaderZone.titleAtPoint(new Point(100, 0))).to.eql('tooltip : 0');
-        expect(topHeaderZone.titleAtPoint(new Point(199, 0))).to.eql('tooltip : 0');
-        expect(topHeaderZone.titleAtPoint(new Point(299, 0))).to.eql('tooltip : aa');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(0, 0))).to.eql('tooltip : a');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(100, 0))).to.eql('tooltip : 0');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(199, 0))).to.eql('tooltip : 0');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(299, 0))).to.eql('tooltip : aa');
     });
 
     describe("should calculate if point if a rectangle contains a column separator", function () {

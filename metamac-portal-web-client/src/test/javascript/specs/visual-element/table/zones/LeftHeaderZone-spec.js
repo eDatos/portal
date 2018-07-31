@@ -380,10 +380,10 @@ describe("[TableCanvas] LeftHeaderZone", function () {
             ]
         ];
 
-        expect(leftHeaderZone.titleAtPoint(new Point(0, 0))).to.eql('tooltip : a');
-        expect(leftHeaderZone.titleAtPoint(new Point(100, 0))).to.eql('tooltip : 0');
-        expect(leftHeaderZone.titleAtPoint(new Point(199, 0))).to.eql('tooltip : 0');
-        expect(leftHeaderZone.titleAtPoint(new Point(299, 0))).to.eql('tooltip : aa');
+        expect(leftHeaderZone.cellInfoAtPoint(new Point(0, 0))).to.eql('tooltip : a');
+        expect(leftHeaderZone.cellInfoAtPoint(new Point(100, 0))).to.eql('tooltip : 0');
+        expect(leftHeaderZone.cellInfoAtPoint(new Point(199, 0))).to.eql('tooltip : 0');
+        expect(leftHeaderZone.cellInfoAtPoint(new Point(299, 0))).to.eql('tooltip : aa');
     });
 
 

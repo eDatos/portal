@@ -130,7 +130,7 @@
         });
     }
 
-    App.Table.TopHeaderZone.prototype.titleAtPoint = function (absolutePoint) {
+    App.Table.TopHeaderZone.prototype.cellInfoAtPoint = function (absolutePoint) {
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
             return this.delegate.formatHeaderInfo({
