@@ -96,6 +96,9 @@
                         cellAttributes = _.filter(cellAttributes, function (cellAttribute) {
                             return cellAttribute.dimensionId == cellInfo.dimensionId;
                         });
+                        if (!_.compact(_.pluck(cellAttributes, 'value')).length) {
+                            cellAttributes = [];
+                        }
                         cellTitle = cellInfo.title;
                     }
 
@@ -240,7 +243,7 @@
                 this.ctx.fillText(cell.content || "", cell.x + margin, cell.y + margin);
 
                 // Attributes triangle
-                if (_.compact(cell.attributes).length) {
+                if (cell.attributes.length) {
                     this.ctx.beginPath();
                     var marginMark = this.delegate.style.attributeCellMark.margin;
                     var sizeMark = this.delegate.style.attributeCellMark.size;
