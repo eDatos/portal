@@ -3,16 +3,13 @@
 <div>
     Notas de la categoría
     <ul>
-    {{#each attributes}}        
+        {{#each attributes}}
         <li>
             {{#if href}}
-                <a href="{{href}}" target="_blank">{{name}}</a>
-            {{/if}}
-            {{#unless href}}
-                {{this}}
-            {{/unless}}
+            <a href="{{href}}" target="_blank">{{name}}</a>
+            {{/if}} {{#unless href}} {{this}} {{/unless}}
         </li>
-    {{/each}}
+        {{/each}}
     </ul>
 </div>
 {{/if}}
