@@ -111,11 +111,15 @@
             };
 
             this.$el.html(this.template(context));
-            this.$el.find('.metadata-group').perfectScrollbar();
+            var scrollGroup = this.$el.find('.metadata-group');
+            scrollGroup.perfectScrollbar();
             this.$el.find('.metadata-accordion').accordion({
                 collapsible: true,
                 active: this._isIndicator() ? 0 : false,
-                heightStyle: "content"
+                heightStyle: "content",
+                activate: function () {
+                    scrollGroup.perfectScrollbar('update');
+                }
             });
         },
 
