@@ -57,9 +57,29 @@
 
         getCache: function () {
             if (!this.cache) {
-                this.cache = new Cache(this.filterDimensions.getTableInfo().getTableSize());
+                this.cache = new Cache(_.extend({}, this.filterDimensions.getTableInfo().getTableSize(), { size: this._calculateCacheSize() }));
             }
             return this.cache;
+        },
+
+        // We'll approximate a size for the cache based on the max length of the representation codes, 
+        // because this is directly related to the API request that we´ll execute later
+        // 
+        // App.Constants.maxUrlQueryLength > cacheSize * maxRepresentationLength[1] + cacheSize * maxRepresentationLength[2]...
+        // App.Constants.maxUrlQueryLength > cacheSize * (maxRepresentationLength[1] +  maxRepresentationLength[2]...)
+        // cacheSize < App.Constants.maxUrlQueryLength / (maxRepresentationLength[1] +  maxRepresentationLength[2]...)
+        _calculateCacheSize: function () {
+            var maxRepresentationLengths = this.filterDimensions.map(function (filterDimension) {
+                return filterDimension.get('representations').max(function (representation) { return representation.id.length; }).id.length + 1;
+            });
+
+            var summatoryRepresentationLengths = _(maxRepresentationLengths).reduce(function (memo, maxRepresentationLength) {
+                return memo + maxRepresentationLength;
+            });
+
+            var cacheSize = Math.floor(App.Constants.maxUrlQueryLength / summatoryRepresentationLengths);
+            console.log("cache size", cacheSize);
+            return cacheSize;
         },
 
         _initializeAjaxManager: function () {
