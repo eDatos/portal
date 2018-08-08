@@ -5,8 +5,8 @@
 
     // Collection that allow indexing granularityOrder by normCode
     var GranularityOrderCollection = Backbone.Collection.extend({
-        model : Backbone.Model.extend({
-            idAttribute : "urn"
+        model: Backbone.Model.extend({
+            idAttribute: "urn"
         })
     });
 
@@ -79,7 +79,7 @@
             });
         },
 
-        fetchContainer : function (normCodes, cb) {
+        fetchContainer: function (normCodes, cb) {
             var self = this;
 
             var validNormCodes = this._filterValidNormCodes(normCodes);
@@ -93,13 +93,13 @@
                 self.fetchShapes([containerNormCode], function (err, shapes) {
                     if (err) return cb(err);
 
-                    var shape = shapes? shapes[0] : undefined;
+                    var shape = shapes ? shapes[0] : undefined;
                     cb(null, shape);
                 });
             });
         },
 
-        _setShapesHierarchy : function (shapes, cb) {
+        _setShapesHierarchy: function (shapes, cb) {
             this._loadGranularityOrder(function (err, granularityOrderCollection) {
                 if (err) return cb(err);
 
@@ -116,7 +116,7 @@
             });
         },
 
-        _loadGranularityOrder : function (cb) {
+        _loadGranularityOrder: function (cb) {
             var self = this;
             if (!this.granularityOrderCollection) {
                 self.api.getGranularityOrder(function (err, granularityOrder) {
@@ -129,17 +129,16 @@
             }
         },
 
-
-        _normCodesFromShapes : function (shapes) {
+        _normCodesFromShapes: function (shapes) {
             return _.chain(shapes).compact().pluck("normCode").value();
         },
 
-        _filterValidNormCodes : function (normCodes) {
+        _filterValidNormCodes: function (normCodes) {
             var notNullNormCodes = _.compact(normCodes);
             return notNullNormCodes;
         },
 
-        _validateCache : function (normCodes, cb) {
+        _validateCache: function (normCodes, cb) {
             var self = this;
             if (self.lastUpdatedDate) {
                 cb();
