@@ -39,7 +39,9 @@
                 INDICATOR: "indicator",
                 DATASET: "dataset"
             }
-        }
+        },
+
+        maxQueryUrlLength: 1800
     };
 
 }());

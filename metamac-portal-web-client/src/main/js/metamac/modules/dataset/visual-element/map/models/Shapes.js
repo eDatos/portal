@@ -17,9 +17,29 @@
 
     App.Map.Shapes.prototype = {
 
-        fetchShapes : function (normCodes, cb) {
+        _chunkNormCodesIntoValidUrlSize: function (normCodes) {
+            if (!normCodes) { return []; }
+
+            var chunks = [];
+            var i = 0;
+            while (i < normCodes.length) {
+                var chunk = [];
+                var totalQueryLength = 0;
+                while (i < normCodes.length && totalQueryLength + normCodes[i].length + 1 < App.Constants.maxQueryUrlLength) {
+                    chunk.push(normCodes[i]);
+                    totalQueryLength += (normCodes[i].length + 1);
+                    i++;
+                }
+
+                chunks.push(chunk);
+            }
+            return chunks;
+        },
+
+        fetchShapes: function (normCodes, cb) {
             var self = this;
             var validNormCodes = this._filterValidNormCodes(normCodes);
+
             self._validateCache(validNormCodes, function (err) {
                 if (err) return cb(err);
 
@@ -32,13 +52,28 @@
                         return self._setShapesHierarchy(dbShapes, cb);
                     }
 
-                    self.api.getShapes(notDbNormCodes, function (err, apiShapes) {
-                        if (err) return cb(err);
-                        self.store.put(apiShapes, function () {
-                            //ignore error saving shapes
-                            var shapes = self._mixDbAndApiShapes(dbShapes, apiShapes);
-                            self._setShapesHierarchy(shapes, cb);
+                    var shapeRequests = [];
+                    self._chunkNormCodesIntoValidUrlSize(notDbNormCodes)
+                        .forEach(function (normCodesChunk, index) {
+
+                            shapeRequests["action_" + index] = _.bind(function (normCodesChunk) {
+                                var self = this;
+                                self.api.getShapes(normCodesChunk, function (err, apiShapes) {
+                                    if (err) return cb(err);
+                                    self.store.put(apiShapes, function () { });
+                                });
+                            }, self, normCodesChunk);
+
                         });
+
+                    async.parallel(shapeRequests, function (err) {
+                        if (err) return cb(err);
+
+                        self.store.get(normCodes, function (err, dbShapes) {
+                            if (err) return cb(err);
+                            self._setShapesHierarchy(dbShapes, cb);
+                        });
+
                     });
                 });
             });
@@ -94,17 +129,6 @@
             }
         },
 
-        _mixDbAndApiShapes : function (dbShapes, apiShapes) {
-            var allShapes = [];
-            for (var i = 0; i < dbShapes.length; i++) {
-                if (_.isUndefined(dbShapes[i])) {
-                    allShapes[i] = apiShapes.splice(0, 1)[0];
-                } else {
-                    allShapes[i] = dbShapes[i];
-                }
-            }
-            return allShapes;
-        },
 
         _normCodesFromShapes : function (shapes) {
             return _.chain(shapes).compact().pluck("normCode").value();
