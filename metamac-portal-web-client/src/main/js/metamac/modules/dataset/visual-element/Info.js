@@ -121,6 +121,8 @@
                     scrollGroup.perfectScrollbar('update');
                 }
             });
+
+            scrollGroup.perfectScrollbar('update');
         },
 
         _isIndicator: function () {
