@@ -25,7 +25,7 @@
             while (i < normCodes.length) {
                 var chunk = [];
                 var totalQueryLength = 0;
-                while (i < normCodes.length && totalQueryLength + normCodes[i].length + 1 < App.Constants.maxQueryUrlLength) {
+                while (i < normCodes.length && totalQueryLength + normCodes[i].length + 1 < App.Constants.maxUrlQueryLength) {
                     chunk.push(normCodes[i]);
                     totalQueryLength += (normCodes[i].length + 1);
                     i++;
