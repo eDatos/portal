@@ -52,18 +52,20 @@
                         return self._setShapesHierarchy(dbShapes, cb);
                     }
 
-                    var shapeRequests = [];
-                    self._chunkNormCodesIntoValidUrlSize(notDbNormCodes)
-                        .forEach(function (normCodesChunk, index) {
+                    var shapeRequests = self._chunkNormCodesIntoValidUrlSize(notDbNormCodes)
+                        .map(function (normCodesChunk) {
 
-                            shapeRequests["action_" + index] = _.bind(function (normCodesChunk) {
+                            function getShapes(normCodesChunk, cb) {
                                 var self = this;
                                 self.api.getShapes(normCodesChunk, function (err, apiShapes) {
                                     if (err) return cb(err);
-                                    self.store.put(apiShapes, function () { });
+                                    self.store.put(apiShapes, function (dbShapes) {
+                                        cb(null, dbShapes);
+                                    });
                                 });
-                            }, self, normCodesChunk);
+                            }
 
+                            return _.bind(getShapes, self, normCodesChunk);
                         });
 
                     async.parallel(shapeRequests, function (err) {
