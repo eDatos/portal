@@ -50,29 +50,18 @@
             options.size = { width: this.cacheBlockSize.columns, height: this.cacheBlockSize.rows };
             this.cache[i][j] = new BigDataCacheBlock(options);
         },
-
         initializeCacheBlockSize: function () {
             this.cacheBlockSize = {};
-            if (this.rows > this.size && this.columns > this.size) {
+
+            this.cacheBlockSize.rows = this.rows;
+            this.cacheBlockSize.columns = this.columns;
+
+            if (this.rows > this.size) {
                 this.cacheBlockSize.rows = this.size;
+            }
+
+            if (this.columns > this.size) {
                 this.cacheBlockSize.columns = this.size;
-            } else if (this.rows > this.size) {
-                this.cacheBlockSize.rows = Math.ceil(this.size * this.size / this.columns);
-                this.cacheBlockSize.columns = this.columns;
-
-                if (this.cacheBlockSize.rows > this.rows) {
-                    this.cacheBlockSize.rows = this.rows;
-                }
-            } else if (this.columns > this.size) {
-                this.cacheBlockSize.rows = this.rows;
-                this.cacheBlockSize.columns = Math.ceil(this.size * this.size / this.rows);
-
-                if (this.cacheBlockSize.columns > this.columns) {
-                    this.cacheBlockSize.columns = this.columns;
-                }
-            } else {
-                this.cacheBlockSize.rows = this.rows;
-                this.cacheBlockSize.columns = this.columns;
             }
         },
 
