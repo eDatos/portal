@@ -78,7 +78,6 @@
             });
 
             var cacheSize = Math.floor(App.Constants.maxUrlQueryLength / summatoryRepresentationLengths);
-            console.log("cache size", cacheSize);
             return cacheSize;
         },
 
