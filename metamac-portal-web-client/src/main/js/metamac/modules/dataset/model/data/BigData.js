@@ -83,9 +83,8 @@
 
         _initializeAjaxManager: function () {
             this.ajaxManager = $.manageAjax.create('DataSourceDatasetCache', {
-                queue: 'limit',
-                cacheResponse: true,
-                queueLimit: 9 // neighbours
+                queue: true,
+                cacheResponse: true
             });
         },
 
