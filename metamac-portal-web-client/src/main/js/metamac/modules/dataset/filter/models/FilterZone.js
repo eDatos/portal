@@ -5,19 +5,18 @@
 
     App.modules.dataset.filter.models.FilterZone = Backbone.Model.extend({
 
-        defaults : {
-            dimensions : undefined,
-            fixedSize : undefined,
-            maxSize : undefined,
-            type : undefined,
-            preferredType : undefined,
-            selectedLimit : Infinity,
-            drawableLimit : Infinity
+        defaults: {
+            dimensions: undefined,
+            fixedSize: undefined,
+            maxSize: undefined,
+            type: undefined,
+            preferredType: undefined,
+            drawableLimit: Infinity
         },
 
-        initialize : function () {
+        initialize: function () {
             this.set('dimensions', new Backbone.Collection());
-            this.on('change:selectedLimit change:drawableLimit', this._onChangeLimitForDimension, this);            
+            this.on('change:drawableLimit', this._onChangeLimitForDimension, this);
         },
 
         remove : function (dimension) {
@@ -38,8 +37,7 @@
             this.get('dimensions').each(this._updateLimitForDimension, this);
         },
 
-        _updateLimitForDimension : function (dimension) {
-            dimension.get('representations').setSelectedLimit(this.get('selectedLimit'));
+        _updateLimitForDimension: function (dimension) {
             dimension.get('representations').setDrawableLimit(this.get('drawableLimit'));
         },
 

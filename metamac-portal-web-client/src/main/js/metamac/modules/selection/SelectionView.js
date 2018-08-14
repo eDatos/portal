@@ -65,8 +65,8 @@
             var zones = this.collection.zones;
 
             // Remove restrictions
-            zones.get("left").set({ fixedSize: undefined, selectedLimit: Infinity });
-            zones.get("top").set({ fixedSize: undefined, selectedLimit: Infinity });
+            zones.get("left").set({ fixedSize: undefined, drawableLimit: Infinity });
+            zones.get("top").set({ fixedSize: undefined, drawableLimit: Infinity });
 
             zones
                 .getFixedZones()
