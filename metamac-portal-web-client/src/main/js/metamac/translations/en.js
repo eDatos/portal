@@ -113,7 +113,8 @@ I18n.translations.en = {
         mapbubble: {
             nomap: "No map available"
         },
-        noSelection: "You must choose at least one category on each dimension"
+        noSelection: "You must choose at least one category on each dimension",
+        loading: "Loading data..."
     },
 
     entity: {

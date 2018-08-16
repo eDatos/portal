@@ -1235,13 +1235,26 @@ function program20(depth0,data) {
   return buffer;
   });
 
+this["Handlebars"]["templates"]["dataset/dataset-loading"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"dataset-message-container\">\r\n    <div class=\"dataset-message-text\">";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "ve.loading", options) : helperMissing.call(depth0, "message", "ve.loading", options)))
+    + "\r\n    </div>\r\n</div>";
+  return buffer;
+  });
+
 this["Handlebars"]["templates"]["dataset/dataset-no-selection"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"no-selection-container\">\r\n    <div class=\"no-selection-message\">";
+  buffer += "<div class=\"dataset-message-container\">\r\n    <div class=\"dataset-message-text\">";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.message || depth0.message),stack1 ? stack1.call(depth0, "ve.noSelection", options) : helperMissing.call(depth0, "message", "ve.noSelection", options)))
     + "\r\n    </div>\r\n</div>";

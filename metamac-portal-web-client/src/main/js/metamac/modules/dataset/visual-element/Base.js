@@ -11,6 +11,7 @@
     App.VisualElement.Base.prototype = {
 
         _noSelectionTemplate: App.templateManager.get('dataset/dataset-no-selection'),
+        _loadingTemplate: App.templateManager.get('dataset/dataset-loading'),
 
         initialize: function (options) {
             options = options || {};
@@ -267,7 +268,7 @@
 
         setupNoSelectionViewIfNeeded: function () {
             if (this.$el.find('.dataset-no-selection').length) { return; }
-            this.$noSelection = $('<div class="dataset-no-selection"></div>');
+            this.$noSelection = $('<div class="dataset-no-selection dataset-message"></div>');
             this.$noSelection.hide();
             this.$el.append(this.$noSelection);
         },
@@ -281,6 +282,25 @@
             } else {
                 this.renderNoSelectionView();
                 return false;
+            }
+        },
+
+        showLoading: function () {
+            this.setupLoadingViewIfNeeded();
+            this.$loading.html(this._loadingTemplate());
+            this.$loading.show();
+        },
+
+        setupLoadingViewIfNeeded: function () {
+            if (this.$el.find('.dataset-loading').length) { return; }
+            this.$loading = $('<div class="dataset-loading dataset-message"></div>');
+            this.$loading.hide();
+            this.$el.append(this.$loading);
+        },
+
+        hideLoading: function () {
+            if (this.$loading) {
+                this.$loading.hide();
             }
         }
 

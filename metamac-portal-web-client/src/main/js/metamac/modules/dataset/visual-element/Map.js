@@ -73,6 +73,8 @@
             if (this.$title) { this.$title.show(); }
             this.visible = true;
 
+            this.showLoading();
+
             var normCodes = this._getGeographicDimensionNormCodes();
             var allNormCodes = this._getAllGeographicDimensionNormCodes();
 
@@ -171,6 +173,7 @@
 
             this._setUpListeners();
             this.render();
+            this.hideLoading();
         },
 
         _initTitleView: function () {
