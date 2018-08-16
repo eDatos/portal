@@ -69,15 +69,31 @@
         // App.Constants.maxUrlQueryLength > cacheSize * (maxRepresentationLength[1] +  maxRepresentationLength[2]...)
         // cacheSize < App.Constants.maxUrlQueryLength / (maxRepresentationLength[1] +  maxRepresentationLength[2]...)
         _calculateCacheSize: function () {
-            var maxRepresentationLengths = this.filterDimensions.map(function (filterDimension) {
-                return filterDimension.get('representations').max(function (representation) { return representation.id.length; }).id.length + 1;
+            var availableQueryLength = App.Constants.maxUrlQueryLength;
+            var summatoryRepresentationLengths = 0;
+            this.filterDimensions.each(function (filterDimension) {
+                var drawableRepresentations = filterDimension.get('representations').where({ drawable: true });
+                if (!drawableRepresentations.length) { return; }
+                var maxRepresentationLength = _.max(drawableRepresentations, function (representation) { return representation.id.length; }).id.length + 1;
+                if (drawableRepresentations.length == 1) {
+                    // If we only have one representation selected, we simply add it to the query
+                    availableQueryLength -= maxRepresentationLength * 2;
+                } else {
+                    // Else, we add it to later divide for it
+                    summatoryRepresentationLengths += maxRepresentationLength;
+                }
             });
 
-            var summatoryRepresentationLengths = _(maxRepresentationLengths).reduce(function (memo, maxRepresentationLength) {
-                return memo + maxRepresentationLength;
-            });
+            if (availableQueryLength < 0) {
+                console.warn("Too many dimensions");
+                return;
+            }
 
-            var cacheSize = Math.floor(App.Constants.maxUrlQueryLength / summatoryRepresentationLengths);
+            if (!summatoryRepresentationLengths) {
+                return; // Use default value
+            }
+
+            var cacheSize = Math.floor(availableQueryLength / summatoryRepresentationLengths) || 1;
             return cacheSize;
         },
 

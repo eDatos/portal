@@ -41,7 +41,7 @@
             }
         },
 
-        maxUrlQueryLength: 1800
+        maxUrlQueryLength: 1700
     };
 
 }());
