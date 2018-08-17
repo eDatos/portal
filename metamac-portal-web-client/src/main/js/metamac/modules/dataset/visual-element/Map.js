@@ -66,13 +66,12 @@
         load: function () {
             var self = this;
             this._bindEvents();
-            if (!this.assertAllDimensionsHaveSelections()) {
                 if (this.$title) { this.$title.hide(); }
+            if (!this.assertAllDimensionsHaveSelections()) {
                 return;
             }
-            if (this.$title) { this.$title.show(); }
-            this.visible = true;
 
+            this.visible = true;
             this.showLoading();
 
             var normCodes = this._getGeographicDimensionNormCodes();
@@ -172,6 +171,7 @@
             this._initTitleView();
 
             this._setUpListeners();
+            if (this.$title) { this.$title.show(); }
             this.render();
             this.hideLoading();
         },
