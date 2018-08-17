@@ -47,7 +47,9 @@
             var childrenSelected = this.children.any(function (child) {
                 return child.get('selected') || child.get('childrenSelected');
             });
+            if (childrenSelected != this.get('childrenSelected')) {
             this.set('childrenSelected', childrenSelected);
+            }
         },
 
         _close: function () {
