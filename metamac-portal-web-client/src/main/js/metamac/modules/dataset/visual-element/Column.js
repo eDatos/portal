@@ -129,9 +129,12 @@
 
         render: function () {
             var self = this;
+            self.showLoading();
 
             this.dataset.data.loadAllSelectedData()
                 .then(function () {
+                    self.hideLoading();
+
                     self.$el.html("");
                     self.$title = $('<h3></h3>');
                     self.updateTitle();

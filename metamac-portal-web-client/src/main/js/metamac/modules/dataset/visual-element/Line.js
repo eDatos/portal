@@ -213,8 +213,12 @@ App.namespace("App.VisualElement.LineChart");
 
         render: function () {
             var self = this;
+
+            self.showLoading();
             this.dataset.data.loadAllSelectedData()
                 .then(function () {
+                    self.hideLoading();
+
                     self.$el.empty();
                     self.$title = $('<h3></h3>');
                     self.updateTitle();
