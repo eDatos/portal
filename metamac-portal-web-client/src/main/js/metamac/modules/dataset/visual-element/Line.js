@@ -300,12 +300,11 @@ App.namespace("App.VisualElement.LineChart");
             if (!this.masterChart || !this.detailChart) {
                 this.load();
             } else {
-                self.detailChart.showLoading();
-                self.masterChart.showLoading();
+                self.showLoading();
 
                 this.dataset.data.loadAllSelectedData().then(function () {
-                    self.detailChart.hideLoading();
-                    self.masterChart.hideLoading();
+                    self.hideLoading();
+
                     self.updateTitle();
                     self._updateMaster();
                     self._updateDetail();

@@ -276,14 +276,14 @@
             if (!this.assertAllDimensionsHaveSelections()) {
                 return;
             }
+
             if (!this.chart) {
                 this.load();
             } else {
-                this.chart.showLoading();
-
                 var self = this;
+                self.showLoading();
                 this.dataset.data.loadAllSelectedData().then(function () {
-                    self.chart.hideLoading();
+                    self.hideLoading();
 
                     self.updateTitle();
                     var data = self.getData();
