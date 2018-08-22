@@ -67,7 +67,6 @@
         load: function () {
             var self = this;
             this._bindEvents();
-                if (this.$title) { this.$title.hide(); }
             if (!this.assertAllDimensionsHaveSelections()) {
                 return;
             }
@@ -172,7 +171,7 @@
             this._initTitleView();
 
             this._setUpListeners();
-            if (this.$title) { this.$title.show(); }
+            this.showTitle();
             this.render();
             this.hideLoading();
         },
