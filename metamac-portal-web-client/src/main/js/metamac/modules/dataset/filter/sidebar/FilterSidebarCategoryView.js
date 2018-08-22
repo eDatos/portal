@@ -61,6 +61,7 @@
 
         toggleSelectedElementAndChildren : function (e) {
             e.preventDefault();
+            this.filterRepresentation.trigger("loading");
             this.filterRepresentation.toggleMeAndMyChildren('selected');
         },
 
