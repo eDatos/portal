@@ -23,8 +23,9 @@
         },
 
         _bindEvents: function () {
-            if (this.filterDimensions != null)
-                this.filterDimensions.on('change:drawable change:zone', this.onUpdateFilter, this);
+            if (this.filterDimensions != null) {
+                this.filterDimensions.on('change:drawable change:zone', _.debounce(this.onUpdateFilter, 20, true), this);
+            }
         },
 
         isAllSelectedDataLoaded: function () {
