@@ -5,47 +5,47 @@
 
     App.widget.filter.sidebar.FilterSidebarCategoryView = Backbone.View.extend({
 
-        template : App.templateManager.get('dataset/filter/sidebar/filter-sidebar-category'),
+        template: App.templateManager.get('dataset/filter/sidebar/filter-sidebar-category'),
 
-        className : "filter-sidebar-category",
+        className: "filter-sidebar-category",
 
-        initialize : function (options) {
+        initialize: function (options) {
             this.filterRepresentation = options.filterRepresentation;
             this.filterDimension = options.filterDimension;
             this.filterSidebarDimensionView = options.filterSidebarDimensionView;
         },
 
-        events : {
+        events: {
             "click .filter-sidebar-category-label" : "toggleSelected",
             "click .category-state" : "toggleSelected",
 
-            "dblclick .filter-sidebar-category-label" : "toggleSelectedElementAndChildren",
-            "dblclick .category-state" : "toggleSelectedElementAndChildren",
+            "dblclick .filter-sidebar-category-label": "toggleSelectedElementAndChildren",
+            "dblclick .category-state": "toggleSelectedElementAndChildren",
 
-            "click .category-expand" : "toggleOpen"
+            "click .category-expand": "toggleOpen"
         },
 
-        _bindEvents : function () {
+        _bindEvents: function () {
             var renderEvents = 'change:visibleLabel change:selected change:childrenSelected change:visible change:open change:matchIndexBegin change:matchIndexEnd';
             // Debounce 0 is strange, but needed, because if put the render as inmediate, the views reset, losing the events pointing to them
             this.listenTo(this.filterRepresentation, renderEvents, this.render);
         },
 
-        _unbindEvents : function () {
+        _unbindEvents: function () {
             this.stopListening();
         },
 
-        destroy : function () {
+        destroy: function () {
             this._unbindEvents();
             this.remove();
         },
 
-        toggleOpen : function (e) {
+        toggleOpen: function (e) {
             e.preventDefault();
             this.filterRepresentation.toggle('open');
         },
 
-        toggleSelected : function (e) {
+        toggleSelected: function (e) {
             e.preventDefault();
             var representations = this.filterDimension.get('representations');
             var currentIndex = representations.indexOf(this.filterRepresentation);
@@ -69,13 +69,13 @@
             this.filterSidebarDimensionView.lastIndex = currentIndex;
         },
 
-        toggleSelectedElementAndChildren : function (e) {
+        toggleSelectedElementAndChildren: function (e) {
             e.preventDefault();
             this.filterRepresentation.trigger("loading");
             this.filterRepresentation.toggleMeAndMyChildren('selected');
         },
 
-        _stateClass : function () {
+        _stateClass: function () {
             var stateClass;
             if (this.filterRepresentation.children.length > 0 && this.filterRepresentation.get('childrenSelected')) {
                 stateClass = this.filterRepresentation.get('selected') ?
@@ -89,7 +89,7 @@
             return stateClass;
         },
 
-        _collapseClass : function () {
+        _collapseClass: function () {
             if (this.filterRepresentation.children.length > 0) {
                 if (this.filterRepresentation.get('open')) {
                     return this.filterRepresentation.get('childrenSelected') ? 'filter-sidebar-category-any-children-icon-collapse' : 'filter-sidebar-category-icon-collapse';
@@ -99,7 +99,7 @@
             }
         },
 
-        _strongZone : function (str, begin, end) {
+        _strongZone: function (str, begin, end) {
             if (begin >= 0 && end > begin) {
                 var p1 = str.substring(0, begin);
                 var p2 = str.substring(begin, end);
@@ -110,7 +110,7 @@
             }
         },
 
-        render : function () {
+        render: function () {
             this._unbindEvents();
             this._bindEvents();
 
@@ -124,10 +124,10 @@
                 var label = this._strongZone(filterRepresentation.visibleLabel, filterRepresentation.matchIndexBegin, filterRepresentation.matchIndexEnd);
 
                 var context = {
-                    filterRepresentation : filterRepresentation,
-                    label : new Handlebars.SafeString(label),
-                    stateClass : stateClass,
-                    collapseClass : collapseClass
+                    filterRepresentation: filterRepresentation,
+                    label: new Handlebars.SafeString(label),
+                    stateClass: stateClass,
+                    collapseClass: collapseClass
                 };
                 this.$el.html(this.template(context));
                 this.$el.css("padding-left", this.filterRepresentation.get('level') * 18);
