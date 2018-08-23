@@ -27,8 +27,8 @@
 
         _bindEvents : function () {
             var renderEvents = 'change:visibleLabel change:selected change:childrenSelected change:visible change:open change:matchIndexBegin change:matchIndexEnd';
-            //debounce for multiple changes when searching
-            this.listenTo(this.filterRepresentation, renderEvents, _.debounce(this.render, 15));
+            // Debounce 0 is strange, but needed, because if put the render as inmediate, the views reset, losing the events pointing to them
+            this.listenTo(this.filterRepresentation, renderEvents, this.render);
         },
 
         _unbindEvents : function () {
@@ -54,7 +54,17 @@
                 var sortedIndex = [currentIndex, this.filterSidebarDimensionView.lastIndex].sort();
                 representations.toggleRepresentationsVisibleRange(sortedIndex[0], sortedIndex[1], newState);
             } else {
-                this.filterRepresentation.toggle('selected');
+                // We do this to avoid interactions with the inmediate rendering and toggleSelectedElementAndChildren
+                var selected = this.filterRepresentation.get('selected');
+                var self = this;
+                // Wait for double click events to happen
+                setTimeout(function () {
+                    var currentSelected = self.filterRepresentation.get('selected');
+                    // If after the timeout the seleted value is still the same, you can toggle it safely
+                    if (selected == currentSelected) {
+                        self.filterRepresentation.toggle('selected');
+                    }
+                }, 400);
             }
             this.filterSidebarDimensionView.lastIndex = currentIndex;
         },
