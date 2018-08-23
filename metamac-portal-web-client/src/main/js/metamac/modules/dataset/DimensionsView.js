@@ -218,6 +218,8 @@
                 this.currentSelectedGranularity = selectedGranularity;
                 this._updateDrawableRepresentationsBySelectedGranularity(filterDimensionId, selectedGranularity);
             }
+
+            this.render();
         },
 
         _onChangeLevel: function (e) {
@@ -259,10 +261,10 @@
         _bindEvents: function () {
             var self = this;
             this.filterDimensions.each(function (filterDimension) {
-                self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 300));
-                self.listenTo(self.filterDimensions, 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
+                self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 400));
+                self.listenTo(filterDimension.get('representations'), 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
             });
-            this.listenTo(this.filterDimensions, "change:zone change:selected", _.throttle(self.render, 500));
+            this.listenTo(this.filterDimensions, "change:zone", _.throttle(self.render, 500));
             this.listenTo(this.dataset.data, "hasNewData", self.hasNewdata);
             if (this.optionsModel.get('widget')) {
                 this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);

@@ -57,15 +57,12 @@
 
         parse: function (attributes) {
             attributes.representations = App.modules.dataset.filter.models.FilterRepresentations.initializeWithRepresentations(attributes.representations);
-            attributes.representations.on('all', this._onRepresentationEvent, this);
+            this.listenTo(attributes.representations, 'change:drawable', this._onRepresentationDrawableEvent);
             return attributes;
         },
 
-        _onRepresentationEvent: function (event, model, collection, options) {
-            // Don´t propagate this one from children to parents again, it´s already propagated from parent to children
-            if (event != "change:visibleLabelType") {
-                this.trigger.apply(this, arguments);
-            }
+        _onRepresentationDrawableEvent: function (model, collection, options) {
+            this.trigger("change:drawable", model, collection, options);
         },
 
         _cleanFilterQuery: function (query) {
