@@ -41,6 +41,7 @@
 
             _.invoke(this.models, 'set', { drawable: false }, { silent: true });
             _.invoke(modelsToDraw, 'set', { drawable: true });
+            this.trigger("change:drawable");
         },
 
         _getModelsToDraw: function () {
