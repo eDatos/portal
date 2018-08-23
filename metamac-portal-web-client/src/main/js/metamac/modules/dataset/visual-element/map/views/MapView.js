@@ -17,7 +17,7 @@
         _defaultMapOptions: {
             chart: {
                 className: 'map',
-                animation: false,
+                animation: false
             },
 
             title: {
