@@ -173,7 +173,6 @@
             this._setUpListeners();
             this.showTitle();
             this.render();
-            this.hideLoading();
         },
 
         _initTitleView: function () {
@@ -200,7 +199,8 @@
                 mapType: this.mapType,
                 title: this.getTitle(),
                 rightsHolder: this.getRightsHolderText(),
-                showRightsHolder: this.showRightsHolderText()
+                showRightsHolder: this.showRightsHolderText(),
+                callback: this.hideLoading
             });
         },
 

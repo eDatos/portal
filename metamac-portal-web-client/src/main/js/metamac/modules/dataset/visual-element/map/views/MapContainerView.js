@@ -21,6 +21,7 @@
             this.title = options.title;
             this.rightsHolder = options.rightsHolder;
             this.showRightsHolder = options.showRightsHolder;
+            this.callback = options.callback;
             this.$el.empty();
             this._initInternalViews();
         },
@@ -80,7 +81,8 @@
                 mapType: this.mapType,
                 title: this.title,
                 rightsHolder: this.rightsHolder,
-                showRightsHolder: this.showRightsHolder
+                showRightsHolder: this.showRightsHolder,
+                callback: this.callback
             });
         },
 

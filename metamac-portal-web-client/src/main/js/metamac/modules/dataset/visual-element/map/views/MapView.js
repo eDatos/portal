@@ -118,6 +118,7 @@
             this._defaultMapOptions.tooltip.formatter = _.partial(function (formatter, mapView) {
                 return mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
             }, _, this);
+            this._defaultMapOptions.chart.events = { load: options.callback };
         },
 
         events: {
