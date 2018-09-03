@@ -208,13 +208,13 @@
         _updateRepresentations: function (filterDimensionId, e) {
             // TODO Refactor this to avoid accesing the DOM
             var selectedLevel = this.$el.find('select.dimension-select-level[data-dimension-id=' + filterDimensionId + ']').val();
-            if (selectedLevel && this.currentSelectedLevel != selectedLevel) {
+            if (selectedLevel) {
                 this.currentSelectedLevel = selectedLevel;
                 this._updateDrawableRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
             }
 
             var selectedGranularity = this.$el.find('select.dimension-select-granularity[data-dimension-id=' + filterDimensionId + ']').val();
-            if (selectedGranularity && this.currentSelectedGranularity != selectedGranularity) {
+            if (selectedGranularity) {
                 this.currentSelectedGranularity = selectedGranularity;
                 this._updateDrawableRepresentationsBySelectedGranularity(filterDimensionId, selectedGranularity);
             }
