@@ -15,6 +15,7 @@
         this.metadata = options.metadata;
         this.dimensions = options.dimensions;
         this.ajaxManager = options.ajaxManager;
+        this.singleRequest = options.singleRequest;
     };
 
     App.dataset.data.ApiDatasetRequest.prototype = {
@@ -25,7 +26,7 @@
 
         queryParams: function () {
             var result = {};
-            if (this.dimensions) {
+            if (this.dimensions && !this.singleRequest) {
                 //MOTIVOS_ESTANCIA:000|001|002:ISLAS_DESTINO_PRINCIPAL:005|006
                 result.dim = _.map(this.dimensions,
                     function (dimension) {

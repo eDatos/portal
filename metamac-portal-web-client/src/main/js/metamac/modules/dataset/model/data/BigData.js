@@ -43,6 +43,7 @@
 
         loadAllSelectedData: function () {
             var self = this;
+            this.singleRequest = true;
             var blocks = this.getCache().getAllCacheBlocks();
             var promises = _.map(blocks, this._loadCacheBlock, this);
             return $.when.apply($, promises);
@@ -54,6 +55,7 @@
 
         _invalidateCache: function () {
             this.cache = undefined;
+            this.singleRequest = undefined;
         },
 
         getCache: function () {
@@ -71,6 +73,10 @@
         // App.Constants.maxUrlQueryLength > cacheSize * (maxRepresentationLength[1] +  maxRepresentationLength[2]...)
         // cacheSize < App.Constants.maxUrlQueryLength / (maxRepresentationLength[1] +  maxRepresentationLength[2]...)
         _calculateCacheSize: function () {
+            if (this.singleRequest) {
+                return Infinity;
+            }
+
             var availableQueryLength = App.Constants.maxUrlQueryLength;
             var summatoryRepresentationLengths = 0;
             this.filterDimensions.each(function (filterDimension) {
@@ -121,11 +127,13 @@
                 this._loadCacheBlock(cacheBlock, true);
             }
 
-            // load neighbours
-            var neighbourCacheBlocks = this.getCache().neighbourCacheBlocks(cacheBlock);
-            _.each(neighbourCacheBlocks, function (cacheBlock) {
-                this._loadCacheBlock(cacheBlock, true);
-            }, this);
+            if (!this.singleRequest) {
+                // load neighbours
+                var neighbourCacheBlocks = this.getCache().neighbourCacheBlocks(cacheBlock);
+                _.each(neighbourCacheBlocks, function (cacheBlock) {
+                    this._loadCacheBlock(cacheBlock, true);
+                }, this);
+            }
         },
 
         getAttributes: function (selection) {
@@ -164,13 +172,14 @@
             } else if (cacheBlock) {
                 this._loadCacheBlock(cacheBlock, true);
             }
-
-            if (cacheBlock) {
-                // load neighbours
-                var neighbourCacheBlocks = this.getCache().neighbourCacheBlocks(cacheBlock);
-                _.each(neighbourCacheBlocks, function (cacheBlock) {
-                    this._loadCacheBlock(cacheBlock, true);
-                }, this);
+            if (!this.singleRequest) {
+                if (cacheBlock) {
+                    // load neighbours
+                    var neighbourCacheBlocks = this.getCache().neighbourCacheBlocks(cacheBlock);
+                    _.each(neighbourCacheBlocks, function (cacheBlock) {
+                        this._loadCacheBlock(cacheBlock, true);
+                    }, this);
+                }
             }
         },
 
@@ -197,7 +206,7 @@
             if (!this.getCache().isBlockReady(cacheBlock)) {
                 if (!cacheBlock.isFetching()) {
                     var dimensions = this._getCategoryIdsForCacheBlock(cacheBlock);
-                    var apiRequestParams = { metadata: this.metadata, dimensions: dimensions };
+                    var apiRequestParams = { metadata: this.metadata, dimensions: dimensions, singleRequest: self.singleRequest };
                     if (limitSimultaneousRequests) {
                         apiRequestParams.ajaxManager = this.ajaxManager;
                     }
