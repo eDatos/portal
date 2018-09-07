@@ -42,7 +42,6 @@
         },
 
         loadAllSelectedData: function () {
-            var self = this;
             this.singleRequest = true;
             var blocks = this.getCache().getAllCacheBlocks();
             var promises = _.map(blocks, this._loadCacheBlock, this);

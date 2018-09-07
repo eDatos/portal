@@ -2,52 +2,52 @@
     App.namespace("App.Map.MapModel");
 
     App.Map.MapModel = Backbone.Model.extend({
-        defaults : {
-            minScale : 0.1,
-            maxScale : 320,
-            scaleFactor : 2,
-            currentScale : 1,
-            oldScale : null,
-            x : 0,
-            y : 0,
-            animationDelay : 0,
-            minValue : 0,
-            maxValue : 40,
-            values : [1],
-            minRangesNum : 1,
-            maxRangesNum : 10,
-            currentRangesNum : 4,
-            mapType : 'map'
+        defaults: {
+            minScale: 0.1,
+            maxScale: 320,
+            scaleFactor: 2,
+            currentScale: 1,
+            oldScale: null,
+            x: 0,
+            y: 0,
+            animationDelay: 0,
+            minValue: 0,
+            maxValue: 40,
+            values: [1],
+            minRangesNum: 1,
+            maxRangesNum: 10,
+            currentRangesNum: 4,
+            mapType: 'map'
         },
 
-        zoomExit : function () {
-            this.set({currentScale : 2, x : 0, y : 0, animationDelay : 1000});
+        zoomExit: function () {
+            this.set({ currentScale: 2, x: 0, y: 0, animationDelay: 1000 });
             this.trigger('zoomExit');
         },
 
-        zoomIn : function () {
+        zoomIn: function () {
             var currentScale = this.get("currentScale");
             var scaleFactor = this.get("scaleFactor");
 
             var newScale = currentScale * scaleFactor;
 
             if (this.isRequestedZoomAllowed(1)) {
-                this.set({currentScale : newScale, oldScale : currentScale, animationDelay : 500});
+                this.set({ currentScale: newScale, oldScale: currentScale, animationDelay: 500 });
             }
         },
 
-        zoomOut : function () {
+        zoomOut: function () {
             var currentScale = this.get("currentScale");
             var scaleFactor = this.get("scaleFactor");
 
             var newScale = currentScale / scaleFactor;
 
             if (this.isRequestedZoomAllowed(-1)) {
-                this.set({currentScale : newScale, oldScale : currentScale, animationDelay : 500});
+                this.set({ currentScale: newScale, oldScale: currentScale, animationDelay: 500 });
             }
         },
 
-        zoomMouseWheel : function (options) {
+        zoomMouseWheel: function (options) {
             var currentScale = this.get("currentScale");
             var newScale = Math.pow(2, options.delta) * currentScale;
 
@@ -62,20 +62,20 @@
             var x = this.get("x") - this.scaleMovement(options.xOffset, currentScale) + this.scaleMovement(options.xOffset, newScale);
             var y = this.get("y") - this.scaleMovement(options.yOffset, currentScale) + this.scaleMovement(options.yOffset, newScale);
 
-            this.set({currentScale : newScale, oldScale : currentScale, x : x, y : y, animationDelay : 0});
+            this.set({ currentScale: newScale, oldScale: currentScale, x: x, y: y, animationDelay: 0 });
         },
 
-        currentZoomLevel : function () {
+        currentZoomLevel: function () {
             var currentScale = this.get("currentScale");
             return this._log2(currentScale);
         },
 
-        numZoomLevels : function () {
+        numZoomLevels: function () {
             var maxScale = this.get("maxScale");
             return this._log2(maxScale);
         },
 
-        transformToValidScaleFactor : function (newScaleFactor) {
+        transformToValidScaleFactor: function (newScaleFactor) {
             var currentZoomLevelDecimal = this._log2(newScaleFactor);
             var currentZoomLevelInteger = parseInt(currentZoomLevelDecimal);
             var newScaleFactorInteger = Math.pow(2, currentZoomLevelInteger);
@@ -87,7 +87,7 @@
             return newScaleFactorInteger;
         },
 
-        isRequestedZoomAllowed : function (delta) {
+        isRequestedZoomAllowed: function (delta) {
             var currentScale = this.get("currentScale");
             var maxScale = this.get("maxScale");
             var minScale = this.get("minScale");
@@ -98,22 +98,22 @@
             }
         },
 
-        isNewScaleFactorTooBig : function (newScaleFactor) {
+        isNewScaleFactorTooBig: function (newScaleFactor) {
             var maxScale = this.get("maxScale");
             return newScaleFactor > maxScale;
         },
 
-        isNewScaleFactorTooSmall : function (newScaleFactor) {
+        isNewScaleFactorTooSmall: function (newScaleFactor) {
             var minScale = this.get("minScale");
             return newScaleFactor < minScale;
         },
 
-        scaleMovement : function (value, newScale) {
+        scaleMovement: function (value, newScale) {
             var currentScale = newScale || this.get("currentScale");
             return value / currentScale;
         },
 
-        _log2 : function (val) {
+        _log2: function (val) {
             return Math.log(val) / Math.log(2);
         },
 
@@ -127,26 +127,26 @@
         // },
 
         // Taken from https://github.com/jfsiii/d3-quantile/blob/master/index.js
-        _quantile : function(values, p) {
-            var H = (values.length - 1) * p + 1, 
-                h = Math.floor(H), 
-                v = +values[h - 1], 
+        _quantile: function (values, p) {
+            var H = (values.length - 1) * p + 1,
+                h = Math.floor(H),
+                v = +values[h - 1],
                 e = H - h;
             return e ? v + e * (values[h] - v) : v;
         },
 
-        _createQuantiles : function(values, currentRangesNum) {            
+        _createQuantiles: function (values, currentRangesNum) {
             var self = this;
             self.values = _.sortBy(values);
             self.currentRangesNum = currentRangesNum;
-            return _.map(_.range(1, currentRangesNum), function(value, key, list) {
+            return _.map(_.range(1, currentRangesNum), function (value, key, list) {
                 if (value != 0) {
                     return self._quantile(self.values, value / self.currentRangesNum);
                 }
             }, self);
         },
 
-        createRangeLimits : function () {
+        createRangeLimits: function () {
             var minValue = this.get("minValue");
             var maxValue = this.get("maxValue");
             var quantiles = this._createQuantiles(this.get("values"), this.get("currentRangesNum"));
@@ -155,7 +155,7 @@
             return rangeLimits;
         },
 
-        createRanges : function () {
+        createRanges: function () {
             var ranges = [];
             var rangeLimits = this.createRangeLimits();
             for (var i = 0; i < rangeLimits.length - 1; i++) {
@@ -166,7 +166,7 @@
         },
 
         // Deprecated?
-        _createRange : function (from, to) {
+        _createRange: function (from, to) {
             var localizedFrom = App.dataset.data.NumberFormatter.strNumberToLocalizedString(from.toFixed(2));
             var localizedTo = App.dataset.data.NumberFormatter.strNumberToLocalizedString(to.toFixed(2));
             return localizedFrom + " < " + localizedTo;
