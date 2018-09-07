@@ -209,11 +209,11 @@
             var allGeoJson = GeoJsonConverter.shapeListToGeoJson(this._allShapeListOrderByHierarchy(), { contour: true });
             var containerGeoJson = GeoJsonConverter.shapeListToGeoJson([this._container], { contour: true });
 
-            var mapData = this._getMapDataFromGeoJson(geoJson);
+            var data = this._getData();
+
+            var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
             var allMapData = this._getMapDataFromGeoJson(allGeoJson);
             var containerMapData = this._getMapDataFromGeoJson(containerGeoJson);
-
-            var data = this._getData();
 
             var worldContainerSerie = _.defaults(
                 {
@@ -385,8 +385,14 @@
 
         _onResize: function () {
             this.map.reflow();
-        }
+        },
 
+        _filterShapesWithoutData: function (mapData, data) {
+            var dataCodes = _.pluck(data, 'code');
+            return _.filter(mapData, function (mapDataEntry) {
+                return _.contains(dataCodes, mapDataEntry.properties.code);
+            });
+        }
     });
 
 }());
