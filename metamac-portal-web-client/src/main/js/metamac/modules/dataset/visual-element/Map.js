@@ -22,7 +22,7 @@
         },
 
         _bindEvents: function () {
-            var debounceReload = _.debounce(_.bind(this.reload, this), 100);
+            var debounceReload = _.debounce(_.bind(this.reload, this), 200);
             this.listenTo(this.filterDimensions, "loading", this.showLoading);
             this.listenTo(this.filterDimensions, "change:drawable change:zone", debounceReload);
         },
