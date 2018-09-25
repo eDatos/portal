@@ -72,9 +72,18 @@
         },
 
         getGranularityOrder: function (cb) {
+            var defaultGeographicalGranularityCodelist = App.URNUtils.getIdentifierFromUrn(App.config["geographicalGranularityUrn"]);
+            var defaultGeographicalGranularityCodelistUrl = [
+                App.endpoints["structural-resources"],
+                "codelists",
+                defaultGeographicalGranularityCodelist.agency,
+                defaultGeographicalGranularityCodelist.identifier,
+                defaultGeographicalGranularityCodelist.version,
+                "codes.json?_type=json&fields=+order"
+            ].join('/');
 
             var requestParams = {
-                url: App.endpoints["structural-resources"] + "/codelists/~all/~all/~all/codes.json?_type=json&fields=+order&query=DEFAULT_GEOGRAPHICAL_GRANULARITIES_CODELIST EQ 'TRUE'",
+                url: defaultGeographicalGranularityCodelistUrl,
                 method: "GET",
                 dataType: 'jsonp',
                 jsonp: '_callback'

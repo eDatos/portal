@@ -65,6 +65,7 @@
 			request.setAttribute("ApiUrlExport", EXPORT_API_URL_BASE);
 			request.setAttribute("ApiUrlIndicators", INDICATORS_API_URL_BASE);
 			request.setAttribute("organisationUrn", configurationService.retrieveOrganisationUrn());
+            request.setAttribute("geographicalGranularityUrn", configurationService.retrieveDefaultCodelistGeographicalGranularityUrn());
             
 			request.setAttribute("analyticsGoogleTrackingId", configurationService.retrieveAnalyticsGoogleTrackingId());
             
@@ -77,6 +78,7 @@
             request.setAttribute("ApiUrlExport", "error");
             request.setAttribute("ApiUrlIndicators", "error");
             request.setAttribute("organisationUrn", "error");
+            request.setAttribute("geographicalGranularityUrn", "error");
             
             request.setAttribute("analyticsGoogleTrackingId", "error");
 		}
@@ -133,6 +135,7 @@ LazyLoad.js('client/metamac.js?d=${jsDate}', function () {
 	App.config["widget"] = true;
 
 	App.config["organisationUrn"] = "${organisationUrn}";
+	App.config["geographicalGranularityUrn"] = "${geographicalGranularityUrn}";
 	App.config["installationType"] = "${installationType}";
 
 	App.endpoints["statistical-resources"] = "${ApiUrlStatisticalResources}/v1.0";

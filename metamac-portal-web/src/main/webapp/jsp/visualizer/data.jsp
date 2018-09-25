@@ -84,6 +84,7 @@
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};
 			                    App.config["organisationUrn"] = "${organisationUrn}";
+			                    App.config["geographicalGranularityUrn"] = "${geographicalGranularityUrn}";
 			                    App.config["installationType"] = "${installationType}";                                   
 			                    
 			                    App.queryParams["agency"] = '${param.agencyId}';

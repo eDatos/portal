@@ -93,6 +93,7 @@
 			request.setAttribute("ApiUrlStructuralResources", SRM_API_URL_BASE);
 			request.setAttribute("ApiUrlIndicators", INDICATORS_API_URL_BASE);
             request.setAttribute("organisationUrn", configurationService.retrieveOrganisationUrn());
+            request.setAttribute("geographicalGranularityUrn", configurationService.retrieveDefaultCodelistGeographicalGranularityUrn());
 		
 		} catch (MetamacException e) {
 		 	request.setAttribute("ApiUrlStatisticalVisualizer","error");
@@ -103,6 +104,7 @@
 		 	request.setAttribute("ApiUrlStructuralResources", "error");
 		 	request.setAttribute("ApiUrlIndicators", "error");
 		 	request.setAttribute("organisationUrn", "error");
+		 	request.setAttribute("geographicalGranularityUrn", "error");
             
 		 	request.setAttribute("analyticsGoogleTrackingId", "error");
             
