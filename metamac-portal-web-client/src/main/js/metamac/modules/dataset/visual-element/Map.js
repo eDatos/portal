@@ -22,7 +22,7 @@
         },
 
         _bindEvents: function () {
-            var debounceReload = _.debounce(_.bind(this.reload, this), 20);
+            var debounceReload = _.debounce(_.bind(this.reload, this), 100);
             this.listenTo(this.filterDimensions, "loading", this.showLoading);
             this.listenTo(this.filterDimensions, "change:drawable change:zone", debounceReload);
         },
@@ -133,7 +133,7 @@
         destroy: function () {
             this.visible = false;
 
-            if (this._mapContainerView && this._mapContainerView.renderTo) {
+            if (this._mapContainerView) {
                 this._mapContainerView.destroy();
             }
 
