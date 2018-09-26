@@ -86,7 +86,12 @@
                     y: -5
                 }
             },
-
+            xAxis: {
+                minRange: 0.01
+            },
+            yAxis: {
+                minRange: 0.01
+            },
             tooltip: {}
         },
 
