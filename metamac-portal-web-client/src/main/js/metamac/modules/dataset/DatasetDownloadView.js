@@ -87,7 +87,7 @@
                 mapFormats: haveMapFormats,
                 imageFormats: haveImageFormats,
                 iconPreffix: visualizationSupertype,
-                drawSelectionButtons: !isQuery || haveImageFormats // FIXME METAMAC-2709
+                drawSelectionButtons: !isQuery || haveImageFormats // TODO METAMAC-2709
             };
         },
 
