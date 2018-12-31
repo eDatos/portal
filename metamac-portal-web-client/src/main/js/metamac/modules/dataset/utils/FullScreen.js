@@ -7,8 +7,6 @@
         this.initialize(options);
     };
 
-    var keyboardAllowed = typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element;
-
     App.FullScreen.prototype = {
 
         FS_RESIZE_DELAY : 300,
@@ -86,7 +84,7 @@
         },
 
         _enterFullScreenSupport : function () {
-            this._getRequestFullScreen().call(this.getContainer(), keyboardAllowed && Element.ALLOW_KEYBOARD_INPUT);
+            this._getRequestFullScreen().call(this.getContainer());
             this._setFullScreenCss();
         },
 
