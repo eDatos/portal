@@ -208,7 +208,7 @@
     .box-sizing(border-box);
 
     border: 1px solid @istacGreyMedium;
-    .border-radius(0 0 10px 10px);
+    .border-radius(0 0 @borderRadiusBig @borderRadiusBig);
     overflow: hidden;
     .clearfix;
 
@@ -245,7 +245,7 @@
     
     .dataset-visualization-options-bar {
         .options-bar;
-        .border-radius(0 0 6px 6px);        
+        .border-radius(0 0 @borderRadiusSmall @borderRadiusSmall);        
         .btn {
             .options-bar-btn;
 
