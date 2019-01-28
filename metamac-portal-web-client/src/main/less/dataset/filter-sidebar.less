@@ -58,7 +58,7 @@
     background-color: @istacBlueDark;
     color: @istacWhite;
     .user-select(none);
-    .border-radius(6px 6px 0 0);
+    .border-radius(@borderRadiusSmall @borderRadiusSmall 0 0);
 }
 
 .filter-sidebar-dimensions {
@@ -82,7 +82,7 @@
     .filter-sidebar-dimension-title {
         .sidebar-title;
         cursor: pointer;        
-        .border-radius(6px 6px 0 0);
+        .border-radius(@borderRadiusSmall @borderRadiusSmall 0 0);
     }
 
     .filter-sidebar-dimension-label {
@@ -97,7 +97,7 @@
         margin-bottom: 8px;
 
         background:@istacGreyMedium;
-        .border-radius(0 0 6px 6px);
+        .border-radius(0 0 @borderRadiusSmall @borderRadiusSmall);
 
         .filter-sidebar-dimension-actionsbar-wrapper {
             background: @istacWhite;
@@ -105,7 +105,7 @@
         }        
 
         .filter-sidebar-selectAll {
-            .border-radius(0 0 0 6px);
+            .border-radius(0 0 0 @borderRadiusSmall);
         }
 
         .filter-sidebar-dimension-levels, 
@@ -159,7 +159,7 @@
     .filter-sidebar-multidataset-title {
         .sidebar-title;
         cursor: pointer;        
-        .border-radius(6px 6px 0 0);
+        .border-radius(@borderRadiusSmall @borderRadiusSmall 0 0);
     }
 
     .filter-sidebar-multidataset-label {
