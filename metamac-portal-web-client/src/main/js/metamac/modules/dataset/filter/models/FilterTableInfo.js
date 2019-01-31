@@ -55,6 +55,7 @@
                 var result = {
                     ids: [],
                     representationsValues: [],
+                    representationsDescriptions: [],
                     representationsIds: [],
                     representationsLengths: []
                 };
@@ -74,6 +75,7 @@
                     }
 
                     result.representationsValues.push(_.invoke(representations, 'get', 'visibleLabel'));
+                    result.representationsDescriptions.push(_.invoke(representations, 'get', 'description'));
                     result.representationsIds.push(_.invoke(representations, 'get', 'id'));
                     result.representationsLengths.push(representations.length);
                 });
