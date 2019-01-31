@@ -112,7 +112,7 @@
                 case API_TYPES.INDICATOR:
                     return this.getApiUrl().href;
                 default:
-                    return this.getApiUrl().href + '.json?_type=json&fields=-data';
+                    return this.getApiUrl().href + '.json?_type=json&fields=-data,+dimension.description';
             }
         },
 
@@ -299,6 +299,10 @@
                 representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
                     var representation = _.pick(dimensionValue, 'id', 'open', 'temporalGranularity');
                     representation.label = self.localizeLabel(dimensionValue.name.text);
+
+                    if (dimensionValue.description && dimensionValue.description.text) {
+                        representation.description = self.localizeLabel(dimensionValue.description.text);
+                    }
 
                     if (dimensionValue.visualisationParent) {
                         var parent = _.findWhere(dimension.dimensionValues.value, { urn: dimensionValue.visualisationParent });

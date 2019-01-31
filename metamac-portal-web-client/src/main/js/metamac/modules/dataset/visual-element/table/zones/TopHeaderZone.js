@@ -91,6 +91,7 @@
                     var cellAttributesAtIndex = this.dataSource.cellAttributesAtIndex(associatedBodyCellWithAttributes);
                     var cellAttributes = [];
                     var cellTitle = "";
+                    var cellDescription = "";
 
                     var cellInfo = tooltipValues[i][columnIndex];
                     if (cellInfo) {
@@ -102,6 +103,7 @@
                             cellAttributes = [];
                         }
                         cellTitle = cellInfo.title;
+                        cellDescription = cellInfo.description;
                     }
 
                     result[i].push({
@@ -112,7 +114,8 @@
                         x: cellX,
                         width: cellWidth,
                         content: content,
-                        tooltip: cellTitle,
+                        tooltipTitle: cellTitle,
+                        tooltipDescription: cellDescription,
                         attributes: cellAttributes
                     });
                 }
@@ -134,7 +137,8 @@
         var headerCellAtPoint = this.cellAtPoint(absolutePoint);
         if (headerCellAtPoint) {
             return this.delegate.formatHeaderInfo({
-                title: headerCellAtPoint.tooltip,
+                title: headerCellAtPoint.tooltipTitle,
+                description: headerCellAtPoint.tooltipDescription,
                 attributes: headerCellAtPoint.attributes
             });
         }
