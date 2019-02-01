@@ -83,7 +83,7 @@
             var setObject = {};
             var visibleModels = [];
             representations.each(function (model) {
-                var matchIndex = this._cleanFilterQuery(model.get('label')).indexOf(filterQuery);
+                var matchIndex = this._cleanFilterQuery(model.get('visibleLabel')).indexOf(filterQuery);
                 var match = matchIndex !== -1;
 
                 if (match) {
