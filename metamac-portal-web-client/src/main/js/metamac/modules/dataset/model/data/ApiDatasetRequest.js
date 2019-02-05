@@ -27,11 +27,7 @@
         queryParams: function () {
             var result = {};
             if (this.dimensions && !this.singleRequest) {
-                //MOTIVOS_ESTANCIA:000|001|002:ISLAS_DESTINO_PRINCIPAL:005|006
-                result.dim = _.map(this.dimensions,
-                    function (dimension) {
-                        return dimension.id + ":" + dimension.representations.join("|");
-                    }).join(":");
+                result.dim = App.DimensionsUtils.getDimensionsParameterForDatasetRequest(this.dimensions);
             }
             result.fields = "-metadata";
             result._type = "json";

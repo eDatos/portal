@@ -66,6 +66,12 @@
             });
         },
 
+        getDimensionsWithSomeRepresentationNotSelected: function () {
+            return this.filter(function (dimension) {
+                return dimension.get('representations').where({ selected: false }).length > 0;
+            });
+        },
+
         getTableInfo: function () {
             if (!this.tableInfo) {
                 this.tableInfo = new App.modules.dataset.filter.models.FilterTableInfo({ filterDimensions: this });

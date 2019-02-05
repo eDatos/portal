@@ -182,6 +182,7 @@ I18n.translations.es = {
 
             apiDocumentationUrl: "Acceso a la documentación de la API",
             apiUrl: "Acceso al recurso en la API",
+            selectionApiUrl: "Acceso a la selección actual en la API",
 
             nextVersion: {
                 title: "Próxima actualización",

@@ -119,6 +119,9 @@
                 <li>{{ fieldOutput "entity.dataset.mediators" metadata.mediators "text" }}</li>
                 <li>{{ fieldOutput "entity.dataset.apiDocumentationUrl" metadata.apiDocumentationUrl "resource" }}</li>
                 <li>{{ fieldOutput "entity.dataset.apiUrl" metadata.apiUrl "resource" }}</li>
+                {{#if urlParametersForDimensionSelection.isVisible}}
+                <li>{{ fieldOutput "entity.dataset.selectionApiUrl" urlParametersForDimensionSelection "resource" }}</li>
+                {{/if}}
             </ul>
         </div>
     </div>
