@@ -233,9 +233,7 @@
                 this.ctx.beginPath();
                 this.ctx.rect(cell.x + 0.5, cell.y + 0.5, cell.width, cell.height);
 
-                this.ctx.fillStyle = this.delegate.style.headerCell.background({
-                    columns: _.range(cell.index, cell.indexEnd)
-                }, this.view);
+                this.ctx.fillStyle = this.delegate.style.headerCell.background(cell, this.view, false);
                 this.ctx.stroke();
                 this.ctx.fill();
                 this.ctx.closePath();

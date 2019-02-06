@@ -227,10 +227,5 @@
         var point = this.pointFromEvent(e);
         this.view.setActiveCell(point);
     };
-//    
-//    ScrollManager.prototype.click = function (e) {
-//    	var point = this.pointFromEvent(e);
-//    	this.view.showCellAttributes(point);
-//    };
 
 }());

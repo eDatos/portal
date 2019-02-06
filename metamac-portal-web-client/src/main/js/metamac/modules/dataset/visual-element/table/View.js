@@ -140,7 +140,7 @@
                 return self.getCellInfoAtMousePosition(position);
             }
         };
-        this.clickTooltip = new Tooltip({ el: this.$canvas, delegate: this.clickTooltipDelegate, trigger: "click" });
+        this.clickTooltip = new Tooltip({ el: this.$canvas, delegate: this.clickTooltipDelegate, trigger: "click", view: this });
     };
 
     // Limpia el canvas completo
@@ -317,7 +317,7 @@
 
             if (zone === "bodyZone" || zone === "leftHeaderZone" || zone === "topHeaderZone") {
                 if (zone === "bodyZone") {
-                    cell = this.bodyZone.relativePoint2Cell(arg);
+                    cell = this.bodyZone.cellAtPoint(arg);
                     var isOnlyACellSelected = this.selection.rowsCells.length === 1 && this.selection.columns.length === 1;
                     var firstCellSelectedEqSelectedCell = this.selection.rowsCells[0] === cell.y && this.selection.columns[0] === cell.x;
 
@@ -343,27 +343,37 @@
                     this.toggleSelection({ columns: columns });
                 }
 
-                this.leftHeaderZone.needRepaint = true;
-                this.topHeaderZone.needRepaint = true;
-                this.bodyZone.needRepaint = true;
-                this.repaint();
+                this.repaintZonesWithCells();
             }
 
         }
     };
 
-    //    App.Table.View.prototype.showCellAttributes = function (arg) {
-    //        var cell;
-    //
-    //        if (arg instanceof Point) {
-    //            var zone = this.zoneFromPoint(arg);
-    //            if (zone === "bodyZone" || zone === "leftHeaderZone" || zone === "topHeaderZone") {
-    //            	
-    //            	console.log("uy!");
-    //            	
-    //            }
-    //        }
-    //    };    
+    App.Table.View.prototype.isCellClicked = function (cell) {
+        return this.clickedCell && this.clickedCell.x === cell.x && this.clickedCell.y === cell.y;
+    };
+
+    App.Table.View.prototype.toggleClickedCellByRelativePoint = function (point) {
+        var zone = this.findZoneWithCellsAtMousePosition();
+        if (!zone || this.clickedCell) {
+            this.clearClickedCell();
+        } else {
+            this.clickedCell = zone.cellAtPoint(point);
+            this.repaintZonesWithCells();
+        }
+    };
+
+    App.Table.View.prototype.clearClickedCell = function () {
+        this.clickedCell = null;
+        this.repaintZonesWithCells();
+    };
+
+    App.Table.View.prototype.repaintZonesWithCells = function () {
+        this.leftHeaderZone.needRepaint = true;
+        this.topHeaderZone.needRepaint = true;
+        this.bodyZone.needRepaint = true;
+        this.repaint();
+    };
 
     App.Table.View.prototype.setMousePosition = function (point, e) {
         this.mouseInCanvas = e.target === this.canvas;
@@ -389,14 +399,23 @@
 
     App.Table.View.prototype.getCellInfoAtMousePosition = function (point) {
         var cellInfo;
-        if (this.mouseZone === "bodyZone") {
-            cellInfo = this.bodyZone.cellInfoAtPoint(point);
-        } else if (this.mouseZone === "leftHeaderZone") {
-            cellInfo = this.leftHeaderZone.cellInfoAtPoint(point);
-        } else if (this.mouseZone === "topHeaderZone") {
-            cellInfo = this.topHeaderZone.cellInfoAtPoint(point);
+        var zone = this.findZoneWithCellsAtMousePosition();
+        if (zone) {
+            cellInfo = zone.cellInfoAtPoint(point);
         }
         return cellInfo;
+    };
+
+    App.Table.View.prototype.findZoneWithCellsAtMousePosition = function () {
+        var zone;
+        if (this.mouseZone === "bodyZone") {
+            zone = this.bodyZone;
+        } else if (this.mouseZone === "leftHeaderZone") {
+            zone = this.leftHeaderZone;
+        } else if (this.mouseZone === "topHeaderZone") {
+            zone = this.topHeaderZone;
+        }
+        return zone;
     };
 
     App.Table.View.prototype.setLastClickZone = function (zone) {

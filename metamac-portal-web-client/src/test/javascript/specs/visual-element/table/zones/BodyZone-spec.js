@@ -182,7 +182,7 @@ describe("[TableCanvas] BodyZone", function () {
         expect(zone.needRepaint).to.be.false;
     });
 
-    it("should convert a relative point to a cell", function () {
+    it("should convert a point to a cell", function () {
         var dataSource = App.Table.DataSource.factory(5, 10);
 
         var zone = new Zone({
@@ -190,16 +190,16 @@ describe("[TableCanvas] BodyZone", function () {
             dataSource : dataSource
         });
 
-        expect(zone.relativePoint2Cell(new Point(0, 0))).to.eql(new Cell(0, 0));
-        expect(zone.relativePoint2Cell(new Point(60, 0))).to.eql(new Cell(1, 0));
-        expect(zone.relativePoint2Cell(new Point(60, 30))).to.eql(new Cell(1, 1));
+        expect(zone.cellAtPoint(new Point(0, 0))).to.eql(new Cell(0, 0));
+        expect(zone.cellAtPoint(new Point(60, 0))).to.eql(new Cell(1, 0));
+        expect(zone.cellAtPoint(new Point(60, 30))).to.eql(new Cell(1, 1));
 
         zone.setOrigin(new Point(60, 30));
-        expect(zone.relativePoint2Cell(new Point(0, 0))).to.eql(new Cell(1, 1));
+        expect(zone.cellAtPoint(new Point(0, 0))).to.eql(new Cell(1, 1));
 
         zone.setViewPort(new Rectangle(10, 10, 300, 300));
         zone.setOrigin(new Point(0, 0));
-        expect(zone.relativePoint2Cell(new Point(10, 10))).to.eql(new Cell(0, 0));
+        expect(zone.cellAtPoint(new Point(10, 10))).to.eql(new Cell(0, 0));
 
 
     });

@@ -25,6 +25,7 @@
             this._hide();
             this.setEl(options.el);
             this.delegate = options.delegate;
+            this.view = options.view;
         },
 
         destroy : function () {
@@ -131,6 +132,7 @@
         _updateByClick : function (point) {
 	        var attribute = this.delegate.getCellInfoAtMousePosition(point);
 	        if (attribute) {
+	            this.view.toggleClickedCellByRelativePoint(point);
 	            this.$innerTooltip.html(attribute);
 	            var position = this._getPosition(point);
 	            this.$tooltip.css({	                        
@@ -139,6 +141,7 @@
 	            });
 	            this.$tooltip.toggle();
 	        } else {
+	            this.view.clearClickedCell();
 	            this._hide();
 	        }
         },
@@ -164,21 +167,15 @@
 
         _mouseMove : function (e) {
             var offset = this._getOffset();
-            var point = {
-                x : e.pageX - offset.left,
-                y : e.pageY - offset.top
-            };
+            var point = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
             this._update(point);
         },
+
         _click : function (e) {
             var offset = this._getOffset();
-            var point = {
-                x : e.pageX - offset.left,
-                y : e.pageY - offset.top
-            };
+            var point = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
             this._update(point);
         }
 
     };
-
 }());

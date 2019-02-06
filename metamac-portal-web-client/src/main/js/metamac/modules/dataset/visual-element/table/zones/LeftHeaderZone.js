@@ -224,9 +224,7 @@
                 } else {
                     drawCellWithoutBorders(this.ctx);
                 }
-                this.ctx.fillStyle = this.delegate.style.headerCell.background({
-                    rows: _.range(cell.index, cell.indexEnd)
-                }, this.view);
+                this.ctx.fillStyle = this.delegate.style.headerCell.background(cell, this.view, true);
                 this.ctx.stroke();
                 this.ctx.fill();
                 this.ctx.closePath();

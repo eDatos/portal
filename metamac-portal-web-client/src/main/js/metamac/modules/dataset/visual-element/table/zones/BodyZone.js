@@ -67,19 +67,10 @@
         },
 
         // IDEA: Improve implementation. It is not so transparent METAMAC-2282
-        relativePoint2Cell: function (point) {
+        cellAtPoint: function (point) {
             var absolutePoint = this.relativePoint2AbsolutePoint(point);
             var x = Utils.floorIndex(this.incrementalCellSize.columns, absolutePoint.x),
                 y = Utils.floorIndex(this.incrementalCellSize.rows, absolutePoint.y);
-            y -= this.dataSource.blankRowsOffset(y);
-            return new Cell(x, y);
-        },
-
-        // IDEA: Improve implementation. It is not so transparent METAMAC-2282
-        absolutePoint2Cell: function (absolutePoint) {
-            var point = this.relativePoint2AbsolutePoint(new Point(absolutePoint.x, absolutePoint.y))
-            var x = Utils.floorIndex(this.incrementalCellSize.columns, point.x),
-                y = Utils.floorIndex(this.incrementalCellSize.rows, point.y);
             y -= this.dataSource.blankRowsOffset(y);
             return new Cell(x, y);
         },
@@ -286,7 +277,7 @@
         },
 
         cellInfoAtPoint: function (absolutePoint) {
-            var bodyCellAtPoint = this.absolutePoint2Cell(absolutePoint);
+            var bodyCellAtPoint = this.cellAtPoint(absolutePoint);
             if (bodyCellAtPoint) {
                 return this.delegate.formatCellInfo(this.dataSource.cellInfoAtIndex(bodyCellAtPoint));
             }
