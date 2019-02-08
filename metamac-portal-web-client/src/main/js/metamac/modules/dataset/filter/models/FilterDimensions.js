@@ -162,23 +162,15 @@
                 //selectedRepresentations
                 var representations = dimension.get('representations');
                 representations._unbindEvents();
-                representations.invoke('set', { selected: false, drawable: false }, { trigger: false });
 
-                _.each(dimensionToImport.selectedCategories, function (category) {
-                    if (!_.isUndefined(representations.get(category))) {
-                        representations.get(category).set({ selected: true });
+                _.each(dimensionToImport.categories, function (category) {
+                    if (!_.isUndefined(representations.get(category.id))) {
+                        representations.get(category.id).set({ 
+                            selected: category.selected,
+                            drawable: category.drawable
+                         });
                     }
                 });
-
-                if (dimensionToImport.drawableCategories) {
-                    _.each(dimensionToImport.drawableCategories, function (category) {
-                        if (!_.isUndefined(representations.get(category))) {
-                            representations.get(category).set({ drawable: true });
-                        }
-                    });
-                } else {
-                    representations._updateDrawables();
-                }
 
                 this._calculateSelectedGeographicLevel(dimension, representations);
                 this._calculateSelectedTemporalGranularity(dimension, representations);
@@ -210,18 +202,19 @@
         exportJSON: function () {
             var exportResult = {};
             this.each(function (dimension) {
-                var representations = dimension.get('representations');
-                var selectedCategories = representations.where({ selected: true });
-                var selectedCategoriesIds = _.pluck(selectedCategories, 'id');
-                var drawableCategories = representations.where({ drawable: true });
-                var drawableCategoriesIds = _.pluck(drawableCategories, 'id');
                 var zone = dimension.get('zone');
                 var position = zoneOffsets[zone.id] + zone.get('dimensions').indexOf(dimension);
+                var categories = _.map(dimension.get('representations').models, function(representation) {
+                    return { 
+                        id: representation.id,
+                        selected: representation.get('selected'),
+                        drawable: representation.get('drawable')
+                    } 
+                });
                 exportResult[dimension.id] = {
                     position: position,
                     visibleLabelType: dimension.get('visibleLabelType'),
-                    selectedCategories: selectedCategoriesIds,
-                    drawableCategories: drawableCategoriesIds
+                    categories: categories
                 }
             });
             return exportResult;
