@@ -11,6 +11,7 @@
             this.drawableLimit = Infinity;
 
             this.selectedGeographicalLevel = null;
+            this.selectedTemporalGranularity = null;
             this._bindEvents();
         },
 
@@ -147,8 +148,13 @@
         updateDrawablesBySelectedGranularity: function (selectedGranularity) {
             _.invoke(this.models, 'set', { drawable: false }, { silent: true });
             _.invoke(this.where({ temporalGranularity: selectedGranularity, selected: true }), 'set', { drawable: true });
+            this.selectedTemporalGranularity = selectedGranularity;
 
             this.trigger("change:drawable");
+        },
+
+        setSelectedGeographicLevel: function (geographicalLevel) {
+            this.selectedGeographicalLevel = geographicalLevel;
         },
 
         getSelectedGeographicLevel: function () {
@@ -166,8 +172,19 @@
             return _(this.getSelectedRepresentations()).invoke("get", "level");
         },
 
-        getMostPopulatedTemporalGranularity: function () {
-            return this._getMostRepeatedValue(this.getSelectedTemporalGranularities());
+        setSelectedTemporalGranularity: function(temporalGranularity) {
+            this.selectedTemporalGranularity = temporalGranularity;
+        },
+
+        getSelectedTemporalGranularity: function () {
+            if (this.selectedTemporalGranularity == null) {
+                this.updateSelectedTemporalGranularity();
+            }
+            return this.selectedTemporalGranularity;
+        },
+
+        updateSelectedTemporalGranularity: function () {
+            this.selectedTemporalGranularity = this._getMostRepeatedValue(this.getSelectedTemporalGranularities());
         },
 
         getSelectedTemporalGranularities: function () {

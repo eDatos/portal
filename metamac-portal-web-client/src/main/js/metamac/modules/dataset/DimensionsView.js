@@ -165,7 +165,7 @@
             var measureAttribute = _.findWhere(this.dataset.data.getDatasetAttributes(), { type: "MEASURE" });
             if (measureAttribute) {
                 this.measureAttribute = {
-                    label: App.i18n.localizeText(measureAttribute.attributeValues.value[0].name)
+                    label: measureAttribute.name
                 }
                 this.render();
             }
@@ -416,7 +416,7 @@
                     dimension.selectedLevel = dimensionModel.get('representations').getSelectedGeographicLevel();
                     dimension.levelList = self._getGeographicLevelCollection(dimensionModel);
                 } else if (self._needsTemporalGranularitySelector(dimensionModel)) {
-                    dimension.selectedGranularity = dimensionModel.get('representations').getMostPopulatedTemporalGranularity();
+                    dimension.selectedGranularity = dimensionModel.get('representations').getSelectedTemporalGranularity();
                     dimension.granularityList = self._getGranularityList(dimensionModel);
                 } else if (self._isFixedZone(zoneId)) {
                     var selectedCategory = dimensionModel.get('representations').findWhere({ drawable: true });

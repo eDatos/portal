@@ -159,34 +159,69 @@
                 var zoneId = this._zoneIdFromPosition(dimensionToImport.position);
                 this.zones.setDimensionZone(zoneId, dimension, { force: true });
 
-
                 //selectedRepresentations
                 var representations = dimension.get('representations');
                 representations._unbindEvents();
-                representations.invoke('set', { selected: false }, { trigger: false });
+                representations.invoke('set', { selected: false, drawable: false }, { trigger: false });
+
                 _.each(dimensionToImport.selectedCategories, function (category) {
                     if (!_.isUndefined(representations.get(category))) {
                         representations.get(category).set({ selected: true });
                     }
                 });
-                representations._bindEvents();
-                representations._updateDrawables();
 
+                if (dimensionToImport.drawableCategories) {
+                    _.each(dimensionToImport.drawableCategories, function (category) {
+                        if (!_.isUndefined(representations.get(category))) {
+                            representations.get(category).set({ drawable: true });
+                        }
+                    });
+                } else {
+                    representations._updateDrawables();
+                }
+
+                this._calculateSelectedGeographicLevel(dimension, representations);
+                this._calculateSelectedTemporalGranularity(dimension, representations);
+                
+                representations._bindEvents();
+                representations.trigger("change:drawable");
             }, this);
             this.zones.applyFixedSizeRestriction();
+        },
+
+        _calculateSelectedGeographicLevel: function (dimension, representations) {
+            var selectedLevels = _.uniq(_.map(representations.where({ selected: true, drawable: true }), function(representation) {
+                return representation.get('level');
+            }));
+            if (dimension.get('type') === "GEOGRAPHIC_DIMENSION" && selectedLevels.length === 1) {
+                representations.setSelectedGeographicLevel(selectedLevels[0]);
+            }
+        },
+
+        _calculateSelectedTemporalGranularity: function (dimension, representations) {
+            var selectedGranularities = _.uniq(_.map(representations.where({ selected: true, drawable: true }), function(representation) {
+                return representation.get('temporalGranularity');
+            }));
+            if (dimension.get('type') === "TIME_DIMENSION" && selectedGranularities.length === 1) {
+                representations.setSelectedTemporalGranularity(selectedGranularities[0]);
+            }
         },
 
         exportJSON: function () {
             var exportResult = {};
             this.each(function (dimension) {
-                var selectedCategories = dimension.get('representations').where({ selected: true });
+                var representations = dimension.get('representations');
+                var selectedCategories = representations.where({ selected: true });
                 var selectedCategoriesIds = _.pluck(selectedCategories, 'id');
+                var drawableCategories = representations.where({ drawable: true });
+                var drawableCategoriesIds = _.pluck(drawableCategories, 'id');
                 var zone = dimension.get('zone');
                 var position = zoneOffsets[zone.id] + zone.get('dimensions').indexOf(dimension);
                 exportResult[dimension.id] = {
                     position: position,
                     visibleLabelType: dimension.get('visibleLabelType'),
-                    selectedCategories: selectedCategoriesIds
+                    selectedCategories: selectedCategoriesIds,
+                    drawableCategories: drawableCategoriesIds
                 }
             });
             return exportResult;

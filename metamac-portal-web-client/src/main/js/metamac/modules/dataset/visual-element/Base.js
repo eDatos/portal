@@ -224,7 +224,7 @@
         _preselectMostPopulatedTemporalGranularityRepresentations: function () {
             var fixedTimeDimensions = this.filterDimensions.getAllNonFixedDimensionsCopyByType("TIME_DIMENSION");
             _(fixedTimeDimensions).each(function (timeDimension) {
-                var mostPopulatedTemporalGranularity = timeDimension.get('representations').getMostPopulatedTemporalGranularity();
+                var mostPopulatedTemporalGranularity = timeDimension.get('representations').getSelectedTemporalGranularity();
                 timeDimension.get('representations').updateDrawablesBySelectedGranularity(mostPopulatedTemporalGranularity);
             });
         },
