@@ -170,30 +170,41 @@
                     }
                 });
 
-                _.each(dimensionToImport.drawableCategories, function (category) {
-                    if (!_.isUndefined(representations.get(category))) {
-                        representations.get(category).set({ drawable: true });
-                    }
-                });
-
-                var selectedLevels = _.uniq(_.map(representations.where({ selected: true, drawable: true }), function(representation) {
-                    return representation.get('level');
-                }));
-                if (dimension.get('type') === "GEOGRAPHIC_DIMENSION" && selectedLevels.length === 1) {
-                    representations.setSelectedGeographicLevel(selectedLevels[0]);
+                if (dimensionToImport.drawableCategories) {
+                    _.each(dimensionToImport.drawableCategories, function (category) {
+                        if (!_.isUndefined(representations.get(category))) {
+                            representations.get(category).set({ drawable: true });
+                        }
+                    });
+                } else {
+                    representations._updateDrawables();
                 }
 
-                var selectedGranularities = _.uniq(_.map(representations.where({ selected: true, drawable: true }), function(representation) {
-                    return representation.get('temporalGranularity');
-                }));
-                if (dimension.get('type') === "TIME_DIMENSION" && selectedGranularities.length === 1) {
-                    representations.setSelectedTemporalGranularity(selectedGranularities[0]);
-                }
+                this._calculateSelectedGeographicLevel(dimension, representations);
+                this._calculateSelectedTemporalGranularity(dimension, representations);
                 
                 representations._bindEvents();
                 representations.trigger("change:drawable");
             }, this);
             this.zones.applyFixedSizeRestriction();
+        },
+
+        _calculateSelectedGeographicLevel: function (dimension, representations) {
+            var selectedLevels = _.uniq(_.map(representations.where({ selected: true, drawable: true }), function(representation) {
+                return representation.get('level');
+            }));
+            if (dimension.get('type') === "GEOGRAPHIC_DIMENSION" && selectedLevels.length === 1) {
+                representations.setSelectedGeographicLevel(selectedLevels[0]);
+            }
+        },
+
+        _calculateSelectedTemporalGranularity: function (dimension, representations) {
+            var selectedGranularities = _.uniq(_.map(representations.where({ selected: true, drawable: true }), function(representation) {
+                return representation.get('temporalGranularity');
+            }));
+            if (dimension.get('type') === "TIME_DIMENSION" && selectedGranularities.length === 1) {
+                representations.setSelectedTemporalGranularity(selectedGranularities[0]);
+            }
         },
 
         exportJSON: function () {
