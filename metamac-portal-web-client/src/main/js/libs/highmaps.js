@@ -16890,20 +16890,15 @@
 			fill: 'fillColor'
 		},
 
-		/**
-		 * Apply the fillOpacity to all fill positions
-		 */
-		applyOpacity: function (fill) {
-			var markerOptions = this.options.marker,
-				fillOpacity = pick(markerOptions.fillOpacity, 0.5);
+		getFillColor: function (fill) {
+			var markerOptions = this.options.marker;
 
 			// When called from Legend.colorizeItem, the fill isn't predefined
-			fill = fill || markerOptions.fillColor || this.color;
+			return fill || markerOptions.fillColor || this.color;
+		},
 
-			if (fillOpacity !== 1) {
-				fill = Color(fill).setOpacity(fillOpacity).get('rgba');
-			}
-			return fill;
+		getFillOpacity: function() {
+			return pick(this.options.marker.fillOpacity, 0.5);
 		},
 
 		/**
@@ -16912,7 +16907,11 @@
 		convertAttribs: function () {
 			var obj = Series.prototype.convertAttribs.apply(this, arguments);
 
-			obj.fill = this.applyOpacity(obj.fill);
+			obj.fill = this.getFillColor(obj.fill);
+			var fillOpacity = this.getFillOpacity();
+			if (fillOpacity !== 1) {
+				obj['fill-opacity'] = fillOpacity;
+			}
 
 			return obj;
 		},
