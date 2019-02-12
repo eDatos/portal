@@ -290,6 +290,11 @@
             <artifactId>batik-codec</artifactId>
             <version>${batik-core.version}</version>
         </dependency>
+        <dependency>
+		    <groupId>org.apache.xmlgraphics</groupId>
+		    <artifactId>fop</artifactId>
+		    <version>${apache-fop.version}</version>
+		</dependency>
 
         <!-- TESTS -->
         <dependency>
