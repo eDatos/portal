@@ -130,13 +130,13 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportIndicatorToPxForm(String jsonBody, String resourceID, String filename) {
-        ExcelAndPxExportation pxExportationBody = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportationBody = getExcelAndPxExportation(jsonBody);
         return exportIndicatorToPx(pxExportationBody, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorInstanceToPx(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
-        ExcelAndPxExportation pxExportationBody = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportationBody = getExcelAndPxExportation(jsonBody);
         return exportIndicatorInstanceToPx(pxExportationBody, indicatorSystemCode, resourceID, filename);
     }
 
@@ -355,29 +355,29 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelAndPxExportation(jsonBody);
         return exportDatasetToExcel(excelExportation, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportQueryToExcelForm(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
-        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelAndPxExportation(jsonBody);
         return exportQueryToExcel(excelExportation, agencyID, resourceID, lang, filename);
     }
 
     @Override
     public Response exportIndicatorToExcelForm(String jsonBody, String resourceID, String filename) {
-        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelAndPxExportation(jsonBody);
         return exportIndicatorToExcel(excelExportation, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorInstanceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
-        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelAndPxExportation(jsonBody);
         return exportIndicatorInstanceToExcel(excelExportation, indicatorSystemCode, resourceID, filename);
     }
 
-    private ExcelAndPxExportation getExcelExportation(String jsonBody) {
+    private ExcelAndPxExportation getExcelAndPxExportation(String jsonBody) {
         try {
             ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelAndPxExportation.class, MediaType.APPLICATION_JSON_TYPE);
             return objectMapper.readValue(jsonBody, ExcelAndPxExportation.class);
@@ -418,36 +418,52 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportIndicatorToPx(PxExportation exportationBody, String resourceID, String filename) {
+    public Response exportIndicatorToPx(ExcelAndPxExportation exportationBody, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(exportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelectionForExcel != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            }
 
-            // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection); // all langs
-
+            Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
+            
+            if (datasetSelectionForExcel == null) {
+                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.INDICATOR.getName(), resourceID);
             }
-            return exportDatasetToPx(dataset, filename);
+            return exportDatasetToPx(dataset, datasetSelectionForExcel, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportIndicatorInstanceToPx(PxExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
+    public Response exportIndicatorInstanceToPx(ExcelAndPxExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(exportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelectionForExcel != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            }
 
-            // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection); // all langs
-
+            Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
+            
+            if (datasetSelectionForExcel == null) {
+                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
-            return exportDatasetToPx(dataset, filename);
+            return exportDatasetToPx(dataset, datasetSelectionForExcel, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -507,26 +523,14 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ExcelAndPxExportation pxExportation = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportation = getExcelAndPxExportation(jsonBody);
         return exportDatasetToPx(pxExportation, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportQueryToPxForm(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
-        ExcelAndPxExportation pxExportationBody = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportationBody = getExcelAndPxExportation(jsonBody);
         return exportQueryToPx(pxExportationBody, agencyID, resourceID, lang, filename);
-    }
-
-    private ExcelAndPxExportation getPxExportation(String jsonBody) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelAndPxExportation.class, MediaType.APPLICATION_JSON_TYPE);
-        ExcelAndPxExportation pxExportation = null;
-        try {
-            pxExportation = objectMapper.readValue(jsonBody, ExcelAndPxExportation.class);
-        } catch (IOException e) {
-            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
-            throw new RestException(exception, Status.BAD_REQUEST);
-        }
-        return pxExportation;
     }
 
     @Override
