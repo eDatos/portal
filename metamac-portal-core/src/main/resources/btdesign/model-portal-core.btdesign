@@ -30,7 +30,7 @@ Application Portal {
 			exportQueryToTsv(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
             exportQueryToCsvCommaSeparated(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
             exportQueryToCsvSemicolonSeparated(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
-            exportQueryToPx(Query query, Dataset relatedDataset, String lang, OutputStream resultOutputStream) throws MetamacException;
+            exportQueryToPx(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
 			
 			exportSvgToImage(String svg, Float width, String mimeType, OutputStream resultOutputStream) throws MetamacException;
 		}

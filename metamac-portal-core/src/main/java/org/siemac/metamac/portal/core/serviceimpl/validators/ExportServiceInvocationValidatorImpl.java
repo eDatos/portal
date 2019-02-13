@@ -80,7 +80,7 @@ public class ExportServiceInvocationValidatorImpl extends BaseInvocationValidato
         checkMetadataRequired(resultAttributesOutputStream, ServiceExceptionParameters.STREAM, exceptions);
     }
 
-    public static void checkExportQueryToPx(Query query, Dataset relatedDataset, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
+    public static void checkExportQueryToPx(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream, List<MetamacExceptionItem> exceptions) {
         checkMetadataRequired(query, ServiceExceptionParameters.QUERY, exceptions);
         checkMetadataRequired(relatedDataset, ServiceExceptionParameters.DATASET, exceptions);
         checkMetadataRequired(resultOutputStream, ServiceExceptionParameters.STREAM, exceptions);

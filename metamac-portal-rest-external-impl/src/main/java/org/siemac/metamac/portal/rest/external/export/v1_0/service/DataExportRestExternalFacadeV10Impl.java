@@ -484,14 +484,22 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportQueryToPx(PxExportation pxExportationBody, String agencyID, String resourceID, String lang, String filename) {
+    public Response exportQueryToPx(ExcelAndPxExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
         try {
             // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(pxExportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelectionForExcel != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            }
 
-            // Retrieve query: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Query query = statisticalResourcesRestExternal.retrieveQuery(agencyID, resourceID, null, null, dimensionSelection); // all langs
+            Query query = retrieveQuery(agencyID, resourceID, lang, dimensionSelection);
             Dataset relatedDataset = retrieveDataset(query.getMetadata().getRelatedDataset().getUrn(), lang, dimensionSelection);
+
+            if (datasetSelectionForExcel == null) {
+                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
+                        query.getMetadata().getRelatedDsd());
+            }
 
             // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
             if (dimensionSelection != null) {
@@ -501,18 +509,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.QUERY.getName(), agencyID, resourceID);
             }
-            return exportQueryToPx(query, relatedDataset, filename);
+            return exportQueryToPx(query, relatedDataset, datasetSelectionForExcel, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportQueryToPx(Query query, Dataset relatedDataset, String filename) {
+    private Response exportQueryToPx(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelectionForExcel, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportQueryToPx(SERVICE_CONTEXT, query, relatedDataset, null, outputStream); // In PX file, all provided langs are sending
+            exportService.exportQueryToPx(SERVICE_CONTEXT, query, relatedDataset, datasetSelectionForExcel, null, outputStream); // In PX file, all provided langs are sending
             outputStream.close();
 
             return buildResponseOkWithFile(tmpFile, filename, MediaType.TEXT_PLAIN);
