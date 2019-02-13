@@ -14,18 +14,18 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionRepresentation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
-public class ResourceAccessForExcel extends ResourceAccess {
+public class ResourceAccessForExcelAndPx extends ResourceAccess {
 
     private final Map<String, Integer>           multipliers         = new HashMap<String, Integer>();
     private final Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>(); // Map<Dimension, Map<Code, Index>
 
-    public ResourceAccessForExcel(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public ResourceAccessForExcelAndPx(Dataset dataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
         super(dataset, datasetSelection, lang, langAlternative);
         initializeMultipliers();
         initializeIndex();
     }
 
-    public ResourceAccessForExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public ResourceAccessForExcelAndPx(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
         super(query, relatedDataset, datasetSelection, lang, langAlternative);
         initializeMultipliers();
         initializeIndex();

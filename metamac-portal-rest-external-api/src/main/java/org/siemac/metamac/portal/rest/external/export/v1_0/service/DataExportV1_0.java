@@ -9,9 +9,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
+import org.siemac.metamac.rest.export.v1_0.domain.ExcelAndPxExportation;
 import org.siemac.metamac.rest.export.v1_0.domain.PlainTextExportation;
-import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
 
 @Path("/v1.0")
 // IMPORTANT: If a new version of API is added, remember change latest url y urlrewrite.xml in war
@@ -23,7 +22,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToExcel(ExcelExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+    Response exportDatasetToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
@@ -35,7 +34,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/queries/{agencyID}/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportQueryToExcel(ExcelExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+    Response exportQueryToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
             @QueryParam("filename") String filename);
 
     @POST
@@ -47,7 +46,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorToExcel(ExcelExportation excelExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
+    Response exportIndicatorToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("excel/indicators/{resourceID}")
@@ -57,7 +56,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorInstanceToExcel(ExcelExportation excelExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+    Response exportIndicatorInstanceToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     @POST
@@ -154,7 +153,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToPx(PxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+    Response exportDatasetToPx(ExcelAndPxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
@@ -166,7 +165,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/queries/{agencyID}/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportQueryToPx(PxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+    Response exportQueryToPx(ExcelAndPxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
             @QueryParam("filename") String filename);
 
     @POST
@@ -178,7 +177,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorToPx(PxExportation pxExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
+    Response exportIndicatorToPx(ExcelAndPxExportation pxExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("px/indicators/{resourceID}")
@@ -188,7 +187,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorInstanceToPx(PxExportation pxExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+    Response exportIndicatorInstanceToPx(ExcelAndPxExportation pxExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     @POST

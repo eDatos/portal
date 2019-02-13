@@ -20,13 +20,13 @@ Application Portal {
 		}
 		
 		Service ExportService {
-			exportDatasetToExcel(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
+			exportDatasetToExcel(Dataset dataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
 			exportDatasetToTsv(Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
 			exportDatasetToCsvCommaSeparated(Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
 			exportDatasetToCsvSemicolonSeparated(Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
-			exportDatasetToPx(Dataset dataset, String lang, OutputStream resultOutputStream) throws MetamacException;
+			exportDatasetToPx(Dataset dataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
 			
-			exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
+			exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException;
 			exportQueryToTsv(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
             exportQueryToCsvCommaSeparated(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;
             exportQueryToCsvSemicolonSeparated(Query query, DatasetSelectionForPlainText datasetSelection, String lang, OutputStream resultObservationsOutputStream, OutputStream resultAttributesOutputStream) throws MetamacException;

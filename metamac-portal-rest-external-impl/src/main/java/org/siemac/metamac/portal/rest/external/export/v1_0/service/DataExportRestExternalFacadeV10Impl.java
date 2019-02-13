@@ -27,8 +27,7 @@ import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.core.common.util.shared.UrnUtils;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.exporters.PxExporter;
@@ -44,9 +43,8 @@ import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionTyp
 import org.siemac.metamac.portal.rest.external.export.v1_0.mapper.DatasetSelectionMapper;
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
-import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
+import org.siemac.metamac.rest.export.v1_0.domain.ExcelAndPxExportation;
 import org.siemac.metamac.rest.export.v1_0.domain.PlainTextExportation;
-import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.Agency;
@@ -132,13 +130,13 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportIndicatorToPxForm(String jsonBody, String resourceID, String filename) {
-        PxExportation pxExportationBody = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportationBody = getPxExportation(jsonBody);
         return exportIndicatorToPx(pxExportationBody, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorInstanceToPx(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
-        PxExportation pxExportationBody = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportationBody = getPxExportation(jsonBody);
         return exportIndicatorInstanceToPx(pxExportationBody, indicatorSystemCode, resourceID, filename);
     }
 
@@ -187,11 +185,11 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToExcel(ExcelAndPxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
 
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = null;
             if (datasetSelectionForExcel != null) {
                 dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
@@ -215,10 +213,10 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportQueryToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
+    public Response exportQueryToExcel(ExcelAndPxExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = null;
             if (datasetSelectionForExcel != null) {
                 dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
@@ -243,11 +241,11 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String filename) {
+    public Response exportIndicatorToExcel(ExcelAndPxExportation exportationBody, String resourceID, String filename) {
 
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = null;
             if (datasetSelectionForExcel != null) {
                 dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
@@ -270,10 +268,10 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportIndicatorInstanceToExcel(ExcelExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
+    public Response exportIndicatorInstanceToExcel(ExcelAndPxExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
             String dimensionSelection = null;
             if (datasetSelectionForExcel != null) {
                 dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
@@ -295,7 +293,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private Response exportDatasetToExcel(Dataset dataset, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
+    private Response exportDatasetToExcel(Dataset dataset, DatasetSelectionForExcelAndPx datasetSelectionForExcel, String lang, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
@@ -309,7 +307,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private Response exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
+    private Response exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelectionForExcel, String lang, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
@@ -336,8 +334,8 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
         return datasetSelectionForPlainText;
     }
-    private DatasetSelectionForExcel checkAndTransformSelectionForExcel(ExcelExportation exportationBody) throws Exception {
-        DatasetSelectionForExcel datasetSelectionForExcel = null;
+    private DatasetSelectionForExcelAndPx checkAndTransformSelectionForExcel(ExcelAndPxExportation exportationBody) throws Exception {
+        DatasetSelectionForExcelAndPx datasetSelectionForExcel = null;
         if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
             try {
                 datasetSelectionForExcel = DatasetSelectionMapper.toDatasetSelectionForExcel(exportationBody.getDatasetSelection());
@@ -357,32 +355,32 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
         return exportDatasetToExcel(excelExportation, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportQueryToExcelForm(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
         return exportQueryToExcel(excelExportation, agencyID, resourceID, lang, filename);
     }
 
     @Override
     public Response exportIndicatorToExcelForm(String jsonBody, String resourceID, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
         return exportIndicatorToExcel(excelExportation, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorInstanceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        ExcelAndPxExportation excelExportation = getExcelExportation(jsonBody);
         return exportIndicatorInstanceToExcel(excelExportation, indicatorSystemCode, resourceID, filename);
     }
 
-    private ExcelExportation getExcelExportation(String jsonBody) {
+    private ExcelAndPxExportation getExcelExportation(String jsonBody) {
         try {
-            ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
-            return objectMapper.readValue(jsonBody, ExcelExportation.class);
+            ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelAndPxExportation.class, MediaType.APPLICATION_JSON_TYPE);
+            return objectMapper.readValue(jsonBody, ExcelAndPxExportation.class);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -390,14 +388,21 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToPx(PxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToPx(ExcelAndPxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
-            // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(exportationBody);
+            DatasetSelectionForExcelAndPx datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelectionForExcel != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            }
 
-            // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, null, dimensionSelection); // all langs
+            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
 
+            if (datasetSelectionForExcel == null) {
+                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
             if (dimensionSelection != null) {
                 dataset.setId(PxExporter.generateMatrixFromString(dimensionSelection));
@@ -406,7 +411,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.DATASET.getName(), agencyID, resourceID, version);
             }
-            return exportDatasetToPx(dataset, filename);
+            return exportDatasetToPx(dataset, datasetSelectionForExcel, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -448,12 +453,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private Response exportDatasetToPx(Dataset dataset, String filename) {
+    private Response exportDatasetToPx(Dataset dataset, DatasetSelectionForExcelAndPx datasetSelectionForExcel, String lang, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, null, outputStream); // In PX file, all provided langs are sending
+            exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, datasetSelectionForExcel, lang, outputStream); // In PX file, all provided langs are sending
             outputStream.close();
 
             return buildResponseOkWithFile(tmpFile, filename, MediaType.TEXT_PLAIN);
@@ -500,38 +505,23 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private String getDimensionSelectionForPx(PxExportation exportationBody) {
-        String dimensionSelection = null;
-        if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
-            try {
-                List<DatasetSelectionDimension> datasetSelectionDimensions = DatasetSelectionMapper.toDatasetSelectionDimensions(exportationBody.getDatasetSelection());
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionDimensions);
-            } catch (Exception e) {
-                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                        RestExternalConstants.PARAMETER_SELECTION);
-                throw new RestException(exception, Status.BAD_REQUEST);
-            }
-        }
-        return dimensionSelection;
-    }
-
     @Override
     public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        PxExportation pxExportation = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportation = getPxExportation(jsonBody);
         return exportDatasetToPx(pxExportation, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportQueryToPxForm(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
-        PxExportation pxExportationBody = getPxExportation(jsonBody);
+        ExcelAndPxExportation pxExportationBody = getPxExportation(jsonBody);
         return exportQueryToPx(pxExportationBody, agencyID, resourceID, lang, filename);
     }
 
-    private PxExportation getPxExportation(String jsonBody) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PxExportation.class, MediaType.APPLICATION_JSON_TYPE);
-        PxExportation pxExportation = null;
+    private ExcelAndPxExportation getPxExportation(String jsonBody) {
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelAndPxExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        ExcelAndPxExportation pxExportation = null;
         try {
-            pxExportation = objectMapper.readValue(jsonBody, PxExportation.class);
+            pxExportation = objectMapper.readValue(jsonBody, ExcelAndPxExportation.class);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);

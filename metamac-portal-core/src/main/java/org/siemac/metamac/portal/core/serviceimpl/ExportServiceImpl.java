@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.exporters.ExcelExporter;
@@ -34,7 +34,7 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     /* Datasets */
 
     @Override
-    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
+    public void exportDatasetToExcel(ServiceContext ctx, Dataset dataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
         exportServiceInvocationValidator.checkExportDatasetToExcel(ctx, dataset, datasetSelection, lang, resultOutputStream);
 
         String langDefault = portalConfiguration.retrieveLanguageDefault();
@@ -78,22 +78,22 @@ public class ExportServiceImpl extends ExportServiceImplBase {
     }
 
     @Override
-    public void exportDatasetToPx(ServiceContext ctx, Dataset dataset, String lang, OutputStream resultOutputStream) throws MetamacException {
-        exportServiceInvocationValidator.checkExportDatasetToPx(ctx, dataset, lang, resultOutputStream);
+    public void exportDatasetToPx(ServiceContext ctx, Dataset dataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream) throws MetamacException {
+        exportServiceInvocationValidator.checkExportDatasetToPx(ctx, dataset, datasetSelection, lang, resultOutputStream);
 
         String langDefault = portalConfiguration.retrieveLanguageDefault();
         if (lang == null) {
             lang = langDefault;
         }
 
-        PxExporter exporter = new PxExporter(dataset, srmRestExternalFacade, lang, langDefault);
+        PxExporter exporter = new PxExporter(dataset, srmRestExternalFacade, datasetSelection, lang, langDefault);
         exporter.write(resultOutputStream);
     }
 
     /* Queries */
 
     @Override
-    public void exportQueryToExcel(ServiceContext ctx, Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, OutputStream resultOutputStream)
+    public void exportQueryToExcel(ServiceContext ctx, Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, OutputStream resultOutputStream)
             throws MetamacException {
         exportServiceInvocationValidator.checkExportQueryToExcel(ctx, query, relatedDataset, datasetSelection, lang, resultOutputStream);
 

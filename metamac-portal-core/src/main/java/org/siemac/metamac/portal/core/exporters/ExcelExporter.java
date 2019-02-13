@@ -30,8 +30,8 @@ import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.lang.LocaleUtil;
 import org.siemac.metamac.portal.core.domain.CellCommentDetails;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.ResourceAccessForExcel;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
+import org.siemac.metamac.portal.core.domain.ResourceAccessForExcelAndPx;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.messages.MessageKeyType;
@@ -57,8 +57,8 @@ public class ExcelExporter {
     private static final XSSFColor         COLOR_WHITE                         = getXSSFColor("FFFFFF");
     private static final XSSFColor         COLOR_BLACK                         = getXSSFColor("000000");
 
-    private final ResourceAccessForExcel   resourceAccess;
-    private final DatasetSelectionForExcel datasetSelection;
+    private final ResourceAccessForExcelAndPx   resourceAccess;
+    private final DatasetSelectionForExcelAndPx datasetSelection;
     private Sheet                          sheet;
 
     private int                            rowsOfData;
@@ -72,13 +72,13 @@ public class ExcelExporter {
 
     private static Logger                  log                                 = LoggerFactory.getLogger(ExcelExporter.class);
 
-    public ExcelExporter(Dataset dataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
-        resourceAccess = new ResourceAccessForExcel(dataset, datasetSelection, lang, langAlternative);
+    public ExcelExporter(Dataset dataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+        resourceAccess = new ResourceAccessForExcelAndPx(dataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 
-    public ExcelExporter(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelection, String lang, String langAlternative) throws MetamacException {
-        resourceAccess = new ResourceAccessForExcel(query, relatedDataset, datasetSelection, lang, langAlternative);
+    public ExcelExporter(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+        resourceAccess = new ResourceAccessForExcelAndPx(query, relatedDataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 

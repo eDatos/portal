@@ -34,7 +34,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.portal.core.domain.ResourceAccessForPx;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
+import org.siemac.metamac.portal.core.domain.ResourceAccessForExcelAndPx;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.exporters.px.PxKeysEnum;
 import org.siemac.metamac.portal.core.exporters.px.PxLineContainer;
@@ -63,21 +64,24 @@ import org.siemac.metamac.rest.structural_resources.v1_0.domain.Concept;
 
 public class PxExporter {
 
-    private final ResourceAccessForPx datasetAccess;
+    private final ResourceAccessForExcelAndPx datasetAccess;
     private final String              ATTRIBUTE_LINE_SEPARATOR = "#";
     private Set<String>               languages                = new HashSet<String>();
     private Map<String, Integer>      languageOrder            = new HashMap<String, Integer>();
+    private final DatasetSelectionForExcelAndPx datasetSelection;
     private SrmRestExternalFacade     srmRestExternalFacade;
     private Integer                   showDecimals             = null;
     private final static int          MAX_PX_MATRIX_LENGTH     = 8;
 
-    public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForPx(dataset, lang, langAlternative);
+    public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+        datasetAccess = new ResourceAccessForExcelAndPx(dataset, datasetSelection, lang, langAlternative);
+        this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
-    public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForPx(query, relatedDataset, lang, langAlternative);
+    public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+        datasetAccess = new ResourceAccessForExcelAndPx(query, relatedDataset, datasetSelection, lang, langAlternative);
+        this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
@@ -613,11 +617,10 @@ public class PxExporter {
     private void writeValues(PrintWriter printWriter) throws MetamacException {
         // For dimensions with enumerated representation, the values are the labels of each code
         // For dimensions with non enumerated representation, the values are the text
-        for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
-            List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
-            List<InternationalString> dimensionValuesLabels = new ArrayList<InternationalString>(dimensionValuesId.size());
+        for (String dimensionId : getPxDimensionsDatasetOrdered()) {
+            List<InternationalString> dimensionValuesLabels = new ArrayList<>();
 
-            for (String dimensionValueId : dimensionValuesId) {
+            for (String dimensionValueId : datasetSelection.getDimension(dimensionId).getSelectedDimensionValues()) {
                 dimensionValuesLabels.add(datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId));
             }
 
@@ -648,7 +651,7 @@ public class PxExporter {
      * @throws MetamacException
      */
     private void writeCodes(PrintWriter printWriter) throws MetamacException {
-        for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
+        for (String dimensionId : getPxDimensionsDatasetOrdered()) {
             // If is a dimension with non enumerated representation, skip the codes
             if (!PortalUtils.isDimensionWithEnumeratedRepresentation(datasetAccess.getDimensionsMetadataMap().get(dimensionId))) {
                 continue;
@@ -658,7 +661,7 @@ public class PxExporter {
             PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer()
                     .withPxKey(PxKeysEnum.CODES)
                     .withIndexedValue(Arrays.asList(datasetAccess.getDimensionLabel(dimensionId)))
-                    .withValue(datasetAccess.getDimensionValuesOrderedForData(dimensionId))
+                    .withValue(datasetSelection.getDimension(dimensionId).getSelectedDimensionValues())
                     .build();
             // @formatter:on
             writeLine(printWriter, pxLineContainer);
@@ -959,7 +962,8 @@ public class PxExporter {
                 if (!StringUtils.isEmpty(attributeValue)) {
                     StringBuilder key = new StringBuilder();
                     key.append(QUOTE);
-                    for (Iterator<String> iterator = dimensionsDatasetOrderedForPx.iterator(); iterator.hasNext();) {
+                    Iterator<String> iterator = dimensionsDatasetOrderedForPx.iterator();
+                    while(iterator.hasNext()) {
                         String dimensionId = iterator.next();
                         if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
                             String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
@@ -1015,13 +1019,15 @@ public class PxExporter {
 
     private void writeData(PrintWriter printWriter) {
         printWriter.println(PxKeysEnum.DATA.getKeyword() + EQUALS);
-        String[] observations = PortalUtils.dataToDataArray(datasetAccess.getData().getObservations());
-        for (int i = 0; i < observations.length; i++) {
-            String observation = observations[i];
-            if (i == 0) {
-                writeObservation(printWriter, StringUtils.EMPTY, observation);
-            } else {
-                writeObservation(printWriter, SPACE, observation);
+        for (int i = 0; i < datasetSelection.getRows(); i++) {
+            for (int j = 0; j < datasetSelection.getColumns(); j++) {
+                Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(i, j);
+                String observation = datasetAccess.observationAtPermutation(permutationAtCell);
+                if (i == 0 & j == 0) {
+                    writeObservation(printWriter, StringUtils.EMPTY, observation);
+                } else {
+                    writeObservation(printWriter, SPACE, observation);
+                }
             }
         }
         printWriter.print(SEMICOLON + SPACE);

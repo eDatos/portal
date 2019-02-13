@@ -6,7 +6,7 @@
 
     <xs:import namespace="http://www.siemac.org/metamac/rest/common/v1.0/domain" schemaLocation="metamac-rest-api:metamac-rest-common-domain-v1.0.xsd" />
 
-    <xs:complexType name="ExcelExportation">
+    <xs:complexType name="ExcelAndPxExportation">
         <xs:sequence>
             <xs:element name="datasetSelection" type="tns:DatasetSelection" minOccurs="1" />
         </xs:sequence>
@@ -18,12 +18,6 @@
         </xs:sequence>
     </xs:complexType>     
     
-    <xs:complexType name="PxExportation">
-        <xs:sequence>
-            <xs:element name="datasetSelection" type="tns:DatasetSelection" minOccurs="1" />
-        </xs:sequence>
-    </xs:complexType>   
-                          
     <xs:complexType name="DatasetSelection">
         <xs:sequence>
             <xs:element name="dimensions" type="tns:DatasetSelectionDimensions" minOccurs="1" />
@@ -86,7 +80,6 @@
     </xs:simpleType>    
            
     <!-- Elements -->
-    <xs:element name="excelExportation" type="tns:ExcelExportation" />
+    <xs:element name="excelAndPxExportation" type="tns:ExcelAndPxExportation" />
     <xs:element name="plainTextExportation" type="tns:PlainTextExportation" />
-    <xs:element name="pxExportation" type="tns:PxExportation" />
 </xs:schema>

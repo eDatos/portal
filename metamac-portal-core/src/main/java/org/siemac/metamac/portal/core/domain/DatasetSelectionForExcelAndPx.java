@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-public class DatasetSelectionForExcel extends DatasetSelection {
+public class DatasetSelectionForExcelAndPx extends DatasetSelection {
 
     // We only support a max of 20 dimensions each type
     public static final int            LEFT_DIMENSIONS_START_POSITION  = 0;
@@ -17,7 +17,7 @@ public class DatasetSelectionForExcel extends DatasetSelection {
 
     private final Map<String, Integer> multipliers                     = new HashMap<String, Integer>();
 
-    public DatasetSelectionForExcel(List<DatasetSelectionDimension> dimensions, List<DatasetSelectionAttribute> attributes) {
+    public DatasetSelectionForExcelAndPx(List<DatasetSelectionDimension> dimensions, List<DatasetSelectionAttribute> attributes) {
         super(dimensions, attributes);
 
         initializeMultipliers(getLeftDimensions());

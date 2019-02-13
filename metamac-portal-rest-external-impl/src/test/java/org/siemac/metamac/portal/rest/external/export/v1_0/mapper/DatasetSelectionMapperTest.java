@@ -7,7 +7,7 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.rest.export.v1_0.domain.DatasetSelectionAttribute;
@@ -30,7 +30,7 @@ public class DatasetSelectionMapperTest {
         source.getDimensions().getDimensions().add(mockDimension("DESTINO_ALOJAMIENTO", 40, null, "EL_HIERRO", "TENERIFE"));
 
         // Transform
-        DatasetSelectionForExcel selection = DatasetSelectionMapper.toDatasetSelectionForExcel(source);
+        DatasetSelectionForExcelAndPx selection = DatasetSelectionMapper.toDatasetSelectionForExcel(source);
 
         // Validate
         assertEquals(source.getDimensions().getDimensions().size(), selection.getDimensions().size());

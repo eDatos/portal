@@ -11,7 +11,7 @@ import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuild
 
 public class DatasetSelectionTest {
 
-    private DatasetSelectionForExcel datasetSelection;
+    private DatasetSelectionForExcelAndPx datasetSelection;
 
     @Before
     public void before() {
