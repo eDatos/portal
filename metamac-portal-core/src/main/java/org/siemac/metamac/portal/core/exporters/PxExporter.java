@@ -988,7 +988,7 @@ public class PxExporter {
                 }
             } else {
                 String dimensionId = dimensionsAttributeOrderedForData.get(dimensionPosition + 1);
-                List<String> dimensionValues = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+                List<String> dimensionValues = datasetSelection.getDimension(dimensionId).getSelectedDimensionValues();
                 for (int i = dimensionValues.size() - 1; i >= 0; i--) {
                     DataOrderingStackElement temp = new DataOrderingStackElement(dimensionId, dimensionPosition + 1, dimensionValues.get(i));
                     stack.push(temp);
