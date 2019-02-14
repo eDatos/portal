@@ -53,7 +53,6 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeValues
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedAttributeValue;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedAttributeValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
@@ -369,12 +368,9 @@ public class PxExporter {
             // Check if correction for Precisions is needed: If precision is more less than showdecimals, then showdecimals is changed to precission value
             if (existsContVariable()) {
                 // Measure dimension Has an enumerated representation
-                DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-                if (dimensionValues instanceof EnumeratedDimensionValues) {
-                    for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                        if (dimensionValue.getShowDecimalsPrecision() != null && showDecimals > dimensionValue.getShowDecimalsPrecision()) {
-                            showDecimals = dimensionValue.getShowDecimalsPrecision();
-                        }
+                for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                    if (dimensionValue.getShowDecimalsPrecision() != null && showDecimals > dimensionValue.getShowDecimalsPrecision()) {
+                        showDecimals = dimensionValue.getShowDecimalsPrecision();
                     }
                 }
             }
@@ -513,11 +509,8 @@ public class PxExporter {
             writeLine(printWriter, PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.UNITS).withValue(StringUtils.EMPTY).build());
 
             // Indexed to ContVariable Values
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    writeLocalisedLine(printWriter, PxKeysEnum.UNITS, dimensionValue.getName(), extractUnitCode(dimensionValue));
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                writeLocalisedLine(printWriter, PxKeysEnum.UNITS, dimensionValue.getName(), extractUnitCode(dimensionValue));
             }
         } else {
             Attribute measureAttribute = datasetAccess.getMeasureAttribute();
@@ -675,13 +668,10 @@ public class PxExporter {
     private void writeLastUpdated(PrintWriter printWriter) throws MetamacException {
         if (existsContVariable()) {
             // Indexed to ContVariable Values
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    // Metamac doesn't support languages in Last Updated
-                    InternationalString value = createInternationalStringWithDefaultValue(dateToString(datasetAccess.getMetadata().getLastUpdate()));
-                    writeLocalisedLine(printWriter, PxKeysEnum.LAST_UPDATED, dimensionValue.getName(), value);
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                // Metamac doesn't support languages in Last Updated
+                InternationalString value = createInternationalStringWithDefaultValue(dateToString(datasetAccess.getMetadata().getLastUpdate()));
+                writeLocalisedLine(printWriter, PxKeysEnum.LAST_UPDATED, dimensionValue.getName(), value);
             }
         } else {
             PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.LAST_UPDATED).withValue(datasetAccess.getMetadata().getLastUpdate()).build();
@@ -703,11 +693,8 @@ public class PxExporter {
 
         if (existsContVariable()) {
             // Indexed to ContVariable Values
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, dimensionValue.getName(), value);
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, dimensionValue.getName(), value);
             }
         } else {
             writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, Collections.emptyList(), value);
@@ -785,24 +772,38 @@ public class PxExporter {
     private void writePrecision(PrintWriter printWriter) throws MetamacException {
         if (existsContVariable()) {
             // Measure dimension Has an enumerated representation
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    String variableLabel = PortalUtils.getLabel(datasetAccess.getMeasureDimension().getName(), datasetAccess.getLangEffective());
-                    String valueLabel = PortalUtils.getLabel(dimensionValue.getName(), datasetAccess.getLangEffective());
-                    // @formatter:off
-                    PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer()
-                            .withPxKey(PxKeysEnum.PRECISION)
-                            .withIndexedValue(Arrays.asList(variableLabel, valueLabel))
-                            .withValue(dimensionValue.getShowDecimalsPrecision())
-                            .build();
-                    writeLine(printWriter, pxLineContainer);
-                    // @formatter:on
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                String variableLabel = PortalUtils.getLabel(datasetAccess.getMeasureDimension().getName(), datasetAccess.getLangEffective());
+                String valueLabel = PortalUtils.getLabel(dimensionValue.getName(), datasetAccess.getLangEffective());
+                // @formatter:off
+                PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer()
+                        .withPxKey(PxKeysEnum.PRECISION)
+                        .withIndexedValue(Arrays.asList(variableLabel, valueLabel))
+                        .withValue(dimensionValue.getShowDecimalsPrecision())
+                        .build();
+                writeLine(printWriter, pxLineContainer);
+                // @formatter:on
             }
         } else {
             return; // Nothing
         }
+    }
+    
+    private List<EnumeratedDimensionValue> getSelectedValuesForMeasureDimension() {
+        List<EnumeratedDimensionValue> result = new ArrayList<>();
+        
+        Dimension measureDimension = datasetAccess.getMeasureDimension();
+        if (!(measureDimension.getDimensionValues() instanceof EnumeratedDimensionValues)) {
+            return result;
+        }
+        
+        List<String> selectedDimensionValues = datasetSelection.getDimension(measureDimension.getId()).getSelectedDimensionValues();
+        for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) measureDimension.getDimensionValues()).getValues()) {
+            if (selectedDimensionValues.contains(dimensionValue.getId())) {
+                result.add(dimensionValue);
+            }
+        }
+        return result;
     }
 
     /**
