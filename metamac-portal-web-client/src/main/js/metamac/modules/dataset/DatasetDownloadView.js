@@ -113,18 +113,29 @@
             };
             var selection = this.filterDimensions.exportJSON();
 
+            var self = this;
             _.each(selection, function (dimension, dimensionId) {
                 result.dimensions.dimension.push({
                     dimensionId: dimensionId,
                     labelVisualisationMode: dimension.visibleLabelType,
                     position: dimension.position,
                     dimensionValues: {
-                        dimensionValue: dimension.selectedCategories
+                        dimensionValue: self.getSelectedDimensionCategoriesIds(dimension.categories)
                     }
                 })
             });
 
             return { datasetSelection: result };
+        },
+
+        getSelectedDimensionCategoriesIds: function (categories) {
+            var selectedCategoriesIds = []; 
+            _.each(categories, function(category) {
+                if (category.selected) {
+                    selectedCategoriesIds.push(category.id);
+                }
+            });
+            return selectedCategoriesIds;
         },
 
         // Empty selection returns all

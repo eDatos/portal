@@ -164,10 +164,6 @@
             this.optionsModel.set('type', options.visualizationType);
         },
 
-        copyFilterDimensions: function (from, to) {
-            to.importJSON(from.exportJSON());
-        },
-
         _onSelectChartType: function () {
             var currentVe = this.visualizationView._getCurrentVe();
             if (currentVe) {
