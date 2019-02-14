@@ -34,6 +34,8 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDi
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValues;
 
 public class DatasetSelectionMapper {
+    
+    private static final int MAX_SIZE_URL = 2000;
 
     public static DatasetSelectionForExcelAndPx toDatasetSelectionForExcel(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
@@ -59,6 +61,11 @@ public class DatasetSelectionMapper {
             sb.append(":");
         }
         sb.deleteCharAt(sb.length() - 1); // delete last :
+        
+        if (sb.length() > MAX_SIZE_URL) {
+            return null;
+        }
+        
         return sb.toString();
     }
 
