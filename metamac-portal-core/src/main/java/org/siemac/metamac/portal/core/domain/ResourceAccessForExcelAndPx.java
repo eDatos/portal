@@ -19,13 +19,13 @@ public class ResourceAccessForExcelAndPx extends ResourceAccess {
     private final Map<String, Integer>           multipliers         = new HashMap<String, Integer>();
     private final Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>(); // Map<Dimension, Map<Code, Index>
 
-    public ResourceAccessForExcelAndPx(Dataset dataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public ResourceAccessForExcelAndPx(Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         super(dataset, datasetSelection, lang, langAlternative);
         initializeMultipliers();
         initializeIndex();
     }
 
-    public ResourceAccessForExcelAndPx(Query query, Dataset relatedDataset, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public ResourceAccessForExcelAndPx(Query query, Dataset relatedDataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         super(query, relatedDataset, datasetSelection, lang, langAlternative);
         initializeMultipliers();
         initializeIndex();

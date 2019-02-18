@@ -1,8 +1,8 @@
 package org.siemac.metamac.portal.rest.external.export.v1_0.mapper;
 
-import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx.FIXED_DIMENSIONS_START_POSITION;
-import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx.LEFT_DIMENSIONS_START_POSITION;
-import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx.TOP_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelection.FIXED_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelection.LEFT_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelection.TOP_DIMENSIONS_START_POSITION;
 import static org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum.CODE_AND_LABEL;
 
 import java.util.ArrayList;
@@ -13,10 +13,9 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionType;
 import org.siemac.metamac.rest.exception.RestException;
@@ -37,16 +36,10 @@ public class DatasetSelectionMapper {
     
     private static final int MAX_SIZE_URL = 2000;
 
-    public static DatasetSelectionForExcelAndPx toDatasetSelectionForExcel(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
+    public static DatasetSelection toDatasetSelection(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
         List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
-        return new DatasetSelectionForExcelAndPx(dimensions, attributes);
-    }
-
-    public static DatasetSelectionForPlainText toDatasetSelectionForPlainText(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
-        List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
-        List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
-        return new DatasetSelectionForPlainText(dimensions, attributes);
+        return new DatasetSelection(dimensions, attributes);
     }
 
     public static String toStatisticalResourcesApiDimsParameter(List<DatasetSelectionDimension> dimensions) {
@@ -126,11 +119,10 @@ public class DatasetSelectionMapper {
         }
     }
 
-    public static DatasetSelectionForExcelAndPx datasetToDatasetSelectionForExcel(Dimensions datasetDimensions, Attributes datasetAttributes, DataStructureDefinition relatedDsd) {
+    public static DatasetSelection datasetToDatasetSelection(Dimensions datasetDimensions, Attributes datasetAttributes, DataStructureDefinition relatedDsd) {
         List<DatasetSelectionDimension> dimensions = dimensionsToDatasetSelectionDimensions(datasetDimensions, relatedDsd);
         List<DatasetSelectionAttribute> attributes = attributesToDatasetSelectionAttributes(datasetAttributes);
-        DatasetSelectionForExcelAndPx datasetSelectionForExcel = new DatasetSelectionForExcelAndPx(dimensions, attributes);
-        return datasetSelectionForExcel;
+        return new DatasetSelection(dimensions, attributes);
     }
 
     private static List<DatasetSelectionAttribute> attributesToDatasetSelectionAttributes(Attributes attributes) {

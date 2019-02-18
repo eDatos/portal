@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 
 public class DatasetSelectionMockBuilder {
@@ -57,12 +56,7 @@ public class DatasetSelectionMockBuilder {
         return this;
     }
 
-    public DatasetSelectionForExcelAndPx buildForExcel() {
-        return new DatasetSelectionForExcelAndPx(dimensions, attributes);
+    public DatasetSelection build() {
+        return new DatasetSelection(dimensions, attributes);
     }
-
-    public DatasetSelectionForPlainText buildForTsv() {
-        return new DatasetSelectionForPlainText(dimensions, attributes);
-    }
-
 }

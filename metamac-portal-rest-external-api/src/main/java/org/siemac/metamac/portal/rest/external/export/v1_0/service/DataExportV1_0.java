@@ -9,8 +9,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.siemac.metamac.rest.export.v1_0.domain.ExcelAndPxExportation;
-import org.siemac.metamac.rest.export.v1_0.domain.PlainTextExportation;
+import org.siemac.metamac.rest.export.v1_0.domain.Exportation;
 
 @Path("/v1.0")
 // IMPORTANT: If a new version of API is added, remember change latest url y urlrewrite.xml in war
@@ -22,7 +21,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+    Response exportDatasetToExcel(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
@@ -34,7 +33,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/queries/{agencyID}/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportQueryToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+    Response exportQueryToExcel(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
             @QueryParam("filename") String filename);
 
     @POST
@@ -46,7 +45,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
+    Response exportIndicatorToExcel(Exportation exportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("excel/indicators/{resourceID}")
@@ -56,7 +55,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("excel/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorInstanceToExcel(ExcelAndPxExportation excelExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+    Response exportIndicatorInstanceToExcel(Exportation exportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     @POST
@@ -71,7 +70,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("tsv/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToTsv(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+    Response exportDatasetToTsv(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
@@ -83,7 +82,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("tsv/queries/{agencyID}/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportQueryToTsv(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+    Response exportQueryToTsv(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
             @QueryParam("filename") String filename);
 
     @POST
@@ -95,7 +94,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("tsv/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorToTsv(PlainTextExportation plainTextExportation, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
+    Response exportIndicatorToTsv(Exportation exportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("tsv/indicators/{resourceID}")
@@ -105,7 +104,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("tsv/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorInstanceToTsv(PlainTextExportation plainTextExportation, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+    Response exportIndicatorInstanceToTsv(Exportation exportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     @POST
@@ -122,7 +121,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("csv_comma/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToCsvComma(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
+    Response exportDatasetToCsvComma(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
             @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
@@ -138,7 +137,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("csv_semicolon/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToCsvSemicolon(PlainTextExportation plainTextExportation, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
+    Response exportDatasetToCsvSemicolon(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID,
             @PathParam("version") String version, @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
@@ -153,7 +152,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/datasets/{agencyID}/{resourceID}/{version}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportDatasetToPx(ExcelAndPxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
+    Response exportDatasetToPx(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @PathParam("version") String version,
             @QueryParam("lang") String lang, @QueryParam("filename") String filename);
 
     @POST
@@ -165,7 +164,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/queries/{agencyID}/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportQueryToPx(ExcelAndPxExportation pxExportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
+    Response exportQueryToPx(Exportation exportationBody, @PathParam("agencyID") String agencyID, @PathParam("resourceID") String resourceID, @QueryParam("lang") String lang,
             @QueryParam("filename") String filename);
 
     @POST
@@ -177,7 +176,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/indicators/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorToPx(ExcelAndPxExportation pxExportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
+    Response exportIndicatorToPx(Exportation exportationBody, @PathParam("resourceID") String resourceID, @QueryParam("filename") String filename);
 
     @POST
     @Path("px/indicators/{resourceID}")
@@ -187,7 +186,7 @@ public interface DataExportV1_0 {
     @POST
     @Path("px/indicatorsSystems/{indicatorSystemCode}/indicatorsInstances/{resourceID}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    Response exportIndicatorInstanceToPx(ExcelAndPxExportation pxExportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
+    Response exportIndicatorInstanceToPx(Exportation exportationBody, @PathParam("indicatorSystemCode") String indicatorSystemCode, @PathParam("resourceID") String resourceID,
             @QueryParam("filename") String filename);
 
     @POST

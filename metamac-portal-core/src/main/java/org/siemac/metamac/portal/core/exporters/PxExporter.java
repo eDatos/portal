@@ -34,7 +34,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.ResourceAccessForExcelAndPx;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.exporters.px.PxKeysEnum;
@@ -67,18 +67,18 @@ public class PxExporter {
     private final String              ATTRIBUTE_LINE_SEPARATOR = "#";
     private Set<String>               languages                = new HashSet<String>();
     private Map<String, Integer>      languageOrder            = new HashMap<String, Integer>();
-    private final DatasetSelectionForExcelAndPx datasetSelection;
+    private final DatasetSelection datasetSelection;
     private SrmRestExternalFacade     srmRestExternalFacade;
     private Integer                   showDecimals             = null;
     private final static int          MAX_PX_MATRIX_LENGTH     = 8;
 
-    public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccessForExcelAndPx(dataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
-    public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelectionForExcelAndPx datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccessForExcelAndPx(query, relatedDataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;

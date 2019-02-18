@@ -12,7 +12,7 @@ import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.ResourceAccessForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
@@ -36,7 +36,7 @@ public class PlainTextExporter {
 
     private PlainTextTypeEnum                plainTextTypeEnum                   = null;
 
-    public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccessForPlainText(dataset, datasetSelection, lang, langAlternative);
         this.plainTextTypeEnum = plainTextTypeEnum;
         if (this.plainTextTypeEnum == null) {
@@ -44,7 +44,7 @@ public class PlainTextExporter {
         }
     }
 
-    public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelectionForPlainText datasetSelection, String lang, String langAlternative) throws MetamacException {
+    public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccessForPlainText(query, null, datasetSelection, lang, langAlternative);
         this.plainTextTypeEnum = plainTextTypeEnum;
         if (this.plainTextTypeEnum == null) {

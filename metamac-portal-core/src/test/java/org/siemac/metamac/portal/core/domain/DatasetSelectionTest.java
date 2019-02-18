@@ -11,7 +11,7 @@ import org.siemac.metamac.portal.core.serviceapi.utils.DatasetSelectionMockBuild
 
 public class DatasetSelectionTest {
 
-    private DatasetSelectionForExcelAndPx datasetSelection;
+    private DatasetSelection datasetSelection;
 
     @Before
     public void before() {
@@ -21,7 +21,7 @@ public class DatasetSelectionTest {
                 .dimension("INDICADORES", 0).dimensionValues("INDICE_OCUPACION_PLAZAS")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20).dimensionValues("1_2_3_ESTRELLAS")
                 .dimension("DESTINO_ALOJAMIENTO", 40).dimensionValues("EL_HIERRO")
-                .buildForExcel();
+                .build();
         //@formatter:on
     }
 

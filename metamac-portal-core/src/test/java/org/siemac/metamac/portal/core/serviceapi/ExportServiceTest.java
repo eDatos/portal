@@ -26,8 +26,7 @@ import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcelAndPx;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.invocation.SrmRestExternalFacadeImpl;
@@ -92,7 +91,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Test
     public void testExportDatasetToExcelWithCodes() throws Exception {
         //@formatter:off
-        DatasetSelectionForExcelAndPx datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -113,7 +112,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
-                .buildForExcel();
+                .build();
 
          //@formatter:on
 
@@ -134,12 +133,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Test
     public void testExportDatasetToExcelWithLabels() throws Exception {
         //@formatter:off
-        DatasetSelectionForExcelAndPx datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.LABEL).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, LabelVisualisationModeEnum.LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
-                .buildForExcel();
+                .build();
 
          //@formatter:on
 
@@ -160,12 +159,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Test
     public void testExportDatasetToExcelWithLabelsAndCodes() throws Exception {
         //@formatter:off
-        DatasetSelectionForExcelAndPx datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, null).dimensionValues("INDICE_OCUPACION_PLAZAS")// do not specify visualisation mode (apply default)
-                .buildForExcel();
+                .build();
 
          //@formatter:on
 
@@ -192,7 +191,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Test
     public void testExportQueryToExcelWithCodes() throws Exception {
         //@formatter:off
-        DatasetSelectionForExcelAndPx datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -213,7 +212,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
-                .buildForExcel();
+                .build();
 
          //@formatter:on
 
@@ -235,12 +234,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Test
     public void testExportQueryToExcelWithLabels() throws Exception {
         //@formatter:off
-        DatasetSelectionForExcelAndPx datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.LABEL).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, LabelVisualisationModeEnum.LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
-                .buildForExcel();
+                .build();
 
          //@formatter:on
 
@@ -262,12 +261,12 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Test
     public void testExportQueryToExcelWithLabelsAndCodes() throws Exception {
         //@formatter:off
-        DatasetSelectionForExcelAndPx datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2012", "2013")
                 .dimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
                 .dimension("INDICADORES", 40, null).dimensionValues("INDICE_OCUPACION_PLAZAS")// do not specify visualisation mode (apply default)
-                .buildForExcel();
+                .build();
 
          //@formatter:on
 
@@ -308,7 +307,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Dataset dataset = buildDatasetToExport();
 
         //@formatter:off
-        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -329,7 +328,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
-                .buildForTsv();
+                .build();
         //@formatter:on
 
         {
@@ -478,7 +477,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Dataset dataset = buildDatasetToExport();
 
         //@formatter:off
-        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.LABEL).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -499,7 +498,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.LABEL)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.LABEL)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.LABEL)
-                .buildForTsv();
+                .build();
         //@formatter:on
 
         {
@@ -704,7 +703,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Dataset dataset = buildDatasetToExport();
 
         //@formatter:off
-        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -725,7 +724,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
-                .buildForTsv();
+                .build();
         //@formatter:on
 
         {
@@ -978,7 +977,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Dataset dataset = buildDatasetToExport();
 
         //@formatter:off
-        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -1000,7 +999,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_D", null)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
 
-                .buildForTsv();
+                .build();
         //@formatter:on
 
         {
@@ -1079,7 +1078,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Query query = buildQueryToExport();
 
         //@formatter:off
-        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -1100,7 +1099,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_C", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_D", LabelVisualisationModeEnum.CODE)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
-                .buildForTsv();
+                .build();
         //@formatter:on
 
         {
@@ -1164,7 +1163,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Query query = buildQueryToExport();
 
         //@formatter:off
-        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -1185,7 +1184,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("CELLNOTE_A", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("CELLNOTE_B", LabelVisualisationModeEnum.CODE_AND_LABEL)
                 .attribute("CELLNOTE_C", LabelVisualisationModeEnum.CODE_AND_LABEL)
-                .buildForTsv();
+                .build();
         //@formatter:on
 
         {
@@ -1249,7 +1248,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
         Query query = buildQueryToExport();
 
         //@formatter:off
-        DatasetSelectionForPlainText datasetSelection = DatasetSelectionMockBuilder.create()
+        DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
                 .dimension("DESTINO_ALOJAMIENTO", LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("ANDALUCIA", "ARAGON")
                 .dimension("TIME_PERIOD", LabelVisualisationModeEnum.CODE).dimensionValues("2013", "2012")
                 .dimension("CATEGORIA_ALOJAMIENTO", LabelVisualisationModeEnum.LABEL).dimensionValues("1_2_3_ESTRELLAS", "4_5_ESTRELLAS")
@@ -1271,7 +1270,7 @@ public class ExportServiceTest implements ExportServiceTestBase {
                 .attribute("ATTRIBUTE_D", null)
                 .attribute("ATTRIBUTE_E", LabelVisualisationModeEnum.CODE)
 
-                .buildForTsv();
+                .build();
         //@formatter:on
 
         {
