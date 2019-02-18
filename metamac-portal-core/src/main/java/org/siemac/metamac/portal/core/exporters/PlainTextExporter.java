@@ -13,7 +13,7 @@ import java.util.Stack;
 import org.apache.commons.lang.StringUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
-import org.siemac.metamac.portal.core.domain.ResourceAccessForPlainText;
+import org.siemac.metamac.portal.core.domain.ResourceAccess;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
@@ -24,7 +24,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 
 public class PlainTextExporter {
 
-    private final ResourceAccessForPlainText datasetAccess;
+    private final ResourceAccess datasetAccess;
 
     private final String                     ESCAPE_DOUBLE_QUOTES                = "\"";
     private final String                     HEADER_OBSERVATION                  = "OBS_VALUE";
@@ -37,7 +37,7 @@ public class PlainTextExporter {
     private PlainTextTypeEnum                plainTextTypeEnum                   = null;
 
     public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForPlainText(dataset, datasetSelection, lang, langAlternative);
+        datasetAccess = new ResourceAccess(dataset, datasetSelection, lang, langAlternative);
         this.plainTextTypeEnum = plainTextTypeEnum;
         if (this.plainTextTypeEnum == null) {
             throw new MetamacException(ServiceExceptionType.UNKNOWN, "Plain Text format is required ");
@@ -45,7 +45,7 @@ public class PlainTextExporter {
     }
 
     public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForPlainText(query, null, datasetSelection, lang, langAlternative);
+        datasetAccess = new ResourceAccess(query, null, datasetSelection, lang, langAlternative);
         this.plainTextTypeEnum = plainTextTypeEnum;
         if (this.plainTextTypeEnum == null) {
             throw new MetamacException(ServiceExceptionType.UNKNOWN, "Plain Text format is required ");

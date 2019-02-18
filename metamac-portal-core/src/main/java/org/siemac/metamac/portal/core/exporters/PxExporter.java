@@ -35,7 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
-import org.siemac.metamac.portal.core.domain.ResourceAccessForExcelAndPx;
+import org.siemac.metamac.portal.core.domain.ResourceAccess;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.exporters.px.PxKeysEnum;
 import org.siemac.metamac.portal.core.exporters.px.PxLineContainer;
@@ -63,7 +63,7 @@ import org.siemac.metamac.rest.structural_resources.v1_0.domain.Concept;
 
 public class PxExporter {
 
-    private final ResourceAccessForExcelAndPx datasetAccess;
+    private final ResourceAccess datasetAccess;
     private final String              ATTRIBUTE_LINE_SEPARATOR = "#";
     private Set<String>               languages                = new HashSet<String>();
     private Map<String, Integer>      languageOrder            = new HashMap<String, Integer>();
@@ -73,13 +73,13 @@ public class PxExporter {
     private final static int          MAX_PX_MATRIX_LENGTH     = 8;
 
     public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForExcelAndPx(dataset, datasetSelection, lang, langAlternative);
+        datasetAccess = new ResourceAccess(dataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
     public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForExcelAndPx(query, relatedDataset, datasetSelection, lang, langAlternative);
+        datasetAccess = new ResourceAccess(query, relatedDataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;
     }

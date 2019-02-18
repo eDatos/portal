@@ -31,7 +31,7 @@ import org.siemac.metamac.core.common.lang.LocaleUtil;
 import org.siemac.metamac.portal.core.domain.CellCommentDetails;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-import org.siemac.metamac.portal.core.domain.ResourceAccessForExcelAndPx;
+import org.siemac.metamac.portal.core.domain.ResourceAccess;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.messages.MessageKeyType;
@@ -57,7 +57,7 @@ public class ExcelExporter {
     private static final XSSFColor         COLOR_WHITE                         = getXSSFColor("FFFFFF");
     private static final XSSFColor         COLOR_BLACK                         = getXSSFColor("000000");
 
-    private final ResourceAccessForExcelAndPx   resourceAccess;
+    private final ResourceAccess   resourceAccess;
     private final DatasetSelection datasetSelection;
     private Sheet                          sheet;
 
@@ -77,12 +77,12 @@ public class ExcelExporter {
     private CellStyle attributeCellStyle;
 
     public ExcelExporter(Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
-        resourceAccess = new ResourceAccessForExcelAndPx(dataset, datasetSelection, lang, langAlternative);
+        resourceAccess = new ResourceAccess(dataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 
     public ExcelExporter(Query query, Dataset relatedDataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
-        resourceAccess = new ResourceAccessForExcelAndPx(query, relatedDataset, datasetSelection, lang, langAlternative);
+        resourceAccess = new ResourceAccess(query, relatedDataset, datasetSelection, lang, langAlternative);
         this.datasetSelection = datasetSelection;
     }
 

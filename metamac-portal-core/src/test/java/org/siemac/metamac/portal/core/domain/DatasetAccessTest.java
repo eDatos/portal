@@ -12,7 +12,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 
 public class DatasetAccessTest {
 
-    private ResourceAccessForExcelAndPx datasetAccessForExcel;
+    private ResourceAccess datasetAccessForExcel;
 
     @Before
     public void before() throws Exception {
@@ -27,7 +27,7 @@ public class DatasetAccessTest {
                 .dimensionValue("DIM_B_1", "Representation B1")
                 .build();
         //@formatter:on
-        datasetAccessForExcel = new ResourceAccessForExcelAndPx(dataset, null, "es", "es");
+        datasetAccessForExcel = new ResourceAccess(dataset, null, "es", "es");
     }
 
     @Test
