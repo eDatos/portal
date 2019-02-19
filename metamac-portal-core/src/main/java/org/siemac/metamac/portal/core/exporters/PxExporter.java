@@ -857,14 +857,18 @@ public class PxExporter {
                 continue;
             }
             String dimensionId = attribute.getDimensions().getDimensions().get(0).getDimensionId();
-            Map<String, Map<String, StringBuilder>> attributeValuesByDimensionId = PxKeysEnum.VALUENOTEX.equals(attributeId) ? valueNotex : valueNote;
+            Map<String, Map<String, StringBuilder>> attributeValuesByDimensionId = PxKeysEnum.VALUENOTEX.getKeyword().equals(attributeId) ? valueNotex : valueNote;
             if (!attributeValuesByDimensionId.containsKey(dimensionId)) {
                 attributeValuesByDimensionId.put(dimensionId, new HashMap<String, StringBuilder>());
             }
             List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+            List<String> selectedDimensionValuesId = datasetSelection.getDimension(dimensionId).getSelectedDimensionValues();
             Map<String, StringBuilder> attributeValuesByDimensionValueId = attributeValuesByDimensionId.get(dimensionId);
             for (int i = 0; i < dimensionValuesId.size(); i++) {
                 String dimensionValueId = dimensionValuesId.get(i);
+                if (!selectedDimensionValuesId.contains(dimensionValueId)) {
+                    continue;
+                }
                 String attributeValue = attributeValues[i];
                 if (StringUtils.isEmpty(attributeValue)) {
                     continue;
@@ -928,7 +932,7 @@ public class PxExporter {
                 continue;
             }
 
-            Map<String, StringBuilder> cellNoteToAttribute = PxKeysEnum.CELLNOTEX.equals(attributeId) ? cellNotex : cellNote;
+            Map<String, StringBuilder> cellNoteToAttribute = PxKeysEnum.CELLNOTEX.getKeyword().equals(attributeId) ? cellNotex : cellNote;
             List<String> dimensionsAttributeOrderedForData = datasetAccess.getDimensionsAttributeOrderedForData(attribute);
             writeAttributeCellNote(attributeId, attributeValues, dimensionsAttributeOrderedForData, allDimensionsDatasetOrderedForPx, cellNoteToAttribute);
         }
@@ -960,7 +964,7 @@ public class PxExporter {
             if (dimensionPosition == dimensionLastPosition) {
                 // We have all dimensions here
                 String attributeValue = attributeValues[attributeValueIndex++];
-                if (!StringUtils.isEmpty(attributeValue)) {
+                if (!StringUtils.isEmpty(attributeValue) && allDimensionValuesAreSelected(dimensionsDatasetOrderedForPx, dimensionValuesForAttributeValue)) {
                     StringBuilder key = new StringBuilder();
                     key.append(QUOTE);
                     Iterator<String> iterator = dimensionsDatasetOrderedForPx.iterator();
@@ -988,13 +992,26 @@ public class PxExporter {
                 }
             } else {
                 String dimensionId = dimensionsAttributeOrderedForData.get(dimensionPosition + 1);
-                List<String> dimensionValues = datasetSelection.getDimension(dimensionId).getSelectedDimensionValues();
+                List<String> dimensionValues = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
                 for (int i = dimensionValues.size() - 1; i >= 0; i--) {
                     DataOrderingStackElement temp = new DataOrderingStackElement(dimensionId, dimensionPosition + 1, dimensionValues.get(i));
                     stack.push(temp);
                 }
             }
         }
+    }
+    
+    private boolean allDimensionValuesAreSelected(List<String> dimensionsDatasetOrderedForPx, Map<String, String> dimensionValuesForAttributeValue) {
+        for (String dimensionId : dimensionsDatasetOrderedForPx) {
+            if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
+                String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
+                if (!datasetSelection.getDimension(dimensionId).getSelectedDimensionValues().contains(dimensionValueId)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private void writeAttributeCellNoteField(PrintWriter printWriter, PxKeysEnum pxKey, Map<String, StringBuilder> cellNote) throws MetamacException {
@@ -1024,7 +1041,7 @@ public class PxExporter {
             for (int j = 0; j < datasetSelection.getColumns(); j++) {
                 Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(i, j);
                 String observation = datasetAccess.observationAtPermutation(permutationAtCell);
-                if (i == 0 & j == 0) {
+                if (i == 0 && j == 0) {
                     writeObservation(printWriter, StringUtils.EMPTY, observation);
                 } else {
                     writeObservation(printWriter, SPACE, observation);
