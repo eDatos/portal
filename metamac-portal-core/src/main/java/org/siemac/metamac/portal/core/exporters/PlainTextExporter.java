@@ -4,7 +4,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,7 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 public class PlainTextExporter {
 
     private final ResourceAccess datasetAccess;
+    private final DatasetSelection datasetSelection;
 
     private final String                     ESCAPE_DOUBLE_QUOTES                = "\"";
     private final String                     HEADER_OBSERVATION                  = "OBS_VALUE";
@@ -38,6 +38,7 @@ public class PlainTextExporter {
 
     public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccess(dataset, datasetSelection, lang, langAlternative);
+        this.datasetSelection = datasetSelection;
         this.plainTextTypeEnum = plainTextTypeEnum;
         if (this.plainTextTypeEnum == null) {
             throw new MetamacException(ServiceExceptionType.UNKNOWN, "Plain Text format is required ");
@@ -46,6 +47,7 @@ public class PlainTextExporter {
 
     public PlainTextExporter(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccess(query, null, datasetSelection, lang, langAlternative);
+        this.datasetSelection = datasetSelection;
         this.plainTextTypeEnum = plainTextTypeEnum;
         if (this.plainTextTypeEnum == null) {
             throw new MetamacException(ServiceExceptionType.UNKNOWN, "Plain Text format is required ");
@@ -115,31 +117,16 @@ public class PlainTextExporter {
     }
 
     private void writeBodyForPlainTextObservations(PrintWriter printWriter) {
-        Stack<DataOrderingStackElement> stack = new Stack<DataOrderingStackElement>();
-        stack.push(new DataOrderingStackElement(null, -1, null));
-        ArrayList<String> entryId = new ArrayList<String>(datasetAccess.getDimensionsMetadata().size());
-        for (int i = 0; i < datasetAccess.getDimensionsMetadata().size(); i++) {
-            entryId.add(i, StringUtils.EMPTY);
-        }
-
-        int dimensionLastPosition = datasetAccess.getDimensionsMetadata().size() - 1;
-        int observationIndex = 0;
-        while (stack.size() > 0) {
-            DataOrderingStackElement elem = stack.pop();
-            int dimensionPosition = elem.getDimensionPosition();
-            String dimensionCodeId = elem.getDimensionCodeId();
-            if (dimensionPosition != -1) {
-                entryId.set(dimensionPosition, dimensionCodeId);
-            }
-
-            if (dimensionPosition == dimensionLastPosition) {
+        for (int i = 0; i < datasetSelection.getRows(); i++) {
+            for (int j = 0; j < datasetSelection.getColumns(); j++) {
+                Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(i, j);
+                
                 // The observation is complete
                 StringBuilder line = new StringBuilder();
 
                 // Dimension values
-                for (int i = 0, size = datasetAccess.getDimensionsOrderedForData().size(); i < size; i++) {
-                    String dimensionId = datasetAccess.getDimensionsOrderedForData().get(i);
-                    String dimensionValueId = entryId.get(i);
+                for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
+                    String dimensionValueId = permutationAtCell.get(dimensionId);
                     LabelVisualisationModeEnum labelVisualisation = datasetAccess.getDimensionLabelVisualisationMode(dimensionId);
                     if (labelVisualisation.isLabel()) {
                         String dimensionValueLabel = datasetAccess.getDimensionValueLabelCurrentLocale(dimensionId, dimensionValueId);
@@ -151,7 +138,7 @@ public class PlainTextExporter {
                 }
 
                 // Observation
-                String observation = datasetAccess.getObservations()[observationIndex];
+                String observation = datasetAccess.observationAtPermutation(permutationAtCell);
                 if (observation == null) {
                     observation = StringUtils.EMPTY;
                 }
@@ -162,12 +149,9 @@ public class PlainTextExporter {
                     if (!AttributeAttachmentLevelType.PRIMARY_MEASURE.equals(attribute.getAttachmentLevel())) {
                         continue; // only observation attachment level
                     }
+                    
                     String attributeId = attribute.getId();
-                    String[] attributeValues = datasetAccess.getAttributeValues(attributeId);
-                    String attributeValue = null;
-                    if (attributeValues != null) {
-                        attributeValue = attributeValues[observationIndex];
-                    }
+                    String attributeValue = datasetAccess.measureAttributeValueAtPermutation(attributeId, permutationAtCell);
                     if (attributeValue == null) {
                         attributeValue = StringUtils.EMPTY;
                         line.append(plainTextTypeEnum.getSeparator() + escapeString(attributeValue, ESCAPE_IF_NECESSARY));
@@ -185,15 +169,6 @@ public class PlainTextExporter {
                     }
                 }
                 printWriter.println(line);
-                observationIndex++;
-                entryId.set(dimensionPosition, StringUtils.EMPTY);
-            } else {
-                String dimensionId = datasetAccess.getDimensionsOrderedForData().get(dimensionPosition + 1);
-                List<String> dimensionValues = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
-                for (int i = dimensionValues.size() - 1; i >= 0; i--) {
-                    DataOrderingStackElement temp = new DataOrderingStackElement(dimensionId, dimensionPosition + 1, dimensionValues.get(i));
-                    stack.push(temp);
-                }
             }
         }
     }
@@ -285,7 +260,7 @@ public class PlainTextExporter {
             if (dimensionPosition == lastDimensionPosition) {
                 // We have all dimensions here
                 String attributeValue = attributeValues[attributeValueIndex++];
-                if (!StringUtils.isEmpty(attributeValue)) {
+                if (!StringUtils.isEmpty(attributeValue) && allDimensionValuesAreSelected(datasetAccess.getDimensionsOrderedForData(), dimensionValuesForAttributeValue)) {
                     StringBuilder line = new StringBuilder();
                     // Dimensions
                     for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
@@ -320,6 +295,19 @@ public class PlainTextExporter {
                 }
             }
         }
+    }
+    
+    private boolean allDimensionValuesAreSelected(List<String> dimensionsOrderedForData, Map<String, String> dimensionValuesForAttributeValue) {
+        for (String dimensionId : dimensionsOrderedForData) {
+            if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
+                String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
+                if (!datasetSelection.getDimension(dimensionId).getSelectedDimensionValues().contains(dimensionValueId)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private void writeBodyAttributeValueForPlainTextAttributes(StringBuilder line, String attributeId, String attributeValueCode, int numberOfColumnsToAttributeValue) {
@@ -371,5 +359,4 @@ public class PlainTextExporter {
         // Escape always
         return ESCAPE_DOUBLE_QUOTES + source + ESCAPE_DOUBLE_QUOTES;
     }
-
 }

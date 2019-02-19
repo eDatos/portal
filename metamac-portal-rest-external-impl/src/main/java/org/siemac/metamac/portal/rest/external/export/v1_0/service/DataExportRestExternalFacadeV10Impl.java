@@ -627,20 +627,25 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelection datasetSelectionForPlainText = checkAndTransformSelection(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
 
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.DATASET.getName(), agencyID, resourceID, version);
             }
 
-            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelection, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -649,20 +654,25 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private Response exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, Exportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelection datasetSelectionForPlainText = checkAndTransformSelection(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Query query = retrieveQuery(agencyID, resourceID, lang, dimensionSelection);
+            
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
+                        query.getMetadata().getRelatedDsd());
+            }
 
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.QUERY.getName(), agencyID, resourceID);
             }
 
-            return exportQueryToPlainText(plainTextTypeEnum, query, datasetSelectionForPlainText, lang, filename);
+            return exportQueryToPlainText(plainTextTypeEnum, query, datasetSelection, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -671,20 +681,25 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private Response exportIndicatorToPlainText(PlainTextTypeEnum plainTextTypeEnum, Exportation exportationBody, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelection datasetSelectionForPlainText = checkAndTransformSelection(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
 
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.INDICATOR.getName(), resourceID);
             }
 
-            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
@@ -693,20 +708,25 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private Response exportIndicatorInstanceToPlainText(PlainTextTypeEnum plainTextTypeEnum, Exportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelection datasetSelectionForPlainText = checkAndTransformSelection(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
 
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
 
-            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }

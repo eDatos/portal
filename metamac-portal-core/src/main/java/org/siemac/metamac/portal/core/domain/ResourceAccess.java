@@ -410,6 +410,16 @@ public class ResourceAccess {
            return null;
        }
    }
+   
+   public String measureAttributeValueAtPermutation(String attributeId, Map<String, String> permutation) {
+       int offset = calculateOffsetAtPermutation(permutation);
+       String[] attributeValues = getAttributeValues(attributeId);
+       String attributeValue = null;
+       if (attributeValues != null) {
+           attributeValue = attributeValues[offset];
+       }
+       return attributeValue;
+   }
 
    public CellCommentDetails observationAttributesAtPermutation(Map<String, String> permutation) {
        CellCommentDetails cellCommentDetails = new CellCommentDetails();
