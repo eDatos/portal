@@ -517,12 +517,18 @@ public class PxExporter {
             if (measureAttribute != null) {
                 // By Metamac Constraints, the measure attribute has dataset attachment and enumerated representation.
                 // Quantity
-                AttributeValues attributeValues = measureAttribute.getAttributeValues();
-                if (attributeValues != null) {
-                    if (attributeValues instanceof EnumeratedAttributeValues) {
-                        // En este caso sólo debería de tener un único Valor la representación ENUMERADA
-                        EnumeratedAttributeValue enumeratedAttributeValue = ((EnumeratedAttributeValues) attributeValues).getValues().iterator().next();
-                        writeLocalisedLine(printWriter, PxKeysEnum.UNITS, Collections.emptyList(), extractUnitCode(enumeratedAttributeValue));
+                String[] attributeValuesFromData = datasetAccess.getAttributeValues(measureAttribute.getId()); // Enumerated representation
+                if (attributeValuesFromData == null || attributeValuesFromData.length != 1) {
+                    throw new RuntimeException("No instances of measure attribute type in the dataset. This is a Metamac error.");
+                }
+                AttributeValues attributeValuesFromMetadata = measureAttribute.getAttributeValues();
+                if (attributeValuesFromMetadata instanceof EnumeratedAttributeValues) {
+                    // En este caso sólo debería de tener un único Valor la representación ENUMERADA
+                    List<EnumeratedAttributeValue> metadataAttributeValues = ((EnumeratedAttributeValues) attributeValuesFromMetadata).getValues();
+                    for (EnumeratedAttributeValue attributeValue : metadataAttributeValues) {
+                        if (attributeValue.getId().equals(attributeValuesFromData[0])) {
+                            writeLocalisedLine(printWriter, PxKeysEnum.UNITS, Collections.emptyList(), extractUnitCode(attributeValue));
+                        }
                     }
                 }
             } else {

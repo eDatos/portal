@@ -9,8 +9,8 @@
         <cdomain:text xml:lang="en">Occupancy rate as census indicators islands, provinces and communities</cdomain:text>
     </ns2:name>
     <ns2:description>
-        <cdomain:text xml:lang="en">Índice censal de ocupación según indicadores por islas, provincias y comunidades</cdomain:text>
-        <cdomain:text xml:lang="es">Occupancy rate as census indicators islands, provinces and communities</cdomain:text>
+        <cdomain:text xml:lang="es">Índice censal de ocupación según indicadores por islas, provincias y comunidades</cdomain:text>
+        <cdomain:text xml:lang="en">Occupancy rate as census indicators islands, provinces and communities</cdomain:text>
     </ns2:description>
     <ns2:selectedLanguages total="3">
         <ns2:language>es</ns2:language>
@@ -1346,6 +1346,7 @@
                 <ns2:id>INDICADORES</ns2:id>
                 <ns2:name>
                     <cdomain:text xml:lang="es">Indicadores</cdomain:text>
+                    <cdomain:text xml:lang="en">Indicators</cdomain:text>
                 </ns2:name>
                 <ns2:type>DIMENSION</ns2:type>
                 <ns2:dimensionValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:EnumeratedDimensionValues" total="8">
@@ -1583,7 +1584,7 @@
                 <ns2:id>TIME_PERIOD</ns2:id>
                 <ns2:name>
                     <cdomain:text xml:lang="es">Periodo de tiempo</cdomain:text>
-                    <cdomain:text xml:lang="es">Time frame</cdomain:text>
+                    <cdomain:text xml:lang="en">Time frame</cdomain:text>
                 </ns2:name>
                 <ns2:type>TIME_DIMENSION</ns2:type>
                 <ns2:dimensionValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:NonEnumeratedDimensionValues" total="56">
