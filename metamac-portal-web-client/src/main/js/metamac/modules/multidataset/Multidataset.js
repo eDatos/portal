@@ -59,7 +59,7 @@
 
         parse: function (response) {
             var attributes = {};
-            attributes.name = App.i18n.localizeText(response.name);
+            attributes.name = App.i18n.localizeText(response.metadata.filteringDimension);
             attributes.description = App.i18n.localizeText(response.description);
             this.set('nodes', App.modules.multidataset.MultidatasetNode.parseNodes(response.data.nodes, this.multidatasetIdentifier, this.filterDimensions.metadata.identifier()));
             return attributes;
