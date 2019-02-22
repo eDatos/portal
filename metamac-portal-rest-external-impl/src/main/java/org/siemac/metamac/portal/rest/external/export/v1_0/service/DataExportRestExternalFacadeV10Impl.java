@@ -27,9 +27,7 @@ import org.siemac.metamac.core.common.io.DeleteOnCloseFileInputStream;
 import org.siemac.metamac.core.common.util.shared.UrnUtils;
 import org.siemac.metamac.portal.core.conf.PortalConfiguration;
 import org.siemac.metamac.portal.core.constants.PortalConstants.ResourceType;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.enume.PlainTextTypeEnum;
 import org.siemac.metamac.portal.core.exporters.PxExporter;
 import org.siemac.metamac.portal.core.exporters.SvgExportSupportedMimeType;
@@ -44,9 +42,7 @@ import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionTyp
 import org.siemac.metamac.portal.rest.external.export.v1_0.mapper.DatasetSelectionMapper;
 import org.siemac.metamac.rest.exception.RestException;
 import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
-import org.siemac.metamac.rest.export.v1_0.domain.ExcelExportation;
-import org.siemac.metamac.rest.export.v1_0.domain.PlainTextExportation;
-import org.siemac.metamac.rest.export.v1_0.domain.PxExportation;
+import org.siemac.metamac.rest.export.v1_0.domain.Exportation;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Query;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.Agency;
@@ -87,81 +83,71 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     private JacksonJsonProvider                    jacksonJsonProvider;
 
     @Override
-    public Response exportDatasetToTsv(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToTsv(Exportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportDatasetToTsv(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        Exportation exportationBody = getExportation(jsonBody);
         return exportDatasetToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
-    public Response exportQueryToTsv(PlainTextExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
+    public Response exportQueryToTsv(Exportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
         return exportQueryToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, lang, filename);
     }
 
     @Override
     public Response exportQueryToTsv(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
-        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        Exportation exportationBody = getExportation(jsonBody);
         return exportQueryToPlainText(PlainTextTypeEnum.TSV, exportationBody, agencyID, resourceID, lang, filename);
     }
 
     @Override
-    public Response exportIndicatorToTsv(PlainTextExportation exportationBody, String resourceID, String filename) {
+    public Response exportIndicatorToTsv(Exportation exportationBody, String resourceID, String filename) {
         return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorToTsv(String jsonBody, String resourceID, String filename) {
-        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        Exportation exportationBody = getExportation(jsonBody);
         return exportIndicatorToPlainText(PlainTextTypeEnum.TSV, exportationBody, resourceID, filename);
     }
 
     @Override
-    public Response exportIndicatorInstanceToTsv(PlainTextExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
+    public Response exportIndicatorInstanceToTsv(Exportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorInstanceToTsv(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
-        PlainTextExportation exportationBody = getPlainTextExportation(jsonBody);
+        Exportation exportationBody = getExportation(jsonBody);
         return exportIndicatorInstanceToPlainText(PlainTextTypeEnum.TSV, exportationBody, indicatorSystemCode, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorToPxForm(String jsonBody, String resourceID, String filename) {
-        PxExportation pxExportationBody = getPxExportation(jsonBody);
+        Exportation pxExportationBody = getExportation(jsonBody);
         return exportIndicatorToPx(pxExportationBody, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorInstanceToPx(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
-        PxExportation pxExportationBody = getPxExportation(jsonBody);
+        Exportation pxExportationBody = getExportation(jsonBody);
         return exportIndicatorInstanceToPx(pxExportationBody, indicatorSystemCode, resourceID, filename);
     }
 
-    private PlainTextExportation getPlainTextExportation(String jsonBody) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
-        try {
-            return objectMapper.readValue(jsonBody, PlainTextExportation.class);
-        } catch (IOException e) {
-            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
-            throw new RestException(exception, Status.BAD_REQUEST);
-        }
-    }
-
     @Override
-    public Response exportDatasetToCsvComma(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvComma(Exportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.CSV_COMMA, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportDatasetToCsvComma(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(Exportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
-            PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
+            Exportation tsvExportation = objectMapper.readValue(jsonBody, Exportation.class);
             return exportDatasetToPlainText(PlainTextTypeEnum.CSV_COMMA, tsvExportation, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
@@ -170,15 +156,15 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToCsvSemicolon(PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToCsvSemicolon(Exportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         return exportDatasetToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, exportationBody, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportDatasetToCsvSemicolon(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PlainTextExportation.class, MediaType.APPLICATION_JSON_TYPE);
+        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(Exportation.class, MediaType.APPLICATION_JSON_TYPE);
         try {
-            PlainTextExportation tsvExportation = objectMapper.readValue(jsonBody, PlainTextExportation.class);
+            Exportation tsvExportation = objectMapper.readValue(jsonBody, Exportation.class);
             return exportDatasetToPlainText(PlainTextTypeEnum.CSV_SEMICOLON, tsvExportation, agencyID, resourceID, version, lang, filename);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
@@ -187,20 +173,20 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToExcel(Exportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
 
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForExcel != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
 
-            if (datasetSelectionForExcel == null) {
-                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
                         dataset.getMetadata().getRelatedDsd());
             }
 
@@ -208,27 +194,27 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".xlsx", ResourceType.DATASET.getName(), agencyID, resourceID, version);
             }
 
-            return exportDatasetToExcel(dataset, datasetSelectionForExcel, lang, filename);
+            return exportDatasetToExcel(dataset, datasetSelection, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportQueryToExcel(ExcelExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
+    public Response exportQueryToExcel(Exportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForExcel != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             Query query = retrieveQuery(agencyID, resourceID, lang, dimensionSelection);
             Dataset relatedDataset = retrieveDataset(query.getMetadata().getRelatedDataset().getUrn(), lang, dimensionSelection);
 
-            if (datasetSelectionForExcel == null) {
-                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
                         query.getMetadata().getRelatedDsd());
             }
 
@@ -236,71 +222,71 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 filename = buildFilename(".xlsx", ResourceType.QUERY.getName(), agencyID, resourceID);
             }
 
-            return exportQueryToExcel(query, relatedDataset, datasetSelectionForExcel, lang, filename);
+            return exportQueryToExcel(query, relatedDataset, datasetSelection, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportIndicatorToExcel(ExcelExportation exportationBody, String resourceID, String filename) {
+    public Response exportIndicatorToExcel(Exportation exportationBody, String resourceID, String filename) {
 
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForExcel != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
 
-            if (datasetSelectionForExcel == null) {
-                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
                         dataset.getMetadata().getRelatedDsd());
             }
 
             if (filename == null) {
                 filename = buildFilename(".xlsx", ResourceType.INDICATOR.getName(), resourceID);
             }
-            return exportDatasetToExcel(dataset, datasetSelectionForExcel, null, filename);
+            return exportDatasetToExcel(dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportIndicatorInstanceToExcel(ExcelExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
+    public Response exportIndicatorInstanceToExcel(Exportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForExcel datasetSelectionForExcel = checkAndTransformSelectionForExcel(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForExcel != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForExcel.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
 
-            if (datasetSelectionForExcel == null) {
-                datasetSelectionForExcel = DatasetSelectionMapper.datasetToDatasetSelectionForExcel(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
                         dataset.getMetadata().getRelatedDsd());
             }
 
             if (filename == null) {
                 filename = buildFilename(".xlsx", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
-            return exportDatasetToExcel(dataset, datasetSelectionForExcel, null, filename);
+            return exportDatasetToExcel(dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportDatasetToExcel(Dataset dataset, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
+    private Response exportDatasetToExcel(Dataset dataset, DatasetSelection datasetSelection, String lang, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelectionForExcel, lang, outputStream);
+            exportService.exportDatasetToExcel(SERVICE_CONTEXT, dataset, datasetSelection, lang, outputStream);
             outputStream.close();
 
             return buildResponseOkWithFile(tmpFile, filename, MEDIA_TYPE_APPLICATION_XLSX);
@@ -309,12 +295,12 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private Response exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelectionForExcel datasetSelectionForExcel, String lang, String filename) {
+    private Response exportQueryToExcel(Query query, Dataset relatedDataset, DatasetSelection datasetSelection, String lang, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "xlsx");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportQueryToExcel(SERVICE_CONTEXT, query, relatedDataset, datasetSelectionForExcel, lang, outputStream);
+            exportService.exportQueryToExcel(SERVICE_CONTEXT, query, relatedDataset, datasetSelection, lang, outputStream);
             outputStream.close();
 
             return buildResponseOkWithFile(tmpFile, filename, MEDIA_TYPE_APPLICATION_XLSX);
@@ -323,31 +309,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private DatasetSelectionForPlainText checkAndTransformSelectionForPlainText(PlainTextExportation exportationBody) {
-        DatasetSelectionForPlainText datasetSelectionForPlainText = null;
+    private DatasetSelection checkAndTransformSelection(Exportation exportationBody) throws Exception {
+        DatasetSelection datasetSelection = null;
         if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
             try {
-                datasetSelectionForPlainText = DatasetSelectionMapper.toDatasetSelectionForPlainText(exportationBody.getDatasetSelection());
+                datasetSelection = DatasetSelectionMapper.toDatasetSelection(exportationBody.getDatasetSelection());
             } catch (Exception e) {
                 org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
                         RestExternalConstants.PARAMETER_SELECTION);
                 throw new RestException(exception, Status.BAD_REQUEST);
             }
         }
-        return datasetSelectionForPlainText;
-    }
-    private DatasetSelectionForExcel checkAndTransformSelectionForExcel(ExcelExportation exportationBody) throws Exception {
-        DatasetSelectionForExcel datasetSelectionForExcel = null;
-        if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
-            try {
-                datasetSelectionForExcel = DatasetSelectionMapper.toDatasetSelectionForExcel(exportationBody.getDatasetSelection());
-            } catch (Exception e) {
-                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                        RestExternalConstants.PARAMETER_SELECTION);
-                throw new RestException(exception, Status.BAD_REQUEST);
-            }
-        }
-        return datasetSelectionForExcel;
+        return datasetSelection;
     }
 
     private String buildFilename(String extension, String... parts) {
@@ -357,32 +330,32 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
 
     @Override
     public Response exportDatasetToExcelForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        Exportation excelExportation = getExportation(jsonBody);
         return exportDatasetToExcel(excelExportation, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportQueryToExcelForm(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        Exportation excelExportation = getExportation(jsonBody);
         return exportQueryToExcel(excelExportation, agencyID, resourceID, lang, filename);
     }
 
     @Override
     public Response exportIndicatorToExcelForm(String jsonBody, String resourceID, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        Exportation excelExportation = getExportation(jsonBody);
         return exportIndicatorToExcel(excelExportation, resourceID, filename);
     }
 
     @Override
     public Response exportIndicatorInstanceToExcelForm(String jsonBody, String indicatorSystemCode, String resourceID, String filename) {
-        ExcelExportation excelExportation = getExcelExportation(jsonBody);
+        Exportation excelExportation = getExportation(jsonBody);
         return exportIndicatorInstanceToExcel(excelExportation, indicatorSystemCode, resourceID, filename);
     }
 
-    private ExcelExportation getExcelExportation(String jsonBody) {
+    private Exportation getExportation(String jsonBody) {
         try {
-            ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(ExcelExportation.class, MediaType.APPLICATION_JSON_TYPE);
-            return objectMapper.readValue(jsonBody, ExcelExportation.class);
+            ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(Exportation.class, MediaType.APPLICATION_JSON_TYPE);
+            return objectMapper.readValue(jsonBody, Exportation.class);
         } catch (IOException e) {
             org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
             throw new RestException(exception, Status.BAD_REQUEST);
@@ -390,14 +363,21 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportDatasetToPx(PxExportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
+    public Response exportDatasetToPx(Exportation exportationBody, String agencyID, String resourceID, String version, String lang, String filename) {
         try {
-            // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
+            }
 
-            // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Dataset dataset = statisticalResourcesRestExternal.retrieveDataset(agencyID, resourceID, version, null, null, dimensionSelection); // all langs
+            Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
 
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
             if (dimensionSelection != null) {
                 dataset.setId(PxExporter.generateMatrixFromString(dimensionSelection));
@@ -406,54 +386,70 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.DATASET.getName(), agencyID, resourceID, version);
             }
-            return exportDatasetToPx(dataset, filename);
+            return exportDatasetToPx(dataset, datasetSelection, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportIndicatorToPx(PxExportation exportationBody, String resourceID, String filename) {
+    public Response exportIndicatorToPx(Exportation exportationBody, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
+            }
 
-            // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection); // all langs
-
+            Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
+            
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.INDICATOR.getName(), resourceID);
             }
-            return exportDatasetToPx(dataset, filename);
+            return exportDatasetToPx(dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
     @Override
-    public Response exportIndicatorInstanceToPx(PxExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
+    public Response exportIndicatorInstanceToPx(Exportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
+            }
 
-            // Retrieve dataset: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection); // all langs
-
+            Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
+            
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
-            return exportDatasetToPx(dataset, filename);
+            return exportDatasetToPx(dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportDatasetToPx(Dataset dataset, String filename) {
+    private Response exportDatasetToPx(Dataset dataset, DatasetSelection datasetSelection, String lang, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, null, outputStream); // In PX file, all provided langs are sending
+            exportService.exportDatasetToPx(SERVICE_CONTEXT, dataset, datasetSelection, lang, outputStream); // In PX file, all provided langs are sending
             outputStream.close();
 
             return buildResponseOkWithFile(tmpFile, filename, MediaType.TEXT_PLAIN);
@@ -463,14 +459,22 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
     }
 
     @Override
-    public Response exportQueryToPx(PxExportation pxExportationBody, String agencyID, String resourceID, String lang, String filename) {
+    public Response exportQueryToPx(Exportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
         try {
             // Transform possible selection (not required)
-            String dimensionSelection = getDimensionSelectionForPx(pxExportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
+            String dimensionSelection = null;
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
+            }
 
-            // Retrieve query: In PX-FILE all languages is fetched, the "lang" parameter is ignored
-            Query query = statisticalResourcesRestExternal.retrieveQuery(agencyID, resourceID, null, null, dimensionSelection); // all langs
+            Query query = retrieveQuery(agencyID, resourceID, lang, dimensionSelection);
             Dataset relatedDataset = retrieveDataset(query.getMetadata().getRelatedDataset().getUrn(), lang, dimensionSelection);
+
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
+                        query.getMetadata().getRelatedDsd());
+            }
 
             // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
             if (dimensionSelection != null) {
@@ -480,18 +484,18 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.QUERY.getName(), agencyID, resourceID);
             }
-            return exportQueryToPx(query, relatedDataset, filename);
+            return exportQueryToPx(query, relatedDataset, datasetSelection, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportQueryToPx(Query query, Dataset relatedDataset, String filename) {
+    private Response exportQueryToPx(Query query, Dataset relatedDataset, DatasetSelection datasetSelection, String filename) {
         try {
             // Export
             final File tmpFile = File.createTempFile("metamac", "px");
             FileOutputStream outputStream = new FileOutputStream(tmpFile);
-            exportService.exportQueryToPx(SERVICE_CONTEXT, query, relatedDataset, null, outputStream); // In PX file, all provided langs are sending
+            exportService.exportQueryToPx(SERVICE_CONTEXT, query, relatedDataset, datasetSelection, null, outputStream); // In PX file, all provided langs are sending
             outputStream.close();
 
             return buildResponseOkWithFile(tmpFile, filename, MediaType.TEXT_PLAIN);
@@ -500,43 +504,16 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private String getDimensionSelectionForPx(PxExportation exportationBody) {
-        String dimensionSelection = null;
-        if (exportationBody != null && exportationBody.getDatasetSelection() != null) {
-            try {
-                List<DatasetSelectionDimension> datasetSelectionDimensions = DatasetSelectionMapper.toDatasetSelectionDimensions(exportationBody.getDatasetSelection());
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionDimensions);
-            } catch (Exception e) {
-                org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT,
-                        RestExternalConstants.PARAMETER_SELECTION);
-                throw new RestException(exception, Status.BAD_REQUEST);
-            }
-        }
-        return dimensionSelection;
-    }
-
     @Override
     public Response exportDatasetToPxForm(String jsonBody, String agencyID, String resourceID, String version, String lang, String filename) {
-        PxExportation pxExportation = getPxExportation(jsonBody);
+        Exportation pxExportation = getExportation(jsonBody);
         return exportDatasetToPx(pxExportation, agencyID, resourceID, version, lang, filename);
     }
 
     @Override
     public Response exportQueryToPxForm(String jsonBody, String agencyID, String resourceID, String lang, String filename) {
-        PxExportation pxExportationBody = getPxExportation(jsonBody);
+        Exportation pxExportationBody = getExportation(jsonBody);
         return exportQueryToPx(pxExportationBody, agencyID, resourceID, lang, filename);
-    }
-
-    private PxExportation getPxExportation(String jsonBody) {
-        ObjectMapper objectMapper = jacksonJsonProvider.locateMapper(PxExportation.class, MediaType.APPLICATION_JSON_TYPE);
-        PxExportation pxExportation = null;
-        try {
-            pxExportation = objectMapper.readValue(jsonBody, PxExportation.class);
-        } catch (IOException e) {
-            org.siemac.metamac.rest.common.v1_0.domain.Exception exception = RestExceptionUtils.getException(RestServiceExceptionType.PARAMETER_INCORRECT, RestExternalConstants.PARAMETER_SELECTION);
-            throw new RestException(exception, Status.BAD_REQUEST);
-        }
-        return pxExportation;
     }
 
     @Override
@@ -646,96 +623,116 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         in.close();
     }
 
-    private Response exportDatasetToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String agencyID, String resourceID, String version, String lang,
+    private Response exportDatasetToPlainText(PlainTextTypeEnum plainTextTypeEnum, Exportation exportationBody, String agencyID, String resourceID, String version, String lang,
             String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Dataset dataset = retrieveDataset(agencyID, resourceID, version, lang, dimensionSelection);
 
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.DATASET.getName(), agencyID, resourceID, version);
             }
 
-            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, lang, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelection, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
+    private Response exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, Exportation exportationBody, String agencyID, String resourceID, String lang, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Query query = retrieveQuery(agencyID, resourceID, lang, dimensionSelection);
+            
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
+                        query.getMetadata().getRelatedDsd());
+            }
 
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.QUERY.getName(), agencyID, resourceID);
             }
 
-            return exportQueryToPlainText(plainTextTypeEnum, query, datasetSelectionForPlainText, lang, filename);
+            return exportQueryToPlainText(plainTextTypeEnum, query, datasetSelection, lang, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportIndicatorToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String resourceID, String filename) {
+    private Response exportIndicatorToPlainText(PlainTextTypeEnum plainTextTypeEnum, Exportation exportationBody, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Dataset dataset = retrieveDatasetFromIndicator(resourceID, dimensionSelection);
 
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+            
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.INDICATOR.getName(), resourceID);
             }
 
-            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportIndicatorInstanceToPlainText(PlainTextTypeEnum plainTextTypeEnum, PlainTextExportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
+    private Response exportIndicatorInstanceToPlainText(PlainTextTypeEnum plainTextTypeEnum, Exportation exportationBody, String indicatorSystemCode, String resourceID, String filename) {
         try {
             // Transform possible selection (not required)
-            DatasetSelectionForPlainText datasetSelectionForPlainText = checkAndTransformSelectionForPlainText(exportationBody);
+            DatasetSelection datasetSelection = checkAndTransformSelection(exportationBody);
             String dimensionSelection = null;
-            if (datasetSelectionForPlainText != null) {
-                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelectionForPlainText.getDimensions());
+            if (datasetSelection != null) {
+                dimensionSelection = DatasetSelectionMapper.toStatisticalResourcesApiDimsParameter(datasetSelection.getDimensions());
             }
 
             // Retrieve dataset
             Dataset dataset = retrieveDatasetFromIndicatorInstance(indicatorSystemCode, resourceID, dimensionSelection);
 
+            if (datasetSelection == null) {
+                datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
+                        dataset.getMetadata().getRelatedDsd());
+            }
+
             if (filename == null) {
                 filename = buildFilename(".zip", ResourceType.INDICATOR_INSTANCE.getName(), indicatorSystemCode, resourceID);
             }
 
-            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelectionForPlainText, null, filename);
+            return exportDatasetToPlainText(plainTextTypeEnum, dataset, datasetSelection, null, filename);
         } catch (Exception e) {
             throw manageException(e);
         }
     }
 
-    private Response exportDatasetToPlainText(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelectionForPlainText datasetSelectionForPlainText, String lang, String filename) {
+    private Response exportDatasetToPlainText(PlainTextTypeEnum plainTextTypeEnum, Dataset dataset, DatasetSelection datasetSelectionForPlainText, String lang, String filename) {
         try {
             // Export
             final File tmpFileObservations = File.createTempFile("metamac", plainTextTypeEnum.getExtension());
@@ -773,7 +770,7 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
         }
     }
 
-    private Response exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelectionForPlainText datasetSelectionForPlainText, String lang, String filename) {
+    private Response exportQueryToPlainText(PlainTextTypeEnum plainTextTypeEnum, Query query, DatasetSelection datasetSelectionForPlainText, String lang, String filename) {
         try {
             // Export
             final File tmpFileObservations = File.createTempFile("metamac", plainTextTypeEnum.getExtension());

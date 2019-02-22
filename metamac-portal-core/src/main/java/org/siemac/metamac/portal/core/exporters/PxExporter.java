@@ -34,7 +34,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.portal.core.domain.ResourceAccessForPx;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.ResourceAccess;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.exporters.px.PxKeysEnum;
 import org.siemac.metamac.portal.core.exporters.px.PxLineContainer;
@@ -52,7 +53,6 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.AttributeValues
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DataStructureDefinition;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dataset;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.Dimension;
-import org.siemac.metamac.rest.statistical_resources.v1_0.domain.DimensionValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedAttributeValue;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedAttributeValues;
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.EnumeratedDimensionValue;
@@ -63,21 +63,24 @@ import org.siemac.metamac.rest.structural_resources.v1_0.domain.Concept;
 
 public class PxExporter {
 
-    private final ResourceAccessForPx datasetAccess;
+    private final ResourceAccess datasetAccess;
     private final String              ATTRIBUTE_LINE_SEPARATOR = "#";
     private Set<String>               languages                = new HashSet<String>();
     private Map<String, Integer>      languageOrder            = new HashMap<String, Integer>();
+    private final DatasetSelection datasetSelection;
     private SrmRestExternalFacade     srmRestExternalFacade;
     private Integer                   showDecimals             = null;
     private final static int          MAX_PX_MATRIX_LENGTH     = 8;
 
-    public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForPx(dataset, lang, langAlternative);
+    public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
+        datasetAccess = new ResourceAccess(dataset, datasetSelection, lang, langAlternative);
+        this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
-    public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, String lang, String langAlternative) throws MetamacException {
-        datasetAccess = new ResourceAccessForPx(query, relatedDataset, lang, langAlternative);
+    public PxExporter(Query query, Dataset relatedDataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
+        datasetAccess = new ResourceAccess(query, relatedDataset, datasetSelection, lang, langAlternative);
+        this.datasetSelection = datasetSelection;
         this.srmRestExternalFacade = srmRestExternalFacade;
     }
 
@@ -365,12 +368,9 @@ public class PxExporter {
             // Check if correction for Precisions is needed: If precision is more less than showdecimals, then showdecimals is changed to precission value
             if (existsContVariable()) {
                 // Measure dimension Has an enumerated representation
-                DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-                if (dimensionValues instanceof EnumeratedDimensionValues) {
-                    for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                        if (dimensionValue.getShowDecimalsPrecision() != null && showDecimals > dimensionValue.getShowDecimalsPrecision()) {
-                            showDecimals = dimensionValue.getShowDecimalsPrecision();
-                        }
+                for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                    if (dimensionValue.getShowDecimalsPrecision() != null && showDecimals > dimensionValue.getShowDecimalsPrecision()) {
+                        showDecimals = dimensionValue.getShowDecimalsPrecision();
                     }
                 }
             }
@@ -509,23 +509,26 @@ public class PxExporter {
             writeLine(printWriter, PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.UNITS).withValue(StringUtils.EMPTY).build());
 
             // Indexed to ContVariable Values
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    writeLocalisedLine(printWriter, PxKeysEnum.UNITS, dimensionValue.getName(), extractUnitCode(dimensionValue));
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                writeLocalisedLine(printWriter, PxKeysEnum.UNITS, dimensionValue.getName(), extractUnitCode(dimensionValue));
             }
         } else {
             Attribute measureAttribute = datasetAccess.getMeasureAttribute();
             if (measureAttribute != null) {
                 // By Metamac Constraints, the measure attribute has dataset attachment and enumerated representation.
                 // Quantity
-                AttributeValues attributeValues = measureAttribute.getAttributeValues();
-                if (attributeValues != null) {
-                    if (attributeValues instanceof EnumeratedAttributeValues) {
-                        // En este caso sólo debería de tener un único Valor la representación ENUMERADA
-                        EnumeratedAttributeValue enumeratedAttributeValue = ((EnumeratedAttributeValues) attributeValues).getValues().iterator().next();
-                        writeLocalisedLine(printWriter, PxKeysEnum.UNITS, Collections.emptyList(), extractUnitCode(enumeratedAttributeValue));
+                String[] attributeValuesFromData = datasetAccess.getAttributeValues(measureAttribute.getId()); // Enumerated representation
+                if (attributeValuesFromData == null || attributeValuesFromData.length != 1) {
+                    throw new RuntimeException("No instances of measure attribute type in the dataset. This is a Metamac error.");
+                }
+                AttributeValues attributeValuesFromMetadata = measureAttribute.getAttributeValues();
+                if (attributeValuesFromMetadata instanceof EnumeratedAttributeValues) {
+                    // En este caso sólo debería de tener un único Valor la representación ENUMERADA
+                    List<EnumeratedAttributeValue> metadataAttributeValues = ((EnumeratedAttributeValues) attributeValuesFromMetadata).getValues();
+                    for (EnumeratedAttributeValue attributeValue : metadataAttributeValues) {
+                        if (attributeValue.getId().equals(attributeValuesFromData[0])) {
+                            writeLocalisedLine(printWriter, PxKeysEnum.UNITS, Collections.emptyList(), extractUnitCode(attributeValue));
+                        }
                     }
                 }
             } else {
@@ -613,11 +616,10 @@ public class PxExporter {
     private void writeValues(PrintWriter printWriter) throws MetamacException {
         // For dimensions with enumerated representation, the values are the labels of each code
         // For dimensions with non enumerated representation, the values are the text
-        for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
-            List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
-            List<InternationalString> dimensionValuesLabels = new ArrayList<InternationalString>(dimensionValuesId.size());
+        for (String dimensionId : getPxDimensionsDatasetOrdered()) {
+            List<InternationalString> dimensionValuesLabels = new ArrayList<>();
 
-            for (String dimensionValueId : dimensionValuesId) {
+            for (String dimensionValueId : datasetSelection.getDimension(dimensionId).getSelectedDimensionValues()) {
                 dimensionValuesLabels.add(datasetAccess.getDimensionValueLabel(dimensionId, dimensionValueId));
             }
 
@@ -648,7 +650,7 @@ public class PxExporter {
      * @throws MetamacException
      */
     private void writeCodes(PrintWriter printWriter) throws MetamacException {
-        for (String dimensionId : datasetAccess.getDimensionsOrderedForData()) {
+        for (String dimensionId : getPxDimensionsDatasetOrdered()) {
             // If is a dimension with non enumerated representation, skip the codes
             if (!PortalUtils.isDimensionWithEnumeratedRepresentation(datasetAccess.getDimensionsMetadataMap().get(dimensionId))) {
                 continue;
@@ -658,7 +660,7 @@ public class PxExporter {
             PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer()
                     .withPxKey(PxKeysEnum.CODES)
                     .withIndexedValue(Arrays.asList(datasetAccess.getDimensionLabel(dimensionId)))
-                    .withValue(datasetAccess.getDimensionValuesOrderedForData(dimensionId))
+                    .withValue(datasetSelection.getDimension(dimensionId).getSelectedDimensionValues())
                     .build();
             // @formatter:on
             writeLine(printWriter, pxLineContainer);
@@ -672,13 +674,10 @@ public class PxExporter {
     private void writeLastUpdated(PrintWriter printWriter) throws MetamacException {
         if (existsContVariable()) {
             // Indexed to ContVariable Values
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    // Metamac doesn't support languages in Last Updated
-                    InternationalString value = createInternationalStringWithDefaultValue(dateToString(datasetAccess.getMetadata().getLastUpdate()));
-                    writeLocalisedLine(printWriter, PxKeysEnum.LAST_UPDATED, dimensionValue.getName(), value);
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                // Metamac doesn't support languages in Last Updated
+                InternationalString value = createInternationalStringWithDefaultValue(dateToString(datasetAccess.getMetadata().getLastUpdate()));
+                writeLocalisedLine(printWriter, PxKeysEnum.LAST_UPDATED, dimensionValue.getName(), value);
             }
         } else {
             PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.LAST_UPDATED).withValue(datasetAccess.getMetadata().getLastUpdate()).build();
@@ -700,11 +699,8 @@ public class PxExporter {
 
         if (existsContVariable()) {
             // Indexed to ContVariable Values
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, dimensionValue.getName(), value);
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, dimensionValue.getName(), value);
             }
         } else {
             writeLocalisedLine(printWriter, PxKeysEnum.CONTACT, Collections.emptyList(), value);
@@ -782,24 +778,38 @@ public class PxExporter {
     private void writePrecision(PrintWriter printWriter) throws MetamacException {
         if (existsContVariable()) {
             // Measure dimension Has an enumerated representation
-            DimensionValues dimensionValues = datasetAccess.getMeasureDimension().getDimensionValues();
-            if (dimensionValues instanceof EnumeratedDimensionValues) {
-                for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) dimensionValues).getValues()) {
-                    String variableLabel = PortalUtils.getLabel(datasetAccess.getMeasureDimension().getName(), datasetAccess.getLangEffective());
-                    String valueLabel = PortalUtils.getLabel(dimensionValue.getName(), datasetAccess.getLangEffective());
-                    // @formatter:off
-                    PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer()
-                            .withPxKey(PxKeysEnum.PRECISION)
-                            .withIndexedValue(Arrays.asList(variableLabel, valueLabel))
-                            .withValue(dimensionValue.getShowDecimalsPrecision())
-                            .build();
-                    writeLine(printWriter, pxLineContainer);
-                    // @formatter:on
-                }
+            for (EnumeratedDimensionValue dimensionValue : getSelectedValuesForMeasureDimension()) {
+                String variableLabel = PortalUtils.getLabel(datasetAccess.getMeasureDimension().getName(), datasetAccess.getLangEffective());
+                String valueLabel = PortalUtils.getLabel(dimensionValue.getName(), datasetAccess.getLangEffective());
+                // @formatter:off
+                PxLineContainer pxLineContainer = PxLineContainerBuilder.pxLineContainer()
+                        .withPxKey(PxKeysEnum.PRECISION)
+                        .withIndexedValue(Arrays.asList(variableLabel, valueLabel))
+                        .withValue(dimensionValue.getShowDecimalsPrecision())
+                        .build();
+                writeLine(printWriter, pxLineContainer);
+                // @formatter:on
             }
         } else {
             return; // Nothing
         }
+    }
+    
+    private List<EnumeratedDimensionValue> getSelectedValuesForMeasureDimension() {
+        List<EnumeratedDimensionValue> result = new ArrayList<>();
+        
+        Dimension measureDimension = datasetAccess.getMeasureDimension();
+        if (!(measureDimension.getDimensionValues() instanceof EnumeratedDimensionValues)) {
+            return result;
+        }
+        
+        List<String> selectedDimensionValues = datasetSelection.getDimension(measureDimension.getId()).getSelectedDimensionValues();
+        for (EnumeratedDimensionValue dimensionValue : ((EnumeratedDimensionValues) measureDimension.getDimensionValues()).getValues()) {
+            if (selectedDimensionValues.contains(dimensionValue.getId())) {
+                result.add(dimensionValue);
+            }
+        }
+        return result;
     }
 
     /**
@@ -853,14 +863,18 @@ public class PxExporter {
                 continue;
             }
             String dimensionId = attribute.getDimensions().getDimensions().get(0).getDimensionId();
-            Map<String, Map<String, StringBuilder>> attributeValuesByDimensionId = PxKeysEnum.VALUENOTEX.equals(attributeId) ? valueNotex : valueNote;
+            Map<String, Map<String, StringBuilder>> attributeValuesByDimensionId = PxKeysEnum.VALUENOTEX.getKeyword().equals(attributeId) ? valueNotex : valueNote;
             if (!attributeValuesByDimensionId.containsKey(dimensionId)) {
                 attributeValuesByDimensionId.put(dimensionId, new HashMap<String, StringBuilder>());
             }
             List<String> dimensionValuesId = datasetAccess.getDimensionValuesOrderedForData(dimensionId);
+            List<String> selectedDimensionValuesId = datasetSelection.getDimension(dimensionId).getSelectedDimensionValues();
             Map<String, StringBuilder> attributeValuesByDimensionValueId = attributeValuesByDimensionId.get(dimensionId);
             for (int i = 0; i < dimensionValuesId.size(); i++) {
                 String dimensionValueId = dimensionValuesId.get(i);
+                if (!selectedDimensionValuesId.contains(dimensionValueId)) {
+                    continue;
+                }
                 String attributeValue = attributeValues[i];
                 if (StringUtils.isEmpty(attributeValue)) {
                     continue;
@@ -924,7 +938,7 @@ public class PxExporter {
                 continue;
             }
 
-            Map<String, StringBuilder> cellNoteToAttribute = PxKeysEnum.CELLNOTEX.equals(attributeId) ? cellNotex : cellNote;
+            Map<String, StringBuilder> cellNoteToAttribute = PxKeysEnum.CELLNOTEX.getKeyword().equals(attributeId) ? cellNotex : cellNote;
             List<String> dimensionsAttributeOrderedForData = datasetAccess.getDimensionsAttributeOrderedForData(attribute);
             writeAttributeCellNote(attributeId, attributeValues, dimensionsAttributeOrderedForData, allDimensionsDatasetOrderedForPx, cellNoteToAttribute);
         }
@@ -956,10 +970,11 @@ public class PxExporter {
             if (dimensionPosition == dimensionLastPosition) {
                 // We have all dimensions here
                 String attributeValue = attributeValues[attributeValueIndex++];
-                if (!StringUtils.isEmpty(attributeValue)) {
+                if (!StringUtils.isEmpty(attributeValue) && allDimensionValuesAreSelected(dimensionsDatasetOrderedForPx, dimensionValuesForAttributeValue)) {
                     StringBuilder key = new StringBuilder();
                     key.append(QUOTE);
-                    for (Iterator<String> iterator = dimensionsDatasetOrderedForPx.iterator(); iterator.hasNext();) {
+                    Iterator<String> iterator = dimensionsDatasetOrderedForPx.iterator();
+                    while(iterator.hasNext()) {
                         String dimensionId = iterator.next();
                         if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
                             String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
@@ -991,6 +1006,19 @@ public class PxExporter {
             }
         }
     }
+    
+    private boolean allDimensionValuesAreSelected(List<String> dimensionsDatasetOrderedForPx, Map<String, String> dimensionValuesForAttributeValue) {
+        for (String dimensionId : dimensionsDatasetOrderedForPx) {
+            if (dimensionValuesForAttributeValue.containsKey(dimensionId)) {
+                String dimensionValueId = dimensionValuesForAttributeValue.get(dimensionId);
+                if (!datasetSelection.getDimension(dimensionId).getSelectedDimensionValues().contains(dimensionValueId)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
     private void writeAttributeCellNoteField(PrintWriter printWriter, PxKeysEnum pxKey, Map<String, StringBuilder> cellNote) throws MetamacException {
         if (cellNote.size() == 0) {
@@ -1015,13 +1043,15 @@ public class PxExporter {
 
     private void writeData(PrintWriter printWriter) {
         printWriter.println(PxKeysEnum.DATA.getKeyword() + EQUALS);
-        String[] observations = PortalUtils.dataToDataArray(datasetAccess.getData().getObservations());
-        for (int i = 0; i < observations.length; i++) {
-            String observation = observations[i];
-            if (i == 0) {
-                writeObservation(printWriter, StringUtils.EMPTY, observation);
-            } else {
-                writeObservation(printWriter, SPACE, observation);
+        for (int i = 0; i < datasetSelection.getRows(); i++) {
+            for (int j = 0; j < datasetSelection.getColumns(); j++) {
+                Map<String, String> permutationAtCell = datasetSelection.permutationAtCell(i, j);
+                String observation = datasetAccess.observationAtPermutation(permutationAtCell);
+                if (i == 0 && j == 0) {
+                    writeObservation(printWriter, StringUtils.EMPTY, observation);
+                } else {
+                    writeObservation(printWriter, SPACE, observation);
+                }
             }
         }
         printWriter.print(SEMICOLON + SPACE);

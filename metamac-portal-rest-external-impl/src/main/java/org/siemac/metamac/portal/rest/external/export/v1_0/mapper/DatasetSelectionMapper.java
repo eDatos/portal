@@ -1,8 +1,8 @@
 package org.siemac.metamac.portal.rest.external.export.v1_0.mapper;
 
-import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel.FIXED_DIMENSIONS_START_POSITION;
-import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel.LEFT_DIMENSIONS_START_POSITION;
-import static org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel.TOP_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelection.FIXED_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelection.LEFT_DIMENSIONS_START_POSITION;
+import static org.siemac.metamac.portal.core.domain.DatasetSelection.TOP_DIMENSIONS_START_POSITION;
 import static org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum.CODE_AND_LABEL;
 
 import java.util.ArrayList;
@@ -13,10 +13,9 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.portal.core.domain.DatasetSelection;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionAttribute;
 import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForExcel;
-import org.siemac.metamac.portal.core.domain.DatasetSelectionForPlainText;
 import org.siemac.metamac.portal.core.enume.LabelVisualisationModeEnum;
 import org.siemac.metamac.portal.rest.external.exception.RestServiceExceptionType;
 import org.siemac.metamac.rest.exception.RestException;
@@ -34,17 +33,13 @@ import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDi
 import org.siemac.metamac.rest.statistical_resources.v1_0.domain.NonEnumeratedDimensionValues;
 
 public class DatasetSelectionMapper {
+    
+    private static final int MAX_SIZE_URL = 2000;
 
-    public static DatasetSelectionForExcel toDatasetSelectionForExcel(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
+    public static DatasetSelection toDatasetSelection(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
         List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
-        return new DatasetSelectionForExcel(dimensions, attributes);
-    }
-
-    public static DatasetSelectionForPlainText toDatasetSelectionForPlainText(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
-        List<DatasetSelectionDimension> dimensions = toDatasetSelectionDimensions(source);
-        List<DatasetSelectionAttribute> attributes = toDatasetSelectionAttributes(source);
-        return new DatasetSelectionForPlainText(dimensions, attributes);
+        return new DatasetSelection(dimensions, attributes);
     }
 
     public static String toStatisticalResourcesApiDimsParameter(List<DatasetSelectionDimension> dimensions) {
@@ -59,6 +54,11 @@ public class DatasetSelectionMapper {
             sb.append(":");
         }
         sb.deleteCharAt(sb.length() - 1); // delete last :
+        
+        if (sb.length() > MAX_SIZE_URL) {
+            return null;
+        }
+        
         return sb.toString();
     }
 
@@ -119,11 +119,10 @@ public class DatasetSelectionMapper {
         }
     }
 
-    public static DatasetSelectionForExcel datasetToDatasetSelectionForExcel(Dimensions datasetDimensions, Attributes datasetAttributes, DataStructureDefinition relatedDsd) {
+    public static DatasetSelection datasetToDatasetSelection(Dimensions datasetDimensions, Attributes datasetAttributes, DataStructureDefinition relatedDsd) {
         List<DatasetSelectionDimension> dimensions = dimensionsToDatasetSelectionDimensions(datasetDimensions, relatedDsd);
         List<DatasetSelectionAttribute> attributes = attributesToDatasetSelectionAttributes(datasetAttributes);
-        DatasetSelectionForExcel datasetSelectionForExcel = new DatasetSelectionForExcel(dimensions, attributes);
-        return datasetSelectionForExcel;
+        return new DatasetSelection(dimensions, attributes);
     }
 
     private static List<DatasetSelectionAttribute> attributesToDatasetSelectionAttributes(Attributes attributes) {
