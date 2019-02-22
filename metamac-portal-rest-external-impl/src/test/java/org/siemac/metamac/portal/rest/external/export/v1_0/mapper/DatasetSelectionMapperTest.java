@@ -44,10 +44,10 @@ public class DatasetSelectionMapperTest {
 
         org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source = new org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection();
         source.setDimensions(new DatasetSelectionDimensions());
-        source.getDimensions().getDimensions().add(mockDimension("TIME_PERIOD", null, LabelVisualisationMode.CODE, "2012", "2013"));
-        source.getDimensions().getDimensions().add(mockDimension("INDICADORES", null, LabelVisualisationMode.LABEL, "INDICE_OCUPACION_PLAZAS"));
-        source.getDimensions().getDimensions().add(mockDimension("CATEGORIA_ALOJAMIENTO", null, LabelVisualisationMode.CODE_AND_LABEL, "1_2_3_ESTRELLAS"));
-        source.getDimensions().getDimensions().add(mockDimension("DESTINO_ALOJAMIENTO", null, null, "EL_HIERRO", "TENERIFE"));
+        source.getDimensions().getDimensions().add(mockDimension("TIME_PERIOD", 0, LabelVisualisationMode.CODE, "2012", "2013"));
+        source.getDimensions().getDimensions().add(mockDimension("INDICADORES", 1, LabelVisualisationMode.LABEL, "INDICE_OCUPACION_PLAZAS"));
+        source.getDimensions().getDimensions().add(mockDimension("CATEGORIA_ALOJAMIENTO", 20, LabelVisualisationMode.CODE_AND_LABEL, "1_2_3_ESTRELLAS"));
+        source.getDimensions().getDimensions().add(mockDimension("DESTINO_ALOJAMIENTO", 21, LabelVisualisationMode.LABEL, "EL_HIERRO", "TENERIFE"));
         source.setAttributes(new DatasetSelectionAttributes());
         source.getAttributes().getAttributes().add(mockAttribute("ATTRIBUTE_01", LabelVisualisationMode.CODE_AND_LABEL));
         source.getAttributes().getAttributes().add(mockAttribute("ATTRIBUTE_02", LabelVisualisationMode.CODE));
