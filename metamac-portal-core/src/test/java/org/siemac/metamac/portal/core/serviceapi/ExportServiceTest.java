@@ -1337,10 +1337,10 @@ public class ExportServiceTest implements ExportServiceTestBase {
     @Override
     public void testExportQueryToPx() throws Exception {
         DatasetSelection datasetSelection = DatasetSelectionMockBuilder.create()
-                .dimension("DESTINO_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("FUERTEVENTURA", "GRAN_CANARIA", "LANZAROTE", "EL_HIERRO", "LA_GOMERA", "LA_PALMA", "TENERIFE")
-                .dimension("CATEGORIA_ALOJAMIENTO", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("TOTAL")
-                .dimension("TIME_PERIOD", 20,LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
-                .dimension("INDICADORES", 21, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
+                .dimension("DESTINO_ALOJAMIENTO", 1, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("FUERTEVENTURA", "GRAN_CANARIA", "LANZAROTE", "EL_HIERRO", "LA_GOMERA", "LA_PALMA", "TENERIFE")
+                .dimension("CATEGORIA_ALOJAMIENTO", 0, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("TOTAL")
+                .dimension("TIME_PERIOD", 21,LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("2013", "2012")
+                .dimension("INDICADORES", 20, LabelVisualisationModeEnum.CODE_AND_LABEL).dimensionValues("INDICE_OCUPACION_PLAZAS")
                 .build();
         {
             Query query = XMLUtils.getQuery(XMLUtils.class.getResourceAsStream("/resources/INDICADORES_OCUPACION.xml"));
