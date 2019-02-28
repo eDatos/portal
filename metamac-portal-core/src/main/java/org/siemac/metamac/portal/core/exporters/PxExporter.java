@@ -35,6 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.portal.core.domain.DatasetSelection;
+import org.siemac.metamac.portal.core.domain.DatasetSelectionDimension;
 import org.siemac.metamac.portal.core.domain.ResourceAccess;
 import org.siemac.metamac.portal.core.error.ServiceExceptionType;
 import org.siemac.metamac.portal.core.exporters.px.PxKeysEnum;
@@ -574,11 +575,9 @@ public class PxExporter {
      * @throws MetamacException
      */
     private void writeStub(PrintWriter printWriter) throws MetamacException {
-        DataStructureDefinition relatedDsd = datasetAccess.getRelatedDsd();
-
         List<InternationalString> stubInternationalString = new LinkedList<>();
-        for (String dimensionId : relatedDsd.getStub().getDimensionIds()) {
-            stubInternationalString.add(datasetAccess.getDimensionsMetadataMap().get(dimensionId).getName());
+        for (DatasetSelectionDimension dimension : datasetSelection.getLeftDimensions()) {
+            stubInternationalString.add(datasetAccess.getDimensionsMetadataMap().get(dimension.getId()).getName());
         }
 
         writeLocalisedLine(printWriter, PxKeysEnum.STUB, Collections.emptyList(), stubInternationalString);
@@ -589,11 +588,9 @@ public class PxExporter {
      * @throws MetamacException
      */
     private void writeHeading(PrintWriter printWriter) throws MetamacException {
-        DataStructureDefinition relatedDsd = datasetAccess.getRelatedDsd();
-
         List<InternationalString> headingInternationalString = new LinkedList<>();
-        for (String dimensionId : relatedDsd.getHeading().getDimensionIds()) {
-            headingInternationalString.add(datasetAccess.getDimensionsMetadataMap().get(dimensionId).getName());
+        for (DatasetSelectionDimension dimension : datasetSelection.getTopDimensions()) {
+            headingInternationalString.add(datasetAccess.getDimensionsMetadataMap().get(dimension.getId()).getName());
         }
 
         writeLocalisedLine(printWriter, PxKeysEnum.HEADING, Collections.emptyList(), headingInternationalString);
@@ -1251,8 +1248,12 @@ public class PxExporter {
 
     private List<String> getPxDimensionsDatasetOrdered() {
         List<String> dimensionsOrderedToAttributes = new ArrayList<String>();
-        dimensionsOrderedToAttributes.addAll(datasetAccess.getRelatedDsd().getStub().getDimensionIds());
-        dimensionsOrderedToAttributes.addAll(datasetAccess.getRelatedDsd().getHeading().getDimensionIds());
+        for (DatasetSelectionDimension dimension : datasetSelection.getLeftDimensions()) {
+            dimensionsOrderedToAttributes.add(dimension.getId());
+        }
+        for (DatasetSelectionDimension dimension : datasetSelection.getTopDimensions()) {
+            dimensionsOrderedToAttributes.add(dimension.getId());
+        }
         return dimensionsOrderedToAttributes;
     }
 
