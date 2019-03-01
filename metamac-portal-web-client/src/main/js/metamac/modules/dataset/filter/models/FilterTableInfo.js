@@ -89,6 +89,9 @@
                     representationsValues: [
                         [""]
                     ],
+                    representationsDescriptions: [
+                        [""]
+                    ],
                     representationsIds: [
                         [undefined]
                     ],
