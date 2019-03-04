@@ -141,7 +141,6 @@
                 this._mapModel.off('change', this._handleTransform);
                 this._mapModel.off('change:currentRangesNum', this._handleRangesNum);
                 this._mapModel.off('zoomExit', this._handleZoomExit);
-                this._listenersSetted = false;
             }
 
             this._unbindEvents();
@@ -205,12 +204,9 @@
         },
 
         _setUpListeners: function () {
-            if (!this._listenersSetted) {
-                this._listenersSetted = true;
-                this._mapModel.on('change:currentScale', this._handleTransform, this);
-                this._mapModel.on('change:currentRangesNum', this._handleRangesNum, this);
-                this._mapModel.on('zoomExit', this._handleZoomExit, this);
-            }
+            this._mapModel.on('change:currentScale', this._handleTransform, this);
+            this._mapModel.on('change:currentRangesNum', this._handleRangesNum, this);
+            this._mapModel.on('zoomExit', this._handleZoomExit, this);
         },
 
         _calculateRanges: function () {
