@@ -33,7 +33,7 @@
         },
 
         getDataResponse: function(metadata, filterDimensions) {
-            return new App.dataset.data.ApiResponse(this.response, metadata, this.helper, filterDimensions);
+            return new App.datasource.model.DataResponse(this.response, metadata, this.helper, filterDimensions);
         }
 
     };

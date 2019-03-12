@@ -1,13 +1,13 @@
 (function () {
     "use strict";
 
-    App.namespace("App.dataset.Metadata");
+    App.namespace("App.datasource.model.MetadataResponse");
 
-    App.dataset.Metadata = function (options) {
+    App.datasource.model.MetadataResponse = function (options) {
         this.initialize(options);
     };
 
-    App.dataset.Metadata.prototype = {
+    App.datasource.model.MetadataResponse.prototype = {
 
         initialize: function (options) {
             this.datasourceIdentifier = options.datasourceIdentifier;

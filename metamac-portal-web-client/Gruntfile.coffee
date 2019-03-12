@@ -100,6 +100,8 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/datasource/helper/IndicatorHelper.js"
                 paths.js + "/metamac/modules/datasource/helper/IndicatorSystemHelper.js"
                 paths.js + "/metamac/modules/datasource/helper/QueryHelper.js"
+                paths.js + "/metamac/modules/datasource/model/MetadataResponse.js"
+                paths.js + "/metamac/modules/datasource/model/DataResponse.js"
                 paths.js + "/metamac/modules/datasource/MetadataRequest.js"
                 paths.js + "/metamac/modules/datasource/DataRequest.js"
                 paths.js + "/metamac/modules/datasource/DatasourceIdentifier.js"
@@ -111,10 +113,8 @@ module.exports = (grunt) ->
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/data/ApiIndicatorResponseToApiResponse.js"
-                paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"
                 paths.js + "/metamac/modules/dataset/model/data/Attributes.js"
                 paths.js + "/metamac/modules/dataset/model/data/NumberFormatter.js"
-                paths.js + "/metamac/modules/dataset/model/Metadata.js"
                 paths.js + "/metamac/modules/dataset/model/StructuralResourcesApi.js"
 
                 # components

@@ -33,7 +33,7 @@
         },
 
         getMetadataResponse: function() {
-            return new App.dataset.Metadata({ datasourceIdentifier: this.datasourceIdentifier, datasourceHelper: this.helper, response: this.response});
+            return new App.datasource.model.MetadataResponse({ datasourceIdentifier: this.datasourceIdentifier, datasourceHelper: this.helper, response: this.response});
         }
 
     };

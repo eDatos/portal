@@ -1,15 +1,13 @@
 (function () {
     "use strict";
 
-    var Attributes = App.dataset.data.Attributes;
+    App.namespace("App.datasource.model.DataResponse");
 
-    App.namespace("App.dataset.data.ApiResponse");
-
-    App.dataset.data.ApiResponse = function (response, metadata, datasourceHelper, filterDimensions) {
+    App.datasource.model.DataResponse = function (response, metadata, datasourceHelper, filterDimensions) {
         this.metadata = metadata;
         this.filterDimensions = filterDimensions;
         this.response = datasourceHelper.typedApiResponseToApiResponse(response);
-        this.attributes = new Attributes({ response: this.response, metadata: metadata });
+        this.attributes = new App.dataset.data.Attributes({ response: this.response, metadata: metadata });
 
         // Mult Factor
         this._mult = null;
@@ -30,7 +28,7 @@
         this._setUpTransformPosToPosArray();
     };
 
-    App.dataset.data.ApiResponse.prototype = {
+    App.datasource.model.DataResponse.prototype = {
 
         getDatasetAttributes: function () {
             return this.attributes.getDatasetAttributes();
