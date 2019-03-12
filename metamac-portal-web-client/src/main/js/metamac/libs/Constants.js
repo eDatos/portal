@@ -41,6 +41,19 @@
             }
         },
 
+        visualization: {
+            type: {
+                INDICATOR: "indicator",
+                INDICATOR_INSTANCE: "indicatorInstance",
+                DATASET: "dataset",
+                QUERY: "query"
+            }
+        },
+
+        metadata: {
+            defaultDecimals: 2
+        },
+
         maxUrlQueryLength: 1700
     };
 
