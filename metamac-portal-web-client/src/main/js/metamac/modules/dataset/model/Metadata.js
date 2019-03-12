@@ -3,49 +3,33 @@
 
     App.namespace("App.dataset.Metadata");
 
-    var API_TYPES = App.Constants.api.type;
-
-    var DECIMALS = 2;
-
     App.dataset.Metadata = function (options) {
         this.initialize(options);
     };
 
-    var API_TYPES_MAP = {
-        "indicator": API_TYPES.INDICATOR,
-        "indicatorInstance": API_TYPES.INDICATOR,
-        "dataset": API_TYPES.DATASET,
-        "query": API_TYPES.DATASET
-    }
-
     App.dataset.Metadata.prototype = {
 
         initialize: function (options) {
-            this.options = options || {};
-            this.apiType = API_TYPES_MAP[this.identifier().type];
+            this.datasourceIdentifier = options.datasourceIdentifier;
+            this.datasourceHelper = options.datasourceHelper;
+            this.parse(options.response);
         },
 
-        getApiType: function () {
-            return this.apiType;
+        parse: function (response) {
+            var metadataResponse = this.datasourceHelper.typedMetadataResponseToMetadataResponse(response);
+            this.metadataResponse = _.extend(this.identifier(), metadataResponse);
+            this.selectedLanguages = this.metadataResponse.selectedLanguages.language;
+            this.metadata = this.metadataResponse.metadata;
+            this.initializeLocalesIndex();
+            this.initializeCache();
+        },
+
+        identifier: function () {
+            return this.datasourceIdentifier.getIdentifier();
         },
 
         urlIdentifierPart: function () {
-            return this.buildUrlIdentifierPart(this.identifier());
-        },
-
-        buildUrlIdentifierPart: function (identifier) {
-            switch (identifier.type) {
-                case "dataset":
-                    return '/datasets/' + identifier.agency + '/' + identifier.identifier + '/' + identifier.version;
-                case "query":
-                    return '/queries/' + identifier.agency + '/' + identifier.identifier;
-                case "indicator":
-                    return '/indicators/' + identifier.identifier;
-                case "indicatorInstance":
-                    return '/indicatorsSystems/' + identifier.indicatorSystem + '/indicatorsInstances/' + identifier.identifier;
-                default:
-                    throw Error("type " + identifier.type + " not supported");
-            }
+            return this.datasourceHelper.buildUrlIdentifierPart(this.identifier());
         },
 
         buildQueryString: function (identifier) {
@@ -61,21 +45,6 @@
                 indicatorSystem,
                 permalinkId
             ]).join('&');
-        },
-
-        idAttributes: ["type", "agency", "identifier", "version", "indicatorSystem", "permalinkId", "multidatasetId"],
-
-        equals: function (metadata) {
-            if (_.isUndefined(metadata)) return false;
-
-            var self = this;
-            return _.every(this.idAttributes, function (idAttribute) {
-                return self.options[idAttribute] === metadata.options[idAttribute];
-            });
-        },
-
-        identifier: function () {
-            return _.pick(this.options, this.idAttributes);
         },
 
         hasMultidataset: function () {
@@ -96,67 +65,6 @@
             } else {
                 return [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
             }
-        },
-
-        getBaseUrl: function () {
-            switch (this.apiType) {
-                case API_TYPES.INDICATOR:
-                    return App.endpoints["indicators"];
-                default:
-                    return App.endpoints["statistical-resources"];
-            }
-        },
-
-        url: function () {
-            switch (this.apiType) {
-                case API_TYPES.INDICATOR:
-                    return this.getApiUrl().href;
-                default:
-                    return this.getApiUrl().href + '.json?_type=json&fields=-data,+dimension.description';
-            }
-        },
-
-        getApiUrl: function () {
-            var apiUrl = this.getBaseUrl() + this.urlIdentifierPart();
-            return { href: apiUrl, name: apiUrl };
-        },
-
-        getApiDocumentationUrl: function () {
-            var apiDocumentationUrl = this.getBaseUrl();
-            return { href: apiDocumentationUrl, name: apiDocumentationUrl };
-        },
-
-        fetch: function () {
-            var self = this;
-            var result = $.Deferred();
-            var req = $.ajax({
-                url: this.url(),
-                dataType: 'jsonp',
-                jsonp: "_callback"
-            });
-            req.success(function (response) {
-                self.parse(response);
-                result.resolveWith(null, [this]);
-            });
-            return result.promise();
-        },
-
-        typedMetadataResponseToMetadataResponse: function (response) {
-            switch (this.apiType) {
-                case API_TYPES.INDICATOR:
-                    return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorMetadataResponseToMetadataResponse(response);
-                default:
-                    return response;
-            }
-        },
-
-        parse: function (response) {
-            var metadataResponse = this.typedMetadataResponseToMetadataResponse(response);
-            _.extend(this.options, metadataResponse);
-            this.selectedLanguages = this.options.selectedLanguages.language;
-            this.metadata = this.options.metadata;
-            this.initializeLocalesIndex();
-            this.initializeCache();
         },
 
         initializeCache: function () {
@@ -212,7 +120,7 @@
         },
 
         getIdentifier: function () {
-            return this.options.id;
+            return this.metadataResponse.id;
         },
 
         getLanguages: function () {
@@ -274,7 +182,7 @@
         },
 
         getDefaultDecimals: function () {
-            return _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : DECIMALS
+            return _.has(this.metadata.relatedDsd, 'showDecimals') ? this.metadata.relatedDsd.showDecimals : App.Constants.metadata.defaultDecimals;
         },
 
         getGeographicDimensionNormCode: function (dimensionValue) {
@@ -404,6 +312,16 @@
             };
         },
 
+        getApiUrl: function () {
+            var apiUrl = this.datasourceHelper.getBaseUrl() + this.urlIdentifierPart();
+            return { href: apiUrl, name: apiUrl };
+        },
+
+        getApiDocumentationUrl: function () {
+            var apiDocumentationUrl = this.datasourceHelper.getBaseUrl();
+            return { href: apiDocumentationUrl, name: apiDocumentationUrl };
+        },
+
         hasValidity: function () {
             return this.getDates().validFrom || this.getDates().validTo || this.getStatisticOfficiality();
         },
@@ -472,11 +390,11 @@
         },
 
         getUri: function () {
-            return this.options.urn;
+            return this.metadataResponse.urn;
         },
 
         getTitle: function () {
-            return this.getLocalizedLabel(this.options.name);
+            return this.getLocalizedLabel(this.metadataResponse.name);
         },
 
         getSubtitle: function () {
@@ -488,7 +406,7 @@
         },
 
         getDescription: function () {
-            return this.getLocalizedLabel(this.options.description);
+            return this.getLocalizedLabel(this.metadataResponse.description);
         },
 
         getDates: function () {

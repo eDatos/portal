@@ -5,26 +5,10 @@
 
     App.namespace("App.dataset.data.ApiResponse");
 
-    function typedApiResponseToApiResponse(response, apiType) {
-        switch (apiType) {
-            case App.Constants.api.type.INDICATOR:
-                return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorResponseToResponse(response);
-            default:
-                return response;
-        }
-    }
-
-    function typedResponseToObservations(response, apiType) {
-        switch (apiType) {
-            case App.Constants.api.type.INDICATOR:
-                return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorResponseToObservations(response);
-            default:
-                return response.data.observations.split(" | ");
-        }
-    }
-
-    App.dataset.data.ApiResponse = function (response, metadata, type) {
-        this.response = typedApiResponseToApiResponse(response, type);
+    App.dataset.data.ApiResponse = function (response, metadata, datasourceHelper, filterDimensions) {
+        this.metadata = metadata;
+        this.filterDimensions = filterDimensions;
+        this.response = datasourceHelper.typedApiResponseToApiResponse(response);
         this.attributes = new Attributes({ response: this.response, metadata: metadata });
 
         // Mult Factor
@@ -39,7 +23,7 @@
         // Receives as parameters the pos to transform (["1", "1"])
         // Returns the array position (5)
         this._transformPosToPosArrays = null;
-        this.observations = typedResponseToObservations(this.response, type);
+        this.observations = datasourceHelper.typedResponseToObservations(this.response);
 
         this._createMult();
         this._setUpTransformIdToPos();
@@ -152,6 +136,32 @@
 
             // Creating the function
             self._transformPosToPosArrays = new Function("pos", body);
+        },
+
+        getNumberData: function (selection) {
+            var value = this.getData(selection);
+            return App.dataset.data.NumberFormatter.strToNumber(value);
+        },
+
+        getStringData: function (selection) {
+            var value = this.getData(selection);
+            var decimals = this.metadata.decimalsForSelection(this._idsFromSelection(selection));
+            return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, { decimals: decimals });
+        },
+
+        getData: function (selection) {
+            var ids = this._idsFromSelection(selection);
+            return this.getDataById(ids).value;
+        },
+
+        _idsFromSelection: function (selection) {
+            return selection.ids || this.filterDimensions.getTableInfo().getCategoryIdsForCell(selection.cell);
+        },
+
+        getAttributes: function (selection) {
+            var cell = selection.cell || this.filterDimensions.getTableInfo().getCellForCategoryIds(selection.ids);
+            var ids = this.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
+            return this.getDataById(ids).attributes;
         }
 
     };
