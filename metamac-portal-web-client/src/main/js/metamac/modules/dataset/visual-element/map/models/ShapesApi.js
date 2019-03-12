@@ -33,7 +33,7 @@
                 });
         },
 
-        getContainer: function (normCodes, cb) {
+        getContainerNormCode: function (callback) {
             var self = this;
             var url = App.endpoints["structural-resources"] + "/variables/~all/variableelements.json?query=VARIABLE_TYPE%20EQ%20'GEOGRAPHICAL'%20AND%20GEOGRAPHICAL_GRANULARITY_URN%20IS_NULL&limit=1&_type=json";
             var ajaxParams = {
@@ -44,11 +44,10 @@
             }
             $.ajax(ajaxParams).done(function (response) {
                 var urn = response.variableElement[0].urn;
-                cb(null, self._extractNormCodeFromUrn(urn));
-            })
-                .fail(function () {
-                    cb("Error fetching container");
-                });
+                callback(null, self._extractNormCodeFromUrn(urn));
+            }).fail(function () {
+                callback("Error fetching container");
+            });
         },
 
         getLastUpdatedDate: function (normCodes, cb) {

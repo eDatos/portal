@@ -81,22 +81,20 @@
             });
         },
 
-        fetchContainer: function (normCodes, cb) {
+        fetchContainer: function (callback) {
             var self = this;
-
-            var validNormCodes = this._filterValidNormCodes(normCodes);
-            if (validNormCodes.length == 0) {
-                return cb();
-            }
-
-            self.api.getContainer(normCodes, function (err, containerNormCode) {
-                if (err) return cb(err);
+            self.api.getContainerNormCode(function (err, containerNormCode) {
+                if (err) {
+                    return callback(err);
+                }
 
                 self.fetchShapes([containerNormCode], function (err, shapes) {
-                    if (err) return cb(err);
+                    if (err)  {
+                        return callback(err);
+                    }
 
-                    var shape = shapes ? shapes[0] : undefined;
-                    cb(null, shape);
+                    var container = shapes ? shapes[0] : undefined;
+                    callback(null, container);
                 });
             });
         },

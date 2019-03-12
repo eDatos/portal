@@ -19,7 +19,6 @@
             this.controller = options.controller;
             this.filterDimensions = this.controller.filterDimensions;
 
-            this.dataset = new App.dataset.Dataset({ metadata: this.metadata, filterDimensions: this.filterDimensions });
             this.optionsModel = new App.modules.dataset.OptionsModel({
                 widget: App.config.widget,
                 visualize: true
