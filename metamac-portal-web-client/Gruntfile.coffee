@@ -94,6 +94,16 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DatasetDownloadView.js"
                 paths.modules + "/dataset/DatasetEmbedView.js"
 
+                # Datasource
+                paths.js + "/metamac/modules/datasource/helper/DatasetHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/HelperFactory.js"
+                paths.js + "/metamac/modules/datasource/helper/IndicatorHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/IndicatorSystemHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/QueryHelper.js"
+                paths.js + "/metamac/modules/datasource/MetadataRequest.js"
+                paths.js + "/metamac/modules/datasource/DataRequest.js"
+                paths.js + "/metamac/modules/datasource/DatasourceIdentifier.js"
+
                 # Utils
                 paths.js + "/metamac/modules/dataset/utils/FullScreen.js"
                 paths.js + "/metamac/modules/dataset/utils/URNUtils.js"
