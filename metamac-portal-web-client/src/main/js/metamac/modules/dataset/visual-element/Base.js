@@ -15,7 +15,7 @@
 
         initialize: function (options) {
             options = options || {};
-            this.dataset = options.dataset;
+            this.data = options.data;
 
             this.filterOptions = options.filterOptions; //deprecated
             this.filterDimensions = options.filterDimensions;
@@ -177,7 +177,7 @@
 
         _forceDimensionsByMetadataInfo: function () {
             var self = this;
-            _.each(this.dataset.metadata.getDimensionsPosition(), function (dimensions, zone) {
+            _.each(this.data.metadata.getDimensionsPosition(), function (dimensions, zone) {
                 _.each(dimensions, function (dimension) {
                     self._forceDimensionIdInZone(dimension, zone);
                 });
@@ -245,7 +245,7 @@
         },
 
         getRightsHolderText: function () {
-            return this.dataset && this.dataset.metadata.getRightsHolder() ? this.dataset.metadata.getRightsHolder().name : '';
+            return this.data && this.data.metadata.getRightsHolder() ? this.data.metadata.getRightsHolder().name : '';
         },
 
         showRightsHolderText: function () {

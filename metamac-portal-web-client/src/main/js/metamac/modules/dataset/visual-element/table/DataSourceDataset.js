@@ -4,7 +4,7 @@
     App.namespace("App.DataSourceDataset");
 
     App.DataSourceDataset = function (options) {
-        this.dataset = options.dataset;
+        this.data = options.data;
         this.filterDimensions = options.filterDimensions;
     };
 
@@ -51,7 +51,7 @@
         },
 
         cellAtIndex: function (cell) {
-            return this.dataset.data.getStringData({ cell: cell });
+            return this.data.getStringData({ cell: cell });
         },
 
         cellExists: function (cell) {
@@ -61,14 +61,14 @@
         },
 
         cellHasPrimaryAttributes: function (cell) {
-            var cellAttributes = this.dataset.data.getAttributes({ cell: cell });
+            var cellAttributes = this.data.getAttributes({ cell: cell });
             return !_.isUndefined(cellAttributes)
                 && !_.isUndefined(cellAttributes.primaryMeasureAttributes)
                 && _.compact(cellAttributes.primaryMeasureAttributes).length > 0;
         },
 
         cellAttributesAtIndex: function (cell) {
-            return this.dataset.data.getAttributes({ cell: cell });
+            return this.data.getAttributes({ cell: cell });
         },
 
         cellInfoAtIndex: function (cell) {
@@ -91,7 +91,7 @@
         },
 
         datasetAttributes: function () {
-            return this.dataset.data.getDatasetAttributes();
+            return this.data.getDatasetAttributes();
         },
 
         rows: function () {

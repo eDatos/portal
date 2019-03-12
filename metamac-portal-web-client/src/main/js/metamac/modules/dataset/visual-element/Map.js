@@ -11,7 +11,7 @@
 
         initialize: function (options) {
             this.filterDimensions = options.filterDimensions;
-            this.dataset = options.dataset;
+            this.data = options.data;
             this.optionsModel = options.optionsModel;
 
             this.shapes = new App.Map.Shapes();
@@ -34,6 +34,19 @@
         reload: function () {
             this.destroy();
             this.load();
+           /*  this.showLoading();
+
+            this._dataJson = this._loadData();
+            this._geoJson = this._findDrawableShapes();
+            this._calculateRanges();
+            this._mapContainerView.reload(this._dataJson, this._geoJson); */
+        },
+
+        _findDrawableShapes: function () {
+            var normCodes = this._getGeographicDimensionNormCodes();
+            return _.filter(this._allGeoJson, function(shape) {
+                return !shape || _.contains(normCodes, shape.normCode);
+            });
         },
 
         updatingDimensionPositions: function (oldElement) {
@@ -45,7 +58,6 @@
                 this.filterDimensions.zones.get('top').set('fixedSize', 0);
             }
         },
-
 
         _applyVisualizationRestrictions: function () {
             if (this._mustApplyVisualizationRestrictions()) {
@@ -74,54 +86,54 @@
             this.visible = true;
             this.showLoading();
 
-            var normCodes = this._getGeographicDimensionNormCodes();
             var allNormCodes = this._getAllGeographicDimensionNormCodes();
 
-            var actions = {
-                data: _.bind(this._loadData, this),
-                shapes: _.bind(this.shapes.fetchShapes, this.shapes, normCodes),
-                allShapes: _.bind(this.shapes.fetchShapes, this.shapes, allNormCodes),
-                container: _.bind(this.shapes.fetchContainer, this.shapes, normCodes)
-            };
+            this._dataJson = this._loadData();
+            var actions = {};
+
+            if (!this._allGeoJson) {
+                actions["allShapes"] = _.bind(this.shapes.fetchShapes, this.shapes, allNormCodes);
+            }
+
+            if (!this._container) {
+                actions["container"] = _.bind(this.shapes.fetchContainer, this.shapes);
+            }
 
             async.parallel(actions, function (err, result) {
                 if (!err) {
-                    self._geoJson = result.shapes;
-                    self._container = result.container;
-                    self._allGeoJson = result.allShapes;
-                    self._dataJson = result.data;
+                    if (result.allShapes) {
+                        self._allGeoJson = result.allShapes;
+                    }
+                    if (result.container) {
+                        self._container = result.container;
+                    }
+                    self._geoJson = self._findDrawableShapes();
                     self._loadCallback();
                 }
             });
         },
 
-        _loadData: function (cb) {
+        _loadData: function () {
+            var fixedPermutation = this.getFixedPermutation();
+            var geographicDimension = this._getGeographicDimension();
+            var geographicDimensionSelectedRepresentations = this._getGeographicSelectedRepresentations();
+
+            var result = {};
             var self = this;
-            this.dataset.data.loadAllSelectedData()
-                .done(function () {
-                    var fixedPermutation = self.getFixedPermutation();
-                    var geographicDimension = self._getGeographicDimension();
-                    var geographicDimensionSelectedRepresentations = self._getGeographicSelectedRepresentations();
+            _.each(geographicDimensionSelectedRepresentations, function (geographicRepresentation) {
+                var normCode = geographicRepresentation.get("normCode");
+                if (normCode) {
+                    var currentPermutation = {};
+                    currentPermutation[geographicDimension.id] = geographicRepresentation.id;
+                    _.extend(currentPermutation, fixedPermutation);
 
-                    var result = {};
-                    _.each(geographicDimensionSelectedRepresentations, function (geographicRepresentation) {
-                        var normCode = geographicRepresentation.get("normCode");
-                        if (normCode) {
-                            var currentPermutation = {};
-                            currentPermutation[geographicDimension.id] = geographicRepresentation.id;
-                            _.extend(currentPermutation, fixedPermutation);
-
-                            var value = self.dataset.data.getNumberData({ ids: currentPermutation });
-                            if (_.isNumber(value)) {
-                                result[normCode] = { value: value };
-                            }
-                        }
-                    });
-                    cb(null, result);
-                })
-                .fail(function () {
-                    cb("Error fetching data");
-                });
+                    var value = self.data.getNumberData({ ids: currentPermutation });
+                    if (_.isNumber(value)) {
+                        result[normCode] = { value: value };
+                    }
+                }
+            });
+            return result;
         },
 
         render: function () {
@@ -186,7 +198,7 @@
         _initContainerView: function () {
             this._mapContainerView = new App.Map.MapContainerView({
                 el: this.el,
-                dataset: this.dataset,
+                data: this.data,
                 filterDimensions: this.filterDimensions,
                 mapModel: this._mapModel,
                 geoJson: this._geoJson,
@@ -199,7 +211,7 @@
                 title: this.getTitle(),
                 rightsHolder: this.getRightsHolderText(),
                 showRightsHolder: this.showRightsHolderText(),
-                callback: this.hideLoading
+                callback: _.bind(this.hideLoading, this)
             });
         },
 

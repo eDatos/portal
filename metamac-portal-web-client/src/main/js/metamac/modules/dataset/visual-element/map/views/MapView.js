@@ -97,7 +97,7 @@
 
 
         initialize: function (options) {
-            this._dataset = options.dataset;
+            this._data = options.data;
             this._filterDimensions = options.filterDimensions;
             this._width = options.width;
             this._height = options.height;
@@ -123,13 +123,24 @@
             this._defaultMapOptions.tooltip.formatter = _.partial(function (formatter, mapView) {
                 return mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
             }, _, this);
-            this._defaultMapOptions.chart.events = { load: options.callback };
+            this._defaultMapOptions.chart.events = { load: options.callback, redraw: options.callback };
         },
 
         events: {
             "mousewheel": "_handleMousewheel",
             "dblclick": "_handleDblclick",
             "resize": "_onResize"
+        },
+
+        reload: function (newDataJson, newShapeList) {
+            this._dataJson = newDataJson;
+            this._shapeList = newShapeList;
+
+            var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
+            var data = this._getData();
+            var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
+            this.map.series[2].update({mapData: mapData, data: data});
+
         },
 
         render: function () {
@@ -148,9 +159,6 @@
         transform: function () {
             var currentScale = this.model.get("currentScale");
             var oldScale = this.model.get("oldScale");
-            var x = this.model.get("x");
-            var y = this.model.get("y");
-            var animationDelay = this.model.get("animationDelay");
             this.map.mapZoom(oldScale / currentScale);
         },
 
@@ -168,31 +176,6 @@
 
         canRender: function () {
             return this._shapeListOrderByHierarchy().length > 0;
-        },
-
-        _calculateOriginAndScale: function () {
-            this._origin = this._calculateNewOriginAndBounds();
-            this._scale = this._calculateNewScale({ x: this._minX, y: this._minY }, { x: 0, y: 0 }, this._origin);
-        },
-
-        _calculateNewOriginAndBounds: function () {
-            var coordinates = _.chain(this._shapeList).compact().pluck("shape").flatten().value();
-
-            var xCoordinates = _.filter(coordinates, function (num, i) {
-                return i % 2 === 0;
-            });
-            var yCoordinates = _.filter(coordinates, function (num, i) {
-                return i % 2 !== 0;
-            });
-
-            this._maxX = _.max(xCoordinates);
-            this._minX = _.min(xCoordinates);
-            this._maxY = _.max(yCoordinates);
-            this._minY = _.min(yCoordinates);
-
-            var originX = this._minX + (this._maxX - this._minX) / 2;
-            var originY = this._minY + (this._maxY - this._minY) / 2;
-            return [originX, originY];
         },
 
         _shapeListOrderByHierarchy: function () {

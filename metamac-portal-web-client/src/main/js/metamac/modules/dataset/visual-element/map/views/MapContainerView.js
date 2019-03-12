@@ -8,7 +8,7 @@
         _errorTemplate: App.templateManager.get('dataset/map/map-error'),
 
         initialize: function (options) {
-            this._dataset = options.dataset;
+            this._data = options.data;
             this._filterDimensions = options.filterDimensions;
             this._mapModel = options.mapModel;
             this._width = options.width;
@@ -24,6 +24,12 @@
             this.callback = options.callback;
             this.$el.empty();
             this._initInternalViews();
+        },
+
+        reload: function (newDataJson, newGeoJson) {
+            this.dataJson = newDataJson;
+            this.geoJson = newGeoJson;
+            this.mapView.reload(this.dataJson, this.geoJson);
         },
 
         render: function () {
@@ -69,7 +75,7 @@
             var $mapContainer = $('<div class="svgContainer"></div>').appendTo(this.$el);
             this.mapView = new App.Map.MapView({
                 el: $mapContainer,
-                dataset: this._dataset,
+                data: this._data,
                 filterDimensions: this._filterDimensions,
                 model: this._mapModel,
                 shapeList: this.geoJson,

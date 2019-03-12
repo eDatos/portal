@@ -135,7 +135,7 @@ App.namespace("App.VisualElement.LineChart");
             xAxisTicks: 6
         };
 
-        var hasTimeDimensions = this.dataset.metadata.getTimeDimensions().length > 0;
+        var hasTimeDimensions = this.data.metadata.getTimeDimensions().length > 0;
         var detailZoomModelStart = hasTimeDimensions ? 0 : 0;
         var detailZoomModelStop = hasTimeDimensions ? 1 : 0.48;
 
@@ -212,23 +212,18 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         render: function () {
-            var self = this;
+            //self.showLoading();
+            // self.hideLoading();
 
-            self.showLoading();
-            this.dataset.data.loadAllSelectedData()
-                .then(function () {
-                    self.hideLoading();
-
-                    self.$el.empty();
-                    self.$title = $('<h3></h3>');
-                    self.updateTitle();
-                    self.$el.append(self.$title);
+            this.$el.empty();
+            this.$title = $('<h3></h3>');
+            this.updateTitle();
+            this.$el.append(this.$title);
 
 
-                    self._renderContainers();
-                    self._renderMaster();
-                    self._renderDetail();
-                });
+            this._renderContainers();
+            this._renderMaster();
+            this._renderDetail();
         },
 
         _renderContainers: function () {
@@ -300,15 +295,13 @@ App.namespace("App.VisualElement.LineChart");
             if (!this.masterChart || !this.detailChart) {
                 this.load();
             } else {
-                self.showLoading();
+                // self.showLoading();
 
-                this.dataset.data.loadAllSelectedData().then(function () {
-                    self.hideLoading();
+                // self.hideLoading();
 
-                    self.updateTitle();
-                    self._updateMaster();
-                    self._updateDetail();
-                });
+                this.updateTitle();
+                this._updateMaster();
+                this._updateDetail();
             }
         },
 
@@ -372,8 +365,8 @@ App.namespace("App.VisualElement.LineChart");
                     currentPermutation[columnsDimension.id] = columnCategory.id;
                     _.extend(currentPermutation, fixedPermutation);
 
-                    var y = self.dataset.data.getNumberData({ ids: currentPermutation });
-                    var name = self.dataset.data.getStringData({ ids: currentPermutation });
+                    var y = self.data.getNumberData({ ids: currentPermutation });
+                    var name = self.data.getStringData({ ids: currentPermutation });
                     serie.data.push({ y: y, name: name });
                 });
 

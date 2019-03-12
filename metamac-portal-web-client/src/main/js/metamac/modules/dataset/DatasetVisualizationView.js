@@ -9,7 +9,7 @@
 
         initialize: function (options) {
             this.container = options.container;
-            this.dataset = options.dataset;
+            this.data = options.data;
 
             this.filterDimensions = options.filterDimensions;
 
@@ -23,7 +23,7 @@
 
         _initializeVisualElements: function () {
             var options = {
-                dataset: this.dataset,
+                data: this.data,
                 filterDimensions: this.filterDimensions,
                 animation: this.options.animation,
                 optionsModel: this.optionsModel
