@@ -127,10 +127,6 @@
         },
 
         render: function () {
-            // this.showLoading();
-
-            // this.hideLoading();
-
             this.$el.html("");
             this.$title = $('<h3></h3>');
             this.updateTitle();
@@ -153,9 +149,6 @@
                     color: App.Constants.colors.hiddenText
                 }
             }
-            // TODO METAMAC-2615
-            // this._chartOptions.title.text = this.dataset.metadata.getTitle();
-            // this._chartOptions.subtitle.text = this.getTitle();
 
             this.chart = new Highcharts.Chart(this._chartOptions);
             this.chart.counters.color = 0;
@@ -194,7 +187,6 @@
             _.each(horizontalDimensionSelectedCategories, function (horizontalCategory, horizontalCategoryIndex) {
 
                 var columnSeries = [];
-                var index = null;
                 _.each(columnsDimensionSelectedCategories, function (columnCategory, columnCategoryIndex) {
                     var serie = {};
 
@@ -274,18 +266,16 @@
 
             if (!this.chart) {
                 this.load();
-            } else {
-                var self = this;
-                // this.showLoading();
-
-                this.updateTitle();
-                var data = this.getData();
-
-                this.replaceSeries(this.chart, data.series);
-                this.chart.xAxis[0].setCategories(data.xAxis, false);
-                this.chart.counters.color = 0;
-                this.chart.redraw(false);
+                return;
             }
+
+            this.updateTitle();
+            var data = this.getData();
+
+            this.replaceSeries(this.chart, data.series);
+            this.chart.xAxis[0].setCategories(data.xAxis, false);
+            this.chart.counters.color = 0;
+            this.chart.redraw(false);
         },
 
         _updateSize: function () {
@@ -296,8 +286,7 @@
             // Necesario para evitar error en el dibujado tras cambiar a stacked columns     
             this.chart.xAxis[0].update();
         }
+
     });
-
-
 
 }());

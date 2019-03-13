@@ -117,15 +117,6 @@
             return Math.log(val) / Math.log(2);
         },
 
-        // _createQuantizer : function () {
-        //     var minValue = this.get("minValue");
-        //     var maxValue = this.get("maxValue");
-        //     var currentRangesNum = this.get("currentRangesNum");
-        //     var values = this.get("values");
-        //     this.quantizer = d3.scale.quantile().domain(values).range(d3.range(currentRangesNum));
-        //     return this.quantizer;
-        // },
-
         // Taken from https://github.com/jfsiii/d3-quantile/blob/master/index.js
         _quantile: function (values, p) {
             var H = (values.length - 1) * p + 1,

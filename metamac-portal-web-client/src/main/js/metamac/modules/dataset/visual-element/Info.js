@@ -6,9 +6,6 @@
     App.VisualElement.Info = function (options) {
         this.initialize(options);
         this._type = 'info';
-        this.data = options.data;
-        this.optionsModel = options.optionsModel;
-        this.filterDimensions = options.filterDimensions;
         this.api = new App.dataset.StructuralResourcesApi({ metadata: this.data.metadata });
     };
 
@@ -19,14 +16,12 @@
         template: App.templateManager.get("dataset/dataset-info"),
 
         load: function () {
-            if (this.optionsModel.get('type') == this._type) {
-                this.getDimensions();
-                this.getMeasureConcepts();
-                this.getDatasetAttributes();
-                this._getSelectionApiUrl();
-                this._bindEvents();
-                this.render();
-            }
+            this.getDimensions();
+            this.getMeasureConcepts();
+            this.getDatasetAttributes();
+            this._getSelectionApiUrl();
+            this._bindEvents();
+            this.render();
         },
 
         updateMeasureConcepts: function (concepts) {
@@ -42,7 +37,6 @@
 
         getDatasetAttributes: function () {
             this.datasetAttributes = this.data.getDatasetAttributes();
-            // Instead of a callback we use hasNewData
         },
 
         _updateSelectionApiUrl: function () {

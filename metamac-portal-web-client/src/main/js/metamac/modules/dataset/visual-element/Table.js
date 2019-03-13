@@ -4,10 +4,8 @@
     App.namespace("App.VisualElement.Table");
 
     App.VisualElement.Table = function (options) {
-        this.data = options.data;
-
-        this.filterDimensions = options.filterDimensions;
-        this.optionsModel = options.optionsModel;
+        this.initialize(options);
+        this._type = 'table';
 
         this._chartOptions = {
             title: {
@@ -21,11 +19,11 @@
             },
             fixedDimensions: {}
         };
-
-        this._type = 'table';
     };
 
-    App.VisualElement.Table.prototype = {
+    App.VisualElement.Table.prototype = new App.VisualElement.Base();
+
+    _.extend(App.VisualElement.Table.prototype, {
 
         load: function () {
             this._bindEvents();
@@ -151,9 +149,6 @@
             this.view.resize(containerDimensions);
         }
 
-    };
-
-    _.extend(App.VisualElement.Table.prototype, Backbone.Events);
-    _.defaults(App.VisualElement.Table.prototype, new App.VisualElement.Base());
+    });
 
 }());

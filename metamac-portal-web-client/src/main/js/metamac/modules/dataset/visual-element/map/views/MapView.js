@@ -132,7 +132,7 @@
             "resize": "_onResize"
         },
 
-        reload: function (newDataJson, newShapeList) {
+        update: function (newDataJson, newShapeList) {
             this._dataJson = newDataJson;
             this._shapeList = newShapeList;
 

@@ -26,10 +26,10 @@
             this._initInternalViews();
         },
 
-        reload: function (newDataJson, newGeoJson) {
+        update: function (newDataJson, newGeoJson) {
             this.dataJson = newDataJson;
             this.geoJson = newGeoJson;
-            this.mapView.reload(this.dataJson, this.geoJson);
+            this.mapView.update(this.dataJson, this.geoJson);
         },
 
         render: function () {
