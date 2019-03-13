@@ -54,6 +54,14 @@
             defaultDecimals: 2
         },
 
+        attributes: {
+            attachmentLevels: {
+                PRIMARY_MEASURE: "PRIMARY_MEASURE",
+                DIMENSION: "DIMENSION",
+                DATASET: "DATASET"
+            }
+        },
+
         maxUrlQueryLength: 1700
     };
 

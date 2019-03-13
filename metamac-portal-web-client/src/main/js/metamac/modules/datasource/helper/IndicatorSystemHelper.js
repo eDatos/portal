@@ -17,7 +17,7 @@
         },
 
         typedMetadataResponseToMetadataResponse: function (response) {
-            return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorMetadataResponseToMetadataResponse(response);
+            return App.datasource.helper.ApiIndicatorResponseToApiResponse.indicatorMetadataResponseToMetadataResponse(response);
         },
 
         getParametersForMetadataUrl: function () {
@@ -29,11 +29,11 @@
         },
 
         typedApiResponseToApiResponse: function(response) {
-            return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorResponseToResponse(response);
+            return App.datasource.helper.ApiIndicatorResponseToApiResponse.indicatorResponseToResponse(response);
         },
 
         typedResponseToObservations: function(response) {
-            return App.dataset.data.ApiIndicatorResponseToApiResponse.indicatorResponseToObservations(response);
+            return App.datasource.helper.ApiIndicatorResponseToApiResponse.indicatorResponseToObservations(response);
         }
 
     };

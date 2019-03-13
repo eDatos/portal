@@ -167,8 +167,8 @@
 
         // Deprecated?
         _createRange: function (from, to) {
-            var localizedFrom = App.dataset.data.NumberFormatter.strNumberToLocalizedString(from.toFixed(2));
-            var localizedTo = App.dataset.data.NumberFormatter.strNumberToLocalizedString(to.toFixed(2));
+            var localizedFrom = App.util.NumberFormatter.strNumberToLocalizedString(from.toFixed(2));
+            var localizedTo = App.util.NumberFormatter.strNumberToLocalizedString(to.toFixed(2));
             return localizedFrom + " < " + localizedTo;
         }
 

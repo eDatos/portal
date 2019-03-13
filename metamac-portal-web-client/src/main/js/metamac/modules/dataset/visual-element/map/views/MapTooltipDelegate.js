@@ -43,7 +43,7 @@
         _getValueFromNormCode : function (normCode) {
             var normCodeData = this._dataJson[normCode];
             if (normCodeData) {
-                return App.dataset.data.NumberFormatter.strNumberToLocalizedString(normCodeData.value.toString());
+                return App.util.NumberFormatter.strNumberToLocalizedString(normCodeData.value.toString());
             }
             return ".";
         },

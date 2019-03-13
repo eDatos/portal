@@ -7,7 +7,7 @@
         this.metadata = metadata;
         this.filterDimensions = filterDimensions;
         this.response = datasourceHelper.typedApiResponseToApiResponse(response);
-        this.attributes = new App.dataset.data.Attributes({ response: this.response, metadata: metadata });
+        this.attributes = new App.datasource.model.Attributes({ response: this.response, metadata: metadata });
 
         // Mult Factor
         this._mult = null;
@@ -138,13 +138,13 @@
 
         getNumberData: function (selection) {
             var value = this.getData(selection);
-            return App.dataset.data.NumberFormatter.strToNumber(value);
+            return App.util.NumberFormatter.strToNumber(value);
         },
 
         getStringData: function (selection) {
             var value = this.getData(selection);
             var decimals = this.metadata.decimalsForSelection(this._idsFromSelection(selection));
-            return App.dataset.data.NumberFormatter.strNumberToLocalizedString(value, { decimals: decimals });
+            return App.util.NumberFormatter.strNumberToLocalizedString(value, { decimals: decimals });
         },
 
         getData: function (selection) {
