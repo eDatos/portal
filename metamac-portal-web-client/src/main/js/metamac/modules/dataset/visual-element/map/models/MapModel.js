@@ -31,7 +31,7 @@
 
             var newScale = currentScale * scaleFactor;
 
-            if (this.isRequestedZoomAllowed(1)) {
+            if (this._isRequestedZoomAllowed(1)) {
                 this.set({ currentScale: newScale, oldScale: currentScale, animationDelay: 500 });
             }
         },
@@ -42,7 +42,7 @@
 
             var newScale = currentScale / scaleFactor;
 
-            if (this.isRequestedZoomAllowed(-1)) {
+            if (this._isRequestedZoomAllowed(-1)) {
                 this.set({ currentScale: newScale, oldScale: currentScale, animationDelay: 500 });
             }
         },
@@ -59,8 +59,8 @@
                 newScale = this.get("minScale");
             }
 
-            var x = this.get("x") - this.scaleMovement(options.xOffset, currentScale) + this.scaleMovement(options.xOffset, newScale);
-            var y = this.get("y") - this.scaleMovement(options.yOffset, currentScale) + this.scaleMovement(options.yOffset, newScale);
+            var x = this.get("x") - this._scaleMovement(options.xOffset, currentScale) + this._scaleMovement(options.xOffset, newScale);
+            var y = this.get("y") - this._scaleMovement(options.yOffset, currentScale) + this._scaleMovement(options.yOffset, newScale);
 
             this.set({ currentScale: newScale, oldScale: currentScale, x: x, y: y, animationDelay: 0 });
         },
@@ -75,19 +75,7 @@
             return this._log2(maxScale);
         },
 
-        transformToValidScaleFactor: function (newScaleFactor) {
-            var currentZoomLevelDecimal = this._log2(newScaleFactor);
-            var currentZoomLevelInteger = parseInt(currentZoomLevelDecimal);
-            var newScaleFactorInteger = Math.pow(2, currentZoomLevelInteger);
-            if (this.isNewScaleFactorTooBig(newScaleFactorInteger)) {
-                newScaleFactorInteger = this.get("maxScale");
-            } else if (this.isNewScaleFactorTooSmall(newScaleFactorInteger)) {
-                newScaleFactorInteger = this.get("minScale");
-            }
-            return newScaleFactorInteger;
-        },
-
-        isRequestedZoomAllowed: function (delta) {
+        _isRequestedZoomAllowed: function (delta) {
             var currentScale = this.get("currentScale");
             var maxScale = this.get("maxScale");
             var minScale = this.get("minScale");
@@ -98,17 +86,7 @@
             }
         },
 
-        isNewScaleFactorTooBig: function (newScaleFactor) {
-            var maxScale = this.get("maxScale");
-            return newScaleFactor > maxScale;
-        },
-
-        isNewScaleFactorTooSmall: function (newScaleFactor) {
-            var minScale = this.get("minScale");
-            return newScaleFactor < minScale;
-        },
-
-        scaleMovement: function (value, newScale) {
+        _scaleMovement: function (value, newScale) {
             var currentScale = newScale || this.get("currentScale");
             return value / currentScale;
         },
@@ -144,23 +122,6 @@
 
             var rangeLimits = _.flatten([minValue, quantiles, maxValue], true);
             return rangeLimits;
-        },
-
-        createRanges: function () {
-            var ranges = [];
-            var rangeLimits = this.createRangeLimits();
-            for (var i = 0; i < rangeLimits.length - 1; i++) {
-                ranges[i] = this._createRange(rangeLimits[i], rangeLimits[i + 1]);
-            }
-
-            return ranges;
-        },
-
-        // Deprecated?
-        _createRange: function (from, to) {
-            var localizedFrom = App.util.NumberFormatter.strNumberToLocalizedString(from.toFixed(2));
-            var localizedTo = App.util.NumberFormatter.strNumberToLocalizedString(to.toFixed(2));
-            return localizedFrom + " < " + localizedTo;
         }
 
     });

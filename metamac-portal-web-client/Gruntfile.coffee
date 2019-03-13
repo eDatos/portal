@@ -199,8 +199,6 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/MapContainerView.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/MapView.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/ZoomView.js"
-                paths.js + "/metamac/modules/dataset/visual-element/map/views/LegendView.js"
-                paths.js + "/metamac/modules/dataset/visual-element/map/views/CreditsView.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/RangesView.js"
 
                 # Selection
