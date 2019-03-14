@@ -97,10 +97,10 @@ module.exports = (grunt) ->
                 # Datasource
                 paths.js + "/metamac/modules/datasource/helper/ApiIndicatorResponseToApiResponse.js"
                 paths.js + "/metamac/modules/datasource/helper/DatasetHelper.js"
-                paths.js + "/metamac/modules/datasource/helper/HelperFactory.js"
                 paths.js + "/metamac/modules/datasource/helper/IndicatorHelper.js"
                 paths.js + "/metamac/modules/datasource/helper/IndicatorSystemHelper.js"
                 paths.js + "/metamac/modules/datasource/helper/QueryHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/HelperFactory.js"
                 paths.js + "/metamac/modules/datasource/model/Attributes.js"
                 paths.js + "/metamac/modules/datasource/model/MetadataResponse.js"
                 paths.js + "/metamac/modules/datasource/model/DataResponse.js"
