@@ -25,7 +25,7 @@
         },
 
         getParametersForDataUrl: function() {
-            return '.json';
+            return '.json?_type=json&fields=-metadata';
         },
 
         typedApiResponseToApiResponse: function(response) {
