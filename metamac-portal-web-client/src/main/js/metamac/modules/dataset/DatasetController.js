@@ -11,7 +11,7 @@
 
         showDataset: function (datasetIdentifier) {
             var self = this;
-            this._loadMetadata(datasetIdentifier).then(function () {
+            this._loadMetadataAndData(datasetIdentifier).then(function () {
                 var routeParts = [];
 
                 if (self.metadata.getAutoOpen()) {
@@ -30,7 +30,7 @@
             this.router.navigate(link);
 
             var self = this;
-            this._loadMetadata(datasetIdentifier).then(function () {
+            this._loadMetadataAndData(datasetIdentifier).then(function () {
                 self.region.show(self.selectionView);
             });
         },
@@ -41,7 +41,7 @@
 
             var self = this;
             var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version", "permalinkId", "indicatorSystem", "geo", "multidatasetId");
-            this._loadMetadata(datasetIdentifier).then(function () {
+            this._loadMetadataAndData(datasetIdentifier).then(function () {
                 options = _.defaults(options, {
                     visualizationType: "table",
                     fullScreen: false
@@ -78,7 +78,7 @@
             return this.router.linkTo(routeName, options);
         },
 
-        _loadMetadata: function (datasetIdentifier) {
+        _loadMetadataAndData: function (datasetIdentifier) {
             var deferred = $.Deferred();
             var datasourceIdentifier = new App.datasource.DatasourceIdentifier(datasetIdentifier);
 
@@ -97,7 +97,7 @@
             };
 
             var self = this;
-            async.parallel(loads, function (err, result) {
+            async.parallel(loads, function () {
                 self.metadata = self.metadataRequest.getMetadataResponse();
                 self.filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(self.metadata);
                 self.data = self.dataRequest.getDataResponse(self.metadata, self.filterDimensions);
