@@ -14,7 +14,7 @@
             this._width = options.width;
             this._height = options.height;
             this.geoJson = options.geoJson;
-            this.allGeoJson = options.allGeoJson;
+            this.baseGeoJson = options.baseGeoJson;
             this.container = options.container;
             this.dataJson = options.dataJson;
             this.mapType = options.mapType;
@@ -26,10 +26,12 @@
             this._initInternalViews();
         },
 
-        update: function (newDataJson, newGeoJson) {
+        update: function (newDataJson, newGeoJson, newTitle) {
             this.dataJson = newDataJson;
             this.geoJson = newGeoJson;
-            this.mapView.update(this.dataJson, this.geoJson);
+            this.title = newTitle;
+            this.mapView.update(this.dataJson, this.geoJson, this.title);
+            this.updateRanges();
         },
 
         render: function () {
@@ -79,7 +81,7 @@
                 filterDimensions: this._filterDimensions,
                 model: this._mapModel,
                 shapeList: this.geoJson,
-                allShapeList: this.allGeoJson,
+                baseShapeList: this.baseGeoJson,
                 container: this.container,
                 dataJson: this.dataJson,
                 width: this._width,

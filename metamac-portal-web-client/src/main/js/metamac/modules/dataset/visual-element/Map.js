@@ -23,6 +23,7 @@
 
             var self = this;
             this._loadShapes().then(function () {
+                self._getBaseShapes();
                 self._getDrawableShapes();
                 self._getData();
 
@@ -66,9 +67,11 @@
                 var allNormCodes = this._getAllGeographicDimensionNormCodes();
                 actions["allShapes"] = _.bind(this.shapes.fetchShapes, this.shapes, allNormCodes);
             }
+            /* Ver comentarios de METAMAC-2824 
             if (!this._container) {
                 actions["container"] = _.bind(this.shapes.fetchContainer, this.shapes);
             }
+            */
 
             var self = this;
             async.parallel(actions, function (err, result) {
@@ -89,10 +92,22 @@
             return deferred.promise();
         },
 
+        _getBaseShapes: function () {
+            var normCodes = this._getBaseRepresentationNormCodes();
+            this._baseShapes = _.filter(this._allGeoJson, function(shape) {
+                return shape && _.contains(normCodes, shape.normCode);
+            });
+        },
+
+        _getBaseRepresentationNormCodes: function () {
+            var levelZeroRepresentations = this._getGeographicDimension().get('representations').where({ level: 0});
+            return _.invoke(levelZeroRepresentations, "get", "normCode");
+        },
+
         _getDrawableShapes: function () {
             var normCodes = this._getGeographicDimensionNormCodes();
             this._geoJson = _.filter(this._allGeoJson, function(shape) {
-                return !shape || _.contains(normCodes, shape.normCode);
+                return shape && _.contains(normCodes, shape.normCode);
             });
         },
 
@@ -120,18 +135,20 @@
         },
 
         _initModel: function () {
-            var values = _.map(this._dataJson, function (value) {
-                return value.value;
-            });
-            
             this._mapModel = new App.Map.MapModel();
-            this._mapModel.set("values", values);
-            this._mapModel.set("minValue", _.min(values));
-            this._mapModel.set("maxValue", _.max(values));
-
             this._mapModel.on('change:currentScale', this._handleTransform, this);
             this._mapModel.on('change:currentRangesNum', this._handleRangesNum, this);
             this._mapModel.on('zoomExit', this._handleZoomExit, this);
+            this._calculateAndSetRanges();
+        },
+
+        _calculateAndSetRanges: function () {
+            var values = _.map(this._dataJson, function (value) {
+                return value.value;
+            });
+            this._mapModel.set("values", values);
+            this._mapModel.set("minValue", _.min(values));
+            this._mapModel.set("maxValue", _.max(values));
         },
 
         _initContainerView: function () {
@@ -141,7 +158,7 @@
                 filterDimensions: this.filterDimensions,
                 mapModel: this._mapModel,
                 geoJson: this._geoJson,
-                allGeoJson: this._allGeoJson,
+                baseGeoJson: this._baseShapes,
                 container: this._container,
                 dataJson: this._dataJson,
                 width: $(this.el).width(),
@@ -163,18 +180,15 @@
             this._mapContainerView.render();
         },
 
-        // Está mal hecho por bugs de HighMaps, destruye y vuelve a cargar en vez de actualizar.
         update: function () {
-            this.destroy();
-            this.load();
-
-            /*
             this.showLoading();
-            this._dataJson = this._getData();
-            this._geoJson = this._getDrawableShapes();
-            this._calculateRanges();
-            this._mapContainerView.update(this._dataJson, this._geoJson);
-            */
+
+            this._getDrawableShapes();
+            this._getData();
+            this._calculateAndSetRanges();
+
+            this.updateTitle();
+            this._mapContainerView.update(this._dataJson, this._geoJson, this.getTitle());
         },
 
         updatingDimensionPositions: function (oldElement) {

@@ -311,6 +311,7 @@
         hideLoading: function () {
             if (this.$loading) {
                 this.$loading.hide();
+                this.showTitle();
             }
         }
 
