@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var DatasetPermalink = App.modules.dataset.DatasetPermalink;
+
     App.namespace('App.modules.dataset.DatasetController');
 
     App.modules.dataset.DatasetController = App.Controller.extend({
@@ -95,9 +97,13 @@
                 metadata: _.bind(this.metadataRequest.fetch, this.metadataRequest),
                 data: _.bind(this.dataRequest.fetch, this.dataRequest)
             };
+            
+            if (datasetIdentifier.permalinkId) {
+                loads["permalink"] = _.bind(DatasetPermalink.retrievePermalink, DatasetPermalink, datasetIdentifier.permalinkId)
+            }
 
             var self = this;
-            async.parallel(loads, function () {
+            async.parallel(loads, function (err, result) {
                 self.metadata = self.metadataRequest.getMetadataResponse();
                 self.filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(self.metadata);
                 self.data = self.dataRequest.getDataResponse(self.metadata, self.filterDimensions);
@@ -105,16 +111,12 @@
                 self.selectionView = new App.modules.selection.SelectionView({ controller: self, collection: self.filterDimensions, metadata: self.metadata });
                 self.visualizationView = new App.modules.dataset.DatasetView({ controller: self, filterDimensions: self.filterDimensions, metadata: self.metadata, data: self.data });
 
-                if (datasetIdentifier.permalinkId) {
-                    App.modules.dataset.DatasetPermalink.retrievePermalink(datasetIdentifier.permalinkId).done(function (content) {
-                        self.filterDimensions.importJSON(content.selection);
-                        if (!window.location.hash.includes(content.hash)) {
-                            self.visualizationView.optionsModel.set('mustApplyVisualizationRestrictions', true);
-                        }
-                        deferred.resolve();
-                    }).fail(function () {
-                        deferred.resolve();
-                    });
+                if (result.permalink) {
+                    self.filterDimensions.importJSON(result.permalink.selection);
+                    if (!window.location.hash.includes(result.permalink.hash)) {
+                        self.visualizationView.optionsModel.set('mustApplyVisualizationRestrictions', true);
+                    }
+                    deferred.resolve();
                 } else if (datasetIdentifier.geo) {
                     self.filterDimensions.importGeographicSelection(datasetIdentifier.geo);
                     deferred.resolve();

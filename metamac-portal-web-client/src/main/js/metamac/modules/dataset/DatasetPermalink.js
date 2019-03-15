@@ -23,9 +23,13 @@
             return hash.indexOf(PERMALINK_SUBPATH) !== -1 ? hash.substring(0, hash.indexOf(PERMALINK_SUBPATH)) : hash;
         },
 
-        retrievePermalink: function (permalinkId) {
+        retrievePermalink: function (permalinkId, callback) {
             var url = this.baseUrl() + "/" + permalinkId;
-            return $.getJSON(url);
+            $.getJSON(url).done(function (content) {
+                callback(undefined, content);
+            }).fail(function () {
+                callback(undefined, false);
+            });
         },
 
         savePermalinkShowingCaptchaInElement: function (content, el) {
