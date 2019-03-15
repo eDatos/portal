@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    App.namespace("App.datasource.helper.HelperFactory");
+    App.namespace("App.datasource.helper.DatasourceHelperFactory");
 
     var HELPERS = {
         "dataset": new App.datasource.helper.DatasetHelper(),
@@ -10,7 +10,7 @@
         "indicatorInstance": new App.datasource.helper.IndicatorSystemHelper()
     };
 
-    App.datasource.helper.HelperFactory = {
+    App.datasource.helper.DatasourceHelperFactory = {
         
         getHelper: function (type) {
             return HELPERS[type];

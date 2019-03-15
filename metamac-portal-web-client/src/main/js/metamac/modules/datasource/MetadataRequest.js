@@ -11,7 +11,7 @@
 
         initialize : function (datasourceIdentifier) {
             this.datasourceIdentifier = datasourceIdentifier;
-            this.helper = App.datasource.helper.HelperFactory.getHelper(this.datasourceIdentifier.getIdentifier().type);
+            this.helper = App.datasource.helper.DatasourceHelperFactory.getHelper(this.datasourceIdentifier.getIdentifier().type);
         },
 
         fetch: function (callback) {
