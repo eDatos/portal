@@ -99,6 +99,7 @@ describe("[TableCanvas] TopHeaderZone", function () {
         var paintInfo = topHeaderZone.paintInfo();
 
         expect(paintInfo.length).to.eql(3);
+
         expect(paintInfo[0]).to.eql([
             {
                 index: 0,
@@ -108,7 +109,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
                 x: 0,
                 width: 1200,
                 content: 'a',
-                tooltip: 'tooltip : a',
+                tooltipTitle: 'tooltip : a',
+                tooltipDescription: undefined,
                 attributes: []
             }
         ]);
@@ -122,7 +124,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
                 x: 0,
                 width: 240,
                 content: '0',
-                tooltip: 'tooltip : 0',
+                tooltipTitle: 'tooltip : 0',
+                tooltipDescription: undefined,
                 attributes: []
             }
         ]);
@@ -135,7 +138,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 0,
             width: 60,
             content: 'aa',
-            tooltip: 'tooltip : aa',
+            tooltipTitle: 'tooltip : aa',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -147,7 +151,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 60,
             width: 60,
             content: 'bb',
-            tooltip: 'tooltip : bb',
+            tooltipTitle: 'tooltip : bb',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -159,7 +164,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 120,
             width: 60,
             content: 'cc',
-            tooltip: 'tooltip : cc',
+            tooltipTitle: 'tooltip : cc',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -171,7 +177,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 180,
             width: 60,
             content: 'dd',
-            tooltip: 'tooltip : dd',
+            tooltipTitle: 'tooltip : dd',
+            tooltipDescription: undefined,
             attributes: []
         });
     });
@@ -238,7 +245,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
                 x: -530,
                 width: 1200,
                 content: 'c',
-                tooltip: 'tooltip : c',
+                tooltipTitle: 'tooltip : c',
+                tooltipDescription: undefined,
                 attributes: []
             }
         ]);
@@ -251,7 +259,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: -50,
             width: 240,
             content: '2',
-            tooltip: 'tooltip : 2',
+            tooltipTitle: 'tooltip : 2',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -263,7 +272,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 190,
             width: 240,
             content: '3',
-            tooltip: 'tooltip : 3',
+            tooltipTitle: 'tooltip : 3',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -275,7 +285,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 70,
             width: 60,
             content: 'cc',
-            tooltip: 'tooltip : cc',
+            tooltipTitle: 'tooltip : cc',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -287,7 +298,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 130,
             width: 60,
             content: 'dd',
-            tooltip: 'tooltip : dd',
+            tooltipTitle: 'tooltip : dd',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -299,7 +311,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 190,
             width: 60,
             content: 'aa',
-            tooltip: 'tooltip : aa',
+            tooltipTitle: 'tooltip : aa',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -311,7 +324,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 250,
             width: 60,
             content: 'bb',
-            tooltip: 'tooltip : bb',
+            tooltipTitle: 'tooltip : bb',
+            tooltipDescription: undefined,
             attributes: []
         });
 
@@ -323,7 +337,8 @@ describe("[TableCanvas] TopHeaderZone", function () {
             x: 310,
             width: 60,
             content: 'cc',
-            tooltip: 'tooltip : cc',
+            tooltipTitle: 'tooltip : cc',
+            tooltipDescription: undefined,
             attributes: []
         });
     });
@@ -339,7 +354,7 @@ describe("[TableCanvas] TopHeaderZone", function () {
                 x: 0,
                 width: 100,
                 content: 'a',
-                tooltip: 'tooltip : a',
+                tooltipTitle: 'tooltip : a',
                 attributes: []
             },
             {
@@ -349,7 +364,7 @@ describe("[TableCanvas] TopHeaderZone", function () {
                 x: 100,
                 width: 100,
                 content: '0',
-                tooltip: 'tooltip : 0',
+                tooltipTitle: 'tooltip : 0',
                 attributes: []
             },
             {
@@ -359,15 +374,15 @@ describe("[TableCanvas] TopHeaderZone", function () {
                 x: 200,
                 width: 100,
                 content: 'aa',
-                tooltip: 'tooltip : aa',
+                tooltipTitle: 'tooltip : aa',
                 attributes: []
             }
         ]];
 
-        expect(topHeaderZone.cellInfoAtPoint(new Point(0, 0))).to.eql('tooltip : a');
-        expect(topHeaderZone.cellInfoAtPoint(new Point(100, 0))).to.eql('tooltip : 0');
-        expect(topHeaderZone.cellInfoAtPoint(new Point(199, 0))).to.eql('tooltip : 0');
-        expect(topHeaderZone.cellInfoAtPoint(new Point(299, 0))).to.eql('tooltip : aa');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(0, 0)).trim()).to.eql('tooltip : a');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(100, 0)).trim()).to.eql('tooltip : 0');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(199, 0)).trim()).to.eql('tooltip : 0');
+        expect(topHeaderZone.cellInfoAtPoint(new Point(299, 0)).trim()).to.eql('tooltip : aa');
     });
 
     describe("should calculate if point if a rectangle contains a column separator", function () {

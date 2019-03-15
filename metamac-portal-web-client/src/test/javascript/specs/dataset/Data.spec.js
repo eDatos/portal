@@ -7,10 +7,10 @@ describe('Dataset Data', function () {
     beforeEach(function () {
         SpecUtils.configureI18n('es');
 
-        metadata = new App.dataset.Metadata();
-        metadata.parse(App.test.response.metadata);
-        data = new App.dataset.data.Data({metadata : metadata});
-        data.apiResponse = new App.dataset.data.ApiResponse(App.test.response.data);
+        var datasourceIdentificer = new App.datasource.DatasourceIdentifier(App.test.metadata.identifier);
+        var datasetHelper = new App.datasource.helper.DatasetHelper();
+        metadata = new App.datasource.model.MetadataResponse({ datasourceIdentifier: datasourceIdentificer, datasourceHelper: datasetHelper, response: App.test.response.metadata});
+        data = new App.datasource.model.DataResponse(App.test.response.data, metadata, datasetHelper, undefined);
 
         ids = {
             TIME_PERIOD : "no_emun_code_11",

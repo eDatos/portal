@@ -62,41 +62,6 @@ describe('FilterRepresentations', function () {
             expect(filterRepresentations.where({selected : true}).length).to.equal(filterRepresentations.length);
         });
 
-        it('should select until reach limit', function () {
-            var limit = 2;
-            filterRepresentations.invoke('set', {selected : false, visible : true});
-            filterRepresentations.setSelectedLimit(limit);
-            filterRepresentations.selectVisible();
-            expect(filterRepresentations.where({selected : true}).length).to.equal(limit);
-        });
-
-    });
-
-    describe('deselectVisible', function () {
-        it('should leave at least one model selected', function () {
-            filterRepresentations.invoke('set', {selected : true, visible : true});
-            filterRepresentations.deselectVisible();
-            expect(filterRepresentations.where({selected : true}).length).to.equal(1);
-            expect(filterRepresentations.where({drawable : true}).length).to.equal(1);
-        });
-
-        it('should leave at least one model selected', function () {
-            filterRepresentations.invoke('set', {selected : false, visible : true});
-            r1.set('selected', true);
-            filterRepresentations.deselectVisible();
-            expect(filterRepresentations.where({selected : true}).length).to.equal(1);
-            expect(filterRepresentations.where({drawable : true}).length).to.equal(1);
-        });
-
-    });
-
-    describe('setSelectedLimit', function () {
-        it('should deselect models if there are more elements selected than the model', function () {
-            var limit = 2;
-            filterRepresentations.invoke('set', {selected : true});
-            filterRepresentations.setSelectedLimit(limit);
-            expect(filterRepresentations.where({selected : true}).length).to.equal(2);
-        });
     });
 
     describe('toggleRepresentationsVisibleRange', function () {
@@ -115,37 +80,6 @@ describe('FilterRepresentations', function () {
             filterRepresentations.toggleRepresentationsVisibleRange(0, 2, false);
             var allSelected = _.chain([r1, r2, r3]).invoke('get', 'selected').any().value();
             expect(allSelected).to.be.false;
-        });
-
-        it('should toggle selected range until reach the selection limit', function () {
-            filterRepresentations.deselectVisible();
-            r2.set('open', false);
-            filterRepresentations.setSelectedLimit(2);
-
-            filterRepresentations.toggleRepresentationsVisibleRange(0, 2, true);
-
-            var selected = _.invoke([r1, r2, r3], 'get', 'selected');
-            expect(selected).to.eql([false, true, true]);
-        });
-
-    });
-
-    describe('on models change selected', function () {
-
-        it('should not deselect if is the last model', function () {
-            filterRepresentations.deselectVisible();
-            r1.set({selected : false});
-            expect(r1.get('selected')).to.be.true;
-        });
-
-        it('should change a model is is over the limit', function () {
-            filterRepresentations.selectVisible();
-            filterRepresentations.setSelectedLimit(1);
-            expect(r1.get('selected')).to.be.true;
-            expect(r2.get('selected')).to.be.false;
-            r2.set('selected', true);
-            expect(r1.get('selected')).to.be.false;
-            expect(r2.get('selected')).to.be.true;
         });
 
     });
@@ -187,63 +121,6 @@ describe('FilterRepresentations', function () {
             filterRepresentations.reverse();
             var filterRepresentationsIds = filterRepresentations.pluck("id");
             expect(filterRepresentationsIds).to.eql(["r3", "r2.2", "r2.1.2", "r2.1", "r2", "r1"]);
-        });
-    });
-
-    describe('getModelsToDraw', function() {
-        it('should calculate properly for drawableLimit = Infinity and selectedLimited = Infinity', function() {
-            var total = filterRepresentations.models.length;
-            var selectedLimit = Infinity;
-            var drawableLimit = Infinity;
-            filterRepresentations.setSelectedLimit(selectedLimit);
-            filterRepresentations.setDrawableLimit(drawableLimit);
-            
-            expect(filterRepresentations._getModelsToDraw().length).to.equal(total);            
-        });
-
-        it('should calculate properly for drawableLimit = Infinity and selectedLimited = Infinity and 3 selected', function() {
-            var total = filterRepresentations.models.length;
-            var nToDraw = 2;
-            var selectedLimit = Infinity;
-            var drawableLimit = Infinity;
-            filterRepresentations.setSelectedLimit(selectedLimit);
-            filterRepresentations.setDrawableLimit(drawableLimit);
-
-            filterRepresentations.invoke('set', {selected : false});
-            r1.set('selected', true);
-            r3.set('selected', true);
-
-            expect(filterRepresentations._getModelsToDraw().length).to.equal(nToDraw);            
-        });
-
-        it('should calculate properly for drawableLimit = 1 and selectedLimited = Infinity', function() {
-            var total = filterRepresentations.models.length;
-            var selectedLimit = Infinity;
-            var drawableLimit = 1;
-            filterRepresentations.setSelectedLimit(selectedLimit);
-            filterRepresentations.setDrawableLimit(drawableLimit);
-
-            expect(filterRepresentations._getModelsToDraw().length).to.equal(1);            
-        });
-
-        it('should calculate properly for drawableLimit = Infinity and selectedLimited = 1', function() {
-            var total = filterRepresentations.models.length;
-            var selectedLimit = 1;
-            var drawableLimit = Infinity;
-            filterRepresentations.setSelectedLimit(selectedLimit);
-            filterRepresentations.setDrawableLimit(drawableLimit);
-
-            expect(filterRepresentations._getModelsToDraw().length).to.equal(1);            
-        });
-
-        it('should calculate properly for drawableLimit = 1 and selectedLimited = 1', function() {
-            var total = filterRepresentations.models.length;
-            var selectedLimit = 1;
-            var drawableLimit = 1;
-            filterRepresentations.setSelectedLimit(selectedLimit);
-            filterRepresentations.setDrawableLimit(drawableLimit);
-
-            expect(filterRepresentations._getModelsToDraw().length).to.equal(1);             
         });
     });
 

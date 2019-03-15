@@ -80,23 +80,11 @@ describe("Shapes", function () {
 
     it("should find the contour to cache first", function (done) {
         var storeResponse = {normCode : "CONTAINER", shape : "[shape1]"};
-        shapes.api.getContainer = mockAsyncFuncWithResult({normCode : "CONTAINER"});
+        shapes.api.getContainerNormCode = mockAsyncFuncWithResult("CONTAINER");
         shapes.store.get = mockAsyncFuncWithResult([storeResponse]);
 
-        shapes.fetchContainer(["CODE1", "CODE2"], function (err, result) {
+        shapes.fetchContainer(function (err, result) {
             expect(result).to.eql(storeResponse);
-            done();
-        });
-    });
-
-    it("should return undefined if pass empty normCodes list to container", function (done) {
-        var apiSpy = sinon.spy(shapes.api, "getContainer");
-        var storeSpy = sinon.spy(shapes.store, "get");
-
-        shapes.fetchContainer([null, undefined], function (err, result) {
-            expect(result).to.be.undefined;
-            expect(apiSpy.called).to.be.false;
-            expect(storeSpy.called).to.be.false;
             done();
         });
     });

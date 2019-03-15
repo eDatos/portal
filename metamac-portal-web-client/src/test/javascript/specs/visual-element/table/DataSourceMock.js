@@ -100,7 +100,8 @@
         return false;
     };   
 
-    
-
+    App.Table.DataSource.prototype.cellAttributesAtIndex = function () {
+        return [];
+    }
 
 }());

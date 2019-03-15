@@ -7,8 +7,9 @@ describe('FilterZones', function () {
     };
 
     beforeEach(function () {
-        metadata = new App.dataset.Metadata();
-        metadata.parse(App.test.response.metadata);
+        var datasourceIdentificer = new App.datasource.DatasourceIdentifier(App.test.metadata.identifier);
+        var datasetHelper = new App.datasource.helper.DatasetHelper();
+        metadata = new App.datasource.model.MetadataResponse({ datasourceIdentifier: datasourceIdentificer, datasourceHelper: datasetHelper, response: App.test.response.metadata});
         filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         zones = filterDimensions.zones;
     });
@@ -58,31 +59,6 @@ describe('FilterZones', function () {
 
             expect(dim2.get('zone').id).to.eql('left');
             expect(indexInZone(dim2)).to.equal(0);
-        });
-
-        it('should update selected limit and drawableLimit', function () {
-            var leftZone = zones.get('left');
-            var topZone = zones.get('top');
-
-            var dim1 = leftZone.get('dimensions').at(0);
-            var dim2 = topZone.get('dimensions').at(0);
-
-            leftZone.set('selectedLimit', 1);
-            topZone.set('selectedLimit', 2);
-
-            expect(dim1.get('representations').selectedLimit).to.equal(1);
-            expect(dim2.get('representations').selectedLimit).to.equal(2);
-
-            expect(dim1.get('representations').drawableLimit).to.equal(1);
-            expect(dim2.get('representations').drawableLimit).to.equal(2);
-
-            zones.swapDimensions(dim1, dim2);
-
-            expect(dim1.get('representations').selectedLimit).to.equal(2);
-            expect(dim2.get('representations').selectedLimit).to.equal(1);
-
-            expect(dim1.get('representations').drawableLimit).to.equal(2);
-            expect(dim2.get('representations').drawableLimit).to.equal(1);
         });
         
     });

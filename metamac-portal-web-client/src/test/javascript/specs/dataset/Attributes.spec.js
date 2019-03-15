@@ -2,15 +2,16 @@ describe("Dataset Attributes", function () {
 
     var attributes;
     var metadata;
-    var apiResponse;
+    var data;
 
     beforeEach(function () {
 
-        metadata = new App.dataset.Metadata();
-        metadata.parse(App.test.response.metadata);
-        apiResponse = new App.dataset.data.ApiResponse(App.test.response.data, metadata);
+        var datasourceIdentificer = new App.datasource.DatasourceIdentifier(App.test.metadata.identifier);
+        var datasetHelper = new App.datasource.helper.DatasetHelper();
+        metadata = new App.datasource.model.MetadataResponse({ datasourceIdentifier: datasourceIdentificer, datasourceHelper: datasetHelper, response: App.test.response.metadata});
+        data = new App.datasource.model.DataResponse(App.test.response.data, metadata, datasetHelper, undefined);
 
-        attributes = apiResponse.attributes;
+        attributes = data.attributes;
     });
 
     it('should hasAttributes', function () {
