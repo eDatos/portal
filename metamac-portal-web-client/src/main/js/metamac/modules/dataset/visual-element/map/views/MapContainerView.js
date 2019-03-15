@@ -30,14 +30,18 @@
             this.dataJson = newDataJson;
             this.geoJson = newGeoJson;
             this.title = newTitle;
-            this.mapView.update(this.dataJson, this.geoJson, this.title);
-            this.updateRanges();
+
+            var isMap = this.mapType === 'map';
+            this.mapView.update(this.dataJson, this.geoJson, this.title, !isMap);
+            if (isMap) {
+                this.updateRanges();
+            }
         },
 
         render: function () {
             if (this.mapView.canRender()) {
                 this.zoomView.render();
-                if (this.mapType == 'map') {
+                if (this.mapType === 'map') {
                     this.rangesView.render();
                 }
                 this.mapView.render();

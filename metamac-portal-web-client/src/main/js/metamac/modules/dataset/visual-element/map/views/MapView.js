@@ -127,7 +127,7 @@
             "resize": "_onResize"
         },
 
-        update: function (newDataJson, newShapeList, newTitle) {
+        update: function (newDataJson, newShapeList, newTitle, redraw) {
             this._dataJson = newDataJson;
             this._shapeList = newShapeList;
             this.title = newTitle;
@@ -135,7 +135,7 @@
             var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
             var data = this._getData();
             var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
-            this.map.series[2].update({mapData: mapData, data: data, name: this.title}, false);
+            this.map.series[2].update({mapData: mapData, data: data, name: this.title}, redraw);
         },
 
         render: function () {
