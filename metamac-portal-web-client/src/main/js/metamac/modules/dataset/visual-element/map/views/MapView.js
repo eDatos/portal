@@ -3,6 +3,7 @@
 
     var GeoJsonConverter = App.Map.GeoJsonConverter;
     var Constants = App.Constants;
+    var DATA_SERIE_INDEX = 2;
 
     App.namespace('App.Map.MapView');
 
@@ -135,7 +136,7 @@
             var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
             var data = this._getData();
             var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
-            this.map.series[2].update({mapData: mapData, data: data, name: this.title}, redraw);
+            this.map.series[DATA_SERIE_INDEX].update({mapData: mapData, data: data, name: this.title}, redraw);
         },
 
         render: function () {

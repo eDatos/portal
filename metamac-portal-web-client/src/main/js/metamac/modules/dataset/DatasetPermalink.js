@@ -28,6 +28,7 @@
             $.getJSON(url).done(function (content) {
                 callback(undefined, content);
             }).fail(function () {
+                console.warn("Requested permalink not found.");
                 callback(undefined, false);
             });
         },

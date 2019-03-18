@@ -13,7 +13,11 @@
     App.datasource.helper.DatasourceHelperFactory = {
         
         getHelper: function (type) {
-            return HELPERS[type];
+            var result = HELPERS[type];
+            if (!result) {
+                throw Error("type " + type + " not supported");
+            }
+            return result;
         }
 
     };
