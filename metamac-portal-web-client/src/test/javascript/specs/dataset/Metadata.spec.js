@@ -3,18 +3,11 @@ describe("Dataset Metadata", function () {
     var metadata;
     var MEASURE_DIMENSION;
     var MEASURE_DIMENSION_REPRESENTATIONS;
-    var METADATA_OPTIONS = {
-        "type": "dataset",
-        "agency": "ISTAC",
-        "identifier": "C00025A_000001",
-        "version": "001.000"
-    };
-
 
     beforeEach(function () {
-        metadata = new App.dataset.Metadata(METADATA_OPTIONS);
-        metadata.parse(App.test.response.metadata);
-
+        var datasourceIdentificer = new App.datasource.DatasourceIdentifier(App.test.metadata.identifier);
+        var datasetHelper = new App.datasource.helper.DatasetHelper();
+        metadata = new App.datasource.model.MetadataResponse({ datasourceIdentifier: datasourceIdentificer, datasourceHelper: datasetHelper, response: App.test.response.metadata});
 
         MEASURE_DIMENSION = { "id": "INDICADORES", "label": "Indicadores", "type": "MEASURE_DIMENSION", "hierarchy": false };
         MEASURE_DIMENSION_REPRESENTATIONS = [
@@ -172,42 +165,50 @@ describe("Dataset Metadata", function () {
     describe('toJSON', function () {
 
         it("shouldn't break if some metadata is empty", function () {
-            metadata = new App.dataset.Metadata(METADATA_OPTIONS);
-            metadata.parse({
+            var datasourceIdentificer = new App.datasource.DatasourceIdentifier(App.test.metadata.identifier);
+            var datasetHelper = new App.datasource.helper.DatasetHelper();
+            var metadataResponse = {
                 selectedLanguages: App.test.response.metadata.selectedLanguages,
                 metadata: {
                     dimensions: App.test.response.metadata.metadata.dimensions,
                     relatedDsd: App.test.response.metadata.metadata.relatedDsd
                 }
-            });
-            var json = metadata.toJSON();
+            };
+            metadata = new App.datasource.model.MetadataResponse({ datasourceIdentifier: datasourceIdentificer, datasourceHelper: datasetHelper, response: metadataResponse});
+            metadata.toJSON();
         });
 
         it('should work', function () {
             var json = metadata.toJSON();
             var expectedJSON = {
+                "title": "Título en español",
+                "description": "Descripción en español",
+                "hasDescriptors": {
+                    "href": "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/latest/operations/C00025A",
+                    "name": "Estadística de la Evolución Histórica de la Población"
+                },
                 "statisticalOperation": {
                     "href": "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/latest/operations/C00025A",
                     "name": "Estadística de la Evolución Histórica de la Población"
                 },
-                "title": "Título en español",
-                "description": "Descripción en español",
                 "dates": {
 
                 },
+                "hasVersionInfo": "001.000",
                 "version": "001.000",
                 "versionRationale": "Major: New resource",
-                "publishers": [
-                    "Instituto Canario de Estadística"
-                ],
                 "nextVersion": "Non scheduled update",
-                "lastUpdate": "2013-07-26T10:48:29.072+01:00",
                 "dateNextUpdate": "2013-07-30T12:00:00+01:00",
                 "updateFrequency": {
                     "href": "http://estadisticas.arte-consultores.com/metamac-srm-web/apis/structural-resources-internal/latest/codelists/SDMX/CL_FREQ/1.0/codes/M",
                     "name": "Mensual"
                 },
+                "publishers": [
+                    "Instituto Canario de Estadística"
+                ],
+                "hasValidity": "Oficialidad",
                 "statisticOfficiality": "Oficialidad",
+                "lastUpdate": "2013-07-26T10:48:29.072+01:00",
                 "languages": {
                     "id": [
                         "es",
@@ -271,7 +272,8 @@ describe("Dataset Metadata", function () {
                 "apiDocumentationUrl": {
                     "href": "",
                     "name": ""
-                }
+                },
+                "visualizerUrlForWidget": "http://localhost:3000/src/test/javascript/runner/runner.html?agencyId=ISTAC&resourceId=C00025A_000001&version=001.000&resourceType=dataset"
             };
             // console.log(JSON.stringify(json)); console.log(JSON.stringify(expectedJSON));
             expect(JSON.stringify(json)).to.eql(JSON.stringify(expectedJSON));

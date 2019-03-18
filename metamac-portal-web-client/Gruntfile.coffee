@@ -89,33 +89,35 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/OptionsModel.js"
                 paths.modules + "/dataset/OptionsView.js"
                 paths.modules + "/dataset/DimensionsView.js"
-                paths.modules + "/dataset/DatasetInfoView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
                 paths.modules + "/dataset/DatasetShareView.js"
                 paths.modules + "/dataset/DatasetDownloadView.js"
                 paths.modules + "/dataset/DatasetEmbedView.js"
 
+                # Datasource
+                paths.js + "/metamac/modules/datasource/helper/ApiIndicatorResponseToApiResponse.js"
+                paths.js + "/metamac/modules/datasource/helper/DatasetHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/IndicatorHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/IndicatorSystemHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/QueryHelper.js"
+                paths.js + "/metamac/modules/datasource/helper/DatasourceHelperFactory.js"
+                paths.js + "/metamac/modules/datasource/model/Attributes.js"
+                paths.js + "/metamac/modules/datasource/model/MetadataResponse.js"
+                paths.js + "/metamac/modules/datasource/model/DataResponse.js"
+                paths.js + "/metamac/modules/datasource/MetadataRequest.js"
+                paths.js + "/metamac/modules/datasource/DataRequest.js"
+                paths.js + "/metamac/modules/datasource/DatasourceIdentifier.js"
+
+                # Util
+                paths.js + "/metamac/modules/util/NumberFormatter.js"
+
                 # Utils
-                paths.js + "/metamac/modules/dataset/utils/VisualElementManager.js"
                 paths.js + "/metamac/modules/dataset/utils/FullScreen.js"
                 paths.js + "/metamac/modules/dataset/utils/URNUtils.js"
                 paths.js + "/metamac/modules/dataset/utils/DimensionsUtils.js"
 
                 # data
-                paths.js + "/metamac/modules/dataset/model/data/Attributes.js"
-                paths.js + "/metamac/modules/dataset/model/data/ApiResponse.js"
-                paths.js + "/metamac/modules/dataset/model/data/ApiIndicatorResponseToApiResponse.js"
-                paths.js + "/metamac/modules/dataset/model/data/ApiRequest.js"
-                paths.js + "/metamac/modules/dataset/model/data/ApiDatasetRequest.js"
-                paths.js + "/metamac/modules/dataset/model/data/ApiIndicatorRequest.js"
                 paths.js + "/metamac/modules/dataset/model/StructuralResourcesApi.js"
-                paths.js + "/metamac/modules/dataset/model/data/NumberFormatter.js"
-                paths.js + "/metamac/modules/dataset/model/data/BigDataCacheBlock.js"
-                paths.js + "/metamac/modules/dataset/model/data/BigDataCache.js"
-                paths.js + "/metamac/modules/dataset/model/data/BigData.js"
-                paths.js + "/metamac/modules/dataset/model/data/Data.js"
-                paths.js + "/metamac/modules/dataset/model/Dataset.js"
-                paths.js + "/metamac/modules/dataset/model/Metadata.js"
 
                 # components
                 paths.js + "/metamac/components/tooltip/Tooltip.js"
@@ -158,7 +160,6 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/visual-element/Info.js"
                 paths.js + "/metamac/modules/dataset/visual-element/Column.js"
                 paths.js + "/metamac/modules/dataset/visual-element/Line.js"
-                paths.js + "/metamac/modules/dataset/visual-element/Pie.js"
                 paths.js + "/metamac/modules/dataset/visual-element/Table.js"
                 paths.js + "/metamac/modules/dataset/visual-element/line/DetailZoomModel.js"
                 paths.js + "/metamac/modules/dataset/visual-element/line/DetailZoomView.js"
@@ -198,27 +199,15 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/MapContainerView.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/MapView.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/ZoomView.js"
-                paths.js + "/metamac/modules/dataset/visual-element/map/views/LegendView.js"
-                paths.js + "/metamac/modules/dataset/visual-element/map/views/CreditsView.js"
                 paths.js + "/metamac/modules/dataset/visual-element/map/views/RangesView.js"
 
                 # Selection
                 paths.js + "/metamac/modules/selection/SelectionView.js"
                 paths.js + "/metamac/modules/dataset/DatasetController.js"
 
-                # Collection
-                paths.modules + "/collection/CollectionNode.js"
-                paths.modules + "/collection/Collection.js"
-                paths.modules + "/collection/CollectionView.js"
-                paths.modules + "/collection/CollectionController.js"
-
                 # Multidatasets
                 paths.modules + "/multidataset/MultidatasetNode.js"
                 paths.modules + "/multidataset/Multidataset.js"
-
-                # Error module
-                paths.modules + "/error/ErrorController.js"
-                paths.modules + "/error/ErrorView.js"
 
             ]
             dest: paths.assets + "/metamac.js"

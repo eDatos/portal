@@ -1,21 +1,15 @@
 (function () {
     "use strict";
 
-    App.namespace("App.dataset.data.Attributes");
+    App.namespace("App.datasource.model.Attributes");
 
-    var ATTACHMENT_LEVELS = {
-        PRIMARY_MEASURE: "PRIMARY_MEASURE",
-        DIMENSION: "DIMENSION",
-        DATASET: "DATASET"
-    };
+    var ATTACHMENT_LEVELS = App.Constants.attributes.attachmentLevels;
 
-    App.dataset.data.Attributes = function (options) {
+    App.datasource.model.Attributes = function (options) {
         this.initialize(options);
     };
 
-    App.dataset.data.Attributes.ATTACHMENT_LEVELS = ATTACHMENT_LEVELS;
-
-    App.dataset.data.Attributes.prototype = {
+    App.datasource.model.Attributes.prototype = {
 
         initialize: function (options) {
             this.response = options.response;

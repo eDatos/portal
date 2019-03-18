@@ -10,7 +10,7 @@
     App.Map.TooltipDelegate.prototype = {
         initialize : function (options) {
             this.text = null;
-            this._dataset = options.dataset;
+            this._data = options.data;
             this._filterDimensions = options.filterDimensions;
             this._dataJson = options.dataJson;
 
@@ -34,7 +34,7 @@
 
         _getLabelFromNormCode : function (normCode) {
             var geographicDimension = this._filterDimensions.dimensionsAtZone('left').at(0);
-            var category = this._dataset.metadata.getCategoryByNormCode(geographicDimension.id, normCode);
+            var category = this._data.metadata.getCategoryByNormCode(geographicDimension.id, normCode);
             if (_.isUndefined(category)) { return normCode; }
             var representation = geographicDimension.get("representations").get(category.id);
             return representation.get("visibleLabel");
@@ -43,7 +43,7 @@
         _getValueFromNormCode : function (normCode) {
             var normCodeData = this._dataJson[normCode];
             if (normCodeData) {
-                return App.dataset.data.NumberFormatter.strNumberToLocalizedString(normCodeData.value.toString());
+                return App.util.NumberFormatter.strNumberToLocalizedString(normCodeData.value.toString());
             }
             return ".";
         },

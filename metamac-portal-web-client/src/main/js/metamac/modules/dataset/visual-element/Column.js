@@ -87,7 +87,6 @@
             this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", debounceUpdate);
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
-            var self = this;
             this.$el.on("resize", function (e) {
                 e.stopPropagation();
                 resize();
@@ -128,44 +127,33 @@
         },
 
         render: function () {
-            var self = this;
-            self.showLoading();
+            this.$el.html("");
+            this.$title = $('<h3></h3>');
+            this.updateTitle();
+            this.$el.append(this.$title);
 
-            this.dataset.data.loadAllSelectedData()
-                .then(function () {
-                    self.hideLoading();
+            this.$chartContainer = $('<div></div>');
+            var newHeight = this.$el.height() - this.$title.height() - this.getRightsHolderHeight();
+            this.$chartContainer.height(newHeight);
 
-                    self.$el.html("");
-                    self.$title = $('<h3></h3>');
-                    self.updateTitle();
-                    self.$el.append(self.$title);
+            this.$el.append(this.$chartContainer);
 
-                    self.$chartContainer = $('<div></div>');
-                    var newHeight = self.$el.height() - self.$title.height() - self.getRightsHolderHeight();
-                    self.$chartContainer.height(newHeight);
+            var data = this.getData();
+            this._chartOptions.series = data.series;
+            this._chartOptions.xAxis.categories = data.xAxis;
+            this._chartOptions.chart.renderTo = this.$chartContainer[0];
 
-                    self.$el.append(self.$chartContainer);
+            this._chartOptions.credits.text = this.getRightsHolderText();
+            if (!this.showRightsHolderText()) {
+                this._chartOptions.credits.style = {
+                    color: App.Constants.colors.hiddenText
+                }
+            }
 
-                    var data = self.getData();
-                    self._chartOptions.series = data.series;
-                    self._chartOptions.xAxis.categories = data.xAxis;
-                    self._chartOptions.chart.renderTo = self.$chartContainer[0];
+            this.chart = new Highcharts.Chart(this._chartOptions);
+            this.chart.counters.color = 0;
 
-                    self._chartOptions.credits.text = self.getRightsHolderText();
-                    if (!self.showRightsHolderText()) {
-                        self._chartOptions.credits.style = {
-                            color: App.Constants.colors.hiddenText
-                        }
-                    }
-                    // TODO METAMAC-2615
-                    // self._chartOptions.title.text = self.dataset.metadata.getTitle();
-                    // self._chartOptions.subtitle.text = self.getTitle();
-
-                    self.chart = new Highcharts.Chart(self._chartOptions);
-                    self.chart.counters.color = 0;
-
-                    self.$el.on("resize", function () { });
-                });
+            this.$el.on("resize", function () { });
         },
 
         resizeFullScreen: function () { },
@@ -199,7 +187,6 @@
             _.each(horizontalDimensionSelectedCategories, function (horizontalCategory, horizontalCategoryIndex) {
 
                 var columnSeries = [];
-                var index = null;
                 _.each(columnsDimensionSelectedCategories, function (columnCategory, columnCategoryIndex) {
                     var serie = {};
 
@@ -208,8 +195,8 @@
                     currentPermutation[columnsDimension.id] = columnCategory.id;
                     _.extend(currentPermutation, fixedPermutation);
 
-                    var y = self.dataset.data.getNumberData({ ids: currentPermutation });
-                    var name = self.dataset.data.getStringData({ ids: currentPermutation });
+                    var y = self.data.getNumberData({ ids: currentPermutation });
+                    var name = self.data.getStringData({ ids: currentPermutation });
                     // Instead of saving the data as an array on the same serie, we create as many series as needed so we can sort them independtly
                     serie.data = [{ y: y, name: name, x: horizontalCategoryIndex }];
                     serie.name = columnCategory.get('visibleLabel');
@@ -279,21 +266,16 @@
 
             if (!this.chart) {
                 this.load();
-            } else {
-                var self = this;
-                self.showLoading();
-                this.dataset.data.loadAllSelectedData().then(function () {
-                    self.hideLoading();
-
-                    self.updateTitle();
-                    var data = self.getData();
-
-                    self.replaceSeries(self.chart, data.series);
-                    self.chart.xAxis[0].setCategories(data.xAxis, false);
-                    self.chart.counters.color = 0;
-                    self.chart.redraw(false);
-                });
+                return;
             }
+
+            this.updateTitle();
+            var data = this.getData();
+
+            this.replaceSeries(this.chart, data.series);
+            this.chart.xAxis[0].setCategories(data.xAxis, false);
+            this.chart.counters.color = 0;
+            this.chart.redraw(false);
         },
 
         _updateSize: function () {
@@ -304,8 +286,7 @@
             // Necesario para evitar error en el dibujado tras cambiar a stacked columns     
             this.chart.xAxis[0].update();
         }
+
     });
-
-
 
 }());

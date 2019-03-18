@@ -24,16 +24,11 @@
 
         initialize: function (options) {
             options || (options = {});
-            this.collectionController = options.collectionController;
-            this.datasetController = options.datasetController;
-            this.errorController = options.errorController;
 
-            this.collectionController.router = this;
+            this.datasetController = options.datasetController;
             this.datasetController.router = this;
-            this.errorController.router = this;
 
             this.routesByName = _.invert(this.routes);
-
             this.checkQueryParamsValidity();
         },
 

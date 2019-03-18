@@ -3,8 +3,9 @@ describe('FilterDimensions', function () {
     var filterDimensions;
 
     beforeEach(function () {
-        metadata = new App.dataset.Metadata();
-        metadata.parse(App.test.response.metadata);
+        var datasourceIdentificer = new App.datasource.DatasourceIdentifier(App.test.metadata.identifier);
+        var datasetHelper = new App.datasource.helper.DatasetHelper();
+        metadata = new App.datasource.model.MetadataResponse({ datasourceIdentifier: datasourceIdentificer, datasourceHelper: datasetHelper, response: App.test.response.metadata});
         filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
     });
 
@@ -61,7 +62,9 @@ describe('FilterDimensions', function () {
 
         it('should trigger change event when a representation change the state', function () {
             var spy = sinon.spy();
-            filterDimensions.on('change:selected', spy);
+            filterDimensions.each(function (filterDimension) {
+                filterDimension.get('representations').on("change:selected", spy);
+            });
             filterDimensions.at(0).get('representations').at(0).toggle('selected');
             expect(spy.called).to.be.true;
         });
@@ -104,8 +107,8 @@ describe('FilterDimensions', function () {
         it('should export selected categories', function () {
             var selectedRepresentationId = dim.get('representations').findWhere({ selected: true }).id;
             // After the change on the fixed dimensions limit regarding the drawable attribute, the selected number are no longer affected
-            expect(exportedJSON[dimId].selectedCategories.length).to.equal(2);
-            expect(exportedJSON[dimId].selectedCategories[0]).to.equal(selectedRepresentationId);
+            expect(exportedJSON[dimId].categories.length).to.equal(2);
+            expect(exportedJSON[dimId].categories[0].id).to.equal(selectedRepresentationId);
         });
 
         it('should export positions', function () {
@@ -138,22 +141,116 @@ describe('FilterDimensions', function () {
             var exportedJSON = {
                 "TIME_PERIOD": {
                     "position": 21,
-                    "selectedCategories": ["time_1", "time_2"],
+                    "categories": [
+                        {
+                            id: "time_1",
+                            selected: true,
+                            drawable: true
+                        },
+                        {
+                           id: "time_2",
+                           selected: true,
+                           drawable: true
+                        },
+                        {
+                           id: "time_2_1",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "time_2_2",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "time_2_2_1",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "time_3",
+                           selected: false,
+                           drawable: false
+                        }
+                    ],
                     "visibleLabelType": "LABEL",
                 },
                 "INDICADORES": {
                     "position": 0,
-                    "selectedCategories": ["INDICE_OCUPACION_PLAZAS"],
+                    "categories": [
+                        {
+                            id: "INDICE_OCUPACION_PLAZAS",
+                            selected: true,
+                            drawable: true
+                        },
+                        {
+                            id: "INDICE_OCUPACION_HABITACIONES",
+                            selected: false,
+                            drawable: false
+                        }
+                    ],
                     "visibleLabelType": "LABEL_AND_CODE",
                 },
                 "CATEGORIA_ALOJAMIENTO": {
                     "position": 20,
-                    "selectedCategories": ["1_2_3_ESTRELLAS"],
+                    "categories": [
+                        {
+                            id: "1_2_3_ESTRELLAS",
+                            selected: true,
+                            drawable: true
+                        },
+                        {
+                           id: "4_5_ESTRELLAS",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "TOTAL",
+                           selected: false,
+                           drawable: false
+                        }
+                    ],
                     "visibleLabelType": "CODE",
                 },
                 "DESTINO_ALOJAMIENTO": {
                     "position": 40,
-                    "selectedCategories": ["EL_HIERRO"]
+                    "categories": [
+                        {
+                            id: "EL_HIERRO",
+                            selected: true,
+                            drawable: true
+                        },
+                        {
+                           id: "LA_PALMA",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "LA_GOMERA",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "TENERIFE",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "GRAN_CANARIA",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "FUERTEVENTURA",
+                           selected: false,
+                           drawable: false
+                        },
+                        {
+                           id: "LANZAROTE",
+                           selected: false,
+                           drawable: false
+                        }
+                    ]
                 }
             };
             filterDimensions.importJSON(exportedJSON);

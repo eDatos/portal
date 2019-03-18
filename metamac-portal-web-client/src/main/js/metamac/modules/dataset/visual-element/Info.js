@@ -4,13 +4,9 @@
     App.namespace("App.VisualElement.Info");
 
     App.VisualElement.Info = function (options) {
-        var self = this;
         this.initialize(options);
         this._type = 'info';
-        this.dataset = options.dataset;
-        this.optionsModel = options.optionsModel;
-        this.filterDimensions = options.filterDimensions;
-        this.api = new App.dataset.StructuralResourcesApi({ metadata: this.dataset.metadata });
+        this.api = new App.dataset.StructuralResourcesApi({ metadata: this.data.metadata });
     };
 
     App.VisualElement.Info.prototype = new App.VisualElement.Base();
@@ -20,14 +16,12 @@
         template: App.templateManager.get("dataset/dataset-info"),
 
         load: function () {
-            if (this.optionsModel.get('type') == this._type) {
-                this.getDimensions();
-                this.getMeasureConcepts();
-                this.getDatasetAttributes();
-                this._getSelectionApiUrl();
-                this._bindEvents();
-                this.render();
-            }
+            this.getDimensions();
+            this.getMeasureConcepts();
+            this.getDatasetAttributes();
+            this._getSelectionApiUrl();
+            this._bindEvents();
+            this.render();
         },
 
         updateMeasureConcepts: function (concepts) {
@@ -41,14 +35,8 @@
             this.render();
         },
 
-        updateDatasetAttributes: function () {
-            this.datasetAttributes = this.dataset.data.getDatasetAttributes();
-            this.render();
-        },
-
         getDatasetAttributes: function () {
-            this.datasetAttributes = this.dataset.data.getDatasetAttributes();
-            // Instead of a callback we use hasNewData
+            this.datasetAttributes = this.data.getDatasetAttributes();
         },
 
         _updateSelectionApiUrl: function () {
@@ -57,7 +45,7 @@
         },
 
         _getSelectionApiUrl: function () {
-            var apiUrl = this.dataset.metadata.getApiUrl();
+            var apiUrl = this.data.metadata.getApiUrl();
             var dimParameter = App.DimensionsUtils.getDimensionsParameterForDatasetRequest(this._getDimensionsForApiUrl());
             this.selectionApiUrl = {
                 name: apiUrl.name + '?dim=' + dimParameter,
@@ -107,7 +95,6 @@
         },
 
         _bindEvents: function () {
-            this.listenTo(this.dataset.data, "hasNewData", this.updateDatasetAttributes);
             this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", this._updateSelectionApiUrl);
         },
 
@@ -119,7 +106,7 @@
             if (!this.$el) { return; }
 
             var context = {
-                metadata: this.dataset.metadata.toJSON(),
+                metadata: this.data.metadata.toJSON(),
                 datasetAttributes: this.datasetAttributes,
                 measureConcepts: this.measureConcepts,
                 nonMeasureDimensions: this.nonMeasureDimensions,
@@ -155,7 +142,7 @@
         },
 
         _isIndicator: function () {
-            return this.dataset.metadata.getApiType() == App.Constants.api.type.INDICATOR;
+            return App.Constants.api.type.INDICATOR === this.data.metadata.identifier().type || App.Constants.api.type.INDICATOR_INSTANCE === this.data.metadata.identifier().type;
         }
     });
 

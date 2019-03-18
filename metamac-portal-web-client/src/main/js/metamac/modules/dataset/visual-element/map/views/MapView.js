@@ -3,6 +3,7 @@
 
     var GeoJsonConverter = App.Map.GeoJsonConverter;
     var Constants = App.Constants;
+    var DATA_SERIE_INDEX = 2;
 
     App.namespace('App.Map.MapView');
 
@@ -97,12 +98,12 @@
 
 
         initialize: function (options) {
-            this._dataset = options.dataset;
+            this._data = options.data;
             this._filterDimensions = options.filterDimensions;
             this._width = options.width;
             this._height = options.height;
             this._shapeList = options.shapeList;
-            this._allShapeList = options.allShapeList;
+            this._baseShapeList = options.baseShapeList;
             this._container = options.container;
             this._dataJson = options.dataJson;
             this.mapType = options.mapType;
@@ -111,25 +112,31 @@
             this.showRightsHolder = options.showRightsHolder;
 
             this.tooltipDelegate = new App.Map.TooltipDelegate(options);
-            // _.bindAll(this, "_calculateColor");
 
             this._onResize = _.debounce(_.bind(this._onResize, this), 200);
             this._updateDataClasses = _.debounce(_.bind(this._updateDataClasses, this), 100);
 
-            // METAMAC-2615
-            // this._defaultMapOptions.title.text = this._dataset.metadata.getTitle();
-            // this._defaultMapOptions.subtitle.text = this.title;
-
             this._defaultMapOptions.tooltip.formatter = _.partial(function (formatter, mapView) {
                 return mapView.tooltipDelegate._getLabelFromNormCode(this.point.code) + ': ' + this.point.value;
             }, _, this);
-            this._defaultMapOptions.chart.events = { load: options.callback };
+            this._defaultMapOptions.chart.events = { load: options.callback, redraw: options.callback };
         },
 
         events: {
             "mousewheel": "_handleMousewheel",
             "dblclick": "_handleDblclick",
             "resize": "_onResize"
+        },
+
+        update: function (newDataJson, newShapeList, newTitle, redraw) {
+            this._dataJson = newDataJson;
+            this._shapeList = newShapeList;
+            this.title = newTitle;
+
+            var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
+            var data = this._getData();
+            var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
+            this.map.series[DATA_SERIE_INDEX].update({mapData: mapData, data: data, name: this.title}, redraw);
         },
 
         render: function () {
@@ -148,9 +155,6 @@
         transform: function () {
             var currentScale = this.model.get("currentScale");
             var oldScale = this.model.get("oldScale");
-            var x = this.model.get("x");
-            var y = this.model.get("y");
-            var animationDelay = this.model.get("animationDelay");
             this.map.mapZoom(oldScale / currentScale);
         },
 
@@ -170,54 +174,21 @@
             return this._shapeListOrderByHierarchy().length > 0;
         },
 
-        _calculateOriginAndScale: function () {
-            this._origin = this._calculateNewOriginAndBounds();
-            this._scale = this._calculateNewScale({ x: this._minX, y: this._minY }, { x: 0, y: 0 }, this._origin);
-        },
-
-        _calculateNewOriginAndBounds: function () {
-            var coordinates = _.chain(this._shapeList).compact().pluck("shape").flatten().value();
-
-            var xCoordinates = _.filter(coordinates, function (num, i) {
-                return i % 2 === 0;
-            });
-            var yCoordinates = _.filter(coordinates, function (num, i) {
-                return i % 2 !== 0;
-            });
-
-            this._maxX = _.max(xCoordinates);
-            this._minX = _.min(xCoordinates);
-            this._maxY = _.max(yCoordinates);
-            this._minY = _.min(yCoordinates);
-
-            var originX = this._minX + (this._maxX - this._minX) / 2;
-            var originY = this._minY + (this._maxY - this._minY) / 2;
-            return [originX, originY];
-        },
-
         _shapeListOrderByHierarchy: function () {
             return _.chain(this._shapeList).compact().sortBy(function (shape) {
                 return -shape.hierarchy; //reverse order
             }).value();
         },
 
-        _allShapeListOrderByHierarchy: function () {
-            return _.chain(this._allShapeList).compact().sortBy(function (shape) {
-                return -shape.hierarchy; //reverse order
-            }).value();
-        },
-
-
         _createMapContent: function () {
-
             var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
-            var allGeoJson = GeoJsonConverter.shapeListToGeoJson(this._allShapeListOrderByHierarchy(), { contour: true });
+            var baseGeoJson = GeoJsonConverter.shapeListToGeoJson(this._baseShapeList, { contour: true });
             var containerGeoJson = GeoJsonConverter.shapeListToGeoJson([this._container], { contour: true });
 
             var data = this._getData();
 
             var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
-            var allMapData = this._getMapDataFromGeoJson(allGeoJson);
+            var baseMapData = this._getMapDataFromGeoJson(baseGeoJson);
             var containerMapData = this._getMapDataFromGeoJson(containerGeoJson);
 
             var worldContainerSerie = _.defaults(
@@ -233,7 +204,7 @@
                 {
                     id: "featuresContainerSerie",
                     name: "FeaturesContainer",
-                    mapData: allMapData,
+                    mapData: baseMapData,
                     nullColor: Constants.colors.istacGreyMedium
                 },
                 this._defaultSeriesOptions);
@@ -310,20 +281,12 @@
         },
 
         _updateDataClasses: function () {
-            if (this.map) {
-                var axis = this.map.colorAxis[0];
-                if (this.model.get('mapType') == 'map') {
-                    axis.update({
-                        dataClasses: this._generateDataClasses()
-                    }, false);
-                }
-
-                this.map.redraw();
-
-                // TODO: METAMAC-2032 this a workaround to solve the problem when updating dataclasses
-                this.map.mapZoom(1.000000001);
-                this._redrawLegend();
+            if (this.model.get('mapType') !== 'map' || !this.map) {
+                return;
             }
+
+            var axis = this.map.colorAxis[0];
+            axis.update({ dataClasses: this._generateDataClasses() });
         },
 
         _centerAndZoom: function () {

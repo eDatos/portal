@@ -1,11 +1,11 @@
 (function () {
     "use strict";
 
-    App.namespace("dataset.data.NumberFormatter");
+    App.namespace("App.util.NumberFormatter");
 
-    App.dataset.data.NumberFormatter = {};
+    App.util.NumberFormatter = {};
 
-    App.dataset.data.NumberFormatter.strToNumber = function (str) {
+    App.util.NumberFormatter.strToNumber = function (str) {
         var result = null;
         if (_.isString(str)) {
             var strToParse = str.replace(',', '.');
@@ -17,7 +17,7 @@
         return result;
     };
 
-    App.dataset.data.NumberFormatter.strNumberToLocalizedString = function (value, options) {
+    App.util.NumberFormatter.strNumberToLocalizedString = function (value, options) {
         if (isNaN(parseFloat(value))) return value;
 
         var options = _.defaults(options || {}, I18n.lookup("number.format"), {separator : ".", delimiter : ",", strip_insignificant_zeros : false});

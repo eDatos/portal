@@ -133,6 +133,9 @@ describe("[TableCanvas] BodyZone", function () {
             view : {
                 isSelectionActive : function () {
                     return false;
+                },
+                isCellClicked : function () {
+                    return false;
                 }
             }
         });
@@ -171,6 +174,9 @@ describe("[TableCanvas] BodyZone", function () {
             context : context,
             view : {
                 isSelectionActive : function () {
+                    return false;
+                },
+                isCellClicked : function () {
                     return false;
                 }
             }

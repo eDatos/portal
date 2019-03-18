@@ -5,8 +5,9 @@ describe("OrderSidebarView", function () {
     var optionsModel;
 
     beforeEach(function () {
-        var metadata = new App.dataset.Metadata();
-        metadata.parse(App.test.response.metadata);
+        var datasourceIdentificer = new App.datasource.DatasourceIdentifier(App.test.metadata.identifier);
+        var datasetHelper = new App.datasource.helper.DatasetHelper();
+        metadata = new App.datasource.model.MetadataResponse({ datasourceIdentifier: datasourceIdentificer, datasourceHelper: datasetHelper, response: App.test.response.metadata});
         filterDimensions = App.modules.dataset.filter.models.FilterDimensions.initializeWithMetadata(metadata);
         optionsModel = new App.modules.dataset.OptionsModel();
         orderSidebarView = new App.widget.filter.sidebar.OrderSidebarView({filterDimensions : filterDimensions, optionsModel : optionsModel});

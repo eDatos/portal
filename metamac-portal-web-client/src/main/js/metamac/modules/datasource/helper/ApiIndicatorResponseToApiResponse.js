@@ -1,15 +1,13 @@
 (function () {
     "use strict";
 
-    var Attributes = App.dataset.data.Attributes;
-
-    App.namespace("App.dataset.data.ApiIndicatorResponseToApiResponse");
+    App.namespace("App.datasource.helper.ApiIndicatorResponseToApiResponse");
 
     var ATTRIBUTE_OBS_CONF = "OBS_CONF";
     var DEFAULT = "__default__";
     var SPANISH_LOCALE = "es";
 
-    App.dataset.data.ApiIndicatorResponseToApiResponse = {
+    App.datasource.helper.ApiIndicatorResponseToApiResponse = {
 
         indicatorResponseToResponse: function (response) {
             var parsedResponse = {
@@ -209,11 +207,11 @@
         indicatorAttachmentLevelToDatasetAttachmentLevel: function (indicatorAttachmentLevel) {
             switch (indicatorAttachmentLevel) {
                 case "OBSERVATION":
-                    return Attributes.ATTACHMENT_LEVELS.PRIMARY_MEASURE;
+                    return App.Constants.attributes.attachmentLevels.PRIMARY_MEASURE;
                 case "DATASET":
-                    return Attributes.ATTACHMENT_LEVELS.DATASET;
+                    return App.Constants.attributes.attachmentLevels.DATASET;
                 case "DIMENSION":
-                    return Attributes.ATTACHMENT_LEVELS.DIMENSION;
+                    return App.Constants.attributes.attachmentLevels.DIMENSION;
                 default:
                     break;
             }

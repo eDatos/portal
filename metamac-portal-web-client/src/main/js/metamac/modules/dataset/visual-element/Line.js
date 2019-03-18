@@ -1,5 +1,3 @@
-App.namespace("App.VisualElement.LineChart");
-
 (function () {
     "use strict";
 
@@ -135,7 +133,7 @@ App.namespace("App.VisualElement.LineChart");
             xAxisTicks: 6
         };
 
-        var hasTimeDimensions = this.dataset.metadata.getTimeDimensions().length > 0;
+        var hasTimeDimensions = this.data.metadata.getTimeDimensions().length > 0;
         var detailZoomModelStart = hasTimeDimensions ? 0 : 0;
         var detailZoomModelStop = hasTimeDimensions ? 1 : 0.48;
 
@@ -143,7 +141,9 @@ App.namespace("App.VisualElement.LineChart");
         this.detailZoomModel.on("change", _.debounce(this._updateDetail, 300), this);
     };
 
-    App.VisualElement.LineChart.prototype = {
+    App.VisualElement.LineChart.prototype = new App.VisualElement.Base();
+
+    _.extend(App.VisualElement.LineChart.prototype, {
 
         load: function () {
             this._bindEvents();
@@ -212,23 +212,14 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         render: function () {
-            var self = this;
+            this.$el.empty();
+            this.$title = $('<h3></h3>');
+            this.updateTitle();
+            this.$el.append(this.$title);
 
-            self.showLoading();
-            this.dataset.data.loadAllSelectedData()
-                .then(function () {
-                    self.hideLoading();
-
-                    self.$el.empty();
-                    self.$title = $('<h3></h3>');
-                    self.updateTitle();
-                    self.$el.append(self.$title);
-
-
-                    self._renderContainers();
-                    self._renderMaster();
-                    self._renderDetail();
-                });
+            this._renderContainers();
+            this._renderMaster();
+            this._renderDetail();
         },
 
         _renderContainers: function () {
@@ -245,12 +236,12 @@ App.namespace("App.VisualElement.LineChart");
         _renderMaster: function () {
             this.getData();
 
-            this.detailZoomModel.set('step', 1 / this.data.xAxis.length);
+            this.detailZoomModel.set('step', 1 / this.processedData.xAxis.length);
 
             this._masterOptions.chart.renderTo = this.$masterContainer[0];
-            this._masterOptions.series = this.data.series;
-            this._masterOptions.xAxis.categories = this.data.xAxis;
-            this._masterOptions.xAxis.tickInterval = Math.ceil(this.data.xAxis.length / this.config.xAxisTicks);
+            this._masterOptions.series = this.processedData.series;
+            this._masterOptions.xAxis.categories = this.processedData.xAxis;
+            this._masterOptions.xAxis.tickInterval = Math.ceil(this.processedData.xAxis.length / this.config.xAxisTicks);
             this.masterChart = new Highcharts.Chart(this._masterOptions);
 
             this.detailZoomView = new App.VisualElement.line.DetailZoomView({ model: this.detailZoomModel, "$targetEl": this.$masterContainer });
@@ -267,10 +258,6 @@ App.namespace("App.VisualElement.LineChart");
             this._chartOptions.xAxis.max = detailData.max;
             this._chartOptions.xAxis.tickInterval = detailData.tickInterval;
 
-            // METAMAC-2615
-            // this._chartOptions.title.text = this.dataset.metadata.getTitle();
-            // this._chartOptions.subtitle.text = this.getTitle();
-
             this._chartOptions.credits.text = this.getRightsHolderText();
             if (!this.showRightsHolderText()) {
                 this._chartOptions.credits.style = {
@@ -284,7 +271,6 @@ App.namespace("App.VisualElement.LineChart");
         _updateSize: function () {
             var detailHeight = this.$el.height() - this.config.masterHeight - this.$title.height();
             this.$detailContainer.css({ height: detailHeight });
-            //this.$masterContainer.css({ top : detailHeight + this.$title.height()});
 
             this.detailChart.setSize(this.$detailContainer.width(), this.$detailContainer.height(), false);
             this.masterChart.setSize(this.$masterContainer.width(), this.$masterContainer.height(), false);
@@ -292,24 +278,18 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         update: function () {
-            var self = this;
             if (!this.assertAllDimensionsHaveSelections()) {
                 return;
             }
 
             if (!this.masterChart || !this.detailChart) {
                 this.load();
-            } else {
-                self.showLoading();
-
-                this.dataset.data.loadAllSelectedData().then(function () {
-                    self.hideLoading();
-
-                    self.updateTitle();
-                    self._updateMaster();
-                    self._updateDetail();
-                });
+                return;
             }
+
+            this.updateTitle();
+            this._updateMaster();
+            this._updateDetail();
         },
 
         _updateMaster: function () {
@@ -321,24 +301,26 @@ App.namespace("App.VisualElement.LineChart");
         },
 
         _updateDetail: function () {
-            if (this.detailChart) {
-                var detailData = this.getDetailData();
-                this.replaceSeries(this.detailChart, detailData.series);
-
-                this.detailChart.xAxis[0].update(
-                    {
-                        categories: detailData.xAxis,
-                        min: detailData.min,
-                        max: detailData.max,
-                        tickInterval: detailData.tickInterval
-                    },
-                    false
-                );
-
-                this.detailChart.counters.color = 0;
-
-                this.detailChart.redraw(false);
+            if (!this.detailChart) {
+                return;
             }
+            
+            var detailData = this.getDetailData();
+            this.replaceSeries(this.detailChart, detailData.series);
+
+            this.detailChart.xAxis[0].update(
+                {
+                    categories: detailData.xAxis,
+                    min: detailData.min,
+                    max: detailData.max,
+                    tickInterval: detailData.tickInterval
+                },
+                false
+            );
+
+            this.detailChart.counters.color = 0;
+
+            this.detailChart.redraw(false);
         },
 
         getData: function () {
@@ -372,8 +354,8 @@ App.namespace("App.VisualElement.LineChart");
                     currentPermutation[columnsDimension.id] = columnCategory.id;
                     _.extend(currentPermutation, fixedPermutation);
 
-                    var y = self.dataset.data.getNumberData({ ids: currentPermutation });
-                    var name = self.dataset.data.getStringData({ ids: currentPermutation });
+                    var y = self.data.getNumberData({ ids: currentPermutation });
+                    var name = self.data.getStringData({ ids: currentPermutation });
                     serie.data.push({ y: y, name: name });
                 });
 
@@ -387,13 +369,13 @@ App.namespace("App.VisualElement.LineChart");
             result.series = listSeries;
             result.xAxis = xaxis;
 
-            this.data = result;
+            this.processedData = result;
 
             return result;
         },
 
         getDetailData: function () {
-            var total = this.data.xAxis.length;
+            var total = this.processedData.xAxis.length;
             var indexStart = Math.round(total * this.detailZoomModel.get('start'));
             var indexStop = Math.round(total * this.detailZoomModel.get('stop'));
 
@@ -407,8 +389,8 @@ App.namespace("App.VisualElement.LineChart");
             }
 
             var result = {
-                series: this.data.series,
-                xAxis: this.data.xAxis,
+                series: this.processedData.series,
+                xAxis: this.processedData.xAxis,
                 min: indexStart,
                 max: indexStop - 1,
                 tickInterval: tickInterval
@@ -416,8 +398,6 @@ App.namespace("App.VisualElement.LineChart");
             return result;
         }
 
-    };
-
-    _.defaults(App.VisualElement.LineChart.prototype, App.VisualElement.Base.prototype);
+    });
 
 }());

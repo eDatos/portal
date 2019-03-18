@@ -11,7 +11,6 @@
         template: App.templateManager.get('dataset/dataset-dimensions'),
 
         initialize: function (options) {
-            this.dataset = options.dataset;
             this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
             this.measureAttribute = null;
@@ -161,16 +160,6 @@
             e.preventDefault();
         },
 
-        hasNewdata: function () {
-            var measureAttribute = _.findWhere(this.dataset.data.getDatasetAttributes(), { type: "MEASURE" });
-            if (measureAttribute) {
-                this.measureAttribute = {
-                    label: measureAttribute.name
-                }
-                this.render();
-            }
-        },
-
         toggleVisibility: function () {
             if (this.optionsModel.get('filter')) {
                 this.$el.show();
@@ -265,7 +254,6 @@
                 self.listenTo(filterDimension.get('representations'), 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
             });
             this.listenTo(this.filterDimensions, "change:zone", _.throttle(self.render, 500));
-            this.listenTo(this.dataset.data, "hasNewData", self.hasNewdata);
             if (this.optionsModel.get('widget')) {
                 this.listenTo(this.optionsModel, "change:filter", this.toggleVisibility);
             }

@@ -41,6 +41,27 @@
             }
         },
 
+        visualization: {
+            type: {
+                INDICATOR: "indicator",
+                INDICATOR_INSTANCE: "indicatorInstance",
+                DATASET: "dataset",
+                QUERY: "query"
+            }
+        },
+
+        metadata: {
+            defaultDecimals: 2
+        },
+
+        attributes: {
+            attachmentLevels: {
+                PRIMARY_MEASURE: "PRIMARY_MEASURE",
+                DIMENSION: "DIMENSION",
+                DATASET: "DATASET"
+            }
+        },
+
         maxUrlQueryLength: 1700
     };
 

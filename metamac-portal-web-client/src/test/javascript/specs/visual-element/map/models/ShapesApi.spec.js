@@ -9,6 +9,7 @@ describe("ShapesApi", function () {
         codes = ["TERRITORIO.CODE1", "TERRITORIO.CODE2"];
         ajaxStub = sinon.stub($, "ajax");
         App.endpoints["structural-resources"] = "http://srm.com";
+        App.config["geographicalGranularityUrn"] = "urn:sdmx:org.sdmx.infomodel.codelist.Codelist=ISTAC:CL_GEO_GRANULARITIES(01.006)";
     });
 
     afterEach(function () {

@@ -4,10 +4,8 @@
     App.namespace("App.VisualElement.Table");
 
     App.VisualElement.Table = function (options) {
-        this.dataset = options.dataset;
-
-        this.filterDimensions = options.filterDimensions;
-        this.optionsModel = options.optionsModel;
+        this.initialize(options);
+        this._type = 'table';
 
         this._chartOptions = {
             title: {
@@ -21,11 +19,11 @@
             },
             fixedDimensions: {}
         };
-
-        this._type = 'table';
     };
 
-    App.VisualElement.Table.prototype = {
+    App.VisualElement.Table.prototype = new App.VisualElement.Base();
+
+    _.extend(App.VisualElement.Table.prototype, {
 
         load: function () {
             this._bindEvents();
@@ -52,8 +50,6 @@
         },
 
         _bindEvents: function () {
-            this.listenTo(this.dataset.data, "hasNewData", this.hasNewData);
-
             var debouncedUpdate = _.debounce(_.bind(this.update, this), 20);
             this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", debouncedUpdate);
 
@@ -95,7 +91,7 @@
         },
 
         render: function () {
-            this.dataSource = new App.DataSourceDataset({ dataset: this.dataset, filterDimensions: this.filterDimensions });
+            this.dataSource = new App.DataSourceDataset({ data: this.data, filterDimensions: this.filterDimensions });
             this.delegate = new App.Table.Delegate();
 
             this.$el.empty();
@@ -121,12 +117,6 @@
             this.$el.append(this.$rightsHolder);
 
             this.view.repaint();
-        },
-
-        hasNewData: function () {
-            if (this.view) {
-                this.view.forceRepaint();
-            }
         },
 
         update: function () {
@@ -159,9 +149,6 @@
             this.view.resize(containerDimensions);
         }
 
-    };
-
-    _.extend(App.VisualElement.Table.prototype, Backbone.Events);
-    _.defaults(App.VisualElement.Table.prototype, new App.VisualElement.Base());
+    });
 
 }());

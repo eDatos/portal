@@ -8,13 +8,13 @@
         _errorTemplate: App.templateManager.get('dataset/map/map-error'),
 
         initialize: function (options) {
-            this._dataset = options.dataset;
+            this._data = options.data;
             this._filterDimensions = options.filterDimensions;
             this._mapModel = options.mapModel;
             this._width = options.width;
             this._height = options.height;
             this.geoJson = options.geoJson;
-            this.allGeoJson = options.allGeoJson;
+            this.baseGeoJson = options.baseGeoJson;
             this.container = options.container;
             this.dataJson = options.dataJson;
             this.mapType = options.mapType;
@@ -26,10 +26,22 @@
             this._initInternalViews();
         },
 
+        update: function (newDataJson, newGeoJson, newTitle) {
+            this.dataJson = newDataJson;
+            this.geoJson = newGeoJson;
+            this.title = newTitle;
+
+            var isMap = this.mapType === 'map';
+            this.mapView.update(this.dataJson, this.geoJson, this.title, !isMap);
+            if (isMap) {
+                this.updateRanges();
+            }
+        },
+
         render: function () {
             if (this.mapView.canRender()) {
                 this.zoomView.render();
-                if (this.mapType == 'map') {
+                if (this.mapType === 'map') {
                     this.rangesView.render();
                 }
                 this.mapView.render();
@@ -69,11 +81,11 @@
             var $mapContainer = $('<div class="svgContainer"></div>').appendTo(this.$el);
             this.mapView = new App.Map.MapView({
                 el: $mapContainer,
-                dataset: this._dataset,
+                data: this._data,
                 filterDimensions: this._filterDimensions,
                 model: this._mapModel,
                 shapeList: this.geoJson,
-                allShapeList: this.allGeoJson,
+                baseShapeList: this.baseGeoJson,
                 container: this.container,
                 dataJson: this.dataJson,
                 width: this._width,
