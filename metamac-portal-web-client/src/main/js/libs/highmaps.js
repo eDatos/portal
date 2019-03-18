@@ -46194,7 +46194,7 @@
                     attr = Series.prototype.pointAttribs.call(this, point, state);
 
                 if (fillOpacity !== 1) {
-                    attr.fill = color(attr.fill).setOpacity(fillOpacity).get('rgba');
+                    attr['fill-opacity'] = fillOpacity;
                 }
 
                 return attr;
