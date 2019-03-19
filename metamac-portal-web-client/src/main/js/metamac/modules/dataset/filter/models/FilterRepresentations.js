@@ -157,8 +157,6 @@
 
             _.invoke(this.models, 'set', { drawable: false }, { silent: true });
             _.invoke(this.getSelectedRepresentationsByCurrentGranularity(), 'set', { drawable: true });
-            this.selectedTemporalGranularity = selectedGranularity;
-
             this.trigger("change:drawable");
         },
 
