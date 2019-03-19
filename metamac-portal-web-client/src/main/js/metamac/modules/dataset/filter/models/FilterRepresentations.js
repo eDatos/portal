@@ -137,14 +137,17 @@
         },
 
         updateDrawablesBySelectedLevel: function () {
-            var selectedRepresentationsForCurrentLevel = this.where({ level: parseInt(this.selectedGeographicalLevel), selected: true });
-            if (selectedRepresentationsForCurrentLevel.length === 0) {
+            if (this.getSelectedRepresentationsByCurrentLevel().length === 0) {
                 this.updateSelectedGeographicLevelWithMostRepeatedValue();    
             }
 
             _.invoke(this.models, 'set', { drawable: false }, { silent: true });
-            _.invoke(this.where({ level: parseInt(this.selectedGeographicalLevel), selected: true }), 'set', { drawable: true });
+            _.invoke(this.getSelectedRepresentationsByCurrentLevel(), 'set', { drawable: true });
             this.trigger("change:drawable");
+        },
+
+        getSelectedRepresentationsByCurrentLevel: function (level) {
+            return this.where({ level: parseInt(this.selectedGeographicalLevel), selected: true });
         },
 
         updateDrawablesBySelectedGranularity: function (selectedGranularity) {
