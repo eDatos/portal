@@ -81,7 +81,6 @@
 
         _onChangeSelected: function (model) {
             this._updateDrawables();
-            this.updateSelectedGeographicLevel();
         },
 
         _onChangeDrawable: function (model) {
@@ -137,11 +136,14 @@
             return this.where({ drawable: true });
         },
 
-        updateDrawablesBySelectedLevel: function (selectedLevel) {
-            _.invoke(this.models, 'set', { drawable: false }, { silent: true });
-            _.invoke(this.where({ level: parseInt(selectedLevel), selected: true }), 'set', { drawable: true });
-            this.selectedGeographicalLevel = selectedLevel;
+        updateDrawablesBySelectedLevel: function () {
+            var selectedRepresentationsForCurrentLevel = this.where({ level: parseInt(this.selectedGeographicalLevel), selected: true });
+            if (selectedRepresentationsForCurrentLevel.length === 0) {
+                this.updateSelectedGeographicLevelWithMostRepeatedValue();    
+            }
 
+            _.invoke(this.models, 'set', { drawable: false }, { silent: true });
+            _.invoke(this.where({ level: parseInt(this.selectedGeographicalLevel), selected: true }), 'set', { drawable: true });
             this.trigger("change:drawable");
         },
 
@@ -159,12 +161,12 @@
 
         getSelectedGeographicLevel: function () {
             if (this.selectedGeographicalLevel == null) {
-                this.updateSelectedGeographicLevel();
+                this.updateSelectedGeographicLevelWithMostRepeatedValue();
             }
             return this.selectedGeographicalLevel;
         },
 
-        updateSelectedGeographicLevel: function () {
+        updateSelectedGeographicLevelWithMostRepeatedValue: function () {
             this.selectedGeographicalLevel = this._getMostRepeatedValue(this.getSelectedGeographicLevels());
         },
 
@@ -196,8 +198,6 @@
             var maxPopulation = _(countedBy).max();
             return _.invert(countedBy)[maxPopulation];
         },
-
-
 
     }, {
             initializeWithRepresentations: function (representations) {
