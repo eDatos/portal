@@ -224,16 +224,16 @@
         _preselectMostPopulatedTemporalGranularityRepresentations: function () {
             var fixedTimeDimensions = this.filterDimensions.getAllNonFixedDimensionsCopyByType("TIME_DIMENSION");
             _(fixedTimeDimensions).each(function (timeDimension) {
-                var mostPopulatedTemporalGranularity = timeDimension.get('representations').getSelectedTemporalGranularity();
-                timeDimension.get('representations').updateDrawablesBySelectedGranularity(mostPopulatedTemporalGranularity);
+                timeDimension.get('representations').updateSelectedTemporalGranularityWithMostRepeatedValue();
+                timeDimension.get('representations').updateDrawablesBySelectedGranularity();
             });
         },
 
         _preselectMostPopulatedGeographicLevelRepresentations: function () {
             var nonFixedGeographicDimensions = this.filterDimensions.getAllNonFixedDimensionsCopyByType("GEOGRAPHIC_DIMENSION");
             _(nonFixedGeographicDimensions).each(function (geographicDimension) {
-                var mostPopulatedLevel = geographicDimension.get('representations').getSelectedGeographicLevel();
-                geographicDimension.get('representations').updateDrawablesBySelectedLevel(mostPopulatedLevel);
+                geographicDimension.get('representations').updateSelectedGeographicLevelWithMostRepeatedValue();
+                geographicDimension.get('representations').updateDrawablesBySelectedLevel();
             });
         },
 

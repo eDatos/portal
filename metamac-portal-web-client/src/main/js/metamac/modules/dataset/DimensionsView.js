@@ -14,9 +14,6 @@
             this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
             this.measureAttribute = null;
-
-            this.currentSelectedLevel = null;
-            this.currentSelectedGranularity = null;
         },
 
         configuration: {
@@ -186,28 +183,13 @@
             }
         },
 
-        _updateDrawableRepresentationsBySelectedLevel: function (dimensionId, selectedLevel) {
-            this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedLevel(selectedLevel);
+        _onChangeSelectedForGeographicRepresentations: function (dimensionId, e) {
+            this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedLevel();
+            this.render();
         },
 
-        _updateDrawableRepresentationsBySelectedGranularity: function (dimensionId, selectedGranularity) {
-            this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedGranularity(selectedGranularity);
-        },
-
-        _updateRepresentations: function (filterDimensionId, e) {
-            // TODO Refactor this to avoid accesing the DOM
-            var selectedLevel = this.$el.find('select.dimension-select-level[data-dimension-id=' + filterDimensionId + ']').val();
-            if (selectedLevel) {
-                this.currentSelectedLevel = selectedLevel;
-                this._updateDrawableRepresentationsBySelectedLevel(filterDimensionId, selectedLevel);
-            }
-
-            var selectedGranularity = this.$el.find('select.dimension-select-granularity[data-dimension-id=' + filterDimensionId + ']').val();
-            if (selectedGranularity) {
-                this.currentSelectedGranularity = selectedGranularity;
-                this._updateDrawableRepresentationsBySelectedGranularity(filterDimensionId, selectedGranularity);
-            }
-
+        _onChangeSelectedForTemporalRepresentations: function (dimensionId, e) {
+            this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedGranularity();
             this.render();
         },
 
@@ -216,16 +198,18 @@
             var selectedLevel = currentTarget.val();
             var dimensionId = currentTarget.data("dimension-id");
             if (dimensionId) {
-                this._updateDrawableRepresentationsBySelectedLevel(dimensionId, selectedLevel);
+                this.filterDimensions.get(dimensionId).get('representations').setSelectedGeographicLevel(selectedLevel);
+                this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedLevel();
             }
         },
 
         _onChangeGranularity: function (e) {
             var currentTarget = $(e.currentTarget);
-            var selectedLevel = currentTarget.val();
+            var selectedGranularity = currentTarget.val();
             var dimensionId = currentTarget.data("dimension-id");
             if (dimensionId) {
-                this._updateDrawableRepresentationsBySelectedGranularity(dimensionId, selectedLevel);
+                this.filterDimensions.get(dimensionId).get('representations').setSelectedTemporalGranularity(selectedGranularity);
+                this.filterDimensions.get(dimensionId).get('representations').updateDrawablesBySelectedGranularity();
             }
         },
 
@@ -251,7 +235,14 @@
             var self = this;
             this.filterDimensions.each(function (filterDimension) {
                 self.listenTo(filterDimension.get('representations'), 'change:drawable', _.debounce(_.bind(self._updateSelectedCategory, self, filterDimension.get('id')), 400));
-                self.listenTo(filterDimension.get('representations'), 'change:selected', _.debounce(_.bind(self._updateRepresentations, self, filterDimension.get('id')), 300));
+                
+                if (self._needsGeographicLevelSelector(filterDimension)) {
+                    self.listenTo(filterDimension.get('representations'), 'change:selected', _.debounce(_.bind(self._onChangeSelectedForGeographicRepresentations, self, filterDimension.get('id')), 300));
+                } else if (self._needsTemporalGranularitySelector(filterDimension)) {
+                    self.listenTo(filterDimension.get('representations'), 'change:selected', _.debounce(_.bind(self._onChangeSelectedForTemporalRepresentations, self, filterDimension.get('id')), 300));
+                } else {
+                    self.listenTo(filterDimension.get('representations'), 'change:selected', _.debounce(_.bind(self.render, self), 300));
+                }
             });
             this.listenTo(this.filterDimensions, "change:zone", _.throttle(self.render, 500));
             if (this.optionsModel.get('widget')) {

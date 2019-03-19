@@ -181,6 +181,10 @@
         },
 
         update: function () {
+            if (!this.assertAllDimensionsHaveSelections()) {
+                return;
+            }
+            
             this.showLoading();
 
             this._getDrawableShapes();
