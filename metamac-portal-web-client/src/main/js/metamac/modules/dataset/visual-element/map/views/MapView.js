@@ -147,6 +147,7 @@
         destroy: function () {
             if (this.map && this.map.renderTo) {
                 this.map.destroy();
+                this.map = null;
             }
 
             this.undelegateEvents();
