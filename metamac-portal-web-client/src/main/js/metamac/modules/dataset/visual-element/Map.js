@@ -15,12 +15,12 @@
     _.extend(App.VisualElement.Map.prototype, {
 
         load: function () {
-            this.showLoading();
             this._bindEvents();
             if (!this.assertAllDimensionsHaveSelections()) {
                 return;
             }
 
+            this.showLoading();
             var self = this;
             this._loadShapes().then(function () {
                 self._getBaseShapes();
@@ -46,7 +46,6 @@
 
         _bindEvents: function () {
             this.listenTo(this.filterDimensions, "change:drawable change:zone", _.debounce(this.update, 20));
-            this.listenTo(this.filterDimensions, "loading", this.showLoading);
         },
 
         _unbindEvents: function () {
@@ -184,6 +183,11 @@
             if (!this.assertAllDimensionsHaveSelections()) {
                 return;
             }
+
+            if (!this._mapExists()) {
+                this.load();
+                return;
+            }
             
             this.showLoading();
 
@@ -193,6 +197,10 @@
 
             this.updateTitle();
             this._mapContainerView.update(this._dataJson, this._geoJson, this.getTitle());
+        },
+
+        _mapExists: function() {
+            return this._mapContainerView && this._mapContainerView.mapView && this._mapContainerView.mapView.map;
         },
 
         updatingDimensionPositions: function (oldElement) {

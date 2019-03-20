@@ -158,9 +158,11 @@
 
             if (this.masterChart) {
                 this.masterChart.destroy();
+                this.masterChart = null;
             }
             if (this.detailChart) {
                 this.detailChart.destroy();
+                this.detailChart = null;
             }
         },
 
