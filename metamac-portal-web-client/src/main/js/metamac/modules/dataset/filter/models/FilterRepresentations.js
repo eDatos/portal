@@ -30,7 +30,7 @@
                 var children = this.where({ parent: representation.id });
                 if (children.length) {
                     hasHierarchy = true;
-                    representation.children.reset(children);
+                    representation.initChildren(children);
                     representation._onChangeOpen();
                 }
             }, this);
