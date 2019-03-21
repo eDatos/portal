@@ -286,6 +286,7 @@
             if (this.allDimensionsHaveSelections()) {
                 if (this.$noSelection) {
                     this.$noSelection.hide();
+                    this.showTitle();
                 }
                 return true;
             } else {
