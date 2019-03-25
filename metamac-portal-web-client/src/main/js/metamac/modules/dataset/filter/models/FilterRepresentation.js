@@ -48,8 +48,8 @@
             var open = this.get("open");
             if (!open) {
                 this.children.each(function (child) {
-                    child.set("selected", false, { silent: true });
-                    child.set("drawable", false, { silent: true });
+                    child.setMeAndMyChildren("selected", false, { silent: true });
+                    child.setMeAndMyChildren("drawable", false, { silent: true });
                 });
             }
         },
