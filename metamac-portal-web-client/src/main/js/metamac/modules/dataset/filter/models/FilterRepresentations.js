@@ -27,7 +27,7 @@
         initializeHierarchy: function () {
             var hasHierarchy = false;
             var modelsSortedByLevelReversed = _.sortBy(this.models, function (representation) {
-                return representation.get('temporalGranularity') || representation.get('level');
+                return representation.get('level');
             }).reverse();
 
             _.each(modelsSortedByLevelReversed, function (representation) {
