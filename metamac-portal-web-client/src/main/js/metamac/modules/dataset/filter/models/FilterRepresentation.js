@@ -43,6 +43,17 @@
             }
         },
 
+        initChildren: function(children) {
+            this.children.reset(children);
+            var open = this.get("open");
+            if (!open) {
+                this.children.each(function (child) {
+                    child.setMeAndMyChildren("selected", false, { silent: true });
+                    child.setMeAndMyChildren("drawable", false, { silent: true });
+                });
+            }
+        },
+
         _updateChildrenSelected: function () {
             var childrenSelected = this.children.any(function (child) {
                 return child.get('selected') || child.get('childrenSelected');
