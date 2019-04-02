@@ -235,7 +235,6 @@
                         this.ctx.font = this.delegate.style.headerCell.font.mainLevel;
                         break;
                     case 1:
-                        cell.content = cell.content ? cell.content.toUpperCase() : "";
                         this.ctx.font = this.delegate.style.headerCell.font.secondLevel;
                         break;
                     default:
