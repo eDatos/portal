@@ -1683,7 +1683,7 @@ div#tweets form {
 
 /* Swagger integration */
 #cabecera h1 a {
-	background: transparent url(http://www.gobiernodecanarias.org/opencms8/export/system/modules/es.gobcan.istac.web/resources/images/logo_istac.jpg) no-repeat scroll 5px 5px;
+	background: transparent url(https://www.gobiernodecanarias.org/opencms8/export/system/modules/es.gobcan.istac.web/resources/images/logo_istac.jpg) no-repeat scroll 5px 5px;
 }
 .swagger-section {
 	padding: 20px;
