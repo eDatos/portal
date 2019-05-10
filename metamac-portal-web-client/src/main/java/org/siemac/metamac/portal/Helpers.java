@@ -150,7 +150,7 @@ public class Helpers {
             String agencyId = PortalUtils.splitUrnWithoutPrefixItemScheme(multidatasetId)[0];
             String resourceId = PortalUtils.splitUrnWithoutPrefixItemScheme(multidatasetId)[1];
 
-            if (internalPortal) {               
+            if (internalPortal) {
                 multidataset = multidataset2DtoMapper.multidatasetInternalToDto(Helpers.getInternalJAXRSClient(apiUrlStatisticalResources).retrieveMultidataset(agencyId, resourceId, lang, fields));
             } else {
                 multidataset = multidataset2DtoMapper.multidatasetExternalToDto(Helpers.getExternalJAXRSClient(apiUrlStatisticalResources).retrieveMultidataset(agencyId, resourceId, lang, fields));
@@ -338,19 +338,37 @@ public class Helpers {
 
     public static String tableViewUrl(Table table) {
         StringBuilder builder = new StringBuilder();
-        Resource resource = table.getDataset() != null ? table.getDataset() : table.getQuery();
+
+        Resource resource = getResourceFromTable(table);
+
         if (resource != null) {
             String[] tripleIdentifier = getTripleIdentifier(resource);
-            appendParameter(builder, PARAMETER_RESOURCE_TYPE, resourceKindToResourceType(resource.getKind()));
-            appendParameter(builder, PARAMETER_AGENCY_ID, tripleIdentifier[0]);
-            appendParameter(builder, PARAMETER_RESOURCE_ID, tripleIdentifier[1]);
-            appendParameter(builder, PARAMETER_VERSION, tripleIdentifier[2]);
-
+            if (table.getMultidataset() != null) {
+                appendParameter(builder, PARAMETER_MULTIDATASET_ID, tripleIdentifier[0] + ":" + tripleIdentifier[1]);
+            } else {
+                appendParameter(builder, PARAMETER_RESOURCE_TYPE, resourceKindToResourceType(resource.getKind()));
+                appendParameter(builder, PARAMETER_AGENCY_ID, tripleIdentifier[0]);
+                appendParameter(builder, PARAMETER_RESOURCE_ID, tripleIdentifier[1]);
+                appendParameter(builder, PARAMETER_VERSION, tripleIdentifier[2]);
+            }
             builder.insert(0, PATH_RELATIVE_DATA_PAGE);
         }
         builder.append("#");
 
         return builder.toString();
+    }
+
+    private static Resource getResourceFromTable(Table table) {
+        Resource resource = null;
+
+        if (table.getDataset() != null) {
+            resource = table.getDataset();
+        } else if (table.getQuery() != null) {
+            resource = table.getQuery();
+        } else if (table.getMultidataset() != null) {
+            resource = table.getMultidataset();
+        }
+        return resource;
     }
 
     private static String[] getTripleIdentifier(Resource resource) {
