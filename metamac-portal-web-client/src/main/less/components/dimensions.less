@@ -155,8 +155,11 @@
         &.dataset-dimensions-left-2 { 
             .order-sidebar-zone {
                 .order-sidebar-dimensions {
-                    .border-radius(0 0 @borderRadiusMedium 0); 
                     overflow: hidden;
+                }
+
+                &:last-child .order-sidebar-dimensions{
+                    .border-radius(0 0 @borderRadiusMedium 0); 
                 }
             }
         }
