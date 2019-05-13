@@ -138,7 +138,7 @@
         },
 
         canDrawMapVisualizations: function () {
-            return this.metadata.apiType != App.Constants.api.type.INDICATOR;
+            return this.metadata.identifier().type != App.Constants.api.type.INDICATOR;
         },
 
         importJSON: function (json) {
