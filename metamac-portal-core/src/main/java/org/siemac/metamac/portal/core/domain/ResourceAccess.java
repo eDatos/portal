@@ -98,7 +98,7 @@ public class ResourceAccess {
         description = dataset.getDescription();
         relatedDsd = dataset.getMetadata().getRelatedDsd();
 
-        dataset = dataset;
+        this.dataset = dataset;
         metadata = dataset.getMetadata();
 
         initialize(data, dimensions, attributes, datasetSelection, lang, langAlternative);
