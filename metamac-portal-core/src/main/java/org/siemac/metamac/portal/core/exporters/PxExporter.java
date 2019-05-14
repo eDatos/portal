@@ -71,6 +71,7 @@ public class PxExporter {
     private SrmRestExternalFacade     srmRestExternalFacade;
     private Integer                   showDecimals             = null;
     private final static int          MAX_PX_MATRIX_LENGTH     = 8;
+    private final static int MAX_PX_SUBJECT_CODE_LENGTH = 20;
 
     public PxExporter(Dataset dataset, SrmRestExternalFacade srmRestExternalFacade, DatasetSelection datasetSelection, String lang, String langAlternative) throws MetamacException {
         datasetAccess = new ResourceAccess(dataset, datasetSelection, lang, langAlternative);
@@ -416,8 +417,8 @@ public class PxExporter {
         Resources subjectAreas = datasetAccess.getMetadata().getSubjectAreas();
 
         if (subjectAreas == null) {
-            writeLocalisedLine(printWriter, PxKeysEnum.SUBJECT_AREA, Collections.emptyList(), datasetAccess.getName());
-            PxLineContainer subjectCodeLine = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SUBJECT_CODE).withValue(datasetAccess.getId()).build();
+            writeLocalisedLine(printWriter, PxKeysEnum.SUBJECT_AREA, Collections.emptyList(), this.getName());
+            PxLineContainer subjectCodeLine = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SUBJECT_CODE).withValue(this.getId()).build();
             writeLine(printWriter, subjectCodeLine);
             return;
         }
@@ -437,6 +438,20 @@ public class PxExporter {
 
         PxLineContainer subjectCodeLine = PxLineContainerBuilder.pxLineContainer().withPxKey(PxKeysEnum.SUBJECT_CODE).withValue(valueCode.toString()).build();
         writeLine(printWriter, subjectCodeLine);
+    }
+    
+    private String getId() {
+        if (datasetAccess.getId().length() > MAX_PX_SUBJECT_CODE_LENGTH) {
+            return datasetAccess.getDataset().getId();
+        }
+        return datasetAccess.getId();
+    }
+    
+    private InternationalString getName() {
+        if (datasetAccess.getId().length() > MAX_PX_SUBJECT_CODE_LENGTH) {
+            return datasetAccess.getDataset().getName();
+        }
+        return datasetAccess.getName();
     }
 
     /**
