@@ -441,6 +441,7 @@ public class PxExporter {
     }
     
     private String getId() {
+        // METAMAC-2915 Los ids de las queries pueden ser demasiado largos para este formato.
         if (datasetAccess.getId().length() > MAX_PX_SUBJECT_CODE_LENGTH) {
             return datasetAccess.getDataset().getId();
         }
@@ -448,6 +449,7 @@ public class PxExporter {
     }
     
     private InternationalString getName() {
+        // METAMAC-2915 Por coherencia, si se usa el id del dataset también se usa su nombre
         if (datasetAccess.getId().length() > MAX_PX_SUBJECT_CODE_LENGTH) {
             return datasetAccess.getDataset().getName();
         }
