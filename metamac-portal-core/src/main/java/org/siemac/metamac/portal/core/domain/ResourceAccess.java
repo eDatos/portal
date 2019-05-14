@@ -51,6 +51,7 @@ public class ResourceAccess {
     private DataStructureDefinition                       relatedDsd;
     private String                                        urn;
     private String                                        id;
+    private String                                        uniqueId;
     private InternationalString                           description;
 
     // Metadata
@@ -76,6 +77,8 @@ public class ResourceAccess {
     private List<String>                                  dimensionsOrderedForData;
     private Map<String, List<String>>                     dimensionValuesOrderedForDataByDimensionId;
     
+    private Dataset dataset;
+    
     private final Map<String, Integer>           multipliers         = new HashMap<String, Integer>();
     private final Map<String, Map<String, Long>> representationIndex = new HashMap<String, Map<String, Long>>(); // Map<Dimension, Map<Code, Index>
 
@@ -84,12 +87,18 @@ public class ResourceAccess {
         dimensions = dataset.getMetadata().getDimensions();
         attributes = dataset.getMetadata().getAttributes();
 
+        uniqueId = dataset.getId();
+        if (datasetSelection.isUserSelection()) {
+            uniqueId = PxExporter.generateMatrixFromString(dataset.getId());
+        }
+        
         name = dataset.getName();
         id = dataset.getId();
         urn = dataset.getUrn();
         description = dataset.getDescription();
         relatedDsd = dataset.getMetadata().getRelatedDsd();
 
+        this.dataset = dataset;
         metadata = dataset.getMetadata();
 
         initialize(data, dimensions, attributes, datasetSelection, lang, langAlternative);
@@ -100,14 +109,17 @@ public class ResourceAccess {
         dimensions = query.getMetadata().getDimensions();
         attributes = query.getMetadata().getAttributes();
 
-        name = query.getName();
         // Query id can be too long for PX Matrix
-        id = PxExporter.generateMatrixFromString(query.getId());
+        uniqueId = PxExporter.generateMatrixFromString(query.getId());
+        
+        name = query.getName();
+        id = query.getId();
         urn = query.getUrn();
         description = query.getDescription();
         relatedDsd = query.getMetadata().getRelatedDsd();
 
         if (relatedDataset != null) {
+            dataset = relatedDataset;
             metadata = relatedDataset.getMetadata();
         }
 
@@ -141,6 +153,10 @@ public class ResourceAccess {
     public InternationalString getName() {
         return name;
     }
+    
+    public Dataset getDataset() {
+        return dataset;
+    }
 
     public DatasetMetadata getMetadata() {
         return metadata;
@@ -148,6 +164,10 @@ public class ResourceAccess {
 
     public DataStructureDefinition getRelatedDsd() {
         return relatedDsd;
+    }
+    
+    public String getUniqueId() {
+        return uniqueId;
     }
 
     public String getId() {

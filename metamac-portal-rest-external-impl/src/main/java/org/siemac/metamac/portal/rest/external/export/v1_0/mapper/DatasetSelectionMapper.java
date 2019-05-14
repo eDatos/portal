@@ -62,7 +62,7 @@ public class DatasetSelectionMapper {
         return sb.toString();
     }
 
-    public static List<DatasetSelectionDimension> toDatasetSelectionDimensions(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
+   private static List<DatasetSelectionDimension> toDatasetSelectionDimensions(org.siemac.metamac.rest.export.v1_0.domain.DatasetSelection source) throws Exception {
         if (source == null || source.getDimensions() == null) {
             return null;
         }
@@ -122,7 +122,7 @@ public class DatasetSelectionMapper {
     public static DatasetSelection datasetToDatasetSelection(Dimensions datasetDimensions, Attributes datasetAttributes, DataStructureDefinition relatedDsd) {
         List<DatasetSelectionDimension> dimensions = dimensionsToDatasetSelectionDimensions(datasetDimensions, relatedDsd);
         List<DatasetSelectionAttribute> attributes = attributesToDatasetSelectionAttributes(datasetAttributes);
-        return new DatasetSelection(dimensions, attributes);
+        return new DatasetSelection(dimensions, attributes, false);
     }
 
     private static List<DatasetSelectionAttribute> attributesToDatasetSelectionAttributes(Attributes attributes) {
