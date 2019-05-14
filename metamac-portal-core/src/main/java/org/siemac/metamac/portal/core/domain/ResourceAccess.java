@@ -51,6 +51,7 @@ public class ResourceAccess {
     private DataStructureDefinition                       relatedDsd;
     private String                                        urn;
     private String                                        id;
+    private String                                        uniqueId;
     private InternationalString                           description;
 
     // Metadata
@@ -84,6 +85,11 @@ public class ResourceAccess {
         dimensions = dataset.getMetadata().getDimensions();
         attributes = dataset.getMetadata().getAttributes();
 
+        uniqueId = dataset.getId();
+        if (datasetSelection.isUserSelection()) {
+            uniqueId = PxExporter.generateMatrixFromString(dataset.getId());
+        }
+        
         name = dataset.getName();
         id = dataset.getId();
         urn = dataset.getUrn();
@@ -100,9 +106,11 @@ public class ResourceAccess {
         dimensions = query.getMetadata().getDimensions();
         attributes = query.getMetadata().getAttributes();
 
+        uniqueId = PxExporter.generateMatrixFromString(query.getId());
+        
         name = query.getName();
         // Query id can be too long for PX Matrix
-        id = PxExporter.generateMatrixFromString(query.getId());
+        id = query.getId();
         urn = query.getUrn();
         description = query.getDescription();
         relatedDsd = query.getMetadata().getRelatedDsd();
@@ -148,6 +156,10 @@ public class ResourceAccess {
 
     public DataStructureDefinition getRelatedDsd() {
         return relatedDsd;
+    }
+    
+    public String getUniqueId() {
+        return uniqueId;
     }
 
     public String getId() {

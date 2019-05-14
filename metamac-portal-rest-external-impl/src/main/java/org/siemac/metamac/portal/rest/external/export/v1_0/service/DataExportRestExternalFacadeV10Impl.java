@@ -377,11 +377,6 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
                 datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(dataset.getMetadata().getDimensions(), dataset.getMetadata().getAttributes(),
                         dataset.getMetadata().getRelatedDsd());
             }
-            
-            // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
-            if (dimensionSelection != null) {
-                dataset.setId(PxExporter.generateMatrixFromString(dimensionSelection));
-            }
 
             if (filename == null) {
                 filename = buildFilename(".px", ResourceType.DATASET.getName(), agencyID, resourceID, version);
@@ -474,11 +469,6 @@ public class DataExportRestExternalFacadeV10Impl implements DataExportV1_0 {
             if (datasetSelection == null) {
                 datasetSelection = DatasetSelectionMapper.datasetToDatasetSelection(query.getMetadata().getDimensions(), query.getMetadata().getAttributes(),
                         query.getMetadata().getRelatedDsd());
-            }
-
-            // If we have a selection, we can´t use the ID on the MATRIX, we need to generate a random one
-            if (dimensionSelection != null) {
-                query.setId(PxExporter.generateMatrixFromString(dimensionSelection));
             }
 
             if (filename == null) {

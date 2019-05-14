@@ -17,6 +17,8 @@ public class DatasetSelection {
     public static final int            TOP_DIMENSIONS_START_POSITION   = 20;
     public static final int            FIXED_DIMENSIONS_START_POSITION = 40;
     
+    private boolean userSelection = true;
+    
     private List<DatasetSelectionDimension>              dimensions    = new ArrayList<DatasetSelectionDimension>();
     private final Map<String, DatasetSelectionDimension> dimensionsMap = new HashMap<String, DatasetSelectionDimension>();
 
@@ -25,6 +27,11 @@ public class DatasetSelection {
     
     private final Map<String, Integer> multipliers                     = new HashMap<String, Integer>();
 
+    public DatasetSelection(List<DatasetSelectionDimension> dimensions, List<DatasetSelectionAttribute> attributes, boolean userSelection) {
+        this(dimensions, attributes);
+        this.userSelection = userSelection;
+    }
+    
     public DatasetSelection(List<DatasetSelectionDimension> dimensions, List<DatasetSelectionAttribute> attributes) {
         if (dimensions != null) {
             this.dimensions = new ArrayList<DatasetSelectionDimension>(dimensions);
@@ -42,6 +49,10 @@ public class DatasetSelection {
         initializeMultipliers(getLeftDimensions());
         initializeMultipliers(getTopDimensions());
         initializedFixedMultipliers();
+    }
+    
+    public boolean isUserSelection() {
+        return userSelection;
     }
 
     public DatasetSelectionDimension getDimension(String dimensionId) {
