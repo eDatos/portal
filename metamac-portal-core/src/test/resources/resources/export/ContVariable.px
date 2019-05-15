@@ -6,7 +6,7 @@ UPDATE-FREQUENCY="Mensual (M)";
 TABLEID="urn:siemac:org.siemac.metamac.infomodel.statisticalresources.Dataset=ISTAC:C00031A_000002(001.006)";
 DECIMALS=2;
 SHOWDECIMALS=2;
-MATRIX="C00031A_000002";
+MATRIX="QzAwMDMx";
 AGGREGALLOWED="NO";
 AUTOPEN=NO;
 SUBJECT-AREA="Turismo. Pol�tica y otras actividades de la comunidad";
