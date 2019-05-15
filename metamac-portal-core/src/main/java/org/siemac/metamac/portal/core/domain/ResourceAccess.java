@@ -88,7 +88,7 @@ public class ResourceAccess {
         attributes = dataset.getMetadata().getAttributes();
 
         uniqueId = dataset.getId();
-        if (datasetSelection.isUserSelection()) {
+        if (datasetSelection != null && datasetSelection.isUserSelection()) {
             uniqueId = PxExporter.generateMatrixFromString(dataset.getId());
         }
         
