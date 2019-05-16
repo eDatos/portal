@@ -142,7 +142,7 @@
         },
 
         _isIndicator: function () {
-            return App.Constants.api.type.INDICATOR === this.data.metadata.identifier().type || App.Constants.api.type.INDICATOR_INSTANCE === this.data.metadata.identifier().type;
+            return App.Constants.visualization.type.INDICATOR === this.data.metadata.identifier().type || App.Constants.visualization.type.INDICATOR_INSTANCE === this.data.metadata.identifier().type;
         }
     });
 

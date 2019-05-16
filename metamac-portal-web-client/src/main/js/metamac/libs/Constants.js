@@ -34,13 +34,6 @@
             }
         },
 
-        api: {
-            type: {
-                INDICATOR: "indicator",
-                DATASET: "dataset"
-            }
-        },
-
         visualization: {
             type: {
                 INDICATOR: "indicator",
