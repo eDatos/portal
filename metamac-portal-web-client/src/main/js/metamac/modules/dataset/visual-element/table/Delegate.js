@@ -169,6 +169,7 @@
             var context = {
                 title: headerInfo.title,
                 description: headerInfo.description,
+                measureUnit: headerInfo.measureUnit,
                 attributes: this.formatHeaderAttributes(_.pluck(headerInfo.attributes, 'value'))
             }
             return template(context);
