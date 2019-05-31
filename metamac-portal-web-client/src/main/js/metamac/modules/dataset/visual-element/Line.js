@@ -336,12 +336,13 @@
             if (!columnsDimension) {
                 columnsDimension = this.filterDimensions.dimensionsAtZone('fixed').at(0);
             }
-            var horizontalDimensionSelectedCategories = this.getDrawableRepresentations(horizontalDimension);
-            if (horizontalDimension.get('type') == "TIME_DIMENSION") {
-                horizontalDimensionSelectedCategories = _.sortBy(horizontalDimensionSelectedCategories, function (representation) {
-                    return representation.normCode;
-                }).reverse();
-            }
+
+            var selectedTemporalGranularity = horizontalDimension.get("representations").getSelectedTemporalGranularity()
+            var horizontalDimensionCategories = horizontalDimension.get('representations').where({ temporalGranularity: selectedTemporalGranularity });
+            horizontalDimensionCategories = _.sortBy(horizontalDimensionCategories, function (representation) {
+                return representation.normCode;
+            }).reverse();
+            
             var columnsDimensionSelectedCategories = this.getDrawableRepresentations(columnsDimension);
 
             var listSeries = [];
@@ -350,13 +351,16 @@
                 serie.data = [];
                 serie.name = "";
 
-                _.each(horizontalDimensionSelectedCategories, function (horizontalCategory) {
+                _.each(horizontalDimensionCategories, function (horizontalCategory) {
                     var currentPermutation = {};
                     currentPermutation[horizontalDimension.id] = horizontalCategory.id;
                     currentPermutation[columnsDimension.id] = columnCategory.id;
                     _.extend(currentPermutation, fixedPermutation);
 
-                    var y = self.data.getNumberData({ ids: currentPermutation });
+                    var y = null;
+                    if (horizontalCategory.get("drawable")) {
+                        y = self.data.getNumberData({ ids: currentPermutation });
+                    }
                     var name = self.data.getStringData({ ids: currentPermutation });
                     serie.data.push({ y: y, name: name });
                 });
@@ -365,7 +369,7 @@
                 listSeries.push(serie);
             });
 
-            var xaxis = _.invoke(horizontalDimensionSelectedCategories, 'get', 'visibleLabel');
+            var xaxis = _.invoke(horizontalDimensionCategories, 'get', 'visibleLabel');
 
             // Changing the options of the chart
             result.series = listSeries;
