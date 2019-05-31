@@ -208,6 +208,10 @@
                     var representation = _.pick(dimensionValue, 'id', 'open', 'temporalGranularity');
                     representation.label = self.localizeLabel(dimensionValue.name.text);
 
+                    if (dimensionValue.measureQuantity && dimensionValue.measureQuantity.unitCode) {
+                        representation.measureUnit = self.localizeLabel(dimensionValue.measureQuantity.unitCode.name.text);
+                    }
+
                     if (dimensionValue.description && dimensionValue.description.text) {
                         representation.description = self.localizeLabel(dimensionValue.description.text);
                     }

@@ -90,6 +90,7 @@
                     var cellAttributes = [];
                     var cellTitle = "";
                     var cellDescription = "";
+                    var cellMeasureUnit = "";
 
                     var cellInfo = tooltipValues[i][rowIndex];
                     if (cellInfo) {
@@ -102,6 +103,7 @@
                         }
                         cellTitle = cellInfo.title;
                         cellDescription = cellInfo.description;
+                        cellMeasureUnit = cellInfo.measureUnit;
                     }
 
                     result[i].push({
@@ -115,6 +117,7 @@
                         level: level,
                         tooltipTitle: cellTitle,
                         tooltipDescription: cellDescription,
+                        tooltipMeasureUnit: cellMeasureUnit,
                         attributes: cellAttributes
                     });
                 }
@@ -139,6 +142,7 @@
             return this.delegate.formatHeaderInfo({
                 title: headerCellAtPoint.tooltipTitle,
                 description: headerCellAtPoint.tooltipDescription,
+                measureUnit: headerCellAtPoint.tooltipMeasureUnit,
                 attributes: headerCellAtPoint.attributes
             });
         }
