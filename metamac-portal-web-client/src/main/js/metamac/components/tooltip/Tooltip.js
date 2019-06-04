@@ -134,6 +134,7 @@
 	        if (attribute) {
 	            this.view.toggleClickedCellByRelativePoint(point);
 	            this.$innerTooltip.html(attribute);
+                this._drawChart(point);
 	            var position = this._getPosition(point);
 	            this.$tooltip.css({	                        
 	                top : position.y,
@@ -144,6 +145,24 @@
 	            this.view.clearClickedCell();
 	            this._hide();
 	        }
+        },
+
+        _drawChart : function(point) {
+            var cellTimeSerie = this.delegate.getCellTimeSerieAtMousePosition(point);
+            if (!cellTimeSerie) {
+                return;
+            }
+
+            this.$tooltipChart = $('<div class="tooltip-chart"></div>');
+            this.$innerTooltip.append(this.$tooltipChart)
+
+            var lineChart = new App.VisualElement.TooltipLine({
+                el: this.$tooltipChart,
+                data: cellTimeSerie.data,
+                permutation: cellTimeSerie.permutation,
+                timeDimension: cellTimeSerie.timeDimension
+            });
+            lineChart.render();
         },
         
         _updateByMouseOver : function (point) {

@@ -88,6 +88,19 @@
             };
         },
 
+        canDrawLineVisualizations: function () {
+            return this.filterDimensions.canDrawLineVisualizations();
+        },
+
+        getCellTimeSerieAtIndex: function (cell) {
+            var permutation = this.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
+            return {
+                data: this.data,
+                permutation: permutation,
+                timeDimension: this.filterDimensions.findWhere({ type: "TIME_DIMENSION" })
+            }
+        },
+
         _formatCategories: function (categoryValues) {
             var self = this;
             return _.map(categoryValues, function (value, key) {
