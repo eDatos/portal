@@ -2,13 +2,12 @@
     "use strict";
 
     var Constants = App.Constants;
-    var MAX_ELEMENTS = 10;
     var WIDTH = 400; // El mismo que en tooltip.less .tooltip-inner
     var HEIGHT = WIDTH * 9 / 16;
 
-    App.namespace("App.VisualElement.TooltipLine");
+    App.namespace("App.VisualElement.TooltipLineChart");
 
-    App.VisualElement.TooltipLine = function (options) {
+    App.VisualElement.TooltipLineChart = function (options) {
         this.$el = options.el;
         this.data = options.data;
         this.timeDimension = options.timeDimension;
@@ -97,7 +96,7 @@
         };
     };
 
-    App.VisualElement.TooltipLine.prototype = {
+    App.VisualElement.TooltipLineChart.prototype = {
 
         tooltipFormatter: function () {
             return '<strong>' + this.x + '</strong>:<br/>' + this.point.name;
@@ -126,7 +125,9 @@
         },
 
         _getData: function () {
-            var timeDimensionCategories = _.sortBy(this.timeDimension.getDrawableRepresentations(), function (representation) {
+            var selectedTemporalGranularity = this.timeDimension.get("representations").getSelectedTemporalGranularity();
+            var timeDimensionCategories = this.timeDimension.get('representations').where({ temporalGranularity: selectedTemporalGranularity });
+            timeDimensionCategories = _.sortBy(timeDimensionCategories, function (representation) {
                 return representation.normCode;
             }).reverse();
 
@@ -136,20 +137,24 @@
             serie.data = [];
             var xAxis = [];
 
-            for (var i = 1; i <= MAX_ELEMENTS; i++) {
-                var index = timeDimensionCategories.length - i;
-                var timeCategory = timeDimensionCategories[index];
-
+            var self = this;
+            _.each(timeDimensionCategories, function (timeCategory) {
                 var currentPermutation = {};
-                currentPermutation[this.timeDimension.id] = timeCategory.id;
+                currentPermutation[self.timeDimension.id] = timeCategory.id;
                 currentPermutation = _.extend({}, fixedPermutation, currentPermutation);
 
-                var y = this.data.getNumberData({ ids: currentPermutation });
-                var name = this.data.getStringData({ ids: currentPermutation });
-                serie.data.unshift({ y: y, name: name });
+                var y = self.data.getNumberData({ ids: currentPermutation });
+                var name = self.data.getStringData({ ids: currentPermutation });
+                var point = { y: y, name: name };
 
-                xAxis.unshift(timeCategory.get("visibleLabel"));
-            }
+                if (self.permutation[self.timeDimension.id] === timeCategory.id) {
+                    point.colorIndex = 2;
+                }
+
+                serie.data.push(point);
+
+                xAxis.push(timeCategory.get("visibleLabel"));
+            });
 
             return {
                 series: [serie],

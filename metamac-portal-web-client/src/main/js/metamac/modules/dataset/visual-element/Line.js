@@ -337,7 +337,7 @@
                 columnsDimension = this.filterDimensions.dimensionsAtZone('fixed').at(0);
             }
 
-            var selectedTemporalGranularity = horizontalDimension.get("representations").getSelectedTemporalGranularity()
+            var selectedTemporalGranularity = horizontalDimension.get("representations").getSelectedTemporalGranularity();
             var horizontalDimensionCategories = horizontalDimension.get('representations').where({ temporalGranularity: selectedTemporalGranularity });
             horizontalDimensionCategories = _.sortBy(horizontalDimensionCategories, function (representation) {
                 return representation.normCode;

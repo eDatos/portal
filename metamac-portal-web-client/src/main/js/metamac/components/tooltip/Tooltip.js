@@ -156,7 +156,7 @@
             this.$tooltipChart = $('<div class="tooltip-chart"></div>');
             this.$innerTooltip.append(this.$tooltipChart)
 
-            var lineChart = new App.VisualElement.TooltipLine({
+            var lineChart = new App.VisualElement.TooltipLineChart({
                 el: this.$tooltipChart,
                 data: cellTimeSerie.data,
                 permutation: cellTimeSerie.permutation,
