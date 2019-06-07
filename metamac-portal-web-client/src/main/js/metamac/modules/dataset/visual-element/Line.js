@@ -298,7 +298,6 @@
             var data = this.getData();
             this.replaceSeries(this.masterChart, data.series);
             this.masterChart.xAxis[0].setCategories(data.xAxis, false);
-            this.masterChart.counters.color = 0;
             this.masterChart.redraw();
         },
 
@@ -319,8 +318,6 @@
                 },
                 false
             );
-
-            this.detailChart.counters.color = 0;
 
             this.detailChart.redraw(false);
         },

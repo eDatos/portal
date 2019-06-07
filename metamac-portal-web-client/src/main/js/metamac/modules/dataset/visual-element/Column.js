@@ -151,7 +151,6 @@
             }
 
             this.chart = new Highcharts.Chart(this._chartOptions);
-            this.chart.counters.color = 0;
 
             this.$el.on("resize", function () { });
         },
@@ -274,7 +273,6 @@
 
             this.replaceSeries(this.chart, data.series);
             this.chart.xAxis[0].setCategories(data.xAxis, false);
-            this.chart.counters.color = 0;
             this.chart.redraw(false);
         },
 
