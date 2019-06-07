@@ -361,17 +361,27 @@
         },
 
         decimalsForSelection: function (selection) {
-            var measureDim = this.getMeasureDimension();
-            var selectedDimValueId = measureDim ? selection[measureDim.id] : null;
-            if (selectedDimValueId) {
-                var selectedDimValue = _.findWhere(measureDim.representations, { id: selectedDimValueId });
-                if (selectedDimValue) {
-                    return selectedDimValue.decimals;
-                }
+            var selectedDimValue = this._findSelectedMeasureDimensionValue(selection);
+            if (selectedDimValue) {
+                return selectedDimValue.decimals;
             }
             return this.getDefaultDecimals();
         },
 
+        measureUnitForSelection: function (selection) {
+            var selectedDimValue = this._findSelectedMeasureDimensionValue(selection);
+            if (selectedDimValue) {
+                return selectedDimValue.measureUnit;
+            }
+        },
+
+        _findSelectedMeasureDimensionValue: function (selection) {
+            var measureDim = this.getMeasureDimension();
+            var selectedDimValueId = measureDim ? selection[measureDim.id] : null;
+            if (selectedDimValueId) {
+                return _.findWhere(measureDim.representations, { id: selectedDimValueId });
+            }
+        },
 
         getDimensionsPosition: function () {
             var top = this.metadata.relatedDsd.heading.dimensionId;

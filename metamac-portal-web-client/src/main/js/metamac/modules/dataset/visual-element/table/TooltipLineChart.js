@@ -3,7 +3,7 @@
 
     var Constants = App.Constants;
     var WIDTH = 400; // El mismo que en tooltip.less .tooltip-inner
-    var HEIGHT = WIDTH * 9 / 16;
+    var HEIGHT = WIDTH * 9 / 21;
 
     App.namespace("App.VisualElement.TooltipLineChart");
 
@@ -11,7 +11,7 @@
         this.$el = options.el;
         this.data = options.data;
         this.timeDimension = options.timeDimension;
-        this.permutation = options.permutation;
+        this._setPermutation(options.permutation);
 
         this._chartOptions = {
             chart: {
@@ -22,30 +22,8 @@
                 backgroundColor: Constants.colors.istacWhite,
                 marginRight: 0
             },
-            title: {
-                text: '',
-                style: {
-                    color: App.Constants.colors.hiddenText,
-                    fontSize: App.Constants.font.title.size
-                }
-            },
-            subtitle: {
-                text: '',
-                style: {
-                    color: App.Constants.colors.hiddenText
-                }
-            },
-            credits: {
-                position: {
-                    y: -5,
-                    x: -10
-                }
-            },
             tooltip: {
                 formatter: this.tooltipFormatter
-            },
-            xAxis: {
-                labels: {}
             },
             yAxis: {
                 title: {
@@ -63,43 +41,53 @@
                 line: {
                     lineWidth: 1.5,
                     marker: {
-                        radius: 3
+                        enabled: false
                     }
                 },
                 series: {
-                    animation: false
-                }
-            },
-            legend: {
-                layout: 'horizontal',
-                backgroundColor: Constants.colors.istacWhite,
-                x: 5,
-                y: 0,
-                borderWidth: 1,
-                borderColor: Constants.colors.istacGreyMedium,
-                floating: false,
-                navigation: {
-                    activeColor: Constants.colors.istacBlueMedium,
-                    animation: true,
-                    arrowSize: 12,
-                    inactiveColor: Constants.colors.istacGreyMedium,
-                    style: {
-                        fontWeight: 'bold',
-                        color: Constants.colors.istacBlack,
-                        fontSize: '12px'
+                    animation: false,
+                    marker: {
+                        states: {
+                            hover: {
+                                fillColor: "#666666"
+                            }
+                        }
                     }
                 }
             },
+            title: {
+                text: undefined
+            },
+            subtitle: {
+                text: '',
+                style: {
+                    color: App.Constants.colors.hiddenText
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            legend: {
+                enabled: false
+            },
             exporting: {
                 enabled: false
+            },
+            xAxis: {
+                visible: false
             }
         };
     };
 
     App.VisualElement.TooltipLineChart.prototype = {
 
+        _setPermutation: function(permutation) {
+            this.permutation = permutation;
+            this.measureUnit = this.data.metadata.measureUnitForSelection(permutation);
+        },
+
         tooltipFormatter: function () {
-            return '<strong>' + this.x + '</strong>:<br/>' + this.point.name;
+            return this.point.name + '<br/>' + this.x;
         },
 
         destroy: function () {
@@ -110,18 +98,22 @@
         },
 
         render: function () {
-            var data = this._getData();
-            this._chartOptions.series = data.series;
-            this._chartOptions.xAxis.categories = data.xAxis;
-            
             this.$el.css({ height: HEIGHT, width: WIDTH });
             this._chartOptions.chart.renderTo = this.$el[0];
-            this._chartOptions.xAxis.tickInterval = 1;
-            this._chartOptions.credits.style = {
-                color: App.Constants.colors.hiddenText
-            }
+            
+            var data = this._getData();
+            this._chartOptions.series = [data.serie];
+            this._chartOptions.xAxis.categories = data.xAxis;
 
             this.detailChart = new Highcharts.Chart(this._chartOptions);
+        },
+
+        update: function(permutation) {
+            this._setPermutation(permutation);
+
+            this.detailChart.series[0].remove(false);
+            var data = this._getData();
+            this.detailChart.addSeries(data.serie, true, false);
         },
 
         _getData: function () {
@@ -145,10 +137,13 @@
 
                 var y = self.data.getNumberData({ ids: currentPermutation });
                 var name = self.data.getStringData({ ids: currentPermutation });
+                if (self.measureUnit) {
+                    name = name + ' (' + self.measureUnit + ')';
+                }
                 var point = { y: y, name: name };
 
                 if (self.permutation[self.timeDimension.id] === timeCategory.id) {
-                    point.colorIndex = 2;
+                    point.marker = { enabled: true, radius: 5 };
                 }
 
                 serie.data.push(point);
@@ -157,7 +152,7 @@
             });
 
             return {
-                series: [serie],
+                serie: serie,
                 xAxis: xAxis
             };
         }
