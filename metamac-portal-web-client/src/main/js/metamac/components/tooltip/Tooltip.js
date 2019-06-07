@@ -17,10 +17,10 @@
             this.view = options.view;
             this.trigger = options.trigger == "click" ? "click" : "mouseOver";
         	
-        	if (this.trigger === "click") {
-        		this._click = _.bind(this._click, this);
-        	} else {
-        		this._mouseMove = _.bind(this._mouseMove, this);
+            if (this.trigger === "click") {
+                this._click = _.bind(this._click, this);
+            } else {
+                this._mouseMove = _.bind(this._mouseMove, this);
             }
 
             this._initializeHtml();

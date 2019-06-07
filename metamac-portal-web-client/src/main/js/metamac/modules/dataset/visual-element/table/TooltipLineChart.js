@@ -35,7 +35,9 @@
                         width: 1,
                         color: Constants.colors.istacGreyDark
                     }
-                ]
+                ],
+                minPadding: 0,
+                maxPadding: 0
             },
             plotOptions: {
                 line: {
