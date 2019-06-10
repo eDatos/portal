@@ -51,7 +51,7 @@
                     marker: {
                         states: {
                             hover: {
-                                fillColor: "#666666"
+                                fillColor: Constants.colors.istacGreyDark
                             }
                         }
                     }
