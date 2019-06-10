@@ -151,9 +151,11 @@
         _drawChart : function(point) {
             var cellTimeSerie = this.delegate.getCellTimeSerieAtMousePosition(point);
             if (!cellTimeSerie) {
+                this.$cellChart.hide();
                 return;
             }
 
+            this.$cellChart.show();
             if (!this.lineChart) {
                 this.lineChart = new App.VisualElement.TooltipLineChart({
                     el: this.$cellChart,

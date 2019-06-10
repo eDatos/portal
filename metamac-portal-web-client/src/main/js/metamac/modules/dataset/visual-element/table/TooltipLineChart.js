@@ -119,8 +119,8 @@
         },
 
         _getData: function () {
-            var selectedTemporalGranularity = this.timeDimension.get("representations").getSelectedTemporalGranularity();
-            var timeDimensionCategories = this.timeDimension.get('representations').where({ temporalGranularity: selectedTemporalGranularity });
+            var temporalGranularityForPermutation = this._findTemporalGranularityForPermutation();
+            var timeDimensionCategories = this.timeDimension.get('representations').where({ temporalGranularity: temporalGranularityForPermutation });
             timeDimensionCategories = _.sortBy(timeDimensionCategories, function (representation) {
                 return representation.normCode;
             }).reverse();
@@ -157,6 +157,11 @@
                 serie: serie,
                 xAxis: xAxis
             };
+        },
+
+        _findTemporalGranularityForPermutation: function () {
+            var selectedTimeCategory = this.timeDimension.get('representations').findWhere({ id: this.permutation[this.timeDimension.id]});
+            return selectedTimeCategory.get("temporalGranularity");
         }
 
     };
