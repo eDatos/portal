@@ -13,22 +13,25 @@
         delay : 300,
 
         initialize : function (options) {
-        	this.trigger = options.trigger == "click" ? "click" : "mouseOver";
+            this.delegate = options.delegate;
+            this.view = options.view;
+            this.trigger = options.trigger == "click" ? "click" : "mouseOver";
         	
-        	if (this.trigger === "click") {
-        		this._click = _.bind(this._click, this);
-        	} else {
-        		this._mouseMove = _.bind(this._mouseMove, this);
-        	}
+            if (this.trigger === "click") {
+                this._click = _.bind(this._click, this);
+            } else {
+                this._mouseMove = _.bind(this._mouseMove, this);
+            }
 
             this._initializeHtml();
             this._hide();
             this.setEl(options.el);
-            this.delegate = options.delegate;
-            this.view = options.view;
         },
 
         destroy : function () {
+            if (this.lineChart) {
+                this.lineChart.destroy();
+            }
             this.$tooltip.remove();
             this._detachEvents();
         },
@@ -47,10 +50,9 @@
         },
 
         _initializeHtml : function () {
-        	this.$tooltipTitle = $('<div class="tooltip-title"></div>');
-        	this.$tooltipBody = $('<div class="tooltip-body"></div>');
-            this.$innerTooltip = $('<div class="tooltip-inner"></div>').append(this.$tooltipTitle);
-            this.$innerTooltip.append(this.$tooltipBody);
+            this.$cellInfo = $('<div class="tooltip-cell-info"></div>');
+            this.$cellChart = $('<div class="tooltip-cell-chart"></div>');
+            this.$innerTooltip = $('<div class="tooltip-inner"></div>').append(this.$cellInfo).append(this.$cellChart);
             this.$tooltip = $('<div class="tooltip in"></div>').append(this.$innerTooltip);
             this.$body = $('body');
         },
@@ -133,7 +135,8 @@
 	        var attribute = this.delegate.getCellInfoAtMousePosition(point);
 	        if (attribute) {
 	            this.view.toggleClickedCellByRelativePoint(point);
-	            this.$innerTooltip.html(attribute);
+	            this.$cellInfo.html(attribute);
+	            this._drawChart(point);
 	            var position = this._getPosition(point);
 	            this.$tooltip.css({	                        
 	                top : position.y,
@@ -141,15 +144,33 @@
 	            });
 	            this.$tooltip.toggle();
 	        } else {
-	            this.view.clearClickedCell();
 	            this._hide();
 	        }
+        },
+
+        _drawChart : function(point) {
+            var cellTimeSerie = this.delegate.getCellTimeSerieAtMousePosition(point);
+            if (!cellTimeSerie) {
+                return;
+            }
+
+            if (!this.lineChart) {
+                this.lineChart = new App.VisualElement.TooltipLineChart({
+                    el: this.$cellChart,
+                    data: cellTimeSerie.data,
+                    permutation: cellTimeSerie.permutation,
+                    timeDimension: cellTimeSerie.timeDimension
+                });
+                this.lineChart.render();
+            } else {
+                this.lineChart.update(cellTimeSerie.permutation);
+            }
         },
         
         _updateByMouseOver : function (point) {
         	var title = this.delegate.getTitleAtMousePosition(point);
             if (title) {
-                this.$innerTooltip.html(title);
+                this.$cellInfo.html(title);
                 var position = this._getPosition(point);
                 this.$tooltip.css({
                     display : 'block',
@@ -163,6 +184,7 @@
 
         _hide : function () {
             this.$tooltip.css('display', 'none');
+            this.view.clearClickedCell();
         },
 
         _mouseMove : function (e) {

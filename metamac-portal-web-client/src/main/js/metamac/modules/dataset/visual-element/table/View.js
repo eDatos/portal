@@ -138,6 +138,10 @@
         this.clickTooltipDelegate = {
             getCellInfoAtMousePosition: function (position) {
                 return self.getCellInfoAtMousePosition(position);
+            },
+
+            getCellTimeSerieAtMousePosition: function (position) {
+                return self.getCellTimeSerieAtMousePosition(position);
             }
         };
         this.clickTooltip = new Tooltip({ el: this.$canvas, delegate: this.clickTooltipDelegate, trigger: "click", view: this });
@@ -404,6 +408,18 @@
             cellInfo = zone.cellInfoAtPoint(point);
         }
         return cellInfo;
+    };
+
+    App.Table.View.prototype._canDrawLineChart = function () {
+        return this.mouseZone === "bodyZone" && this.dataSource.canDrawLineVisualizations();
+    };
+
+    App.Table.View.prototype.getCellTimeSerieAtMousePosition = function (point) {
+        var timeSerie;
+        if (this._canDrawLineChart()) {
+            timeSerie = this.bodyZone.cellTimeSerieAtPoint(point);
+        }
+        return timeSerie;
     };
 
     App.Table.View.prototype.findZoneWithCellsAtMousePosition = function () {

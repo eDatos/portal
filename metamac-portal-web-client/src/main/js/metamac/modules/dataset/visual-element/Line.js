@@ -298,7 +298,6 @@
             var data = this.getData();
             this.replaceSeries(this.masterChart, data.series);
             this.masterChart.xAxis[0].setCategories(data.xAxis, false);
-            this.masterChart.counters.color = 0;
             this.masterChart.redraw();
         },
 
@@ -320,8 +319,6 @@
                 false
             );
 
-            this.detailChart.counters.color = 0;
-
             this.detailChart.redraw(false);
         },
 
@@ -337,7 +334,7 @@
                 columnsDimension = this.filterDimensions.dimensionsAtZone('fixed').at(0);
             }
 
-            var selectedTemporalGranularity = horizontalDimension.get("representations").getSelectedTemporalGranularity()
+            var selectedTemporalGranularity = horizontalDimension.get("representations").getSelectedTemporalGranularity();
             var horizontalDimensionCategories = horizontalDimension.get('representations').where({ temporalGranularity: selectedTemporalGranularity });
             horizontalDimensionCategories = _.sortBy(horizontalDimensionCategories, function (representation) {
                 return representation.normCode;

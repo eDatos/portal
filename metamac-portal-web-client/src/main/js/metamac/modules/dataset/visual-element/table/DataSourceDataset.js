@@ -82,10 +82,26 @@
         cellInfoAtIndex: function (cell) {
             var categoryValues = this.filterDimensions.getTableInfo().getCategoryValuesForCell(cell);
             var formattedCategories = this._formatCategories(categoryValues);
+            var permutation = this.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
             return {
                 attributes: this.cellAttributesAtIndex(cell),
-                categories: formattedCategories
+                categories: formattedCategories,
+                cellValue: this.data.getStringData({ids: permutation}),
+                measureUnit: this.data.metadata.measureUnitForSelection(permutation)
             };
+        },
+
+        canDrawLineVisualizations: function () {
+            return this.filterDimensions.canDrawLineVisualizations();
+        },
+
+        getCellTimeSerieAtIndex: function (cell) {
+            var permutation = this.filterDimensions.getTableInfo().getCategoryIdsForCell(cell);
+            return {
+                data: this.data,
+                permutation: permutation,
+                timeDimension: this.filterDimensions.findWhere({ type: "TIME_DIMENSION" })
+            }
         },
 
         _formatCategories: function (categoryValues) {

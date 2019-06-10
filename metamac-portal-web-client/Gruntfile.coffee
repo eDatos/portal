@@ -187,6 +187,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/visual-element/table/View.js"
                 paths.js + "/metamac/modules/dataset/visual-element/table/ScrollManager.js"
                 paths.js + "/metamac/modules/dataset/visual-element/table/KeyboardManager.js"
+                paths.js + "/metamac/modules/dataset/visual-element/table/TooltipLineChart.js"
 
                 # map
                 paths.js + "/libs/db.js"

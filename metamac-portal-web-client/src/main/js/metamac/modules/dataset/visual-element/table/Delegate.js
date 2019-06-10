@@ -150,7 +150,9 @@
                 primaryMeasureAttributes: formattedCellAttributes ? formattedCellAttributes.primaryMeasureAttributes : undefined,
                 combinatedDimensionsAttributes: formattedCellAttributes ? formattedCellAttributes.combinatedDimensionsAttributes : undefined,
                 categories: cellInfo.categories,
-                hasAttributes: formattedCellAttributes && (formattedCellAttributes.primaryMeasureAttributes.length || formattedCellAttributes.combinatedDimensionsAttributes.length)
+                hasAttributes: formattedCellAttributes && (formattedCellAttributes.primaryMeasureAttributes.length || formattedCellAttributes.combinatedDimensionsAttributes.length),
+                cellValue: cellInfo.cellValue,
+                measureUnit: cellInfo.measureUnit
             }
             return template(context);
         },

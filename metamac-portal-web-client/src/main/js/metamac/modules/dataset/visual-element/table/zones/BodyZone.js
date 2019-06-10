@@ -281,6 +281,13 @@
             if (bodyCellAtPoint) {
                 return this.delegate.formatCellInfo(this.dataSource.cellInfoAtIndex(bodyCellAtPoint));
             }
+        },
+
+        cellTimeSerieAtPoint: function (absolutePoint) {
+            var bodyCellAtPoint = this.cellAtPoint(absolutePoint);
+            if (bodyCellAtPoint) {
+                return this.dataSource.getCellTimeSerieAtIndex(bodyCellAtPoint);
+            }
         }
 
     }
