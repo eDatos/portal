@@ -11,6 +11,16 @@
         sanitizeSvg: function (svg) {
             // sanitize
             svg = svg
+                .replace(/Á/g, '&#193;')
+                .replace(/É/g, '&#201;')
+                .replace(/Í/g, '&#205;')
+                .replace(/Ó/g, '&#211;')
+                .replace(/Ú/g, '&#218;')
+                .replace(/á/g, '&#225;')
+                .replace(/é/g, '&#233;')
+                .replace(/í/g, '&#237;')
+                .replace(/ó/g, '&#243;')
+                .replace(/ú/g, '&#250;')
                 .replace(/zIndex="[^"]+"/g, '')
                 .replace(/isShadow="[^"]+"/g, '')
                 .replace(/symbolName="[^"]+"/g, '')
