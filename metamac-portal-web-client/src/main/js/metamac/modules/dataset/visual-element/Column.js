@@ -54,6 +54,11 @@
                         legendItemClick: function () {
                             return false;
                         }
+                    },
+                    states: {
+                        inactive: {
+                            opacity: 1
+                        }
                     }
                 }
             },
