@@ -11,13 +11,11 @@
 <ul>
     {{#each primaryMeasureAttributes}}
     <li>
-        {{#if href}}
-        <a href="{{href}}" target="_blank">{{name}}</a> {{/if}} {{#unless href}} {{this}} {{/unless}}
+        {{this}}
     </li>
     {{/each}} {{#each combinatedDimensionsAttributes}}
     <li>
-        {{#if href}}
-        <a href="{{href}}" target="_blank">{{name}}</a> {{/if}} {{#unless href}} {{this}} {{/unless}}
+        {{this}}
     </li>
     {{/each}}
 </ul>

@@ -197,15 +197,9 @@
         },
 
         _getValueForEnumerate: function (attributeRawValue, attributeEnumerates) {
-            if (attributeRawValue != "") {
-                if (!_.isUndefined(attributeEnumerates[attributeRawValue])) {
-                    return this._getResourceLink(attributeEnumerates[attributeRawValue]);
-                } else {
-                    return attributeRawValue;
-                }
-            } else {
-                return "";
-            }
+            return attributeEnumerates 
+                    && (attributeEnumerates[attributeRawValue] || attributeRawValue) 
+                    && this.localizeLabel(attributeEnumerates[attributeRawValue].name.text);
         },
 
         initializeLocalesIndex: function () {
@@ -236,17 +230,6 @@
                 }
 
                 return label;
-            }
-        },
-
-        _getResourceLink: function (resource) {
-            if (resource) {
-                var name = this.localizeLabel(resource.name.text);
-                if (resource.selfLink) {
-                    return { href: resource.selfLink.href, name: name };
-                } else {
-                    return name;
-                }
             }
         },
 

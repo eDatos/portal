@@ -139,3 +139,6 @@ Desktop.ini
 ######################
 **/bower_components/**
 /target/
+
+
+HandlebarsTemplates.js
