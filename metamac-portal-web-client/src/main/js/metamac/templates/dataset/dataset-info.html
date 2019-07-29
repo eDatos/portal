@@ -90,9 +90,11 @@
             <ul>
                 <li>{{ fieldOutput "entity.dataset.version" metadata.version "text" }}</li>
                 <li>{{ fieldOutput "entity.dataset.versionRationale.title" metadata.versionRationale "text" }}</li>
+                {{#if metadata.keepAllData}}
                 <li>{{ fieldOutput "entity.dataset.replacesVersion" metadata.replacesVersion "resource" }}</li>
-                <li>{{ fieldOutput "entity.dataset.isReplacedByVersion" metadata.isReplacedByVersion "resource" }}</li>
                 <li>{{ fieldOutput "entity.dataset.replaces" metadata.replaces "resource" }}</li>
+                {{/if}}
+                <li>{{ fieldOutput "entity.dataset.isReplacedByVersion" metadata.isReplacedByVersion "resource" }}</li>
                 <li>{{ fieldOutput "entity.dataset.isReplacedBy" metadata.isReplacedBy "resource" }}</li>
                 <li>{{ fieldOutput "entity.dataset.nextVersion.title" metadata.nextVersion "text" }}</li>
                 <li>{{ fieldOutput "entity.dataset.dateNextUpdate" metadata.dateNextUpdate "date" }}</li>
