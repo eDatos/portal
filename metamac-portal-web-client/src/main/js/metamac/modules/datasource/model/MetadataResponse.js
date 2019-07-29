@@ -398,9 +398,7 @@
         },
 
         getStatisticalOperation: function () {
-            if (this.metadata.statisticalOperation) {
-                return this._getResourceLink(this.metadata.statisticalOperation);
-            }
+            this._getResourceName(this.metadata.statisticalOperation);
         },
 
         getUri: function () {
@@ -529,9 +527,7 @@
         },
 
         getRightsHolder: function () {
-            if (this.metadata.rightsHolder) {
-                return this._getResourceLink(this.metadata.rightsHolder);
-            }
+            return this._getResourceName(this.metadata.rightsHolder);
         },
 
         getCopyrightDate: function () {
@@ -565,9 +561,7 @@
         },
 
         getUpdateFrequency: function () {
-            if (this.metadata.updateFrequency) {
-                return this._getResourceLink(this.metadata.updateFrequency);
-            }
+            return this._getResourceName(this.metadata.updateFrequency);
         },
 
         getStatisticOfficiality: function () {
@@ -580,10 +574,8 @@
             return this.getLocalizedLabel(this.metadata.bibliographicCitation);
         },
 
-        _getResourceLink: function (resource) {
-            if (resource) {
-                return { href: resource.selfLink.href, name: this.localizeLabel(resource.name.text) };
-            }
+        _getResourceName: function (resource) {
+            return resource && this.localizeLabel(resource.name.text);
         }
     };
 

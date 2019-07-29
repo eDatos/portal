@@ -199,7 +199,7 @@
         _getValueForEnumerate: function (attributeRawValue, attributeEnumerates) {
             if (attributeRawValue != "") {
                 if (!_.isUndefined(attributeEnumerates[attributeRawValue])) {
-                    return this._getResourceLink(attributeEnumerates[attributeRawValue]);
+                    return attributeEnumerates[attributeRawValue] && this.localizeLabel(attributeEnumerates[attributeRawValue].name.text);
                 } else {
                     return attributeRawValue;
                 }
@@ -236,17 +236,6 @@
                 }
 
                 return label;
-            }
-        },
-
-        _getResourceLink: function (resource) {
-            if (resource) {
-                var name = this.localizeLabel(resource.name.text);
-                if (resource.selfLink) {
-                    return { href: resource.selfLink.href, name: name };
-                } else {
-                    return name;
-                }
             }
         },
 

@@ -18,9 +18,7 @@
     <ul>
         {{#each attributes}}
         <li>
-            {{#if href}}
-            <a href="{{href}}" target="_blank">{{name}}</a>
-            {{/if}} {{#unless href}} {{this}} {{/unless}}
+            {{this}}
         </li>
         {{/each}}
     </ul>

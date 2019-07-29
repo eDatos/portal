@@ -245,7 +245,7 @@
         },
 
         getRightsHolderText: function () {
-            return this.data && this.data.metadata.getRightsHolder() ? this.data.metadata.getRightsHolder().name : '';
+            return (this.data && this.data.metadata.getRightsHolder()) || '';
         },
 
         showRightsHolderText: function () {
