@@ -197,9 +197,15 @@
         },
 
         _getValueForEnumerate: function (attributeRawValue, attributeEnumerates) {
-            return attributeEnumerates 
-                    && (attributeEnumerates[attributeRawValue] || attributeRawValue) 
-                    && this.localizeLabel(attributeEnumerates[attributeRawValue].name.text);
+            if (attributeRawValue != "") {
+                if (!_.isUndefined(attributeEnumerates[attributeRawValue])) {
+                    return attributeEnumerates[attributeRawValue] && this.localizeLabel(attributeEnumerates[attributeRawValue].name.text);
+                } else {
+                    return attributeRawValue;
+                }
+            } else {
+                return "";
+            }
         },
 
         initializeLocalesIndex: function () {
