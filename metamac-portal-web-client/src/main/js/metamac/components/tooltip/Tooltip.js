@@ -132,20 +132,20 @@
         },
         
         _updateByClick : function (point) {
-	        var attribute = this.delegate.getCellInfoAtMousePosition(point);
-	        if (attribute) {
-	            this.view.toggleClickedCellByRelativePoint(point);
-	            this.$cellInfo.html(attribute);
-	            this._drawChart(point);
-	            var position = this._getPosition(point);
-	            this.$tooltip.css({	                        
-	                top : position.y,
-	                left : position.x                    
-	            });
-	            this.$tooltip.toggle();
-	        } else {
-	            this._hide();
-	        }
+            var attribute = this.delegate.getCellInfoAtMousePosition(point);
+            if (attribute) {
+                this.view.toggleClickedCellByRelativePoint(point);
+                this.$cellInfo.html(attribute);
+                this._drawChart(point);
+                var position = this._getPosition(point);
+                this.$tooltip.css({	                        
+                    top : position.y,
+                    left : position.x                    
+                });
+                this.$tooltip.toggle();
+            } else {
+                this._hide();
+            }
         },
 
         _drawChart : function(point) {
@@ -170,7 +170,7 @@
         },
         
         _updateByMouseOver : function (point) {
-        	var title = this.delegate.getTitleAtMousePosition(point);
+            var title = this.delegate.getTitleAtMousePosition(point);
             if (title) {
                 this.$cellInfo.html(title);
                 var position = this._getPosition(point);
