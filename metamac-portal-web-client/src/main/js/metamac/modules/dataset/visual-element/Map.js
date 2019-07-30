@@ -15,6 +15,7 @@
     _.extend(App.VisualElement.Map.prototype, {
 
         load: function () {
+            this._unbindEvents();
             this._bindEvents();
             if (!this.assertAllDimensionsHaveSelections()) {
                 return;
@@ -190,13 +191,16 @@
             }
             
             this.showLoading();
-
             this._getDrawableShapes();
             this._getData();
             this._calculateAndSetRanges();
 
-            this.updateTitle();
-            this._mapContainerView.update(this._dataJson, this._geoJson, this.getTitle());
+            this._initModel();
+            this._initContainerView();
+            
+            this._initTitleView();
+            this.showTitle();
+            this.render();
         },
 
         _mapExists: function() {
