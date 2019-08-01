@@ -147,8 +147,8 @@
                 return value.value;
             });
             this._mapModel.set("values", values);
-            this._mapModel.set("minValue", _.min(values));
-            this._mapModel.set("maxValue", _.max(values));
+            this._mapModel.set("minValue", values.length > 0? _.min(values): 0);
+            this._mapModel.set("maxValue", values.length > 0? _.max(values): 0);
         },
 
         _initContainerView: function () {
@@ -238,7 +238,7 @@
         },
 
         _getGeographicSelectedRepresentations: function () {
-            return this._getGeographicDimension().get('representations').where({ drawable: true });
+            return this._getGeographicDimension().get('representations').getSelectedRepresentationsByCurrentLevel();
         },
 
         _getGeographicDimensionNormCodes: function () {
