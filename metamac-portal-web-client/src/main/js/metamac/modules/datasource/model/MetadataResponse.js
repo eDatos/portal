@@ -410,7 +410,7 @@
             return this.getLocalizedLabel(this.metadataResponse.name);
         },
 
-        getKeepAllData() {
+        getKeepAllData: function() {
             return this.metadata.keepAllData;
         },
 

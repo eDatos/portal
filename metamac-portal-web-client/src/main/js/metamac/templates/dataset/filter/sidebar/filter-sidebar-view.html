@@ -1,4 +1,12 @@
 <div class="filter-sidebar" id="filter-sidebar">
+    <div class="form-group">
+        <label for="ignore-null-fields">{{ message "filter.sidebar.ignore.null" }}</label>
+        <input class="cell-hidder" type="checkbox" id="ignore-null-fields" data-value="NULO" {{#if ignoredValues.NULO}}checked{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="ignore-cero-fields">{{ message "filter.sidebar.ignore.zero" }}</label>
+        <input class="cell-hidder" type="checkbox" id="ignore-cero-fields" data-value="CERO" {{#if ignoredValues.CERO}}checked{{/if}}>
+    </div>
     <div class="filter-sidebar-search"></div>
     <div class="filter-sidebar-multidatasets"></div>
     <div class="filter-sidebar-dimensions"></div>

@@ -22,6 +22,15 @@
             this.dataSource = options.dataSource;
             this.delegate = options.delegate;
             this.view = options.view;
+            this.ignoredValues = [];
+            this.ignoredValuesHandlers = {
+                'NULO': function(value) {
+                    return (value == '' || value ==null) 
+                },
+                'CERO': function(value) {
+                    return parseInt(value) == 0;
+                }
+            }
             this.calculateIncrementalSize();
         },
 
@@ -44,12 +53,54 @@
                     rows: rows,
                     columns: columns
                 };
-
-                var widthTotal = columns[columns.length - 1];
-                var heightTotal = rows[rows.length - 1];
-
-                this.setSize(new Size(widthTotal, heightTotal));
             }
+        },
+
+        calculateDimensionsAndIgnoredCells: function() {
+            var widthTotal = 0;
+            var heightTotal = 0;
+            this.ignoredCells = null;
+
+            if (this.shouldIgnoreCells()) {
+                var nColumns = this.dataSource.columns();
+                var nRows = this.dataSource.rows();
+                var ignoredCells = {
+                    columns: new Set(),
+                    rows: new Set()
+                }
+
+                for (var c=0; c<nColumns; c++) {
+                    if (this.shouldIgnoreColumn(c)) {
+                        ignoredCells.columns.add(c);
+                    }
+                    else {
+                        widthTotal += this.incrementalCellSize.columns[c + 1] - this.incrementalCellSize.columns[c]
+                    }
+                }
+
+                for (var r=0; r<nRows; r++) {
+                    if (this.shouldIgnoreRow(r)) {
+                        ignoredCells.rows.add(r);
+                    }
+                    else {
+                        heightTotal += this.incrementalCellSize.rows[r + 1] - this.incrementalCellSize.rows[r];
+                    }
+                }
+                this.ignoredCells = ignoredCells;
+            }
+            else {
+                var columns = this.incrementalCellSize.columns;
+                var rows = this.incrementalCellSize.rows;
+
+                widthTotal = columns[columns.length - 1];
+                heightTotal = rows[rows.length - 1];
+            }
+
+            this.setSize(new Size(widthTotal, heightTotal));
+        },
+
+        shouldIgnoreCells: function() {
+            return this.ignoredValues && this.ignoredValues.length > 0;
         },
 
         // Calcula la primera celda visible (en la esquina superior izquierda)
@@ -68,10 +119,16 @@
 
         // IDEA: Improve implementation. It is not so transparent METAMAC-2282
         cellAtPoint: function (point) {
-            var absolutePoint = this.relativePoint2AbsolutePoint(point);
-            var x = Utils.floorIndex(this.incrementalCellSize.columns, absolutePoint.x),
-                y = Utils.floorIndex(this.incrementalCellSize.rows, absolutePoint.y);
-            y -= this.dataSource.blankRowsOffset(y);
+
+            var iX = Utils.floorIndex(this.currentPaintInfo.columns.map(function(c) { return c.x}), point.x);
+            var iY = Utils.floorIndex(this.currentPaintInfo.rows.map(function(r){return r.y}), point.y);
+
+            if (iX == -1 || iY == -1) {
+                console.error('No se puede obtener la celda');
+            }
+
+            var x = this.currentPaintInfo.columns[iX].index;
+            var y = this.currentPaintInfo.rows[iY].indexCell;
             return new Cell(x, y);
         },
 
@@ -138,6 +195,11 @@
             var size;
 
             while (xVisible && j < totalColumns) {
+                if (this.ignoredCells && this.ignoredCells.columns.has(j)) {
+                    j++;
+                    continue;
+                }
+
                 size = this.delegate.columnWidth(j);
 
                 columns.push({
@@ -158,6 +220,12 @@
             // IndexCell to account for the difference that blank rows add
             var indexCell = i - this.dataSource.blankRowsOffset(firstCell.y);
             while (yVisible && i < totalRows) {
+                if (!this.dataSource.isBlankRow(i) && this.ignoredCells && this.ignoredCells.rows.has(indexCell)) {
+                    i++;
+                    indexCell++;
+                    continue;
+                }
+
                 size = this.delegate.rowHeight(i);
 
                 rows.push({
@@ -184,6 +252,78 @@
             };
         },
 
+        shouldIgnoreRow: function(iRow) {
+            var totalColumns = this.dataSource.columns();
+            var firstCell = this.firstCell();
+            var firstCellPoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(firstCell));
+            var firstCellSize = this.cellSize(firstCell);
+
+
+            var xVisible = true;
+            var shouldIgnore = true;
+            var x = firstCellPoint.x;
+
+            for (var i=0; xVisible && i<totalColumns; i++) {
+                var size = this.delegate.columnWidth(i);
+                var cell = new Cell(i, iRow);
+                var value = this.dataSource.cellAtIndex(cell);
+
+                if (!this.isIgnored(value)) {
+                    shouldIgnore = false;
+                    break;
+                }
+
+                x += size;
+                xVisible = this.isRelativeRectangleVisible(new Rectangle(x, firstCellPoint.y, size, firstCellSize.height));
+            }
+
+            return shouldIgnore;
+        },
+
+        isIgnored: function(value) {
+            var ignored = false;
+            for (var i = 0; i<this.ignoredValues.length; i++) {
+                if (this.ignoredValuesHandlers[this.ignoredValues[i]] && this.ignoredValuesHandlers[this.ignoredValues[i]](value)) {
+                    ignored = true;
+                    break;
+                }
+            }
+            return ignored;
+        },
+
+        shouldIgnoreColumn: function(iColumn) {
+            /* Filtrar columnas con valor 0 */
+            var firstCell = this.firstCell();
+            var firstCellPoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(firstCell));
+            var firstCellSize = this.cellSize(firstCell);
+            var totalRows = this.dataSource.rows();
+
+
+            var shouldIgnore = true;
+            var visible = true;
+            var y = firstCellPoint.y;
+            for (var iRow = firstCell.y - this.dataSource.blankRowsOffset(firstCell.y); visible && iRow<(totalRows - this.dataSource.blankRowsOffset(firstCell.y)); iRow++) {
+                var rowHeight = this.delegate.rowHeight(iRow);
+                var cell = new Cell(iColumn, iRow);
+                var value = this.dataSource.cellAtIndex(cell);
+
+                if (!this.isIgnored(value)) {
+                    shouldIgnore = false;
+                    break;
+                }
+                y += rowHeight;
+                visible = this.isRelativeRectangleVisible(new Rectangle(firstCellPoint.x, y, firstCellSize.width, rowHeight));
+            }
+
+            return shouldIgnore;
+        },
+
+        ignoreValues: function(ignoredValues, repaint) {
+            repaint = repaint != null? repaint : false;
+            this.ignoredValues = ignoredValues;
+            repaint && this.repaint();
+        },
+
         repaint: function () {
             this.clear();
             this.ctx.save();
@@ -192,8 +332,9 @@
             this.ctx.rect(this.viewPort.x, this.viewPort.y, this.viewPort.width, this.viewPort.height);
             this.ctx.clip();
 
-            var limits = this.visibleRowsAndColumns();
+            this.calculateDimensionsAndIgnoredCells();
             var paintInfo = this.paintInfo();
+            this.currentPaintInfo = paintInfo;
 
             this.paintCells(paintInfo);
 

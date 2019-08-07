@@ -95,7 +95,7 @@
         },
 
         _bindEvents: function () {
-            this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", this._updateSelectionApiUrl);
+            this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", _.debounce(this._updateSelectionApiUrl, 20));
         },
 
         _unbindEvents: function () {

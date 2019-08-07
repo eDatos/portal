@@ -76,8 +76,6 @@
                 var indexInValue = Math.floor(row.index / columnsValuesLengthAc[i]);
                 var index = indexInValue * columnsValuesLengthAc[i];
                 if (result[i].length === 0 || _.last(result[i]).index != index) {
-                    var cellY = this.incrementalCellSize.rows[index] - this.bodyZone.origin.y + this.viewPort.y;
-
                     var indexEnd = index + columnsValuesLengthAc[i];
                     var cellHeight = this.incrementalCellSize.rows[indexEnd] - this.incrementalCellSize.rows[index];
 
@@ -110,7 +108,7 @@
                         index: index,
                         indexEnd: indexEnd,
                         height: cellHeight,
-                        y: cellY,
+                        y: row.y,
                         x: cellX,
                         width: cellWidth,
                         content: content,
