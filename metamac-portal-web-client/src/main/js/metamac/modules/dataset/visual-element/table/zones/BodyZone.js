@@ -319,7 +319,7 @@
         },
 
         ignoreValues: function(ignoredValues, repaint) {
-            repaint = repaint != null? repaint : false;
+            repaint = repaint != null ? repaint : false;
             this.ignoredValues = ignoredValues;
             repaint && this.repaint();
         },
