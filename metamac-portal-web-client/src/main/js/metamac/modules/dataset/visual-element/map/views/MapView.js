@@ -136,7 +136,14 @@
             var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
             var data = this._getData();
             var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
-            this.map.series[DATA_SERIE_INDEX].update({mapData: mapData, data: data, name: this.title}, redraw);
+
+            // Posible bug detectado
+            // Es necesario establecer 'hasDerivedData' a true puesto que si no, la variable 'keepPoints' del método 'update'
+            // siempre será verdadero y 'data' y 'mapData' no se actualizarán correctamente
+            // Issue creado: https://github.com/highcharts/highcharts/issues/11636
+            this.map.series[DATA_SERIE_INDEX].hasDerivedData = true;
+
+            this.map.series[DATA_SERIE_INDEX].update({data: data, mapData: mapData, name: this.title}, redraw);
         },
 
         render: function () {

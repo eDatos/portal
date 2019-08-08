@@ -101,7 +101,7 @@
 
                 associatedBodyCellWithAttributes = new Cell(chunk[0].index, 0);
                 
-                var resultx = chunk[0].x < 0? 0 : chunk[0].x;
+                var resultx = chunk[0].x < 0 ? 0 : chunk[0].x;
                 var lastChunkElement = chunk[chunk.length -1 ];
 
                 cellResult = {

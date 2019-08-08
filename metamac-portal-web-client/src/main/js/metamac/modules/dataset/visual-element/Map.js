@@ -147,8 +147,8 @@
                 return value.value;
             });
             this._mapModel.set("values", values);
-            this._mapModel.set("minValue", values.length > 0? _.min(values): 0);
-            this._mapModel.set("maxValue", values.length > 0? _.max(values): 0);
+            this._mapModel.set("minValue", values.length > 0 ? _.min(values): 0);
+            this._mapModel.set("maxValue", values.length > 0 ? _.max(values): 0);
         },
 
         _initContainerView: function () {
@@ -195,12 +195,8 @@
             this._getData();
             this._calculateAndSetRanges();
 
-            this._initModel();
-            this._initContainerView();
-            
-            this._initTitleView();
-            this.showTitle();
-            this.render();
+            this.updateTitle();
+            this._mapContainerView.update(this._dataJson, this._geoJson, this.getTitle());
         },
 
         _mapExists: function() {
