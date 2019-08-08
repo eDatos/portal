@@ -71,7 +71,7 @@
         onChangeSelect : function () {
             var selectedId = this.$('select').val();
             var selectedModel = this.collection.get(selectedId);
-            var selectedModelId = selectedModel? selectedModel.id : undefined;
+            var selectedModelId = selectedModel ? selectedModel.id : undefined;
             this.selectionModel.set(this.name, selectedModelId);
             this.trigger('select', selectedModel);
         }
