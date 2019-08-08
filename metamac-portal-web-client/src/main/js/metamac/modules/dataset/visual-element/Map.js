@@ -195,12 +195,8 @@
             this._getData();
             this._calculateAndSetRanges();
 
-            this._initModel();
-            this._initContainerView();
-            
-            this._initTitleView();
-            this.showTitle();
-            this.render();
+            this.updateTitle();
+            this._mapContainerView.update(this._dataJson, this._geoJson, this.getTitle());
         },
 
         _mapExists: function() {

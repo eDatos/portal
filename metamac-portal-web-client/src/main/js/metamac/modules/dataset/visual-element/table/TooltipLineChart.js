@@ -108,7 +108,7 @@
             this._chartOptions.xAxis.categories = data.xAxis;
 
             this.detailChart = new Highcharts.Chart(this._chartOptions);
-            this._emptyData(data)? this.$el.hide() : this.$el.show();
+            this._checkVisibility(data);
         },
 
         update: function(permutation) {
@@ -118,11 +118,20 @@
             var data = this._getData();
             this.detailChart.addSeries(data.serie, true, false);
             this.detailChart.xAxis[0].setCategories(data.xAxis);
-            this._emptyData(data)? this.$el.hide() : this.$el.show();
+            this._checkVisibility(data);
         },
 
         _emptyData: function(data) {
             return !Array.isArray(data.serie.data) || data.serie.data.every(function(d) { return d.y == null; });
+        },
+
+        _checkVisibility: function(data) {
+            if (this._emptyData(data)) {
+                this.$el.hide()
+            }
+            else {
+                this.$el.show()
+            };
         },
 
         _getData: function () {

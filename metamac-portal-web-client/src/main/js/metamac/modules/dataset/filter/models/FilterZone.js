@@ -46,7 +46,7 @@
         },
 
         leftoverDimensions : function () {
-            var begin = _.isUndefined(this.get('fixedSize'))? 0 : this.get('fixedSize');
+            var begin = _.isUndefined(this.get('fixedSize')) ? 0 : this.get('fixedSize');
             return this.get('dimensions').slice(begin);
         },
 
