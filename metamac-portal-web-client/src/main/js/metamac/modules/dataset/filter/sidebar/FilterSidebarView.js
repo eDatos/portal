@@ -46,7 +46,7 @@
 
         events: {
             "resize": "_onResize",
-            "change .cell-hidder": "_onIgnoreDimensionValue"
+            "change .control-ignore-value": "_onIgnoreDimensionValue"
         },
 
         _onIgnoreDimensionValue: function(event) {
