@@ -1,5 +1,7 @@
 (function () {
     "use strict";
+    var Constants = App.Constants;
+    var FullScreen = App.FullScreen;
 
     App.namespace("App.widget.filter.sidebar");
 
@@ -8,6 +10,30 @@
         template: App.templateManager.get('dataset/filter/sidebar/filter-sidebar-multidataset-node'),
 
         className: "filter-sidebar-multidataset-node",
+
+        events: {
+            'click .multidataset-link': 'onMultidatasetClick'
+        },
+
+        onMultidatasetClick: function (event) {
+            if (FullScreen.isInFullScreen(Constants.metamacContainerSelector)) {
+                var target = event.currentTarget;
+                var newPath = target.pathname + target.search + target.hash;
+                window.history.pushState("", "", newPath);
+                var queryParams = target.search.replace('?', '').split('&').reduce(function(queryParams, queryString){
+                    var pair = queryString.split('=');
+                    queryParams[pair[0]] = pair[1] || '';
+                    return queryParams;
+                }, {});
+                App.queryParams.agencyId =  queryParams.agencyId;
+                App.queryParams.multidatasetId =  queryParams.multidatasetId;
+                App.queryParams.identifier =  queryParams.resourceId;
+                App.queryParams.resourceType =  queryParams.resourceType;
+                App.queryParams.version =  queryParams.version;
+                Backbone.history.loadUrl(Backbone.history.fragment);
+                return false;
+            }
+        },
 
         initialize: function (options) {
             this.multidatasetNode = options.multidatasetNode;

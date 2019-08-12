@@ -25,6 +25,10 @@
             _.bindAll(this, "exitFullScreen", "_keydown", "_didExitFullScreen");
         },
 
+        destroy: function () {
+            this._removeExitFullScreenListeners();
+        },
+
         setContainer : function (container) {
             if (container instanceof $) {
                 this.$container = container;
@@ -98,18 +102,21 @@
             if (this.browserHasFullScreenSupport()) {
                 var fn = function () {
                     setTimeout(function () {
-                        self.$document.unbind(self.events.change, fn);
                         self.trigger('didEnterFullScreen');
                         self._addExitFullScreenListeners();
                     }, this.FS_RESIZE_DELAY); // time out for wait browser animation
                 };
-                self.$document.bind(self.events.change, fn);
+                self.$document.one(self.events.change, fn);
                 self._enterFullScreenSupport();
             } else {
                 self._enterFullScreenNoSupport();
                 self._addExitFullScreenListeners();
                 self.trigger('didEnterFullScreen');
             }
+        },
+
+        addExitFullScreenListeners: function() {
+            this._addExitFullScreenListeners();
         },
 
         _addExitFullScreenListeners : function () {
@@ -176,10 +183,22 @@
             } else {
                 this.get$Container().removeClass('full-screen');
             }
+        },
+
+        isInFullScreen: function() {
+            return !!document.fullscreenElement && this.get$Container()[0] === document.fullscreenElement;
         }
 
     };
 
+    App.FullScreen.isInFullScreen = function(elementSelector) {
+        if (!document.fullscreenElement) {
+            return false;
+        }
+
+        var element = document.querySelector(elementSelector);
+        return element === document.fullscreenElement;
+    }
     _.extend(App.FullScreen.prototype, Backbone.Events);
 
 }());
