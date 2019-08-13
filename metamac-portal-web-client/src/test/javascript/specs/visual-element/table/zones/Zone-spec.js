@@ -67,31 +67,6 @@ describe("[TableCanvas] Zone", function () {
                 expect(zone.absolutePoint2RelativePoint(new Point(150, 150))).to.eql(new Point(160, 160));
             });
 
-            it("should convert a relative point to and absolute point", function () {
-                var zone = new ZoneClass();
-                zone.setViewPort(new Rectangle(new Point(0, 0), new Size(300, 300)));
-                zone.setSize(new Size(600, 600));
-
-                expect(zone.relativePoint2AbsolutePoint(new Point(0, 0))).to.eql(new Point(0, 0));
-                expect(zone.relativePoint2AbsolutePoint(new Point(30, 30))).to.eql(new Point(30, 30));
-
-                zone.setOrigin(new Point(-50, -50));
-                expect(zone.relativePoint2AbsolutePoint(new Point(0, 0))).to.eql(new Point(-50, -50));
-                expect(zone.relativePoint2AbsolutePoint(new Point(30, 30))).to.eql(new Point(-20, -20));
-
-
-                zone.setViewPort(new Rectangle(new Point(30, 30), new Size(300, 300)));
-                zone.setOrigin(new Point(0, 0));
-
-                expect(zone.relativePoint2AbsolutePoint(new Point(30, 30))).to.eql(new Point(0, 0));
-                expect(zone.relativePoint2AbsolutePoint(new Point(60, 60))).to.eql(new Point(30, 30));
-
-                zone.setOrigin(new Point(-50, -50));
-
-                expect(zone.relativePoint2AbsolutePoint(new Point(30, 30))).to.eql(new Point(-50, -50));
-                expect(zone.relativePoint2AbsolutePoint(new Point(60, 60))).to.eql(new Point(-20, -20));
-            });
-
             it("should know if a relative point is visible", function () {
                 var zone = new ZoneClass();
                 zone.setViewPort(new Rectangle(new Point(0, 0), new Size(300, 300)));

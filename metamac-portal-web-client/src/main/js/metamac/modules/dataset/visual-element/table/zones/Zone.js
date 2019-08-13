@@ -72,11 +72,6 @@
         return point.distance(this.origin).plus(this.viewPort.getPoint());
     };
 
-    // Convierte una posicion relative al canvas a una posición absoluta
-    App.Table.Zone.prototype.relativePoint2AbsolutePoint = function (point) {
-        return point.distance(this.viewPort.getPoint()).plus(this.origin);
-    };
-
     // Comprueba si un punto relativo es visible
     App.Table.Zone.prototype.isRelativePointVisible = function (point) {
         return (point.x >= this.viewPort.x && point.x < this.viewPort.width + this.viewPort.x) &&

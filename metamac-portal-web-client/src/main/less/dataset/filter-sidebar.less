@@ -357,10 +357,11 @@
 
 input.control-ignore-value {
     display: none;
-    & + .filter-sidebar-category-icon-check:before {
-        content: "\f159";
+    & + .filter-sidebar-category-icon-check {
+        .icon-uncheck;
     }
-    &:checked + .filter-sidebar-category-icon-check:before {
-        content: "\f103";
+    
+    &:checked + .filter-sidebar-category-icon-check {
+        .icon-check-fill;
     }
 }

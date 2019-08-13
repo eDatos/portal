@@ -65,13 +65,13 @@
                 var nColumns = this.dataSource.columns();
                 var nRows = this.dataSource.rows();
                 var ignoredCells = {
-                    columns: new Set(),
-                    rows: new Set()
+                    columns: {},
+                    rows: {}
                 }
 
                 for (var c=0; c<nColumns; c++) {
                     if (this.shouldIgnoreColumn(c)) {
-                        ignoredCells.columns.add(c);
+                        ignoredCells.columns[c] = true;
                     }
                     else {
                         widthTotal += this.incrementalCellSize.columns[c + 1] - this.incrementalCellSize.columns[c]
@@ -80,7 +80,7 @@
 
                 for (var r=0; r<nRows; r++) {
                     if (this.shouldIgnoreRow(r)) {
-                        ignoredCells.rows.add(r);
+                        ignoredCells.rows[r] = true;
                     }
                     else {
                         heightTotal += this.incrementalCellSize.rows[r + 1] - this.incrementalCellSize.rows[r];
@@ -117,15 +117,9 @@
             return new Point(x, y);
         },
 
-        // IDEA: Improve implementation. It is not so transparent METAMAC-2282
         cellAtPoint: function (point) {
-
             var iX = Utils.floorIndex(this.currentPaintInfo.columns.map(function(c) { return c.x}), point.x);
             var iY = Utils.floorIndex(this.currentPaintInfo.rows.map(function(r){return r.y}), point.y);
-
-            if (iX == -1 || iY == -1) {
-                console.error('No se puede obtener la celda');
-            }
 
             var x = this.currentPaintInfo.columns[iX].index;
             var y = this.currentPaintInfo.rows[iY].indexCell;
@@ -195,7 +189,7 @@
             var size;
 
             while (xVisible && j < totalColumns) {
-                if (this.ignoredCells && this.ignoredCells.columns.has(j)) {
+                if (this.ignoredCells && this.ignoredCells.columns.hasOwnProperty(j)) {
                     j++;
                     continue;
                 }
@@ -220,7 +214,7 @@
             // IndexCell to account for the difference that blank rows add
             var indexCell = i - this.dataSource.blankRowsOffset(firstCell.y);
             while (yVisible && i < totalRows) {
-                if (!this.dataSource.isBlankRow(i) && this.ignoredCells && this.ignoredCells.rows.has(indexCell)) {
+                if (!this.dataSource.isBlankRow(i) && this.ignoredCells && this.ignoredCells.rows.hasOwnProperty(indexCell)) {
                     i++;
                     indexCell++;
                     continue;
@@ -292,7 +286,6 @@
         },
 
         shouldIgnoreColumn: function(iColumn) {
-            /* Filtrar columnas con valor 0 */
             var firstCell = this.firstCell();
             var firstCellPoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(firstCell));
             var firstCellSize = this.cellSize(firstCell);

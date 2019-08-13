@@ -58,62 +58,61 @@
 
         var rowsLen = this.dataSource.topHeaderRows();
         var rowsValues = this.dataSource.topHeaderValues();
-        var columns = {};
-        for (var i=0; i<bodyPaintInfo.columns.length; i++) {
+        var columnsTree = {};
+        for (var i = 0; i < bodyPaintInfo.columns.length; i++) {
             var column = bodyPaintInfo.columns[i];
             var index = column.index;
-            var pointerColumn = columns;
-            for (var j=0; j<rowsLen-1; j++) {
+            var pointerColumn = columnsTree;
+            for (var j = 0; j < rowsLen - 1; j++) {
                 var columnIndex = Math.floor(index / rowsValues[j+1].length) % rowsValues[j].length;
                 if (!pointerColumn.hasOwnProperty(columnIndex)) {
                     pointerColumn[columnIndex] = {}
                 }
                 pointerColumn = pointerColumn[columnIndex];
             }
-            pointerColumn[index % rowsValues[rowsValues.length-1].length] = i;
+            pointerColumn[index % rowsValues[rowsValues.length - 1].length] = i;
         }
 
-        var result = [];
-        this.parseColumns(bodyPaintInfo, columns, result);
+        var paintInfo = [];
+        this.parseColumns(bodyPaintInfo, columnsTree, paintInfo);
 
-        this.lastPaintInfo = result;
-        return result;
+        this.lastPaintInfo = paintInfo;
+        return paintInfo;
     }
 
 
-    App.Table.TopHeaderZone.prototype.parseColumns = function (bodyPaintInfo, columns, result, i, offset) {
-        i = i || 0;
+    App.Table.TopHeaderZone.prototype.parseColumns = function (bodyPaintInfo, columnsTree, paintInfo, columnLevel, offset) {
+        columnLevel = columnLevel || 0;
         offset = offset || 0;
         var tooltipValues = this.dataSource.topHeaderTooltipValues();
         var rowsValues = this.dataSource.topHeaderValues();
         var self = this;
-        result[i] = result[i] || [];
+        paintInfo[columnLevel] = paintInfo[columnLevel] || [];
 
-        Object.keys(columns).forEach(function(c) {
+        Object.keys(columnsTree).forEach(function(columnKey) {
             var cellResult = {};
             var associatedBodyCellWithAttributes;
 
-            if (typeof columns[c] == 'object'){
-                self.parseColumns(bodyPaintInfo, columns[c], result, i + 1);
-                var offsetEnd = offset + Object.keys(columns[c]).length;
-                var chunk = result[i+1].slice(offset, offsetEnd); // i+1 para acceder al siguiente nivel
+            if (typeof columnsTree[columnKey] == 'object') { // Is column with childs
+                self.parseColumns(bodyPaintInfo, columnsTree[columnKey], paintInfo, columnLevel + 1);
+                var offsetEnd = offset + Object.keys(columnsTree[columnKey]).length;
+                var visibleChilds = paintInfo[columnLevel + 1].slice(offset, offsetEnd);
                 offset = offsetEnd;
 
-                associatedBodyCellWithAttributes = new Cell(chunk[0].index, 0);
+                associatedBodyCellWithAttributes = new Cell(visibleChilds[0].index, 0);
                 
-                var resultx = chunk[0].x < 0 ? 0 : chunk[0].x;
-                var lastChunkElement = chunk[chunk.length -1 ];
+                var resultx = visibleChilds[0].x < 0 ? 0 : visibleChilds[0].x;
+                var lastChunkElement = visibleChilds[visibleChilds.length -1 ];
 
                 cellResult = {
                     width: (lastChunkElement.x + lastChunkElement.width) - resultx,
-                    index: chunk[0].index,
-                    indexEnd: chunk[0].index + 1,
+                    index: visibleChilds[0].index,
+                    indexEnd: visibleChilds[0].index + 1,
                     x: resultx,
                 }
 
-            }
-            else {
-                var column = bodyPaintInfo.columns[columns[c]];
+            } else {
+                var column = bodyPaintInfo.columns[columnsTree[columnKey]];
                 associatedBodyCellWithAttributes = new Cell(column.index, 0);
 
                 cellResult = {
@@ -129,7 +128,7 @@
             var cellTitle = "";
             var cellDescription = "";
             var cellMeasureUnit = "";
-            var cellInfo = tooltipValues[i][c];
+            var cellInfo = tooltipValues[columnLevel][columnKey];
 
             if (cellInfo) {
                 cellAttributes = cellAttributesAtIndex ? cellAttributesAtIndex.dimensionsAttributes : [];
@@ -144,10 +143,10 @@
                 cellMeasureUnit = cellInfo.measureUnit;
             }
 
-            result[i].push(_.extend(cellResult, {
-                y: self.incrementalCellSize.rows[i],
-                height: self.delegate.topHeaderRowHeight(i, self.view),
-                content: rowsValues[i][c],
+            paintInfo[columnLevel].push(_.extend(cellResult, {
+                y: self.incrementalCellSize.rows[columnLevel],
+                height: self.delegate.topHeaderRowHeight(columnLevel, self.view),
+                content: rowsValues[columnLevel][columnKey],
                 tooltipTitle: cellTitle,
                 tooltipDescription: cellDescription,
                 tooltipMeasureUnit: cellMeasureUnit,
