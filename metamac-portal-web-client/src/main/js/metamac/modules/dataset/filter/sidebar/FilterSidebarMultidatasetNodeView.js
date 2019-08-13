@@ -1,5 +1,6 @@
 (function () {
     "use strict";
+    var QueryParamsUtils = App.QueryParamsUtils;
 
     App.namespace("App.widget.filter.sidebar");
 
@@ -8,6 +9,27 @@
         template: App.templateManager.get('dataset/filter/sidebar/filter-sidebar-multidataset-node'),
 
         className: "filter-sidebar-multidataset-node",
+
+        events: {
+            'click .multidataset-link': 'onMultidatasetClick'
+        },
+
+        onMultidatasetClick: function (event) {
+            var target = event.currentTarget;
+            var newPath = target.pathname + target.search + target.hash;
+            
+            // Cambia la URL sin realizar ninguna petición
+            window.history.pushState("", "", newPath);
+
+            var queryParams = QueryParamsUtils.getQueryParamsFromQuery(target.search);
+            queryParams.identifier = queryParams.resourceId;
+            delete queryParams.resourceId;
+            _.extend(App.queryParams, queryParams);
+
+            // Refresca la ruta actual: https://stackoverflow.com/a/25777550
+            Backbone.history.loadUrl(Backbone.history.fragment);
+            return false;
+        },
 
         initialize: function (options) {
             this.multidatasetNode = options.multidatasetNode;

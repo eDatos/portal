@@ -32,6 +32,12 @@
             this._initializeHighChartsOptions();
         },
 
+        destroy: function () {
+            if (this.fullScreen) {
+                this.fullScreen.destroy();
+            }
+        },
+
         _initializeVisualElements: function () {
             var visualElements = ["info", "table", "column", "line"];
             if (_.findWhere(this.metadata.getDimensions(), { type: 'GEOGRAPHIC_DIMENSION' })) {
@@ -133,7 +139,7 @@
             this.content.show(this.sidebarView);
             this.optionsBar.show(this.optionsView);
             this.dimensions.show(this.dimensionsView);
-            this.fullScreen.setContainer($('.metamac-container'));
+            this.fullScreen.setContainer($(Constants.metamacContainerSelector));
             if (this.optionsModel.get('widget')) {
                 this._initializeWidget();
             }
@@ -152,9 +158,12 @@
         },
 
         showChart: function (options) {
-            if (options.fullScreen) {
+            if (this.fullScreen.isInFullScreen()) {
+                this.fullScreen.addExitFullScreenListeners();
+                this.optionsModel.set('fullScreen', true);
+            }
+            else if (options.fullScreen) {
                 this.fullScreen.enterFullScreen();
-                this.optionsModel.set('fullScreen', options.fullScreen);
             }
 
             if (!this.optionsModel.get('widgetInitialType')) {
