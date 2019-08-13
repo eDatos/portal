@@ -122,7 +122,7 @@
         },
 
         _emptyData: function(data) {
-            return !Array.isArray(data.serie.data) || data.serie.data.every(function(d) { return d.y == null; });
+            return !Array.isArray(data.serie.data) || data.serie.data.every(function(value) { return value.y == null; });
         },
 
         _checkVisibility: function(data) {
