@@ -63,6 +63,11 @@
         this.zones = [this.bodyZone, this.rightScrollZone, this.bottomScrollZone, this.leftHeaderZone, this.topHeaderZone];
     };
 
+    App.Table.View.prototype.filterDimensionsByValues = function(ignoreValues) {
+        this.bodyZone.ignoreValues(ignoreValues);
+        this.forceRepaint();
+    };
+
     App.Table.View.prototype.getSize = function () {
         return new Size(this.canvas.width, this.canvas.height);
     };

@@ -2,4 +2,25 @@
     <div class="filter-sidebar-search"></div>
     <div class="filter-sidebar-multidatasets"></div>
     <div class="filter-sidebar-dimensions"></div>
+
+    <div class="filter-ignore-values-checks">
+        <div class="form-group">
+            <label for="ignore-null-fields">
+                <input class="control-ignore-value" type="checkbox" id="ignore-null-fields" data-value="NULO" {{#if ignoredValues.NULO}}checked{{/if}}>
+                <i class="filter-sidebar-category-icon-check"></i>
+                <span>
+                    {{ message "filter.sidebar.ignore.null" }}
+                </span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="ignore-cero-fields">
+                <input class="control-ignore-value" type="checkbox" id="ignore-cero-fields" data-value="CERO" {{#if ignoredValues.CERO}}checked{{/if}}>
+                <i class="filter-sidebar-category-icon-check"></i>
+                <span>
+                    {{ message "filter.sidebar.ignore.zero" }}
+                </span>
+            </label>
+        </div>
+    </div>
 </div>

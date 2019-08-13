@@ -60,6 +60,10 @@ I18n.translations.es = {
             "for": "Para"
         },
         sidebar: {
+            ignore: {
+                null: 'Ignorar valores nulos',
+                zero: 'Ignorar valores cero'
+            },
             info: {
                 title: "Info"
             },

@@ -52,6 +52,7 @@
         _bindEvents: function () {
             var debouncedUpdate = _.debounce(_.bind(this.update, this), 20);
             this.listenTo(this.filterDimensions, "change:drawable change:zone change:visibleLabelType reverse", debouncedUpdate);
+            this.listenTo(this.filterDimensions, "change:filterByValues", this._filterDimensionsByValues);
 
             var resize = _.debounce(_.bind(this._updateSize, this), 200);
             this.$el.on("resize", function (e) {
@@ -60,6 +61,9 @@
             });
         },
 
+        _filterDimensionsByValues: function(values) {
+            this.view.filterDimensionsByValues(values);
+        },
         _unbindEvents: function () {
             this.stopListening();
             this.$el.off("resize");
