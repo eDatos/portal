@@ -186,19 +186,19 @@
         },
 
         isInFullScreen: function() {
-            return !!document.fullscreenElement && this.get$Container()[0] === document.fullscreenElement;
+            var fullscreenElement = this._getFullscreenElement();
+            return !!fullscreenElement && this.get$Container()[0] === fullscreenElement;
+        },
+        
+        _getFullscreenElement: function() {
+            return document.fullscreenElement || /* Standard syntax */
+                document.webkitFullscreenElement || /* Chrome, Safari and Opera syntax */
+                document.mozFullScreenElement ||/* Firefox syntax */
+                document.msFullscreenElement; /* IE/Edge syntax */
         }
 
     };
 
-    App.FullScreen.isInFullScreen = function(elementSelector) {
-        if (!document.fullscreenElement) {
-            return false;
-        }
-
-        var element = document.querySelector(elementSelector);
-        return element === document.fullscreenElement;
-    }
     _.extend(App.FullScreen.prototype, Backbone.Events);
 
 }());

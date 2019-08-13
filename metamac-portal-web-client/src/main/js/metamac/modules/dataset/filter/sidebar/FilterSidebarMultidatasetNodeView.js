@@ -1,7 +1,6 @@
 (function () {
     "use strict";
-    var Constants = App.Constants;
-    var FullScreen = App.FullScreen;
+    var QueryParamsUtils = App.QueryParamsUtils;
 
     App.namespace("App.widget.filter.sidebar");
 
@@ -16,23 +15,20 @@
         },
 
         onMultidatasetClick: function (event) {
-            if (FullScreen.isInFullScreen(Constants.metamacContainerSelector)) {
-                var target = event.currentTarget;
-                var newPath = target.pathname + target.search + target.hash;
-                window.history.pushState("", "", newPath);
-                var queryParams = target.search.replace('?', '').split('&').reduce(function(queryParams, queryString){
-                    var pair = queryString.split('=');
-                    queryParams[pair[0]] = pair[1] || '';
-                    return queryParams;
-                }, {});
-                App.queryParams.agencyId =  queryParams.agencyId;
-                App.queryParams.multidatasetId =  queryParams.multidatasetId;
-                App.queryParams.identifier =  queryParams.resourceId;
-                App.queryParams.resourceType =  queryParams.resourceType;
-                App.queryParams.version =  queryParams.version;
-                Backbone.history.loadUrl(Backbone.history.fragment);
-                return false;
-            }
+            var target = event.currentTarget;
+            var newPath = target.pathname + target.search + target.hash;
+            
+            // Cambia la URL sin realizar ninguna petición
+            window.history.pushState("", "", newPath);
+
+            var queryParams = QueryParamsUtils.getQueryParamsFromQuery(target.search);
+            queryParams.identifier = queryParams.resourceId;
+            delete queryParams.resourceId;
+            _.extend(App.queryParams, queryParams);
+
+            // Refresca la ruta actual: https://stackoverflow.com/a/25777550
+            Backbone.history.loadUrl(Backbone.history.fragment);
+            return false;
         },
 
         initialize: function (options) {
