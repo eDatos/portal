@@ -115,6 +115,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/utils/FullScreen.js"
                 paths.js + "/metamac/modules/dataset/utils/URNUtils.js"
                 paths.js + "/metamac/modules/dataset/utils/DimensionsUtils.js"
+                paths.js + "/metamac/modules/dataset/utils/QueryParamsUtils.js"
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/StructuralResourcesApi.js"

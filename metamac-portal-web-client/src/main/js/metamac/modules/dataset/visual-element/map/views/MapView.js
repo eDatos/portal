@@ -136,7 +136,7 @@
             var geoJson = GeoJsonConverter.shapeListToGeoJson(this._shapeListOrderByHierarchy());
             var data = this._getData();
             var mapData = this._filterShapesWithoutData(this._getMapDataFromGeoJson(geoJson), data);
-
+            
             // Posible bug detectado
             // Es necesario establecer 'hasDerivedData' a true puesto que si no, la variable 'keepPoints' del método 'update'
             // siempre será verdadero y 'data' y 'mapData' no se actualizarán correctamente

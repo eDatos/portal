@@ -16,6 +16,8 @@
 .filter-sidebar {
     font-size: @filterSidebarFontSize;
     height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
 }
 
 .filter-sidebar-icon {
@@ -339,4 +341,27 @@
 .order-sidebar-instructions {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.filter-ignore-values-checks {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #dadada;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input.control-ignore-value {
+    display: none;
+    & + .filter-sidebar-category-icon-check {
+        .icon-uncheck;
+    }
+    
+    &:checked + .filter-sidebar-category-icon-check {
+        .icon-check-fill;
+    }
 }

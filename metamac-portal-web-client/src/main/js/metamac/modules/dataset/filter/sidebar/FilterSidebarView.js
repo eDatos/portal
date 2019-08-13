@@ -46,10 +46,10 @@
 
         events: {
             "resize": "_onResize",
-            "change .cell-hidder": "_onIgnoreDimensionValue"
+            "change .control-ignore-value": "onIgnoreDimensionValue"
         },
 
-        _onIgnoreDimensionValue: function(event) {
+        onIgnoreDimensionValue: function(event) {
             var $target = $(event.target);
             var value = $target.data('value');
             this.ignoredValues[value] = $target.is(':checked');
