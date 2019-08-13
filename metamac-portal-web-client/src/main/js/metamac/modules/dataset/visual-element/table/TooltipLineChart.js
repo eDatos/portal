@@ -134,15 +134,6 @@
             };
         },
 
-        _checkVisibility: function(data) {
-            if (this._emptyData(data)) {
-                this.$el.hide()
-            }
-            else {
-                this.$el.show()
-            };
-        },
-
         _getData: function () {
             var temporalGranularityForPermutation = this._findTemporalGranularityForPermutation();
             var timeDimensionCategories = this.timeDimension.get('representations').where({ temporalGranularity: temporalGranularityForPermutation });
