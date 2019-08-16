@@ -210,7 +210,8 @@ I18n.translations.en = {
                     FOUR_MONTHLY: "Four monthly",
                     MONTHLY: "Monthly",
                     WEEKLY: "Weekly",
-                    DAILY: "Daily"
+                    DAILY: "Daily",
+                    HOURLY: "Hourly"
                 }
             }
         }
