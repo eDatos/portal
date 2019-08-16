@@ -28,7 +28,7 @@
                     return (value == '' || value ==null) 
                 },
                 'CERO': function(value) {
-                    return parseInt(value) == 0;
+                    return (typeof value == 'string') && parseFloat(value.replace(',','.')) == 0;
                 }
             }
             this.calculateIncrementalSize();
@@ -60,16 +60,17 @@
             var widthTotal = 0;
             var heightTotal = 0;
             this.ignoredCells = null;
+            this.filteredRows = null;
 
             if (this.shouldIgnoreCells()) {
                 var nColumns = this.dataSource.columns();
-                var nRows = this.dataSource.rows();
                 var ignoredCells = {
                     columns: {},
                     rows: {}
                 }
+                var visibleRows = [];
 
-                for (var c=0; c<nColumns; c++) {
+                for (var c = 0; c < nColumns; c++) {
                     if (this.shouldIgnoreColumn(c)) {
                         ignoredCells.columns[c] = true;
                     }
@@ -78,15 +79,22 @@
                     }
                 }
 
-                for (var r=0; r<nRows; r++) {
+                var leftHeadersLengths = this.dataSource.leftHeaderDimensionsLengths();
+                var rowsWithvalue = leftHeadersLengths.reduce(function(dimensionsRows, dimensionRows ){ return dimensionsRows * dimensionRows }, 1);
+                for (var r = 0; r < rowsWithvalue; r++) {
                     if (this.shouldIgnoreRow(r)) {
                         ignoredCells.rows[r] = true;
                     }
                     else {
-                        heightTotal += this.incrementalCellSize.rows[r + 1] - this.incrementalCellSize.rows[r];
+                        visibleRows.push(r);
                     }
                 }
                 this.ignoredCells = ignoredCells;
+                
+                var leftHeadersAc = Utils.rightProductAcumulate(leftHeadersLengths)
+                var rowsTree = this.createRowsTree(visibleRows, leftHeadersLengths, leftHeadersAc);
+                this.filteredRows = this.parseFilteredRows(rowsTree, leftHeadersLengths.length);
+                heightTotal = this.incrementalCellSize.rows[this.filteredRows.length];
             }
             else {
                 var columns = this.incrementalCellSize.columns;
@@ -95,8 +103,64 @@
                 widthTotal = columns[columns.length - 1];
                 heightTotal = rows[rows.length - 1];
             }
-
             this.setSize(new Size(widthTotal, heightTotal));
+        },
+
+        createRowsTree: function(finalLevelIndices, levelsLengths, levelsLengthsAc) {
+            var rowsTree = {};
+            for (var i = 0; i < finalLevelIndices.length; i++) {
+                var finalLevelIndex = finalLevelIndices[i];
+                var branch = rowsTree;
+                for (var j = 0; j < levelsLengths.length - 1; j++) {
+                    var levelIndex = Math.floor(finalLevelIndex / levelsLengthsAc[j]) % levelsLengths[j];
+                    if (!branch.hasOwnProperty(levelIndex)) {
+                        branch[levelIndex] = {}
+                    }
+                    branch = branch[levelIndex];
+                }
+                branch[finalLevelIndex % levelsLengths[ levelsLengths.length - 1]] = finalLevelIndex;
+            }
+            return rowsTree;
+        },
+
+
+        parseFilteredRows: function(rowsTree, numberLevels, rows, relativeIndex, rowLevel, absoluteIndexParent) {
+            relativeIndex = relativeIndex || {value: 0};
+            rowLevel = rowLevel || 0;
+            rows = rows || [];
+            absoluteIndexParent = absoluteIndexParent || 0;
+            var self = this;
+
+            Object.keys(rowsTree).forEach(function(rowKey) {
+                rowKey = Number(rowKey);
+                if (typeof rowsTree[rowKey] === 'object') {
+                    var absoluteIndex = absoluteIndexParent + self.dataSource.leftHeaderDimensionsElements(rowLevel + 1) * rowKey + (rowLevel? 1 : 0)
+                    rows.push({
+                        relativeIndex: relativeIndex.value,
+                        absoluteIndex: absoluteIndex,
+                        indexCell: _.range(numberLevels - rowLevel).reduce(function(indexCell) {
+                            return (typeof indexCell == 'object')? indexCell[Object.keys(indexCell)[0]] : indexCell;
+                        }, rowsTree[rowKey]),
+                        blank: true,
+                        rowLevel: rowLevel
+                    });
+                    relativeIndex.value ++;
+                    self.parseFilteredRows(rowsTree[rowKey], numberLevels, rows, relativeIndex, rowLevel + 1, absoluteIndex);
+
+                }
+                else {
+                    rows.push({
+                        relativeIndex: relativeIndex.value,
+                        absoluteIndex: absoluteIndexParent + rowKey + 1,
+                        indexCell: rowsTree[rowKey],
+                        blank: false,
+                        rowLevel: rowLevel
+                    });
+                    relativeIndex.value ++;
+                }
+            });
+
+            return rows;
         },
 
         shouldIgnoreCells: function() {
@@ -107,7 +171,6 @@
         firstCell: function () {
             var x = Utils.floorIndex(this.incrementalCellSize.columns, this.origin.x),
                 y = Utils.floorIndex(this.incrementalCellSize.rows, this.origin.y);
-
             return new Cell(x, y);
         },
 
@@ -210,14 +273,25 @@
 
             var i = firstCell.y;
             var y = firstCellPoint.y;
-
+            if (this.filteredRows && this.filteredRows.length > 0) {
+                i = this.filteredRows[i]? this.filteredRows[i].absoluteIndex: this.filteredRows[this.filteredRows.length - 1].absoluteIndex;
+            }
             // IndexCell to account for the difference that blank rows add
             var indexCell = i - this.dataSource.blankRowsOffset(firstCell.y);
             while (yVisible && i < totalRows) {
-                if (!this.dataSource.isBlankRow(i) && this.ignoredCells && this.ignoredCells.rows.hasOwnProperty(indexCell)) {
-                    i++;
-                    indexCell++;
-                    continue;
+                if (this.filteredRows && this.filteredRows.length > 0) {
+                    var filteredRow = _.find(this.filteredRows, function(filteredRow) {
+                        return filteredRow.absoluteIndex == i
+                    });
+
+                    if (!filteredRow) {
+                        i++;
+                        continue;
+                    }
+                    else {
+                        indexCell = filteredRow.indexCell
+                    }
+
                 }
 
                 size = this.delegate.rowHeight(i);
@@ -256,13 +330,11 @@
             var xVisible = true;
             var shouldIgnore = true;
             var x = firstCellPoint.x;
-
-            for (var i=0; xVisible && i<totalColumns; i++) {
+            for (var i = firstCell.x; xVisible && i < totalColumns; i++) {
                 var size = this.delegate.columnWidth(i);
                 var cell = new Cell(i, iRow);
                 var value = this.dataSource.cellAtIndex(cell);
-
-                if (!this.isIgnored(value)) {
+                if (!this.shouldIgnore(value)) {
                     shouldIgnore = false;
                     break;
                 }
@@ -274,7 +346,7 @@
             return shouldIgnore;
         },
 
-        isIgnored: function(value) {
+        shouldIgnore: function(value) {
             var ignored = false;
             for (var i = 0; i<this.ignoredValues.length; i++) {
                 if (this.ignoredValuesHandlers[this.ignoredValues[i]] && this.ignoredValuesHandlers[this.ignoredValues[i]](value)) {
@@ -300,7 +372,7 @@
                 var cell = new Cell(iColumn, iRow);
                 var value = this.dataSource.cellAtIndex(cell);
 
-                if (!this.isIgnored(value)) {
+                if (!this.shouldIgnore(value)) {
                     shouldIgnore = false;
                     break;
                 }
