@@ -61,8 +61,8 @@ I18n.translations.es = {
         },
         sidebar: {
             ignore: {
-                null: 'Ignorar valores nulos',
-                zero: 'Ignorar valores cero'
+                null: 'Ocultar categorías con celdas en blanco',
+                zero: 'Ocultar categorías con celdas en cero'
             },
             info: {
                 title: "Info"
