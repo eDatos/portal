@@ -217,7 +217,8 @@ I18n.translations.es = {
                     FOUR_MONTHLY: "Cuatrimestral",
                     MONTHLY: "Mensual",
                     WEEKLY: "Semanal",
-                    DAILY: "Diario"
+                    DAILY: "Diario",
+                    HOURLY: "Cada hora"
                 }
             }
         }

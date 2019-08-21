@@ -211,7 +211,8 @@ I18n.translations.pt = {
                     FOUR_MONTHLY: "Cuatrimestral",
                     MONTHLY: "Por mês",
                     WEEKLY: "Semanal",
-                    DAILY: "Diariamente"
+                    DAILY: "Diariamente",
+                    HOURLY: "Cada hora"
                 }
             }
         }
