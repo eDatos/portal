@@ -121,9 +121,13 @@
             } else {
                 var column = bodyPaintInfo.columns[columnsTree[columnKey]];
                 associatedBodyCellWithAttributes = new Cell(column.index, 0);
-
+                var cellWidth = column.width;
+                var windowWidth = self.viewPort.width + self.offset.x;
+                if (column.x + column.width > windowWidth) {
+                    cellWidth = windowWidth - column.x;
+                }
                 cellResult = {
-                    width: column.width,
+                    width: cellWidth,
                     index: column.index,
                     indexEnd: column.index + 1,
                     x: column.x,
