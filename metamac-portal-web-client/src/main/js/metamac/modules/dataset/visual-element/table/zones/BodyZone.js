@@ -22,13 +22,13 @@
             this.dataSource = options.dataSource;
             this.delegate = options.delegate;
             this.view = options.view;
-            this.ignoredValues = [];
-            this.ignoredValuesHandlers = {
+            this.valuesToIgnore = [];
+            this.valuesToIgnoreHandlers = {
                 'NULO': function(value) {
-                    return (value == '' || value ==null) 
+                    return value == null
                 },
                 'CERO': function(value) {
-                    return (typeof value == 'string') && parseFloat(value.replace(',','.')) == 0;
+                    return value === 0;
                 }
             }
             this.calculateIncrementalSize();
@@ -75,9 +75,10 @@
             return rowsTree;
         },
 
+
         /* BEGIN section Ignore functions */
 
-        parseIgnoredRows: function(rowsTree, numberLevels, ignoredRows, rowLevel, absoluteIndexParent) {
+        calculateIgnoredRows: function(rowsTree, numberLevels, ignoredRows, rowLevel, absoluteIndexParent) {
             rowLevel = rowLevel || 0;
             ignoredRows = ignoredRows || {};
             absoluteIndexParent = absoluteIndexParent || 0;
@@ -97,10 +98,8 @@
                             rowLevel: rowLevel
                         };
                     }
-                    self.parseIgnoredRows(rowsTree[rowKey], numberLevels, ignoredRows, rowLevel + 1, absoluteIndex);
-
-                }
-                else {
+                    self.calculateIgnoredRows(rowsTree[rowKey], numberLevels, ignoredRows, rowLevel + 1, absoluteIndex);
+                } else {
                     ignoredRows[absoluteIndexParent + rowKey + 1] = {
                         absoluteIndex: absoluteIndexParent + rowKey + 1,
                         indexCell: rowsTree[rowKey],
@@ -114,7 +113,6 @@
         },
 
         shouldIgnoreBlankRow: function(rowsBranchTree, numberLevels, currentLevel) {
-            
             currentLevel = currentLevel || 0;
             var self = this;
             var childs = Object.keys(rowsBranchTree);
@@ -134,48 +132,39 @@
         },
 
         shouldIgnore: function(value) {
-            var ignored = false;
-            for (var i = 0; i<this.ignoredValues.length; i++) {
-                if (this.ignoredValuesHandlers[this.ignoredValues[i]] && this.ignoredValuesHandlers[this.ignoredValues[i]](value)) {
-                    ignored = true;
-                    break;
+            for (var i = 0; i < this.valuesToIgnore.length; i++) {
+                if (this.valuesToIgnoreHandlers[this.valuesToIgnore[i]] && this.valuesToIgnoreHandlers[this.valuesToIgnore[i]](value)) {
+                    return true;
                 }
             }
-            return ignored;
+            return false;
         },
 
         shouldIgnoreCells: function() {
-            return this.ignoredValues && this.ignoredValues.length > 0;
+            return this.valuesToIgnore && this.valuesToIgnore.length > 0;
         },
 
         shouldIgnoreRow: function(iRow) {
             var totalColumns = this.dataSource.columns();
-            var shouldIgnore = true;
             for (var i = 0; i < totalColumns; i++) {
-                var value = this.dataSource.cellAtIndex(new Cell(i, iRow));
+                var value = this.dataSource.valueAtIndex(new Cell(i, iRow));
                 if (!this.shouldIgnore(value)) {
-                    shouldIgnore = false;
-                    break;
+                    return false;
                 }
             }
-
-            return shouldIgnore;
+            return true;
         },
 
         shouldIgnoreColumn: function(iColumn) {
             var leftHeadersLengths = this.dataSource.leftHeaderDimensionsLengths();
-            var rowsWithvalue = leftHeadersLengths.reduce(function(dimensionsRows, dimensionRows ){ return dimensionsRows * dimensionRows }, 1);
-            var shouldIgnore = true;
-
+            var rowsWithvalue = leftHeadersLengths.reduce(function(dimensionsRows, dimensionRows){ return dimensionsRows * dimensionRows }, 1);
             for (var i = 0; i < rowsWithvalue; i++) {
-                var value = this.dataSource.cellAtIndex(new Cell(iColumn, i));
+                var value = this.dataSource.valueAtIndex(new Cell(iColumn, i));
                 if (!this.shouldIgnore(value)) {
-                    shouldIgnore = false;
-                    break;
+                    return false;
                 }
             }
-
-            return shouldIgnore;
+            return true;
         },
 
         calculateIgnoredCells: function() {
@@ -205,18 +194,16 @@
             }
             var leftHeadersAc = Utils.rightProductAcumulate(leftHeadersLengths)
             var rowsTree = this.createRowsTree(ignoredRowsWithValues, leftHeadersLengths, leftHeadersAc);
-            ignoredCells.rows = this.parseIgnoredRows(rowsTree, leftHeadersLengths.length);
+            ignoredCells.rows = this.calculateIgnoredRows(rowsTree, leftHeadersLengths.length);
 
             ignoredCells.columnsKeys = Object.keys(ignoredCells.columns).map(function(key) {return Number(key)});
             ignoredCells.rowsKeys = Object.keys(ignoredCells.rows).map(function(key) {return Number(key)});
             return ignoredCells;
         },
 
-        ignoreValues: function(ignoredValues, repaint) {
-            repaint = repaint != null ? repaint : false;
-            this.ignoredValues = ignoredValues;
+        recalculateIgnoredValues: function(valuesToIgnore) {
+            this.valuesToIgnore = valuesToIgnore;
             this.ignoredCells = this.calculateIgnoredCells();
-
             
             var widthTotal = 0;
             var heightTotal = 0;
@@ -225,19 +212,15 @@
             if (this.ignoredCells) {
                 widthTotal = columns[columns.length - 1 - Object.keys(this.ignoredCells.columns).length];
                 heightTotal = rows[rows.length - 1 - Object.keys(this.ignoredCells.rows).length];
-            }
-            else {
+            } else {
                 widthTotal = columns[columns.length - 1];
                 heightTotal = rows[rows.length - 1];
             }
             this.setSize(new Size(widthTotal, heightTotal));
-            
-
-            repaint && this.repaint();
         },
 
         /* END section Ignore functions */
-
+        
         
         // Calcula la primera celda visible (en la esquina superior izquierda)
         firstCell: function () {
@@ -320,7 +303,7 @@
             var columns = [], rows = [];
 
             if (this.ignoredCells) {
-                // Si se están ignorando filas/columnas se obtiene la correspondiente primera celda.
+                // We need to recalculate the offset for the first column in case it is ignored
                 var iColumn = firstCell.x;
                 var ignoredOffset = _.sortedIndex(this.ignoredCells.columnsKeys, iColumn);
                 var offset = 0;
@@ -335,6 +318,7 @@
                     }
                 }
                 
+                // We need to recalculate the offset for the first row in case it is ignored
                 var iRow = firstCell.y;
                 var ignoredRowsOffset = _.sortedIndex(this.ignoredCells.rowsKeys, iRow);
                 offset = 0;

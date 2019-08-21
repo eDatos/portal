@@ -63,8 +63,8 @@
         this.zones = [this.bodyZone, this.rightScrollZone, this.bottomScrollZone, this.leftHeaderZone, this.topHeaderZone];
     };
 
-    App.Table.View.prototype.filterDimensionsByValues = function(ignoreValues) {
-        this.bodyZone.ignoreValues(ignoreValues);
+    App.Table.View.prototype.filterDimensionsByValues = function(valuesToIgnore) {
+        this.bodyZone.recalculateIgnoredValues(valuesToIgnore);
         this.forceRepaint();
     };
 

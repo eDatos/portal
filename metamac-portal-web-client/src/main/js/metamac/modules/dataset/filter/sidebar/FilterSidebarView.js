@@ -17,7 +17,7 @@
         initialize: function (options) {
             this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
-            this.ignoredValues = {};
+            this.valuesToIgnore = {};
 
             //Initialize subviews here to keep state
 
@@ -52,9 +52,9 @@
         onIgnoreDimensionValue: function(event) {
             var $target = $(event.target);
             var value = $target.data('value');
-            this.ignoredValues[value] = $target.is(':checked');
+            this.valuesToIgnore[value] = $target.is(':checked');
             var self = this;
-            this.filterDimensions.trigger('change:filterByValues', Object.keys(this.ignoredValues || {}).filter(function(value) {return self.ignoredValues[value]}));
+            this.filterDimensions.trigger('change:filterByValues', Object.keys(this.valuesToIgnore || {}).filter(function(value) {return self.valuesToIgnore[value]}));
         },
 
         _bindEvents: function () {
@@ -69,7 +69,7 @@
             this._unbindEvents();
             this._bindEvents();
 
-            this.$el.html(this.template({ignoredValues: this.ignoredValues}));
+            this.$el.html(this.template({valuesToIgnore: this.valuesToIgnore}));
 
             var $dimensions = this.$('.filter-sidebar-dimensions');
 
