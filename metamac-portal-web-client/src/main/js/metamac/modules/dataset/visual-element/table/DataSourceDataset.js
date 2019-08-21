@@ -62,6 +62,10 @@
             return this.data.getStringData({ cell: cell });
         },
 
+        valueAtIndex: function (cell) {
+            return this.data.getNumberData({ cell: cell });
+        },
+
         cellExists: function (cell) {
             var tableSize = this.filterDimensions.getTableInfo().getTableSize();
             return (cell.y >= 0 && cell.x >= 0) &&

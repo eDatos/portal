@@ -58,13 +58,18 @@
 
         var rowsLen = this.dataSource.topHeaderRows();
         var rowsValues = this.dataSource.topHeaderValues();
+
+        var rowsValuesLength = _.map(rowsValues, function (rowValue) {
+            return rowValue.length;
+        });
+        var rowsValuesLengthAc = Utils.rightProductAcumulate(rowsValuesLength);
         var columnsTree = {};
         for (var i = 0; i < bodyPaintInfo.columns.length; i++) {
             var column = bodyPaintInfo.columns[i];
             var index = column.index;
             var pointerColumn = columnsTree;
             for (var j = 0; j < rowsLen - 1; j++) {
-                var columnIndex = Math.floor(index / rowsValues[j+1].length) % rowsValues[j].length;
+                var columnIndex = Math.floor(index / rowsValuesLengthAc[j]) % rowsValues[j].length;
                 if (!pointerColumn.hasOwnProperty(columnIndex)) {
                     pointerColumn[columnIndex] = {}
                 }
@@ -81,9 +86,10 @@
     }
 
 
-    App.Table.TopHeaderZone.prototype.parseColumns = function (bodyPaintInfo, columnsTree, paintInfo, columnLevel, offset) {
+    App.Table.TopHeaderZone.prototype.parseColumns = function (bodyPaintInfo, columnsTree, paintInfo, columnLevel, offsets) {
         columnLevel = columnLevel || 0;
-        offset = offset || 0;
+        offsets = offsets || {};
+        offsets[columnLevel] = offsets[columnLevel] || 0;
         var tooltipValues = this.dataSource.topHeaderTooltipValues();
         var rowsValues = this.dataSource.topHeaderValues();
         var self = this;
@@ -94,10 +100,11 @@
             var associatedBodyCellWithAttributes;
 
             if (typeof columnsTree[columnKey] == 'object') { // Is column with childs
-                self.parseColumns(bodyPaintInfo, columnsTree[columnKey], paintInfo, columnLevel + 1);
+                self.parseColumns(bodyPaintInfo, columnsTree[columnKey], paintInfo, columnLevel + 1, offsets);
+                var offset = offsets[columnLevel];
                 var offsetEnd = offset + Object.keys(columnsTree[columnKey]).length;
                 var visibleChilds = paintInfo[columnLevel + 1].slice(offset, offsetEnd);
-                offset = offsetEnd;
+                offsets[columnLevel] = offsetEnd;
 
                 associatedBodyCellWithAttributes = new Cell(visibleChilds[0].index, 0);
                 
@@ -107,7 +114,7 @@
                 cellResult = {
                     width: (lastChunkElement.x + lastChunkElement.width) - resultx,
                     index: visibleChilds[0].index,
-                    indexEnd: visibleChilds[0].index + 1,
+                    indexEnd: lastChunkElement.indexEnd,
                     x: resultx,
                 }
 
