@@ -79,14 +79,12 @@
         }
 
         var paintInfo = [];
-        this.parseColumns(bodyPaintInfo, columnsTree, paintInfo);
-
+        this.calculateColumns(bodyPaintInfo, columnsTree, paintInfo);
         this.lastPaintInfo = paintInfo;
         return paintInfo;
     }
 
-
-    App.Table.TopHeaderZone.prototype.parseColumns = function (bodyPaintInfo, columnsTree, paintInfo, columnLevel, offsets) {
+    App.Table.TopHeaderZone.prototype.calculateColumns = function (bodyPaintInfo, columnsTree, paintInfo, columnLevel, offsets) {
         columnLevel = columnLevel || 0;
         offsets = offsets || {};
         offsets[columnLevel] = offsets[columnLevel] || 0;
@@ -100,22 +98,25 @@
             var associatedBodyCellWithAttributes;
 
             if (typeof columnsTree[columnKey] == 'object') { // Is column with childs
-                self.parseColumns(bodyPaintInfo, columnsTree[columnKey], paintInfo, columnLevel + 1, offsets);
+                self.calculateColumns(bodyPaintInfo, columnsTree[columnKey], paintInfo, columnLevel + 1, offsets);
                 var offset = offsets[columnLevel];
                 var offsetEnd = offset + Object.keys(columnsTree[columnKey]).length;
                 var visibleChilds = paintInfo[columnLevel + 1].slice(offset, offsetEnd);
                 offsets[columnLevel] = offsetEnd;
 
-                associatedBodyCellWithAttributes = new Cell(visibleChilds[0].index, 0);
+                var firstChild = visibleChilds[0];
+                var lastChild = visibleChilds[visibleChilds.length -1 ];
+                associatedBodyCellWithAttributes = new Cell(firstChild.index, 0);
                 
-                var resultx = visibleChilds[0].x < 0 ? 0 : visibleChilds[0].x;
-                var lastChunkElement = visibleChilds[visibleChilds.length -1 ];
+                var resultx = firstChild.x < 0 ? 0 : firstChild.x;
 
                 cellResult = {
-                    width: (lastChunkElement.x + lastChunkElement.width) - resultx,
-                    index: visibleChilds[0].index,
-                    indexEnd: lastChunkElement.indexEnd,
-                    x: resultx,
+                    width: (lastChild.x + lastChild.width) - resultx,
+                    index: firstChild.index,
+                    indexEnd: lastChild.indexEnd,
+                    relativeIndex: firstChild.relativeIndex,
+                    relativeIndexEnd: lastChild.relativeIndexEnd,
+                    x: resultx
                 }
 
             } else {
@@ -127,6 +128,8 @@
                     index: column.index,
                     indexEnd: column.index + 1,
                     x: column.x,
+                    relativeIndex: column.relativeIndex,
+                    relativeIndexEnd: column.relativeIndex + 1
                 }
             }
 
@@ -306,9 +309,9 @@
         for (var i = 0; i < lastRowPaintInfo.length; i++) {
             var cellPaintInfo = lastRowPaintInfo[i];
             if (rectangle.containsPoint(new Point(cellPaintInfo.x, rectangle.y))) {
-                return cellPaintInfo.index;
+                return cellPaintInfo.relativeIndex;
             } else if (rectangle.containsPoint(new Point(cellPaintInfo.x + cellPaintInfo.width, rectangle.y))) {
-                return cellPaintInfo.indexEnd;
+                return cellPaintInfo.relativeIndexEnd;
             }
         }
     }
