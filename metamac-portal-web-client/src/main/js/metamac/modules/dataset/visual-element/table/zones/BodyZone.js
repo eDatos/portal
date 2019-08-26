@@ -53,9 +53,25 @@
                     rows: rows,
                     columns: columns
                 };
-                
-                this.setSize(new Size(columns[columns.length - 1], rows[rows.length - 1]));
+
+                this.calculateSize();
             }
+        },
+
+        calculateSize: function() {
+            this.ignoredCells = this.calculateIgnoredCells();
+            var widthTotal = 0;
+            var heightTotal = 0;
+            var columns = this.incrementalCellSize.columns;
+            var rows = this.incrementalCellSize.rows;
+            if (this.ignoredCells) {
+                widthTotal = columns[columns.length - 1 - Object.keys(this.ignoredCells.columns).length];
+                heightTotal = rows[rows.length - 1 - Object.keys(this.ignoredCells.rows).length];
+            } else {
+                widthTotal = columns[columns.length - 1];
+                heightTotal = rows[rows.length - 1];
+            }
+            this.setSize(new Size(widthTotal, heightTotal));
         },
 
         createRowsTree: function(finalLevelIndices, levelsLengths, levelsLengthsAc) {
@@ -203,20 +219,7 @@
 
         recalculateIgnoredValues: function(valuesToIgnore) {
             this.valuesToIgnore = valuesToIgnore;
-            this.ignoredCells = this.calculateIgnoredCells();
-            
-            var widthTotal = 0;
-            var heightTotal = 0;
-            var columns = this.incrementalCellSize.columns;
-            var rows = this.incrementalCellSize.rows;
-            if (this.ignoredCells) {
-                widthTotal = columns[columns.length - 1 - Object.keys(this.ignoredCells.columns).length];
-                heightTotal = rows[rows.length - 1 - Object.keys(this.ignoredCells.rows).length];
-            } else {
-                widthTotal = columns[columns.length - 1];
-                heightTotal = rows[rows.length - 1];
-            }
-            this.setSize(new Size(widthTotal, heightTotal));
+            this.calculateSize();
         },
 
         /* END section Ignore functions */
@@ -296,15 +299,15 @@
             var totalRows = this.dataSource.rows();
             var totalColumns = this.dataSource.columns();
 
-            var firstCell = this.firstCell();
-            var firstCellPoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(firstCell));
-            var firstCellSize = this.cellSize(firstCell);
+            var relativeFirstCell = this.firstCell();
+            var absoluteFirstCell = relativeFirstCell;
+            var firstCellPoint = this.absolutePoint2RelativePoint(this.cell2AbsolutePoint(relativeFirstCell));
 
             var columns = [], rows = [];
 
             if (this.ignoredCells) {
                 // We need to recalculate the offset for the first column in case it is ignored
-                var iColumn = firstCell.x;
+                var iColumn = absoluteFirstCell.x;
                 var ignoredOffset = _.sortedIndex(this.ignoredCells.columnsKeys, iColumn);
                 var offset = 0;
 
@@ -319,7 +322,7 @@
                 }
                 
                 // We need to recalculate the offset for the first row in case it is ignored
-                var iRow = firstCell.y;
+                var iRow = absoluteFirstCell.y;
                 var ignoredRowsOffset = _.sortedIndex(this.ignoredCells.rowsKeys, iRow);
                 offset = 0;
 
@@ -331,13 +334,15 @@
                         offset++;
                     }
                 }
-                firstCell = {
+                absoluteFirstCell = {
                     x: iColumn,
                     y: iRow
                 }
             }
 
-            var j = firstCell.x;
+            var firstCellSize = this.cellSize(absoluteFirstCell);
+            var j = absoluteFirstCell.x;
+            var relativeJ = relativeFirstCell.x;
             var x = firstCellPoint.x;
             var size;
 
@@ -347,12 +352,13 @@
                     continue;
                 }
 
-                size = this.delegate.columnWidth(j);
+                size = this.delegate.columnWidth(relativeJ);
 
                 columns.push({
                     x: x,
                     index: j,
-                    width: size
+                    width: size,
+                    relativeIndex: relativeJ++
                 });
 
                 j = j + 1;
@@ -361,7 +367,7 @@
                 xVisible = this.isRelativeRectangleVisible(new Rectangle(x, firstCellPoint.y, size, firstCellSize.height));
             }
 
-            var i = firstCell.y;
+            var i = absoluteFirstCell.y;
             var y = firstCellPoint.y;
             // IndexCell to account for the difference that blank rows add
             var indexCell = i - this.dataSource.blankRowsOffset(i);
