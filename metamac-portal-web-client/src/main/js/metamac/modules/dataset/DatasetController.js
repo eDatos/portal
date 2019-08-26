@@ -110,10 +110,6 @@
 
                 self.selectionView = new App.modules.selection.SelectionView({ controller: self, collection: self.filterDimensions, metadata: self.metadata });
                 
-                if (self.visualizationView) {
-                    self.visualizationView.destroy();
-                }
-                
                 self.visualizationView = new App.modules.dataset.DatasetView({ controller: self, filterDimensions: self.filterDimensions, metadata: self.metadata, data: self.data });
 
                 if (result.permalink) {
