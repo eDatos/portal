@@ -32,12 +32,6 @@
             this._initializeHighChartsOptions();
         },
 
-        destroy: function () {
-            if (this.fullScreen) {
-                this.fullScreen.destroy();
-            }
-        },
-
         _initializeVisualElements: function () {
             var visualElements = ["info", "table", "column", "line"];
             if (_.findWhere(this.metadata.getDimensions(), { type: 'GEOGRAPHIC_DIMENSION' })) {
@@ -159,7 +153,7 @@
 
         showChart: function (options) {
             if (this.fullScreen.isInFullScreen()) {
-                this.fullScreen.addExitFullScreenListeners();
+                this.fullScreen.refreshFullScreenListeners();
                 this.optionsModel.set('fullScreen', true);
             }
             else if (options.fullScreen) {

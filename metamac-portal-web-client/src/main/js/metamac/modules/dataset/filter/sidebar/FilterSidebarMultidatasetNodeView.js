@@ -28,6 +28,7 @@
 
             // Refresca la ruta actual: https://stackoverflow.com/a/25777550
             Backbone.history.loadUrl(Backbone.history.fragment);
+            
             return false;
         },
 

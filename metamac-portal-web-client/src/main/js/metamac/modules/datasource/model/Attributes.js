@@ -199,7 +199,7 @@
         _getValueForEnumerate: function (attributeRawValue, attributeEnumerates) {
             if (attributeRawValue != "") {
                 if (!_.isUndefined(attributeEnumerates[attributeRawValue])) {
-                    return attributeEnumerates[attributeRawValue] && this.localizeLabel(attributeEnumerates[attributeRawValue].name.text);
+                    return attributeEnumerates[attributeRawValue] ? this.localizeLabel(attributeEnumerates[attributeRawValue].name.text) : null;
                 } else {
                     return attributeRawValue;
                 }

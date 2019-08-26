@@ -25,10 +25,6 @@
             _.bindAll(this, "exitFullScreen", "_keydown", "_didExitFullScreen");
         },
 
-        destroy: function () {
-            this._removeExitFullScreenListeners();
-        },
-
         setContainer : function (container) {
             if (container instanceof $) {
                 this.$container = container;
@@ -115,7 +111,8 @@
             }
         },
 
-        addExitFullScreenListeners: function() {
+        refreshFullScreenListeners: function() {
+            this._removeExitFullScreenListeners();
             this._addExitFullScreenListeners();
         },
 
