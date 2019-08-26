@@ -399,7 +399,7 @@
         },
 
         getStatisticalOperation: function () {
-            this._getResourceName(this.metadata.statisticalOperation);
+            return this._getResourceName(this.metadata.statisticalOperation);
         },
 
         getUri: function () {
