@@ -7,11 +7,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="requestURL">${pageContext.request.requestURL}</c:set>
 <c:set var="baseURL">${fn:replace(requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}</c:set>
 
-<fmt:setLocale value="<%= request.getLocale() %>" />
 <t:metamac_plantilla_1col baseURL="${baseURL}">
+<fmt:setLocale value="${pageContext.request.locale.language}" />
     <div>    
         <c:choose>
             <c:when test="${collection != null}">
