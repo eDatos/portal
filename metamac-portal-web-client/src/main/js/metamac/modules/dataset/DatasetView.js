@@ -61,7 +61,8 @@
 
             this.dimensionsView = new App.modules.dataset.DimensionsView({
                 filterDimensions: this.filterDimensions,
-                optionsModel: this.optionsModel
+                optionsModel: this.optionsModel,
+                data: this.data
             });
 
             // sidebarView

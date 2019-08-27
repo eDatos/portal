@@ -13,7 +13,13 @@
         initialize: function (options) {
             this.filterDimensions = options.filterDimensions;
             this.optionsModel = options.optionsModel;
-            this.measureAttribute = null;
+            
+            var measureAttribute = _.findWhere(options.data.getDatasetAttributes(), { type: "MEASURE" });
+            if (measureAttribute) {
+                this.measureAttribute = {
+                    label: measureAttribute.name
+                }
+            }
         },
 
         configuration: {
