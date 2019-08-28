@@ -131,22 +131,23 @@
         },
 
         isBlankRow: function (row) {
-            var pos = row;
-            var dimensionesLengths = this.leftHeaderDimensionsLengths();
-            for (var dimension = 0; dimension < dimensionesLengths.length - 1; dimension++) {
+            // leftHeaderDimensionsLenghts and leftHeaderDimensionsElements represent a tree
+            // We are looking on the tree. Leaf nodes, are non-blank. Non-leaf nodes, are blank
+            var branchsByDimension = this.leftHeaderDimensionsLengths();
+            for (var dimension = 0; dimension < branchsByDimension.length - 1; dimension++) {
                 var dimensionElements = this.leftHeaderDimensionsElements(dimension + 1);
 
-                if (dimensionesLengths[dimension] > 1) {
-                    for (var branch = 0; branch < dimensionesLengths[dimension]; branch++ ) {
+                if (branchsByDimension[dimension] > 1) {
+                    for (var branch = 0; branch < branchsByDimension[dimension]; branch++ ) {
                         var firstNode = branch * dimensionElements + dimension;
-                        if (pos >= firstNode && pos < (firstNode + dimensionElements)) {
-                            pos = branch > 0 ? (pos % firstNode) + dimension : pos;
+                        if (row >= firstNode && row < (firstNode + dimensionElements)) {
+                            row = branch > 0 ? (row % firstNode) + dimension : row;
                             break;
                         }
                     }
                 }
 
-                if ( pos == dimension )
+                if ( row == dimension )
                     return true;
             }
             return false;
