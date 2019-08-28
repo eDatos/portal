@@ -134,7 +134,7 @@
             this.content.show(this.sidebarView);
             this.optionsBar.show(this.optionsView);
             this.dimensions.show(this.dimensionsView);
-            this.fullScreen.setContainer($(Constants.metamacContainerSelector));
+            this.fullScreen.setContainer($('.metamac-container'));
             if (this.optionsModel.get('widget')) {
                 this._initializeWidget();
             }
