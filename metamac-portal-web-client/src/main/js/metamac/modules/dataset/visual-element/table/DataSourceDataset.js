@@ -131,16 +131,23 @@
         },
 
         isBlankRow: function (row) {
-            var dimensionElements = 0;
-            var pos = row;
-            // Starts on one because the first one is not nested on another dimension
-            for (var dimension = 1; dimension < this.leftHeaderDimensionsLengths().length; dimension++) {
+            // leftHeaderDimensionsLenghts and leftHeaderDimensionsElements represent a tree
+            // We are looking on the tree. Leaf nodes, are non-blank. Non-leaf nodes, are blank
+            var branchsByDimension = this.leftHeaderDimensionsLengths();
+            for (var dimension = 0; dimension < branchsByDimension.length - 1; dimension++) {
+                var dimensionElements = this.leftHeaderDimensionsElements(dimension + 1);
 
-                dimensionElements = this.leftHeaderDimensionsElements(dimension);
+                if (branchsByDimension[dimension] > 1) {
+                    for (var branch = 0; branch < branchsByDimension[dimension]; branch++ ) {
+                        var firstNode = branch * dimensionElements + dimension;
+                        if (row >= firstNode && row < (firstNode + dimensionElements)) {
+                            row = branch > 0 ? (row % firstNode) + dimension : row;
+                            break;
+                        }
+                    }
+                }
 
-                // Check if the current row is the first of this dimension; if not, 'enter' the next nested dimension
-                pos = pos % dimensionElements;
-                if (pos == dimension - 1)
+                if ( row == dimension )
                     return true;
             }
             return false;
