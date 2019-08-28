@@ -131,16 +131,22 @@
         },
 
         isBlankRow: function (row) {
-            var dimensionElements = 0;
             var pos = row;
-            // Starts on one because the first one is not nested on another dimension
-            for (var dimension = 1; dimension < this.leftHeaderDimensionsLengths().length; dimension++) {
+            var dimensionesLengths = this.leftHeaderDimensionsLengths();
+            for (var dimension = 0; dimension < dimensionesLengths.length - 1; dimension++) {
+                var dimensionElements = this.leftHeaderDimensionsElements(dimension + 1);
 
-                dimensionElements = this.leftHeaderDimensionsElements(dimension);
+                if (dimensionesLengths[dimension] > 1) {
+                    for (var branch = 0; branch < dimensionesLengths[dimension]; branch++ ) {
+                        var firstNode = branch * dimensionElements + dimension;
+                        if (pos >= firstNode && pos < (firstNode + dimensionElements)) {
+                            pos = branch > 0 ? (pos % firstNode) + dimension : pos;
+                            break;
+                        }
+                    }
+                }
 
-                // Check if the current row is the first of this dimension; if not, 'enter' the next nested dimension
-                pos = pos % dimensionElements;
-                if (pos == dimension - 1)
+                if ( pos == dimension )
                     return true;
             }
             return false;
