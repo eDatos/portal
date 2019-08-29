@@ -236,6 +236,10 @@
         },
         _updateSidebarHeight: function (height) {
             this.content.$el.outerHeight(height);
+        },
+
+        showLoading: function () {
+            this.visualizationView.showLoading();
         }
     });
 
