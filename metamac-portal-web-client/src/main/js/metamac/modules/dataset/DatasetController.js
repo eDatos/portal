@@ -43,6 +43,9 @@
 
             var self = this;
             var datasetIdentifier = _.pick(options, "type", "agency", "identifier", "version", "permalinkId", "indicatorSystem", "geo", "multidatasetId");
+            if (this.visualizationView) {
+                this.visualizationView.showLoading();
+            }
             this._loadMetadataAndData(datasetIdentifier).then(function () {
                 options = _.defaults(options, {
                     visualizationType: "table",
