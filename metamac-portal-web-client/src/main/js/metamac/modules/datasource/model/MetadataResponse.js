@@ -203,8 +203,9 @@
             if (dimension && dimension.dimensionValues) {
                 var isMeasureDimension = dimension.type === "MEASURE_DIMENSION";
                 var isGeographic = dimension.type === "GEOGRAPHIC_DIMENSION";
-
-                representations = _.map(dimension.dimensionValues.value, function (dimensionValue) {
+                var isTemporal = dimension.type === 'TIME_DIMENSION';
+                var dimensionValues = dimension.dimensionValues.value;
+                representations = _.map(dimensionValues, function(dimensionValue, index) {
                     var representation = _.pick(dimensionValue, 'id', 'open', 'temporalGranularity');
                     representation.label = self.localizeLabel(dimensionValue.name.text);
 
@@ -217,8 +218,27 @@
                     }
 
                     if (dimensionValue.visualisationParent) {
-                        var parent = _.findWhere(dimension.dimensionValues.value, { urn: dimensionValue.visualisationParent });
+                        var parent = _.findWhere(dimensionValues, { urn: dimensionValue.visualisationParent });
                         if (parent) representation.parent = parent.id;
+                    }
+
+                    if (isTemporal) {
+                        
+                        if (index > 0) {
+                            var previousIndex = index - 1;
+                            var currentPriority = App.TemporalUtils.getTemporalPriority(dimensionValue.temporalGranularity);
+
+                            while (previousIndex > 0) {
+                                var previousDimensionValue = dimensionValues[previousIndex];
+                                var previousPriority = App.TemporalUtils.getTemporalPriority(previousDimensionValue.temporalGranularity);
+                                if (previousPriority > currentPriority && App.TemporalUtils.contains(previousDimensionValue, dimensionValue)) {
+                                    representation.parent = previousDimensionValue.id;
+                                    break;
+                                }
+
+                                previousIndex --;
+                            }
+                        }
                     }
 
                     if (isGeographic) {
