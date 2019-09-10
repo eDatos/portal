@@ -1,6 +1,6 @@
 describe("Number Formatter", function () {
 
-    var NumberFormatter = App.dataset.data.NumberFormatter;
+    var NumberFormatter = App.util.NumberFormatter;
 
     beforeEach(function () {
         SpecUtils.configureI18n('es');
@@ -36,7 +36,7 @@ describe("Number Formatter", function () {
 
     describe('strNumberToLocalizedString', function () {
 
-        var strNumberToLocalizedString = App.dataset.data.NumberFormatter.strNumberToLocalizedString;
+        var strNumberToLocalizedString = App.util.NumberFormatter.strNumberToLocalizedString;
 
         it("should parse integer numbers", function() {
             I18n.locale = 'es';
