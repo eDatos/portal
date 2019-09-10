@@ -165,6 +165,95 @@ App.test.response.metadata = {
                     }
                 },
                 {
+                    "id": "TIME_PERIOD_2",
+                    "name": {
+                        "text": [
+                            {
+                                "value": "Periodo de tiempo 2",
+                                "lang": "es"
+                            }
+                        ]
+                    },
+                    "type": "TIME_DIMENSION",
+                    "dimensionValues": {
+                        "value": [
+                            {
+                                "id": "2018",
+                                "name": {
+                                    "text": [
+                                        {
+                                            "value": "Year 2018",
+                                            "lang": "es"
+                                        }
+                                    ]
+                                },
+                                "temporalGranularity": "YEARLY"
+                            },
+                            {
+                                "id": "2018-W10",
+                                "name": {
+                                    "text": [
+                                        {
+                                            "value": "2018-W10",
+                                            "lang": "es"
+                                        }
+                                    ]
+                                },
+                                "temporalGranularity": "WEEKLY"
+                            },
+                            {
+                                "id": "2018-M02",
+                                "name": {
+                                    "text": [
+                                        {
+                                            "value": "2018-M02",
+                                            "lang": "es"
+                                        }
+                                    ]
+                                },
+                                "temporalGranularity": "MONTHLY"
+                            },
+                            {
+                                "id": "2018-W06",
+                                "name": {
+                                    "text": [
+                                        {
+                                            "value": "2018-W06",
+                                            "lang": "es"
+                                        }
+                                    ]
+                                },
+                                "temporalGranularity": "WEEKLY"
+                            },
+                            {
+                                "id": "2017-W05",
+                                "name": {
+                                    "text": [
+                                        {
+                                            "value": "2017-W05",
+                                            "lang": "es"
+                                        }
+                                    ]
+                                },
+                                "temporalGranularity": "WEEKLY"
+                            },
+                            {
+                                "id": "2016",
+                                "name": {
+                                    "text": [
+                                        {
+                                            "value": "Year 2016",
+                                            "lang":"es"
+                                        }
+                                    ]
+                                },
+                                "temporalGranularity": "YEARLY"
+                            }
+                        ],
+                        "total": 6
+                    }
+                },
+                {
                     "id": "INDICADORES",
                     "name": {
                         "text": [

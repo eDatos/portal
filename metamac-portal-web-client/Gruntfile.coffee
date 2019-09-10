@@ -55,6 +55,7 @@ module.exports = (grunt) ->
                 paths.js + "/libs/jquery.ba-resize.js"
                 paths.js + "/libs/perfect-scrollbar.jquery.js"
                 paths.js + "/libs/select2.min.js"
+                paths.js + "/libs/moment.min.js"
 
                 # Metamac libs
                 paths.js + "/metamac/libs/i18n.js"
@@ -116,6 +117,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/dataset/utils/URNUtils.js"
                 paths.js + "/metamac/modules/dataset/utils/DimensionsUtils.js"
                 paths.js + "/metamac/modules/dataset/utils/QueryParamsUtils.js"
+                paths.js + "/metamac/modules/dataset/utils/TemporalUtils.js"
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/StructuralResourcesApi.js"

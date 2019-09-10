@@ -61,6 +61,7 @@ describe("Dataset Metadata", function () {
     it('should getDimensions', function () {
         expect(metadata.getDimensions()).to.eql([
             { "id": "TIME_PERIOD", "label": "Periodo de tiempo", "type": "TIME_DIMENSION", "hierarchy": true },
+            { "id": "TIME_PERIOD_2", "label": "Periodo de tiempo 2", "type": "TIME_DIMENSION", "hierarchy": false },
             MEASURE_DIMENSION,
             { "id": "CATEGORIA_ALOJAMIENTO", "label": "Categoría del alojamiento", "type": "DIMENSION", "hierarchy": false },
             { "id": "DESTINO_ALOJAMIENTO", "label": "Destino del alojamiento", "type": "GEOGRAPHIC_DIMENSION", "hierarchy": false }
@@ -96,16 +97,23 @@ describe("Dataset Metadata", function () {
 
         });
 
+        describe('when dimension is temporal', function () {
+            it('should hierarchize temporal dimension', function() {
+                expect(metadata.getRepresentations('TIME_PERIOD_2')).to.eql([
+                    { id: '2018', temporalGranularity: 'YEARLY', label: 'Year 2018' },
+                    { id: '2018-W10', temporalGranularity: 'WEEKLY', label: '2018-W10', parent: '2018' },
+                    { id: '2018-M02', temporalGranularity: 'MONTHLY', label: '2018-M02', parent: '2018' },
+                    { id: '2018-W06', temporalGranularity: 'WEEKLY', label: '2018-W06', parent: '2018-M02' },
+                    { id: '2017-W05', temporalGranularity: 'WEEKLY', label: '2017-W05' },
+                    { id: '2016', temporalGranularity: 'YEARLY', label: 'Year 2016' }
+                ]);
+            });
+        });
+
         it('should order dimensionValues by order field', function () {
             expect(metadata.getRepresentations('INDICADORES')).to.eql(MEASURE_DIMENSION_REPRESENTATIONS);
         });
 
-    });
-
-    it('should getDimensionsAndRepresentations', function () {
-        var dimensionsAndRepresentations = metadata.getDimensionsAndRepresentations();
-        expect(_.pluck(dimensionsAndRepresentations, 'id')).to.eql(['TIME_PERIOD', 'INDICADORES', 'CATEGORIA_ALOJAMIENTO', 'DESTINO_ALOJAMIENTO']);
-        expect(dimensionsAndRepresentations[1].representations).to.eql(MEASURE_DIMENSION_REPRESENTATIONS);
     });
 
     it.skip('should getCategories', function () { });
@@ -146,7 +154,8 @@ describe("Dataset Metadata", function () {
 
     it('should getTimeDimensions', function () {
         expect(metadata.getTimeDimensions()).to.eql([
-            { "id": "TIME_PERIOD", "label": "Periodo de tiempo", "type": "TIME_DIMENSION", "hierarchy": true }
+            { "id": "TIME_PERIOD", "label": "Periodo de tiempo", "type": "TIME_DIMENSION", "hierarchy": true },
+            { "id": "TIME_PERIOD_2", "label": "Periodo de tiempo 2", "type": "TIME_DIMENSION", "hierarchy": true }
         ]);
     });
 

@@ -9,7 +9,9 @@ describe("Tooltip", function () {
     });
 
     afterEach(function () {
-        tooltip.destroy();
+        if (tooltip) {
+            tooltip.destroy();
+        }
         $container.remove();
     });
 
