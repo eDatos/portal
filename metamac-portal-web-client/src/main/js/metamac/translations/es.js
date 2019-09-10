@@ -60,9 +60,9 @@ I18n.translations.es = {
             "for": "Para"
         },
         sidebar: {
-            ignore: {
-                null: 'Ocultar categorías con celdas en blanco',
-                zero: 'Ocultar categorías con celdas en cero'
+            ignorable: {
+                null: 'Ver categorías con celdas en blanco',
+                zero: 'Ver categorías con celdas en cero'
             },
             info: {
                 title: "Info"
