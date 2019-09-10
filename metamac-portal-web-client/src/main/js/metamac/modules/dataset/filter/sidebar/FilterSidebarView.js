@@ -52,7 +52,7 @@
         onIgnoreDimensionValue: function(event) {
             var $target = $(event.target);
             var value = $target.data('value');
-            this.valuesToIgnore[value] = $target.is(':checked');
+            this.valuesToIgnore[value] = !$target.is(':checked');
             var self = this;
             this.filterDimensions.trigger('change:filterByValues', Object.keys(this.valuesToIgnore || {}).filter(function(value) {return self.valuesToIgnore[value]}));
         },
