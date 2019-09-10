@@ -225,11 +225,11 @@
                     if (isTemporal && dimensionValue.temporalGranularity) {
                         if (index > 0) {
                             var previousIndex = index - 1;
-                            var currentPriority = App.TemporalUtils.getTemporalPriority(dimensionValue.temporalGranularity);
+                            var currentPriority = App.TemporalUtils.getTemporalGranularityPriority(dimensionValue.temporalGranularity);
 
                             while (previousIndex >= 0) {
                                 var previousDimensionValue = dimensionValues[previousIndex];
-                                var previousPriority = App.TemporalUtils.getTemporalPriority(previousDimensionValue.temporalGranularity);
+                                var previousPriority = App.TemporalUtils.getTemporalGranularityPriority(previousDimensionValue.temporalGranularity);
                                 if (previousPriority > currentPriority && App.TemporalUtils.contains(previousDimensionValue, dimensionValue)) {
                                     representation.parent = previousDimensionValue.id;
                                     break;

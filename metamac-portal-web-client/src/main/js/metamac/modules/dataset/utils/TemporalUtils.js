@@ -29,47 +29,25 @@
             }
         },
 
-        dateParsers: {
-            YEARLY: function(stringDate) {
-                return moment(stringDate, "YYYY");
-            },
-            MONTHLY: function(stringDate) { // 2018-M10
-                return moment(stringDate, "YYYY-'M'MM");
-            },
-            WEEKLY: function(stringDate) { // 2018-W10
-                return moment(stringDate, "YYYY-'W'WW");
-            }
+        temporalGranularityPriorities: {
+            MINUTELY: 0,
+            HOURLY: 1,
+            DAILY_D: 2,
+            DAILY_B: 2,
+            WEEKLY: 3,
+            MONTHLY: 4,
+            YEARLY: 8, // [YEARLY, EVENT]
         },
 
-        contains: function(temporalA, temporalB) {
-            var interval = this.intervalDateParsers[temporalA.temporalGranularity](temporalA.id);
-            var date = this.dateParsers[temporalB.temporalGranularity](temporalB.id);
-            return interval.begin <= date && date <= interval.end;
+        contains: function(majorTemporal, minorTemporal) {
+            var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity](majorTemporal.id);
+            var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity](minorTemporal.id);
+
+            return majorInterval.begin <= minorInterval.begin && minorInterval.end <= majorInterval.end;
         },
 
-        getTemporalPriority: function(temporalGranularity) {
-            var temporalPriorities = [
-                'MINUTELY',
-                'HOURLY',
-                ['DAILY_D', 'DAILY_B'],
-                'WEEKLY',
-                'MONTHLY',
-                'YEARLY' // ['YEARLY', 'EVENT']
-            ];
-
-            var priority = 0;
-            while (priority < temporalPriorities.length) {
-                if (Array.isArray(temporalPriorities[priority])) {
-                    if (temporalPriorities[priority].indexOf(temporalGranularity) != -1) {
-                        return priority;
-                    }
-                }
-                else if (temporalPriorities[priority] === temporalGranularity) {
-                    return priority;
-                }
-                priority++;
-            }
-            return null;
+        getTemporalGranularityPriority: function(temporalGranularity) {
+            return this.temporalGranularityPriorities[temporalGranularity] || null;
         },
         
     };
