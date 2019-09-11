@@ -5,6 +5,14 @@
 
     App.TemporalUtils = {
 
+        regExps: {
+            BIYEARLY: /^\d{4}-S(\d{1,2})$/,
+            FOUR_MONTHLY: /^\d{4}-T(\d{1,2})$/,
+            QUARTERLY: /^\d{4}-Q(\d{1,2})$/,
+            MONTHLY: /^\d{4}-\d{2}$/,
+            DAILY: /^\d{4}-D(\d{1,3})$/
+        },
+
         intervalDateParsers: {
             YEARLY: function(stringDate) {
                 var momentDate = moment(stringDate, "YYYY").utc(); // parse format YYYY-A1 too
@@ -14,40 +22,49 @@
                 }
             },
             BIYEARLY: function(stringDate) {
-                var monthEnd = moment(stringDate, "YYYY-'S'M");
-                monthEnd.month(((monthEnd.month() + 1) * 6) - 1);
+                var matchs = stringDate.match(this.regExps.BIYEARLY);
+                var monthBeginNumber = matchs[1] * 6 - 6;
 
-                var monthBegin = monthEnd.clone();
-                monthBegin.month(monthEnd.month() - 5);
+                var monthBegin = moment(stringDate, 'YYYY');
+                monthBegin.month(monthBeginNumber);
+
+                var monthEnd = monthBegin.clone();
+                monthEnd.month(monthBegin.month() + 5);
                 return {
                     begin: monthBegin.startOf('month').utc().valueOf(),
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
             FOUR_MONTHLY: function(stringDate) {
-                var monthEnd = moment(stringDate, "YYYY-'T'M");
-                monthEnd.month(((monthEnd.month() + 1) * 4) - 1);
+                var matchs = stringDate.match(this.regExps.FOUR_MONTHLY);
+                var monthBeginNumber = matchs[1] * 4 - 4;
 
-                var monthBegin = monthEnd.clone();
-                monthBegin.month(monthEnd.month() - 3);
+                var monthBegin = moment(stringDate, 'YYYY');
+                monthBegin.month(monthBeginNumber);
+
+                var monthEnd = monthBegin.clone();
+                monthEnd.month(monthBegin.month() + 3);
                 return {
                     begin: monthBegin.startOf('month').utc().valueOf(),
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
             QUARTERLY: function(stringDate) {
-                var monthEnd = moment(stringDate, "YYYY-'Q'M");
-                monthEnd.month(((monthEnd.month() + 1) * 3) - 1);
+                var matchs = stringDate.match(this.regExps.QUARTERLY);
+                var monthBeginNumber = matchs[1] * 3 - 3;
 
-                var monthBegin = monthEnd.clone();
-                monthBegin.month(monthEnd.month() - 2);
+                var monthBegin = moment(stringDate, 'YYYY');
+                monthBegin.month(monthBeginNumber);
+
+                var monthEnd = monthBegin.clone();
+                monthEnd.month(monthBegin.month() + 2);
                 return {
                     begin: monthBegin.startOf('month').utc().valueOf(),
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
             MONTHLY: function(stringDate) { // 2018-M10, 2018-10
-                var momentDate = moment(stringDate, (/^\d{4}-\d{2}$/).test(stringDate) ? 'YYYY-MM' : "YYYY-'M'MM").utc();
+                var momentDate = moment(stringDate, (this.regExps.MONTHLY).test(stringDate) ? 'YYYY-MM' : "YYYY-'M'MM").utc();
                 return {
                     begin: momentDate.startOf('month').valueOf(),
                     end: momentDate.endOf('month').valueOf()
@@ -61,7 +78,7 @@
                 }
             },
             DAILY: function(stringDate) {
-                var matchs = stringDate.match(/^\d{4}-D(\d{1,3})$/)
+                var matchs = stringDate.match(this.regExps.DAILY)
                 var momentDate;
                 if (matchs) {
                     momentDate = moment(stringDate, "YYYY");
@@ -108,8 +125,8 @@
                     console.log(minorTemporal.temporalGranularity);
                     return false;
                 }
-            var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity](majorTemporal.id);
-            var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity](minorTemporal.id);
+            var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity].call(this, majorTemporal.id);
+            var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity].call(this, minorTemporal.id);
 
             return majorInterval.begin <= minorInterval.begin && minorInterval.end <= majorInterval.end;
         },
