@@ -101,8 +101,9 @@ describe("Dataset Metadata", function () {
             it('should hierarchize temporal dimension', function() {
                 expect(metadata.getRepresentations('TIME_PERIOD_2')).to.eql([
                     { id: '2018', temporalGranularity: 'YEARLY', label: 'Year 2018' },
-                    { id: '2018-W10', temporalGranularity: 'WEEKLY', label: '2018-W10', parent: '2018' },
-                    { id: '2018-M02', temporalGranularity: 'MONTHLY', label: '2018-M02', parent: '2018' },
+                    { id: "2018-S1", temporalGranularity: "BIYEARLY", label: '2018-S1', parent: '2018' },
+                    { id: '2018-W10', temporalGranularity: 'WEEKLY', label: '2018-W10', parent: '2018-S1' },
+                    { id: '2018-M02', temporalGranularity: 'MONTHLY', label: '2018-M02', parent: '2018-S1' },
                     { id: '2018-W06', temporalGranularity: 'WEEKLY', label: '2018-W06', parent: '2018-M02' },
                     { id: '2017-W05', temporalGranularity: 'WEEKLY', label: '2017-W05' },
                     { id: '2016', temporalGranularity: 'YEARLY', label: 'Year 2016' }

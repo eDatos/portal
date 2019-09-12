@@ -190,6 +190,18 @@ App.test.response.metadata = {
                                 "temporalGranularity": "YEARLY"
                             },
                             {
+                                "id": "2018-S1",
+                                "name": {
+                                    "text": [
+                                        {
+                                            "value": "2018-S1",
+                                            "lang": "es"
+                                        }
+                                    ]
+                                },
+                                "temporalGranularity": "BIYEARLY"
+                            },
+                            {
                                 "id": "2018-W10",
                                 "name": {
                                     "text": [
