@@ -5,14 +5,18 @@
 
     App.TemporalUtils = {
 
-        regExps: {
+        REGEXPS: {
             BIYEARLY: /^\d{4}-S(\d{1,2})$/,
             FOUR_MONTHLY: /^\d{4}-T(\d{1,2})$/,
             QUARTERLY: /^\d{4}-Q(\d{1,2})$/,
             MONTHLY: /^\d{4}-\d{2}$/,
             DAILY: /^\d{4}-D(\d{1,3})$/
         },
-
+        MONTHS: {
+            BIYEARLY: 6,
+            FOUR_MONTHLY: 4,
+            QUARTERLY: 3
+        },
         intervalDateParsers: {
             YEARLY: function(stringDate) {
                 var momentDate = moment(stringDate, "YYYY").utc(); // parse format YYYY-A1 too
@@ -22,49 +26,49 @@
                 }
             },
             BIYEARLY: function(stringDate) {
-                var matchs = stringDate.match(this.regExps.BIYEARLY);
-                var monthBeginNumber = matchs[1] * 6 - 6;
+                var matchs = stringDate.match(App.TemporalUtils.REGEXPS.BIYEARLY);
+                var monthBeginNumber = (matchs[1] - 1) * App.TemporalUtils.MONTHS.BIYEARLY;
 
                 var monthBegin = moment(stringDate, 'YYYY');
                 monthBegin.month(monthBeginNumber);
 
                 var monthEnd = monthBegin.clone();
-                monthEnd.month(monthBegin.month() + 5);
+                monthEnd.month(monthBegin.month() + App.TemporalUtils.MONTHS.BIYEARLY - 1);
                 return {
                     begin: monthBegin.startOf('month').utc().valueOf(),
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
             FOUR_MONTHLY: function(stringDate) {
-                var matchs = stringDate.match(this.regExps.FOUR_MONTHLY);
-                var monthBeginNumber = matchs[1] * 4 - 4;
+                var matchs = stringDate.match(App.TemporalUtils.REGEXPS.FOUR_MONTHLY);
+                var monthBeginNumber = (matchs[1] - 1) * App.TemporalUtils.MONTHS.FOUR_MONTHLY;
 
                 var monthBegin = moment(stringDate, 'YYYY');
                 monthBegin.month(monthBeginNumber);
 
                 var monthEnd = monthBegin.clone();
-                monthEnd.month(monthBegin.month() + 3);
+                monthEnd.month(monthBegin.month() + App.TemporalUtils.MONTHS.FOUR_MONTHLY - 1);
                 return {
                     begin: monthBegin.startOf('month').utc().valueOf(),
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
             QUARTERLY: function(stringDate) {
-                var matchs = stringDate.match(this.regExps.QUARTERLY);
-                var monthBeginNumber = matchs[1] * 3 - 3;
+                var matchs = stringDate.match(App.TemporalUtils.REGEXPS.QUARTERLY);
+                var monthBeginNumber = (matchs[1] - 1) * App.TemporalUtils.MONTHS.QUARTERLY;
 
                 var monthBegin = moment(stringDate, 'YYYY');
                 monthBegin.month(monthBeginNumber);
 
                 var monthEnd = monthBegin.clone();
-                monthEnd.month(monthBegin.month() + 2);
+                monthEnd.month(monthBegin.month() + App.TemporalUtils.MONTHS.QUARTERLY - 1);
                 return {
                     begin: monthBegin.startOf('month').utc().valueOf(),
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
             MONTHLY: function(stringDate) { // 2018-M10, 2018-10
-                var momentDate = moment(stringDate, (this.regExps.MONTHLY).test(stringDate) ? 'YYYY-MM' : "YYYY-'M'MM").utc();
+                var momentDate = moment(stringDate, (App.TemporalUtils.REGEXPS.MONTHLY).test(stringDate) ? 'YYYY-MM' : "YYYY-'M'MM").utc();
                 return {
                     begin: momentDate.startOf('month').valueOf(),
                     end: momentDate.endOf('month').valueOf()
@@ -78,7 +82,7 @@
                 }
             },
             DAILY: function(stringDate) {
-                var matchs = stringDate.match(this.regExps.DAILY)
+                var matchs = stringDate.match(App.TemporalUtils.REGEXPS.DAILY)
                 var momentDate;
                 if (matchs) {
                     momentDate = moment(stringDate, "YYYY");
@@ -120,13 +124,13 @@
         contains: function(majorTemporal, minorTemporal) {
             if (!this.intervalDateParsers.hasOwnProperty(majorTemporal.temporalGranularity) ||
                 !this.intervalDateParsers.hasOwnProperty(minorTemporal.temporalGranularity)) {
-                    console.log('Some of the next granularities do not have a parser');
+                    console.warm('Some of the next granularities do not have a parser');
                     console.log(majorTemporal.temporalGranularity);
                     console.log(minorTemporal.temporalGranularity);
                     return false;
                 }
-            var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity].call(this, majorTemporal.id);
-            var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity].call(this, minorTemporal.id);
+            var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity](majorTemporal.id);
+            var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity](minorTemporal.id);
 
             return majorInterval.begin <= minorInterval.begin && minorInterval.end <= majorInterval.end;
         },
