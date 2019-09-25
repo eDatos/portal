@@ -121,6 +121,7 @@
             this.$el.append(this.$rightsHolder);
 
             this.view.repaint();
+            this._filterDimensionsByValues(this.filterDimensions.getValuesToIgnore());
         },
 
         update: function () {
