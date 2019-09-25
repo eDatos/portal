@@ -15,7 +15,10 @@
             return JSON.stringify({
                 queryParams: App.queryParams,
                 hash: this.removePermalink(window.location.hash),
-                selection: filterDimensions.exportJSON()
+                selection: filterDimensions.exportJSON(),
+                state: {
+                    valuesToIgnore: filterDimensions.getValuesToIgnore()
+                }
             });
         },
 

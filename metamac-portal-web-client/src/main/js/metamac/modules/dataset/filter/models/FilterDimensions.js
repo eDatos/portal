@@ -20,6 +20,7 @@
             this._bindEvents();
 
             this.accordion = true; //accordion behaviour
+            this.valuesToIgnore = [];
         },
 
         _bindEvents: function () {
@@ -228,6 +229,22 @@
 
         getMultidatasetId: function () {
             return this.metadata.identifier().multidatasetId;
+        },
+
+        filterDimensionsByValues: function (valuesToIgnore) {
+            this.valuesToIgnore = valuesToIgnore;
+            this.trigger('change:filterByValues', valuesToIgnore);
+        },
+
+        getValuesToIgnore() {
+            return this.valuesToIgnore;
+        },
+
+        importValuesToIgnore(valuesToIgnore) {
+            if (Array.isArray(valuesToIgnore)) {
+                this.trigger('onImportValuesToIgnore', valuesToIgnore);
+                this.filterDimensionsByValues(valuesToIgnore);
+            }
         }
 
     }, {

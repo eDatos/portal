@@ -117,6 +117,9 @@
 
                 if (result.permalink) {
                     self.filterDimensions.importJSON(result.permalink.selection);
+                    if (result.permalink.state && result.permalink.state.valuesToIgnore) {
+                        self.filterDimensions.importValuesToIgnore(result.permalink.state.valuesToIgnore);
+                    }
                     if (!window.location.hash.includes(result.permalink.hash)) {
                         self.visualizationView.optionsModel.set('mustApplyVisualizationRestrictions', true);
                     }

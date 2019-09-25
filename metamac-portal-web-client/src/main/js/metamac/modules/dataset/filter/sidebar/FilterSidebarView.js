@@ -36,6 +36,8 @@
 
             this.title = I18n.t("filter.sidebar.filter.title");
 
+            this.listenTo(this.filterDimensions, "onImportValuesToIgnore", this.importValuesToIgnore);
+
             //_.last(this.subviews).stateModel.set('collapsed', false); // open last subview
         },
 
@@ -52,9 +54,20 @@
         onIgnoreDimensionValue: function(event) {
             var $target = $(event.target);
             var value = $target.data('value');
-            this.valuesToIgnore[value] = !$target.is(':checked');
             var self = this;
-            this.filterDimensions.trigger('change:filterByValues', Object.keys(this.valuesToIgnore || {}).filter(function(value) {return self.valuesToIgnore[value]}));
+            this.valuesToIgnore[value] = !$target.is(':checked');
+            this.filterDimensions.filterDimensionsByValues(Object.keys(this.valuesToIgnore || {}).filter(function(value) {return self.valuesToIgnore[value]}));
+        },
+
+        importValuesToIgnore: function(valuesToIgnore) {
+            var self = this;
+            valuesToIgnore.forEach(function(valueToIgnore) {
+                self.valuesToIgnore[valueToIgnore] = true;
+                var $checkbox = $('[data-value="'+ valueToIgnore +'"]');
+                if ($checkbox.length) {
+                    $checkbox.prop('checked', false);
+                }
+            });
         },
 
         _bindEvents: function () {
