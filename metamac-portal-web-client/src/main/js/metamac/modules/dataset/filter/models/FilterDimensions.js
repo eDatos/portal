@@ -20,7 +20,7 @@
             this._bindEvents();
 
             this.accordion = true; //accordion behaviour
-            this.ignoranceOfValues = {};
+            this.valuesToIgnoreStatus = {};
         },
 
         _bindEvents: function () {
@@ -232,17 +232,17 @@
         },
 
         setIgnoranceOfValue: function (value, isIgnored) {
-            this.ignoranceOfValues[value] = isIgnored;
+            this.valuesToIgnoreStatus[value] = isIgnored;
             this.trigger('change:valuesToIgnore', this.getValuesToIgnore());
         },
 
         getValuesToIgnore: function () {
             var self = this;
-            return Object.keys(this.ignoranceOfValues || {}).filter(function(value) {return self.ignoranceOfValues[value]})
+            return Object.keys(this.valuesToIgnoreStatus || {}).filter(function(value) {return self.valuesToIgnoreStatus[value]})
         },
 
-        getIgnoranceOfValues: function() {
-            return this.ignoranceOfValues;
+        getValuesToIgnoreStatus: function() {
+            return this.valuesToIgnoreStatus;
         },
 
         exportJSONState: function () {
@@ -253,14 +253,14 @@
 
         importJSONState: function (state) {
             if (state && Array.isArray(state.valuesToIgnore)) {
-                this.ignoranceOfValues = {};
+                this.valuesToIgnoreStatus = {};
                 var self = this;
 
                 state.valuesToIgnore.forEach(function(valueToIgnore) {
-                    self.ignoranceOfValues[valueToIgnore] = true;
+                    self.valuesToIgnoreStatus[valueToIgnore] = true;
                 });
 
-                this.trigger('change:ignoranceOfValues');
+                this.trigger('change:valuesToIgnoreStatus');
             }
         }
 

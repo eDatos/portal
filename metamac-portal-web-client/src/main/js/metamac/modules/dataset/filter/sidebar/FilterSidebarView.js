@@ -35,7 +35,7 @@
 
             this.title = I18n.t("filter.sidebar.filter.title");
 
-            this.listenTo(this.filterDimensions, "change:ignoranceOfValues", this.render);
+            this.listenTo(this.filterDimensions, "change:valuesToIgnoreStatus", this.render);
 
             //_.last(this.subviews).stateModel.set('collapsed', false); // open last subview
         },
@@ -70,7 +70,7 @@
             this._bindEvents();
 
             this.$el.html(this.template({
-                valuesToIgnore: this.filterDimensions.getIgnoranceOfValues()
+                valuesToIgnore: this.filterDimensions.getValuesToIgnoreStatus()
             }));
 
             var $dimensions = this.$('.filter-sidebar-dimensions');

@@ -24,10 +24,10 @@
             this.view = options.view;
             this.valuesToIgnore = [];
             this.valuesToIgnoreHandlers = {
-                'NULO': function(value) {
+                'NULL': function(value) {
                     return value == null
                 },
-                'CERO': function(value) {
+                'ZERO': function(value) {
                     return value === 0;
                 }
             }
