@@ -20,7 +20,7 @@
             this._bindEvents();
 
             this.accordion = true; //accordion behaviour
-            this.valuesToIgnore = [];
+            this.ignoranceOfValues = {};
         },
 
         _bindEvents: function () {
@@ -231,25 +231,36 @@
             return this.metadata.identifier().multidatasetId;
         },
 
-        filterDimensionsByValues: function (valuesToIgnore) {
-            this.valuesToIgnore = valuesToIgnore;
-            this.trigger('change:filterByValues', valuesToIgnore);
+        setIgnoranceOfValue: function (value, isIgnored) {
+            this.ignoranceOfValues[value] = isIgnored;
+            this.trigger('change:valuesToIgnore', this.getValuesToIgnore());
         },
 
-        getValuesToIgnore() {
-            return this.valuesToIgnore;
+        getValuesToIgnore: function () {
+            var self = this;
+            return Object.keys(this.ignoranceOfValues || {}).filter(function(value) {return self.ignoranceOfValues[value]})
         },
 
-        exportJSONState() {
+        getIgnoranceOfValues: function() {
+            return this.ignoranceOfValues;
+        },
+
+        exportJSONState: function () {
             return {
-                valuesToIgnore: this.valuesToIgnore
+                valuesToIgnore: this.getValuesToIgnore()
             }
         },
 
-        importJSONState(state) {
+        importJSONState: function (state) {
             if (state && Array.isArray(state.valuesToIgnore)) {
-                this.trigger('onImportValuesToIgnore', state.valuesToIgnore);
-                this.filterDimensionsByValues(state.valuesToIgnore);
+                this.ignoranceOfValues = {};
+                var self = this;
+
+                state.valuesToIgnore.forEach(function(valueToIgnore) {
+                    self.ignoranceOfValues[valueToIgnore] = true;
+                });
+
+                this.trigger('change:ignoranceOfValues');
             }
         }
 
