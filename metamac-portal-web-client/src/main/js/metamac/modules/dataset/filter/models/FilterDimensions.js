@@ -129,7 +129,7 @@
                     position: position,
                     selectedCategories: selection.split("|")
                 }
-                this.importJSON(json);
+                this.importJSONSelection(json);
             }
         },
 
@@ -143,7 +143,7 @@
                 && this.metadata.identifier().type != App.Constants.visualization.type.INDICATOR_INSTANCE;
         },
 
-        importJSON: function (json) {
+        importJSONSelection: function (json) {
 
             var dimensionsToImport = _.chain(json).map(function (value, key) {
                 value.id = key;
@@ -201,7 +201,7 @@
             }
         },
 
-        exportJSON: function () {
+        exportJSONSelection: function () {
             var exportResult = {};
             this.each(function (dimension) {
                 var zone = dimension.get('zone');
@@ -240,10 +240,16 @@
             return this.valuesToIgnore;
         },
 
-        importValuesToIgnore(valuesToIgnore) {
-            if (Array.isArray(valuesToIgnore)) {
-                this.trigger('onImportValuesToIgnore', valuesToIgnore);
-                this.filterDimensionsByValues(valuesToIgnore);
+        exportJSONState() {
+            return {
+                valuesToIgnore: this.valuesToIgnore
+            }
+        },
+
+        importJSONState(state) {
+            if (state && Array.isArray(state.valuesToIgnore)) {
+                this.trigger('onImportValuesToIgnore', state.valuesToIgnore);
+                this.filterDimensionsByValues(state.valuesToIgnore);
             }
         }
 

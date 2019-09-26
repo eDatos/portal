@@ -111,7 +111,7 @@
                     dimension: []
                 }
             };
-            var selection = this.filterDimensions.exportJSON();
+            var selection = this.filterDimensions.exportJSONSelection();
 
             var self = this;
             _.each(selection, function (dimension, dimensionId) {

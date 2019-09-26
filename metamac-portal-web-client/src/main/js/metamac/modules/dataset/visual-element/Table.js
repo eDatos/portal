@@ -120,8 +120,8 @@
             this.$rightsHolder = $('<div class="rights-holder">' + rightsHolder + '</div>');
             this.$el.append(this.$rightsHolder);
 
-            this.view.repaint();
             this._filterDimensionsByValues(this.filterDimensions.getValuesToIgnore());
+            this.view.repaint();
         },
 
         update: function () {

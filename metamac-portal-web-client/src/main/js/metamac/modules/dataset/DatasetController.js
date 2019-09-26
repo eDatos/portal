@@ -116,10 +116,8 @@
                 self.visualizationView = new App.modules.dataset.DatasetView({ controller: self, filterDimensions: self.filterDimensions, metadata: self.metadata, data: self.data });
 
                 if (result.permalink) {
-                    self.filterDimensions.importJSON(result.permalink.selection);
-                    if (result.permalink.state && result.permalink.state.valuesToIgnore) {
-                        self.filterDimensions.importValuesToIgnore(result.permalink.state.valuesToIgnore);
-                    }
+                    self.filterDimensions.importJSONSelection(result.permalink.selection);
+                    self.filterDimensions.importJSONState(result.permalink.state);
                     if (!window.location.hash.includes(result.permalink.hash)) {
                         self.visualizationView.optionsModel.set('mustApplyVisualizationRestrictions', true);
                     }

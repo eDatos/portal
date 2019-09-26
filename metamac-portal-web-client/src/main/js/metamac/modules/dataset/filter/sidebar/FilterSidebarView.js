@@ -63,11 +63,8 @@
             var self = this;
             valuesToIgnore.forEach(function(valueToIgnore) {
                 self.valuesToIgnore[valueToIgnore] = true;
-                var $checkbox = $('[data-value="'+ valueToIgnore +'"]');
-                if ($checkbox.length) {
-                    $checkbox.prop('checked', false);
-                }
             });
+            this.render();
         },
 
         _bindEvents: function () {
