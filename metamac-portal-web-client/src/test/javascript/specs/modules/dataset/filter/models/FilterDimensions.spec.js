@@ -89,7 +89,7 @@ describe('FilterDimensions', function () {
 
     });
 
-    describe('exportJSON', function () {
+    describe('exportJSONSelection', function () {
 
         var exportedJSON, dim, dimId;
 
@@ -97,7 +97,7 @@ describe('FilterDimensions', function () {
             dimId = 'INDICADORES';
             dim = filterDimensions.get(dimId);
             filterDimensions.zones.setDimensionZone('fixed', dim);
-            exportedJSON = filterDimensions.exportJSON();
+            exportedJSON = filterDimensions.exportJSONSelection();
         });
 
         it('should export all dimensions', function () {
@@ -120,7 +120,7 @@ describe('FilterDimensions', function () {
 
     });
 
-    describe('importJSON', function () {
+    describe('importJSONSelection', function () {
 
         var selectedRepresentationsIdsInDimension = function (dimensionId) {
             var dimension = filterDimensions.get(dimensionId);
@@ -253,7 +253,7 @@ describe('FilterDimensions', function () {
                     ]
                 }
             };
-            filterDimensions.importJSON(exportedJSON);
+            filterDimensions.importJSONSelection(exportedJSON);
         });
 
         it('should import selected categories', function () {

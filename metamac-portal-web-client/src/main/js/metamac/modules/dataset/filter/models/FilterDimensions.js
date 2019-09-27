@@ -20,6 +20,7 @@
             this._bindEvents();
 
             this.accordion = true; //accordion behaviour
+            this.valuesToIgnoreStatus = {};
         },
 
         _bindEvents: function () {
@@ -128,7 +129,7 @@
                     position: position,
                     selectedCategories: selection.split("|")
                 }
-                this.importJSON(json);
+                this.importJSONSelection(json);
             }
         },
 
@@ -142,7 +143,7 @@
                 && this.metadata.identifier().type != App.Constants.visualization.type.INDICATOR_INSTANCE;
         },
 
-        importJSON: function (json) {
+        importJSONSelection: function (json) {
 
             var dimensionsToImport = _.chain(json).map(function (value, key) {
                 value.id = key;
@@ -200,7 +201,7 @@
             }
         },
 
-        exportJSON: function () {
+        exportJSONSelection: function () {
             var exportResult = {};
             this.each(function (dimension) {
                 var zone = dimension.get('zone');
@@ -228,6 +229,39 @@
 
         getMultidatasetId: function () {
             return this.metadata.identifier().multidatasetId;
+        },
+
+        setIgnoranceOfValue: function (value, isIgnored) {
+            this.valuesToIgnoreStatus[value] = isIgnored;
+            this.trigger('change:valuesToIgnore', this.getValuesToIgnore());
+        },
+
+        getValuesToIgnore: function () {
+            var self = this;
+            return Object.keys(this.valuesToIgnoreStatus || {}).filter(function(value) {return self.valuesToIgnoreStatus[value]})
+        },
+
+        getValuesToIgnoreStatus: function() {
+            return this.valuesToIgnoreStatus;
+        },
+
+        exportJSONState: function () {
+            return {
+                valuesToIgnore: this.getValuesToIgnore()
+            }
+        },
+
+        importJSONState: function (state) {
+            if (state && Array.isArray(state.valuesToIgnore)) {
+                this.valuesToIgnoreStatus = {};
+                var self = this;
+
+                state.valuesToIgnore.forEach(function(valueToIgnore) {
+                    self.valuesToIgnoreStatus[valueToIgnore] = true;
+                });
+
+                this.trigger('change:valuesToIgnoreStatus');
+            }
         }
 
     }, {
