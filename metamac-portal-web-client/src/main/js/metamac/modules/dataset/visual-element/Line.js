@@ -43,7 +43,6 @@
                 title: {
                     text: null
                 },
-                min: 0.6,
                 showFirstLabel: false
             },
             title: {
