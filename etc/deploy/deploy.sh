@@ -44,8 +44,8 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     sudo rm -rf $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer.war
     
     # Restore Configuration
-    sudo cp $HOME_PATH_EXTERNAL/environment.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer/$ENVIRONMENT_RELATIVE_PATH_FILE
-    sudo cp $HOME_PATH_EXTERNAL/logback.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer/$LOGBACK_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH_EXTERNAL/environment_external.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer/$ENVIRONMENT_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH_EXTERNAL/logback_external.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer/$LOGBACK_RELATIVE_PATH_FILE
 
 
     ###
@@ -59,8 +59,8 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     sudo rm -rf $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer-api.war
 
     # Restore Configuration
-    sudo cp $HOME_PATH_EXTERNAL/environment-api.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer-api/$ENVIRONMENT_RELATIVE_PATH_FILE
-    sudo cp $HOME_PATH_EXTERNAL/logback-api.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer-api/$LOGBACK_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH_EXTERNAL/environment_external-api.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer-api/$ENVIRONMENT_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH_EXTERNAL/logback_external-api.xml $DEPLOY_TARGET_PATH_EXTERNAL/statistical-visualizer-api/$LOGBACK_RELATIVE_PATH_FILE
     
     if [ $RESTART -eq 1 ]; then
         sudo chown -R edatos-external.edatos-external /servers/edatos-external
@@ -83,7 +83,7 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     sudo rm -rf $DEPLOY_TARGET_PATH_INTERNAL/statistical-visualizer-internal.war
     
     # Restore Configuration
-    sudo cp $HOME_PATH_INTERNAL/environment.xml $DEPLOY_TARGET_PATH_INTERNAL/statistical-visualizer-internal/$ENVIRONMENT_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH_INTERNAL/environment_internal.xml $DEPLOY_TARGET_PATH_INTERNAL/statistical-visualizer-internal/$ENVIRONMENT_RELATIVE_PATH_FILE
     sudo cp $HOME_PATH_INTERNAL/logback_internal.xml $DEPLOY_TARGET_PATH_INTERNAL/statistical-visualizer-internal/$LOGBACK_RELATIVE_PATH_FILE
 
 
