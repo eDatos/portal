@@ -171,7 +171,7 @@ public class WebUtils extends org.siemac.metamac.core.common.util.WebUtils {
 
     private static String getBreadcrumbsParams() {
         try {
-            // IDEA move http://www.gobiernodecanarias.org to property
+            // IDEA: EDATOS-3159 move http://www.gobiernodecanarias.org to property
             return "?enlace=http://www.gobiernodecanarias.org/istac&miga=" + URLEncoder.encode("Inicio|Visualizador estadístico", StandardCharsets.UTF_8.toString());
         } catch (UnsupportedEncodingException e) {
             log.error("UnsupportedEncodingException encoding a constant. This is not supposed to EVER throw", e);
