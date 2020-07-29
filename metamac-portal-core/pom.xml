@@ -532,7 +532,7 @@
                 <groupId>org.fornax.toolsupport</groupId>
                 <artifactId>fornax-oaw-m2-plugin</artifactId>
                 <configuration>
-                <version>3.6.0</version>
+                <version>${fornax-oaw-m2.version}</version>
                     <workflowEngine>mwe2</workflowEngine>
                     <workflowDescriptor>file://${basedir}/src/main/resources/generator/Workflow.mwe2
                     </workflowDescriptor>
