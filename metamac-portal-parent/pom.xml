@@ -32,7 +32,7 @@
         <batik-core.version>1.7</batik-core.version> <!-- Error al subir a batik 1.10. Ver METAMAC-2921 -->
         
         <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
-        <node.version>v4.6.0</node.version>
+        <node.version>v4.9.1</node.version>
         
         <!-- WEB -->
         <freemarker.version>2.3.18</freemarker.version>
