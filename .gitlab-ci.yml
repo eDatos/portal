@@ -32,6 +32,8 @@ stages:
 build:
     stage: build
     tags: ["build"]
+    before_script:
+    	- 'sudo apt-get -y install make '
     script:
         - 'mvn $MAVEN_CLI_OPTS deploy -s /tmp/settings.xml '
     artifacts:
