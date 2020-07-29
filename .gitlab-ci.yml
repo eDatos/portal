@@ -33,6 +33,7 @@ build:
     stage: build
     tags: ["build"]
     before_script:
+        - 'apt-get -y update '
         - 'apt-get -y install build-essential '
     script:
         - 'mvn $MAVEN_CLI_OPTS deploy -s /tmp/settings.xml '
