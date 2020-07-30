@@ -36,7 +36,7 @@ ssh -o ProxyCommand="ssh -W %h:%p deploy@estadisticas.arte-consultores.com" depl
     sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-internal.war
     
     # Restore Configuration
-    sudo mv $ENV_CONF/* $DEPLOY_TARGET_PATH/statistical-visualizer-internal
+    sudo cp -rf $ENV_CONF/* $DEPLOY_TARGET_PATH/statistical-visualizer-internal
     
     ###
     # METAMAC-PORTAL-API - Internal
@@ -51,6 +51,7 @@ ssh -o ProxyCommand="ssh -W %h:%p deploy@estadisticas.arte-consultores.com" depl
     fi
 
 	sudo rm -rf $SCRIPTS_PATH/*
+	sudo rm -rf $ENV_CONF/*
 
     echo "Finished deploy"
 
