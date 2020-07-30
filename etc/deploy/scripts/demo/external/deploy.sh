@@ -37,7 +37,7 @@ ssh -o ProxyCommand="ssh -W %h:%p deploy@estadisticas.arte-consultores.com" depl
     sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer.war
     
     # Restore Configuration
-    sudo cp $ENV_CONF/web/* $DEPLOY_TARGET_PATH/statistical-visualizer
+    sudo cp -rf $ENV_CONF/web/* $DEPLOY_TARGET_PATH/statistical-visualizer
 
     ###
     # METAMAC-PORTAL-API - External
@@ -50,7 +50,7 @@ ssh -o ProxyCommand="ssh -W %h:%p deploy@estadisticas.arte-consultores.com" depl
     sudo rm -rf $DEPLOY_TARGET_PATH/statistical-visualizer-api.war
 
     # Restore Configuration
-    sudo cp $ENV_CONF/api/* $DEPLOY_TARGET_PATH/statistical-visualizer-api
+    sudo cp -rf $ENV_CONF/api/* $DEPLOY_TARGET_PATH/statistical-visualizer-api
     
     if [ $RESTART -eq 1 ]; then
         sudo chown -R edatos-external.edatos-external /servers/edatos-external
