@@ -60,4 +60,5 @@ ssh -o ProxyCommand="ssh -W %h:%p deploy@estadisticas.arte-consultores.com" depl
     sudo rm -rf $SCRIPTS_PATH/*
 	sudo rm -rf $ENV_CONF/*
 
+    echo "Finished deploy"
 EOF

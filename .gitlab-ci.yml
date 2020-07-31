@@ -114,7 +114,7 @@ log external:
     image: anaga:5000/vpn_globalprotect:1.1.0
     stage: pre
     only:
-        - master
+        - EDATOS-3188-gitlab_ci
     tags: ["deploy-vpn"]
     when: manual
     before_script:
@@ -136,21 +136,21 @@ pre deploy all:
         - bash ./etc/deploy/scripts/pre/internal/deploy.sh $RESTART
         - bash ./etc/deploy/scripts/pre/external/deploy.sh $RESTART
     dependencies:
-        - release
+        - build
 
 pre deploy internal:
     <<: *pre_job_definition
     script:
         - bash ./etc/deploy/scripts/pre/internal/deploy.sh $RESTART
     dependencies:
-        - release
+        - build
 
 pre deploy external:
     <<: *pre_job_definition
     script:
         - bash ./etc/deploy/scripts/pre/external/deploy.sh $RESTART
     dependencies:
-        - release
+        - build
 
 stop all pre servers:
     <<: *pre_job_definition
@@ -181,7 +181,7 @@ pre log external:
     image: anaga:5000/vpn_globalprotect:1.1.0
     stage: pro
     only:
-        - master
+        - EDATOS-3188-gitlab_ci
     tags: ["deploy-vpn"]
     when: manual
     before_script:
@@ -203,21 +203,21 @@ pro deploy all:
         - bash ./etc/deploy/scripts/pro/internal/deploy.sh $RESTART
         - bash ./etc/deploy/scripts/pro/external/deploy.sh $RESTART
     dependencies:
-        - release
+        - build
     
 pro deploy internal:
     <<: *pro_job_definition
     script:
         - bash ./etc/deploy/scripts/pro/internal/deploy.sh $RESTART
     dependencies:
-        - release
+        - build
     
 pro deploy external:
     <<: *pro_job_definition
     script:
         - bash ./etc/deploy/scripts/pro/external/deploy.sh $RESTART
     dependencies:
-        - release
+        - build
 
 stop all pro servers:
     <<: *pro_job_definition
