@@ -39,7 +39,7 @@ build:
             - metamac-portal-web/target/*.war
             - metamac-portal-api-web/target/*.war
     only:
-      - EDATOS-3188-gitlab_ci
+      - develop
 
 release:
     stage: release
@@ -59,7 +59,7 @@ release:
             - metamac-portal-web/target/*.war
             - metamac-portal-api-web/target/*.war
     only:
-      - master
+      - EDATOS-3188-gitlab_ci
     when: manual
 
 # ######################################################################################
@@ -114,7 +114,7 @@ log external:
     image: anaga:5000/vpn_globalprotect:1.1.0
     stage: pre
     only:
-        - EDATOS-3188-gitlab_ci
+        - develop
     tags: ["deploy-vpn"]
     when: manual
     before_script:
@@ -181,7 +181,7 @@ pre log external:
     image: anaga:5000/vpn_globalprotect:1.1.0
     stage: pro
     only:
-        - EDATOS-3188-gitlab_ci
+        - develop
     tags: ["deploy-vpn"]
     when: manual
     before_script:
