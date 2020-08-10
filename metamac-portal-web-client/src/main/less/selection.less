@@ -11,16 +11,15 @@
 
     &> div {
         float: left;
-        width: @dimensionWidth;
+        width: 49%;
+        min-width: @dimensionWidth;
 
 		margin-left: 2px;
         &:nth-child(even) {
             margin-right: 8px;
         }
         
-        .full-screen & {
-        	width: 49%;
-            min-width: @dimensionWidth;
+        .full-screen & {    
             padding-left: 10px;
         }
         
