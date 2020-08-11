@@ -4,7 +4,7 @@
 
 <link href="https://www.gobiernodecanarias.org/gcc/img/favicon.ico" rel="shortcut icon"/>
 <c:if test="${!empty portalStyleCssUrl}">
-    <link href="<c:out value='${portalStyleCssUrl}'/>" media='screen' rel='stylesheet' type='text/css' />
+    <link href="<c:out value='${portalStyleCssUrl}'/>" rel='stylesheet' type='text/css' />
 </c:if>
 
 <!--[if IE]>
