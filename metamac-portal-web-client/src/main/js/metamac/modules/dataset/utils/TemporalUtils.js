@@ -18,14 +18,14 @@
             QUARTERLY: 3
         },
         intervalDateParsers: {
-            YEARLY: function(stringDate) {
+            YEARLY: function (stringDate) {
                 var momentDate = moment(stringDate, "YYYY").utc(); // parse format YYYY-A1 too
                 return {
                     begin: momentDate.startOf('year').valueOf(),
                     end: momentDate.endOf('year').valueOf()
                 }
             },
-            BIYEARLY: function(stringDate) {
+            BIYEARLY: function (stringDate) {
                 var matchs = stringDate.match(App.TemporalUtils.REGEXPS.BIYEARLY);
                 var monthBeginNumber = (matchs[1] - 1) * App.TemporalUtils.MONTHS.BIYEARLY;
 
@@ -39,7 +39,7 @@
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
-            FOUR_MONTHLY: function(stringDate) {
+            FOUR_MONTHLY: function (stringDate) {
                 var matchs = stringDate.match(App.TemporalUtils.REGEXPS.FOUR_MONTHLY);
                 var monthBeginNumber = (matchs[1] - 1) * App.TemporalUtils.MONTHS.FOUR_MONTHLY;
 
@@ -53,7 +53,7 @@
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
-            QUARTERLY: function(stringDate) {
+            QUARTERLY: function (stringDate) {
                 var matchs = stringDate.match(App.TemporalUtils.REGEXPS.QUARTERLY);
                 var monthBeginNumber = (matchs[1] - 1) * App.TemporalUtils.MONTHS.QUARTERLY;
 
@@ -67,21 +67,21 @@
                     end: monthEnd.endOf('month').utc().valueOf()
                 }
             },
-            MONTHLY: function(stringDate) { // 2018-M10, 2018-10
+            MONTHLY: function (stringDate) { // 2018-M10, 2018-10
                 var momentDate = moment(stringDate, (App.TemporalUtils.REGEXPS.MONTHLY).test(stringDate) ? 'YYYY-MM' : "YYYY-'M'MM").utc();
                 return {
                     begin: momentDate.startOf('month').valueOf(),
                     end: momentDate.endOf('month').valueOf()
                 }
             },
-            WEEKLY: function(stringDate) { // 2018-W10
+            WEEKLY: function (stringDate) { // 2018-W10
                 var momentDate = moment(stringDate, "YYYY-'W'WW").utc();
                 return {
                     begin: momentDate.startOf('week').valueOf(),
                     end: momentDate.endOf('week').valueOf()
                 }
             },
-            DAILY: function(stringDate) {
+            DAILY: function (stringDate) {
                 var matchs = stringDate.match(App.TemporalUtils.REGEXPS.DAILY)
                 var momentDate;
                 if (matchs) {
@@ -97,7 +97,7 @@
                     end: momentDate.endOf('day').valueOf()
                 }
             },
-            HOURLY: function(stringDate) {
+            HOURLY: function (stringDate) {
                 var momentDate = moment(stringDate);
                 momentDate.utc();
                 return {
@@ -121,23 +121,23 @@
             HOURLY: 1 // 2013-07-24T13:21:52.519+01:00
         },
 
-        contains: function(majorTemporal, minorTemporal) {
+        contains: function (majorTemporal, minorTemporal) {
             if (!this.intervalDateParsers.hasOwnProperty(majorTemporal.temporalGranularity) ||
                 !this.intervalDateParsers.hasOwnProperty(minorTemporal.temporalGranularity)) {
-                    console.warm('Some of the next granularities do not have a parser');
-                    console.log(majorTemporal.temporalGranularity);
-                    console.log(minorTemporal.temporalGranularity);
-                    return false;
-                }
+                console.warm('Some of the next granularities do not have a parser');
+                console.log(majorTemporal.temporalGranularity);
+                console.log(minorTemporal.temporalGranularity);
+                return false;
+            }
             var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity](majorTemporal.id);
             var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity](minorTemporal.id);
 
-            return majorInterval.begin <= minorInterval.begin && minorInterval.end <= majorInterval.end;
+            return majorInterval.begin <= minorInterval.end && minorInterval.end <= majorInterval.end;
         },
 
-        getTemporalGranularityPriority: function(temporalGranularity) {
+        getTemporalGranularityPriority: function (temporalGranularity) {
             return this.temporalGranularityPriorities[temporalGranularity] || null;
         },
-        
+
     };
 }());
