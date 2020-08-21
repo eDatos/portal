@@ -28,6 +28,9 @@
     min-width: @modal-min-width;
     margin-left: -220px;
     margin-top: -175px;
+    display: block;
+    bottom: inherit;
+    right: inherit;
 
     .border-radius(@borderRadiusBig);
     border: 2px solid @istacGreyDark;
@@ -64,6 +67,7 @@
 .modal-content {
     text-align: left;
     padding: 10px 10px 20px 10px;
+    border-radius: 0;
 
     h3 {
         margin: 0 0 10px 4px;
