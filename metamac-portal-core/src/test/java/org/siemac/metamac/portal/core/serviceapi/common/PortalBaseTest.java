@@ -23,6 +23,9 @@ public abstract class PortalBaseTest extends MetamacDBUnitBaseTests {
     @Value("${metamac.portal.db.provider}")
     private String                databaseProvider;
 
+    @Value("${metamac.portal.db.default_schema}")
+    private String                defaultSchema;
+
     // --------------------------------------------------------------------------------------------------------------
     // DBUNIT CONFIGURATION
     // --------------------------------------------------------------------------------------------------------------
@@ -42,6 +45,11 @@ public abstract class PortalBaseTest extends MetamacDBUnitBaseTests {
     @Override
     protected DataBaseProvider getDatabaseProvider() {
         return DataBaseProvider.valueOf(databaseProvider);
+    }
+
+    @Override
+    protected String getDefaultSchema() {
+        return defaultSchema;
     }
 
     protected ServiceContext getServiceContext() {
