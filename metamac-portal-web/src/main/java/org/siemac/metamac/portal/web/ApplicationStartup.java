@@ -31,7 +31,11 @@ public class ApplicationStartup extends ApplicationStartupListener {
         }
         super.contextInitialized(sce);
         try {
-            WebUtils.setOrganisation(configurationService.retrieveOrganisation());
+            if (INSTALLATION_TYPE.equals("EXTERNAL")) {
+                WebUtils.setAppsBaseUrl(configurationService.retrieveAppsExternalWebApplicationUrlBase());
+            } else if (INSTALLATION_TYPE.equals("INTERNAL")) {
+                WebUtils.setAppsBaseUrl(configurationService.retrieveAppsInternalWebApplicationUrlBase());
+            }
             WebUtils.setExportApiBaseURL(configurationService.retrievePortalExternalApisExportUrlBase());
             WebUtils.setPermalinksApiBaseURL(configurationService.retrievePortalExternalApisPermalinksUrlBase());
 
