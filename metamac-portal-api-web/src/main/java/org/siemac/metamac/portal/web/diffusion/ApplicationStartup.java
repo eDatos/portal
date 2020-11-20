@@ -31,6 +31,7 @@ public class ApplicationStartup extends ApplicationStartupListener {
         }
         super.contextInitialized(sce);
         try {
+            String INSTALLATION_TYPE = portalConfigurationService.retrieveInstallationType();
             if (INSTALLATION_TYPE.equals("EXTERNAL")) {
                 WebUtils.setAppsBaseUrl(configurationService.retrieveAppsExternalWebApplicationUrlBase());
             } else if (INSTALLATION_TYPE.equals("INTERNAL")) {
