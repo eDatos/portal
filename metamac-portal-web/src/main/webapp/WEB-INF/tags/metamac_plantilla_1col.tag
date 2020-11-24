@@ -7,16 +7,21 @@
 <head>
   <!-- Title y metas -->
 	<t:metamac_title_meta></t:metamac_title_meta>
-	
-	<!-- Recursos CSS -->
-	<c:choose>
-	    <c:when test="${Organisation == 'ISTAC'}">
-			<t:css_istac baseURL="${baseURL}"></t:css_istac>
-	    </c:when>
-	    <c:when test="${Organisation == 'DREM'}">
-	        <t:css_drem baseURL="${baseURL}"></t:css_drem>
-	    </c:when>
+
+	<c:choose>    
+		<c:when test="${!empty portalStyleCssUrl}">
+			<link href="<c:out value='${portalStyleCssUrl}'/>" rel='stylesheet' type='text/css' />
+		</c:when>
+		<c:otherwise>			
+			<!-- portalStyleCssUrl is empty -->
+		</c:otherwise>
 	</c:choose>
+
+	<!-- TODO habría que tomar una decisión sobre este condicional -->
+	<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="//www.gobiernodecanarias.org/gcc/css/ie.css" />
+	<![endif]-->
+
 </head>
 <body>
 
