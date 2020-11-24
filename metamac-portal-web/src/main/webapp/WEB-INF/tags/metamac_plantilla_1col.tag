@@ -7,15 +7,14 @@
 <head>
   <!-- Title y metas -->
 	<t:metamac_title_meta></t:metamac_title_meta>
-	
-	<!-- Recursos CSS -->
-	<c:choose>
-	    <c:when test="${Organisation == 'ISTAC'}">
-			<t:css_istac baseURL="${baseURL}"></t:css_istac>
-	    </c:when>
-	    <c:when test="${Organisation == 'DREM'}">
-	        <t:css_drem baseURL="${baseURL}"></t:css_drem>
-	    </c:when>
+
+	<c:choose>    
+		<c:when test="${!empty portalStyleCssUrl}">
+			<link href="<c:out value='${portalStyleCssUrl}'/>" rel='stylesheet' type='text/css' />
+		</c:when>
+		<c:otherwise>			
+			<!-- portalStyleCssUrl is empty -->
+		</c:otherwise>
 	</c:choose>
 </head>
 <body>
@@ -26,14 +25,7 @@
             <c:import charEncoding="UTF-8" url="${portalStyleHeaderUrl}" />
         </c:when>
         <c:otherwise>
-            <c:choose>
-        	    <c:when test="${Organisation == 'ISTAC'}">
-                    <t:cabecera_istac/>
-        	    </c:when>
-        	    <c:when test="${Organisation == 'DREM'}">
-        	        <t:cabecera_drem/>
-        	    </c:when>
-            </c:choose>
+			<!-- portalStyleHeaderUrl is empty -->
         </c:otherwise>           
 	</c:choose>
         
@@ -55,14 +47,7 @@
             <c:import charEncoding="UTF-8" url="${portalStyleFooterUrl}" />
         </c:when>
         <c:otherwise>			
-        	<c:choose>
-        	    <c:when test="${Organisation == 'ISTAC'}">
-                    <t:pie_istac baseURL="${baseURL}"/>
-        	    </c:when>
-        	    <c:when test="${Organisation == 'DREM'}">
-        	        <t:pie_drem baseURL="${baseURL}"/>
-        	    </c:when>
-        	</c:choose>        
+			<!-- portalStyleFooterUrl is empty -->
         </c:otherwise>
     </c:choose>    
 	<!-- end: pie -->       
