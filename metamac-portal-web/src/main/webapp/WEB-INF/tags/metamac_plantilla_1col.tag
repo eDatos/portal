@@ -16,12 +16,6 @@
 			<!-- portalStyleCssUrl is empty -->
 		</c:otherwise>
 	</c:choose>
-
-	<!-- TODO habría que tomar una decisión sobre este condicional -->
-	<!--[if IE]>
-		<link rel="stylesheet" type="text/css" href="//www.gobiernodecanarias.org/gcc/css/ie.css" />
-	<![endif]-->
-
 </head>
 <body>
 
