@@ -31,14 +31,7 @@
             <c:import charEncoding="UTF-8" url="${portalStyleHeaderUrl}" />
         </c:when>
         <c:otherwise>
-            <c:choose>
-        	    <c:when test="${Organisation == 'ISTAC'}">
-                    <t:cabecera_istac/>
-        	    </c:when>
-        	    <c:when test="${Organisation == 'DREM'}">
-        	        <t:cabecera_drem/>
-        	    </c:when>
-            </c:choose>
+			<!-- portalStyleHeaderUrl is empty -->
         </c:otherwise>           
 	</c:choose>
         
