@@ -63,12 +63,11 @@
             
 			request.setAttribute("analyticsGoogleTrackingId", configurationService.retrieveAnalyticsGoogleTrackingId());
 			
-			if (ORGANISATION.equals("ISTAC")) {
-			    request.setAttribute("AddthisCode","#pubid=ra-501fc6f600bacbe9");
-			    request.setAttribute("titlePrefix","ISTAC | ");
-			} else if (ORGANISATION.equals("DREM")) {
-			    request.setAttribute("titlePrefix","DREM | ");
-			}
+            String analyticsAddthisCode = configurationService.retrieveAnalyticsAddthisCode();
+            if (analyticsAddthisCode != null && !analyticsAddthisCode.isEmpty()) {                    
+                request.setAttribute("AddthisCode","#pubid=" + analyticsAddthisCode);
+            }
+			request.setAttribute("titlePrefix",ORGANISATION + " | ");
 		    
 		    PORTAL_URL_BASE = configurationService.retrievePortalExternalWebApplicationUrlBase();
 		    STATISTICAL_VISUALIZER_URL_BASE = configurationService.retrievePortalExternalUrlBase();
