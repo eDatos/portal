@@ -21,6 +21,7 @@ I18n.translations.pt = {
             fullscreen: "Ecrã inteiro",
             share: "Partilhar",
             download: "Download",
+            save: "Salvar",
             accept: "Aceitar",
             cancel: "Cancelar",
             selectAll: "Selecionar",

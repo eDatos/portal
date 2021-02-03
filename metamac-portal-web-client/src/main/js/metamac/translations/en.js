@@ -21,6 +21,7 @@ I18n.translations.en = {
             fullscreen: "Fullscreen",
             share: "Share",
             download: "Download",
+            save: "Save",
             accept: "Accept",
             cancel: "Cancel",
             selectAll: "Select",

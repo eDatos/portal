@@ -21,6 +21,7 @@ I18n.translations.es = {
             fullscreen: "Pantalla completa",
             share: "Compartir",
             download: "Descarga",
+            save: "Guardar",
             accept: "Aceptar",
             cancel: "Cancelar",
             selectAll: "Marcar",
