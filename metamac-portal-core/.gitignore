@@ -1,2 +1,3 @@
 /target/
 **/generated/**
+/src/main/resources/generator/sculptor-generator.properties

@@ -19,10 +19,10 @@
         },
         intervalDateParsers: {
             YEARLY: function (stringDate) {
-                var momentDate = moment(stringDate, "YYYY").utc(); // parse format YYYY-A1 too
+                var momentDate = moment(stringDate, "YYYY"); // parse format YYYY-A1 too
                 return {
-                    begin: momentDate.startOf('year').valueOf(),
-                    end: momentDate.endOf('year').valueOf()
+                    begin: momentDate.clone().startOf('year').utc().valueOf(),
+                    end: momentDate.clone().endOf('year').utc().valueOf()
                 }
             },
             BIYEARLY: function (stringDate) {
@@ -35,8 +35,8 @@
                 var monthEnd = monthBegin.clone();
                 monthEnd.month(monthBegin.month() + App.TemporalUtils.MONTHS.BIYEARLY - 1);
                 return {
-                    begin: monthBegin.startOf('month').utc().valueOf(),
-                    end: monthEnd.endOf('month').utc().valueOf()
+                    begin: monthBegin.clone().startOf('month').utc().valueOf(),
+                    end: monthEnd.clone().endOf('month').utc().valueOf()
                 }
             },
             FOUR_MONTHLY: function (stringDate) {
@@ -49,8 +49,8 @@
                 var monthEnd = monthBegin.clone();
                 monthEnd.month(monthBegin.month() + App.TemporalUtils.MONTHS.FOUR_MONTHLY - 1);
                 return {
-                    begin: monthBegin.startOf('month').utc().valueOf(),
-                    end: monthEnd.endOf('month').utc().valueOf()
+                    begin: monthBegin.clone().startOf('month').utc().valueOf(),
+                    end: monthEnd.clone().endOf('month').utc().valueOf()
                 }
             },
             QUARTERLY: function (stringDate) {
@@ -63,22 +63,22 @@
                 var monthEnd = monthBegin.clone();
                 monthEnd.month(monthBegin.month() + App.TemporalUtils.MONTHS.QUARTERLY - 1);
                 return {
-                    begin: monthBegin.startOf('month').utc().valueOf(),
-                    end: monthEnd.endOf('month').utc().valueOf()
+                    begin: monthBegin.clone().startOf('month').utc().valueOf(),
+                    end: monthEnd.clone().endOf('month').utc().valueOf()
                 }
             },
             MONTHLY: function (stringDate) { // 2018-M10, 2018-10
-                var momentDate = moment(stringDate, (App.TemporalUtils.REGEXPS.MONTHLY).test(stringDate) ? 'YYYY-MM' : "YYYY-'M'MM").utc();
+                var momentDate = moment(stringDate, (App.TemporalUtils.REGEXPS.MONTHLY).test(stringDate) ? 'YYYY-MM' : "YYYY-'M'MM");
                 return {
-                    begin: momentDate.startOf('month').valueOf(),
-                    end: momentDate.endOf('month').valueOf()
+                    begin: momentDate.clone().startOf('month').utc().valueOf(),
+                    end: momentDate.clone().endOf('month').utc().valueOf()
                 }
             },
             WEEKLY: function (stringDate) { // 2018-W10
-                var momentDate = moment(stringDate, "YYYY-'W'WW").utc();
+                var momentDate = moment(stringDate, "YYYY-'W'WW");
                 return {
-                    begin: momentDate.startOf('week').valueOf(),
-                    end: momentDate.endOf('week').valueOf()
+                    begin: momentDate.clone().startOf('isoWeek').utc().valueOf(),
+                    end: momentDate.clone().endOf('isoWeek').utc().valueOf()
                 }
             },
             DAILY: function (stringDate) {
@@ -91,18 +91,16 @@
                 else {
                     momentDate = moment(stringDate, "YYYY-MM-DD");
                 }
-                momentDate.utc();
                 return {
-                    begin: momentDate.startOf('day').valueOf(),
-                    end: momentDate.endOf('day').valueOf()
+                    begin: momentDate.clone().startOf('day').utc().valueOf(),
+                    end: momentDate.clone().endOf('day').utc().valueOf()
                 }
             },
             HOURLY: function (stringDate) {
                 var momentDate = moment(stringDate);
-                momentDate.utc();
                 return {
-                    begin: momentDate.startOf('hour').valueOf(),
-                    end: momentDate.endOf('hour').valueOf()
+                    begin: momentDate.clone().startOf('hour').utc().valueOf(),
+                    end: momentDate.clone().endOf('hour').utc().valueOf()
                 }
             }
         },
@@ -124,7 +122,7 @@
         contains: function (majorTemporal, minorTemporal) {
             if (!this.intervalDateParsers.hasOwnProperty(majorTemporal.temporalGranularity) ||
                 !this.intervalDateParsers.hasOwnProperty(minorTemporal.temporalGranularity)) {
-                console.warm('Some of the next granularities do not have a parser');
+                console.warn('Some of the next granularities do not have a parser');
                 console.log(majorTemporal.temporalGranularity);
                 console.log(minorTemporal.temporalGranularity);
                 return false;
