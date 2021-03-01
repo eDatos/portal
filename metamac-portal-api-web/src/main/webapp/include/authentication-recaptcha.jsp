@@ -40,14 +40,13 @@ String CAPTCHA_PUBLIC_KEY = configurationService.retrieveCaptchaPublicKey();
             };
 
             var sendRequestWithCaptcha = function (ajaxOptions, callback) {
-                if (!ajaxOptions.headers) {
-                    ajaxOptions.headers = {};
-                }
-
-                ajaxOptions.headers.recaptcha_challenge = Recaptcha.get_challenge();
-                ajaxOptions.headers.recaptcha_response = Recaptcha.get_response();
-
-                var authenticatedRequest = $.ajax(ajaxOptions);
+                var authenticatedRequest = $.ajax({
+                    ...ajaxOptions,
+                    url: ajaxOptions.url + '?' + $.param({
+                        recaptcha_challenge: Recaptcha.get_challenge(),
+                        recaptcha_response: Recaptcha.get_response()
+                    })
+                });
 
                 authenticatedRequest.done(function (response) {
                     callback(null, response);

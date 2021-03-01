@@ -275,6 +275,13 @@ module.exports = (grunt) ->
                 files: paths.templates + "/**/*.html"
                 tasks: ['handlebars', 'concat']
 
+            update_html:
+                files: paths.theme + "/**/*.html"
+                tasks: ['handlebars', 'concat']
+                options: {
+                  livereload: true,
+                },
+
             concat:
                 files: paths.js + "/**/*.js"
                 tasks: 'concat'
