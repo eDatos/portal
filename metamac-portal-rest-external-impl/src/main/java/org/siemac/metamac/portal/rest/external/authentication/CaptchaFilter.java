@@ -92,9 +92,8 @@ public class CaptchaFilter implements RequestHandler {
 
     private boolean validateSimple(Message m) {
         LOG.info("Validating simple captcha");
-        HttpHeaders headers = new HttpHeadersImpl(m);
         Object simpleCaptchaAnswer = request.getSession().getAttribute(Captcha.NAME);
-        String responseSimple = getSingleHeader(headers, "captcha_simple_response");
+        String responseSimple = request.getParameter("captcha_simple_response");
 
         boolean valid = false;
         if (responseSimple != null && simpleCaptchaAnswer != null) {
@@ -110,9 +109,8 @@ public class CaptchaFilter implements RequestHandler {
     }
 
     private boolean validateRecaptchaGobcan(Message m) throws MetamacException {
-        HttpHeaders headers = new HttpHeadersImpl(m);
-        String challengeRecaptcha = getSingleHeader(headers, "recaptcha_challenge");
-        String responseRecaptcha = getSingleHeader(headers, "recaptcha_response");
+        String challengeRecaptcha = request.getParameter("recaptcha_challenge");
+        String responseRecaptcha = request.getParameter("recaptcha_response");
 
         boolean valid = false;
 
@@ -131,9 +129,8 @@ public class CaptchaFilter implements RequestHandler {
     }
 
     private boolean validateCaptchaGobcan(Message m) {
-        HttpHeaders headers = new HttpHeadersImpl(m);
         Object gobcanCaptchaAnswer = request.getSession().getAttribute("captcha_gobcan");
-        String responseGobcan = getSingleHeader(headers, "captcha_gobcan");
+        String responseGobcan = request.getParameter("captcha_gobcan");
 
         boolean valid = false;
         if (gobcanCaptchaAnswer != null) {

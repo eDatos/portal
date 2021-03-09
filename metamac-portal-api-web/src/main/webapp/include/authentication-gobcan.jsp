@@ -61,12 +61,10 @@
     };
     
     var sendRequestWithCaptcha = function (ajaxOptions, callback) {
-        if (!ajaxOptions.headers) {
-            ajaxOptions.headers = {};
-        }
-
-        ajaxOptions.headers.captcha_gobcan = GovernCaptcha.get_response();
-        var authenticatedRequest = $.ajax(ajaxOptions);
+        var authenticatedRequest = $.ajax({
+            ...ajaxOptions,
+            url: ajaxOptions.url + '?' + $.param({captcha_gobcan: GovernCaptcha.get_response()})
+        });
 
         authenticatedRequest.done(function (response) {
             callback(null, response);

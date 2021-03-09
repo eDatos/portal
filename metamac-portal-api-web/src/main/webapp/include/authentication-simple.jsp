@@ -65,13 +65,20 @@
     };
     
     var sendRequestWithCaptcha = function (ajaxOptions, callback) {
-        if (!ajaxOptions.headers) {
-            ajaxOptions.headers = {};
-        }
+        // Why override the base url? This function is first called when the user clicks on the button
+        // that triggers the captcha modal. Is in this moment when all the callbacks are set (this function
+        // being one of those). The function that gave us the ajaxOptions won't get called again
+        // to provide us with fresh info if the user fails the captcha.
+        //
+        // That means if we update any attribute of ajaxOptions, it stays set for future calls to this
+        // function, until the modal is closed and opened again. So, if the user gives the wrong answer and
+        // tries again we will have a malformed url, because it will have duplicated the same query string
+        // parameter. I.e.: domain.com/path?param1=foo?param1=bar?param1=baz.
 
-        ajaxOptions.headers.captcha_simple_response = SimpleCaptcha.get_response();
-
-        var authenticatedRequest = $.ajax(ajaxOptions);
+        var authenticatedRequest = $.ajax({
+            ...ajaxOptions,
+            url: ajaxOptions.url + '?' + $.param({captcha_simple_response: SimpleCaptcha.get_response()})
+        });
 
         authenticatedRequest.done(function (response) {
             callback(null, response);
