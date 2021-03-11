@@ -12,15 +12,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaService;
 import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaServiceSoap;
 import nl.captcha.servlet.CaptchaServletUtil;
 
 public class CaptchaGobcanServlet extends HttpServlet {
 
-    private static final long serialVersionUID                = -7975028803772796638L;
-    public static String      CAPTCHA_GOBCAN_RESPONSE_HEADER  = "captcha_gobcan";
-    public static String      CAPTCHA_GOBCAN_RESULT_ATTRIBUTE = "captcha_gobcan";
+    private static final long serialVersionUID = -7975028803772796638L;
+    public static String CAPTCHA_GOBCAN_RESPONSE_HEADER = "captcha_gobcan";
+    public static String CAPTCHA_GOBCAN_RESULT_ATTRIBUTE = "captcha_gobcan";
+
+    private static final Logger log = LoggerFactory.getLogger(CaptchaGobcanServlet.class);
+
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,8 +108,9 @@ public class CaptchaGobcanServlet extends HttpServlet {
             request.getSession().setAttribute("captcha_gobcan", String.valueOf(resultado));
             // Escribir la imagen como un jpg
             CaptchaServletUtil.writeImage(response, bufferedImage);
-        } catch (IOException ioe) {
-            throw new RuntimeException("No se pudo construir el CAPTCHA", ioe);
+        } catch (Exception e) {
+            log.error("No se pudo construir el CAPTCHA", e);
+            throw new RuntimeException("No se pudo construir el CAPTCHA", e);
         }
     }
 
