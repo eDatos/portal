@@ -66,7 +66,12 @@ public class CaptchaFilter implements RequestHandler {
             return null;
         }
 
+        if ("OPTIONS".equals(request.getMethod())) {
+            LOG.info("This was the preflight request");
+        }
+
         if ("POST".equals(request.getMethod())) {
+            LOG.info("Processing captcha...");
             boolean valid = false;
             if (PortalConfigurationConstants.CAPTCHA_PROVIDER_GOBCAN.equals(captchaProvider)) {
                 valid = validateCaptchaGobcan(m);
@@ -94,6 +99,7 @@ public class CaptchaFilter implements RequestHandler {
         LOG.info("Validating simple captcha");
         Object simpleCaptchaAnswer = request.getSession().getAttribute(Captcha.NAME);
         String responseSimple = request.getParameter("captcha_simple_response");
+        LOG.info("JSESSIONID = {}, User answer: {}, Captcha answer: {}", new Object[]{request.getSession().getId(), responseSimple, simpleCaptchaAnswer});
 
         boolean valid = false;
         if (responseSimple != null && simpleCaptchaAnswer != null) {
@@ -102,7 +108,7 @@ public class CaptchaFilter implements RequestHandler {
         }
 
         if (!valid) {
-            LOG.error("Error validating simple captcha. Responsesimple = {}, SimpleCaptchaAnswer = {}", responseSimple, simpleCaptchaAnswer);
+            LOG.error("Error validating simple captcha. User answer = {}, Real answer = {}", responseSimple, simpleCaptchaAnswer);
         }
 
         return valid;
@@ -129,8 +135,10 @@ public class CaptchaFilter implements RequestHandler {
     }
 
     private boolean validateCaptchaGobcan(Message m) {
+        LOG.info("Validating GobCan captcha");
         Object gobcanCaptchaAnswer = request.getSession().getAttribute("captcha_gobcan");
         String responseGobcan = request.getParameter("captcha_gobcan");
+        LOG.info("JSESSIONID = {}, User answer: {}, Captcha answer: {}", new Object[]{request.getSession().getId(), responseGobcan, gobcanCaptchaAnswer});
 
         boolean valid = false;
         if (gobcanCaptchaAnswer != null) {
