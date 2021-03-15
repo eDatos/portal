@@ -22,11 +22,10 @@ import nl.captcha.servlet.CaptchaServletUtil;
 public class CaptchaGobcanServlet extends HttpServlet {
 
     private static final long serialVersionUID = -7975028803772796638L;
-    public static String CAPTCHA_GOBCAN_RESPONSE_HEADER = "captcha_gobcan";
-    public static String CAPTCHA_GOBCAN_RESULT_ATTRIBUTE = "captcha_gobcan";
 
     private static final Logger log = LoggerFactory.getLogger(CaptchaGobcanServlet.class);
 
+    public static String CAPTCHA_GOBCAN_NAME = "captcha_gobcan";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,6 +104,7 @@ public class CaptchaGobcanServlet extends HttpServlet {
 
             BufferedImage bufferedImage = ImageIO.read(memStream);
 
+            log.info("Setting {} (answer: {}) to session {}", new Object[]{CAPTCHA_GOBCAN_NAME, String.valueOf(resultado), request.getSession().getId()});
             request.getSession().setAttribute("captcha_gobcan", String.valueOf(resultado));
             // Escribir la imagen como un jpg
             CaptchaServletUtil.writeImage(response, bufferedImage);
