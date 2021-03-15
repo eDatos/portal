@@ -41,12 +41,6 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
-                xhrFields: {
-                    // TODO(EDATOS-3232): In local, withCredentials seems necessary to send the JSESSION id back to the
-                    //   server. However, it doesn't seems like it's needed in estadisticas demo. Maybe this is causing
-                    //   trouble in prod? WHY IS NEEDED IN LOCAL BUT NOT IN DEMO?
-                    withCredentials: true,
-                }
             }, {
                 captchaEl: el
             });
