@@ -40,10 +40,10 @@
                 method: "POST",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ content: content })
+                data: JSON.stringify({ content: content }),
             }, {
-                    captchaEl: el
-                });
+                captchaEl: el
+            });
         }
 
     }
