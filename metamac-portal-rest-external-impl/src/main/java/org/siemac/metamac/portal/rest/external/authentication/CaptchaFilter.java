@@ -139,11 +139,16 @@ public class CaptchaFilter implements RequestHandler {
         Object gobcanCaptchaAnswer = request.getSession().getAttribute("captcha_gobcan");
         String responseGobcan = request.getParameter("captcha_gobcan");
         LOG.info("JSESSIONID = {}, User answer: {}, Captcha answer: {}", new Object[]{request.getSession().getId(), responseGobcan, gobcanCaptchaAnswer});
-
+        
+        // FIXME EDATOS-3232 - Problema con el captcha en los entornos de gobierno 
+        // Parcheado hasta solución definitiva
+        return true;
+/*
         boolean valid = false;
         if (gobcanCaptchaAnswer != null) {
             valid = gobcanCaptchaAnswer.toString().equals(responseGobcan);
         }
         return valid;
+*/
     }
 }
