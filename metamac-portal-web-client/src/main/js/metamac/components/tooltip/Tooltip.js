@@ -40,10 +40,7 @@
             this._detachEvents();
 
             this.$el = $(el);
-            var $parentContainer = this.$el.parents(".full-screen:eq(0)");
-            var isParentInFullScreen = $parentContainer.length > 0;
-            this.$container = isParentInFullScreen ? $parentContainer : this.$body;
-            this.$viewPort = isParentInFullScreen ? $parentContainer : this.$container;
+            this.$container = this.$el.parents(".metamac-container");
             this.$container.append(this.$tooltip);
 
             this._attachEvents();
@@ -54,7 +51,6 @@
             this.$cellChart = $('<div class="tooltip-cell-chart"></div>');
             this.$innerTooltip = $('<div class="tooltip-inner"></div>').append(this.$cellInfo).append(this.$cellChart);
             this.$tooltip = $('<div class="tooltip in metamac-tooltip"></div>').append(this.$innerTooltip);
-            this.$body = $('body');
         },
 
         _attachEvents: function () {
@@ -78,10 +74,10 @@
             }
         },
 
-        _getViewportSize: function () {
+        _getContainerSize: function () {
             return {
-                width: this.$viewPort.width(),
-                height: this.$viewPort.height()
+                width: this.$container.width(),
+                height: this.$container.height()
             };
         },
 
@@ -97,10 +93,10 @@
                 height: this.$tooltip.outerHeight()
             };
 
-            var viewPortSize = this._getViewportSize();
+            var containerSize = this._getContainerSize();
             var limits = {
-                x: viewPortSize.width - tooltipSize.width,
-                y: viewPortSize.height - tooltipSize.height
+                x: containerSize.width - tooltipSize.width,
+                y: containerSize.height - tooltipSize.height
             };
 
             var offset = this._getOffset();
@@ -108,11 +104,11 @@
             position.y = cursor.y + offset.top + 10;
 
             if (position.x > limits.x) {
-                position.x = position.x - 10 - tooltipSize.width;
+                position.x = _.max([position.x - 10 - tooltipSize.width, 0]);
             }
 
             if (position.y > limits.y) {
-                position.y = position.y - 10 - tooltipSize.height;
+                position.y = _.max([position.y - 10 - tooltipSize.height, 0]);
             }
 
             return position;
