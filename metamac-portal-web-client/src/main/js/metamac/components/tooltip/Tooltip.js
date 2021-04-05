@@ -74,13 +74,6 @@
             }
         },
 
-        _getContainerSize: function () {
-            return {
-                width: this.$container.width(),
-                height: this.$container.height()
-            };
-        },
-
         _getOffset: function () {
             return this.$el.offset();
         },
@@ -93,13 +86,18 @@
                 height: this.$tooltip.outerHeight()
             };
 
-            var containerSize = this._getContainerSize();
-            var limits = {
-                x: containerSize.width - tooltipSize.width,
-                y: containerSize.height - tooltipSize.height
-            };
+            var containerSize = {
+                width: this.$container.width(),
+                height: this.$container.height()
+            }
 
             var offset = this._getOffset();
+
+            var limits = {
+                x: offset.left + containerSize.width - tooltipSize.width,
+                y: offset.top + containerSize.height - tooltipSize.height
+            };
+
             position.x = cursor.x + offset.left + 10;
             position.y = cursor.y + offset.top + 10;
 
