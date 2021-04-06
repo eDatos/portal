@@ -40,7 +40,7 @@
             this._detachEvents();
 
             this.$el = $(el);
-            this.$container = this.$el.parents(".metamac-container");
+            this.$container = this.$el.parent().closest(".metamac-container");
             this.$container.append(this.$tooltip);
 
             this._attachEvents();
@@ -92,21 +92,27 @@
                 height: this.$el.height()
             }
 
-            var limits = {
-                x: elementSize.width - tooltipSize.width,
-                y: elementSize.height - tooltipSize.height
-            };
+            var MARGIN = 10;
 
             var relativePosition = {
-                x: _.min([cursor.x + 10, limits.x]),
-                y: _.min([cursor.y + 10, limits.y])
-            };
+                x: cursor.x + MARGIN,
+                y: cursor.y + MARGIN
+            }
 
-            /* But must return a absolute position */
+            /* if the tooltip would be drawn out of limits, we invert its direction */
+            if (cursor.x + tooltipSize.width > elementSize.width) {
+                relativePosition.x = cursor.x - MARGIN - tooltipSize.width;
+            }
+
+            if (cursor.y + tooltipSize.height > elementSize.height) {
+                relativePosition.y = cursor.y - MARGIN - tooltipSize.height;
+            }
+
+            /* Must return a absolute position because the tooltip is fixed */
             var offset = this._getOffset();
             return {
                 x: offset.left + relativePosition.x,
-                y: offset.top + relativePosition.y,
+                y: offset.top + relativePosition.y
             };
         },
 
