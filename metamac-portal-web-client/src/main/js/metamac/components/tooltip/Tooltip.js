@@ -74,42 +74,40 @@
             }
         },
 
+        /* $el upper left corner */
         _getOffset: function () {
             return this.$el.offset();
         },
 
+        /* cursor coordinates are relative to $el upper left corner*/
         _getPosition: function (cursor) {
-            var position = {};
 
             var tooltipSize = {
                 width: this.$tooltip.outerWidth(),
                 height: this.$tooltip.outerHeight()
             };
 
-            var containerSize = {
-                width: this.$container.width(),
-                height: this.$container.height()
+            var elementSize = {
+                width: this.$el.width(),
+                height: this.$el.height()
             }
-
-            var offset = this._getOffset();
 
             var limits = {
-                x: offset.left + containerSize.width - tooltipSize.width,
-                y: offset.top + containerSize.height - tooltipSize.height
+                x: elementSize.width - tooltipSize.width,
+                y: elementSize.height - tooltipSize.height
             };
 
-            position.x = cursor.x + offset.left + 10;
-            position.y = cursor.y + offset.top + 10;
+            var relativePosition = {
+                x: _.min([cursor.x + 10, limits.x]),
+                y: _.min([cursor.y + 10, limits.y])
+            };
 
-            if (position.x > limits.x) {
-                position.x = _.max([position.x - 10 - tooltipSize.width, 0]);
-            }
-
-            if (position.y > limits.y) {
-                position.y = _.max([position.y - 10 - tooltipSize.height, 0]);
-            }
-
-            return position;
+            /* But must return a absolute position */
+            var offset = this._getOffset();
+            return {
+                x: offset.left + relativePosition.x,
+                y: offset.top + relativePosition.y,
+            };
         },
 
         _update: function (point) {
@@ -185,14 +183,14 @@
 
         _mouseMove: function (e) {
             var offset = this._getOffset();
-            var point = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
-            this._update(point);
+            var relativePointToEl = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
+            this._update(relativePointToEl);
         },
 
         _click: function (e) {
             var offset = this._getOffset();
-            var point = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
-            this._update(point);
+            var relativePointToEl = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
+            this._update(relativePointToEl);
         }
 
     };
