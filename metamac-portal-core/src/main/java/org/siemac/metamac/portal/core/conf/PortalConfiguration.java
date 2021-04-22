@@ -16,10 +16,6 @@ public interface PortalConfiguration extends ConfigurationService {
     String retrieveInstallationType() throws MetamacException;
 
     // Visualizer Styles
-    String retrievePortalDefaultStyleHeaderUrl() throws MetamacException;
-    String retrievePortalDefaultStyleCssUrl() throws MetamacException;
-    String retrievePortalDefaultStyleFooterUrl() throws MetamacException;
-
     String retrievePortalAgricultureStyleHeaderUrl() throws MetamacException;
     String retrievePortalAgricultureStyleCssUrl() throws MetamacException;
     String retrievePortalAgricultureStyleFooterUrl() throws MetamacException;
@@ -31,7 +27,7 @@ public interface PortalConfiguration extends ConfigurationService {
     String retrievePortalTourismStyleHeaderUrl() throws MetamacException;
     String retrievePortalTourismStyleCssUrl() throws MetamacException;
     String retrievePortalTourismStyleFooterUrl() throws MetamacException;
-    
+
     String retrievePortalPublicServiceStyleHeaderUrl() throws MetamacException;
     String retrievePortalPublicServiceStyleCssUrl() throws MetamacException;
     String retrievePortalPublicServiceStyleFooterUrl() throws MetamacException;
