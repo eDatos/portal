@@ -26,6 +26,7 @@
             "click .visual-element-options-edit": "clickFilterLoader",
             "click .visual-element-options-fs": "clickFullScreen",
             "click .visual-element-options-share": "clickShare",
+            "click .visual-element-options-save": "clickSave",
             "click .visual-element-options-download": "clickDownload",
             "click .visual-element-options-embed": "clickEmbed",
         },
@@ -180,6 +181,10 @@
             var title = I18n.t("filter.button.share");
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             modal.show();
+        },
+
+        clickSave: function (e) {
+            throw 'Not implemented';
         },
 
         clickEmbed: function (e) {
