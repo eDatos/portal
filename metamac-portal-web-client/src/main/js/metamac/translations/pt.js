@@ -47,6 +47,10 @@ I18n.translations.pt = {
         embed: {
             instructions: "Seleciona, copia e cola este código na tua página: "
         },
+        save: {
+            success: "O filtro foi salvo com sucesso",
+            failure: "Ocorreu um problema ao salvar o filtro"
+        },
         text: {
             fixedDimensions: "Valores fixos",
             leftDimensions: "Linhas",

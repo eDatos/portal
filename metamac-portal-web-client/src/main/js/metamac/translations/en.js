@@ -47,6 +47,10 @@ I18n.translations.en = {
         embed: {
             instructions: "Select, copy and paste this code on your page:"
         },
+        save: {
+            success: "The filter has been saved successfully",
+            failure: "There was a problem saving the filter"
+        },
         text: {
             fixedDimensions: "Fixed values",
             leftDimensions: "Rows",

@@ -184,7 +184,16 @@
         },
 
         clickSave: function (e) {
-            throw 'Not implemented';
+            e.preventDefault();
+            var modalContentView = null;
+            if (this.isInternalPortal()) {
+                modalContentView = new DisabledFeatureInternalPortalView();
+            } else {
+                modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: this.filterDimensions });
+            }
+            var title = I18n.t("filter.button.save");
+            var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
+            modal.show();
         },
 
         clickEmbed: function (e) {
