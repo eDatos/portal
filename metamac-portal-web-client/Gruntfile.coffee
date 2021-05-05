@@ -93,6 +93,7 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DatasetVisualizationView.js"
                 paths.modules + "/dataset/DatasetShareView.js"
                 paths.modules + "/dataset/DatasetSaveView.js"
+                paths.modules + "/dataset/DatasetLoginView.js"
                 paths.modules + "/dataset/DatasetDownloadView.js"
                 paths.modules + "/dataset/DatasetEmbedView.js"
 
@@ -346,7 +347,7 @@ module.exports = (grunt) ->
                     syntax: "bootstrap",
                     htmlDemo : true,
                     autoHint : false,
-                    types: 'eot,woff,ttf,svg';
+                    types: 'eot,woff,ttf,svg'
                 }
 
 

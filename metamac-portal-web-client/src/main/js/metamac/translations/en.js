@@ -241,5 +241,20 @@ I18n.translations.en = {
                 GEOGRAPHICAL: "Geographical location"
             }
         }
+    },
+    login: {
+        button: {
+            submit: "Sign in",
+            register: "Sign up"
+        },
+        label: {
+            username: "Username",
+            password: "Password"
+        },
+        modal: {
+            title: "User",
+            success: "You have successfully logged in",
+            failure: "There was a problem logging in"
+        }
     }
 };

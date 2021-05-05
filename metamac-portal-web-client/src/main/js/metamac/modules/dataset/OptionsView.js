@@ -185,13 +185,42 @@
 
         clickSave: function (e) {
             e.preventDefault();
+            if (this.isInternalPortal()) {
+                var modalContentView = new DisabledFeatureInternalPortalView();
+                var title = I18n.t("filter.button.save");
+                var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
+                modal.show();
+            } else  if(sessionStorage.getItem("authToken")) {
+                metamac.authentication.ajax({
+                    url: App.endpoints["user-resources"] + "/account",
+                    headers: {
+                        Authorization: "Bearer " + sessionStorage.getItem("authToken")
+                    },
+                    method: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                }).done(val => {
+                    var modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: this.filterDimensions, user: val });
+                    var title = I18n.t("filter.button.save");
+                    var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
+                    modal.show();
+                }).fail(() => {
+                    this.clickLogin(e);
+                });
+            } else {
+                this.clickLogin(e);
+            }
+        },
+
+        clickLogin: function (e) {
+            e.preventDefault();
             var modalContentView = null;
             if (this.isInternalPortal()) {
                 modalContentView = new DisabledFeatureInternalPortalView();
             } else {
-                modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: this.filterDimensions });
+                modalContentView = new App.modules.dataset.DatasetLoginView({ filterDimensions: this.filterDimensions });
             }
-            var title = I18n.t("filter.button.save");
+            var title = I18n.t("login.modal.title");
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             modal.show();
         },

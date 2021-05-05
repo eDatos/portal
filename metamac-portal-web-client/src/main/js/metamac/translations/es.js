@@ -250,5 +250,20 @@ I18n.translations.es = {
                 GEOGRAPHICAL: "Localización geográfica"
             }
         }
+    },
+    login: {
+        button: {
+            submit: "Iniciar sesión",
+            register: "Registrarse"
+        },
+        label: {
+            username: "Usuario",
+            password: "Contraseña"
+        },
+        modal: {
+            title: "Usuario",
+            success: "Ha iniciado sesión con éxito",
+            failure: "Ha habido un problema iniciando sesión"
+        }
     }
 };

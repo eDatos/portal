@@ -11,47 +11,49 @@
 
         initialize: function () {
             this.filterDimensions = this.options.filterDimensions;
+            this.user = this.options.user;
         },
 
         render: function () {
             var self = this;
-            if (this.needsPermalink()) {
-                var savePermalinkRequest = this.saveFilter();
-                savePermalinkRequest.done(function (response) {
-                    self.renderFilter(true);
-                }).fail(function (response) {
-                    self.renderFilter(false);
+            this.createPermalink().done(function (permalink) {
+                self.savePermalink(permalink).done(() => {
+                    self.renderResult(true);
+                }).fail(function () {
+                    self.renderResult(false);
                 });
-            } else {
-                self.renderFilter(this.getExistingPermalinkId());
-            }
-        },
-
-        needsPermalink: function () {
-            return !(App.config.widget && this.getExistingPermalinkId());
-        },
-
-        getExistingPermalinkId: function () {
-            return this.filterDimensions.metadata.identifier().permalinkId;
-        },
-
-        saveFilter: function () {
-            var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
-            return metamac.authentication.ajax({
-                url: App.endpoints["user-resources"] + "/filters",
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ content: permalinkContent }),
-                xhrFields: {
-                    withCredentials: true,
-                }
-            }, {
-                captchaEl: this.$el
+            }).fail(function () {
+                self.renderResult(false);
             });
         },
 
-        renderFilter: function (succeeded) {
+        createPermalink: function () {
+            var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
+            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
+        },
+
+        savePermalink: function (permalink) {
+            const resourceName = this.filterDimensions.metadata.metadataResponse.description.text.find(val => val.lang === I18n.currentLocale()).value;
+            return metamac.authentication.ajax({
+                url: App.endpoints["user-resources"] + '/filters',
+                headers: {
+                    Authorization: "Bearer " + sessionStorage.getItem("authToken")
+                },
+                method: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    id: null,
+                    name: "Mi primer filtro",
+                    resourceName: resourceName,
+                    externalUser: { id: this.user.id },
+                    permalink: permalink.selfLink.href,
+                    notes: "."
+                })
+            });
+        },
+
+        renderResult: function (succeeded) {
             const context = {
                 statusMessage: succeeded ? I18n.t("filter.save.success") : I18n.t("filter.save.failure")
             };

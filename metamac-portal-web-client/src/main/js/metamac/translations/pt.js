@@ -242,5 +242,20 @@ I18n.translations.pt = {
                 GEOGRAPHICAL: "Localização geografica"
             }
         }
+    },
+    login: {
+        button: {
+            submit: "Iniciar sessão",
+            register: "Inscrever-se"
+        },
+        label: {
+            username: "Nome de usuário",
+            password: "Senha"
+        },
+        modal: {
+            title: "Usuário",
+            success: "Você fez login com sucesso",
+            failure: "Ocorreu um problema ao fazer login"
+        }
     }
 };
