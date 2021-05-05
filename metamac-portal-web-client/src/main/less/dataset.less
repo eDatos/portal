@@ -636,21 +636,19 @@
     }
 }
 
-.dataset-save {
-    padding: 10px;
-    min-width: 500px;
-}
-
 .dataset-message {
     padding: 10px;
     min-width: 500px;
 }
 
-.dataset-login {
+.dataset-login, .dataset-save {
     padding: 5px;
-    input {
+    input, textarea {
         width: 100%;
         box-sizing: border-box;
+    }
+    textarea {
+        resize: none;
     }
     fieldset {
         margin-bottom: 10px;

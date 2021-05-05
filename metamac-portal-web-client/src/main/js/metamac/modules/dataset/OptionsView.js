@@ -201,7 +201,7 @@
                     contentType: "application/json; charset=utf-8"
                 }).done(val => {
                     var modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: this.filterDimensions, user: val });
-                    var title = I18n.t("filter.button.save");
+                    var title = I18n.t("filter.save.modal.title");
                     var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
                     modal.show();
                 }).fail(() => {

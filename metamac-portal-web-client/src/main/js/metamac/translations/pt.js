@@ -48,8 +48,18 @@ I18n.translations.pt = {
             instructions: "Seleciona, copia e cola este código na tua página: "
         },
         save: {
-            success: "O filtro foi salvo com sucesso",
-            failure: "Ocorreu um problema ao salvar o filtro"
+            button: {
+                submit: "Salvar",
+            },
+            label: {
+                name: "Nome do filtro",
+                notes: "Notas"
+            },
+            modal: {
+                title: "Salvar filtro",
+                success: "O filtro foi salvo com sucesso",
+                failure: "Ocorreu um problema ao salvar o filtro"
+            }
         },
         text: {
             fixedDimensions: "Valores fixos",
