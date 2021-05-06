@@ -6,7 +6,7 @@
     App.modules.dataset.DatasetLoginView = Backbone.View.extend({
 
         template: App.templateManager.get("dataset/dataset-login"),
-        templateResult: App.templateManager.get("dataset/dataset-message"),
+        templateResult: App.templateManager.get("components/modal/modal-message"),
 
         events: {
             "submit": "onSubmit"

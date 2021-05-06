@@ -8,7 +8,7 @@
     App.modules.dataset.DatasetSaveView = Backbone.View.extend({
 
         template: App.templateManager.get("dataset/dataset-save"),
-        templateResult: App.templateManager.get("dataset/dataset-message"),
+        templateResult: App.templateManager.get("components/modal/modal-message"),
 
         events: {
             "submit": "onSubmit"
