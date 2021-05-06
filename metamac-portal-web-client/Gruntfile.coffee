@@ -111,6 +111,9 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/datasource/DataRequest.js"
                 paths.js + "/metamac/modules/datasource/DatasourceIdentifier.js"
 
+                # User
+                paths.js + "/metamac/modules/user/UserHeaderView.js"
+
                 # Util
                 paths.js + "/metamac/modules/util/NumberFormatter.js"
 
