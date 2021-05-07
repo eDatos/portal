@@ -26,18 +26,31 @@
             const notes = document.getElementById("notes").value;
             this.savePermalink(this.permalink, name, notes).done(() => {
                 this.renderResult(true);
-            }).fail(function () {
+            }).fail(() => {
                 this.renderResult(false);
             });
         },
 
         render: function () {
-            this.createPermalink().done((permalink) => {
-                this.permalink = permalink;
+            if (this.needsPermalink()) {
+                this.createPermalink().done((permalink) => {
+                    this.permalink = permalink.id;
+                    this.$el.html(this.template({}));
+                }).fail(() => {
+                    this.renderResult(false);
+                });
+            } else {
+                this.permalink = this.getExistingPermalinkId();
                 this.$el.html(this.template({}));
-            }).fail(() => {
-                this.renderResult(false);
-            });
+            }
+        },
+
+        needsPermalink: function () {
+            return !(App.config.widget && this.getExistingPermalinkId());
+        },
+
+        getExistingPermalinkId: function () {
+            return this.filterDimensions.metadata.identifier().permalinkId;
         },
 
         createPermalink: function () {
@@ -60,7 +73,7 @@
                     name: name,
                     resourceName: resourceName,
                     externalUser: { id: this.user.id },
-                    permalink: permalink.selfLink.href,
+                    permalink: permalink,
                     notes: notes
                 })
             });
