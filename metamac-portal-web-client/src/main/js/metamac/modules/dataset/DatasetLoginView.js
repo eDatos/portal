@@ -14,7 +14,6 @@
 
         initialize: function () {
             this.filterDimensions = this.options.filterDimensions;
-            this.onLogin = this.options.onLogin || (() => {});
         },
 
         onSubmit: function(e) {
@@ -26,7 +25,7 @@
             this.login(credentials).done(val => {
                 sessionStorage.setItem("authToken", val.token);
                 this.renderSuccess();
-                this.onLogin();
+                App.trigger("login");
             });
         },
 

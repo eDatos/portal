@@ -12,7 +12,7 @@
         },
 
         initialize : function () {
-
+            this.listenTo(App, "login", this.render);
         },
 
         render : function () {
@@ -49,12 +49,6 @@
             }
         },
 
-        onLogin: function(self) {
-            return function() {
-                self.render();
-            }
-        },
-
         _getUserAccount: function () {
             return metamac.authentication.ajax({
                 url: App.endpoints["user-resources"] + "/account",
@@ -68,7 +62,7 @@
         },
 
         _showLoginModal: function () {
-            let modalContentView = new App.modules.dataset.DatasetLoginView({ filterDimensions: this.filterDimensions, onLogin: this.onLogin(this)  });
+            let modalContentView = new App.modules.dataset.DatasetLoginView({ filterDimensions: this.filterDimensions });
             var title = I18n.t("login.modal.title");
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             modal.show();
