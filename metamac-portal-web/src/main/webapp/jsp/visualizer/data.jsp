@@ -83,8 +83,8 @@
 
 								App.endpoints["external-users"] = "${ApiUrlExternalUsers}/api";
 
-								// https://estadisticas.arte-consultores.com/external-users-external/#
-								App.endpoints["external-users-web"] = "${WebApplicationExternalUsers}";
+								// https://estadisticas.arte-consultores.com/external-users-external
+								App.endpoints["external-users-web"] = "${WebApplicationExternalUsers}/#";
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};
