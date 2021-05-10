@@ -14,8 +14,8 @@
 
         initialize: function () {
             this.question = this.options.question;
-            this.onConfirm = this.options.onConfirm || (() => {});
-            this.onReject = this.options.onReject || (() => {});
+            this.onConfirm = this.options.onConfirm || (function() {});
+            this.onReject = this.options.onReject || (function() {});
         },
 
         confirm: function() {
@@ -27,7 +27,7 @@
         },
 
         render: function () {
-            const context = {
+            var context = {
                 question: this.question
             }
             this.$el.html(this.template(context));
