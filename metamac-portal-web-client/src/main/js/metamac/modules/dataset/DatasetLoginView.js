@@ -32,7 +32,7 @@
 
         render: function () {
             var context = {
-                registerUrl: App.endpoints["register"]
+                registerUrl: App.endpoints["external-users-web"] + '/signup'
             }
             this.$el.html(this.template(context));
         },
