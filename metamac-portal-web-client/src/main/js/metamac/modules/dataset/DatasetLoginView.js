@@ -18,20 +18,21 @@
 
         onSubmit: function(e) {
             e.preventDefault();
-            const credentials = {
+            var credentials = {
                 login: document.getElementById("username").value,
                 password: document.getElementById("password").value
             }
-            this.login(credentials).done(val => {
+            var self = this;
+            this.login(credentials).done(function(val) {
                 sessionStorage.setItem("authToken", val.token);
-                this.renderSuccess();
+                self.renderSuccess();
                 App.trigger("login");
             });
         },
 
         render: function () {
-            const context = {
-                registerUrl: App.endpoints["register"]
+            var context = {
+                registerUrl: App.endpoints["external-users-web"] + '/signup'
             }
             this.$el.html(this.template(context));
         },
@@ -47,7 +48,7 @@
         },
 
         renderSuccess: function () {
-            const context = {
+            var context = {
                 statusMessage: I18n.t("login.modal.success")
             }
             this.$el.html(this.templateResult(context));

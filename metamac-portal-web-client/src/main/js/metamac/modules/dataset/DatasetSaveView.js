@@ -22,22 +22,24 @@
 
         onSubmit: function(e) {
             e.preventDefault();
-            const name = document.getElementById("name").value || null;
-            const notes = document.getElementById("notes").value;
-            this.savePermalink(this.permalink, name, notes).done(() => {
-                this.renderResult(true);
-            }).fail(() => {
-                this.renderResult(false);
+            var name = document.getElementById("name").value || null;
+            var notes = document.getElementById("notes").value;
+            var self = this;
+            this.savePermalink(this.permalink, name, notes).done(function() {
+                self.renderResult(true);
+            }).fail(function() {
+                self.renderResult(false);
             });
         },
 
         render: function () {
             if (this.needsPermalink()) {
-                this.createPermalink().done((permalink) => {
-                    this.permalink = permalink.id;
-                    this.$el.html(this.template({}));
-                }).fail(() => {
-                    this.renderResult(false);
+                var self = this;
+                this.createPermalink().done(function (permalink) {
+                    self.permalink = permalink.id;
+                    self.$el.html(self.template({}));
+                }).fail(function() {
+                    self.renderResult(false);
                 });
             } else {
                 this.permalink = this.getExistingPermalinkId();
@@ -54,12 +56,12 @@
         },
 
         createPermalink: function () {
-            const permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
+            var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
             return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
         },
 
         savePermalink: function (permalink, name, notes) {
-            const resourceName = this.filterDimensions.metadata.metadataResponse.description.text.find(val => val.lang === I18n.currentLocale()).value;
+            var resourceName = this.filterDimensions.metadata.metadataResponse.description.text.find(this._findTextByCurrentLocale).value;
             return metamac.authentication.ajax({
                 url: App.endpoints["external-users"] + '/filters',
                 headers: {
@@ -80,10 +82,15 @@
         },
 
         renderResult: function (succeeded) {
-            const context = {
+            var context = {
                 statusMessage: succeeded ? I18n.t("filter.save.modal.success") : I18n.t("filter.save.modal.failure")
             };
             this.$el.html(this.templateResult(context));
+        },
+
+        _findTextByCurrentLocale: function (val) {
+            // TODO: alternativa si no se encuentra el idioma
+            return val.lang === I18n.currentLocale();
         }
 
     });

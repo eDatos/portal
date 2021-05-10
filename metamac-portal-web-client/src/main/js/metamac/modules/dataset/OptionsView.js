@@ -191,6 +191,7 @@
                 var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
                 modal.show();
             } else  if(sessionStorage.getItem("authToken")) {
+                var self = this;
                 metamac.authentication.ajax({
                     url: App.endpoints["external-users"] + "/account",
                     headers: {
@@ -199,13 +200,13 @@
                     method: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8"
-                }).done(val => {
-                    var modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: this.filterDimensions, user: val });
+                }).done(function(val) {
+                    var modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: self.filterDimensions, user: val });
                     var title = I18n.t("filter.save.modal.title");
                     var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
                     modal.show();
-                }).fail(() => {
-                    this.clickLogin(e);
+                }).fail(function() {
+                    self.clickLogin(e);
                 });
             } else {
                 this.clickLogin(e);
