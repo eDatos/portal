@@ -52,7 +52,7 @@
 
         _getUserAccount: function () {
             return metamac.authentication.ajax({
-                url: App.endpoints["user-resources"] + "/account",
+                url: App.endpoints["external-users"] + "/account",
                 headers: {
                     Authorization: "Bearer " + sessionStorage.getItem("authToken")
                 },

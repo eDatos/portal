@@ -38,7 +38,7 @@
 
         login: function (credentials) {
             return metamac.authentication.ajax({
-                url: App.endpoints["user-resources"] + "/login",
+                url: App.endpoints["external-users"] + "/login",
                 method: "POST",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",

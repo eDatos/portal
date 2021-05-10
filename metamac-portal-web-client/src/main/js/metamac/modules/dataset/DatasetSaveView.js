@@ -61,7 +61,7 @@
         savePermalink: function (permalink, name, notes) {
             const resourceName = this.filterDimensions.metadata.metadataResponse.description.text.find(val => val.lang === I18n.currentLocale()).value;
             return metamac.authentication.ajax({
-                url: App.endpoints["user-resources"] + '/filters',
+                url: App.endpoints["external-users"] + '/filters',
                 headers: {
                     Authorization: "Bearer " + sessionStorage.getItem("authToken")
                 },
