@@ -266,5 +266,19 @@ I18n.translations.en = {
             success: "You have successfully logged in",
             failure: "There was a problem logging in"
         }
+    },
+    logout: {
+        modal: {
+            title: "Log out",
+            question: "Are you sure you want to log out?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Yes",
+                reject: "No"
+            }
+        }
     }
 };

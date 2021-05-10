@@ -267,5 +267,19 @@ I18n.translations.pt = {
             success: "Você fez login com sucesso",
             failure: "Ocorreu um problema ao fazer login"
         }
+    },
+    logout: {
+        modal: {
+            title: "Fechar Sessão",
+            question: "Tem a certeza que quer terminar a sessão?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Sim",
+                reject: "Não"
+            }
+        }
     }
 };

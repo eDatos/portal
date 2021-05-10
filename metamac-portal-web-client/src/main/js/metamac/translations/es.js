@@ -275,5 +275,19 @@ I18n.translations.es = {
             success: "Ha iniciado sesión con éxito",
             failure: "Ha habido un problema iniciando sesión"
         }
+    },
+    logout: {
+        modal: {
+            title: "Cerrar sesión",
+            question: "¿Está seguro de que quiere cerrar sesión?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Sí",
+                reject: "No"
+            }
+        }
     }
 };
