@@ -21,6 +21,7 @@ I18n.translations.pt = {
             fullscreen: "Ecrã inteiro",
             share: "Partilhar",
             download: "Download",
+            save: "Salvar",
             accept: "Aceitar",
             cancel: "Cancelar",
             selectAll: "Selecionar",
@@ -45,6 +46,20 @@ I18n.translations.pt = {
         },
         embed: {
             instructions: "Seleciona, copia e cola este código na tua página: "
+        },
+        save: {
+            button: {
+                submit: "Salvar",
+            },
+            label: {
+                name: "Nome do filtro",
+                notes: "Notas"
+            },
+            modal: {
+                title: "Salvar filtro",
+                success: "O filtro foi salvo com sucesso",
+                failure: "Ocorreu um problema ao salvar o filtro"
+            }
         },
         text: {
             fixedDimensions: "Valores fixos",
@@ -235,6 +250,35 @@ I18n.translations.pt = {
                 TIME: "Períodos",
                 MEASURE: "Medidas",
                 GEOGRAPHICAL: "Localização geografica"
+            }
+        }
+    },
+    login: {
+        button: {
+            submit: "Iniciar sessão",
+            register: "Inscrever-se"
+        },
+        label: {
+            username: "Nome de usuário",
+            password: "Senha"
+        },
+        modal: {
+            title: "Usuário",
+            success: "Você fez login com sucesso",
+            failure: "Ocorreu um problema ao fazer login"
+        }
+    },
+    logout: {
+        modal: {
+            title: "Fechar Sessão",
+            question: "Tem a certeza que quer terminar a sessão?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Sim",
+                reject: "Não"
             }
         }
     }

@@ -1,0 +1,15 @@
+<form class="dataset-login">
+    <fieldset>
+        <label>{{ message "login.label.username" }}</label>
+        <input type="text" id="username" required>
+    </fieldset>
+    <fieldset>
+        <label>{{ message "login.label.password" }}</label>
+        <input type="password" id="password" required>
+    </fieldset>
+
+    <div class="form-buttons">
+        <a href="{{ registerUrl }}" target="_blank">{{ message "login.button.register" }}</a>
+        <button type="submit">{{ message "login.button.submit" }}</button>
+    </div>
+</form>

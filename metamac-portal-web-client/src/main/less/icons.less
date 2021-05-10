@@ -3,12 +3,12 @@
 
 /* icons-mixins lo cargamos dos veces, la de línea superior están para que puedan ser usados como mixin, disponibles para los otros componentes.
  * La segunda estan acotados dentro del .metamac-container, para evitar que si alguien usa fontawesome, reescriba nuestros iconos.
- * La alternativa sería que todos nuestros iconos fueran usados sólo via mixin, pero eso es mas costoso porque implica perseguir todos los sitios del widget donde 
+ * La alternativa sería que todos nuestros iconos fueran usados sólo via mixin, pero eso es mas costoso porque implica perseguir todos los sitios del widget donde
  * se usen iconos
  */
- @import "icons-mixins";
- .metamac-container {    
-	 // Overrides
+@import "icons-mixins";
+.metamac-container {
+	// Overrides
 	[class^="icon-"]:before,
 	[class*=" icon-"]:before {
 		font-family:"icons";
@@ -26,7 +26,7 @@
 	}
 
 	@import "icons-mixins";
- }
+}
 
 @font-face {
 	font-family:"icons";

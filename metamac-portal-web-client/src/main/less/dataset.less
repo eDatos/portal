@@ -483,6 +483,11 @@
     .icon-share;
 }
 
+.dataset-options-save {
+    .dataset-options-type-icon;
+    .icon-star;
+}
+
 .dataset-options-embed {
     .dataset-options-type-icon;
     .icon-embed;
@@ -628,6 +633,36 @@
                 color: #791998;
             }
         } 
+    }
+}
+
+.modal-message {
+    padding: 5px;
+}
+
+.dataset-login, .dataset-save {
+    padding: 5px;
+    input, textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    textarea {
+        resize: none;
+    }
+    fieldset {
+        margin-bottom: 10px;
+        * {
+            display: block;
+        }
+    }
+    .form-buttons {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: baseline;
+        a, button {
+            margin-left: 5px;
+        }
     }
 }
 

@@ -80,6 +80,8 @@
 
                                 // http://estadisticas.arte-consultores.com/indicators
                                 App.endpoints["indicators"] = "${ApiUrlIndicators}/v1.0";
+
+								App.endpoints["external-users"] = "${ApiUrlExternalUsers}/api";
 			                    
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};

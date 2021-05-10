@@ -92,6 +92,8 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DimensionsView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
                 paths.modules + "/dataset/DatasetShareView.js"
+                paths.modules + "/dataset/DatasetSaveView.js"
+                paths.modules + "/dataset/DatasetLoginView.js"
                 paths.modules + "/dataset/DatasetDownloadView.js"
                 paths.modules + "/dataset/DatasetEmbedView.js"
 
@@ -108,6 +110,9 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/datasource/MetadataRequest.js"
                 paths.js + "/metamac/modules/datasource/DataRequest.js"
                 paths.js + "/metamac/modules/datasource/DatasourceIdentifier.js"
+
+                # User
+                paths.js + "/metamac/modules/user/UserHeaderView.js"
 
                 # Util
                 paths.js + "/metamac/modules/util/NumberFormatter.js"
@@ -133,6 +138,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/components/select/SelectView.js"
                 paths.js + "/metamac/components/toggleable/ToggleableView.js"
                 paths.js + "/metamac/components/modal/ModalView.js"
+                paths.js + "/metamac/components/modal/ConfirmationModalView.js"
 
                 # filters
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js"
@@ -345,7 +351,7 @@ module.exports = (grunt) ->
                     syntax: "bootstrap",
                     htmlDemo : true,
                     autoHint : false,
-                    types: 'eot,woff,ttf,svg';
+                    types: 'eot,woff,ttf,svg'
                 }
 
 

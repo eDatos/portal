@@ -21,6 +21,7 @@ I18n.translations.en = {
             fullscreen: "Fullscreen",
             share: "Share",
             download: "Download",
+            save: "Save",
             accept: "Accept",
             cancel: "Cancel",
             selectAll: "Select",
@@ -45,6 +46,20 @@ I18n.translations.en = {
         },
         embed: {
             instructions: "Select, copy and paste this code on your page:"
+        },
+        save: {
+            button: {
+                submit: "Save",
+            },
+            label: {
+                name: "Filter name",
+                notes: "Notes"
+            },
+            modal: {
+                title: "Save filter",
+                success: "The filter has been saved successfully",
+                failure: "There was a problem saving the filter"
+            }
         },
         text: {
             fixedDimensions: "Fixed values",
@@ -234,6 +249,35 @@ I18n.translations.en = {
                 TIME: "Time",
                 MEASURE: "Measures",
                 GEOGRAPHICAL: "Geographical location"
+            }
+        }
+    },
+    login: {
+        button: {
+            submit: "Sign in",
+            register: "Sign up"
+        },
+        label: {
+            username: "Username",
+            password: "Password"
+        },
+        modal: {
+            title: "User",
+            success: "You have successfully logged in",
+            failure: "There was a problem logging in"
+        }
+    },
+    logout: {
+        modal: {
+            title: "Log out",
+            question: "Are you sure you want to log out?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Yes",
+                reject: "No"
             }
         }
     }
