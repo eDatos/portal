@@ -21,18 +21,21 @@
                 var self = this;
                 this._getUserAccount().done(function(val) {
                     var context = {
-                        username : val.name + ' ' + val.surname1 + ' ' + (val.surname2 || '')
+                        username : val.name + ' ' + val.surname1 + ' ' + (val.surname2 || ''),
+                        tooltip : I18n.t("logout.modal.tooltip")
                     };
                     self.$el.html(self.template(context));
                 }).fail(function() {
                     var context = {
-                        username : ""
+                        username : "",
+                        tooltip : I18n.t("login.modal.tooltip")
                     };
                     self.$el.html(self.template(context));
                 });
             } else {
                 var context = {
-                    username : ""
+                    username : "",
+                    tooltip : I18n.t("login.modal.tooltip")
                 };
                 this.$el.html(this.template(context));
             }

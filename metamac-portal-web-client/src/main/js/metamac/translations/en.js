@@ -258,11 +258,12 @@ I18n.translations.en = {
             register: "Sign up"
         },
         label: {
-            username: "Username",
+            email: "Email",
             password: "Password"
         },
         modal: {
             title: "User",
+            tooltip: "Sign in",
             success: "You have successfully logged in",
             failure: "There was a problem logging in"
         }
@@ -270,6 +271,7 @@ I18n.translations.en = {
     logout: {
         modal: {
             title: "Log out",
+            tooltip: "Log out",
             question: "Are you sure you want to log out?"
         }
     },

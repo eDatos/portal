@@ -259,11 +259,12 @@ I18n.translations.pt = {
             register: "Inscrever-se"
         },
         label: {
-            username: "Nome de usuário",
+            email: "Correio eletrônico",
             password: "Senha"
         },
         modal: {
             title: "Usuário",
+            tooltip: "Iniciar sessão",
             success: "Você fez login com sucesso",
             failure: "Ocorreu um problema ao fazer login"
         }
@@ -271,6 +272,7 @@ I18n.translations.pt = {
     logout: {
         modal: {
             title: "Fechar Sessão",
+            tooltip: "Fechar Sessão",
             question: "Tem a certeza que quer terminar a sessão?"
         }
     },
