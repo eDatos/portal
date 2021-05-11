@@ -38,6 +38,7 @@
                 this.createPermalink().done(function (permalink) {
                     self.permalink = permalink.id;
                     self.$el.html(self.template({}));
+                    document.getElementById("name").value = self.filterDimensions.metadata.metadataResponse.description.text.find(self._findTextByCurrentLocale).value;
                 }).fail(function() {
                     self.renderResult(false);
                 });
