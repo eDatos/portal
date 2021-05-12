@@ -5,12 +5,12 @@
 
     App.modules.dataset.model.FilterModel = Backbone.Model.extend({
 
-        initialize: function ({resourceName, name, notes, permalink, userId}) {
-            this.resourceName = resourceName;
-            this.name = name;
-            this.notes = notes;
-            this.permalink = permalink;
-            this.userId = userId;
+        initialize: function (attributes) {
+            this.resourceName = attributes.resourceName;
+            this.name = attributes.name;
+            this.notes = attributes.notes;
+            this.permalink = attributes.permalink;
+            this.userId = attributes.userId;
         },
 
         toString: function () {
