@@ -47,9 +47,9 @@
             e.preventDefault();
             var self = this;
             if(sessionStorage.getItem("authToken")) {
-                UserUtils.getAccount().done(function(val) {
+                UserUtils.getAccount().then(function() {
                     self._showLogoutModal();
-                }).fail(function() {
+                }).catch(function() {
                     self._showLoginModal();
                 });
             } else {
