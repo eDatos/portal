@@ -2,6 +2,7 @@
     "use strict";
 
     var DatasetPermalink = App.modules.dataset.DatasetPermalink;
+    var UserUtils = App.modules.user.UserUtils;
 
     App.namespace('App.modules.dataset.DatasetSaveView');
 
@@ -22,12 +23,17 @@
 
         onSubmit: function(e) {
             e.preventDefault();
-            var name = document.getElementById("name").value || null;
-            var notes = document.getElementById("notes").value;
+            var filter = new App.modules.dataset.model.FilterModel({
+                resourceName: this.filterDimensions.metadata.metadataResponse.description.text.find(this._findTextByCurrentLocale).value,
+                name: document.getElementById("name").value || null,
+                notes: document.getElementById("notes").value,
+                permalink: this.permalink,
+                userId: this.user.id
+            });
             var self = this;
-            this.savePermalink(this.permalink, name, notes).done(function() {
+            UserUtils.saveFilter(filter).then(function () {
                 self.renderResult(true);
-            }).fail(function() {
+            }).catch(function () {
                 self.renderResult(false);
             });
         },
@@ -59,27 +65,6 @@
         createPermalink: function () {
             var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
             return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
-        },
-
-        savePermalink: function (permalink, name, notes) {
-            var resourceName = this.filterDimensions.metadata.metadataResponse.description.text.find(this._findTextByCurrentLocale).value;
-            return metamac.authentication.ajax({
-                url: App.endpoints["external-users"] + '/filters',
-                headers: {
-                    Authorization: "Bearer " + sessionStorage.getItem("authToken")
-                },
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    id: null,
-                    name: name,
-                    resourceName: resourceName,
-                    externalUser: { id: this.user.id },
-                    permalink: permalink,
-                    notes: notes
-                })
-            });
         },
 
         renderResult: function (succeeded) {

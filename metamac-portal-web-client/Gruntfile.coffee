@@ -81,6 +81,10 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/translations/en.js"
                 paths.js + "/metamac/translations/pt.js"
 
+                # User
+                paths.js + "/metamac/modules/user/UserUtils.js"
+                paths.js + "/metamac/modules/user/UserHeaderView.js"
+
                 # DATASET MODULE
                 paths.modules + "/dataset/DatasetPermalink.js"
                 paths.modules + "/dataset/PermalinkBuilder.js"
@@ -111,9 +115,6 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/modules/datasource/DataRequest.js"
                 paths.js + "/metamac/modules/datasource/DatasourceIdentifier.js"
 
-                # User
-                paths.js + "/metamac/modules/user/UserHeaderView.js"
-
                 # Util
                 paths.js + "/metamac/modules/util/NumberFormatter.js"
 
@@ -126,6 +127,7 @@ module.exports = (grunt) ->
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/StructuralResourcesApi.js"
+                paths.js + "/metamac/modules/dataset/model/FilterModel.js"
 
                 # components
                 paths.js + "/metamac/components/tooltip/Tooltip.js"

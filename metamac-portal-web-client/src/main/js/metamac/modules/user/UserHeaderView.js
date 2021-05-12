@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var UserUtils = App.modules.user.UserUtils;
+
     App.namespace("App.modules.user");
 
     App.modules.user.UserHeaderView = Backbone.View.extend({
@@ -19,13 +21,13 @@
         render : function () {
             if(sessionStorage.getItem("authToken")) {
                 var self = this;
-                this._getUserAccount().done(function(val) {
+                UserUtils.getAccount().then(function(val) {
                     var context = {
                         username : val.name + ' ' + val.surname1 + ' ' + (val.surname2 || ''),
                         tooltip : I18n.t("logout.modal.tooltip")
                     };
                     self.$el.html(self.template(context));
-                }).fail(function() {
+                }).catch(function() {
                     var context = {
                         username : "",
                         tooltip : I18n.t("login.modal.tooltip")
@@ -45,7 +47,7 @@
             e.preventDefault();
             var self = this;
             if(sessionStorage.getItem("authToken")) {
-                self._getUserAccount().done(function(val) {
+                UserUtils.getAccount().done(function(val) {
                     self._showLogoutModal();
                 }).fail(function() {
                     self._showLoginModal();
@@ -53,18 +55,6 @@
             } else {
                 self._showLoginModal();
             }
-        },
-
-        _getUserAccount: function () {
-            return metamac.authentication.ajax({
-                url: App.endpoints["external-users"] + "/account",
-                headers: {
-                    Authorization: "Bearer " + sessionStorage.getItem("authToken")
-                },
-                method: "GET",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8"
-            });
         },
 
         _showLoginModal: function () {

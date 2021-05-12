@@ -2,6 +2,7 @@
 
     App.namespace("App.modules.dataset");
 
+    var UserUtils = App.modules.user.UserUtils;
     var DisabledFeatureInternalPortalView = Backbone.View.extend({
         render: function () {
             this.$el.html('<b>' + I18n.t("filter.button.disabledFeature.internalPortal") + '</b>');
@@ -190,26 +191,16 @@
                 var title = I18n.t("filter.button.save");
                 var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
                 modal.show();
-            } else  if(sessionStorage.getItem("authToken")) {
+            } else {
                 var self = this;
-                metamac.authentication.ajax({
-                    url: App.endpoints["external-users"] + "/account",
-                    headers: {
-                        Authorization: "Bearer " + sessionStorage.getItem("authToken")
-                    },
-                    method: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8"
-                }).done(function(val) {
+                UserUtils.getAccount().then(function(val) {
                     var modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: self.filterDimensions, user: val });
                     var title = I18n.t("filter.save.modal.title");
                     var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
                     modal.show();
-                }).fail(function() {
+                }).catch(function() {
                     self.clickLogin(e);
                 });
-            } else {
-                this.clickLogin(e);
             }
         },
 

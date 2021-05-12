@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var UserUtils = App.modules.user.UserUtils;
+
     App.namespace('App.modules.dataset.DatasetLoginView');
 
     App.modules.dataset.DatasetLoginView = Backbone.View.extend({
@@ -23,7 +25,7 @@
                 password: document.getElementById("password").value
             }
             var self = this;
-            this.login(credentials).done(function(val) {
+            UserUtils.login(credentials).then(function(val) {
                 sessionStorage.setItem("authToken", val.token);
                 self.renderSuccess();
                 App.trigger("login");
@@ -35,16 +37,6 @@
                 registerUrl: App.endpoints["external-users-web"] + '/signup'
             }
             this.$el.html(this.template(context));
-        },
-
-        login: function (credentials) {
-            return metamac.authentication.ajax({
-                url: App.endpoints["external-users"] + "/login",
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(credentials)
-            });
         },
 
         renderSuccess: function () {
