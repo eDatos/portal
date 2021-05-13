@@ -24,7 +24,7 @@
         onSubmit: function(e) {
             e.preventDefault();
             var filter = new App.modules.dataset.model.FilterModel({
-                resourceName: this.filterDimensions.metadata.metadataResponse.description.text.find(this._findTextByCurrentLocale).value,
+                resourceName: this.filterDimensions.metadata.getTitle(),
                 name: document.getElementById("name").value || null,
                 notes: document.getElementById("notes").value,
                 permalink: this.permalink,
@@ -44,7 +44,7 @@
                 this.createPermalink().done(function (permalink) {
                     self.permalink = permalink.id;
                     self.$el.html(self.template({}));
-                    document.getElementById("name").value = self.filterDimensions.metadata.metadataResponse.description.text.find(self._findTextByCurrentLocale).value;
+                    document.getElementById("name").value = self.filterDimensions.metadata.getTitle();
                 }).fail(function() {
                     self.renderResult(false);
                 });
