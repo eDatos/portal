@@ -53,7 +53,17 @@ I18n.translations.es = {
             },
             label: {
                 name: "Nombre del filtro",
-                notes: "Notas"
+                notes: "Notas",
+                version: {
+                    group: "Versión",
+                    last: "Última versión",
+                    current: "Versión actual",
+                },
+                data: {
+                    group: "Datos",
+                    quantity: "Los últimos",
+                    date: "A partir de",
+                }
             },
             modal: {
                 title: "Guardar filtro",

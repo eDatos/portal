@@ -12,7 +12,11 @@
         templateResult: App.templateManager.get("components/modal/modal-message"),
 
         events: {
-            "submit": "onSubmit"
+            "submit": "onSubmit",
+            "change #version-current": "hideFieldData",
+            "change #version-last": "showFieldData",
+            "change #data-quantity": "onDataQuantityChosen",
+            "change #data-date": "onDataDateChosen"
         },
 
         initialize: function () {
@@ -51,7 +55,26 @@
             } else {
                 this.permalink = this.getExistingPermalinkId();
                 this.$el.html(this.template({}));
+                document.getElementById("name").value = this.filterDimensions.metadata.getTitle();
             }
+        },
+
+        hideFieldData: function () {
+            document.getElementById("field-data").hidden = true;
+        },
+
+        showFieldData: function () {
+            document.getElementById("field-data").hidden = false;
+        },
+
+        onDataQuantityChosen: function () {
+            document.getElementById("data-quantity-related-input").disabled = false;
+            document.getElementById("data-date-related-input").disabled = true;
+        },
+
+        onDataDateChosen: function () {
+            document.getElementById("data-quantity-related-input").disabled = true;
+            document.getElementById("data-date-related-input").disabled = false;
         },
 
         needsPermalink: function () {
@@ -72,13 +95,7 @@
                 statusMessage: succeeded ? I18n.t("filter.save.modal.success") : I18n.t("filter.save.modal.failure")
             };
             this.$el.html(this.templateResult(context));
-        },
-
-        _findTextByCurrentLocale: function (val) {
-            // TODO: alternativa si no se encuentra el idioma
-            return val.lang === I18n.currentLocale();
         }
-
     });
 
 }());

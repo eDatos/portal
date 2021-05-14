@@ -53,7 +53,17 @@ I18n.translations.en = {
             },
             label: {
                 name: "Filter name",
-                notes: "Notes"
+                notes: "Notes",
+                version: {
+                    group: "Version",
+                    last: "Last version",
+                    current: "Current version",
+                },
+                data: {
+                    group: "Data",
+                    quantity: "The last",
+                    date: "Starting from",
+                }
             },
             modal: {
                 title: "Save filter",
