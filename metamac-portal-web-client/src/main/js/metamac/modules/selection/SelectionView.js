@@ -52,9 +52,14 @@
         },
 
         _initializeUserHeaderView: function () {
-            this.userHeaderView = new App.modules.user.UserHeaderView({
-                el: this.$(".dataset-header-user")
-            });
+            // FIXME: revisar donde ejecutar este código una única vez (no aquí y en DatasetView)
+            if(!$(".dataset-header-user")) {
+                console.log("No se pudo cargar el header de usuarios");
+            } else {
+                this.userHeaderView = new App.modules.user.UserHeaderView({
+                    el: $(".dataset-header-user")
+                });
+            }
         },
 
         buildItemView: function (item, ItemViewType, itemViewOptions) {
@@ -86,7 +91,7 @@
         onRender: function () {
             // We render here the options bar and the user header because marionette provides a built in method
             this.optionsView.setElement(this.$('.selection-options-bar')).render();
-            this.userHeaderView.setElement(this.$('.dataset-header-user')).render();
+            this.userHeaderView.setElement($('.dataset-header-user')).render();
 
             this.fullScreen.setContainer($('.metamac-container'));
             // Workaround: assigning a inner container as selection-body will generate problems when changing pages, because the fullscreen will break because it doesn´t exist.

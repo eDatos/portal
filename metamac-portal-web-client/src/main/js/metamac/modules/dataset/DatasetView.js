@@ -35,9 +35,14 @@
         },
 
         _initializeUserHeaderView: function () {
-            this.userHeaderView = new App.modules.user.UserHeaderView({
-                el: this.$(".dataset-header-user")
-            });
+            // FIXME: revisar donde ejecutar este código una única vez (no aquí y en DatasetView)
+            if(!$(".dataset-header-user")) {
+                console.log("No se pudo cargar el header de usuarios");
+            } else {
+                this.userHeaderView = new App.modules.user.UserHeaderView({
+                    el: $(".dataset-header-user")
+                });
+            }
         },
 
         _initializeVisualElements: function () {
@@ -196,7 +201,7 @@
             }
 
             this.userHeader = new App.modules.user.UserHeaderView({
-                el: this.$(".dataset-header-user")
+                el: $(".dataset-header-user")
             });
             this.userHeader.render();
         },

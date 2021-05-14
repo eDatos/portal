@@ -23,6 +23,7 @@
 	            <p class="justificado">Lo sentimos, alguna de las propiedades no ha sido configurada correctamente.</p>
 	       	</c:when>
 			<c:otherwise>
+                <div class="dataset-header-user"></div>
 			    <c:choose>
 					<c:when test="${!resourceEmpty}">
 						<div class="dataset-header-info">
