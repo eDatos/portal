@@ -43,6 +43,7 @@
             var self = this;
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
+                    // FIXME: revisar la ruta de la cookie
                     var xsrfTokenCookie = self._getXsrfCookie();
                     metamac.authentication.ajax({
                         url: App.endpoints["external-users"] + "/login",
@@ -54,7 +55,8 @@
                             if (xsrfTokenCookie) {
                                 xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
                             } else {
-                                return false;
+                                // FIXME: manejar este error y devolver un false
+                                return true;
                             }
                         }
                     }).done(function(val) {
@@ -72,6 +74,7 @@
             var self = this;
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
+                    // FIXME: revisar la ruta de la cookie
                     var xsrfTokenCookie = self._getXsrfCookie();
                     metamac.authentication.ajax({
                         url: App.endpoints["external-users"] + '/filters',
@@ -81,11 +84,15 @@
                         data: filter.toString(),
                         beforeSend: function(xhr) {
                             var authToken = sessionStorage.getItem("authToken");
-                            if(xsrfTokenCookie && authToken) {
+                            // FIXME: controlar cuando mandar y cuando no esta request
+                            if(xsrfTokenCookie) {
                                 xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
+                            }
+                            if(authToken) {
                                 xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("authToken"));
                             } else {
-                                return false;
+                                // FIXME: manejar este error y devolver un false
+                                return true;
                             }
                         }
                     }).done(function(val) {
