@@ -8,7 +8,6 @@
         template: "dataset/dataset-page",
 
         regions: {
-            userHeader: ".dataset-header-user",
             content: ".dataset-sidebar-visualization-container",
             optionsBar: ".dataset-visualization-options-bar",
             dimensions: ".dataset-visualization-dimensions"
@@ -27,22 +26,10 @@
                 mustApplyVisualizationRestrictions: !this.metadata.identifier().permalinkId
             });
 
-            this._initializeUserHeaderView();
             this._initializeVisualElements();
             this._initializeSidebarView();
             this._initializeFullScreen();
             this._initializeHighChartsOptions();
-        },
-
-        _initializeUserHeaderView: function () {
-            // FIXME: revisar donde ejecutar este código una única vez (no aquí y en DatasetView)
-            if(!$(".dataset-header-user")) {
-                console.log("No se pudo cargar el header de usuarios");
-            } else {
-                this.userHeaderView = new App.modules.user.UserHeaderView({
-                    el: $(".dataset-header-user")
-                });
-            }
         },
 
         _initializeVisualElements: function () {
@@ -144,7 +131,7 @@
         },
 
         onRender: function () {
-            this.userHeader.show(this.userHeaderView);
+
             this.content.show(this.sidebarView);
             this.optionsBar.show(this.optionsView);
             this.dimensions.show(this.dimensionsView);
@@ -199,11 +186,6 @@
                 controllerParams.visualizationType = type;
                 this.controller.changeDatasetVisualization(controllerParams);
             }
-
-            this.userHeader = new App.modules.user.UserHeaderView({
-                el: $(".dataset-header-user")
-            });
-            this.userHeader.render();
         },
 
         _toggleClassByChartType: function (type) {
