@@ -52,13 +52,23 @@ I18n.translations.en = {
                 submit: "Save",
             },
             label: {
-                name: "Filter name",
-                notes: "Notes"
+                name: "Custom consultation name",
+                notes: "Notes",
+                version: {
+                    group: "Version",
+                    last: "Last version",
+                    current: "Current version",
+                },
+                data: {
+                    group: "Data",
+                    quantity: "The last",
+                    date: "Starting from",
+                }
             },
             modal: {
-                title: "Save filter",
-                success: "The filter has been saved successfully",
-                failure: "There was a problem saving the filter"
+                title: "Save custom consultation",
+                success: "The custom consultation has been saved successfully",
+                failure: "There was a problem saving the custom consultation"
             }
         },
         text: {

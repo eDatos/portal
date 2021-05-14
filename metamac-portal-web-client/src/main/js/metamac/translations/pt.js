@@ -52,13 +52,23 @@ I18n.translations.pt = {
                 submit: "Salvar",
             },
             label: {
-                name: "Nome do filtro",
-                notes: "Notas"
+                name: "Nome da consulta personalizada",
+                notes: "Notas",
+                version: {
+                    group: "Versão",
+                    last: "Última versão",
+                    current: "Versão atual",
+                },
+                data: {
+                    group: "Dados",
+                    quantity: "Os últimos",
+                    date: "A partir de",
+                }
             },
             modal: {
-                title: "Salvar filtro",
-                success: "O filtro foi salvo com sucesso",
-                failure: "Ocorreu um problema ao salvar o filtro"
+                title: "Salvar consulta personalizada",
+                success: "A consulta personalizada foi salva com sucesso",
+                failure: "Ocorreu um problema ao salvar a consulta personalizada"
             }
         },
         text: {

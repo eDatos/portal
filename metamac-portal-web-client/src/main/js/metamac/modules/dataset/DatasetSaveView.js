@@ -2,6 +2,7 @@
     "use strict";
 
     var DatasetPermalink = App.modules.dataset.DatasetPermalink;
+    var UserUtils = App.modules.user.UserUtils;
 
     App.namespace('App.modules.dataset.DatasetSaveView');
 
@@ -11,7 +12,11 @@
         templateResult: App.templateManager.get("components/modal/modal-message"),
 
         events: {
-            "submit": "onSubmit"
+            "submit": "onSubmit",
+            "change #version-current": "hideFieldData",
+            "change #version-last": "showFieldData",
+            "change #data-quantity": "onDataQuantityChosen",
+            "change #data-date": "onDataDateChosen"
         },
 
         initialize: function () {
@@ -22,12 +27,17 @@
 
         onSubmit: function(e) {
             e.preventDefault();
-            var name = document.getElementById("name").value || null;
-            var notes = document.getElementById("notes").value;
+            var filter = new App.modules.dataset.model.FilterModel({
+                resourceName: this.filterDimensions.metadata.getTitle(),
+                name: document.getElementById("name").value || null,
+                notes: document.getElementById("notes").value,
+                permalink: this.permalink,
+                userId: this.user.id
+            });
             var self = this;
-            this.savePermalink(this.permalink, name, notes).done(function() {
+            UserUtils.saveFilter(filter).then(function () {
                 self.renderResult(true);
-            }).fail(function() {
+            }).catch(function () {
                 self.renderResult(false);
             });
         },
@@ -38,14 +48,33 @@
                 this.createPermalink().done(function (permalink) {
                     self.permalink = permalink.id;
                     self.$el.html(self.template({}));
-                    document.getElementById("name").value = self.filterDimensions.metadata.metadataResponse.description.text.find(self._findTextByCurrentLocale).value;
+                    document.getElementById("name").value = self.filterDimensions.metadata.getTitle();
                 }).fail(function() {
                     self.renderResult(false);
                 });
             } else {
                 this.permalink = this.getExistingPermalinkId();
                 this.$el.html(this.template({}));
+                document.getElementById("name").value = this.filterDimensions.metadata.getTitle();
             }
+        },
+
+        hideFieldData: function () {
+            document.getElementById("field-data").hidden = true;
+        },
+
+        showFieldData: function () {
+            document.getElementById("field-data").hidden = false;
+        },
+
+        onDataQuantityChosen: function () {
+            document.getElementById("data-quantity-related-input").disabled = false;
+            document.getElementById("data-date-related-input").disabled = true;
+        },
+
+        onDataDateChosen: function () {
+            document.getElementById("data-quantity-related-input").disabled = true;
+            document.getElementById("data-date-related-input").disabled = false;
         },
 
         needsPermalink: function () {
@@ -61,39 +90,12 @@
             return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
         },
 
-        savePermalink: function (permalink, name, notes) {
-            var resourceName = this.filterDimensions.metadata.metadataResponse.description.text.find(this._findTextByCurrentLocale).value;
-            return metamac.authentication.ajax({
-                url: App.endpoints["external-users"] + '/filters',
-                headers: {
-                    Authorization: "Bearer " + sessionStorage.getItem("authToken")
-                },
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    id: null,
-                    name: name,
-                    resourceName: resourceName,
-                    externalUser: { id: this.user.id },
-                    permalink: permalink,
-                    notes: notes
-                })
-            });
-        },
-
         renderResult: function (succeeded) {
             var context = {
                 statusMessage: succeeded ? I18n.t("filter.save.modal.success") : I18n.t("filter.save.modal.failure")
             };
             this.$el.html(this.templateResult(context));
-        },
-
-        _findTextByCurrentLocale: function (val) {
-            // TODO: alternativa si no se encuentra el idioma
-            return val.lang === I18n.currentLocale();
         }
-
     });
 
 }());

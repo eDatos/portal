@@ -24,7 +24,6 @@
                 visualize: true
             });
 
-            this._initializeUserHeaderView();
             this._initializeOptionsView();
             this._initializeFullScreen();
         },
@@ -48,12 +47,6 @@
                 filterDimensions: this.filterDimensions,
                 el: this.$(".selection-options-bar")
                 //,buttons : this.veElements
-            });
-        },
-
-        _initializeUserHeaderView: function () {
-            this.userHeaderView = new App.modules.user.UserHeaderView({
-                el: this.$(".dataset-header-user")
             });
         },
 
@@ -86,7 +79,6 @@
         onRender: function () {
             // We render here the options bar and the user header because marionette provides a built in method
             this.optionsView.setElement(this.$('.selection-options-bar')).render();
-            this.userHeaderView.setElement(this.$('.dataset-header-user')).render();
 
             this.fullScreen.setContainer($('.metamac-container'));
             // Workaround: assigning a inner container as selection-body will generate problems when changing pages, because the fullscreen will break because it doesn´t exist.

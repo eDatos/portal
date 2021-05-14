@@ -52,13 +52,23 @@ I18n.translations.es = {
                 submit: "Guardar",
             },
             label: {
-                name: "Nombre del filtro",
-                notes: "Notas"
+                name: "Nombre de la consulta personalizada",
+                notes: "Notas",
+                version: {
+                    group: "Versión",
+                    last: "Última versión",
+                    current: "Versión actual",
+                },
+                data: {
+                    group: "Datos",
+                    quantity: "Los últimos",
+                    date: "A partir de",
+                }
             },
             modal: {
-                title: "Guardar filtro",
-                success: "El filtro se ha guardado correctamente",
-                failure: "Ha habido un problema guardando el filtro"
+                title: "Guardar consulta personalizada",
+                success: "La consulta personalizada se ha guardado correctamente",
+                failure: "Ha habido un problema guardando la consulta personalizada"
             }
         },
         text: {

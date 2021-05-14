@@ -2,6 +2,7 @@
     "use strict";
 
     var DatasetPermalink = App.modules.dataset.DatasetPermalink;
+    var UserHeaderView = App.modules.user.UserHeaderView;
 
     App.namespace('App.modules.dataset.DatasetController');
 
@@ -127,6 +128,14 @@
                     deferred.resolve();
                 } else {
                     deferred.resolve();
+                }
+
+                if(!$(".dataset-header-user")) {
+                    console.log("No se pudo cargar el header de usuarios");
+                } else {
+                    new UserHeaderView({
+                        el: $(".dataset-header-user")
+                    }).render();
                 }
             });
 
