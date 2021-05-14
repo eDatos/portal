@@ -10,7 +10,10 @@
                 url: App.endpoints["external-users"] + "/profile-info",
                 method: "GET",
                 dataType: "json",
-                contentType: "application/json; charset=utf-8"
+                contentType: "application/json; charset=utf-8",
+                xhrFields: {
+                    withCredentials: true,
+                }
             });
         },
 
