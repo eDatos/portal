@@ -29,6 +29,10 @@
                 sessionStorage.setItem("authToken", val.token);
                 self.renderSuccess();
                 App.trigger("login");
+            }).catch(function(jqXHR) {
+                var loginEl = document.getElementById("login-error");
+                loginEl.hidden = false;
+                loginEl.innerText = (jqXHR.status === 400) ? I18n.t("login.error.client") : I18n.t("login.error.server");
             });
         },
 

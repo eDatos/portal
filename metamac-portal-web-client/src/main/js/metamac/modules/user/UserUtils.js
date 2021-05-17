@@ -10,10 +10,7 @@
                 url: App.endpoints["external-users"] + "/profile-info",
                 method: "GET",
                 dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                xhrFields: {
-                    withCredentials: true,
-                }
+                contentType: "application/json; charset=utf-8"
             });
         },
 
@@ -33,8 +30,8 @@
                     }
                 }).done(function(val) {
                     resolve(val)
-                }).fail(function() {
-                    reject()
+                }).fail(function(jqXHR) {
+                    reject(jqXHR)
                 });
             })
         },
@@ -61,11 +58,11 @@
                         }
                     }).done(function(val) {
                         resolve(val)
-                    }).fail(function() {
-                        reject()
+                    }).fail(function(jqXHR) {
+                        reject(jqXHR)
                     });
-                }).fail(function() {
-                    reject()
+                }).fail(function(jqXHR) {
+                    reject(jqXHR)
                 });
             });
         },
@@ -97,11 +94,11 @@
                         }
                     }).done(function(val) {
                         resolve(val)
-                    }).fail(function() {
-                        reject()
+                    }).fail(function(jqXHR) {
+                        reject(jqXHR)
                     });
-                }).fail(function() {
-                    reject()
+                }).fail(function(jqXHR) {
+                    reject(jqXHR)
                 });
             });
         },

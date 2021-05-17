@@ -69,6 +69,10 @@ I18n.translations.en = {
                 title: "Save custom consultation",
                 success: "The custom consultation has been saved successfully",
                 failure: "There was a problem saving the custom consultation"
+            },
+            error: {
+                quantity: "The numeric field in the 'Data' section must be a positive integer greater than or equal to one.",
+                date: "The date in the 'Data' section is mandatory."
             }
         },
         text: {
@@ -276,6 +280,10 @@ I18n.translations.en = {
             tooltip: "Sign in",
             success: "You have successfully logged in",
             failure: "There was a problem logging in"
+        },
+        error: {
+            client: "Invalid email or password.",
+            server: "There was a problem logging in. Try again later."
         }
     },
     logout: {

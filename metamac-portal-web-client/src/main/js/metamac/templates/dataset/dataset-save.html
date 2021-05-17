@@ -1,11 +1,11 @@
-<form class="dataset-save">
+<form class="dataset-save" novalidate>
     <fieldset>
         <label for="name">{{ message "filter.save.label.name" }}</label>
-        <input type="text" id="name">
+        <input type="text" id="name" maxlength="255">
     </fieldset>
     <fieldset>
         <label for="notes">{{ message "filter.save.label.notes" }}</label>
-        <textarea id="notes" rows="5"></textarea>
+        <textarea id="notes" rows="5" maxlength="4000"></textarea>
     </fieldset>
     <fieldset>
         <label>{{ message "filter.save.label.version.group" }}</label>
@@ -41,6 +41,8 @@
             </div>
         </div>
     </fieldset>
+
+    <p id="save-error" class="form-error"></p>
 
     <div class="form-buttons">
         <button type="submit">{{ message "filter.save.button.submit" }}</button>

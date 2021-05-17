@@ -27,19 +27,36 @@
 
         onSubmit: function(e) {
             e.preventDefault();
-            var filter = new App.modules.dataset.model.FilterModel({
-                resourceName: this.filterDimensions.metadata.getTitle(),
-                name: document.getElementById("name").value || null,
-                notes: document.getElementById("notes").value,
-                permalink: this.permalink,
-                userId: this.user.id
-            });
-            var self = this;
-            UserUtils.saveFilter(filter).then(function () {
-                self.renderResult(true);
-            }).catch(function () {
-                self.renderResult(false);
-            });
+            var errorMessage = this.validateFilter();
+            if(!errorMessage) {
+                var filter = new App.modules.dataset.model.FilterModel({
+                    resourceName: this.filterDimensions.metadata.getTitle(),
+                    name: document.getElementById("name").value || null,
+                    notes: document.getElementById("notes").value,
+                    permalink: this.permalink,
+                    userId: this.user.id
+                });
+                var self = this;
+                UserUtils.saveFilter(filter).then(function () {
+                    self.renderResult(true);
+                }).catch(function () {
+                    self.renderResult(false);
+                });
+            } else {
+                var loginEl = document.getElementById("save-error");
+                loginEl.hidden = false;
+                loginEl.innerText = errorMessage;
+            }
+        },
+
+        validateFilter: function () {
+            if(document.getElementById("data-quantity-related-input").disabled) {
+                var date = document.getElementById("data-date-related-input").valueAsDate;
+                return date instanceof Date && !isNaN(date) ? undefined : I18n.t("filter.save.error.date");
+            } else {
+                var value = document.getElementById("data-quantity-related-input").valueAsNumber;
+                return Number.isInteger(value) && value > 1 ? undefined : I18n.t("filter.save.error.quantity");
+            }
         },
 
         render: function () {

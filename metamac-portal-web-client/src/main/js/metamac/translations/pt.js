@@ -69,6 +69,10 @@ I18n.translations.pt = {
                 title: "Salvar consulta personalizada",
                 success: "A consulta personalizada foi salva com sucesso",
                 failure: "Ocorreu um problema ao salvar a consulta personalizada"
+            },
+            error: {
+                quantity: "O campo numérico na seção 'Dados' deve ser um número inteiro positivo maior ou igual a um.",
+                date: "A data na seção 'Dados' é obrigatória."
             }
         },
         text: {
@@ -277,6 +281,10 @@ I18n.translations.pt = {
             tooltip: "Iniciar sessão",
             success: "Você fez login com sucesso",
             failure: "Ocorreu um problema ao fazer login"
+        },
+        error: {
+            client: "Correio eletrônico ou senha inválida.",
+            server: "Ocorreu um problema ao fazer login. Tente novamente mais tarde."
         }
     },
     logout: {

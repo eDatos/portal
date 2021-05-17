@@ -69,6 +69,10 @@ I18n.translations.es = {
                 title: "Guardar consulta personalizada",
                 success: "La consulta personalizada se ha guardado correctamente",
                 failure: "Ha habido un problema guardando la consulta personalizada"
+            },
+            error: {
+                quantity: "El campo númerico del apartado 'Datos' debe ser un número entero positivo mayor o igual a uno.",
+                date: "La fecha del apartado 'Datos' es obligatoria."
             }
         },
         text: {
@@ -285,6 +289,10 @@ I18n.translations.es = {
             tooltip: "Iniciar sesión",
             success: "Ha iniciado sesión con éxito",
             failure: "Ha habido un problema iniciando sesión"
+        },
+        error: {
+            client: "El correo electrónico o la contraseña no son válidos.",
+            server: "Ha habido un problema iniciando sesión. Inténtelo de nuevo más tarde."
         }
     },
     logout: {
