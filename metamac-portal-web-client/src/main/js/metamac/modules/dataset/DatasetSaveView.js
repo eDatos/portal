@@ -50,12 +50,14 @@
         },
 
         validateFilter: function () {
-            if(document.getElementById("data-quantity-related-input").disabled) {
-                var date = document.getElementById("data-date-related-input").valueAsDate;
-                return date instanceof Date && !isNaN(date) ? undefined : I18n.t("filter.save.error.date");
-            } else {
-                var value = document.getElementById("data-quantity-related-input").valueAsNumber;
-                return Number.isInteger(value) && value > 1 ? undefined : I18n.t("filter.save.error.quantity");
+            if(document.getElementById("version-last").checked) {
+                if(document.getElementById("data-quantity-related-input").disabled) {
+                    var date = document.getElementById("data-date-related-input").valueAsDate;
+                    return date instanceof Date && !isNaN(date) ? undefined : I18n.t("filter.save.error.date");
+                } else {
+                    var value = document.getElementById("data-quantity-related-input").valueAsNumber;
+                    return Number.isInteger(value) && value > 1 ? undefined : I18n.t("filter.save.error.quantity");
+                }
             }
         },
 
