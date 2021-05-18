@@ -106,7 +106,7 @@
 
         createPermalink: function () {
             var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
-            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
+            return DatasetPermalink.savePermalinkWithUserAuth(permalinkContent);
         },
 
         renderResult: function (succeeded) {

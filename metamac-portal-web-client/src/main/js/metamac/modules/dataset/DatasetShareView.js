@@ -35,7 +35,7 @@
 
         savePermalink: function () {
             var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
-            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
+            return DatasetPermalink.savePermalink(permalinkContent, this.$el);
         },
 
         getSharedVisualizerParams: function (permalinkId) {

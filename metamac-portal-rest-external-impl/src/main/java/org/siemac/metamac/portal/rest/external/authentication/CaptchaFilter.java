@@ -13,7 +13,6 @@ import nl.captcha.Captcha;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.jaxrs.ext.RequestHandler;
-import org.apache.cxf.jaxrs.impl.HttpHeadersImpl;
 import org.apache.cxf.jaxrs.model.ClassResourceInfo;
 import org.apache.cxf.message.Message;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -43,6 +42,10 @@ public class CaptchaFilter implements RequestHandler {
 
     @Override
     public Response handleRequest(Message m, ClassResourceInfo resourceClass) {
+        Object isAuthenticated = request.getSession().getAttribute("authenticated");
+        if(isAuthenticated != null && ((boolean) isAuthenticated)) {
+            return null;
+        }
         boolean captchaEnabled = true;
         String captchaProvider = StringUtils.EMPTY;
 
