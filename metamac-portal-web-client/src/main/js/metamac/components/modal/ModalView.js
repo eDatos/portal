@@ -5,48 +5,48 @@
 
     App.components.modal.ModalView = Backbone.Marionette.Layout.extend({
 
-        template : "components/modal/modal",
+        template: "components/modal/modal",
 
-        initialize : function () {
+        initialize: function () {
             this.title = this.options.title;
             this.contentView = this.options.contentView;
         },
 
-        regions : {
+        regions: {
             content: ".modal-content"
         },
 
-        events : {
-            "click .modal-backdrop" : "onClickBackdrop",
-            "click .modal-close" : "onClickClose"
+        events: {
+            "click .modal-backdrop": "onClickBackdrop",
+            "click .modal-close": "onClickClose"
         },
 
-        serializeData : function () {
+        serializeData: function () {
             var context = {
-                title : this.title
+                title: this.title
             };
             return context;
         },
 
-        onRender : function () {
+        onRender: function () {
             this.content.show(this.contentView);
         },
 
-        show : function () {
+        show: function () {
             this.render();
             if ($(".full-screen").append(this.$el).length == 0) {
-            	$("body").append(this.$el)
+                $(".metamac-container").append(this.$el)
             };
         },
 
-        onClickBackdrop : function () {
+        onClickBackdrop: function () {
             this.close();
         },
 
-        onClickClose : function () {
+        onClickClose: function () {
             this.close();
         }
-        
+
 
     });
 

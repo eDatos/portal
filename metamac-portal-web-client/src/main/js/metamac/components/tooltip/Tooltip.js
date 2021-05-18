@@ -40,10 +40,7 @@
             this._detachEvents();
 
             this.$el = $(el);
-            var $parentContainer = this.$el.parents(".full-screen:eq(0)");
-            var isParentInFullScreen = $parentContainer.length > 0;
-            this.$container = isParentInFullScreen ? $parentContainer : this.$body;
-            this.$viewPort = isParentInFullScreen ? $parentContainer : this.$container;
+            this.$container = this.$el.parent().closest(".metamac-container");
             this.$container.append(this.$tooltip);
 
             this._attachEvents();
@@ -54,7 +51,6 @@
             this.$cellChart = $('<div class="tooltip-cell-chart"></div>');
             this.$innerTooltip = $('<div class="tooltip-inner"></div>').append(this.$cellInfo).append(this.$cellChart);
             this.$tooltip = $('<div class="tooltip in metamac-tooltip"></div>').append(this.$innerTooltip);
-            this.$body = $('body');
         },
 
         _attachEvents: function () {
@@ -78,44 +74,46 @@
             }
         },
 
-        _getViewportSize: function () {
-            return {
-                width: this.$viewPort.width(),
-                height: this.$viewPort.height()
-            };
-        },
-
+        /* $el upper left corner */
         _getOffset: function () {
             return this.$el.offset();
         },
 
+        /* cursor coordinates are relative to $el upper left corner*/
         _getPosition: function (cursor) {
-            var position = {};
 
             var tooltipSize = {
                 width: this.$tooltip.outerWidth(),
                 height: this.$tooltip.outerHeight()
             };
 
-            var viewPortSize = this._getViewportSize();
-            var limits = {
-                x: viewPortSize.width - tooltipSize.width,
-                y: viewPortSize.height - tooltipSize.height
-            };
+            var elementSize = {
+                width: this.$el.width(),
+                height: this.$el.height()
+            }
 
+            var MARGIN = 10;
+
+            var relativePosition = {
+                x: cursor.x + MARGIN,
+                y: cursor.y + MARGIN
+            }
+
+            /* if the tooltip would be drawn out of limits, we invert its direction */
+            if (cursor.x + tooltipSize.width > elementSize.width) {
+                relativePosition.x = cursor.x - MARGIN - tooltipSize.width;
+            }
+
+            if (cursor.y + tooltipSize.height > elementSize.height) {
+                relativePosition.y = cursor.y - MARGIN - tooltipSize.height;
+            }
+
+            /* Must return a absolute position because the tooltip is fixed */
             var offset = this._getOffset();
-            position.x = cursor.x + offset.left + 10;
-            position.y = cursor.y + offset.top + 10;
-
-            if (position.x > limits.x) {
-                position.x = position.x - 10 - tooltipSize.width;
-            }
-
-            if (position.y > limits.y) {
-                position.y = position.y - 10 - tooltipSize.height;
-            }
-
-            return position;
+            return {
+                x: offset.left + relativePosition.x,
+                y: offset.top + relativePosition.y
+            };
         },
 
         _update: function (point) {
@@ -191,14 +189,14 @@
 
         _mouseMove: function (e) {
             var offset = this._getOffset();
-            var point = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
-            this._update(point);
+            var relativePointToEl = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
+            this._update(relativePointToEl);
         },
 
         _click: function (e) {
             var offset = this._getOffset();
-            var point = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
-            this._update(point);
+            var relativePointToEl = new App.Table.Point(e.pageX - offset.left, e.pageY - offset.top);
+            this._update(relativePointToEl);
         }
 
     };
