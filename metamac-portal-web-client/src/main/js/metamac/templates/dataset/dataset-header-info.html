@@ -1,12 +1,13 @@
 {{ title }}
 {{#if description}}
 <br>
-{{ description }}
+{{{ description }}}
 {{/if}}
 {{#if measureUnit}}
 <br>
 <div>
     <ul>
+        <!-- FIXME internacionalizame -->
         <li><b>Unidad de medida:</b> {{ measureUnit }}</li>
     </ul>
 </div>
@@ -14,6 +15,7 @@
 {{#if attributes}}
 <br>
 <div>
+    <!-- FIXME internacionalizame -->
     Notas de la categoría
     <ul>
         {{#each attributes}}
