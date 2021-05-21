@@ -3,11 +3,11 @@
 
     var UserUtils = App.modules.user.UserUtils;
 
-    App.namespace('App.modules.dataset.DatasetLoginView');
+    App.namespace('App.modules.user.UserLoginView');
 
-    App.modules.dataset.DatasetLoginView = Backbone.View.extend({
+    App.modules.user.UserLoginView = Backbone.View.extend({
 
-        template: App.templateManager.get("dataset/dataset-login"),
+        template: App.templateManager.get("user/user-login"),
         templateResult: App.templateManager.get("components/modal/modal-message"),
 
         events: {

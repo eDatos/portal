@@ -58,7 +58,7 @@
         },
 
         _showLoginModal: function () {
-            var modalContentView = new App.modules.dataset.DatasetLoginView({ filterDimensions: this.filterDimensions });
+            var modalContentView = new App.modules.user.UserLoginView({ filterDimensions: this.filterDimensions });
             var title = I18n.t("login.modal.title");
             this.modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             this.modal.show();
