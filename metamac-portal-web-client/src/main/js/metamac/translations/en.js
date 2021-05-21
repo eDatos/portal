@@ -277,7 +277,6 @@ I18n.translations.en = {
         },
         modal: {
             title: "User",
-            tooltip: "Sign in",
             success: "You have successfully logged in",
             failure: "There was a problem logging in"
         },
@@ -289,7 +288,6 @@ I18n.translations.en = {
     logout: {
         modal: {
             title: "Log out",
-            tooltip: "Log out",
             question: "Are you sure you want to log out?"
         }
     },
@@ -299,6 +297,13 @@ I18n.translations.en = {
                 confirm: "Yes",
                 reject: "No"
             }
+        }
+    },
+    user: {
+        header: {
+            userAreaTooltip: "Área do usuário",
+            loginTooltip: "Sign in",
+            logoutTooltip: "Log out"
         }
     }
 };

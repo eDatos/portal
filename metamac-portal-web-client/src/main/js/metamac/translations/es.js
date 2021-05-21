@@ -286,7 +286,6 @@ I18n.translations.es = {
         },
         modal: {
             title: "Usuario",
-            tooltip: "Iniciar sesión",
             success: "Ha iniciado sesión con éxito",
             failure: "Ha habido un problema iniciando sesión"
         },
@@ -298,7 +297,6 @@ I18n.translations.es = {
     logout: {
         modal: {
             title: "Cerrar sesión",
-            tooltip: "Cerrar sesión",
             question: "¿Está seguro de que quiere cerrar sesión?"
         }
     },
@@ -308,6 +306,13 @@ I18n.translations.es = {
                 confirm: "Sí",
                 reject: "No"
             }
+        }
+    },
+    user: {
+        header: {
+            userAreaTooltip: "Área del usuario",
+            loginTooltip: "Iniciar sesión",
+            logoutTooltip: "Cerrar sesión"
         }
     }
 };

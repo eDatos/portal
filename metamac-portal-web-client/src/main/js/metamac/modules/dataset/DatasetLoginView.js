@@ -15,7 +15,7 @@
         },
 
         initialize: function () {
-            this.filterDimensions = this.options.filterDimensions;
+
         },
 
         onSubmit: function(e) {
