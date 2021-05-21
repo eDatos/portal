@@ -120,17 +120,32 @@
         },
 
         contains: function (majorTemporal, minorTemporal) {
-            if (!this.intervalDateParsers.hasOwnProperty(majorTemporal.temporalGranularity) ||
-                !this.intervalDateParsers.hasOwnProperty(minorTemporal.temporalGranularity)) {
-                console.warn('Some of the next granularities do not have a parser');
-                console.log(majorTemporal.temporalGranularity);
-                console.log(minorTemporal.temporalGranularity);
+            var majorInterval = this.getInterval(majorTemporal);
+            var minorInterval = majorInterval && this.getInterval(minorTemporal);
+            if(minorInterval) {
+                return majorInterval.begin <= minorInterval.end && minorInterval.end <= majorInterval.end;
+            } else {
                 return false;
             }
-            var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity](majorTemporal.id);
-            var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity](minorTemporal.id);
+        },
 
-            return majorInterval.begin <= minorInterval.end && minorInterval.end <= majorInterval.end;
+        isAfter: function (startTemporal, temporal) {
+            var startDateInterval = this.getInterval(startTemporal);
+            var dateInterval = startDateInterval && this.getInterval(temporal);
+            if(dateInterval) {
+                return startDateInterval.begin <= dateInterval.begin;
+            } else {
+                return false;
+            }
+        },
+
+        getInterval: function (temporal) {
+            if (!this.intervalDateParsers.hasOwnProperty(temporal.temporalGranularity)) {
+                console.warn('The next granularities do not have a parser');
+                console.log(temporal.temporalGranularity);
+                return null;
+            }
+            return this.intervalDateParsers[temporal.temporalGranularity](temporal.id);
         },
 
         getTemporalGranularityPriority: function (temporalGranularity) {

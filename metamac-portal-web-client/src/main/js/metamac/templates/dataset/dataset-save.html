@@ -1,27 +1,27 @@
 <form class="dataset-save" novalidate>
     <fieldset>
         <label for="name">{{ message "filter.save.label.name" }}</label>
-        <input type="text" id="name" maxlength="255">
+        <input type="text" id="name" maxlength="255" value="{{defaultCustomConsultationName}}">
     </fieldset>
     <fieldset>
         <label for="notes">{{ message "filter.save.label.notes" }}</label>
         <textarea id="notes" rows="5" maxlength="4000"></textarea>
     </fieldset>
-    <fieldset>
+    <fieldset {{#unless versionFieldIsNecessary }} disabled="disabled" {{/unless}}>
         <label>{{ message "filter.save.label.version.group" }}</label>
         <!-- TODO: dar funcionamiento a este campo -->
         <div class="horizontal-radio-group">
             <div class="radio-field">
-                <input type="radio" id="version-current" name="version" value="current" checked="checked">
+                <input type="radio" id="version-current" name="version" value="current">
                 <label for="version-current">{{ message "filter.save.label.version.current" }}</label>
             </div>
             <div class="radio-field">
-                <input type="radio" id="version-last" name="version" value="last">
+                <input type="radio" id="version-last" name="version" value="last" checked="checked">
                 <label for="version-last">{{ message "filter.save.label.version.last" }}</label>
             </div>
         </div>
     </fieldset>
-    <fieldset id="field-data" hidden>
+    <fieldset id="field-data">
         <label>{{ message "filter.save.label.data.group" }}</label>
         <!-- TODO: dar funcionamiento a este campo -->
         <div class="vertical-radio-group">
@@ -37,7 +37,11 @@
                     <input type="radio" id="data-date" name="data" value="date">
                     <label for="data-date">{{ message "filter.save.label.data.date" }}</label>
                 </div>
-                <input id="data-date-related-input" class="radio-related-input" type="date" disabled>
+                <select id="data-date-related-input" class="radio-related-input" disabled>
+                    {{#each dimensionCategories}}
+                    <option value='{{this.id}}'>{{this.label}}</option>
+                    {{/each}}
+                </select>
             </div>
         </div>
     </fieldset>

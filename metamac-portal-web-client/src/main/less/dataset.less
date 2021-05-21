@@ -671,15 +671,18 @@
                 margin: 0 5px 0 0;
                 font-weight: normal;
             }
-            input {
+            input, select {
                 width: auto;
-                margin: 0 5px 0 0;
+                &[type="radio"] {
+                    margin: 0 5px 0 0;
+                }
                 &:disabled {
                     background-color: #e6e6e6;
                 }
             }
             .radio-related-input {
                 width: 50%;
+                box-sizing: border-box;
             }
             .input-related-radio {
                 width: 50%;

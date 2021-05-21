@@ -11,11 +11,14 @@
             return App.endpoints["permalinks"] + "/permalinks";
         },
 
-        buildPermalinkContent: function (filterDimensions) {
+        buildPermalinkContent: function (filterDimensions, dynamicSelection, lastVersion) {
+            var queryParams = JSON.parse(JSON.stringify(App.queryParams));
+            queryParams.version = lastVersion ? "~latest" : queryParams.version;
             return JSON.stringify({
-                queryParams: App.queryParams,
+                queryParams: queryParams,
                 hash: this.removePermalink(window.location.hash),
                 selection: filterDimensions.exportJSONSelection(),
+                dynamicSelection: dynamicSelection,
                 state: filterDimensions.exportJSONState()
             });
         },

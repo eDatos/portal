@@ -143,6 +143,33 @@
                 && this.metadata.identifier().type != App.Constants.visualization.type.INDICATOR_INSTANCE;
         },
 
+        preprocessSelectionWithDynamicSelection: function(selection, dynamicSelection) {
+            if (dynamicSelection) {
+                if(!_.isEmpty(dynamicSelection.dimension.type)) {
+                    if(dynamicSelection.dimension.type.TIME_DIMENSION) {
+                        var self = this;
+                        var temporalDimensionId = Object.keys(selection).find(function (key) {
+                            return self.get(key).get("type") === 'TIME_DIMENSION';
+                        });
+
+                        var selectionCopy = JSON.parse(JSON.stringify(selection));
+                        selectionCopy[temporalDimensionId].categories = [];
+
+                        var selectedLeft = dynamicSelection.dimension.type.TIME_DIMENSION.lastNValues;
+                        var afterDate = dynamicSelection.dimension.type.TIME_DIMENSION.afterDate;
+                        _.each(this.get(temporalDimensionId).get("representations").models, function (category) {
+                            selectionCopy[temporalDimensionId].categories.push({
+                                id: category.id,
+                                selected: isNaN(selectedLeft) ? App.TemporalUtils.isAfter(afterDate, category.attributes) : Boolean(Math.max(0,selectedLeft--))
+                            });
+                        });
+                        return selectionCopy;
+                    }
+                }
+            }
+            return selection;
+        },
+
         importJSONSelection: function (json) {
 
             var dimensionsToImport = _.chain(json).map(function (value, key) {

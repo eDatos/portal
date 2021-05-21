@@ -88,6 +88,7 @@ module.exports = (grunt) ->
                 # DATASET MODULE
                 paths.modules + "/dataset/DatasetPermalink.js"
                 paths.modules + "/dataset/PermalinkBuilder.js"
+                paths.modules + "/dataset/DatasetDynamicSelectionBuilder.js"
                 paths.modules + "/dataset/DatasetActionsView.js"
                 paths.modules + "/dataset/DatasetExportView.js"
                 paths.modules + "/dataset/DatasetView.js"
