@@ -45,8 +45,8 @@
             UserUtils.getAccount().then(function() {
                 window.open(App.endpoints["external-users-web"], '_blank').focus();
             }).catch(function() {
-                if(this.isLogged) {
-                    this.render();
+                if(self.isLogged) {
+                    self.render();
                 }
                 self._showLoginModal();
             });
