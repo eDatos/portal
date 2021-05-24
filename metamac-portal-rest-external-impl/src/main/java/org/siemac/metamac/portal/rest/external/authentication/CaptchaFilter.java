@@ -13,7 +13,6 @@ import nl.captcha.Captcha;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.jaxrs.ext.RequestHandler;
-import org.apache.cxf.jaxrs.impl.HttpHeadersImpl;
 import org.apache.cxf.jaxrs.model.ClassResourceInfo;
 import org.apache.cxf.message.Message;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -22,6 +21,8 @@ import org.siemac.metamac.portal.core.constants.PortalConfigurationConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPrivate.AUTHENTICATED_SESSION_ATTRIBUTE;
 
 public class CaptchaFilter implements RequestHandler {
 
@@ -43,6 +44,10 @@ public class CaptchaFilter implements RequestHandler {
 
     @Override
     public Response handleRequest(Message m, ClassResourceInfo resourceClass) {
+        Object isAuthenticated = request.getSession().getAttribute(AUTHENTICATED_SESSION_ATTRIBUTE);
+        if(isAuthenticated != null && ((boolean) isAuthenticated)) {
+            return null;
+        }
         boolean captchaEnabled = true;
         String captchaProvider = StringUtils.EMPTY;
 

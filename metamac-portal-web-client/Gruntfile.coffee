@@ -84,10 +84,12 @@ module.exports = (grunt) ->
                 # User
                 paths.js + "/metamac/modules/user/UserUtils.js"
                 paths.js + "/metamac/modules/user/UserHeaderView.js"
+                paths.js + "/metamac/modules/user/UserLoginView.js"
 
                 # DATASET MODULE
                 paths.modules + "/dataset/DatasetPermalink.js"
                 paths.modules + "/dataset/PermalinkBuilder.js"
+                paths.modules + "/dataset/DatasetDynamicSelectionBuilder.js"
                 paths.modules + "/dataset/DatasetActionsView.js"
                 paths.modules + "/dataset/DatasetExportView.js"
                 paths.modules + "/dataset/DatasetView.js"
@@ -97,7 +99,6 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DatasetVisualizationView.js"
                 paths.modules + "/dataset/DatasetShareView.js"
                 paths.modules + "/dataset/DatasetSaveView.js"
-                paths.modules + "/dataset/DatasetLoginView.js"
                 paths.modules + "/dataset/DatasetDownloadView.js"
                 paths.modules + "/dataset/DatasetEmbedView.js"
 

@@ -6,30 +6,28 @@
     margin: auto 0px;
     font-size: 13px;
   }
-  .button-login {
+  .header-button {
     background-color: transparent;
     margin-left: 5px;
     outline: none;
     border: none;
+    padding: 0;
+    .icon {
+      height: @mIconHeight;
+      width: @mIconWidth;
+      padding: 0;
+      font-size: @mIconHeight;
+      line-height: @mIconHeight;
+
+      .active &:before,
+      &:hover:before {
+        color: @istacBlueDark;
+      }
+
+      &:before {
+        color: @istacGreyDark;
+        padding: 2px 2px;
+      }
+    }
   }
-}
-
-.header-icon-user {
-  height: @mIconHeight;
-  width: @mIconWidth;
-  padding: 0;
-  font-size: @mIconHeight;
-  line-height: @mIconHeight;
-
-  .active &:before,
-  &:hover:before {
-    color: @istacBlueDark;
-  }
-
-  &:before {
-    color: @istacGreyDark;
-    padding: 2px 2px;
-  }
-
-  .icon-user;
 }

@@ -210,7 +210,7 @@
             if (this.isInternalPortal()) {
                 modalContentView = new DisabledFeatureInternalPortalView();
             } else {
-                modalContentView = new App.modules.dataset.DatasetLoginView({ filterDimensions: this.filterDimensions });
+                modalContentView = new App.modules.user.UserLoginView({ filterDimensions: this.filterDimensions });
             }
             var title = I18n.t("login.modal.title");
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });

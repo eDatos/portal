@@ -69,6 +69,10 @@ I18n.translations.en = {
                 title: "Save custom consultation",
                 success: "The custom consultation has been saved successfully",
                 failure: "There was a problem saving the custom consultation"
+            },
+            error: {
+                quantity: "The numeric field in the 'Data' section must be a positive integer greater than or equal to one.",
+                date: "The date in the 'Data' section is mandatory."
             }
         },
         text: {
@@ -273,15 +277,17 @@ I18n.translations.en = {
         },
         modal: {
             title: "User",
-            tooltip: "Sign in",
             success: "You have successfully logged in",
             failure: "There was a problem logging in"
+        },
+        error: {
+            client: "Invalid email or password.",
+            server: "There was a problem logging in. Try again later."
         }
     },
     logout: {
         modal: {
             title: "Log out",
-            tooltip: "Log out",
             question: "Are you sure you want to log out?"
         }
     },
@@ -291,6 +297,13 @@ I18n.translations.en = {
                 confirm: "Yes",
                 reject: "No"
             }
+        }
+    },
+    user: {
+        header: {
+            userAreaTooltip: "Área do usuário",
+            loginTooltip: "Sign in",
+            logoutTooltip: "Log out"
         }
     }
 };

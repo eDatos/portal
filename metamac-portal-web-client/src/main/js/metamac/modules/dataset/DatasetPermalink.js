@@ -11,11 +11,14 @@
             return App.endpoints["permalinks"] + "/permalinks";
         },
 
-        buildPermalinkContent: function (filterDimensions) {
+        buildPermalinkContent: function (filterDimensions, dynamicSelection, lastVersion) {
+            var queryParams = JSON.parse(JSON.stringify(App.queryParams));
+            queryParams.version = lastVersion ? "~latest" : queryParams.version;
             return JSON.stringify({
-                queryParams: App.queryParams,
+                queryParams: queryParams,
                 hash: this.removePermalink(window.location.hash),
                 selection: filterDimensions.exportJSONSelection(),
+                dynamicSelection: dynamicSelection,
                 state: filterDimensions.exportJSONState()
             });
         },
@@ -34,18 +37,41 @@
             });
         },
 
-        savePermalinkShowingCaptchaInElement: function (content, el) {
+        savePermalinkWithUserAuth: function (content) {
             return metamac.authentication.ajax({
                 url: this.baseUrl(),
                 method: "POST",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
+                beforeSend: function(xhr) {
+                    var authToken = sessionStorage.getItem("authToken");
+                    if(authToken) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("authToken"));
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        },
+
+        savePermalink: function (content, el) {
+            return metamac.authentication.ajax({
+                url: this.baseUrl(),
+                method: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ content: content }),
+                beforeSend: function(xhr) {
+                    var authToken = sessionStorage.getItem("authToken");
+                    if(authToken) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("authToken"));
+                    }
+                }
             }, {
                 captchaEl: el
             });
-        }
-
+        },
     }
 
 }());

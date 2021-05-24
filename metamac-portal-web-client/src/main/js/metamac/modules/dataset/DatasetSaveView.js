@@ -3,6 +3,7 @@
 
     var DatasetPermalink = App.modules.dataset.DatasetPermalink;
     var UserUtils = App.modules.user.UserUtils;
+    var DynamicSelectionBuilder = App.modules.dataset.DatasetDynamicSelectionBuilder;
 
     App.namespace('App.modules.dataset.DatasetSaveView');
 
@@ -22,41 +23,70 @@
         initialize: function () {
             this.filterDimensions = this.options.filterDimensions;
             this.user = this.options.user;
-            this.permalink = null;
         },
 
         onSubmit: function(e) {
             e.preventDefault();
-            var filter = new App.modules.dataset.model.FilterModel({
-                resourceName: this.filterDimensions.metadata.getTitle(),
-                name: document.getElementById("name").value || null,
-                notes: document.getElementById("notes").value,
-                permalink: this.permalink,
-                userId: this.user.id
-            });
-            var self = this;
-            UserUtils.saveFilter(filter).then(function () {
-                self.renderResult(true);
-            }).catch(function () {
-                self.renderResult(false);
+            var errorMessage = this.validateFilter();
+            if(!errorMessage) {
+                var self = this;
+                this.createPermalink().done(function (permalink) {
+                    var filter = new App.modules.dataset.model.FilterModel({
+                        resourceName: self.filterDimensions.metadata.getTitle(),
+                        name: document.getElementById("name").value || null,
+                        notes: document.getElementById("notes").value,
+                        permalink: permalink.id,
+                        userId: self.user.id
+                    });
+                    UserUtils.saveFilter(filter).then(function () {
+                        self.renderResult(true);
+                    }).catch(function () {
+                        self.renderResult(false);
+                    });
+                }).fail(function () {
+                   self.renderResult(false);
+                });
+            } else {
+                var loginEl = document.getElementById("save-error");
+                loginEl.hidden = false;
+                loginEl.innerText = errorMessage;
+            }
+        },
+
+        validateFilter: function () {
+            if(document.getElementById("version-last").checked) {
+                if(this.isDataFieldNecessary() && !document.getElementById("data-quantity-related-input").disabled) {
+                    var value = document.getElementById("data-quantity-related-input").valueAsNumber;
+                    return Number.isInteger(value) && value > 1 ? undefined : I18n.t("filter.save.error.quantity");
+                }
+            }
+        },
+
+        isVersionFieldNecessary: function () {
+            return this.filterDimensions.metadata.metadata.keepAllData;
+        },
+
+        isDataFieldNecessary: function () {
+            return !_.isUndefined(this.getTemporalDimension()) && document.getElementById("version-last").checked;
+        },
+
+        getTemporalDimension: function () {
+            return this.filterDimensions.models.find(function(dimension) {
+                return dimension.get("type") === "TIME_DIMENSION"
             });
         },
 
+        getTemporalDimensionCategories: function () {
+            var temporalDimension = this.getTemporalDimension();
+            return temporalDimension ? temporalDimension.get("representations").models : [];
+        },
+
         render: function () {
-            if (this.needsPermalink()) {
-                var self = this;
-                this.createPermalink().done(function (permalink) {
-                    self.permalink = permalink.id;
-                    self.$el.html(self.template({}));
-                    document.getElementById("name").value = self.filterDimensions.metadata.getTitle();
-                }).fail(function() {
-                    self.renderResult(false);
-                });
-            } else {
-                this.permalink = this.getExistingPermalinkId();
-                this.$el.html(this.template({}));
-                document.getElementById("name").value = this.filterDimensions.metadata.getTitle();
-            }
+            this.$el.html(this.template({
+                versionFieldIsNecessary: this.isVersionFieldNecessary(),
+                defaultCustomConsultationName: this.filterDimensions.metadata.getTitle(),
+                dimensionCategories: this.getTemporalDimensionCategories().map(function(category) { return category.attributes })
+            }));
         },
 
         hideFieldData: function () {
@@ -64,7 +94,7 @@
         },
 
         showFieldData: function () {
-            document.getElementById("field-data").hidden = false;
+            document.getElementById("field-data").hidden = !this.isDataFieldNecessary();
         },
 
         onDataQuantityChosen: function () {
@@ -86,8 +116,22 @@
         },
 
         createPermalink: function () {
-            var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
-            return DatasetPermalink.savePermalinkShowingCaptchaInElement(permalinkContent, this.$el);
+            var dynamicSelectionBuilder = DynamicSelectionBuilder();
+            if(this.isDataFieldNecessary()) {
+                if(document.getElementById("data-quantity").checked) {
+                    dynamicSelectionBuilder.selectNLastTemporalDimensionCategories(document.getElementById("data-quantity-related-input").valueAsNumber);
+                } else {
+                    var chosenCategoryAttributes = this.getTemporalDimensionCategories().find(function(val) {
+                        return val.get("id") === document.getElementById("data-date-related-input").value
+                    }).attributes;
+                    dynamicSelectionBuilder.selectTemporalDimensionCategoriesAfterDate(chosenCategoryAttributes);
+                }
+            }
+            var permalinkContent = DatasetPermalink.buildPermalinkContent(
+                this.filterDimensions,
+                dynamicSelectionBuilder.build(),
+                this.isVersionFieldNecessary() ? document.getElementById("version-last").checked : true);
+            return DatasetPermalink.savePermalinkWithUserAuth(permalinkContent);
         },
 
         renderResult: function (succeeded) {
