@@ -206,6 +206,7 @@
                 
                 representations._bindEvents();
                 representations.trigger("change:drawable");
+                representations.trigger("change:selected");
             }, this);
             this.zones.applyFixedSizeRestriction();
         },
