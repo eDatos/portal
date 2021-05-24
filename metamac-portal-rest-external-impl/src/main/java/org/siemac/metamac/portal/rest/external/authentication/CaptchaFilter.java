@@ -22,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPrivate.AUTHENTICATED_SESSION_ATTRIBUTE;
+
 public class CaptchaFilter implements RequestHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(CaptchaFilter.class);
@@ -42,7 +44,7 @@ public class CaptchaFilter implements RequestHandler {
 
     @Override
     public Response handleRequest(Message m, ClassResourceInfo resourceClass) {
-        Object isAuthenticated = request.getSession().getAttribute("authenticated");
+        Object isAuthenticated = request.getSession().getAttribute(AUTHENTICATED_SESSION_ATTRIBUTE);
         if(isAuthenticated != null && ((boolean) isAuthenticated)) {
             return null;
         }

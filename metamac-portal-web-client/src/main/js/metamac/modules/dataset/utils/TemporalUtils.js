@@ -120,23 +120,31 @@
         },
 
         contains: function (majorTemporal, minorTemporal) {
-            var majorInterval = this.getInterval(majorTemporal);
-            var minorInterval = majorInterval && this.getInterval(minorTemporal);
-            if(minorInterval) {
-                return majorInterval.begin <= minorInterval.end && minorInterval.end <= majorInterval.end;
-            } else {
+            if (!this.intervalDateParsers.hasOwnProperty(majorTemporal.temporalGranularity) ||
+                !this.intervalDateParsers.hasOwnProperty(minorTemporal.temporalGranularity)) {
+                console.warn('Some of the next granularities do not have a parser');
+                console.log(majorTemporal.temporalGranularity);
+                console.log(minorTemporal.temporalGranularity);
                 return false;
             }
+            var majorInterval = this.intervalDateParsers[majorTemporal.temporalGranularity](majorTemporal.id);
+            var minorInterval = this.intervalDateParsers[minorTemporal.temporalGranularity](minorTemporal.id);
+
+            return majorInterval.begin <= minorInterval.end && minorInterval.end <= majorInterval.end;
         },
 
         isAfter: function (startTemporal, temporal) {
-            var startDateInterval = this.getInterval(startTemporal);
-            var dateInterval = startDateInterval && this.getInterval(temporal);
-            if(dateInterval) {
-                return startDateInterval.begin <= dateInterval.begin;
-            } else {
+            if (!this.intervalDateParsers.hasOwnProperty(startTemporal.temporalGranularity) ||
+                !this.intervalDateParsers.hasOwnProperty(temporal.temporalGranularity)) {
+                console.warn('Some of the next granularities do not have a parser');
+                console.log(startTemporal.temporalGranularity);
+                console.log(temporal.temporalGranularity);
                 return false;
             }
+            var startDateInterval = this.intervalDateParsers[startTemporal.temporalGranularity](startTemporal.id);
+            var dateInterval = this.intervalDateParsers[temporal.temporalGranularity](temporal.id);
+
+            return startDateInterval.begin <= dateInterval.begin;
         },
 
         getInterval: function (temporal) {

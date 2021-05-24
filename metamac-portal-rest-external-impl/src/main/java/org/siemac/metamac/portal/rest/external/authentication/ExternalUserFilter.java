@@ -15,11 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+
+import static org.siemac.metamac.portal.rest.external.RestExternalConstantsPrivate.AUTHENTICATED_SESSION_ATTRIBUTE;
 
 public class ExternalUserFilter implements RequestHandler {
 
@@ -45,18 +48,18 @@ public class ExternalUserFilter implements RequestHandler {
                 ResponseEntity<String> response = restTemplate.exchange(configurationService.retrieveExternalUsersExternalApiUrlBase() + "/api/account", HttpMethod.GET, entity, String.class);
                 if(HttpStatus.OK.equals(response.getStatusCode())) {
                     LOG.info("JSESSIONID = {}, External users response: {}", new Object[]{request.getSession().getId(), response.getStatusCode()});
-                    request.getSession().setAttribute("authenticated", true);
+                    request.getSession().setAttribute(AUTHENTICATED_SESSION_ATTRIBUTE, true);
                 } else {
                     LOG.error("JSESSIONID = {}, External users response: {}", new Object[]{request.getSession().getId(), response.getStatusCode()});
-                    request.getSession().setAttribute("authenticated", false);
+                    request.getSession().setAttribute(AUTHENTICATED_SESSION_ATTRIBUTE, false);
                 }
-            } catch (MetamacException e) {
+            } catch (MetamacException | RestClientException e) {
                 LOG.error("Error validating external user.", e);
-                request.getSession().setAttribute("authenticated", false);
+                request.getSession().setAttribute(AUTHENTICATED_SESSION_ATTRIBUTE, false);
             }
         } else {
             LOG.info("No external user token.");
-            request.getSession().setAttribute("authenticated", false);
+            request.getSession().setAttribute(AUTHENTICATED_SESSION_ATTRIBUTE, false);
         }
         return null;
     }
