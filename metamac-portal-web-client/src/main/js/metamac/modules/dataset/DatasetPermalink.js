@@ -13,7 +13,7 @@
 
         buildPermalinkContent: function (filterDimensions, dynamicSelection, lastVersion) {
             var queryParams = JSON.parse(JSON.stringify(App.queryParams));
-            queryParams.version = lastVersion ? "~latest" : queryParams.version;
+            queryParams.version = lastVersion ? "~latest" : filterDimensions.metadata.getVersion();
             return JSON.stringify({
                 queryParams: queryParams,
                 hash: this.removePermalink(window.location.hash),
