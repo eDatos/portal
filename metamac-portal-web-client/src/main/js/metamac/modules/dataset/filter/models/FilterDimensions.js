@@ -192,8 +192,10 @@
                 var representations = dimension.get('representations');
                 representations._unbindEvents();
 
+                var mustUpdateDrawables = false;
                 _.each(dimensionToImport.categories, function (category) {
                     if (!_.isUndefined(representations.get(category.id))) {
+                        mustUpdateDrawables = mustUpdateDrawables || _.isUndefined(category.drawable) || _.isNull(category.drawable);
                         representations.get(category.id).set({ 
                             selected: category.selected,
                             drawable: category.drawable
@@ -205,8 +207,11 @@
                 this._calculateSelectedTemporalGranularity(dimension, representations);
                 
                 representations._bindEvents();
-                representations.trigger("change:drawable");
-                representations.trigger("change:selected");
+                if(mustUpdateDrawables) {
+                    representations.trigger("change:selected");
+                } else {
+                    representations.trigger("change:drawable");
+                }
             }, this);
             this.zones.applyFixedSizeRestriction();
         },
