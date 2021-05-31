@@ -15,7 +15,7 @@
         },
 
         initialize : function () {
-            this.listenTo(App, "login", this.render);
+            this.listenTo(App, "logout", this.render);
             this.modal = null;
             this.isLogged = false;
         },
@@ -48,20 +48,13 @@
                 if(self.isLogged) {
                     self.render();
                 }
-                self._showLoginModal();
+                UserUtils.login();
             });
         },
 
         clickLogout: function (e) {
             e.preventDefault();
             this._showLogoutModal();
-        },
-
-        _showLoginModal: function () {
-            var modalContentView = new App.modules.user.UserLoginView({ filterDimensions: this.filterDimensions });
-            var title = I18n.t("login.modal.title");
-            this.modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
-            this.modal.show();
         },
 
         _showLogoutModal: function () {
@@ -78,9 +71,10 @@
         _onLogoutConfirmed: function () {
             var self = this;
             return function() {
-                sessionStorage.removeItem("authToken");
-                self.render();
-                self.modal.close();
+                UserUtils.logout().then(function () {
+                    self.render();
+                    self.modal.close();
+                });
             }
         },
 

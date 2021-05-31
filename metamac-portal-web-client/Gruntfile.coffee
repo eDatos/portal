@@ -44,6 +44,7 @@ module.exports = (grunt) ->
                 paths.lib + "/handlebars.runtime.js"
                 paths.lib + "/jquery.dotdotdot-1.5.0-packed.js"
                 paths.lib + "/async.js"
+                paths.lib + "/cookies.js"
                 paths.js + "/metamac/App.js"
                 paths.js + "/metamac/libs/HandlebarsHelpers.js"
                 paths.js + "/metamac/templates/HandlebarsTemplates.js"
@@ -56,6 +57,10 @@ module.exports = (grunt) ->
                 paths.js + "/libs/perfect-scrollbar.jquery.js"
                 paths.js + "/libs/select2.min.js"
                 paths.js + "/libs/moment.min.js"
+
+                # User
+                paths.js + "/metamac/modules/user/UserUtils.js"
+                paths.js + "/metamac/modules/user/UserHeaderView.js"
 
                 # Metamac libs
                 paths.js + "/metamac/libs/i18n.js"
@@ -80,11 +85,6 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/translations/es.js"
                 paths.js + "/metamac/translations/en.js"
                 paths.js + "/metamac/translations/pt.js"
-
-                # User
-                paths.js + "/metamac/modules/user/UserUtils.js"
-                paths.js + "/metamac/modules/user/UserHeaderView.js"
-                paths.js + "/metamac/modules/user/UserLoginView.js"
 
                 # DATASET MODULE
                 paths.modules + "/dataset/DatasetPermalink.js"
@@ -142,6 +142,7 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/components/toggleable/ToggleableView.js"
                 paths.js + "/metamac/components/modal/ModalView.js"
                 paths.js + "/metamac/components/modal/ConfirmationModalView.js"
+                paths.js + "/metamac/components/modal/InformationModalView.js"
 
                 # filters
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js"

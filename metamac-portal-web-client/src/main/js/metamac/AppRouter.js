@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var UserUtils = App.modules.user.UserUtils;
+
     App.namespace('App.AppRouter');
 
     App.AppRouter = Backbone.Router.extend({
@@ -30,6 +32,21 @@
 
             this.routesByName = _.invert(this.routes);
             this.checkQueryParamsValidity();
+
+            var self = this;
+            Object.keys(this.routes).forEach(function(route) {
+                self.route(self.addQueryParam(route, "token"), undefined, function() {
+                    UserUtils.setAuthenticationTokenCookie(arguments[arguments.length - 1]);
+                    self.navigate('/' + Backbone.history.getFragment().replaceAll(/[?&]token[^/&]+(?=[^/]*$)/g, ""), { trigger: true });
+                });
+            });
+        },
+
+        addQueryParam: function (route, queryParamName) {
+            var newRoute = route.trim();
+            newRoute = newRoute[newRoute.length - 1] === '/' ? newRoute.slice(0, -1) : newRoute;
+            newRoute += /\?[^/]+$/.test(newRoute) ? '&' : '?';
+            return newRoute + queryParamName + '=:' + queryParamName;
         },
 
         home: function () {

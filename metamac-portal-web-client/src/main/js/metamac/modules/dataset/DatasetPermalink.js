@@ -1,6 +1,7 @@
 (function () {
     "use strict";
 
+    var UserUtils = App.modules.user.UserUtils;
     var PERMALINK_SUBPATH = "/permalink";
 
     App.namespace('App.modules.dataset.Permalink');
@@ -45,9 +46,9 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
                 beforeSend: function(xhr) {
-                    var authToken = sessionStorage.getItem("authToken");
+                    var authToken = UserUtils.getAuthenticationTokenCookie();
                     if(authToken) {
-                        xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("authToken"));
+                        xhr.setRequestHeader("Authorization", "Bearer " + authToken);
                     } else {
                         return false;
                     }
@@ -63,9 +64,9 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
                 beforeSend: function(xhr) {
-                    var authToken = sessionStorage.getItem("authToken");
+                    var authToken = UserUtils.getAuthenticationTokenCookie();
                     if(authToken) {
-                        xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("authToken"));
+                        xhr.setRequestHeader("Authorization", "Bearer " + authToken);
                     }
                 }
             }, {

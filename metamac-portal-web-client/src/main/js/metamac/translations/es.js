@@ -306,6 +306,12 @@ I18n.translations.es = {
                 confirm: "Sí",
                 reject: "No"
             }
+        },
+        information: {
+            loginRequired: {
+                title: "Operación no válida",
+                message: "La operación que quiere realizar requiere que inicie sesión primero."
+            }
         }
     },
     user: {

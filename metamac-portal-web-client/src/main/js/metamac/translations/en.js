@@ -297,6 +297,12 @@ I18n.translations.en = {
                 confirm: "Yes",
                 reject: "No"
             }
+        },
+        information: {
+            loginRequired: {
+                title: "Invalid action",
+                message: "The action you want to perform requires you to log in first"
+            }
         }
     },
     user: {
