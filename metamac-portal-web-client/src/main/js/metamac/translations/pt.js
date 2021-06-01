@@ -298,6 +298,12 @@ I18n.translations.pt = {
                 confirm: "Sim",
                 reject: "Não"
             }
+        },
+        information: {
+            loginRequired: {
+                title: "Ação inválida",
+                message: "A ação que você deseja realizar requer que você faça login primeiro"
+            }
         }
     },
     user: {

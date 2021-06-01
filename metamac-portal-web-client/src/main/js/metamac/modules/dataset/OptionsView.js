@@ -199,22 +199,12 @@
                     var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
                     modal.show();
                 }).catch(function() {
-                    self.clickLogin(e);
+                    var modalContentView = new App.components.modal.InformationModalView({ message: I18n.t("modal.information.loginRequired.message") });
+                    var title = I18n.t("modal.information.loginRequired.title");
+                    var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
+                    modal.show();
                 });
             }
-        },
-
-        clickLogin: function (e) {
-            e.preventDefault();
-            var modalContentView = null;
-            if (this.isInternalPortal()) {
-                modalContentView = new DisabledFeatureInternalPortalView();
-            } else {
-                modalContentView = new App.modules.user.UserLoginView({ filterDimensions: this.filterDimensions });
-            }
-            var title = I18n.t("login.modal.title");
-            var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
-            modal.show();
         },
 
         clickEmbed: function (e) {

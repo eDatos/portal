@@ -5,6 +5,9 @@
 
     App.modules.user.UserUtils = {
 
+        AUTH_TOKEN_NAME: "authenticationToken",
+        XSRF_COOKIE_NAME: "XSRF-TOKEN",
+
         _activatePostRequestsIsNecessary: function () {
             return this._getXsrfCookie() ? $.when({}) : metamac.authentication.ajax({
                 url: App.endpoints["external-users"] + "/profile-info",
@@ -15,51 +18,84 @@
         },
 
         getAccount: function () {
+            var self = this;
             return new Promise(function(resolve, reject) {
-                metamac.authentication.ajax({
+                $.ajax({
                     url: App.endpoints["external-users"] + "/account",
                     method: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function(xhr) {
-                        if(!sessionStorage.getItem("authToken")) {
+                        var authToken = self.getAuthenticationTokenCookie();
+                        if(!authToken) {
                             return false;
                         } else {
-                            xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("authToken"));
+                            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+                        }
+                    },
+                    statusCode: {
+                        401: function() {
+                            self.deleteAuthenticationTokenCookie();
+                            App.trigger("logout");
                         }
                     }
-                }).done(function(val) {
-                    resolve(val)
                 }).fail(function(jqXHR) {
                     reject(jqXHR)
+                }).done(function(val) {
+                    resolve(val)
                 });
             })
         },
 
-        login: function (credentials) {
+        login: function () {
+            window.open(App.endpoints["external-users-web"] + '/login?origin=' + encodeURIComponent(window.location.href), '_self').focus();
+        },
+
+        // This method will try to log in the user if there is already a token in the external users app. Either way, the browser will be redirected back immediately.
+        loginOnlyIfAlreadyLoggedInExternalUsers: function () {
+            // thereIsNotATokenInTheUrl: a token in the url means there is a user about to be logged in with that token, so a new login is not necessary
+            var thereIsNotATokenInTheUrl = !/[?&]token=[^/&]+(?=[^/]*$)/.test(Backbone.history.location.href);
+            // automaticAuthenticationHasNotBeenTriedYet: the sessionStorage property "authentication-already-tried" is stored when this method has already
+            // been called in this tab. It is avoiding an infinite loop.
+            var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
+            if(thereIsNotATokenInTheUrl && automaticAuthenticationHasNotBeenTriedYet) {
+                // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
+                this.getAccount().catch(() => {
+                    sessionStorage.setItem("authentication-already-tried", "true");
+                    // The 'nonStop' param tells external-users that we want the jwt token if it already exists. If it doesn't, external-users just redirects back.
+                    window.open(App.endpoints["external-users-web"] + '/login?origin=' + encodeURIComponent(window.location.href) + '&nonStop=true', '_self').focus();
+                });
+            }
+        },
+
+        logout: function () {
             var self = this;
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
-                    // FIXME: revisar la ruta de la cookie
-                    var xsrfTokenCookie = self._getXsrfCookie();
-                    metamac.authentication.ajax({
-                        url: App.endpoints["external-users"] + "/login",
+                    $.ajax({
+                        url: App.endpoints["external-users"] + '/account/logout',
                         method: "POST",
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify(credentials),
-                        beforeSend: function (xhr) {
-                            if (xsrfTokenCookie) {
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        beforeSend: function(xhr) {
+                            var xsrfTokenCookie = self._getXsrfCookie();
+                            var authToken = self.getAuthenticationTokenCookie();
+                            if(xsrfTokenCookie && authToken) {
                                 xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
+                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
                             } else {
                                 // FIXME: manejar este error y devolver un false
                                 return true;
                             }
                         }
-                    }).done(function(val) {
-                        resolve(val)
+                    }).done(function() {
+                        resolve();
                     }).fail(function(jqXHR) {
                         reject(jqXHR)
+                    }).always(function () {
+                        App.trigger("logout");
+                        self.deleteAuthenticationTokenCookie();
                     });
                 }).fail(function(jqXHR) {
                     reject(jqXHR)
@@ -71,25 +107,28 @@
             var self = this;
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
-                    // FIXME: revisar la ruta de la cookie
-                    var xsrfTokenCookie = self._getXsrfCookie();
-                    metamac.authentication.ajax({
+                    $.ajax({
                         url: App.endpoints["external-users"] + '/filters',
                         method: "POST",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         data: filter.toString(),
                         beforeSend: function(xhr) {
-                            var authToken = sessionStorage.getItem("authToken");
+                            var xsrfTokenCookie = self._getXsrfCookie();
+                            var authToken = self.getAuthenticationTokenCookie();
                             // FIXME: controlar cuando mandar y cuando no esta request
-                            if(xsrfTokenCookie) {
+                            if(xsrfTokenCookie && authToken) {
                                 xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
-                            }
-                            if(authToken) {
-                                xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("authToken"));
+                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
                             } else {
                                 // FIXME: manejar este error y devolver un false
                                 return true;
+                            }
+                        },
+                        statusCode: {
+                            401: function() {
+                                self.deleteAuthenticationTokenCookie();
+                                App.trigger("logout");
                             }
                         }
                     }).done(function(val) {
@@ -103,9 +142,20 @@
             });
         },
 
+        getAuthenticationTokenCookie: function () {
+            return Cookies.get(this.AUTH_TOKEN_NAME);
+        },
+
+        setAuthenticationTokenCookie: function (value) {
+            return Cookies.set(this.AUTH_TOKEN_NAME, value);
+        },
+
+        deleteAuthenticationTokenCookie: function () {
+            return Cookies.set(this.AUTH_TOKEN_NAME);
+        },
+
         _getXsrfCookie: function () {
-            var xsrfTokenMatch = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
-            return xsrfTokenMatch ? xsrfTokenMatch[1] : null;
+            return Cookies.get(this.XSRF_COOKIE_NAME);
         }
     }
 }());
