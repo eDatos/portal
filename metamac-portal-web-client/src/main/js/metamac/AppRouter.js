@@ -24,6 +24,26 @@
             "*path": "error"
         },
 
+        route: function (route, name, callback) {
+            var router = this;
+            if (!callback) callback = router[name];
+
+            var f = function() {
+                // Before any route is executed, an automatic authentication must be tried
+                var thereIsNotATokenInTheUrl = !/[?&]token=[^/&]+(?=[^/]*$)/.test(Backbone.history.location.href);
+                var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
+                if(thereIsNotATokenInTheUrl && automaticAuthenticationHasNotBeenTriedYet) {
+                    // if there is not a user logged in
+                    UserUtils.getAccount().catch(() => {
+                        sessionStorage.setItem("authentication-already-tried", "true");
+                        UserUtils.loginOnlyIfAlreadyLogged();
+                    });
+                }
+                callback.apply(router, arguments);
+            }
+            return Backbone.Router.prototype.route.call(router, route, name, f);
+        },
+
         initialize: function (options) {
             options || (options = {});
 
@@ -37,7 +57,7 @@
             Object.keys(this.routes).forEach(function(route) {
                 self.route(self.addQueryParam(route, "token"), undefined, function() {
                     UserUtils.setAuthenticationTokenCookie(arguments[arguments.length - 1]);
-                    self.navigate('/' + Backbone.history.getFragment().replaceAll(/[?&]token[^/&]+(?=[^/]*$)/g, ""), { trigger: true });
+                    self.navigate('/' + Backbone.history.getFragment().replaceAll(/[?&]token=[^/&]+(?=[^/]*$)/g, ""), { trigger: true });
                 });
             });
         },

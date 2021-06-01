@@ -51,6 +51,10 @@
             window.open(App.endpoints["external-users-web"] + '/login?origin=' + encodeURIComponent(window.location.href), '_self').focus();
         },
 
+        loginOnlyIfAlreadyLogged: function () {
+            window.open(App.endpoints["external-users-web"] + '/login?origin=' + encodeURIComponent(window.location.href) + '&nonStop=true', '_self').focus();
+        },
+
         logout: function () {
             var self = this;
             return new Promise(function(resolve, reject) {
