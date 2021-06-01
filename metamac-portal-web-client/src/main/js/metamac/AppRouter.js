@@ -24,21 +24,13 @@
             "*path": "error"
         },
 
+        // Override Router.route method to add a call to UserUtils.loginOnlyIfAlreadyLogged() before each route callback
         route: function (route, name, callback) {
             var router = this;
             if (!callback) callback = router[name];
 
             var f = function() {
-                // Before any route is executed, an automatic authentication must be tried
-                var thereIsNotATokenInTheUrl = !/[?&]token=[^/&]+(?=[^/]*$)/.test(Backbone.history.location.href);
-                var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
-                if(thereIsNotATokenInTheUrl && automaticAuthenticationHasNotBeenTriedYet) {
-                    // if there is not a user logged in
-                    UserUtils.getAccount().catch(() => {
-                        sessionStorage.setItem("authentication-already-tried", "true");
-                        UserUtils.loginOnlyIfAlreadyLogged();
-                    });
-                }
+                UserUtils.loginOnlyIfAlreadyLoggedInExternalUsers();
                 callback.apply(router, arguments);
             }
             return Backbone.Router.prototype.route.call(router, route, name, f);
@@ -54,12 +46,20 @@
             this.checkQueryParamsValidity();
 
             var self = this;
+            // Duplicate each route adding a query parameter 'token'
             Object.keys(this.routes).forEach(function(route) {
-                self.route(self.addQueryParam(route, "token"), undefined, function() {
-                    UserUtils.setAuthenticationTokenCookie(arguments[arguments.length - 1]);
-                    self.navigate('/' + Backbone.history.getFragment().replaceAll(/[?&]token=[^/&]+(?=[^/]*$)/g, ""), { trigger: true });
-                });
+                self.route(self.addQueryParam(route, "token"), undefined, self.processTokenAndRedirect);
             });
+        },
+
+        processTokenAndRedirect: function () {
+            UserUtils.setAuthenticationTokenCookie(arguments[arguments.length - 1]);
+            // After saving the token we can remove the token parameter from the current route
+            this.navigate('/' + this.removeQueryParam(Backbone.history.getFragment(), "token"), { trigger: true });
+        },
+
+        removeQueryParam: function (route, param) {
+            return route.replaceAll(new RegExp("[?&]" + param + "=[^/&]+(?=[^/]*$)", "g"), "");
         },
 
         addQueryParam: function (route, queryParamName) {
