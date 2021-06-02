@@ -8,5 +8,11 @@
 
 *Se deberá realizar primero la actualización de la versión 1.0.0 a la 2.0.0 y luego desde la 2.0.0 a la 3.0.0*
 
-## 3.0.0 a X.Y.Z
+## 6.8.1 a X.Y.Z
+
 * Con la primera versión serán necesarios añadir los metadatos de los scripts `etc\db\common-metadata\oracle\01-create` y `etc\db\common-metadata\postgresql\01-create` en el proyecto [edatos-external-users](https://git.arte-consultores.com/istac/edatos-external-users) con los valores que correspondan para tener acceso a la API y la web externa de external-users.
+
+## 6.7.3 a 6.8.0
+
+## 0.0.0 a 6.7.3
+* El proceso de actualizaciones entre versiones para versiones anteriores a la 6.7.3 está definido en "Metamac - Manual de instalación.doc"
