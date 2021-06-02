@@ -54,20 +54,18 @@
         },
 
         validateFilter: function () {
-            if(document.getElementById("version-last").checked) {
-                if(this.isDataFieldNecessary() && !document.getElementById("data-quantity-related-input").disabled) {
-                    var value = document.getElementById("data-quantity-related-input").valueAsNumber;
-                    return Number.isInteger(value) && value > 1 ? undefined : I18n.t("filter.save.error.quantity");
-                }
+            if(this.isDataFieldNecessary() && !document.getElementById("data-quantity-related-input").disabled) {
+                var value = document.getElementById("data-quantity-related-input").valueAsNumber;
+                return Number.isInteger(value) && value > 1 ? undefined : I18n.t("filter.save.error.quantity");
             }
         },
 
         isVersionFieldNecessary: function () {
-            return this.filterDimensions.metadata.metadata.keepAllData;
+            return (App.queryParams.type === "dataset") && this.filterDimensions.metadata.metadata.keepAllData;
         },
 
         isDataFieldNecessary: function () {
-            return !_.isUndefined(this.getTemporalDimension()) && document.getElementById("version-last").checked;
+            return (App.queryParams.type === "dataset") && !_.isUndefined(this.getTemporalDimension()) && document.getElementById("version-last") && document.getElementById("version-last").checked;
         },
 
         getTemporalDimension: function () {
@@ -83,6 +81,7 @@
 
         render: function () {
             this.$el.html(this.template({
+                isDataset: (App.queryParams.type === "dataset"),
                 versionFieldIsNecessary: this.isVersionFieldNecessary(),
                 defaultCustomConsultationName: this.filterDimensions.metadata.getTitle(),
                 dimensionCategories: this.getTemporalDimensionCategories().map(function(category) { return category.attributes })
