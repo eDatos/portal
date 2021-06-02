@@ -60,7 +60,7 @@
             var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
             if(thereIsNotATokenInTheUrl && automaticAuthenticationHasNotBeenTriedYet) {
                 // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
-                this.getAccount().catch(() => {
+                this.getAccount().catch(function() {
                     sessionStorage.setItem("authentication-already-tried", "true");
                     // The 'nonStop' param tells external-users that we want the jwt token if it already exists. If it doesn't, external-users just redirects back.
                     window.open(App.endpoints["external-users-web"] + '/login?origin=' + encodeURIComponent(window.location.href) + '&nonStop=true', '_self').focus();
