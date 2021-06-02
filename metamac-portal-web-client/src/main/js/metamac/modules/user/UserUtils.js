@@ -142,6 +142,42 @@
             });
         },
 
+        updateLastAccess: function () {
+            var self = this;
+            return new Promise(function(resolve, reject) {
+                self._activatePostRequestsIsNecessary().done(function() {
+                    $.ajax({
+                        url: App.endpoints["external-users"] + '/filters/last-access/' + App.queryParams.permalinkId,
+                        method: "PUT",
+                        beforeSend: function(xhr) {
+                            var xsrfTokenCookie = self._getXsrfCookie();
+                            var authToken = self.getAuthenticationTokenCookie();
+                            // FIXME: controlar cuando mandar y cuando no esta request
+                            if(xsrfTokenCookie && authToken) {
+                                xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
+                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+                            } else {
+                                // FIXME: manejar este error y devolver un false
+                                return true;
+                            }
+                        },
+                        statusCode: {
+                            401: function() {
+                                self.deleteAuthenticationTokenCookie();
+                                App.trigger("logout");
+                            }
+                        }
+                    }).done(function(val) {
+                        resolve(val)
+                    }).fail(function(jqXHR) {
+                        reject(jqXHR)
+                    });
+                }).fail(function(jqXHR) {
+                    reject(jqXHR)
+                });
+            });
+        },
+
         getAuthenticationTokenCookie: function () {
             return Cookies.get(this.AUTH_TOKEN_NAME);
         },

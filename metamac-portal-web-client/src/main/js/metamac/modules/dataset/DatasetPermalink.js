@@ -31,6 +31,7 @@
         retrievePermalink: function (permalinkId, callback) {
             var url = this.baseUrl() + "/" + permalinkId;
             $.getJSON(url).done(function (content) {
+                UserUtils.updateLastAccess().then(function() { });
                 callback(undefined, content);
             }).fail(function () {
                 console.warn("Requested permalink not found.");
