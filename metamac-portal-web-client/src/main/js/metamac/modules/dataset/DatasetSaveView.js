@@ -18,7 +18,7 @@
             "change #version-last": "showFieldData",
             "change #data-quantity": "onDataQuantityChosen",
             "change #data-date": "onDataDateChosen",
-            "change input, textarea, select": "hideError"
+            "focus input, textarea, select": "hideError"
         },
 
         initialize: function () {
@@ -34,8 +34,8 @@
                 this.createPermalink().done(function (permalink) {
                     var filter = new App.modules.dataset.model.FilterModel({
                         resourceName: self.filterDimensions.metadata.getTitle(),
-                        name: self.$("name").value || null,
-                        notes: self.$("notes").value,
+                        name: self.$("#name").val() || null,
+                        notes: self.$("#notes").val(),
                         permalink: permalink.id,
                         userId: self.user.id
                     });
@@ -48,20 +48,20 @@
                    self.renderResult(false);
                 });
             } else {
-                var loginEl = this.$("save-error");
+                var loginEl = this.$("#save-error")[0];
                 loginEl.hidden = false;
                 loginEl.innerText = errorMessage;
             }
         },
 
         hideError: function () {
-            this.$("save-error").hidden = true;
+            this.$("#save-error")[0].hidden = true;
         },
 
         validateFilter: function () {
-            if(this.isDataFieldNecessary() && !this.$("data-quantity-related-input").disabled) {
-                var value = this.$("data-quantity-related-input").valueAsNumber;
-                return Number.isInteger(value) && value > 1 ? undefined : I18n.t("filter.save.error.quantity");
+            if(this.isDataFieldNecessary() && !this.$("#data-quantity-related-input")[0].disabled) {
+                var value = this.$("#data-quantity-related-input")[0].valueAsNumber;
+                return Number.isInteger(value) && value >= 1 ? undefined : I18n.t("filter.save.error.quantity");
             }
         },
 
@@ -70,7 +70,7 @@
         },
 
         isDataFieldNecessary: function () {
-            return (App.queryParams.type === "dataset") && !_.isUndefined(this.getTemporalDimension()) && this.$("version-last") && this.$("version-last").checked;
+            return (App.queryParams.type === "dataset") && !_.isUndefined(this.getTemporalDimension()) && this.$("#version-last").length > 0 && this.$("#version-last")[0].checked;
         },
 
         getTemporalDimension: function () {
@@ -94,21 +94,21 @@
         },
 
         hideFieldData: function () {
-            this.$("field-data").hidden = true;
+            this.$("#field-data")[0].hidden = true;
         },
 
         showFieldData: function () {
-            this.$("field-data").hidden = !this.isDataFieldNecessary();
+            this.$("#field-data")[0].hidden = !this.isDataFieldNecessary();
         },
 
         onDataQuantityChosen: function () {
-            this.$("data-quantity-related-input").disabled = false;
-            this.$("data-date-related-input").disabled = true;
+            this.$("#data-quantity-related-input")[0].disabled = false;
+            this.$("#data-date-related-input")[0].disabled = true;
         },
 
         onDataDateChosen: function () {
-            this.$("data-quantity-related-input").disabled = true;
-            this.$("data-date-related-input").disabled = false;
+            this.$("#data-quantity-related-input")[0].disabled = true;
+            this.$("#data-date-related-input")[0].disabled = false;
         },
 
         needsPermalink: function () {
@@ -122,11 +122,11 @@
         createPermalink: function () {
             var dynamicSelectionBuilder = DynamicSelectionBuilder();
             if(this.isDataFieldNecessary()) {
-                if(this.$("data-quantity").checked) {
-                    dynamicSelectionBuilder.selectNLastTemporalDimensionCategories(this.$("data-quantity-related-input").valueAsNumber);
+                if(this.$("#data-quantity")[0].checked) {
+                    dynamicSelectionBuilder.selectNLastTemporalDimensionCategories(this.$("#data-quantity-related-input")[0].valueAsNumber);
                 } else {
                     var chosenCategoryAttributes = this.getTemporalDimensionCategories().find(function(val) {
-                        return val.get("id") === self.$("data-date-related-input").value
+                        return val.get("id") === self.$("#data-date-related-input")[0].value
                     }).attributes;
                     dynamicSelectionBuilder.selectTemporalDimensionCategoriesAfterDate(chosenCategoryAttributes);
                 }
@@ -134,7 +134,7 @@
             var permalinkContent = DatasetPermalink.buildPermalinkContent(
                 this.filterDimensions,
                 dynamicSelectionBuilder.build(),
-                this.isVersionFieldNecessary() ? this.$("version-last").checked : true);
+                this.isVersionFieldNecessary() ? this.$("#version-last")[0].checked : true);
             return DatasetPermalink.savePermalinkWithUserAuth(permalinkContent);
         },
 
