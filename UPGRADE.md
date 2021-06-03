@@ -8,7 +8,9 @@
 
 *Se deberá realizar primero la actualización de la versión 1.0.0 a la 2.0.0 y luego desde la 2.0.0 a la 3.0.0*
 
-## 6.7.3 a 6.8.0
+## 6.8.1 a X.Y.Z
+
+* A partir de esta versión portal se integra con edatos-external-users. Para aprovechar estas funcionalidades asegúrese de que dicho proyecto esta instalado. En caso contrario simplemente no aparecerán. 
 
 ## 0.0.0 a 6.7.3
 * El proceso de actualizaciones entre versiones para versiones anteriores a la 6.7.3 está definido en "Metamac - Manual de instalación.doc"
