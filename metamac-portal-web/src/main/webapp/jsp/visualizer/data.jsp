@@ -23,9 +23,9 @@
 	            <p class="justificado">Lo sentimos, alguna de las propiedades no ha sido configurada correctamente.</p>
 	       	</c:when>
 			<c:otherwise>
-				<c:when test="${ApiUrlExternalUsers != 'error' && WebApplicationExternalUsers != 'error'}">
+				<c:if test="${ApiUrlExternalUsers != 'error' && WebApplicationExternalUsers != 'error'}">
 					<div class="dataset-header-user"></div>
-				</c:when>
+				</c:if>
 			    <c:choose>
 					<c:when test="${!resourceEmpty}">
 						<div class="dataset-header-info">

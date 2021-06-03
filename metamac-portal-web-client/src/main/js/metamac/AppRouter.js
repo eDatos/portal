@@ -26,7 +26,7 @@
 
         // Override Router.route method to add a call to UserUtils.loginOnlyIfAlreadyLogged() before each route callback
         route: function (route, name, callback) {
-            if(App.endpoints["external-users"] !== "error" && App.endpoints["external-users-web"] !== "error") {
+            if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
                 var router = this;
                 if (!callback) callback = router[name];
 
@@ -49,7 +49,7 @@
             this.routesByName = _.invert(this.routes);
             this.checkQueryParamsValidity();
 
-            if(App.endpoints["external-users"] !== "error" && App.endpoints["external-users-web"] !== "error") {
+            if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
                 var self = this;
                 // Duplicate each route adding a query parameter 'token'
                 Object.keys(this.routes).forEach(function(route) {
