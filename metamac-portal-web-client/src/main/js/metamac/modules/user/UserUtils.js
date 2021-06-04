@@ -142,12 +142,12 @@
             });
         },
 
-        updateLastAccess: function () {
+        updateLastAccess: function (permalinkId) {
             var self = this;
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
                     $.ajax({
-                        url: App.endpoints["external-users"] + '/filters/last-access/' + App.queryParams.permalinkId,
+                        url: App.endpoints["external-users"] + '/filters/last-access/' + permalinkId,
                         method: "PUT",
                         beforeSend: function(xhr) {
                             var xsrfTokenCookie = self._getXsrfCookie();

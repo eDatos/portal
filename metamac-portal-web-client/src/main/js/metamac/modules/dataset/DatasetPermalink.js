@@ -32,7 +32,7 @@
             var url = this.baseUrl() + "/" + permalinkId;
             $.getJSON(url).done(function (content) {
                 if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
-                    UserUtils.updateLastAccess().then(function () { });
+                    UserUtils.updateLastAccess(permalinkId).then(function () { });
                 }
                 callback(undefined, content);
             }).fail(function () {
