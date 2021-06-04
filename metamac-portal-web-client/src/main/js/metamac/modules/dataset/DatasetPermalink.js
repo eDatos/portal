@@ -32,7 +32,7 @@
             var url = this.baseUrl() + "/" + permalinkId;
             $.getJSON(url).done(function (content) {
                 if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
-                    UserUtils.updateLastAccess(permalinkId).then(function () { });
+                    UserUtils.updateLastAccess(permalinkId);
                 }
                 callback(undefined, content);
             }).fail(function () {
@@ -48,14 +48,7 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
-                beforeSend: function(xhr) {
-                    var authToken = UserUtils.getAuthenticationTokenCookie();
-                    if(authToken) {
-                        xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                    } else {
-                        return false;
-                    }
-                }
+                beforeSend: UserUtils.getBeforeSendWithAuthentication()
             });
         },
 
@@ -66,12 +59,7 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
-                beforeSend: function(xhr) {
-                    var authToken = UserUtils.getAuthenticationTokenCookie();
-                    if(authToken) {
-                        xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                    }
-                }
+                beforeSend: UserUtils.getBeforeSendWithAuthentication(true)
             }, {
                 captchaEl: el
             });
