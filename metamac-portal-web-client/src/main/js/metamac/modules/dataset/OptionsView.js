@@ -110,7 +110,7 @@
                         active: fullScreenActive,
                         btnClass: fullScreenActive ? 'active' : ''
                     },
-                    usersAreAvailable: App.endpoints["external-users"] && App.endpoints["external-users-web"],
+                    usersAreAvailable: !!(App.endpoints["external-users"] && App.endpoints["external-users-web"]),
                     visualize: this.optionsModel.get('visualize'),
                     widget: this.optionsModel.get('widget'),
                     widgetButton: this.optionsModel.get('widgetButton')
