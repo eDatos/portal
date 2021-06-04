@@ -88,7 +88,7 @@
             this.$el.html(this.template({
                 isDataset: (App.queryParams.type === "dataset"),
                 versionFieldIsNecessary: this.isVersionFieldNecessary(),
-                defaultCustomConsultationName: this.filterDimensions.metadata.getTitle(),
+                defaultCustomQueryName: this.filterDimensions.metadata.getTitle(),
                 dimensionCategories: this.getTemporalDimensionCategories().map(function(category) { return category.attributes })
             }));
         },

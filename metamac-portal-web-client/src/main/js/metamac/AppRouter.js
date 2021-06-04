@@ -26,14 +26,18 @@
 
         // Override Router.route method to add a call to UserUtils.loginOnlyIfAlreadyLogged() before each route callback
         route: function (route, name, callback) {
-            var router = this;
-            if (!callback) callback = router[name];
+            if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
+                var router = this;
+                if (!callback) callback = router[name];
 
-            var f = function() {
-                UserUtils.loginOnlyIfAlreadyLoggedInExternalUsers();
-                callback.apply(router, arguments);
+                var f = function() {
+                    UserUtils.loginOnlyIfAlreadyLoggedInExternalUsers();
+                    callback.apply(router, arguments);
+                }
+                return Backbone.Router.prototype.route.call(router, route, name, f);
+            } else {
+                return Backbone.Router.prototype.route.call(this, route, name, callback);
             }
-            return Backbone.Router.prototype.route.call(router, route, name, f);
         },
 
         initialize: function (options) {
@@ -45,11 +49,13 @@
             this.routesByName = _.invert(this.routes);
             this.checkQueryParamsValidity();
 
-            var self = this;
-            // Duplicate each route adding a query parameter 'token'
-            Object.keys(this.routes).forEach(function(route) {
-                self.route(self.addQueryParam(route, "token"), undefined, self.processTokenAndRedirect);
-            });
+            if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
+                var self = this;
+                // Duplicate each route adding a query parameter 'token'
+                Object.keys(this.routes).forEach(function(route) {
+                    self.route(self.addQueryParam(route, "token"), undefined, self.processTokenAndRedirect);
+                });
+            }
         },
 
         processTokenAndRedirect: function () {
