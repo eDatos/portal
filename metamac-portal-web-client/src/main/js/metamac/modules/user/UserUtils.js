@@ -25,14 +25,7 @@
                     method: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    beforeSend: function(xhr) {
-                        var authToken = self.getAuthenticationTokenCookie();
-                        if(!authToken) {
-                            return false;
-                        } else {
-                            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                        }
-                    },
+                    beforeSend: self.getBeforeSendWithAuthentication(),
                     statusCode: {
                         401: function() {
                             self.deleteAuthenticationTokenCookie();
@@ -75,20 +68,7 @@
                     $.ajax({
                         url: App.endpoints["external-users"] + '/account/logout',
                         method: "POST",
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        beforeSend: function(xhr) {
-                            var xsrfTokenCookie = self._getXsrfCookie();
-                            var authToken = self.getAuthenticationTokenCookie();
-                            if(xsrfTokenCookie && authToken) {
-                                xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
-                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                            } else {
-                                // FIXME: manejar este error y devolver un false
-                                return true;
-                            }
-                        }
+                        beforeSend: self.getBeforeSendWithXsrfAndAuthentication(),
                     }).done(function() {
                         resolve();
                     }).fail(function(jqXHR) {
@@ -113,18 +93,7 @@
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         data: filter.toString(),
-                        beforeSend: function(xhr) {
-                            var xsrfTokenCookie = self._getXsrfCookie();
-                            var authToken = self.getAuthenticationTokenCookie();
-                            // FIXME: controlar cuando mandar y cuando no esta request
-                            if(xsrfTokenCookie && authToken) {
-                                xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
-                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                            } else {
-                                // FIXME: manejar este error y devolver un false
-                                return true;
-                            }
-                        },
+                        beforeSend: self.getBeforeSendWithXsrfAndAuthentication(),
                         statusCode: {
                             401: function() {
                                 self.deleteAuthenticationTokenCookie();
@@ -149,18 +118,7 @@
                     $.ajax({
                         url: App.endpoints["external-users"] + '/filters/last-access/' + permalinkId,
                         method: "PUT",
-                        beforeSend: function(xhr) {
-                            var xsrfTokenCookie = self._getXsrfCookie();
-                            var authToken = self.getAuthenticationTokenCookie();
-                            // FIXME: controlar cuando mandar y cuando no esta request
-                            if(xsrfTokenCookie && authToken) {
-                                xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
-                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                            } else {
-                                // FIXME: manejar este error y devolver un false
-                                return true;
-                            }
-                        },
+                        beforeSend: self.getBeforeSendWithXsrfAndAuthentication(),
                         statusCode: {
                             401: function() {
                                 self.deleteAuthenticationTokenCookie();
@@ -176,6 +134,32 @@
                     reject(jqXHR)
                 });
             });
+        },
+
+        getBeforeSendWithXsrfAndAuthentication: function () {
+            var self = this;
+            return function(xhr) {
+                var xsrfTokenCookie = self._getXsrfCookie();
+                var authToken = self.getAuthenticationTokenCookie();
+                if(xsrfTokenCookie && authToken) {
+                    xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
+                    xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+                } else {
+                    return false;
+                }
+            }
+        },
+
+        getBeforeSendWithAuthentication: function (optional = false) {
+            var self = this;
+            return function(xhr) {
+                var authToken = self.getAuthenticationTokenCookie();
+                if(authToken) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+                } else if(!optional) {
+                    return false;
+                }
+            }
         },
 
         getAuthenticationTokenCookie: function () {
