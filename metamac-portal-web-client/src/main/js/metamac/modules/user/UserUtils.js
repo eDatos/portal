@@ -150,7 +150,7 @@
             }
         },
 
-        getBeforeSendWithAuthentication: function (optional = false) {
+        getBeforeSendWithAuthentication: function (optional) {
             var self = this;
             return function(xhr) {
                 var authToken = self.getAuthenticationTokenCookie();
