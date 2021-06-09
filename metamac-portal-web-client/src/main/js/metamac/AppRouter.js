@@ -24,23 +24,9 @@
             "*path": "error"
         },
 
-        // Override Router.route method to add a call to UserUtils.loginOnlyIfAlreadyLogged() before each route callback
-        route: function (route, name, callback) {
-            if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
-                var router = this;
-                if (!callback) callback = router[name];
-
-                var f = function() {
-                    UserUtils.loginOnlyIfAlreadyLoggedInExternalUsers();
-                    callback.apply(router, arguments);
-                }
-                return Backbone.Router.prototype.route.call(router, route, name, f);
-            } else {
-                return Backbone.Router.prototype.route.call(this, route, name, callback);
-            }
-        },
-
         initialize: function (options) {
+            UserUtils.loginOnlyIfAlreadyLoggedInExternalUsers();
+            
             options || (options = {});
 
             this.datasetController = options.datasetController;
