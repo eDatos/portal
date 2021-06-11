@@ -85,7 +85,7 @@
                                 App.endpoints["indicators"] = "${ApiUrlIndicators}/v1.0";
 
                                 if(${ApiUrlExternalUsers != "error"}) {
-									App.endpoints["external-users"] = "${ApiUrlExternalUsers}/api";
+									App.endpoints["external-users"] = "${ApiUrlExternalUsers}";
 								}
 
                                 if(${WebApplicationExternalUsers != "error"}) {

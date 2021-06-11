@@ -34,31 +34,6 @@
 
             this.routesByName = _.invert(this.routes);
             this.checkQueryParamsValidity();
-
-            if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
-                var self = this;
-                // Duplicate each route adding a query parameter 'token'
-                Object.keys(this.routes).forEach(function(route) {
-                    self.route(self.addQueryParam(route, "token"), undefined, self.processTokenAndRedirect);
-                });
-            }
-        },
-
-        processTokenAndRedirect: function () {
-            UserUtils.setAuthenticationTokenCookie(arguments[arguments.length - 1]);
-            // After saving the token we can remove the token parameter from the current route
-            this.navigate('/' + this.removeQueryParam(Backbone.history.getFragment(), "token"), { trigger: true });
-        },
-
-        removeQueryParam: function (route, param) {
-            return route.replaceAll(new RegExp("[?&]" + param + "=[^/&]+(?=[^/]*$)", "g"), "");
-        },
-
-        addQueryParam: function (route, queryParamName) {
-            var newRoute = route.trim();
-            newRoute = newRoute[newRoute.length - 1] === '/' ? newRoute.slice(0, -1) : newRoute;
-            newRoute += /\?[^/]+$/.test(newRoute) ? '&' : '?';
-            return newRoute + queryParamName + '=:' + queryParamName;
         },
 
         home: function () {
