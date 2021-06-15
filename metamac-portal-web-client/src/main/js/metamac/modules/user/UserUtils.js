@@ -46,10 +46,13 @@
 
         // This method will try to log in the user if there is already a token in the external users app. Either way, the browser will be redirected back immediately.
         loginOnlyIfAlreadyLoggedInExternalUsers: function () {
+            var currentUrl = new URL(Backbone.history.location.href);
             // tokenInTheUrl: a token in the url means there is a user about to be logged in with that token, so a new login is not necessary
-            var tokenInTheUrl = (new URL(Backbone.history.location.href)).searchParams.get("token");
+            var tokenInTheUrl = currentUrl.searchParams.get("token");
             if(tokenInTheUrl) {
                 this.setAuthenticationTokenCookie(tokenInTheUrl);
+                currentUrl.searchParams.delete("token");
+                window.history.replaceState(history.state,"", currentUrl.href);
             } else {
                 // automaticAuthenticationHasNotBeenTriedYet: the sessionStorage property "authentication-already-tried" is stored when this method has already
                 // been called in this tab. It is avoiding an infinite loop.
