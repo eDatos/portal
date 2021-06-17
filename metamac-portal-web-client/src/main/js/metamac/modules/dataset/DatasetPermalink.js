@@ -48,7 +48,7 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
-                beforeSend: UserUtils.getBeforeSendWithAuthentication()
+                beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders(true)
             });
         },
 
@@ -59,7 +59,7 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ content: content }),
-                beforeSend: UserUtils.getBeforeSendWithAuthentication(true)
+                beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders()
             }, {
                 captchaEl: el
             });
