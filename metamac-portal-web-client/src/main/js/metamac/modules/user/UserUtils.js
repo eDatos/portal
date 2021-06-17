@@ -59,9 +59,12 @@
                 var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
                 if(automaticAuthenticationHasNotBeenTriedYet) {
                     // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
-                    this.getAccount().catch(function() {
-                        sessionStorage.setItem("authentication-already-tried", "true");
-                        window.location.href = App.endpoints["external-users"] + "/authenticate?origin=" + encodeURIComponent(window.location.href);
+                    this.getAccount().catch(function(error) {
+                        // A redirection is avoided when the server is down
+                        if(error.status !== 503) {
+                            sessionStorage.setItem("authentication-already-tried", "true");
+                            window.location.href = App.endpoints["external-users"] + "/authenticate?origin=" + encodeURIComponent(window.location.href);
+                        }
                     });
                 }
             }
