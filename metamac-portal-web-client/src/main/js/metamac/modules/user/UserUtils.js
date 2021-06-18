@@ -17,7 +17,7 @@
             });
         },
 
-        getAccount: function () {
+        getAccount: function (requiredAuthorization = true) {
             var self = this;
             return new Promise(function(resolve, reject) {
                 $.ajax({
@@ -25,7 +25,7 @@
                     method: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    beforeSend: self.prepareAuthorizationAndXSRFHeaders(true),
+                    beforeSend: self.prepareAuthorizationAndXSRFHeaders(requiredAuthorization),
                     statusCode: {
                         401: function() {
                             self.deleteAuthenticationTokenCookie();
@@ -59,9 +59,9 @@
                 var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
                 if(automaticAuthenticationHasNotBeenTriedYet) {
                     // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
-                    this.getAccount().catch(function(error) {
+                    this.getAccount(false).catch(function(error) {
                         // A redirection is avoided when the server is down
-                        if(error.status !== 503) {
+                        if(error.status === 401 || error.status === 403) {
                             sessionStorage.setItem("authentication-already-tried", "true");
                             window.location.href = App.endpoints["external-users"] + "/authenticate?origin=" + encodeURIComponent(window.location.href);
                         }
