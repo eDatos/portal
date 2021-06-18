@@ -17,7 +17,7 @@
             });
         },
 
-        getAccount: function () {
+        getAccount: function (requiredAuthorization = true) {
             var self = this;
             return new Promise(function(resolve, reject) {
                 $.ajax({
@@ -25,7 +25,7 @@
                     method: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    beforeSend: self.getBeforeSendWithAuthentication(),
+                    beforeSend: self.prepareAuthorizationAndXSRFHeaders(requiredAuthorization),
                     statusCode: {
                         401: function() {
                             self.deleteAuthenticationTokenCookie();
@@ -41,7 +41,7 @@
         },
 
         login: function () {
-            window.location.href = App.endpoints["external-users"] + "/forced-external-login?url=" + encodeURIComponent(window.location.href);
+            window.location.href = App.endpoints["external-users"] + "/authenticate?force=true&origin=" + encodeURIComponent(window.location.href);
         },
 
         // This method will try to log in the user if there is already a token in the external users app. Either way, the browser will be redirected back immediately.
@@ -59,9 +59,12 @@
                 var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
                 if(automaticAuthenticationHasNotBeenTriedYet) {
                     // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
-                    this.getAccount().catch(function() {
-                        sessionStorage.setItem("authentication-already-tried", "true");
-                        window.location.href = App.endpoints["external-users"] + "/external-login?url=" + encodeURIComponent(window.location.href);
+                    this.getAccount(false).catch(function(error) {
+                        // A redirection is avoided when the server is down
+                        if(error.status === 401 || error.status === 403) {
+                            sessionStorage.setItem("authentication-already-tried", "true");
+                            window.location.href = App.endpoints["external-users"] + "/authenticate?origin=" + encodeURIComponent(window.location.href);
+                        }
                     });
                 }
             }
@@ -74,7 +77,7 @@
                     $.ajax({
                         url: App.endpoints["external-users"] + '/api/account/logout',
                         method: "POST",
-                        beforeSend: self.getBeforeSendWithXsrfAndAuthentication(),
+                        beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                     }).done(function() {
                         resolve();
                     }).fail(function(jqXHR) {
@@ -99,7 +102,7 @@
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         data: filter.toString(),
-                        beforeSend: self.getBeforeSendWithXsrfAndAuthentication(),
+                        beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
                             401: function() {
                                 self.deleteAuthenticationTokenCookie();
@@ -124,7 +127,7 @@
                     $.ajax({
                         url: App.endpoints["external-users"] + '/api/filters/last-access/' + permalinkId,
                         method: "PUT",
-                        beforeSend: self.getBeforeSendWithXsrfAndAuthentication(),
+                        beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
                             401: function() {
                                 self.deleteAuthenticationTokenCookie();
@@ -142,27 +145,20 @@
             });
         },
 
-        getBeforeSendWithXsrfAndAuthentication: function () {
+        prepareAuthorizationAndXSRFHeaders: function (requiredAuthorization = false, requiredXSRFCookie = false) {
             var self = this;
             return function(xhr) {
-                var xsrfTokenCookie = self._getXsrfCookie();
                 var authToken = self.getAuthenticationTokenCookie();
-                if(xsrfTokenCookie && authToken) {
-                    xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
+                if (authToken) {
                     xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                } else {
+                } else if (requiredAuthorization) {
                     return false;
                 }
-            }
-        },
 
-        getBeforeSendWithAuthentication: function (optional) {
-            var self = this;
-            return function(xhr) {
-                var authToken = self.getAuthenticationTokenCookie();
-                if(authToken) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                } else if(!optional) {
+                var xsrfToken = self._getXsrfCookie();
+                if (xsrfToken) {
+                    xhr.setRequestHeader("X-XSRF-TOKEN", xsrfToken);
+                } else if (requiredXSRFCookie) {
                     return false;
                 }
             }
