@@ -14,13 +14,27 @@
             "click #button-logout": "clickLogout"
         },
 
-        initialize : function () {
-            this.listenTo(App, "logout", this.render);
+        initialize: function () {
+            this.listenTo(App, "logout", this._onLogout());
             this.modal = null;
             this.isLogged = false;
         },
 
-        render : function () {
+        _onLogout: function () {
+            var self = this;
+            return function () {
+                if(self.isLogged) {
+                    self.isLogged = false;
+                    var context = {
+                        username : "",
+                        isLogged: self.isLogged
+                    };
+                    self.$el.html(self.template(context));
+                }
+            }
+        },
+
+        render: function () {
             var self = this;
             UserUtils.getAccount().then(function(account) {
                 self.isLogged = true;
@@ -41,13 +55,9 @@
 
         clickUser: function (e) {
             e.preventDefault();
-            var self = this;
             UserUtils.getAccount().then(function() {
                 window.open(App.endpoints["external-users-web"], '_blank').focus();
             }).catch(function() {
-                if(self.isLogged) {
-                    self.render();
-                }
                 UserUtils.login();
             });
         },
@@ -71,8 +81,7 @@
         _onLogoutConfirmed: function () {
             var self = this;
             return function() {
-                UserUtils.logout().then(function () {
-                    self.render();
+                UserUtils.logout().finally(function () {
                     self.modal.close();
                 });
             }
