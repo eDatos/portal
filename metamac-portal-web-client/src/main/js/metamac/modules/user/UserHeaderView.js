@@ -14,40 +14,37 @@
             "click #button-logout": "clickLogout"
         },
 
-        initialize : function () {
-            this.listenTo(App, "logout", this.render);
+        initialize: function () {
+            this.listenTo(App, "logout", this._onLogout());
             this.modal = null;
-            this.isLogged = false;
-        },
-
-        render : function () {
             var self = this;
             UserUtils.getAccount().then(function(account) {
-                self.isLogged = true;
-                var context = {
-                    username : account.name + ' ' + account.surname1 + ' ' + (account.surname2 || ''),
-                    isLogged: self.isLogged
-                };
-                self.$el.html(self.template(context));
-            }).catch(function() {
-                self.isLogged = false;
-                var context = {
-                    username : "",
-                    isLogged: self.isLogged
-                };
-                self.$el.html(self.template(context));
+                self.username = account.name + ' ' + account.surname1 + ' ' + (account.surname2 || '');
+                self.render();
             });
+        },
+
+        _onLogout: function () {
+            var self = this;
+            return function () {
+                self.username = null;
+                self.render();
+            }
+        },
+
+        render: function () {
+            var context = {
+                username : this.username || '',
+                isLogged: !!this.username
+            };
+            this.$el.html(this.template(context));
         },
 
         clickUser: function (e) {
             e.preventDefault();
-            var self = this;
             UserUtils.getAccount().then(function() {
                 window.open(App.endpoints["external-users-web"], '_blank').focus();
             }).catch(function() {
-                if(self.isLogged) {
-                    self.render();
-                }
                 UserUtils.login();
             });
         },
@@ -71,8 +68,7 @@
         _onLogoutConfirmed: function () {
             var self = this;
             return function() {
-                UserUtils.logout().then(function () {
-                    self.render();
+                UserUtils.logout().finally(function () {
                     self.modal.close();
                 });
             }
