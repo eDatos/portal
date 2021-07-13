@@ -53,7 +53,8 @@
             },
             plotOptions: {
                 series: {
-                    animation: false
+                    animation: false,
+                    turboThreshold: 1200
                 },
                 line: {
                     lineWidth: 1,
@@ -120,7 +121,8 @@
                     }
                 },
                 series: {
-                    animation: false
+                    animation: false,
+                    turboThreshold: 1200
                 }
             }
         });
