@@ -31,7 +31,9 @@
         retrievePermalink: function (permalinkId, callback) {
             var url = this.baseUrl() + "/" + permalinkId;
             $.getJSON(url).done(function (content) {
-                UserUtils.updateLastAccess().then(function() { });
+                if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
+                    UserUtils.updateLastAccess(permalinkId);
+                }
                 callback(undefined, content);
             }).fail(function () {
                 console.warn("Requested permalink not found.");
@@ -40,39 +42,55 @@
         },
 
         savePermalinkWithUserAuth: function (content) {
-            return metamac.authentication.ajax({
-                url: this.baseUrl(),
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ content: content }),
-                beforeSend: function(xhr) {
-                    var authToken = UserUtils.getAuthenticationTokenCookie();
-                    if(authToken) {
-                        xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                    } else {
-                        return false;
+            return new Promise(function(resolve, reject) {
+                $.ajax({
+                    url: this.baseUrl(),
+                    method: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ content: content }),
+                    beforeSend: function(xhr) {
+                        var authToken = UserUtils.getAuthenticationTokenCookie();
+                        if(authToken) {
+                            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+                        } else {
+                            return false;
+                        }
                     }
-                }
+                }).fail(function(jqXHR) {
+                    reject(jqXHR)
+                }).done(function(val) {
+                    resolve(val)
+                });
             });
         },
 
         savePermalink: function (content, el) {
-            return metamac.authentication.ajax({
-                url: this.baseUrl(),
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ content: content }),
-                beforeSend: function(xhr) {
-                    var authToken = UserUtils.getAuthenticationTokenCookie();
-                    if(authToken) {
-                        xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                    }
-                }
-            }, {
-                captchaEl: el
-            });
+            return requestWithCaptcha(
+                function(url) {
+                    return new Promise(function(resolve, reject) {
+                        $.ajax({
+                            url: url,
+                            method: "POST",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ content: content }),
+                            beforeSend: function(xhr) {
+                                var authToken = UserUtils.getAuthenticationTokenCookie();
+                                if(authToken) {
+                                    xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+                                }
+                            }
+                        }).fail(function(jqXHR) {
+                            reject(jqXHR)
+                        }).done(function(val) {
+                            resolve(val)
+                        });
+                    });
+                },
+                this.baseUrl(),
+                { captchaEl: el }
+            );
         },
     }
 

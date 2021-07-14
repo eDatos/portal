@@ -105,7 +105,7 @@
 			
 			                    App.start();
 			                    
-			                    LazyLoad.js("${ApiUrlStatisticalVisualizer}/js/authentication.js?d=${jsDate}", function() {
+			                    LazyLoad.js("http://localhost:8084/api/captcha/authentication.js", function() {
 			                    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js${AddthisCode}");
 			                    });
 			                }		                    

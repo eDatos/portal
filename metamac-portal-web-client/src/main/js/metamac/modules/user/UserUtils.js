@@ -9,7 +9,7 @@
         XSRF_COOKIE_NAME: "XSRF-TOKEN",
 
         _activatePostRequestsIsNecessary: function () {
-            return this._getXsrfCookie() ? $.when({}) : metamac.authentication.ajax({
+            return this._getXsrfCookie() ? $.when({}) : $.ajax({
                 url: App.endpoints["external-users"] + "/profile-info",
                 method: "GET",
                 dataType: "json",

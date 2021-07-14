@@ -30,7 +30,7 @@
             var errorMessage = this.validateFilter();
             if(!errorMessage) {
                 var self = this;
-                this.createPermalink().done(function (permalink) {
+                this.createPermalink().then(function (permalink) {
                     var filter = new App.modules.dataset.model.FilterModel({
                         resourceName: self.filterDimensions.metadata.getTitle(),
                         name: document.getElementById("name").value || null,
@@ -43,7 +43,7 @@
                     }).catch(function () {
                         self.renderResult(false);
                     });
-                }).fail(function () {
+                }).catch(function () {
                    self.renderResult(false);
                 });
             } else {
