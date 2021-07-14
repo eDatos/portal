@@ -52,7 +52,7 @@ I18n.translations.en = {
                 submit: "Save",
             },
             label: {
-                name: "Custom consultation name",
+                name: "Custom query name",
                 notes: "Notes",
                 version: {
                     group: "Version",
@@ -66,9 +66,9 @@ I18n.translations.en = {
                 }
             },
             modal: {
-                title: "Save custom consultation",
-                success: "The custom consultation has been saved successfully",
-                failure: "There was a problem saving the custom consultation"
+                title: "Save custom query",
+                success: "The custom query has been saved successfully",
+                failure: "There was a problem saving the custom query"
             },
             error: {
                 quantity: "The numeric field in the 'Data' section must be a positive integer greater than or equal to one.",

@@ -10,7 +10,7 @@
 
         _activatePostRequestsIsNecessary: function () {
             return this._getXsrfCookie() ? $.when({}) : $.ajax({
-                url: App.endpoints["external-users"] + "/profile-info",
+                url: App.endpoints["external-users"] + "/api/profile-info",
                 method: "GET",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8"
@@ -21,18 +21,11 @@
             var self = this;
             return new Promise(function(resolve, reject) {
                 $.ajax({
-                    url: App.endpoints["external-users"] + "/account",
+                    url: App.endpoints["external-users"] + "/api/account",
                     method: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    beforeSend: function(xhr) {
-                        var authToken = self.getAuthenticationTokenCookie();
-                        if(!authToken) {
-                            return false;
-                        } else {
-                            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                        }
-                    },
+                    beforeSend: self.prepareAuthorizationAndXSRFHeaders(),
                     statusCode: {
                         401: function() {
                             self.deleteAuthenticationTokenCookie();
@@ -48,23 +41,32 @@
         },
 
         login: function () {
-            window.open(App.endpoints["external-users-web"] + '/login?origin=' + encodeURIComponent(window.location.href), '_self').focus();
+            window.location.href = App.endpoints["external-users"] + "/authenticate?force=true&origin=" + encodeURIComponent(window.location.href);
         },
 
         // This method will try to log in the user if there is already a token in the external users app. Either way, the browser will be redirected back immediately.
         loginOnlyIfAlreadyLoggedInExternalUsers: function () {
-            // thereIsNotATokenInTheUrl: a token in the url means there is a user about to be logged in with that token, so a new login is not necessary
-            var thereIsNotATokenInTheUrl = !/[?&]token=[^/&]+(?=[^/]*$)/.test(Backbone.history.location.href);
-            // automaticAuthenticationHasNotBeenTriedYet: the sessionStorage property "authentication-already-tried" is stored when this method has already
-            // been called in this tab. It is avoiding an infinite loop.
-            var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
-            if(thereIsNotATokenInTheUrl && automaticAuthenticationHasNotBeenTriedYet) {
-                // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
-                this.getAccount().catch(function() {
-                    sessionStorage.setItem("authentication-already-tried", "true");
-                    // The 'nonStop' param tells external-users that we want the jwt token if it already exists. If it doesn't, external-users just redirects back.
-                    window.open(App.endpoints["external-users-web"] + '/login?origin=' + encodeURIComponent(window.location.href) + '&nonStop=true', '_self').focus();
-                });
+            var currentUrl = new URL(Backbone.history.location.href);
+            // tokenInTheUrl: a token in the url means there is a user about to be logged in with that token, so a new login is not necessary
+            var tokenInTheUrl = currentUrl.searchParams.get("token");
+            if(tokenInTheUrl) {
+                this.setAuthenticationTokenCookie(tokenInTheUrl);
+                currentUrl.searchParams.delete("token");
+                window.history.replaceState(history.state,"", currentUrl.href);
+            } else {
+                // automaticAuthenticationHasNotBeenTriedYet: the sessionStorage property "authentication-already-tried" is stored when this method has already
+                // been called in this tab. It is avoiding an infinite loop.
+                var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
+                if(automaticAuthenticationHasNotBeenTriedYet) {
+                    // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
+                    this.getAccount().catch(function(error) {
+                        // A redirection is avoided when the server is down
+                        if(error.status === 401 || error.status === 403) {
+                            sessionStorage.setItem("authentication-already-tried", "true");
+                            window.location.href = App.endpoints["external-users"] + "/authenticate?origin=" + encodeURIComponent(window.location.href);
+                        }
+                    });
+                }
             }
         },
 
@@ -73,22 +75,9 @@
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
                     $.ajax({
-                        url: App.endpoints["external-users"] + '/account/logout',
+                        url: App.endpoints["external-users"] + '/api/account/logout',
                         method: "POST",
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        beforeSend: function(xhr) {
-                            var xsrfTokenCookie = self._getXsrfCookie();
-                            var authToken = self.getAuthenticationTokenCookie();
-                            if(xsrfTokenCookie && authToken) {
-                                xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
-                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                            } else {
-                                // FIXME: manejar este error y devolver un false
-                                return true;
-                            }
-                        }
+                        beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                     }).done(function() {
                         resolve();
                     }).fail(function(jqXHR) {
@@ -108,23 +97,12 @@
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
                     $.ajax({
-                        url: App.endpoints["external-users"] + '/filters',
+                        url: App.endpoints["external-users"] + '/api/filters',
                         method: "POST",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         data: filter.toString(),
-                        beforeSend: function(xhr) {
-                            var xsrfTokenCookie = self._getXsrfCookie();
-                            var authToken = self.getAuthenticationTokenCookie();
-                            // FIXME: controlar cuando mandar y cuando no esta request
-                            if(xsrfTokenCookie && authToken) {
-                                xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
-                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                            } else {
-                                // FIXME: manejar este error y devolver un false
-                                return true;
-                            }
-                        },
+                        beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
                             401: function() {
                                 self.deleteAuthenticationTokenCookie();
@@ -142,25 +120,14 @@
             });
         },
 
-        updateLastAccess: function () {
+        updateLastAccess: function (permalinkId) {
             var self = this;
             return new Promise(function(resolve, reject) {
                 self._activatePostRequestsIsNecessary().done(function() {
                     $.ajax({
-                        url: App.endpoints["external-users"] + '/filters/last-access/' + App.queryParams.permalinkId,
+                        url: App.endpoints["external-users"] + '/api/filters/last-access/' + permalinkId,
                         method: "PUT",
-                        beforeSend: function(xhr) {
-                            var xsrfTokenCookie = self._getXsrfCookie();
-                            var authToken = self.getAuthenticationTokenCookie();
-                            // FIXME: controlar cuando mandar y cuando no esta request
-                            if(xsrfTokenCookie && authToken) {
-                                xhr.setRequestHeader("X-XSRF-TOKEN", xsrfTokenCookie);
-                                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                            } else {
-                                // FIXME: manejar este error y devolver un false
-                                return true;
-                            }
-                        },
+                        beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
                             401: function() {
                                 self.deleteAuthenticationTokenCookie();
@@ -176,6 +143,25 @@
                     reject(jqXHR)
                 });
             });
+        },
+
+        prepareAuthorizationAndXSRFHeaders: function (requiredAuthorization, requiredXSRFCookie) {
+            var self = this;
+            return function(xhr) {
+                var authToken = self.getAuthenticationTokenCookie();
+                if (authToken) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+                } else if (requiredAuthorization) {
+                    return false;
+                }
+
+                var xsrfToken = self._getXsrfCookie();
+                if (xsrfToken) {
+                    xhr.setRequestHeader("X-XSRF-TOKEN", xsrfToken);
+                } else if (requiredXSRFCookie) {
+                    return false;
+                }
+            }
         },
 
         getAuthenticationTokenCookie: function () {

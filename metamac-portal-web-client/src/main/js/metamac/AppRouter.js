@@ -24,19 +24,9 @@
             "*path": "error"
         },
 
-        // Override Router.route method to add a call to UserUtils.loginOnlyIfAlreadyLogged() before each route callback
-        route: function (route, name, callback) {
-            var router = this;
-            if (!callback) callback = router[name];
-
-            var f = function() {
-                UserUtils.loginOnlyIfAlreadyLoggedInExternalUsers();
-                callback.apply(router, arguments);
-            }
-            return Backbone.Router.prototype.route.call(router, route, name, f);
-        },
-
         initialize: function (options) {
+            UserUtils.loginOnlyIfAlreadyLoggedInExternalUsers();
+            
             options || (options = {});
 
             this.datasetController = options.datasetController;
@@ -44,29 +34,6 @@
 
             this.routesByName = _.invert(this.routes);
             this.checkQueryParamsValidity();
-
-            var self = this;
-            // Duplicate each route adding a query parameter 'token'
-            Object.keys(this.routes).forEach(function(route) {
-                self.route(self.addQueryParam(route, "token"), undefined, self.processTokenAndRedirect);
-            });
-        },
-
-        processTokenAndRedirect: function () {
-            UserUtils.setAuthenticationTokenCookie(arguments[arguments.length - 1]);
-            // After saving the token we can remove the token parameter from the current route
-            this.navigate('/' + this.removeQueryParam(Backbone.history.getFragment(), "token"), { trigger: true });
-        },
-
-        removeQueryParam: function (route, param) {
-            return route.replaceAll(new RegExp("[?&]" + param + "=[^/&]+(?=[^/]*$)", "g"), "");
-        },
-
-        addQueryParam: function (route, queryParamName) {
-            var newRoute = route.trim();
-            newRoute = newRoute[newRoute.length - 1] === '/' ? newRoute.slice(0, -1) : newRoute;
-            newRoute += /\?[^/]+$/.test(newRoute) ? '&' : '?';
-            return newRoute + queryParamName + '=:' + queryParamName;
         },
 
         home: function () {

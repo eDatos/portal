@@ -75,9 +75,13 @@
 		    STATISTICAL_VISUALIZER_URL_BASE = configurationService.retrievePortalExternalUrlBase();
 		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
             EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();
-            EXTERNAL_USERS_API_URL_BASE = configurationService.retrieveExternalUsersExternalApiUrlBase();
-            EXTERNAL_USERS_WEB_APPLICATION_BASE = configurationService.retrieveExternalUsersExternalWebApplicationUrlBase();
-
+            try {
+                EXTERNAL_USERS_API_URL_BASE = configurationService.retrieveExternalUsersExternalApiUrlBase();
+                EXTERNAL_USERS_WEB_APPLICATION_BASE = configurationService.retrieveExternalUsersExternalWebApplicationUrlBase();
+            } catch(MetamacException e) {
+                EXTERNAL_USERS_API_URL_BASE = "error";
+                EXTERNAL_USERS_WEB_APPLICATION_BASE = "error";
+            }
             if (INSTALLATION_TYPE.equals("INTERNAL")) {
 		        STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesInternalApiUrlBase();
 		        SRM_API_URL_BASE = configurationService.retrieveSrmInternalApiUrlBase();

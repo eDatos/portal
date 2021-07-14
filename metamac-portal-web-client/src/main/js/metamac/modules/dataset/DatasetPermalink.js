@@ -49,14 +49,7 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({ content: content }),
-                    beforeSend: function(xhr) {
-                        var authToken = UserUtils.getAuthenticationTokenCookie();
-                        if(authToken) {
-                            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                        } else {
-                            return false;
-                        }
-                    }
+                    beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders(true)
                 }).fail(function(jqXHR) {
                     reject(jqXHR)
                 }).done(function(val) {
@@ -75,12 +68,7 @@
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             data: JSON.stringify({ content: content }),
-                            beforeSend: function(xhr) {
-                                var authToken = UserUtils.getAuthenticationTokenCookie();
-                                if(authToken) {
-                                    xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-                                }
-                            }
+                            beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders()
                         }).fail(function(jqXHR) {
                             reject(jqXHR)
                         }).done(function(val) {
