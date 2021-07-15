@@ -59,7 +59,7 @@
         },
 
         savePermalink: function (content, el) {
-            return requestWithCaptcha(
+            return showCaptchaWithButton(
                 function(url) {
                     return new Promise(function(resolve, reject) {
                         $.ajax({
