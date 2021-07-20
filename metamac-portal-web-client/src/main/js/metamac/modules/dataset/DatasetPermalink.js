@@ -77,7 +77,12 @@
                     });
                 },
                 this.baseUrl(),
-                { captchaEl: el }
+                {
+                    captchaEl: el,
+                    action: "portal_permalink",
+                    buttonText: I18n.t("captcha.button.text"),
+                    labelText: I18n.t("captcha.label.text")
+                }
             );
         },
     }

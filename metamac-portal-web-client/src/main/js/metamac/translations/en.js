@@ -311,5 +311,13 @@ I18n.translations.en = {
             loginTooltip: "Sign in",
             logoutTooltip: "Log out"
         }
+    },
+    captcha: {
+        button: {
+            text: "Send"
+        },
+        label: {
+            text: "Write the value of the image shown above"
+        }
     }
 };

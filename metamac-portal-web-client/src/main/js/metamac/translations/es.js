@@ -320,5 +320,13 @@ I18n.translations.es = {
             loginTooltip: "Iniciar sesión",
             logoutTooltip: "Cerrar sesión"
         }
+    },
+    captcha: {
+        button: {
+            text: "Enviar"
+        },
+        label: {
+            text: "Escriba el valor de la imagen mostrada encima"
+        }
     }
 };
