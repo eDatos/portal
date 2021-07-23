@@ -111,7 +111,7 @@
 			
 			                    App.start();
 			                    
-			                    LazyLoad.js("http://localhost:8084/api/captcha/authentication.js", function() {
+			                    LazyLoad.js("${ApiUrlCaptcha}/authentication.js", function() {
 			                    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js${AddthisCode}");
 			                    });
 			                }		                    

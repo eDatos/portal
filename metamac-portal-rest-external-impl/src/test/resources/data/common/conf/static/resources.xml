@@ -7,8 +7,4 @@
     <entry key="metamac.portal.rest.external.permalinks">http://portal.istac.es/apis/permalinks</entry>
     <entry key="metamac.portal.rest.external.export">http://portal.istac.es/apis/export</entry>
 
-    <entry key="metamac.portal.rest.external.authentication.captcha.enable">false</entry>
-    <entry key="metamac.portal.rest.external.authentication.captcha.private_key">6LfzJOkSAAAAANn0418mfU0WuDSjJ6eQb6BVx2-O</entry>
-    <entry key="metamac.portal.rest.external.authentication.captcha.public_key">6LfzJOkSAAAAAB6msZFZeL61bPykMLBpaFRPElg5</entry>
-
 </properties>

@@ -1,16 +1,16 @@
 .captcha {
-    text-align: center;
-    img {
+    & .captchaButton, .captchaImg, .captchaLabel, .captchaInput {
+        box-sizing: border-box;
+        display: block;
         width: 100%;
-        height: auto;
     }
-    td {
+
+    .captchaLabel {
+        margin: 5px 0px;
         text-align: left;
-        input {
-            width: 100%;
-        }
     }
-    button {
+
+    .captchaButton {
         border: none;
         background: none;
         color: @istacBlueDark;

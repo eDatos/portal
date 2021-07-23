@@ -3,6 +3,9 @@ package org.siemac.metamac.portal.rest.external.authentication;
 import org.apache.cxf.jaxrs.ext.RequestHandler;
 import org.apache.cxf.jaxrs.model.ClassResourceInfo;
 import org.apache.cxf.message.Message;
+import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.portal.core.conf.PortalConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +24,9 @@ public class CaptchaFilter implements RequestHandler {
     @Context
     private HttpServletRequest  request;
 
+    @Autowired
+    private PortalConfiguration portalConfiguration;
+
     RestTemplate restTemplate = new RestTemplate();
 
     @Override
@@ -30,7 +36,13 @@ public class CaptchaFilter implements RequestHandler {
             return null;
         }
 
-        UriBuilder urlBuilder = UriBuilder.fromUri("http://localhost:8084/api/captcha/validate");
+        UriBuilder urlBuilder;
+        try {
+            urlBuilder = UriBuilder.fromUri(portalConfiguration.retrieveCaptchaExternalApiUrlBase());
+        } catch (MetamacException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        urlBuilder.path("validate");
         for(Object paramKey : Collections.list(request.getParameterNames())) {
             urlBuilder.queryParam(paramKey.toString(), request.getParameter(paramKey.toString()));
         }
