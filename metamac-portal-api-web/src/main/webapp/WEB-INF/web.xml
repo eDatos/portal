@@ -39,42 +39,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-    <!-- CAPTCHA -->
-    <servlet>
-        <servlet-name>Captcha</servlet-name>
-        <servlet-class>org.siemac.metamac.portal.web.diffusion.servlet.SimpleCaptchaServlet</servlet-class>
-        <!--Dimensions -->
-        <init-param>
-            <param-name>captcha-height</param-name>
-            <param-value>100</param-value>
-        </init-param>
-        <init-param>
-            <param-name>captcha-width</param-name>
-            <param-value>300</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Captcha</servlet-name>
-        <url-pattern>/jsp/captcha-simple.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>CaptchaGobcan</servlet-name>
-        <servlet-class>org.siemac.metamac.portal.web.diffusion.servlet.CaptchaGobcanServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CaptchaGobcan</servlet-name>
-        <url-pattern>/jsp/captcha-gobcan.jsp</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>authentication</servlet-name>
-        <jsp-file>/js/authentication.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>authentication</servlet-name>
-        <url-pattern>/js/authentication.js</url-pattern>
-    </servlet-mapping>
-    
 	<!-- URL rewriting -->
 	<filter>
 		<filter-name>UrlRewriteFilter</filter-name>

@@ -17,7 +17,7 @@
             var self = this;
             if (this.needsPermalink()) {
                 var savePermalinkRequest = this.savePermalink();
-                savePermalinkRequest.done(function (response) {
+                savePermalinkRequest.then(function (response) {
                     self.renderEmbed(response.id);
                 });
             } else {
@@ -35,7 +35,7 @@
 
         savePermalink: function () {
             var permalinkContent = DatasetPermalink.buildPermalinkContent(this.filterDimensions);
-            return DatasetPermalink.savePermalink(permalinkContent, this.$el);
+            return DatasetPermalink.savePermalink(permalinkContent, this.$el[0]);
         },
 
         getWidgetUrl: function () {

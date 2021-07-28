@@ -125,18 +125,6 @@ public class ApplicationStartup extends ApplicationStartupListener {
         // Misc
         checkRequiredProperty(PortalConfigurationConstants.METAMAC_EDITION_LANGUAGES);
 
-        // Captcha
-        checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_ENABLE);
-        if (portalConfigurationService.retrieveCaptchaEnable()) {
-            checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
-
-            String provider = portalConfigurationService.retrieveCaptchaProvider();
-            if (PortalConfigurationConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(provider)) {
-                checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
-                checkRequiredProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
-            }
-        }
-
         // Google analytics
         checkRequiredProperty(PortalConfigurationConstants.ANALYTICS_GOOGLE_TRACKING_ID);
     }

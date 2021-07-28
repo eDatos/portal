@@ -9,26 +9,6 @@ public class PortalConfigurationImpl extends ConfigurationServiceImpl implements
     private static final String ENVIROMENT_CONF_INSTALLATION_TYPE = "environment.metamac.portal.installation_type";
 
     @Override
-    public boolean retrieveCaptchaEnable() throws MetamacException {
-        return retrievePropertyBoolean(PortalConfigurationConstants.CAPTCHA_ENABLE);
-    }
-
-    @Override
-    public String retrieveCaptchaProvider() throws MetamacException {
-        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PROVIDER);
-    }
-
-    @Override
-    public String retrieveCaptchaPrivateKey() throws MetamacException {
-        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PRIVATE_KEY);
-    }
-
-    @Override
-    public String retrieveCaptchaPublicKey() throws MetamacException {
-        return retrieveProperty(PortalConfigurationConstants.CAPTCHA_PUBLIC_KEY);
-    }
-
-    @Override
     public String retrieveInstallationType() throws MetamacException {
         return (String) environmentConfigurationProperties.getProperty(ENVIROMENT_CONF_INSTALLATION_TYPE);
     }

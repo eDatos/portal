@@ -50,6 +50,7 @@
         String INDICATORS_API_URL_BASE = "";
         String EXTERNAL_USERS_API_URL_BASE = "";
         String EXTERNAL_USERS_WEB_APPLICATION_BASE = "";
+        String EXTERNAL_CAPTCHA_URL_BASE = "";
 		Boolean internalPortal = null;
 		String ORGANISATION = "";
 				
@@ -75,6 +76,7 @@
 		    STATISTICAL_VISUALIZER_URL_BASE = configurationService.retrievePortalExternalUrlBase();
 		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
             EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();
+            EXTERNAL_CAPTCHA_URL_BASE = configurationService.retrieveCaptchaExternalApiUrlBase();
             try {
                 EXTERNAL_USERS_API_URL_BASE = configurationService.retrieveExternalUsersExternalApiUrlBase();
                 EXTERNAL_USERS_WEB_APPLICATION_BASE = configurationService.retrieveExternalUsersExternalWebApplicationUrlBase();
@@ -101,6 +103,7 @@
 			request.setAttribute("ApiUrlIndicators", INDICATORS_API_URL_BASE);
             request.setAttribute("ApiUrlExternalUsers", EXTERNAL_USERS_API_URL_BASE);
             request.setAttribute("WebApplicationExternalUsers", EXTERNAL_USERS_WEB_APPLICATION_BASE);
+            request.setAttribute("ApiUrlCaptcha", EXTERNAL_CAPTCHA_URL_BASE);
             request.setAttribute("organisationUrn", configurationService.retrieveOrganisationUrn());
             request.setAttribute("geographicalGranularityUrn", configurationService.retrieveDefaultCodelistGeographicalGranularityUrn());
 		
@@ -114,6 +117,7 @@
 		 	request.setAttribute("ApiUrlIndicators", "error");
             request.setAttribute("ApiUrlExternalUsers", "error");
             request.setAttribute("WebApplicationExternalUsers", "error");
+            request.setAttribute("ApiUrlCaptcha", "error");
 		 	request.setAttribute("organisationUrn", "error");
 		 	request.setAttribute("geographicalGranularityUrn", "error");
             
