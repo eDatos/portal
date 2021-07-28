@@ -17,6 +17,7 @@ import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -33,6 +34,7 @@ import org.siemac.metamac.rest.permalinks.v1_0.domain.Permalink;
 import org.siemac.metamac.rest.utils.RestUtils;
 import org.springframework.context.ApplicationContext;
 
+@Ignore
 public class PermalinksRestExternalFacadeV10Test extends MetamacRestBaseTest {
 
     protected static PermalinksV1_0 permalinksV1_0;
