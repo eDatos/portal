@@ -42,9 +42,10 @@
         },
 
         savePermalinkWithUserAuth: function (content) {
+            var self = this;
             return new Promise(function(resolve, reject) {
                 $.ajax({
-                    url: this.baseUrl(),
+                    url: self.baseUrl(),
                     method: "POST",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",

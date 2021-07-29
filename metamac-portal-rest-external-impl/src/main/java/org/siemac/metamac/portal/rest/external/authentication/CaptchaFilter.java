@@ -31,32 +31,36 @@ public class CaptchaFilter implements RequestHandler {
 
     @Override
     public Response handleRequest(Message m, ClassResourceInfo resourceClass) {
-        Object isAuthenticated = request.getSession().getAttribute(AUTHENTICATED_SESSION_ATTRIBUTE);
-        if(isAuthenticated != null && ((boolean) isAuthenticated)) {
-            return null;
-        }
-
-        UriBuilder urlBuilder;
-        try {
-            urlBuilder = UriBuilder.fromUri(portalConfiguration.retrieveCaptchaExternalApiUrlBase());
-        } catch (MetamacException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-        urlBuilder.path("validate");
-        for(Object paramKey : Collections.list(request.getParameterNames())) {
-            urlBuilder.queryParam(paramKey.toString(), request.getParameter(paramKey.toString()));
-        }
-        URI url = urlBuilder.build();
-
-        ResponseEntity<Boolean> response = restTemplate.getForEntity(url, boolean.class);
-        if(response.getStatusCode() == HttpStatus.OK) {
-            if(response.getBody()) {
+        if ("POST".equals(request.getMethod())) {
+            Object isAuthenticated = request.getSession().getAttribute(AUTHENTICATED_SESSION_ATTRIBUTE);
+            if(isAuthenticated != null && ((boolean) isAuthenticated)) {
                 return null;
+            }
+
+            UriBuilder urlBuilder;
+            try {
+                urlBuilder = UriBuilder.fromUri(portalConfiguration.retrieveCaptchaExternalApiUrlBase());
+            } catch (MetamacException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+            urlBuilder.path("validate");
+            for(Object paramKey : Collections.list(request.getParameterNames())) {
+                urlBuilder.queryParam(paramKey.toString(), request.getParameter(paramKey.toString()));
+            }
+            URI url = urlBuilder.build();
+
+            ResponseEntity<Boolean> response = restTemplate.getForEntity(url, boolean.class);
+            if(response.getStatusCode() == HttpStatus.OK) {
+                if(response.getBody()) {
+                    return null;
+                } else {
+                    return Response.status(Response.Status.UNAUTHORIZED).build();
+                }
             } else {
-                return Response.status(Response.Status.UNAUTHORIZED).build();
+                return Response.status(response.getStatusCode().value()).build();
             }
         } else {
-            return Response.status(response.getStatusCode().value()).build();
+            return null;
         }
     }
 }
