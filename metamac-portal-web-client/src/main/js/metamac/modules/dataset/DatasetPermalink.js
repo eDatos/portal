@@ -50,7 +50,13 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({ content: content }),
-                    beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders(true)
+                    beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders(true),
+                    statusCode: {
+                        401: function() {
+                            UserUtils.deleteAuthenticationTokenCookie();
+                            App.trigger("logout");
+                        }
+                    }
                 }).fail(function(jqXHR) {
                     reject(jqXHR)
                 }).done(function(val) {
@@ -60,31 +66,36 @@
         },
 
         savePermalink: function (content, el) {
-            return showCaptchaWithButton(
-                function(url) {
-                    return new Promise(function(resolve, reject) {
-                        $.ajax({
-                            url: url,
-                            method: "POST",
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                            data: JSON.stringify({ content: content }),
-                            beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders()
-                        }).fail(function(jqXHR) {
-                            reject(jqXHR)
-                        }).done(function(val) {
-                            resolve(val)
-                        });
+            var requestFunction = function (url) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: url,
+                        method: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({content: content}),
+                        beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders()
+                    }).fail(function (jqXHR) {
+                        reject(jqXHR)
+                    }).done(function (val) {
+                        resolve(val)
                     });
-                },
-                this.baseUrl(),
-                {
-                    captchaEl: el,
-                    action: "portal_permalink",
-                    buttonText: I18n.t("captcha.button.text"),
-                    labelText: I18n.t("captcha.label.text")
-                }
-            );
+                });
+            };
+            UserUtils.getAccount().then(function () {
+                return requestFunction(this.baseUrl());
+            }).catch(function () {
+                return showCaptchaWithButton(
+                    requestFunction,
+                    this.baseUrl(),
+                    {
+                        captchaEl: el,
+                        action: "portal_permalink",
+                        buttonText: I18n.t("captcha.button.text"),
+                        labelText: I18n.t("captcha.label.text")
+                    }
+                );
+            });
         },
     }
 
