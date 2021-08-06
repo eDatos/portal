@@ -51,12 +51,6 @@
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({ content: content }),
                     beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders(true),
-                    statusCode: {
-                        401: function() {
-                            UserUtils.deleteAuthenticationTokenCookie();
-                            App.trigger("logout");
-                        }
-                    }
                 }).fail(function(jqXHR) {
                     reject(jqXHR)
                 }).done(function(val) {
@@ -82,20 +76,17 @@
                     });
                 });
             };
-            UserUtils.getAccount().then(function () {
-                return requestFunction(this.baseUrl());
-            }).catch(function () {
-                return showCaptchaWithButton(
-                    requestFunction,
-                    this.baseUrl(),
-                    {
-                        captchaEl: el,
-                        action: "portal_permalink",
-                        buttonText: I18n.t("captcha.button.text"),
-                        labelText: I18n.t("captcha.label.text")
-                    }
-                );
-            });
+            return requestWithCaptcha(
+                requestFunction,
+                this.baseUrl(),
+                {
+                    captchaEl: el,
+                    action: "portal_permalink",
+                    buttonText: I18n.t("captcha.button.text"),
+                    labelText: I18n.t("captcha.label.text"),
+                    withButton: true
+                }
+            );
         },
     }
 

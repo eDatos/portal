@@ -27,10 +27,7 @@
                     contentType: "application/json; charset=utf-8",
                     beforeSend: self.prepareAuthorizationAndXSRFHeaders(),
                     statusCode: {
-                        401: function() {
-                            self.deleteAuthenticationTokenCookie();
-                            App.trigger("logout");
-                        }
+                        401: self._triggerLogout()
                     }
                 }).fail(function(jqXHR) {
                     reject(jqXHR)
@@ -104,10 +101,7 @@
                         data: filter.toString(),
                         beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
-                            401: function() {
-                                self.deleteAuthenticationTokenCookie();
-                                App.trigger("logout");
-                            }
+                            401: self._triggerLogout()
                         }
                     }).done(function(val) {
                         resolve(val)
@@ -129,10 +123,7 @@
                         method: "PUT",
                         beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
-                            401: function() {
-                                self.deleteAuthenticationTokenCookie();
-                                App.trigger("logout");
-                            }
+                            401: self._triggerLogout()
                         }
                     }).done(function(val) {
                         resolve(val)
@@ -178,6 +169,14 @@
 
         _getXsrfCookie: function () {
             return Cookies.get(this.XSRF_COOKIE_NAME);
+        },
+
+        _triggerLogout: function () {
+            var self = this;
+            return function() {
+                self.deleteAuthenticationTokenCookie();
+                App.trigger("logout");
+            }
         }
     }
 }());
