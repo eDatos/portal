@@ -25,7 +25,7 @@
                     method: "GET",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    beforeSend: self.prepareAuthorizationAndXSRFHeaders(),
+                    beforeSend: self.prepareAuthorizationAndXSRFHeaders(true),
                     statusCode: {
                         401: self._triggerLogout()
                     }
