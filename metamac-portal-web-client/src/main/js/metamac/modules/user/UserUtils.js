@@ -51,19 +51,13 @@
                 currentUrl.searchParams.delete("token");
                 window.history.replaceState(history.state,"", currentUrl.href);
             } else {
-                // automaticAuthenticationHasNotBeenTriedYet: the sessionStorage property "authentication-already-tried" is stored when this method has already
-                // been called in this tab. It is avoiding an infinite loop.
-                var automaticAuthenticationHasNotBeenTriedYet = _.isNull(sessionStorage.getItem("authentication-already-tried"));
-                if(automaticAuthenticationHasNotBeenTriedYet) {
-                    // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
-                    this.getAccount().catch(function(error) {
-                        // A redirection is avoided when the server is down
-                        if(error.status === 401 || error.status === 403) {
-                            sessionStorage.setItem("authentication-already-tried", "true");
-                            window.location.href = App.endpoints["external-users"] + "/authenticate?origin=" + encodeURIComponent(window.location.href);
-                        }
-                    });
-                }
+                // getAccount(): this call confirms that a user is already logged in. If it is not, then it is the case where we try to log in.
+                this.getAccount().catch(function(error) {
+                    // A redirection is avoided when the server is down
+                    if(error.status === 401 || error.status === 403) {
+                        window.location.href = App.endpoints["external-users"] + "/authenticate?origin=" + encodeURIComponent(window.location.href);
+                    }
+                });
             }
         },
 
@@ -102,7 +96,10 @@
                         beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
                             401: self._triggerLogout()
-                        }
+                        },
+                        xhrFields: {
+                            withCredentials: true
+                        },
                     }).done(function(val) {
                         resolve(val)
                     }).fail(function(jqXHR) {
@@ -124,7 +121,10 @@
                         beforeSend: self.prepareAuthorizationAndXSRFHeaders(true, true),
                         statusCode: {
                             401: self._triggerLogout()
-                        }
+                        },
+                        xhrFields: {
+                            withCredentials: true
+                        },
                     }).done(function(val) {
                         resolve(val)
                     }).fail(function(jqXHR) {
