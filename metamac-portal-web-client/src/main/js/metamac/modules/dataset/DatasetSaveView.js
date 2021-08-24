@@ -139,10 +139,8 @@
         },
 
         renderResult: function (succeeded) {
-            var context = {
-                statusMessage: succeeded ? I18n.t("filter.save.modal.success") : I18n.t("filter.save.modal.failure")
-            };
-            this.$el.html(this.templateResult(context));
+            this.$el.html(this.templateResult());
+            this.$el.find("#message-container")[0].innerHTML = I18n.t(succeeded ? "filter.save.modal.success" : "filter.save.modal.failure");
         }
     });
 
