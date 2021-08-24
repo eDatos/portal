@@ -12,10 +12,8 @@
         },
 
         render: function () {
-            var context = {
-                statusMessage: this.message
-            };
-            this.$el.html(this.template(context));
+            this.$el.html(this.template());
+            this.$el.find("#message-container")[0].innerHTML = this.message;
         }
     });
 
