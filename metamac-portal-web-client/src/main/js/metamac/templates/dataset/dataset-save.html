@@ -12,16 +12,16 @@
             <label>{{ message "filter.save.label.version.group" }}</label>
             <div class="horizontal-radio-group">
                 <div class="radio-field">
-                    <input type="radio" id="version-current" name="version" value="current">
+                    <input type="radio" id="version-current" name="version" value="current" checked="checked">
                     <label for="version-current">{{ message "filter.save.label.version.current" }}</label>
                 </div>
                 <div class="radio-field">
-                    <input type="radio" id="version-last" name="version" value="last" checked="checked">
+                    <input type="radio" id="version-last" name="version" value="last">
                     <label for="version-last">{{ message "filter.save.label.version.last" }}</label>
                 </div>
             </div>
         </fieldset>
-        <fieldset id="field-data">
+        <fieldset id="field-data" hidden>
             <label>{{ message "filter.save.label.data.group" }}</label>
             <div class="vertical-radio-group">
                 <div class="radio-field">
