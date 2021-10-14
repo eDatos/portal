@@ -115,6 +115,9 @@
             // plain update of nested dimensions and levels
             var headerValues = _.reduceRight(headerValuesGroupByDimension, function (memo, headerValuesInDimension) {
                 var levels = _.pluck(headerValuesInDimension, 'level');
+                
+                // if not specify a function for sort, the elements are sorted in ascending, ASCII character order.
+                //   example: [1, 11, 10, 2].sort() returns [1, 10, 11, 2]
                 var orderedLevels = _.uniq(levels)
                     .map(function(level) { return parseInt(level); })
                     .sort(function(a, b) { return a - b; });
