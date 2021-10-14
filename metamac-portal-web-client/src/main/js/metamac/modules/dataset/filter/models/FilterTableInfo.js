@@ -116,7 +116,7 @@
             var headerValues = _.reduceRight(headerValuesGroupByDimension, function (memo, headerValuesInDimension) {
                 var levels = _.pluck(headerValuesInDimension, 'level');
                 var orderedLevels = _.uniq(levels).sort(function(a, b) {
-                    return a - b
+                    return parseInt(a) - parseInt(b);
                 });
                 incrementArray(memo, 'level', orderedLevels.length);
                 var normalizedHeaderValuesInDimension = _.map(headerValuesInDimension, function (headerValue) {
