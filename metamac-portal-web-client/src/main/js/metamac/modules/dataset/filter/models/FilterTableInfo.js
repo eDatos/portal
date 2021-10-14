@@ -115,9 +115,9 @@
             // plain update of nested dimensions and levels
             var headerValues = _.reduceRight(headerValuesGroupByDimension, function (memo, headerValuesInDimension) {
                 var levels = _.pluck(headerValuesInDimension, 'level');
-                var orderedLevels = _.uniq(levels).sort(function(a, b) {
-                    return parseInt(a) - parseInt(b);
-                });
+                var orderedLevels = _.uniq(levels)
+                    .map(function(level) { return parseInt(level); })
+                    .sort(function(a, b) { return a - b; });
                 incrementArray(memo, 'level', orderedLevels.length);
                 var normalizedHeaderValuesInDimension = _.map(headerValuesInDimension, function (headerValue) {
                     headerValue.level = _.indexOf(orderedLevels, headerValue.level);
