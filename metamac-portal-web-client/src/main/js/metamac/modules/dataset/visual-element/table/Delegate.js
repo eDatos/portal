@@ -166,7 +166,11 @@
                             attribute.value = self.formatAttribute(attribute.value);
                             return attribute;
                         }),
-                    combinatedDimensionsAttributes: _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
+                    combinatedDimensionsAttributes: _(_.filter(attributes.combinatedDimensionsAttributes, function(attribute) {return attribute.value}))
+                        .map(function(attribute) {
+                            attribute.value = self.formatAttribute(attribute.value);
+                            return attribute;
+                        })
                 }
             }
         },
