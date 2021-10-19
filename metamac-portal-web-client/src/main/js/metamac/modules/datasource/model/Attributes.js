@@ -41,7 +41,14 @@
         },
 
         getPrimaryMeasureAttributesByPos: function (pos) {
-            return this.primaryMeasureAttributes ? (this.primaryMeasureAttributes[pos] ? this.primaryMeasureAttributes[pos] : []) : [];
+            var attributes = this.primaryMeasureAttributes ? (this.primaryMeasureAttributes[pos] ? this.primaryMeasureAttributes[pos] : []) : [];
+            var self = this;
+            return _.map(attributes, function(atributeValue, i) {
+                return {
+                    value: atributeValue,
+                    attribute: self.localizeLabel(self.attributes[i].name.text),
+                };
+            });
         },
 
         getCombinatedDimensionsAttributesByDimensionsPositions: function (dimensionsPositions) {

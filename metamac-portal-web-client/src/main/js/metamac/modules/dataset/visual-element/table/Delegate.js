@@ -159,8 +159,13 @@
 
         formatCellAttributes: function (attributes) {
             if (attributes) {
+                var self = this;
                 return {
-                    primaryMeasureAttributes: _(_.compact(attributes.primaryMeasureAttributes)).map(this.formatAttribute),
+                    primaryMeasureAttributes: _(_.filter(attributes.primaryMeasureAttributes, function(attribute) {return attribute.value}))
+                        .map(function(attribute) {
+                            attribute.value = self.formatAttribute(attribute.value);
+                            return attribute;
+                        }),
                     combinatedDimensionsAttributes: _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
                 }
             }
