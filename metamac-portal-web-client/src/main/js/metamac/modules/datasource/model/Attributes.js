@@ -75,13 +75,18 @@
         },
 
         getDimensionsAttributesByDimensionsPositions: function (dimensionsPositions) {
+            var self = this;
             return _.map(this.dimensionsAttributes, function (combinatedDimensionAttribute) {
                 self.dimensionsMultiplicators = combinatedDimensionAttribute.dimensionsMultiplicators;
                 var pos = 0;
                 pos = _.reduceRight(this, function (pos, arrayPosition, index) {
                     return pos += self.dimensionsMultiplicators[index] * arrayPosition;
                 }, pos, self);
-                return { value: combinatedDimensionAttribute.values[pos], dimensionId: combinatedDimensionAttribute.attributeDimensionsIds[0] };
+                return {
+                    value: combinatedDimensionAttribute.values[pos],
+                    dimensionId: combinatedDimensionAttribute.attributeDimensionsIds[0],
+                    attribute: self.localizeLabel(combinatedDimensionAttribute.attribute.name.text)
+                };
             }, dimensionsPositions);
         },
 
