@@ -17,7 +17,7 @@ variables:
 image: yopeso/maven-build-essential:3.5.0-jdk-8
 
 # Se añade esta variable para ignorar un problema con el SSL de Let's Encrypt
-GIT_SSL_NO_VERIFY: "1"
+GIT_SSL_NO_VERIFY: "true"
 
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'
