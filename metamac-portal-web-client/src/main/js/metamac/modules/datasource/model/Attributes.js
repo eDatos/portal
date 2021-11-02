@@ -41,17 +41,28 @@
         },
 
         getPrimaryMeasureAttributesByPos: function (pos) {
-            return this.primaryMeasureAttributes ? (this.primaryMeasureAttributes[pos] ? this.primaryMeasureAttributes[pos] : []) : [];
+            var attributes = this.primaryMeasureAttributes ? (this.primaryMeasureAttributes[pos] ? this.primaryMeasureAttributes[pos] : []) : [];
+            var self = this;
+            return _.map(attributes, function(atributeValue, i) {
+                return {
+                    value: atributeValue,
+                    attribute: self.localizeLabel(self.attributes[i].name.text),
+                };
+            });
         },
 
         getCombinatedDimensionsAttributesByDimensionsPositions: function (dimensionsPositions) {
+            var self = this;
             return _.map(this.combinatedDimensionsAttributes, function (combinatedDimensionAttribute) {
                 self.dimensionsMultiplicators = combinatedDimensionAttribute.dimensionsMultiplicators;
                 var pos = 0;
                 pos = _.reduceRight(this, function (pos, arrayPosition, index) {
                     return pos += self.dimensionsMultiplicators[index] * arrayPosition;
                 }, pos, self);
-                return combinatedDimensionAttribute.values[pos];
+                return {
+                    value: combinatedDimensionAttribute.values[pos],
+                    attribute: self.localizeLabel(combinatedDimensionAttribute.attribute.name.text)
+                }
             }, dimensionsPositions);
         },
 
@@ -64,13 +75,18 @@
         },
 
         getDimensionsAttributesByDimensionsPositions: function (dimensionsPositions) {
+            var self = this;
             return _.map(this.dimensionsAttributes, function (combinatedDimensionAttribute) {
                 self.dimensionsMultiplicators = combinatedDimensionAttribute.dimensionsMultiplicators;
                 var pos = 0;
                 pos = _.reduceRight(this, function (pos, arrayPosition, index) {
                     return pos += self.dimensionsMultiplicators[index] * arrayPosition;
                 }, pos, self);
-                return { value: combinatedDimensionAttribute.values[pos], dimensionId: combinatedDimensionAttribute.attributeDimensionsIds[0] };
+                return {
+                    value: combinatedDimensionAttribute.values[pos],
+                    dimensionId: combinatedDimensionAttribute.attributeDimensionsIds[0],
+                    attribute: self.localizeLabel(combinatedDimensionAttribute.attribute.name.text)
+                };
             }, dimensionsPositions);
         },
 
@@ -97,7 +113,7 @@
             var dimensionsMultiplicators = this._getDimensionsMultiplicators(attributeDimensionIds);
             var values = this._parseAttributeValuesList(attribute);
 
-            return { values: values, dimensionsMultiplicators: dimensionsMultiplicators, attributeDimensionsIds: attributeDimensionIds };
+            return { values: values, dimensionsMultiplicators: dimensionsMultiplicators, attributeDimensionsIds: attributeDimensionIds, attribute: attribute };
         },
 
         _getDimensionsMultiplicators: function (attributeDimensionsIds) {

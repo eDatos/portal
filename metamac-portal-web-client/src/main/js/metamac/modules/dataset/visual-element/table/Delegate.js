@@ -160,26 +160,31 @@
         formatCellAttributes: function (attributes) {
             if (attributes) {
                 return {
-                    primaryMeasureAttributes: _(_.compact(attributes.primaryMeasureAttributes)).map(this.formatAttribute),
-                    combinatedDimensionsAttributes: _(_.compact(attributes.combinatedDimensionsAttributes)).map(this.formatAttribute)
+                    primaryMeasureAttributes: this.formatAttributes(attributes.primaryMeasureAttributes),
+                    combinatedDimensionsAttributes: this.formatAttributes(attributes.combinatedDimensionsAttributes)
                 }
             }
         },
 
         formatHeaderInfo: function (headerInfo) {
             var template = App.templateManager.get("dataset/dataset-header-info");
+            
             var context = {
                 title: headerInfo.title,
                 description: headerInfo.description,
                 measureUnit: headerInfo.measureUnit,
-                attributes: this.formatHeaderAttributes(_.pluck(headerInfo.attributes, 'value'))
+                attributes: this.formatAttributes(headerInfo.attributes)
             }
             return template(context);
         },
 
-        formatHeaderAttributes: function (attributes) {
-            return _(_.compact(attributes))
-                .map(this.formatAttribute);
+        formatAttributes: function (attributes) {
+            var self = this;
+            return _(_.filter(attributes, function(attribute) {return attribute.value}))
+                .map(function(attribute) {
+                    attribute.value = self.formatAttribute(attribute.value);
+                    return attribute;
+                })
         },
 
 
