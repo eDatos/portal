@@ -77,7 +77,7 @@
         },
 
         onRender: function () {
-            // We render here the options bar because marionette provides a built in method
+            // We render here the options bar and the user header because marionette provides a built in method
             this.optionsView.setElement(this.$('.selection-options-bar')).render();
 
             this.fullScreen.setContainer($('.metamac-container'));

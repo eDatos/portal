@@ -143,6 +143,33 @@
                 && this.metadata.identifier().type != App.Constants.visualization.type.INDICATOR_INSTANCE;
         },
 
+        preprocessSelectionWithDynamicSelection: function(selection, dynamicSelection) {
+            if (dynamicSelection) {
+                if(!_.isEmpty(dynamicSelection.dimension.type)) {
+                    if(dynamicSelection.dimension.type.TIME_DIMENSION) {
+                        var self = this;
+                        var temporalDimensionId = Object.keys(selection).find(function (key) {
+                            return self.get(key).get("type") === 'TIME_DIMENSION';
+                        });
+
+                        var selectionCopy = JSON.parse(JSON.stringify(selection));
+                        selectionCopy[temporalDimensionId].categories = [];
+
+                        var selectedLeft = dynamicSelection.dimension.type.TIME_DIMENSION.lastNValues;
+                        var afterDate = dynamicSelection.dimension.type.TIME_DIMENSION.afterDate;
+                        _.each(this.get(temporalDimensionId).get("representations").models, function (category) {
+                            selectionCopy[temporalDimensionId].categories.push({
+                                id: category.id,
+                                selected: isNaN(selectedLeft) ? App.TemporalUtils.isAfter(afterDate, category.attributes) : Boolean(Math.max(0,selectedLeft--))
+                            });
+                        });
+                        return selectionCopy;
+                    }
+                }
+            }
+            return selection;
+        },
+
         importJSONSelection: function (json) {
 
             var dimensionsToImport = _.chain(json).map(function (value, key) {
@@ -165,8 +192,10 @@
                 var representations = dimension.get('representations');
                 representations._unbindEvents();
 
+                var mustUpdateDrawables = false;
                 _.each(dimensionToImport.categories, function (category) {
                     if (!_.isUndefined(representations.get(category.id))) {
+                        mustUpdateDrawables = mustUpdateDrawables || _.isUndefined(category.drawable) || _.isNull(category.drawable);
                         representations.get(category.id).set({ 
                             selected: category.selected,
                             drawable: category.drawable
@@ -178,7 +207,11 @@
                 this._calculateSelectedTemporalGranularity(dimension, representations);
                 
                 representations._bindEvents();
-                representations.trigger("change:drawable");
+                if(mustUpdateDrawables) {
+                    representations.trigger("change:selected");
+                } else {
+                    representations.trigger("change:drawable");
+                }
             }, this);
             this.zones.applyFixedSizeRestriction();
         },

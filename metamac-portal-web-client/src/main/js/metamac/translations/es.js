@@ -21,6 +21,7 @@ I18n.translations.es = {
             fullscreen: "Pantalla completa",
             share: "Compartir",
             download: "Descarga",
+            save: "Guardar",
             accept: "Aceptar",
             cancel: "Cancelar",
             selectAll: "Marcar",
@@ -45,6 +46,34 @@ I18n.translations.es = {
         },
         embed: {
             instructions: "Selecciona, copia y pega este código en tu página"
+        },
+        save: {
+            button: {
+                submit: "Guardar",
+            },
+            label: {
+                name: "Nombre de la consulta personalizada",
+                notes: "Notas",
+                version: {
+                    group: "Versión",
+                    last: "Última versión",
+                    current: "Versión actual",
+                },
+                data: {
+                    group: "Datos",
+                    quantity: "Los últimos",
+                    date: "A partir de",
+                }
+            },
+            modal: {
+                title: "Guardar consulta personalizada",
+                success: "La consulta personalizada se ha guardado correctamente",
+                failure: "Ha habido un problema guardando la consulta personalizada"
+            },
+            error: {
+                quantity: "El campo númerico del apartado 'Datos' debe ser un número entero positivo mayor o igual a uno.",
+                date: "La fecha del apartado 'Datos' es obligatoria."
+            }
         },
         text: {
             fixedDimensions: "Valores fijados",
@@ -244,6 +273,60 @@ I18n.translations.es = {
                 MEASURE: "Medidas",
                 GEOGRAPHICAL: "Localización geográfica"
             }
+        }
+    },
+    login: {
+        button: {
+            submit: "Iniciar sesión",
+            register: "Registrarse"
+        },
+        label: {
+            email: "Correo electrónico",
+            password: "Contraseña"
+        },
+        modal: {
+            title: "Usuario",
+            success: "Ha iniciado sesión con éxito",
+            failure: "Ha habido un problema iniciando sesión"
+        },
+        error: {
+            client: "El correo electrónico o la contraseña no son válidos.",
+            server: "Ha habido un problema iniciando sesión. Inténtelo de nuevo más tarde."
+        }
+    },
+    logout: {
+        modal: {
+            title: "Cerrar sesión",
+            question: "¿Está seguro de que quiere cerrar sesión?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Sí",
+                reject: "No"
+            }
+        },
+        information: {
+            loginRequired: {
+                title: "Operación no válida",
+                message: "La operación que quiere realizar requiere que inicie sesión primero pulsando en el icono (<i class=\"icon icon-user\"></i>) que aparece arriba."
+            }
+        }
+    },
+    user: {
+        header: {
+            userAreaTooltip: "Área del usuario",
+            loginTooltip: "Iniciar sesión",
+            logoutTooltip: "Cerrar sesión"
+        }
+    },
+    captcha: {
+        button: {
+            text: "Enviar"
+        },
+        label: {
+            text: "Escriba el valor de la imagen mostrada encima"
         }
     }
 };

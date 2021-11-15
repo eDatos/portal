@@ -44,6 +44,7 @@ module.exports = (grunt) ->
                 paths.lib + "/handlebars.runtime.js"
                 paths.lib + "/jquery.dotdotdot-1.5.0-packed.js"
                 paths.lib + "/async.js"
+                paths.lib + "/cookies.js"
                 paths.js + "/metamac/App.js"
                 paths.js + "/metamac/libs/HandlebarsHelpers.js"
                 paths.js + "/metamac/templates/HandlebarsTemplates.js"
@@ -56,6 +57,10 @@ module.exports = (grunt) ->
                 paths.js + "/libs/perfect-scrollbar.jquery.js"
                 paths.js + "/libs/select2.min.js"
                 paths.js + "/libs/moment.min.js"
+
+                # User
+                paths.js + "/metamac/modules/user/UserUtils.js"
+                paths.js + "/metamac/modules/user/UserHeaderView.js"
 
                 # Metamac libs
                 paths.js + "/metamac/libs/i18n.js"
@@ -84,6 +89,7 @@ module.exports = (grunt) ->
                 # DATASET MODULE
                 paths.modules + "/dataset/DatasetPermalink.js"
                 paths.modules + "/dataset/PermalinkBuilder.js"
+                paths.modules + "/dataset/DatasetDynamicSelectionBuilder.js"
                 paths.modules + "/dataset/DatasetActionsView.js"
                 paths.modules + "/dataset/DatasetExportView.js"
                 paths.modules + "/dataset/DatasetView.js"
@@ -92,6 +98,7 @@ module.exports = (grunt) ->
                 paths.modules + "/dataset/DimensionsView.js"
                 paths.modules + "/dataset/DatasetVisualizationView.js"
                 paths.modules + "/dataset/DatasetShareView.js"
+                paths.modules + "/dataset/DatasetSaveView.js"
                 paths.modules + "/dataset/DatasetDownloadView.js"
                 paths.modules + "/dataset/DatasetEmbedView.js"
 
@@ -121,6 +128,7 @@ module.exports = (grunt) ->
 
                 # data
                 paths.js + "/metamac/modules/dataset/model/StructuralResourcesApi.js"
+                paths.js + "/metamac/modules/dataset/model/FilterModel.js"
 
                 # components
                 paths.js + "/metamac/components/tooltip/Tooltip.js"
@@ -133,6 +141,8 @@ module.exports = (grunt) ->
                 paths.js + "/metamac/components/select/SelectView.js"
                 paths.js + "/metamac/components/toggleable/ToggleableView.js"
                 paths.js + "/metamac/components/modal/ModalView.js"
+                paths.js + "/metamac/components/modal/ConfirmationModalView.js"
+                paths.js + "/metamac/components/modal/InformationModalView.js"
 
                 # filters
                 paths.js + "/metamac/modules/dataset/filter/FilterOptionsDimensionRestriction.js"
@@ -345,7 +355,7 @@ module.exports = (grunt) ->
                     syntax: "bootstrap",
                     htmlDemo : true,
                     autoHint : false,
-                    types: 'eot,woff,ttf,svg';
+                    types: 'eot,woff,ttf,svg'
                 }
 
 

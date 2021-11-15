@@ -28,6 +28,7 @@
             <ref bean="jaxbProvider" />
             <ref bean="jsonProvider" />
             <ref bean="wadlGenerator" />
+            <ref bean="externalUserFilter" />
             <ref bean="captchaFilter" />
         </jaxrs:providers>
         
@@ -70,6 +71,7 @@
         <property name="namespacePrefix" value="ns" />
     </bean>
 
+    <bean id="externalUserFilter" class="org.siemac.metamac.portal.rest.external.authentication.ExternalUserFilter" />
     <bean id="captchaFilter" class="org.siemac.metamac.portal.rest.external.authentication.CaptchaFilter" />
 
     <util:map id="marshallerProperties">

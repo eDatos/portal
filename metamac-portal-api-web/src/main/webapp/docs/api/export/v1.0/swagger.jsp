@@ -28,210 +28,6 @@
     }
   ],
   "definitions": {
-    "CaptchaImage1": {
-      "type": "object",
-      "title": "CaptchaImage1 (Anonymous)",
-      "allOf": [
-        {
-          "properties": {
-            "fFontSize": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "nHeight": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "nWidth": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "sFontName": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            },
-            "sKeyword": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "description": ""
-    },
-    "CaptchaImage1Response": {
-      "type": "object",
-      "title": "CaptchaImage1Response (Anonymous)",
-      "allOf": [
-        {
-          "properties": {
-            "CaptchaImage1Result": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "description": ""
-    },
-    "CaptchaImage2": {
-      "type": "object",
-      "title": "CaptchaImage2 (Anonymous)",
-      "allOf": [
-        {
-          "properties": {
-            "nHeight": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "nWidth": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "sKeyword": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "description": ""
-    },
-    "CaptchaImage2Response": {
-      "type": "object",
-      "title": "CaptchaImage2Response (Anonymous)",
-      "allOf": [
-        {
-          "properties": {
-            "CaptchaImage2Result": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "description": ""
-    },
-    "CaptchaImageString": {
-      "type": "object",
-      "title": "CaptchaImageString (Anonymous)",
-      "allOf": [
-        {
-          "properties": {
-            "fFontSize": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "nHeight": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "nWidth": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "number"
-            },
-            "sFontName": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            },
-            "sKeyword": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "description": ""
-    },
-    "CaptchaImageStringResponse": {
-      "type": "object",
-      "title": "CaptchaImageStringResponse (Anonymous)",
-      "allOf": [
-        {
-          "properties": {
-            "CaptchaImageStringResult": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "description": ""
-    },
-    "GetFontNames": {
-      "type": "object",
-      "title": "GetFontNames (Anonymous)",
-      "allOf": [
-        {}
-      ],
-      "description": ""
-    },
-    "GetFontNamesResponse": {
-      "type": "object",
-      "title": "GetFontNamesResponse (Anonymous)",
-      "allOf": [
-        {
-          "properties": {
-            "GetFontNamesResult": {
-              "xml": {
-                "namespace": "https://www.gobiernodecanarias.org/ws/WSCaptcha/Service.asmx"
-              },
-              "description": "",
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "description": ""
-    },
     "DatasetSelection": {
       "type": "object",
       "title": "DatasetSelection",
@@ -575,7 +371,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -638,7 +434,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -701,7 +497,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -764,7 +560,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -821,7 +617,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },         
           {
             "name": "resourceID",
@@ -872,7 +668,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },         
           {
             "name": "indicatorSystemCode",
@@ -980,7 +776,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -1043,7 +839,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -1100,7 +896,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },          
           {
             "name": "resourceID",
@@ -1152,7 +948,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "indicatorSystemCode",
@@ -1209,7 +1005,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -1272,7 +1068,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "agencyID",
@@ -1329,7 +1125,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "resourceID",
@@ -1380,7 +1176,7 @@
             "name": "jsonBody",
             "in": "formData",
             "type": "string",
-            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
+            "description": "Cuerpo del mensaje en formato json. Este cuerpo sólo es necesario utilizarlo en el caso de que se desee realizar un filtrado de los datos a exportar sobre la totalidad de los que componen el recurso. En el caso de querer realizar un filtrado deberemos definir el objeto \"datasetSelection\". Dentro de este objeto deberemos especificar los valores que queremos exportar para cada una de las dimensiones. La propiedad position determina donde se dibuja la dimensión. Las dimensiones de lado izquierdo toman valores consecutivos empezando en 0, menores de 20. Y las dimensiones de cabecera toman valores consecutivos empezando en 20, menores de 40.  Ejemplo: {\"datasetSelection\":{\"dimensions\":{\"dimension\":[{\"dimensionId\":\"TIME_PERIOD\",\"labelVisualisationMode\":\"LABEL\",\"position\":21,\"dimensionValues\":{\"dimensionValue\":[\"2013\",\"2013-M03\"]}},{\"dimensionId\":\"INDICADORES\",\"labelVisualisationMode\":\"LABEL\",\"position\":20,\"dimensionValues\":{\"dimensionValue\":[\"INDICE_OCUPACION_PLAZAS\"]}},{\"dimensionId\":\"CATEGORIA_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":0,\"dimensionValues\":{\"dimensionValue\":[\"TOTAL\"]}},{\"dimensionId\":\"DESTINO_ALOJAMIENTO\",\"labelVisualisationMode\":\"LABEL\",\"position\":1,\"dimensionValues\":{\"dimensionValue\":[\"EL_HIERRO\",\"LA_PALMA\",\"LA_GOMERA\",\"TENERIFE\",\"GRAN_CANARIA\",\"FUERTEVENTURA\",\"LANZAROTE\"]}}]}}}"
           },
           {
             "name": "indicatorSystemCode",

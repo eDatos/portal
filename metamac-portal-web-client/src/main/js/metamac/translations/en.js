@@ -21,6 +21,7 @@ I18n.translations.en = {
             fullscreen: "Fullscreen",
             share: "Share",
             download: "Download",
+            save: "Save",
             accept: "Accept",
             cancel: "Cancel",
             selectAll: "Select",
@@ -45,6 +46,34 @@ I18n.translations.en = {
         },
         embed: {
             instructions: "Select, copy and paste this code on your page:"
+        },
+        save: {
+            button: {
+                submit: "Save",
+            },
+            label: {
+                name: "Custom query name",
+                notes: "Notes",
+                version: {
+                    group: "Version",
+                    last: "Last version",
+                    current: "Current version",
+                },
+                data: {
+                    group: "Data",
+                    quantity: "The last",
+                    date: "Starting from",
+                }
+            },
+            modal: {
+                title: "Save custom query",
+                success: "The custom query has been saved successfully",
+                failure: "There was a problem saving the custom query"
+            },
+            error: {
+                quantity: "The numeric field in the 'Data' section must be a positive integer greater than or equal to one.",
+                date: "The date in the 'Data' section is mandatory."
+            }
         },
         text: {
             fixedDimensions: "Fixed values",
@@ -235,6 +264,60 @@ I18n.translations.en = {
                 MEASURE: "Measures",
                 GEOGRAPHICAL: "Geographical location"
             }
+        }
+    },
+    login: {
+        button: {
+            submit: "Sign in",
+            register: "Sign up"
+        },
+        label: {
+            email: "Email",
+            password: "Password"
+        },
+        modal: {
+            title: "User",
+            success: "You have successfully logged in",
+            failure: "There was a problem logging in"
+        },
+        error: {
+            client: "Invalid email or password.",
+            server: "There was a problem logging in. Try again later."
+        }
+    },
+    logout: {
+        modal: {
+            title: "Log out",
+            question: "Are you sure you want to log out?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Yes",
+                reject: "No"
+            }
+        },
+        information: {
+            loginRequired: {
+                title: "Invalid action",
+                message: "The action you want to perform requires you to log in first by clicking the icon (<i class=\"icon icon-user\"></i>) above."
+            }
+        }
+    },
+    user: {
+        header: {
+            userAreaTooltip: "Área do usuário",
+            loginTooltip: "Sign in",
+            logoutTooltip: "Log out"
+        }
+    },
+    captcha: {
+        button: {
+            text: "Send"
+        },
+        label: {
+            text: "Write the value of the image shown above"
         }
     }
 };

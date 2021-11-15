@@ -21,6 +21,7 @@ I18n.translations.pt = {
             fullscreen: "Ecrã inteiro",
             share: "Partilhar",
             download: "Download",
+            save: "Salvar",
             accept: "Aceitar",
             cancel: "Cancelar",
             selectAll: "Selecionar",
@@ -45,6 +46,34 @@ I18n.translations.pt = {
         },
         embed: {
             instructions: "Seleciona, copia e cola este código na tua página: "
+        },
+        save: {
+            button: {
+                submit: "Salvar",
+            },
+            label: {
+                name: "Nome da consulta personalizada",
+                notes: "Notas",
+                version: {
+                    group: "Versão",
+                    last: "Última versão",
+                    current: "Versão atual",
+                },
+                data: {
+                    group: "Dados",
+                    quantity: "Os últimos",
+                    date: "A partir de",
+                }
+            },
+            modal: {
+                title: "Salvar consulta personalizada",
+                success: "A consulta personalizada foi salva com sucesso",
+                failure: "Ocorreu um problema ao salvar a consulta personalizada"
+            },
+            error: {
+                quantity: "O campo numérico na seção 'Dados' deve ser um número inteiro positivo maior ou igual a um.",
+                date: "A data na seção 'Dados' é obrigatória."
+            }
         },
         text: {
             fixedDimensions: "Valores fixos",
@@ -236,6 +265,60 @@ I18n.translations.pt = {
                 MEASURE: "Medidas",
                 GEOGRAPHICAL: "Localização geografica"
             }
+        }
+    },
+    login: {
+        button: {
+            submit: "Iniciar sessão",
+            register: "Inscrever-se"
+        },
+        label: {
+            email: "Correio eletrônico",
+            password: "Senha"
+        },
+        modal: {
+            title: "Usuário",
+            success: "Você fez login com sucesso",
+            failure: "Ocorreu um problema ao fazer login"
+        },
+        error: {
+            client: "Correio eletrônico ou senha inválida.",
+            server: "Ocorreu um problema ao fazer login. Tente novamente mais tarde."
+        }
+    },
+    logout: {
+        modal: {
+            title: "Fechar Sessão",
+            question: "Tem a certeza que quer terminar a sessão?"
+        }
+    },
+    modal: {
+        confirmation: {
+            button: {
+                confirm: "Sim",
+                reject: "Não"
+            }
+        },
+        information: {
+            loginRequired: {
+                title: "Ação inválida",
+                message: "A ação que você deseja realizar requer que você faça login primeiro clicando no ícone acima (<i class=\"icon icon-user\"></i>)."
+            }
+        }
+    },
+    user: {
+        header: {
+            userAreaTooltip: "",
+            loginTooltip: "Iniciar sessão",
+            logoutTooltip: "Fechar Sessão"
+        }
+    },
+    captcha: {
+        button: {
+            text: "Mandar"
+        },
+        label: {
+            text: "Escreva o valor da imagem mostrada acima"
         }
     }
 };

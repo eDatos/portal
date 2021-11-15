@@ -2,6 +2,7 @@
 
     App.namespace("App.modules.dataset");
 
+    var UserUtils = App.modules.user.UserUtils;
     var DisabledFeatureInternalPortalView = Backbone.View.extend({
         render: function () {
             this.$el.html('<b>' + I18n.t("filter.button.disabledFeature.internalPortal") + '</b>');
@@ -26,6 +27,7 @@
             "click .visual-element-options-edit": "clickFilterLoader",
             "click .visual-element-options-fs": "clickFullScreen",
             "click .visual-element-options-share": "clickShare",
+            "click .visual-element-options-save": "clickSave",
             "click .visual-element-options-download": "clickDownload",
             "click .visual-element-options-embed": "clickEmbed",
         },
@@ -108,6 +110,7 @@
                         active: fullScreenActive,
                         btnClass: fullScreenActive ? 'active' : ''
                     },
+                    usersAreAvailable: !!(App.endpoints["external-users"] && App.endpoints["external-users-web"]),
                     visualize: this.optionsModel.get('visualize'),
                     widget: this.optionsModel.get('widget'),
                     widgetButton: this.optionsModel.get('widgetButton')
@@ -180,6 +183,29 @@
             var title = I18n.t("filter.button.share");
             var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
             modal.show();
+        },
+
+        clickSave: function (e) {
+            e.preventDefault();
+            if (this.isInternalPortal()) {
+                var modalContentView = new DisabledFeatureInternalPortalView();
+                var title = I18n.t("filter.button.save");
+                var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
+                modal.show();
+            } else {
+                var self = this;
+                UserUtils.getAccount().then(function(val) {
+                    var modalContentView = new App.modules.dataset.DatasetSaveView({ filterDimensions: self.filterDimensions, user: val });
+                    var title = I18n.t("filter.save.modal.title");
+                    var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
+                    modal.show();
+                }).catch(function() {
+                    var modalContentView = new App.components.modal.InformationModalView({ message: I18n.t("modal.information.loginRequired.message") });
+                    var title = I18n.t("modal.information.loginRequired.title");
+                    var modal = new App.components.modal.ModalView({ title: title, contentView: modalContentView });
+                    modal.show();
+                });
+            }
         },
 
         clickEmbed: function (e) {

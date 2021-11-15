@@ -133,6 +133,29 @@
             return majorInterval.begin <= minorInterval.end && minorInterval.end <= majorInterval.end;
         },
 
+        isAfter: function (startTemporal, temporal) {
+            if (!this.intervalDateParsers.hasOwnProperty(startTemporal.temporalGranularity) ||
+                !this.intervalDateParsers.hasOwnProperty(temporal.temporalGranularity)) {
+                console.warn('Some of the next granularities do not have a parser');
+                console.log(startTemporal.temporalGranularity);
+                console.log(temporal.temporalGranularity);
+                return false;
+            }
+            var startDateInterval = this.intervalDateParsers[startTemporal.temporalGranularity](startTemporal.id);
+            var dateInterval = this.intervalDateParsers[temporal.temporalGranularity](temporal.id);
+
+            return startDateInterval.begin <= dateInterval.begin;
+        },
+
+        getInterval: function (temporal) {
+            if (!this.intervalDateParsers.hasOwnProperty(temporal.temporalGranularity)) {
+                console.warn('The next granularities do not have a parser');
+                console.log(temporal.temporalGranularity);
+                return null;
+            }
+            return this.intervalDateParsers[temporal.temporalGranularity](temporal.id);
+        },
+
         getTemporalGranularityPriority: function (temporalGranularity) {
             return this.temporalGranularityPriorities[temporalGranularity] || null;
         },

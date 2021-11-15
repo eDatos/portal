@@ -131,6 +131,7 @@
         },
 
         onRender: function () {
+
             this.content.show(this.sidebarView);
             this.optionsBar.show(this.optionsView);
             this.dimensions.show(this.dimensionsView);

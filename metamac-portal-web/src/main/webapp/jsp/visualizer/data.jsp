@@ -23,6 +23,9 @@
 	            <p class="justificado">Lo sentimos, alguna de las propiedades no ha sido configurada correctamente.</p>
 	       	</c:when>
 			<c:otherwise>
+				<c:if test="${ApiUrlExternalUsers != 'error' && WebApplicationExternalUsers != 'error'}">
+					<div class="dataset-header-user"></div>
+				</c:if>
 			    <c:choose>
 					<c:when test="${!resourceEmpty}">
 						<div class="dataset-header-info">
@@ -80,7 +83,16 @@
 
                                 // http://estadisticas.arte-consultores.com/indicators
                                 App.endpoints["indicators"] = "${ApiUrlIndicators}/v1.0";
-			                    
+
+                                if(${ApiUrlExternalUsers != "error"}) {
+									App.endpoints["external-users"] = "${ApiUrlExternalUsers}";
+								}
+
+                                if(${WebApplicationExternalUsers != "error"}) {
+									// https://estadisticas.arte-consultores.com/external-users-external
+									App.endpoints["external-users-web"] = "${WebApplicationExternalUsers}/#";
+								}
+
 			                    App.config["showHeader"] = ${resourceEmpty};
 			                    App.config["showRightsHolder"] = ${showRightsHolder};
 			                    App.config["organisationUrn"] = "${organisationUrn}";
@@ -99,7 +111,7 @@
 			
 			                    App.start();
 			                    
-			                    LazyLoad.js("${ApiUrlStatisticalVisualizer}/js/authentication.js?d=${jsDate}", function() {
+			                    LazyLoad.js("${ApiUrlCaptcha}/authentication.js", function() {
 			                    	LazyLoad.js("//s7.addthis.com/js/300/addthis_widget.js${AddthisCode}");
 			                    });
 			                }		                    

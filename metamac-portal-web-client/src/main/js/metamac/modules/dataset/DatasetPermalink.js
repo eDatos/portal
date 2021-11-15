@@ -1,6 +1,7 @@
 (function () {
     "use strict";
 
+    var UserUtils = App.modules.user.UserUtils;
     var PERMALINK_SUBPATH = "/permalink";
 
     App.namespace('App.modules.dataset.Permalink');
@@ -11,11 +12,14 @@
             return App.endpoints["permalinks"] + "/permalinks";
         },
 
-        buildPermalinkContent: function (filterDimensions) {
+        buildPermalinkContent: function (filterDimensions, dynamicSelection, lastVersion) {
+            var queryParams = JSON.parse(JSON.stringify(App.queryParams));
+            queryParams.version = lastVersion ? "~latest" : filterDimensions.metadata.getVersion();
             return JSON.stringify({
-                queryParams: App.queryParams,
+                queryParams: queryParams,
                 hash: this.removePermalink(window.location.hash),
                 selection: filterDimensions.exportJSONSelection(),
+                dynamicSelection: dynamicSelection,
                 state: filterDimensions.exportJSONState()
             });
         },
@@ -27,6 +31,9 @@
         retrievePermalink: function (permalinkId, callback) {
             var url = this.baseUrl() + "/" + permalinkId;
             $.getJSON(url).done(function (content) {
+                if(App.endpoints["external-users"] && App.endpoints["external-users-web"]) {
+                    UserUtils.updateLastAccess(permalinkId);
+                }
                 callback(undefined, content);
             }).fail(function () {
                 console.warn("Requested permalink not found.");
@@ -34,18 +41,53 @@
             });
         },
 
-        savePermalinkShowingCaptchaInElement: function (content, el) {
-            return metamac.authentication.ajax({
-                url: this.baseUrl(),
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ content: content }),
-            }, {
-                captchaEl: el
+        savePermalinkWithUserAuth: function (content) {
+            var self = this;
+            return new Promise(function(resolve, reject) {
+                $.ajax({
+                    url: self.baseUrl(),
+                    method: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ content: content }),
+                    beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders(true),
+                }).fail(function(jqXHR) {
+                    reject(jqXHR)
+                }).done(function(val) {
+                    resolve(val)
+                });
             });
-        }
+        },
 
+        savePermalink: function (content, el) {
+            var requestFunction = function (url) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: url,
+                        method: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({content: content}),
+                        beforeSend: UserUtils.prepareAuthorizationAndXSRFHeaders()
+                    }).fail(function (jqXHR) {
+                        reject(jqXHR)
+                    }).done(function (val) {
+                        resolve(val)
+                    });
+                });
+            };
+            return requestWithCaptcha(
+                requestFunction,
+                this.baseUrl(),
+                {
+                    captchaEl: el,
+                    action: "portal_permalink",
+                    buttonText: I18n.t("captcha.button.text"),
+                    labelText: I18n.t("captcha.label.text"),
+                    withButton: true
+                }
+            );
+        },
     }
 
 }());
