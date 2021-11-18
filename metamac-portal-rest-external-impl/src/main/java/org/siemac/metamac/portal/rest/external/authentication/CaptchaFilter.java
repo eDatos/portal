@@ -42,7 +42,8 @@ public class CaptchaFilter implements RequestHandler {
             try {
                 urlBuilder = UriBuilder.fromUri(portalConfiguration.retrieveCaptchaExternalApiUrlBase());
             } catch (MetamacException e) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                // If the captchaExternalApiUrlBase is not available (for example, if external-users is not installed) we don´t check for captchas
+                return null;
             }
             urlBuilder.path("validate");
             for (Object paramKey : Collections.list(request.getParameterNames())) {
