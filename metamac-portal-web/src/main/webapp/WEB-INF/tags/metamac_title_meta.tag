@@ -75,14 +75,16 @@
 		    PORTAL_URL_BASE = configurationService.retrievePortalExternalWebApplicationUrlBase();
 		    STATISTICAL_VISUALIZER_URL_BASE = configurationService.retrievePortalExternalUrlBase();
 		    PERMALINKS_API_URL_BASE = configurationService.retrievePortalExternalApisPermalinksUrlBase();
-            EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();
-            EXTERNAL_CAPTCHA_URL_BASE = configurationService.retrieveCaptchaExternalApiUrlBase();
+            EXPORT_API_URL_BASE = configurationService.retrievePortalExternalApisExportUrlBase();            
             try {
+                // We group this try catch because all of them are served from external-users
                 EXTERNAL_USERS_API_URL_BASE = configurationService.retrieveExternalUsersExternalApiUrlBase();
                 EXTERNAL_USERS_WEB_APPLICATION_BASE = configurationService.retrieveExternalUsersExternalWebApplicationUrlBase();
+                EXTERNAL_CAPTCHA_URL_BASE = configurationService.retrieveCaptchaExternalApiUrlBase();
             } catch(MetamacException e) {
                 EXTERNAL_USERS_API_URL_BASE = "error";
                 EXTERNAL_USERS_WEB_APPLICATION_BASE = "error";
+                EXTERNAL_CAPTCHA_URL_BASE = "error";
             }
             if (INSTALLATION_TYPE.equals("INTERNAL")) {
 		        STATISTICAL_RESOURCES_API_URL_BASE = configurationService.retrieveStatisticalResourcesInternalApiUrlBase();
